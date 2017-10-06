@@ -1,6 +1,7 @@
 import Typography from "typography";
-import kirkhamTheme from "typography-theme-kirkham";
+import altonTheme from "typography-theme-alton";
 
-const typography = new Typography(kirkhamTheme);
+altonTheme.baseFontSize = "20px";
+const typography = new Typography(altonTheme);
 
 export default typography;

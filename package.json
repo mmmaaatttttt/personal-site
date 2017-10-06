@@ -16,7 +16,8 @@
     "gatsby-transformer-remark": "^1.7.7",
     "glamorous": "^4.9.1",
     "marksy": "^5.0.0",
-    "typography-theme-kirkham": "^0.16.3"
+    "styled-components": "^2.2.1",
+    "typography-theme-alton": "^0.15.10"
   },
   "devDependencies": {}
 }

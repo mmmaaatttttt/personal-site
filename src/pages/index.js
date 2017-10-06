@@ -1,27 +1,34 @@
 import React from "react";
-import g from "glamorous";
+import styled from "styled-components";
 import Link from "gatsby-link";
-
 import { rhythm } from "../utils/typography";
+
+const H1 = styled.h1`
+  display: inline-block;
+  border-bottom: 1px solid;
+`;
+
+const H3 = styled.h3`margin-bottom: ${rhythm(1 / 4)};`;
+
+const Span = styled.span`color: #bbb;`;
+
+const StyledLink = styled(Link)`
+  text-decoration: none;
+  color: inherit;
+`;
 
 export default ({ data }) => (
   <div>
-    <g.H1 display={"inline-block"} borderBottom={"1px solid"}>
-      Amazing Pandas Eating Things
-    </g.H1>
+    <H1>Amazing Pandas Eating Things</H1>
     <h4>{data.allMarkdownRemark.totalCount} Posts</h4>
     {data.allMarkdownRemark.edges.map(({ node }) => (
       <div>
-        <Link
-          to={node.fields.slug}
-          css={{ textDecoration: `none`, color: `inherit` }}
-        >
-          <g.H3 marginBottom={rhythm(1 / 4)}>
-            {node.frontmatter.title}{" "}
-            <g.Span color="#BBB">- {node.frontmatter.date}</g.Span>
-          </g.H3>
+        <StyledLink to={node.fields.slug}>
+          <H3>
+            {node.frontmatter.title} <Span>- {node.frontmatter.date}</Span>
+          </H3>
           <p>{node.excerpt}</p>
-        </Link>
+        </StyledLink>
       </div>
     ))}
   </div>
