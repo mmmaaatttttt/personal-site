@@ -8,6 +8,7 @@
     "serve": "gatsby serve"
   },
   "dependencies": {
+    "d3": "^4.11.0",
     "gatsby": "^1.9.36",
     "gatsby-link": "^1.4.1",
     "gatsby-plugin-glamor": "^1.6.7",
@@ -16,6 +17,9 @@
     "gatsby-transformer-remark": "^1.7.7",
     "glamorous": "^4.9.1",
     "marksy": "^5.0.0",
+    "odex": "^2.0.4",
+    "prop-types": "^15.6.0",
+    "rc-slider": "^8.3.1",
     "styled-components": "^2.2.1",
     "typography-theme-alton": "^0.15.10"
   },
