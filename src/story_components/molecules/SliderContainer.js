@@ -1,6 +1,19 @@
 import React from "react";
 import PropTypes from "prop-types";
-import LabeledSlider from "./molecules/LabeledSlider";
+import LabeledSlider from "./LabeledSlider";
+import styled from "styled-components";
+import media from "../../utils/media";
+
+const StyledSliderContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  width: 50%;
+
+  ${media.small`
+    width: 100%;
+  `};
+`;
 
 const SliderContainer = ({ data, handleValueChange }) => {
   let sliders = data.map(d => (
@@ -15,7 +28,7 @@ const SliderContainer = ({ data, handleValueChange }) => {
       color={d.color}
     />
   ));
-  return <div className="SliderContainer">{sliders}</div>;
+  return <StyledSliderContainer>{sliders}</StyledSliderContainer>;
 };
 
 SliderContainer.propTypes = {
@@ -24,7 +37,9 @@ SliderContainer.propTypes = {
       id: PropTypes.string.isRequired,
       min: PropTypes.number.isRequired,
       max: PropTypes.number.isRequired,
-      value: PropTypes.number.isRequired
+      value: PropTypes.number.isRequired,
+      title: PropTypes.string.isRequired,
+      color: PropTypes.string.isRequired
     })
   ),
   handleValueChange: PropTypes.func.isRequired

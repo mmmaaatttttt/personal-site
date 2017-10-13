@@ -7,13 +7,13 @@ import { rhythm } from "../utils/typography";
 
 const Div = styled.div`
   margin: 0 auto;
-  max-width: 700px;
-  padding: ${rhythm(2)}
-  padding-top: ${rhythm(1.5)}
+  max-width: 800px;
+  padding: ${rhythm(1.5)};
+  padding-top: ${rhythm(1.5)};
 `;
 
 const H3 = styled.h3`
-  margin-bottom: ${rhythm(2)}
+  margin-bottom: ${rhythm(2)};
   display: inline-block;
   font-style: normal;
 `;

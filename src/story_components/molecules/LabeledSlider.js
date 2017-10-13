@@ -18,8 +18,6 @@ const StyledSliderArea = styled.div`
   }
 `;
 
-// const StyledSlider =
-
 const LabeledSlider = ({
   id,
   min,

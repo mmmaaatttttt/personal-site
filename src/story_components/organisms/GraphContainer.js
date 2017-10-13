@@ -1,7 +1,24 @@
 import React, { Component } from "react";
-import Graph from "./Graph";
-import SliderContainer from "./SliderContainer";
+import Graph from "../Graph";
+import SliderContainer from "../molecules/SliderContainer";
 import PropTypes from "prop-types";
+import styled from "styled-components";
+import media from "../../utils/media";
+
+const StyledGraphContainer = styled.div`
+  width: 150%;
+  margin-left: -25%;
+  display: flex;
+
+  ${media.medium`
+    width: 130%;
+    margin-left: -15%;
+  `} ${media.small`
+    display: block;
+    width: 100%;
+    margin-left: 0;
+  `};
+`;
 
 class GraphContainer extends Component {
   constructor(props) {
@@ -33,7 +50,7 @@ class GraphContainer extends Component {
       return newObj;
     });
     return (
-      <div className="GraphContainer">
+      <StyledGraphContainer>
         <SliderContainer
           handleValueChange={this.handleValueChange}
           data={data}
@@ -45,7 +62,7 @@ class GraphContainer extends Component {
           smallestY={smallestY}
           largestY={largestY}
         />
-      </div>
+      </StyledGraphContainer>
     );
   }
 }

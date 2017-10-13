@@ -1,2 +1,1 @@
-export { default as Test } from "./Test";
-export { default as GraphContainer } from "./GraphContainer";
+export { default as GraphContainer } from "./organisms/GraphContainer";

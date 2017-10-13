@@ -5,6 +5,15 @@ import { line, curveMonotoneX, curveNatural } from "d3-shape";
 import { generateData } from "../utils/mathHelpers";
 import PropTypes from "prop-types";
 import Axis from "./Axis";
+import styled from "styled-components";
+import media from "../utils/media";
+
+const StyledGraph = styled.div`
+  width: 50%;
+  ${media.small`
+    width: 100%;
+  `};
+`;
 
 class Graph extends Component {
   constructor(props) {
@@ -59,7 +68,7 @@ class Graph extends Component {
       .curve(curveNatural);
 
     return (
-      <div>
+      <StyledGraph>
         <svg
           xmlns="http://www.w3.org/2000/svg"
           viewBox={`0 0 ${width} ${height}`}
@@ -105,7 +114,7 @@ class Graph extends Component {
             />
           </g>
         </svg>
-      </div>
+      </StyledGraph>
     );
   }
 }
@@ -116,7 +125,9 @@ Graph.propTypes = {
       id: PropTypes.string.isRequired,
       min: PropTypes.number.isRequired,
       max: PropTypes.number.isRequired,
-      value: PropTypes.number.isRequired
+      value: PropTypes.number.isRequired,
+      title: PropTypes.string.isRequired,
+      color: PropTypes.string.isRequired
     })
   ),
   width: PropTypes.number.isRequired,
