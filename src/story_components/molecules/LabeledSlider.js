@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import StyledSlider from "../atoms/StyledSlider";
 import styled from "styled-components";
 import { rhythm } from "../../utils/typography";
+import { lighten } from "polished";
 
 const StyledSliderArea = styled.div`
   text-align: center;
@@ -19,7 +20,15 @@ const StyledSliderArea = styled.div`
 
 // const StyledSlider =
 
-const LabeledSlider = ({ id, min, max, value, handleValueChange, title }) => (
+const LabeledSlider = ({
+  id,
+  min,
+  max,
+  value,
+  handleValueChange,
+  title,
+  color
+}) => (
   <StyledSliderArea>
     <p>{title}</p>
     <section>
@@ -30,6 +39,7 @@ const LabeledSlider = ({ id, min, max, value, handleValueChange, title }) => (
         value={value}
         step={(max - min) / 100}
         onChange={v => handleValueChange(id, v)}
+        mainColor={lighten(0.2, color)}
       />
       <p>Positive</p>
     </section>

@@ -93,14 +93,14 @@ class Graph extends Component {
             />
             <path
               d={linePath(this.truncateMonotoneData(graph1, yScale))}
-              strokeWidth="3"
-              stroke="red"
+              strokeWidth="5"
+              stroke={data.find(d => d.id === "graph1_init").color}
               fill="none"
             />
             <path
               d={linePath(this.truncateMonotoneData(graph2, yScale))}
-              strokeWidth="10"
-              stroke="purple"
+              strokeWidth="5"
+              stroke={data.find(d => d.id === "graph2_init").color}
               fill="none"
             />
           </g>

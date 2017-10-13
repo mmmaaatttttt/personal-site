@@ -26,28 +26,32 @@ Think about this conceptually for a bit. Suppose that person A's feelings change
       "max": 5,
       "initialValue": 3,
       "id": "graph1_init",
-      "title": "Person A's Initial Feelings"
-    },
-    {
-      "min": -5,
-      "max": 5,
-      "initialValue": -3,
-      "id": "graph2_init",
-      "title": "Person B's Initial Feelings"
+      "title": "Person A's Initial Feelings",
+      "color": "#FF8E5E"
     },
     {
       "min": -3,
       "max": 3,
       "initialValue": -1,
       "id": "a",
-      "title": "Person A's Response to Person B's Feelings"
+      "title": "Person A's Response to Person B's Feelings",
+      "color": "#FF8E5E"
+    },
+    {
+      "min": -5,
+      "max": 5,
+      "initialValue": -3,
+      "id": "graph2_init",
+      "title": "Person B's Initial Feelings",
+      "color": "#52A081"
     },
     {
       "min": -3,
       "max": 3,
       "initialValue": 1,
       "id": "b",
-      "title": "Person B's Response to Person A's Feelings"
+      "title": "Person B's Response to Person A's Feelings",
+      "color": "#52A081"
     }
   ],
   "width": 800,

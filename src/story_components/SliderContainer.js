@@ -12,6 +12,7 @@ const SliderContainer = ({ data, handleValueChange }) => {
       value={d.value}
       handleValueChange={handleValueChange}
       title={d.title}
+      color={d.color}
     />
   ));
   return <div className="SliderContainer">{sliders}</div>;
