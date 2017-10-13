@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import LabeledSlider from "./LabeledSlider";
+import LabeledSlider from "./molecules/LabeledSlider";
 
 const SliderContainer = ({ data, handleValueChange }) => {
   let sliders = data.map(d => (
@@ -11,6 +11,7 @@ const SliderContainer = ({ data, handleValueChange }) => {
       max={d.max}
       value={d.value}
       handleValueChange={handleValueChange}
+      title={d.title}
     />
   ));
   return <div className="SliderContainer">{sliders}</div>;

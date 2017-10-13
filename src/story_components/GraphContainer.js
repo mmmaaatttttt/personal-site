@@ -57,7 +57,8 @@ GraphContainer.propTypes = {
         min: PropTypes.number.isRequired,
         max: PropTypes.number.isRequired,
         initialValue: PropTypes.number.isRequired,
-        id: PropTypes.string.isRequired
+        id: PropTypes.string.isRequired,
+        title: PropTypes.string.isRequired
       })
     ).isRequired,
     width: PropTypes.number.isRequired,

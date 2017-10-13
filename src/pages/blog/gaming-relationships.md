@@ -7,7 +7,7 @@ In my book, _[Power Up: Unlocking the Hidden Mathematics in Video Games](https:/
 
 The idea of modeling relationships mathematically certainly didn't originate with games. Relationship dynamics have been part of academic research for some time. They've entered popular culture through other mediums, too. One of my favorite examples is this clip from [Flight of the Conchords](https://en.wikipedia.org/wiki/Flight_of_the_Conchords), in which one of the characters, Murray, uses axes to describe his model of friendship. 
 
-<iframe width="560" height="420" src="https://www.youtube.com/embed/Vg-zC1xXK3E" frameBorder="0" allowFullScreen></iframe>
+<iframe width="560" height="420" src="https://www.youtube.com/embed/Vg-zC1xXK3E" frameBorder="0" allowFullScreen key="vid1"></iframe>
 
 As you can see, Murray's model of friendship is one that consists of a few different states, such as friends, work mates, and enemies. During the course of the episode, he updates his friendship graph in response to the actions of the show's main characters, Brett and Jemaine.
 
@@ -25,25 +25,29 @@ Think about this conceptually for a bit. Suppose that person A's feelings change
       "min": -5,
       "max": 5,
       "initialValue": 3,
-      "id": "graph1_init"
+      "id": "graph1_init",
+      "title": "Person A's Initial Feelings"
     },
     {
       "min": -5,
       "max": 5,
       "initialValue": -3,
-      "id": "graph2_init"
+      "id": "graph2_init",
+      "title": "Person B's Initial Feelings"
     },
     {
       "min": -3,
       "max": 3,
       "initialValue": -1,
-      "id": "a"
+      "id": "a",
+      "title": "Person A's Response to Person B's Feelings"
     },
     {
       "min": -3,
       "max": 3,
       "initialValue": 1,
-      "id": "b"
+      "id": "b",
+      "title": "Person B's Response to Person A's Feelings"
     }
   ],
   "width": 800,

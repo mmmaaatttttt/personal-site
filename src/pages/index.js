@@ -22,7 +22,7 @@ export default ({ data }) => (
     <H1>Amazing Pandas Eating Things</H1>
     <h4>{data.allMarkdownRemark.totalCount} Posts</h4>
     {data.allMarkdownRemark.edges.map(({ node }) => (
-      <div>
+      <div key={node.fields.slug}>
         <StyledLink to={node.fields.slug}>
           <H3>
             {node.frontmatter.title} <Span>- {node.frontmatter.date}</Span>
