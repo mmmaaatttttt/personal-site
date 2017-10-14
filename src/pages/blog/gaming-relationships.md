@@ -59,3 +59,9 @@ Think about this conceptually for a bit. Suppose that person A's feelings change
   "smallestY": 5,
   "largestY": 100
 }}/>
+
+For those of you who prefer equations to visualizations, this is what we're visualizing: 
+
+<Latex str={`
+  \\text{What is } (3\\times 4) \\div (5-3)
+`}/>
