@@ -33,15 +33,21 @@ class GraphContainer extends Component {
   }
 
   handleValueChange(id, newVal) {
-    const newValues = this.state.values.map(v => {
-      if (v.id === id) return { id, value: newVal };
-      return v;
-    });
-    this.setState({ values: newValues, transitioning: true });
+    const newValues = this.state.values.map(
+      v => (v.id === id ? { id, value: newVal } : v)
+    );
+    this.setState({ values: newValues });
   }
 
   render() {
-    const { initialData, width, height, smallestY, largestY } = this.props.data;
+    const {
+      initialData,
+      width,
+      height,
+      smallestY,
+      largestY,
+      diffEq
+    } = this.props.data;
     const { values } = this.state;
     const data = initialData.map(d => {
       const value = values.find(v => v.id === d.id).value;
@@ -61,6 +67,7 @@ class GraphContainer extends Component {
           height={height}
           smallestY={smallestY}
           largestY={largestY}
+          diffEq={diffEq}
         />
       </StyledGraphContainer>
     );
@@ -82,7 +89,8 @@ GraphContainer.propTypes = {
     width: PropTypes.number.isRequired,
     height: PropTypes.number.isRequired,
     smallestY: PropTypes.number.isRequired,
-    largestY: PropTypes.number.isRequired
+    largestY: PropTypes.number.isRequired,
+    diffEq: PropTypes.func.isRequired
   }).isRequired
 };
 

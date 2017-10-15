@@ -1,21 +1,18 @@
 import * as odex from "odex";
 
-function generateData(A, B, x0, y0, min, max, step) {
-  var s = new odex.Solver(2);
+function generateData(min, max, step, initialValues, diffEqValues, diffEq) {
+  const s = new odex.Solver(2);
   s.denseOutput = true;
-  function relationship1(a, b) {
-    return (x, y) => [a * y[1], b * y[0]];
-  }
-  var data = {
+  const data = {
     graph1: [],
     graph2: []
   };
   s.solve(
-    relationship1(A, B),
+    diffEq(...diffEqValues),
     min,
-    [x0, y0],
+    initialValues,
     max,
-    s.grid(step, function(x, y) {
+    s.grid(step, (x, y) => {
       data.graph1.push({ x, y: y[0] });
       data.graph2.push({ x, y: y[1] });
     })

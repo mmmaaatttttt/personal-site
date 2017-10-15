@@ -16,18 +16,25 @@ const StyledSliderContainer = styled.div`
 `;
 
 const SliderContainer = ({ data, handleValueChange }) => {
-  let sliders = data.map(d => (
-    <LabeledSlider
-      key={d.id}
-      id={d.id}
-      min={d.min}
-      max={d.max}
-      value={d.value}
-      handleValueChange={handleValueChange}
-      title={d.title}
-      color={d.color}
-    />
-  ));
+  const sliders = data
+    .sort((d1, d2) => {
+      const d1Ids = d1.id.split("|").map(Number);
+      const d2Ids = d2.id.split("|").map(Number);
+      if (d1Ids[0] !== d2Ids[0]) return d1Ids[0] - d2Ids[0];
+      return d1Ids[1] - d2Ids[1];
+    })
+    .map(d => (
+      <LabeledSlider
+        key={d.id}
+        id={d.id}
+        min={d.min}
+        max={d.max}
+        value={d.value}
+        handleValueChange={handleValueChange}
+        title={d.title}
+        color={d.color}
+      />
+    ));
   return <StyledSliderContainer>{sliders}</StyledSliderContainer>;
 };
 

@@ -21,15 +21,20 @@ class Graph extends Component {
     this.transformData = this.transformData.bind(this);
     this.getYDomain = this.getYDomain.bind(this);
     this.truncateMonotoneData = this.truncateMonotoneData.bind(this);
+    this.getInitialValues = this.getInitialValues.bind(this);
   }
 
-  transformData(data) {
-    const { min, max, step } = this.props;
-    const orderedIds = ["a", "b", "graph1_init", "graph2_init"];
-    const orderedParams = orderedIds.map(
-      id => this.props.data.find(d => d.id === id).value
-    );
-    return generateData(...orderedParams, min, max, step);
+  getInitialValues(initial = true) {
+    return initial
+      ? this.props.data.filter(d => d.id.split("|")[1] === "0")
+      : this.props.data.filter(d => d.id.split("|")[1] !== "0");
+  }
+
+  transformData() {
+    const { min, max, step, diffEq } = this.props;
+    const initialValues = this.getInitialValues().map(d => d.value);
+    const diffEqValues = this.getInitialValues(false).map(d => d.value);
+    return generateData(min, max, step, initialValues, diffEqValues, diffEq);
   }
 
   getYDomain(graph1, graph2) {
@@ -51,8 +56,7 @@ class Graph extends Component {
 
   render() {
     const { data, width, height, padding } = this.props;
-
-    let { graph1, graph2 } = this.transformData(data);
+    let { graph1, graph2 } = this.transformData();
 
     const xScale = scaleLinear()
       .domain(extent(graph1, d => d.x))
@@ -103,13 +107,13 @@ class Graph extends Component {
             <path
               d={linePath(this.truncateMonotoneData(graph1, yScale))}
               strokeWidth="5"
-              stroke={data.find(d => d.id === "graph1_init").color}
+              stroke={this.getInitialValues()[0].color}
               fill="none"
             />
             <path
               d={linePath(this.truncateMonotoneData(graph2, yScale))}
               strokeWidth="5"
-              stroke={data.find(d => d.id === "graph2_init").color}
+              stroke={this.getInitialValues()[1].color}
               fill="none"
             />
           </g>

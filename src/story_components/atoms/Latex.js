@@ -4,8 +4,9 @@ import katex from "katex";
 import PropTypes from "prop-types";
 
 const StyledParagraph = styled.p`
-  .katex {
-    font: inherit;
+  .katex,
+  .katex * {
+    font-family: inherit !important;
   }
 `;
 
