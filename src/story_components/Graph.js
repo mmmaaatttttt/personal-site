@@ -20,7 +20,7 @@ class Graph extends Component {
     super(props);
     this.transformData = this.transformData.bind(this);
     this.getYDomain = this.getYDomain.bind(this);
-    this.truncateMonotoneData = this.truncateMonotoneData.bind(this);
+    this.truncateData = this.truncateData.bind(this);
     this.getInitialValues = this.getInitialValues.bind(this);
   }
 
@@ -44,18 +44,18 @@ class Graph extends Component {
     return [-yMax, yMax];
   }
 
-  truncateMonotoneData(graphData, scale) {
-    let newData = graphData.filter(
-      d => d.y >= scale.domain()[0] && d.y <= scale.domain()[1]
-    );
-    if (newData.length < graphData.length) {
-      newData.push(graphData[newData.length]);
-    }
-    return newData;
+  truncateData(graphData, scale) {
+    return graphData.map(d => {
+      let newY = d.y;
+      const domain = scale.domain();
+      if (newY > domain[1]) newY = domain[1] * 1.1;
+      if (newY < domain[0]) newY = domain[0] * 1.1;
+      return { ...d, y: newY };
+    });
   }
 
   render() {
-    const { data, width, height, padding } = this.props;
+    const { data, width, height, padding, id } = this.props;
     let { graph1, graph2 } = this.transformData();
 
     const xScale = scaleLinear()
@@ -81,16 +81,16 @@ class Graph extends Component {
           }}
         >
           <defs>
-            <clipPath id="clip-path">
+            <clipPath id={`clip-path-${id}`}>
               <rect
                 x={padding}
                 y={padding}
-                height={height - padding}
-                width={width - padding}
+                height={height - 2 * padding}
+                width={width - 2 * padding}
               />
             </clipPath>
           </defs>
-          <g clipPath="url(#clip-path)">
+          <g clipPath={`url(#clip-path-${id})`}>
             <Axis
               direction="y"
               scale={yScale}
@@ -105,13 +105,13 @@ class Graph extends Component {
               tickShift={height / 2 - padding}
             />
             <path
-              d={linePath(this.truncateMonotoneData(graph1, yScale))}
+              d={linePath(this.truncateData(graph1, yScale))}
               strokeWidth="5"
               stroke={this.getInitialValues()[0].color}
               fill="none"
             />
             <path
-              d={linePath(this.truncateMonotoneData(graph2, yScale))}
+              d={linePath(this.truncateData(graph2, yScale))}
               strokeWidth="5"
               stroke={this.getInitialValues()[1].color}
               fill="none"

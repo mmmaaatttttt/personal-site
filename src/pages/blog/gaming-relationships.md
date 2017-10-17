@@ -37,10 +37,11 @@ where _a_ measures the strength of A's response to B's feelings, and similarly f
 If you play around with this visualization a bit, you may reach a somewhat unsettling conclusion: none of the relationships captured by the model seem particularly healthy. By adjusting the sliders, here are some of the relationships you can model:
 
 1. One in which each person's feelings oscillate between poisitive and negative, with the two parties never really in sync with one another.
-2. One in which the relationship spirals out of control, with one person's feelings getting increasingly positive, and the other person's getting increasingly negative.
-3. One in which the feelings stabilize, but only at 0, meaning that each person grows indifferent to the other over time.
+2. One in which the relationship explodes into an exponentially increasing mutual mania or hatred.
+3. One in which the relationship explodes in different directions for each person. While one person's feelings become increasingly positive, the other person's feelings become increasingly negative.
+4. One in which the feelings stabilize, but only at 0, meaning that each person grows indifferent to the other over time.
 
-Put simply, this model of relationships isn't very optimistic.
+Put simply, this model of relationships isn't very optimistic. There's no way to model a relationship that naturally grows over time and stabilizes at some reasonable value.
 
 ### Relationship Dynamics: Second Model 
 
@@ -48,7 +49,29 @@ If we want to be able to model a larger class of relationships, we'll need to ad
 
 This requires a few more parameters, since we can now adjust three parameters for each person: their initial feelings, the strength with which they respond to their partner's feelings, and the strength with which they respond to their own feelings. Here's a modified visualization for you to play around with:
 
+<GamingRelationships idx={1}/>
+
+As you might have guessed, more sliders means more parameters in our model. In the language of calculus, our model now looks like this: 
+
+<Latex displayMode={true} str={`
+  \\begin{aligned}
+  A\\prime (t) &= a \\times B(t) + c \\times A(t), \\\\
+  B\\prime (t) &= b \\times A(t) + d \\times B(t),
+  \\end{aligned}
+`}/>
+
+Once again, if your calculus is a little rusty and you can feel your eyes glazing over, fret not! All this is saying is that the rate at which each person's feelings change depends not only on their partner's current feelings, but their own feelings as well. The sliders let us control the values of _a_, _b_, _c_, and _d_ (as well as each partner's _initial_ feelings), so that you can explore a wider range of possible relationships. Maybe one person goes with their gut, and is strongly influenced by their own current feelings, while another person is extremely empathetic and is highly influenced by the feelings of their partner.
+
+Unfortunately, in terms of stable healthy relationships, this model doesn't really do any better than the previous one. In fact, in some sense it's even more pessimistic, in that it can lead to some really horrendous looking relationships. See if you can create some of these:
+
+1. One in which each person's feelings both oscillate _and_ grow without bound. Not only is the couple out of sync, but their mood swings increase in strength over time.
+2. One in which each person's feelings oscillate and shrink with time. As before, these types of relationships stabilize, but unfortunately they tend towards mutual indifference.
+
 ### Relationship Dynamics: Third Model
+
+Maybe the third time's the charm. 
+
+<GamingRelationships idx={2}/>
 
 ### The Three-Body Problem
 
