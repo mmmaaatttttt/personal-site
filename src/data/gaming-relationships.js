@@ -56,11 +56,14 @@ const graph2Data = [
 ];
 
 const graph3Data = [
-  ...graph2Data,
+  ...graph2Data.filter(d => +d.id.split("|")[1] !== 0).map((d, i) => {
+    const newVals = [1, 2, -5, -5];
+    return { ...d, initialValue: newVals[i] };
+  }),
   {
     min: -5,
     max: 5,
-    initialValue: 0,
+    initialValue: 1,
     title: "A's Intrinsic Appeal",
     id: "0|3",
     color: PERSON_A_COLOR
@@ -68,7 +71,7 @@ const graph3Data = [
   {
     min: -5,
     max: 5,
-    initialValue: 0,
+    initialValue: 3,
     title: "A's Response to B's Intrinsic Appeal",
     id: "0|4",
     color: PERSON_A_COLOR
@@ -76,7 +79,7 @@ const graph3Data = [
   {
     min: -5,
     max: 5,
-    initialValue: 0,
+    initialValue: 4,
     title: "B's Intrinsic Appeal",
     id: "1|3",
     color: PERSON_B_COLOR
@@ -84,7 +87,7 @@ const graph3Data = [
   {
     min: -5,
     max: 5,
-    initialValue: 0,
+    initialValue: 2,
     title: "B's Response to A's Intrinsic Appeal",
     id: "1|4",
     color: PERSON_B_COLOR

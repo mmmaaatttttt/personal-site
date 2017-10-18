@@ -73,5 +73,8 @@ Maybe the third time's the charm.
 
 <GamingRelationships idx={2}/>
 
+- explain lack of initial feelings values (simplification, and stable values don't depend on initial values!)
+- why does this lead to better solutions?
+
 ### The Three-Body Problem
 

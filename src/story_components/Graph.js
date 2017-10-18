@@ -19,21 +19,34 @@ class Graph extends Component {
   constructor(props) {
     super(props);
     this.transformData = this.transformData.bind(this);
-    this.getYDomain = this.getYDomain.bind(this);
     this.truncateData = this.truncateData.bind(this);
+    this.getYDomain = this.getYDomain.bind(this);
     this.getInitialValues = this.getInitialValues.bind(this);
+    this.getColors = this.getColors.bind(this);
   }
 
   getInitialValues(initial = true) {
+    // initial values for diffEq come from ids of the form "x|0"
+    const { data } = this.props;
     return initial
-      ? this.props.data.filter(d => d.id.split("|")[1] === "0")
-      : this.props.data.filter(d => d.id.split("|")[1] !== "0");
+      ? data.filter(d => d.id.split("|")[1] === "0")
+      : data.filter(d => d.id.split("|")[1] !== "0");
+  }
+
+  getColors() {
+    const { data } = this.props;
+    return data.reduce((colorArr, d) => {
+      const idx = +d.id.split("|")[0];
+      if (!colorArr[idx]) colorArr.push(d.color);
+      return colorArr;
+    }, []);
   }
 
   transformData() {
     const { min, max, step, diffEq } = this.props;
-    const initialValues = this.getInitialValues().map(d => d.value);
     const diffEqValues = this.getInitialValues(false).map(d => d.value);
+    let initialValues = this.getInitialValues().map(d => d.value);
+    if (initialValues.length === 0) initialValues = [0, 0];
     return generateData(min, max, step, initialValues, diffEqValues, diffEq);
   }
 
@@ -56,7 +69,8 @@ class Graph extends Component {
 
   render() {
     const { data, width, height, padding, id } = this.props;
-    let { graph1, graph2 } = this.transformData();
+    const { graph1, graph2 } = this.transformData();
+    const colors = this.getColors();
 
     const xScale = scaleLinear()
       .domain(extent(graph1, d => d.x))
@@ -107,13 +121,13 @@ class Graph extends Component {
             <path
               d={linePath(this.truncateData(graph1, yScale))}
               strokeWidth="5"
-              stroke={this.getInitialValues()[0].color}
+              stroke={colors[0]}
               fill="none"
             />
             <path
               d={linePath(this.truncateData(graph2, yScale))}
               strokeWidth="5"
-              stroke={this.getInitialValues()[1].color}
+              stroke={colors[1]}
               fill="none"
             />
           </g>
@@ -146,7 +160,7 @@ Graph.propTypes = {
 
 Graph.defaultProps = {
   min: 0,
-  max: 10,
+  max: 20,
   step: 0.1,
   padding: 20
 };
