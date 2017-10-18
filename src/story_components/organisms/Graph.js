@@ -2,11 +2,12 @@ import React, { Component } from "react";
 import { scaleLinear } from "d3-scale";
 import { extent, max } from "d3-array";
 import { line, curveMonotoneX, curveNatural } from "d3-shape";
-import { generateData } from "../utils/mathHelpers";
+import { generateData } from "../../utils/mathHelpers";
 import PropTypes from "prop-types";
-import Axis from "./Axis";
+import Axis from "../molecules/Axis";
+import LinePlot from "../atoms/LinePlot";
 import styled from "styled-components";
-import media from "../utils/media";
+import media from "../../utils/media";
 
 const StyledGraph = styled.div`
   width: 50%;
@@ -45,14 +46,23 @@ class Graph extends Component {
   transformData() {
     const { min, max, step, diffEq } = this.props;
     const diffEqValues = this.getInitialValues(false).map(d => d.value);
+    const graphCount = this.getColors().length;
     let initialValues = this.getInitialValues().map(d => d.value);
     if (initialValues.length === 0) initialValues = [0, 0];
-    return generateData(min, max, step, initialValues, diffEqValues, diffEq);
+    return generateData(
+      graphCount,
+      min,
+      max,
+      step,
+      initialValues,
+      diffEqValues,
+      diffEq
+    );
   }
 
-  getYDomain(graph1, graph2) {
+  getYDomain(graphs) {
     const { largestY, smallestY } = this.props;
-    let yMax = max(graph1.concat(graph2), d => Math.abs(d.y));
+    let yMax = max([].concat(...graphs), d => Math.abs(d.y));
     yMax = Math.min(Math.max(Math.ceil(yMax), smallestY), largestY);
     return [-yMax, yMax];
   }
@@ -69,21 +79,29 @@ class Graph extends Component {
 
   render() {
     const { data, width, height, padding, id } = this.props;
-    const { graph1, graph2 } = this.transformData();
+    const graphs = this.transformData();
     const colors = this.getColors();
 
     const xScale = scaleLinear()
-      .domain(extent(graph1, d => d.x))
+      .domain(extent(graphs[0], d => d.x))
       .range([padding, width - padding]);
 
     const yScale = scaleLinear()
-      .domain(this.getYDomain(graph1, graph2))
+      .domain(this.getYDomain(graphs))
       .range([height - padding, padding]);
 
     const linePath = line()
       .x(d => xScale(d.x))
       .y(d => yScale(d.y))
       .curve(curveNatural);
+
+    const linePlots = graphs.map((graph, i) => (
+      <LinePlot
+        key={i}
+        d={linePath(this.truncateData(graph, yScale))}
+        stroke={colors[i]}
+      />
+    ));
 
     return (
       <StyledGraph>
@@ -118,18 +136,7 @@ class Graph extends Component {
               tickSize={-height + 2 * padding}
               tickShift={height / 2 - padding}
             />
-            <path
-              d={linePath(this.truncateData(graph1, yScale))}
-              strokeWidth="5"
-              stroke={colors[0]}
-              fill="none"
-            />
-            <path
-              d={linePath(this.truncateData(graph2, yScale))}
-              strokeWidth="5"
-              stroke={colors[1]}
-              fill="none"
-            />
+            {linePlots}
           </g>
         </svg>
       </StyledGraph>

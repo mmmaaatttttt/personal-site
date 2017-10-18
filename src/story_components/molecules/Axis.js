@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import StyledAxis from "./atoms/StyledAxis";
+import StyledAxis from "../atoms/StyledAxis";
 import { axisBottom, axisLeft } from "d3-axis";
 import { select } from "d3-selection";
 import { range } from "d3-array";

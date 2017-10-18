@@ -103,6 +103,10 @@ const diffEq3 = (a, b, c, d, e, f, g, h) => (x, y) => [
   a * y[1] + b * y[0] + d * g,
   e * y[0] + f * y[1] + h * c
 ];
+const diffEq4 = (a, b, c, d) => (x, y) => [
+  a * y[1] * (1 - Math.abs(y[1])) + b * y[0],
+  c * y[0] * (1 - Math.abs(y[0])) + d * y[1]
+];
 
 const visualizationData = [
   {
@@ -132,6 +136,16 @@ const visualizationData = [
     largestY: 200,
     diffEq: diffEq3,
     id: "vis3"
+  },
+  {
+    initialData: graph2Data,
+    width: 800,
+    height: 800,
+    smallestY: 5,
+    largestY: 200,
+    diffEq: diffEq4,
+    step: 0.02,
+    id: "vis2"
   }
 ];
 

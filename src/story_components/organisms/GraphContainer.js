@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import Graph from "../Graph";
+import Graph from "./Graph";
 import SliderContainer from "../molecules/SliderContainer";
 import PropTypes from "prop-types";
 import styled from "styled-components";

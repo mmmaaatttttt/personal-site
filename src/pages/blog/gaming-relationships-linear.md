@@ -1,5 +1,5 @@
 ---
-title: Gaming Relationships
+title: "Gaming Relationships: Linear Approaches"
 date: "2017-08-21"
 ---
 
@@ -75,6 +75,7 @@ Maybe the third time's the charm.
 
 - explain lack of initial feelings values (simplification, and stable values don't depend on initial values!)
 - why does this lead to better solutions?
+- http://sprott.physics.wisc.edu/pubs/paper277.pdf -- mention relationship archetypes
 
 ### The Three-Body Problem
 
