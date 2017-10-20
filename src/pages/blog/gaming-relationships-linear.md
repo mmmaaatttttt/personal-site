@@ -21,7 +21,7 @@ Things get more interesting when you start to think about one person's feelings 
 
 Think about this conceptually for a bit. Suppose that person A's feelings change in opposition to person B: when person B's feelings grow too string, person A begins to push away. But when person B begins to retreat, person A shows more interest. On the other hand, suppose that person B's feelings change in parallel with person A: when person A's feelings are strong, so are person B's, and when they're not, neither is person B's. In this case, if person B has feelings for person A, person A will react by pushing person B away. This, in turn, will cause person B to drift away, which will cause person A to to feel more strongly. This will cause person B to feel more strongly too, which will push person A away again, and the cycle repeats.
 
-<GamingRelationships idx={0}/>
+<GamingLinearRelationships idx={0}/>
 
 For those of you who prefer equations to visualizations, here's what we're visualizing. If _A(t)_ denotes person A's feelings at time _t_, and _B(t)_ denotes person B's feelings at time _t_, then these graphs are determined by:
  
@@ -49,7 +49,7 @@ If we want to be able to model a larger class of relationships, we'll need to ad
 
 This requires a few more parameters, since we can now adjust three parameters for each person: their initial feelings, the strength with which they respond to their partner's feelings, and the strength with which they respond to their own feelings. Here's a modified visualization for you to play around with:
 
-<GamingRelationships idx={1}/>
+<GamingLinearRelationships idx={1}/>
 
 As you might have guessed, more sliders means more parameters in our model. In the language of calculus, our model now looks like this: 
 
@@ -71,7 +71,7 @@ Unfortunately, in terms of stable healthy relationships, this model doesn't real
 
 Maybe the third time's the charm. 
 
-<GamingRelationships idx={2}/>
+<GamingLinearRelationships idx={2}/>
 
 - explain lack of initial feelings values (simplification, and stable values don't depend on initial values!)
 - why does this lead to better solutions?

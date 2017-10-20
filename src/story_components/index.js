@@ -1,4 +1,4 @@
 export {
-  default as GamingRelationships
-} from "./root_components/GamingRelationships";
+  default as GamingLinearRelationships
+} from "./root_components/GamingLinearRelationships";
 export { default as Latex } from "./atoms/Latex";

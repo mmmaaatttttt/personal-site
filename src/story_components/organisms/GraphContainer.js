@@ -33,7 +33,6 @@ class GraphContainer extends Component {
   }
 
   handleValueChange(id, newVal) {
-    console.log(newVal);
     const newValues = this.state.values.map(
       v => (v.id === id ? { id, value: newVal } : v)
     );

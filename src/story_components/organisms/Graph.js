@@ -167,7 +167,7 @@ Graph.propTypes = {
 
 Graph.defaultProps = {
   min: 0,
-  max: 20,
+  max: 15,
   step: 0.1,
   padding: 20
 };

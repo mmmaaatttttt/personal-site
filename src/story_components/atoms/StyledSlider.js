@@ -4,7 +4,7 @@ import styled, { css } from "styled-components";
 import Slider from "rc-slider";
 import { darken } from "polished";
 
-const darkerMain = props => darken(0.2, props.mainColor);
+const darkerMain = props => darken(0.2, props.activeColor);
 const totalHeight = s => props => (props.height + 2 * props.padding) * s;
 
 const StyledSlider = styled(Slider)`
@@ -17,6 +17,8 @@ const StyledSlider = styled(Slider)`
   touch-action: none;
   box-sizing: border-box;
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+  display: flex;
+  justify-content: space-between;
 
   * {
     box-sizing: border-box;
@@ -26,7 +28,7 @@ const StyledSlider = styled(Slider)`
   .rc-slider-rail {
     position: absolute;
     width: 100%;
-    background-color: #e9e9e9;
+    background-color: ${props => props.inactiveColor};
     height: ${props => props.height}px;
     border-radius: ${totalHeight(1)}px;
   }
@@ -36,7 +38,7 @@ const StyledSlider = styled(Slider)`
     left: 0;
     height: ${props => props.height}px;
     border-radius: ${totalHeight(1)}px;
-    background-color: ${props => props.mainColor};
+    background-color: ${props => props.activeColor};
   }
 
   .rc-slider-handle {
@@ -48,10 +50,12 @@ const StyledSlider = styled(Slider)`
     cursor: pointer;
     cursor: grab;
     border-radius: 50%;
-    border: solid ${props => props.padding * 0.75}px ${props => props.mainColor};
+    border: solid ${props => props.padding * 0.75}px
+      ${props => props.activeColor};
     background-color: ${darkerMain};
     touch-action: pan-x;
     transition: border-width 0.5s;
+    z-index: 100;
   }
 
   .rc-slider-handle:hover {
@@ -71,46 +75,18 @@ const StyledSlider = styled(Slider)`
     box-shadow: 0 0 0 ${props => props.padding}px ${darkerMain};
     outline: none;
   }
-
-  .rc-slider-mark {
-    position: absolute;
-    top: 18px;
-    left: 0;
-    width: 100%;
-    font-size: 12px;
-  }
-
-  .rc-slider-mark-text {
-    position: absolute;
-    display: inline-block;
-    vertical-align: middle;
-    text-align: center;
-    cursor: pointer;
-    color: #999;
-  }
-
-  .rc-slider-mark-text-active {
-    color: #666;
-  }
-
-  .rc-slider-step {
-    position: absolute;
-    width: 100%;
-    height: ${props => props.height}px;
-    background: transparent;
-  }
 `;
 
 StyledSlider.propTypes = {
-  mainColor: PropTypes.string.isRequired,
+  activeColor: PropTypes.string.isRequired,
+  inactiveColor: PropTypes.string.isRequired,
   height: PropTypes.number.isRequired,
   padding: PropTypes.number.isRequired
 };
 
 StyledSlider.defaultProps = {
-  mainColor: "#abe2fb",
-  height: 6,
-  padding: 10
+  activeColor: "#abe2fb",
+  inactiveColor: "#e9e9e9"
 };
 
 export default StyledSlider;
