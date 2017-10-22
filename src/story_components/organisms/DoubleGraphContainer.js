@@ -49,7 +49,7 @@ class DoubleGraphContainer extends Component {
       max,
       step,
       padding,
-      id
+      ids
     } = this.props.data;
     const { values } = this.state;
     const data = initialData.map(d => {
@@ -76,7 +76,7 @@ class DoubleGraphContainer extends Component {
           max={max}
           step={step}
           padding={padding}
-          id={id}
+          id={ids[0]}
           double
         />
         <Graph
@@ -90,7 +90,7 @@ class DoubleGraphContainer extends Component {
           max={max}
           step={step}
           padding={padding}
-          id={id}
+          id={ids[1]}
           double
         />
       </StyledDoubleGraphContainer>
@@ -119,7 +119,7 @@ DoubleGraphContainer.propTypes = {
     min: PropTypes.number,
     max: PropTypes.number,
     step: PropTypes.number,
-    id: PropTypes.string.isRequired
+    ids: PropTypes.arrayOf(PropTypes.string).isRequired
   }).isRequired
 };
 
