@@ -149,4 +149,6 @@ const visualizationData = [
   }
 ];
 
+export { graph2Data, diffEq2 };
+
 export default visualizationData;

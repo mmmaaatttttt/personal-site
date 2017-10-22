@@ -1,14 +1,14 @@
 import React, { Component } from "react";
 import GraphContainer from "../organisms/GraphContainer";
 import PropTypes from "prop-types";
-import visualizationData from "../../data/gaming-relationships.js";
+import visualizationData from "../../data/gaming-linear-relationships.js";
 
-const GamingRelationships = ({ idx }) => (
+const GamingLinearRelationships = ({ idx }) => (
   <GraphContainer data={visualizationData[idx]} />
 );
 
-GamingRelationships.propTypes = {
+GamingLinearRelationships.propTypes = {
   idx: PropTypes.number.isRequired
 };
 
-export default GamingRelationships;
+export default GamingLinearRelationships;

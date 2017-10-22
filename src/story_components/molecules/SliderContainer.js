@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import LabeledSlider from "./LabeledSlider";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import media from "../../utils/media";
 
 const StyledSliderContainer = styled.div`
@@ -13,9 +13,17 @@ const StyledSliderContainer = styled.div`
   ${media.small`
     width: 100%;
   `};
+
+  ${props =>
+    props.double &&
+    css`
+      width: 100%;
+      flex-wrap: wrap;
+      flex-direction: row;
+    `};
 `;
 
-const SliderContainer = ({ data, handleValueChange }) => {
+const SliderContainer = ({ data, handleValueChange, double }) => {
   const sliders = data
     .sort((d1, d2) => {
       const d1Ids = d1.id.split("|").map(Number);
@@ -33,9 +41,12 @@ const SliderContainer = ({ data, handleValueChange }) => {
         handleValueChange={handleValueChange}
         title={d.title}
         color={d.color}
+        double
       />
     ));
-  return <StyledSliderContainer>{sliders}</StyledSliderContainer>;
+  return (
+    <StyledSliderContainer double={double}>{sliders}</StyledSliderContainer>
+  );
 };
 
 SliderContainer.propTypes = {
@@ -49,7 +60,8 @@ SliderContainer.propTypes = {
       color: PropTypes.string.isRequired
     })
   ),
-  handleValueChange: PropTypes.func.isRequired
+  handleValueChange: PropTypes.func.isRequired,
+  double: PropTypes.bool
 };
 
 export default SliderContainer;

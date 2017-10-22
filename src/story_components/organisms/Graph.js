@@ -6,14 +6,19 @@ import { generateData } from "../../utils/mathHelpers";
 import PropTypes from "prop-types";
 import Axis from "../molecules/Axis";
 import LinePlot from "../atoms/LinePlot";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import media from "../../utils/media";
 
 const StyledGraph = styled.div`
   width: 50%;
-  ${media.small`
-    width: 100%;
-  `};
+
+  ${props =>
+    !props.double &&
+    css`
+      ${media.small`
+        width: 100%;
+      `};
+    `};
 `;
 
 class Graph extends Component {
@@ -78,7 +83,7 @@ class Graph extends Component {
   }
 
   render() {
-    const { data, width, height, padding, id } = this.props;
+    const { data, width, height, padding, id, double } = this.props;
     const graphs = this.transformData();
     const colors = this.getColors();
 
@@ -104,7 +109,7 @@ class Graph extends Component {
     ));
 
     return (
-      <StyledGraph>
+      <StyledGraph double={double}>
         <svg
           xmlns="http://www.w3.org/2000/svg"
           viewBox={`0 0 ${width} ${height}`}
@@ -162,7 +167,8 @@ Graph.propTypes = {
   padding: PropTypes.number.isRequired,
   min: PropTypes.number.isRequired,
   max: PropTypes.number.isRequired,
-  step: PropTypes.number.isRequired
+  step: PropTypes.number.isRequired,
+  double: PropTypes.bool
 };
 
 Graph.defaultProps = {
