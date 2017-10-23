@@ -47,7 +47,9 @@ Put simply, this model of relationships isn't very optimistic. There's no way to
 
 If we want to be able to model a larger class of relationships, we'll need to add more complexity to the model. In the paper I mentioned above, Strogatz offers one possible way to add complexity. Rather than having each person's feelings depend only on the other person's, we should allow them to be a bit more self reflective. In other words, we should allow peoples' feelings to change based on the strength of _their_ current feelings, not just the feelings of their partner.
 
-This requires a few more parameters, since we can now adjust three parameters for each person: their initial feelings, the strength with which they respond to their partner's feelings, and the strength with which they respond to their own feelings. Here's a modified visualization for you to play around with:
+This requires a few more parameters, since we can now adjust three parameters for each person: their initial feelings, the strength with which they respond to their partner's feelings, and the strength with which they respond to their own feelings. 
+
+Here's a modified visualization for you to play around with:
 
 <GamingLinearRelationships idx={1}/>
 
@@ -60,12 +62,18 @@ As you might have guessed, more sliders means more parameters in our model. In t
   \\end{aligned}
 `}/>
 
-Once again, if your calculus is a little rusty and you can feel your eyes glazing over, fret not! All this is saying is that the rate at which each person's feelings change depends not only on their partner's current feelings, but their own feelings as well. The sliders let us control the values of _a_, _b_, _c_, and _d_ (as well as each partner's _initial_ feelings), so that you can explore a wider range of possible relationships. Maybe one person goes with their gut, and is strongly influenced by their own current feelings, while another person is extremely empathetic and is highly influenced by the feelings of their partner.
+Once again, if your calculus is a little rusty and you can feel your eyes glazing over, fret not! All this is saying is that the rate at which each person's feelings change depends not only on their partner's current feelings, but their own feelings as well. The sliders let us control the values of _a_, _b_, _c_, and _d_ (as well as each partner's _initial_ feelings), so that you can explore a wider range of possible relationships. 
 
-Unfortunately, in terms of stable healthy relationships, this model doesn't really do any better than the previous one. In fact, in some sense it's even more pessimistic, in that it can lead to some really horrendous looking relationships. See if you can create some of these:
+In fact, all of these options for values yield four different archetypes, depending on how people respond to the feelings of themselves and their partners. In his book _Nonlinear Dynamics and Chaos_, Strogatz identifies four categories of people. For example, depending on the values of _a_ and _c_, person A could fit into one of these groups:
 
-1. One in which each person's feelings both oscillate _and_ grow without bound. Not only is the couple out of sync, but their mood swings increase in strength over time.
-2. One in which each person's feelings oscillate and shrink with time. As before, these types of relationships stabilize, but unfortunately they tend towards mutual indifference.
+1. _Eager beavers_. (_a_ > 0, _c_ > 0.) These people respond positively to positive feelings in themselves and their partners.
+2. _Narcissistic Nerds_. (_a_ < 0, _c_ > 0.) These people respond positively to their own positive feelings, but are turned off by positive feelings in their partners. 
+3. _Cautious lovers_. (_a_ > 0, _c_ < 0.) These people respond positively to positive feelings in their partners, but are distrustful of their own positive feelings.
+4. _Hermits_. (_a_ < 0, _c_ < 0.) These people respond negatively to all positive feelings.
+
+With these archetypes in mind, play around with the above visualization and see what sorts of patterns emerge. What happens when two narcissists get together? What abou an eager beaver and a hermit?
+
+Unfortunately, you'll soon discover that in terms of stable healthy relationships, this model doesn't really do any better than the previous one. In fact, in some sense it's even more pessimistic: it can lead to some really horrendous looking relationships, including ones that both oscillate and grow exponentially! 
 
 ### Relationship Dynamics: Third Model
 
@@ -75,7 +83,13 @@ Maybe the third time's the charm.
 
 - explain lack of initial feelings values (simplification, and stable values don't depend on initial values!)
 - why does this lead to better solutions?
-- http://sprott.physics.wisc.edu/pubs/paper277.pdf -- mention relationship archetypes
+- mind the gap!
 
-### The Three-Body Problem
+Sources: 
+- my book
+- http://sprott.physics.wisc.edu/pubs/paper277.pdf
+- http://ai.stanford.edu/~rajatr/articles/SS_love_dEq.pdf
+- Strogatz Nonlinear dynamics and chaos book: https://www.amazon.com/Nonlinear-Dynamics-Chaos-Applications-Nonlinearity/dp/0738204536
+
+
 

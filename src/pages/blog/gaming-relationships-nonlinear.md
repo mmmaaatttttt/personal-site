@@ -8,3 +8,4 @@ Part 1 - include toggle for linear vs nonlinear?
 
 Part 2 - Three Body Problem
 
+<GamingNonlinearRelationships idx={1}/>

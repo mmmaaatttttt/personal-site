@@ -77,6 +77,7 @@ class DoubleGraphContainer extends Component {
           step={step}
           padding={padding}
           id={ids[0]}
+          index={0}
           double
         />
         <Graph
@@ -91,6 +92,7 @@ class DoubleGraphContainer extends Component {
           step={step}
           padding={padding}
           id={ids[1]}
+          index={1}
           double
         />
       </StyledDoubleGraphContainer>

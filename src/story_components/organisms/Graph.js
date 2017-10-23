@@ -53,6 +53,7 @@ class Graph extends Component {
     const diffEqValues = this.getInitialValues(false).map(d => d.value);
     const graphCount = this.getColors().length;
     let initialValues = this.getInitialValues().map(d => d.value);
+    console.log("DIFFEQ", diffEqValues, "INIT", initialValues);
     if (initialValues.length === 0) initialValues = [0, 0];
     return generateData(
       graphCount,
@@ -83,10 +84,10 @@ class Graph extends Component {
   }
 
   render() {
-    const { data, width, height, padding, id, double } = this.props;
+    const { data, width, height, padding, id, double, index } = this.props;
     const graphs = this.transformData();
-    const colors = this.getColors();
-
+    const sliceIdxs = graphs.length === 4 && index === 1 ? [2, 4] : [0, 2];
+    const colors = this.getColors().slice(...sliceIdxs);
     const xScale = scaleLinear()
       .domain(extent(graphs[0], d => d.x))
       .range([padding, width - padding]);
@@ -100,13 +101,15 @@ class Graph extends Component {
       .y(d => yScale(d.y))
       .curve(curveNatural);
 
-    const linePlots = graphs.map((graph, i) => (
-      <LinePlot
-        key={i}
-        d={linePath(this.truncateData(graph, yScale))}
-        stroke={colors[i]}
-      />
-    ));
+    const linePlots = graphs
+      .slice(...sliceIdxs)
+      .map((graph, i) => (
+        <LinePlot
+          key={i}
+          d={linePath(this.truncateData(graph, yScale))}
+          stroke={colors[i]}
+        />
+      ));
 
     return (
       <StyledGraph double={double}>
@@ -168,12 +171,14 @@ Graph.propTypes = {
   min: PropTypes.number.isRequired,
   max: PropTypes.number.isRequired,
   step: PropTypes.number.isRequired,
-  double: PropTypes.bool
+  double: PropTypes.bool,
+  index: PropTypes.number
+  // only used to split array of diffeq solutions in last visualization
 };
 
 Graph.defaultProps = {
   min: 0,
-  max: 15,
+  max: 20,
   step: 0.1,
   padding: 20
 };
