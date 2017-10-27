@@ -77,19 +77,48 @@ Unfortunately, you'll soon discover that in terms of stable healthy relationship
 
 ### Relationship Dynamics: Third Model
 
-Maybe the third time's the charm. 
+In our quest for a stable, healthy relationship, we keep coming up short. For all of the sliders we can adjust in our visualizations, maybe our models are still too simple.
+
+Fortunately, if you study up on the theory of differential equations, you'll eventually learn that we're not too far off. In fact, there are theorems that specify when systems like the ones we've explored have stable solutions. [Wikipedia](https://en.wikipedia.org/wiki/Matrix_differential_equation) has a primer, but watch out - terse mathematical notation abounds! 
+
+As it turns out, we can produce a larger class of stable solutions by accounting for each partner's intrinsic appeal. The terminology here is intentionally vague - if you're curious how this corresponds to actual math, you can check out the equations below. For now, all you need to know is that we can expand the model by asserting that each person in the relationship has some intrinsic, quantifiable level of appeal, and that each person in the relationship responds not only to their own feelings and their partner's feelings, but also to their partner's intrinsic appeal. Such a model is explored in more detail in a 1998 paper by Sergio Rinaldi.
+
+This brings us to our final final visualization, which will let you play around with these new values. To simplify things somewhat, I've removed the sliders that allow you to adjust each person's initial feelings. Instead, each person's initial feelings are assumed to be zero. In other words, these models assume that people who haven't met won't have feelings for each other, which seems reasonable.
+
+Here's one example of a relationship that stabilizes. What other ones can you find?
 
 <GamingLinearRelationships idx={2}/>
 
-- explain lack of initial feelings values (simplification, and stable values don't depend on initial values!)
-- why does this lead to better solutions?
-- mind the gap!
+Once again, here are the equations, if you're into that sort of thing:
+
+<Latex displayMode={true} str={`
+  \\begin{aligned}
+  A\\prime (t) &= a \\times B(t) + c \\times A(t) + e \\times B_{appeal}, \\\\
+  B\\prime (t) &= b \\times A(t) + d \\times B(t) + f \\times A_{appeal},
+  \\end{aligned}
+`}/>
+
+The sliders let us control the values of the eight parameters in the above equations. 
+
+There are some fun facts to note here: 
+
+1. In Rinaldi's initial paper, he imposes a restriction that _c_ and _d_ are negative, and the rest of the values are positive. If you follow this restriction, you should be able to find quite a few examples of stable relationships. Something to ponder: why might these assumptions make sense? 
+2. While the assumptions in the last point open the door to stable relationships, they aren't sufficient for finding stable relationships. However, given the assumption on _c_ and _d_, the condition for stability is actually pretty simple: we just need _ab_ < -_cd_.
+3. If you adjust the values of the sliders so that _ab_ is close to (but still less than) -_cd_, you may notice another interesting phenomenon: the longer it takes for people to reach their stable values, the higher those values. In other words, the slower the burn, the more satisfying the relationship over time.
+4. In a scenario where the feelings stabilize, if you increase one person's intrinsic appeal, both parties' stable values increase. However, the _other_ person's stable value increases more. Or, as Rinaldi puts it, "there is a touch of altruism in a woman (man) who tries to improve her (his) appeal."
+
+* * * 
+
+Of course, even though we can now model an even larger class of relationships, there's still room for improvement. We can generate relationships that stabilize, sure, but the trajectories of these relationships don't seem the most realistic. When in your life have you ever met someone for whom your feelings grew without bound, without any bumps in the road or challenges along the way? Unless you are my wife, the answer is probably never. 
+
+We can get some even stranger looking relationship models. But to do so, we'll need to explore an entirely different set of equations. So I'll save such an exploration for next time.
 
 Sources: 
-- my book
-- http://sprott.physics.wisc.edu/pubs/paper277.pdf
-- http://ai.stanford.edu/~rajatr/articles/SS_love_dEq.pdf
-- Strogatz Nonlinear dynamics and chaos book: https://www.amazon.com/Nonlinear-Dynamics-Chaos-Applications-Nonlinearity/dp/0738204536
+- [Power Up: Unlocking the Hidden Mathematics in Video Games](https://www.amazon.com/Power-Up-Unlocking-Hidden-Mathematics-Video/dp/0691161518/), by me!
+- [Love Affairs and Differential Equations](http://ai.stanford.edu/~rajatr/articles/SS_love_dEq.pdf), by Steven Strogatz
+- [Nonlinear Dynamics And Chaos](https://www.amazon.com/Nonlinear-Dynamics-Chaos-Applications-Nonlinearity/dp/0738204536), by Steven Strogatz
+- [Introduction to Matrix Differential Equations](https://en.wikipedia.org/wiki/Matrix_differential_equation)
+- [Love Dynamics: The Case of Linear Couples](http://www.sciencedirect.com/science/article/pii/S0096300397100819), by Sergio Rinaldi
 
 
 

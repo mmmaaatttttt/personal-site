@@ -101,22 +101,6 @@ const diffEq3 = (b, a, c, d, f, e) => (x, y) => [
   e * y[3] + f * y[2] * (1 - Math.abs(y[2]))
 ];
 
-// initial data from paper
-// b => -7
-// a => 2
-// c => 4
-// d => -3
-// e => -1
-// f = > 3
-
-// initial data from python code
-// b => -4
-// a => 1.1
-// c => 3
-// d => -2
-// f => 1.5
-// e => -1
-
 const visualizationData = [
   {
     initialData: graph1Data.map((d, i) => {

@@ -41,7 +41,7 @@ const SliderContainer = ({ data, handleValueChange, double }) => {
         handleValueChange={handleValueChange}
         title={d.title}
         color={d.color}
-        double
+        double={double}
       />
     ));
   return (
