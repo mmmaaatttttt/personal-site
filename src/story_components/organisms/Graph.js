@@ -53,7 +53,6 @@ class Graph extends Component {
     const diffEqValues = this.getInitialValues(false).map(d => d.value);
     const graphCount = this.getColors().length;
     let initialValues = this.getInitialValues().map(d => d.value);
-    console.log("DIFFEQ", diffEqValues, "INIT", initialValues);
     if (initialValues.length === 0) initialValues = [0, 0];
     return generateData(
       graphCount,

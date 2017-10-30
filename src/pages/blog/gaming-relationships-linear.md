@@ -15,6 +15,8 @@ This is very similar to the way the friendship model works in games like _The Si
 
 Mathematically, though, these models don't do a whole lot for me. There's not much here beyond simple arithmetic. Positive interactions add a certain number of points, negative interactions subtract a certain number of points.
 
+* * *
+
 ### Relationship Dynamics: First Model 
 
 Things get more interesting when you start to think about one person's feelings changing in response to another person's feelings. Steven Strogatz wrote a [one-page treatment](http://ai.stanford.edu/~rajatr/articles/SS_love_dEq.pdf) of this idea in 1988. He begins by imagining two people whose feelings for one another depend entirely on the other person's feelings. In other words, the speed with which person A's feelings for person B are changing at any given point in time depend entirely on how person B is feeling, and vice versa for person A's feelings.
@@ -25,6 +27,8 @@ Think about this conceptually for a bit. Suppose that person A's feelings change
 
 For those of you who prefer equations to visualizations, here's what we're visualizing. If _A(t)_ denotes person A's feelings at time _t_, and _B(t)_ denotes person B's feelings at time _t_, then these graphs are determined by:
  
+<Sidebar>Fun fact: if you've studied differential equations, you can solve these equations in terms of trigonometric or exponential functions that you learned about in high school.</Sidebar>
+
 <Latex displayMode={true} str={`
   \\begin{aligned}
   A\\prime (t) &= a \\times B(t), \\\\
@@ -43,6 +47,8 @@ If you play around with this visualization a bit, you may reach a somewhat unset
 
 Put simply, this model of relationships isn't very optimistic. There's no way to model a relationship that naturally grows over time and stabilizes at some reasonable value.
 
+* * *
+
 ### Relationship Dynamics: Second Model 
 
 If we want to be able to model a larger class of relationships, we'll need to add more complexity to the model. In the paper I mentioned above, Strogatz offers one possible way to add complexity. Rather than having each person's feelings depend only on the other person's, we should allow them to be a bit more self reflective. In other words, we should allow peoples' feelings to change based on the strength of _their_ current feelings, not just the feelings of their partner.
@@ -54,6 +60,8 @@ Here's a modified visualization for you to play around with:
 <GamingLinearRelationships idx={1}/>
 
 As you might have guessed, more sliders means more parameters in our model. In the language of calculus, our model now looks like this: 
+
+<Sidebar direction="right">These equations can also be solved in terms of functions you may have encountered in a high school math class!</Sidebar>
 
 <Latex displayMode={true} str={`
   \\begin{aligned}
@@ -74,6 +82,8 @@ In fact, all of these options for values yield four different archetypes, depend
 With these archetypes in mind, play around with the above visualization and see what sorts of patterns emerge. What happens when two narcissists get together? What abou an eager beaver and a hermit?
 
 Unfortunately, you'll soon discover that in terms of stable healthy relationships, this model doesn't really do any better than the previous one. In fact, in some sense it's even more pessimistic: it can lead to some really horrendous looking relationships, including ones that both oscillate and grow exponentially! 
+
+* * *
 
 ### Relationship Dynamics: Third Model
 
@@ -107,7 +117,7 @@ There are some fun facts to note here:
 3. If you adjust the values of the sliders so that _ab_ is close to (but still less than) -_cd_, you may notice another interesting phenomenon: the longer it takes for people to reach their stable values, the higher those values. In other words, the slower the burn, the more satisfying the relationship over time.
 4. In a scenario where the feelings stabilize, if you increase one person's intrinsic appeal, both parties' stable values increase. However, the _other_ person's stable value increases more. Or, as Rinaldi puts it, "there is a touch of altruism in a woman (man) who tries to improve her (his) appeal."
 
-* * * 
+* * *
 
 Of course, even though we can now model an even larger class of relationships, there's still room for improvement. We can generate relationships that stabilize, sure, but the trajectories of these relationships don't seem the most realistic. When in your life have you ever met someone for whom your feelings grew without bound, without any bumps in the road or challenges along the way? Unless you are my wife, the answer is probably never. 
 

@@ -4,10 +4,11 @@ import styled from "styled-components";
 import { rhythm } from "../utils/typography";
 import "katex/dist/katex.min.css";
 import "font-awesome/css/font-awesome.min.css";
-
+import { sizes } from "../utils/styles";
+console.log("SIZE", sizes.maxWidthContent);
 const Div = styled.div`
   margin: 0 auto;
-  max-width: 800px;
+  max-width: ${sizes.maxWidthContent};
   padding: ${rhythm(1.5)};
   padding-top: ${rhythm(1.5)};
 `;

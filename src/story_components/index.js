@@ -4,4 +4,5 @@ export {
 export {
   default as GamingNonlinearRelationships
 } from "./root_components/GamingNonlinearRelationships";
+export { default as Sidebar } from "./atoms/Sidebar";
 export { default as Latex } from "./atoms/Latex";
