@@ -37,7 +37,7 @@ const Navbar = ({ children, title }) => (
     <StyledLinkContainer>
       <Link to="/about">About</Link>
       <span>|</span>
-      <Link to="/about">Stories</Link>
+      <Link to="/stories">Stories</Link>
     </StyledLinkContainer>
   </StyledNav>
 );
