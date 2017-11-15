@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import Link from "gatsby-link";
 import { rhythm } from "../utils/typography";
-import {emojify} from 'react-emojione';
+import { emojify } from 'react-emojione';
 
 const H1 = styled.h1`
   display: inline-block;
