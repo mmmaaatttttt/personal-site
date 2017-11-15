@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import Link from "gatsby-link";
 import styled from "styled-components";
 import { rhythm } from "../utils/typography";
+import { navStyles } from "./mixins";
 
 const StyledNav = styled.nav`
   display: flex;
@@ -10,9 +11,8 @@ const StyledNav = styled.nav`
   align-items: center;
   padding: ${rhythm(0.5)};
   flex-direction: column;
-  background-color: #f9f9f9;
   border-bottom: 1px solid #bbb;
-  box-shadow: 0 1px 12px 3px #e2e2e2;
+  ${navStyles}
 `;
 
 const StyledHeader = styled.h3`
