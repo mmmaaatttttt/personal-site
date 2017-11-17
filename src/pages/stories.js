@@ -4,11 +4,6 @@ import Link from "gatsby-link";
 import { rhythm } from "../utils/typography";
 import { emojify } from 'react-emojione';
 
-const H1 = styled.h1`
-  display: inline-block;
-  border-bottom: 1px solid;
-`;
-
 const H3 = styled.h3`margin-bottom: ${rhythm(1 / 4)};`;
 
 const Span = styled.span`color: #bbb;`;
@@ -20,7 +15,6 @@ const StyledLink = styled(Link)`
 
 export default ({ data }) => (
   <div>
-    <H1>Amazing Pandas Eating Things</H1>
     <div>
         {emojify('Easy! :wave: 😸 :D  ^__^')}
     </div>

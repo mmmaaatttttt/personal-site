@@ -1,7 +1,6 @@
 import React from "react";
 import styled, { keyframes } from "styled-components";
 import Link from "gatsby-link";
-import { rhythm } from "../utils/typography";
 import { emojify } from 'react-emojione';
 
 const wave = keyframes`
