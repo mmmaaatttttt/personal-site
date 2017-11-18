@@ -1,6 +1,8 @@
 ---
 title: "Gaming Relationships: Linear Approaches"
 date: "2017-08-21"
+featured_image: "murray.jpg"
+caption: "The mathematical ballad of love and hate."
 ---
 
 In my book, _[Power Up: Unlocking the Hidden Mathematics in Video Games](https://www.amazon.com/Power-Up-Unlocking-Hidden-Mathematics-Video/dp/0691161518/),_ I write about mathematical models of relationships inspired by games like _The Sims_ and _Skyrim_. I find the models really fun to explore, but there's only so much you can do on the printed page. Here I'd like to provide an overview of what I discuss in the book, along with some more interactive explorations of the models that come up.

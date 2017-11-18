@@ -5,6 +5,11 @@ import styled from "styled-components";
 import { rhythm } from "../utils/typography";
 import COLORS from "../utils/styles";
 import media from "../utils/media";
+import { sizes } from "../utils/styles";
+
+const StyledAboutWrapper = styled.div`
+  max-width: ${sizes.maxWidthContent};
+`
 
 const RightP = styled.p`
   text-align: right;
@@ -46,7 +51,7 @@ const StyledHeadshot = styled.img`
 `
 
 const About = ({data}) => (
-  <div>
+  <StyledAboutWrapper>
     <h1>About {data.site.siteMetadata.title}</h1>
     <StyledHeadshotWrapper>
       <StyledHeadshot src={matt} alt="Matt's face"/>
@@ -57,7 +62,7 @@ const About = ({data}) => (
     <p>Even though it's a cesspool, the best way to reach me if you'd like to chat more is probably <a href="https://www.twitter.com/mmmaaatttttt">Twitter</a>. The only bigger cesspool I can think of is the comments section on any website, so for that reason, I don't enable comments on anything I write here.</p>
     <p>Take a look around, and let me know what you think!</p>
     <RightP><span>{emojify(':heart:')}</span> Matt</RightP>
-  </div>
+  </StyledAboutWrapper>
 );
 
 export default About; 

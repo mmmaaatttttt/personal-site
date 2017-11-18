@@ -36,7 +36,7 @@ const Home = () => (
   <div>
     <h1>Hi. I'm Matt.</h1>
     <StyledEmoji>
-      {emojify(':raised_hand_with_fingers_splayed:')}
+      {emojify(':raised_hand_with_fingers_splayed:')} 
     </StyledEmoji>
     <p>Use the nav bar to explore the site. You'll figure it out. I'm sure of it.</p>
   </div>

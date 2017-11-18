@@ -1,5 +1,7 @@
 const COLORS = {
-  LINK: "#ff5700"
+  LINK: "#ff5700",
+  NAV: "#f9f9f9",
+  NAV_BORDER: "#bbb"
 };
 
 const sizes = {

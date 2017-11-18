@@ -5,13 +5,14 @@ import styled from "styled-components";
 import { rhythm } from "../utils/typography";
 import { navStyles } from "./mixins";
 import media from "../utils/media";
+import COLORS from "../utils/styles";
 
 const StyledFooter = styled.footer`
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: ${rhythm(0.5)} ${rhythm(1)};
-  border-top: 1px solid #bbb;
+  border-top: 1px solid ${COLORS.NAV_BORDER};
   ${navStyles}
 `;
 

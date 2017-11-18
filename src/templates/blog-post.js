@@ -1,14 +1,23 @@
 import React from "react";
 import stripFrontMatterAndCompile from "../utils/marksyCompiler";
+import styled from "styled-components";
+import { sizes } from "../utils/styles";
+import images from "../utils/images";
+
+const StyledBlogWrapper = styled.div`
+  max-width: ${sizes.maxWidthContent}; 
+`
+
 
 export default ({ data }) => {
   const post = data.markdownRemark;
   return (
-    <div>
+    <StyledBlogWrapper>
+      <img src={images[post.frontmatter.featured_image]} alt=""/>
       <h1>{post.frontmatter.title}</h1>
       <h2>{post.frontmatter.date}</h2>
       <div>{stripFrontMatterAndCompile(post.internal.content)}</div>
-    </div>
+    </StyledBlogWrapper>
   );
 };
 
@@ -22,6 +31,7 @@ export const query = graphql`
       frontmatter {
         title
         date
+        featured_image
       }
     }
   }

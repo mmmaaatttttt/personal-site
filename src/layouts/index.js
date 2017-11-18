@@ -5,11 +5,9 @@ import Footer from "./Footer";
 import { rhythm } from "../utils/typography";
 import "katex/dist/katex.min.css";
 import "font-awesome/css/font-awesome.min.css";
-import { sizes } from "../utils/styles";
 
 const StyledContentArea = styled.div`
   margin: 0 auto;
-  max-width: ${sizes.maxWidthContent};
   padding: ${rhythm(1.5)};
   padding-top: ${rhythm(1.5)};
   flex: 1;
