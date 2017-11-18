@@ -28,6 +28,7 @@ const wave = keyframes`
 const StyledEmoji = styled.div`
   & span {
     animation: ${wave} 2s linear 2;
+    font-size: 40rem;
   }
 `;
 
@@ -37,6 +38,7 @@ const Home = () => (
     <StyledEmoji>
       {emojify(':raised_hand_with_fingers_splayed:')}
     </StyledEmoji>
+    <p>Use the nav bar to explore the site. You'll figure it out. I'm sure of it.</p>
   </div>
 );
 

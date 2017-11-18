@@ -11,7 +11,7 @@ const RightP = styled.p`
 `
 
 const StyledHeadshotWrapper = styled.div`
-  position: fixed;
+  position: absolute;
   width: ${rhythm(25)};
   height: ${rhythm(25)};
   bottom: 0;
