@@ -2,14 +2,14 @@
 title: "Gaming Relationships: Linear Approaches"
 date: "2017-11-22"
 featured_image: "murray.jpg"
-caption: "The mathematical ballad of love and hate."
+caption: "A mathematical ballad of love and hate."
 ---
 
 In my book, _[Power Up: Unlocking the Hidden Mathematics in Video Games](https://www.amazon.com/Power-Up-Unlocking-Hidden-Mathematics-Video/dp/0691161518/),_ I write about mathematical models of relationships inspired by games like _The Sims_ and _Skyrim_. I find the models really fun to explore, but there's only so much you can do on the printed page. Here I'd like to provide an overview of what I discuss in the book, along with some more interactive explorations of the models that come up.
 
 The idea of modeling relationships mathematically certainly didn't originate with games. Relationship dynamics have been part of academic research for some time. They've entered popular culture through other mediums, too. One of my favorite examples is this clip from [Flight of the Conchords](https://en.wikipedia.org/wiki/Flight_of_the_Conchords), in which one of the characters, Murray, uses axes to describe his model of friendship. 
 
-<iframe width="560" height="420" src="https://www.youtube.com/embed/Vg-zC1xXK3E" frameBorder="0" allowFullScreen key="vid1"></iframe>
+<ResponsiveIFrame src="https://www.youtube.com/embed/Vg-zC1xXK3E" heightOverWidth={42/56} />
 
 As you can see, Murray's model of friendship is one that consists of a few different states, such as friends, work mates, and enemies. During the course of the episode, he updates his friendship graph in response to the actions of the show's main characters, Brett and Jemaine.
 
