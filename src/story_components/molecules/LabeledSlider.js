@@ -12,12 +12,13 @@ const orderFromId = id => {
   return nums[0] + 2 * nums[1] + 1;
 };
 
+const StyledIconWrapper = styled.p`
+  margin: 0 ${rhythm(0.5)};
+  line-height: 1;
+`;
+
 const StyledSliderArea = styled.div`
   text-align: center;
-
-  p {
-    margin: 0 ${rhythm(0.5)};
-  }
 
   section {
     display: flex;
@@ -31,6 +32,12 @@ const StyledSliderArea = styled.div`
       order: ${props => orderFromId(props.id)};
     `};
 `;
+
+const StyledTitle = styled.p`
+  margin-bottom: ${rhythm(0.25)};
+  font-size: 80%;
+  line-height: 1;
+`
 
 const LabeledSlider = ({
   id,
@@ -47,11 +54,11 @@ const LabeledSlider = ({
   const fraction = (value - min) / (max - min);
   return (
     <StyledSliderArea double={double} id={id}>
-      <p>{title}</p>
+      <StyledTitle>{title}</StyledTitle>
       <section>
-        <p>
+        <StyledIconWrapper>
           <Icon name="minus" color={color} opacity={1 - fraction} />
-        </p>
+        </StyledIconWrapper>
         <StyledSlider
           min={min}
           max={max}
@@ -70,9 +77,9 @@ const LabeledSlider = ({
             padding={sliderPadding}
           />
         </StyledSlider>
-        <p>
+        <StyledIconWrapper>
           <Icon name="plus" color={color} opacity={fraction} />
-        </p>
+        </StyledIconWrapper>
       </section>
     </StyledSliderArea>
   );

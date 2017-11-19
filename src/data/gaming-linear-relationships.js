@@ -112,7 +112,7 @@ const visualizationData = [
   {
     initialData: graph1Data,
     width: 800,
-    height: 600,
+    height: 500,
     smallestY: 5,
     largestY: 100,
     diffEq: diffEq1,
@@ -121,7 +121,7 @@ const visualizationData = [
   {
     initialData: graph2Data,
     width: 800,
-    height: 800,
+    height: 600,
     smallestY: 5,
     largestY: 200,
     diffEq: diffEq2,
@@ -131,7 +131,7 @@ const visualizationData = [
   {
     initialData: graph3Data,
     width: 800,
-    height: 1000,
+    height: 650,
     smallestY: 5,
     largestY: 200,
     diffEq: diffEq3,

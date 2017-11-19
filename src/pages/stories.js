@@ -66,7 +66,7 @@ const StyledStory = styled.div`
   border-bottom: 1px solid ${COLORS.NAV_BORDER};
 `;
 
-const Story = ({title, date, image, caption, slug}) => (
+const Story = ({title, date, image, caption, slug, timeToRead}) => (
   <StyledStory className="animated bounceInRight">
     <StyledLink to={slug}>
       <StyledImageWrapper>
@@ -74,7 +74,7 @@ const Story = ({title, date, image, caption, slug}) => (
       </StyledImageWrapper>
       <StyledExcerptArea>
         <StyledTitle>{title}</StyledTitle>
-        <StyledDate>{date}</StyledDate>
+        <StyledDate>{date} - {timeToRead} minute read</StyledDate>
         <p>{caption}</p>
       </StyledExcerptArea>
     </StyledLink>
@@ -92,6 +92,7 @@ export default ({ data }) => (
         image={images[node.frontmatter.featured_image]}
         caption={node.frontmatter.caption}
         slug={node.fields.slug}
+        timeToRead={node.timeToRead}
       />
     ))}
   </div>
@@ -112,6 +113,7 @@ export const query = graphql`
           fields {
             slug
           }
+          timeToRead
         }
       }
     }

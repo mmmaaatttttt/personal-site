@@ -4,11 +4,13 @@ import SliderContainer from "../molecules/SliderContainer";
 import PropTypes from "prop-types";
 import styled from "styled-components";
 import media from "../../utils/media";
+import { rhythm } from "../../utils/typography";
 
 const StyledGraphContainer = styled.div`
   width: 150%;
   margin-left: -25%;
   display: flex;
+  margin-bottom: ${rhythm(1)};
 
   ${media.medium`
     width: 130%;
