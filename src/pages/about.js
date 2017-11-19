@@ -1,6 +1,5 @@
 import React from "react";
 import matt from "./images/matt.jpg";
-import { emojify } from "react-emojione";
 import styled from "styled-components";
 import { rhythm } from "../utils/typography";
 import COLORS from "../utils/styles";
@@ -63,7 +62,7 @@ const About = ({data}) => (
     <p>A little bit about me: I received my Ph.D. in mathematics from UCLA in 2012. I love my family, problem solving, teaching, learning, and ice cream.</p>
     <p>Even though it's a cesspool, the best way to reach me if you'd like to chat more is probably <a href="https://www.twitter.com/mmmaaatttttt">Twitter</a>. The only bigger cesspool I can think of is the comments section on any website, so for that reason, I don't enable comments on anything I write here.</p>
     <p>Take a look around, and let me know what you think!</p>
-    <RightP>{emojify(':heart:')} Matt</RightP>
+    <RightP>❤️ Matt</RightP>
   </StyledAboutWrapper>
 );
 
