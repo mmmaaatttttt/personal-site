@@ -12,6 +12,7 @@ const StyledPostWrapper = styled.div`
 const StyledTextWrapper = styled.div`
   max-width: ${sizes.maxWidthContent};
   margin: 0 auto;
+  padding: ${rhythm(1)};
 `
 
 const StyledMainImage = styled.div`
@@ -24,7 +25,6 @@ const StyledMainImage = styled.div`
   height: 0;
   padding-top: 56.25%;
   margin-top: -${rhythm(1.5)};
-  margin-bottom: ${rhythm(1)};
 `
 
 const StyledTitleWrapper = styled.div`
