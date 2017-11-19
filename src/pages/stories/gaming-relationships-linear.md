@@ -1,6 +1,6 @@
 ---
 title: "Gaming Relationships: Linear Approaches"
-date: "2017-08-21"
+date: "2017-11-22"
 featured_image: "murray.jpg"
 caption: "The mathematical ballad of love and hate."
 ---

@@ -1,5 +1,5 @@
 import React from "react";
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
 import Link from "gatsby-link";
 import { rhythm } from "../utils/typography";
 import images from "../utils/images";
@@ -63,12 +63,11 @@ const StyledImageWrapper = styled.div`
 `;
 
 const StyledStory = styled.div`
-  margin: 0 auto;
   border-bottom: 1px solid ${COLORS.NAV_BORDER};
 `;
 
 const Story = ({title, date, image, caption, slug}) => (
-  <StyledStory>
+  <StyledStory className="animated bounceInRight">
     <StyledLink to={slug}>
       <StyledImageWrapper>
         <img src={image}/>

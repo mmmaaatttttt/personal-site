@@ -13,6 +13,8 @@ const StyledFooter = styled.footer`
   align-items: center;
   padding: ${rhythm(0.5)} ${rhythm(1)};
   border-top: 1px solid ${COLORS.NAV_BORDER};
+  position: relative;
+  z-index: 1;
   ${navStyles}
 `;
 

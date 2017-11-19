@@ -7,10 +7,11 @@ import "katex/dist/katex.min.css";
 import "font-awesome/css/font-awesome.min.css";
 
 const StyledContentArea = styled.div`
-  margin: 0 auto;
-  padding: ${rhythm(1.5)};
+  width: 100%;
+  justify-content: center;
   padding-top: ${rhythm(1.5)};
   flex: 1;
+  display: flex;
 `;
 
 const StyledPageWrapper = styled.div`
@@ -19,9 +20,12 @@ const StyledPageWrapper = styled.div`
   flex-direction: column;
 `
 
-export default ({ children, data }) => (
+export default ({ children, data, location }) => (
   <StyledPageWrapper>
-    <Navbar title={data.site.siteMetadata.title} />
+    <Navbar
+      title={data.site.siteMetadata.title}
+      hide={/\/stories\/.+/.test(location.pathname)}
+    />
     <StyledContentArea>{children()}</StyledContentArea>
     <Footer />
   </StyledPageWrapper>

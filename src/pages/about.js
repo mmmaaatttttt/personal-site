@@ -5,50 +5,52 @@ import styled from "styled-components";
 import { rhythm } from "../utils/typography";
 import COLORS from "../utils/styles";
 import media from "../utils/media";
-import { sizes } from "../utils/styles";
+import { sizes, fadeIn } from "../utils/styles";
 
 const StyledAboutWrapper = styled.div`
   max-width: ${sizes.maxWidthContent};
-`
+  animation: ${fadeIn} 2s 0.5s forwards;
+  opacity: 0;
+`;
 
 const RightP = styled.p`
   text-align: right;
-`
+`;
 
 const StyledHeadshotWrapper = styled.div`
-  position: absolute;
-  width: ${rhythm(25)};
-  height: ${rhythm(25)};
+  position: fixed;
+  width: ${rhythm(16)};
+  height: ${rhythm(16)};
   bottom: 0;
   right: 0;
   overflow: hidden;
   z-index: -1;
 
-  ${media.medium`
+  ${media.small`
     position: static;
     width: 100%;
     height: auto;
     text-align: center;
   `};
-`
+`;
 
 const StyledHeadshot = styled.img`
   position: absolute;
   border-radius: 50%;
   opacity: 0.3;
   border: ${rhythm(0.25)} solid ${COLORS.LINK};
-  top: ${rhythm(5)};
-  right -${rhythm(5)};
+  top: ${rhythm(3)};
+  right -${rhythm(2)};
   margin: 0 auto 1.44rem;
   display: block;
 
-  ${media.medium`
+  ${media.small`
     position: static;
     opacity: 1;
     width: 50%;
     border-width: ${rhythm(0.1)};
   `};
-`
+`;
 
 const About = ({data}) => (
   <StyledAboutWrapper>
@@ -61,7 +63,7 @@ const About = ({data}) => (
     <p>A little bit about me: I received my Ph.D. in mathematics from UCLA in 2012. I love my family, problem solving, teaching, learning, and ice cream.</p>
     <p>Even though it's a cesspool, the best way to reach me if you'd like to chat more is probably <a href="https://www.twitter.com/mmmaaatttttt">Twitter</a>. The only bigger cesspool I can think of is the comments section on any website, so for that reason, I don't enable comments on anything I write here.</p>
     <p>Take a look around, and let me know what you think!</p>
-    <RightP><span>{emojify(':heart:')}</span> Matt</RightP>
+    <RightP>{emojify(':heart:')} Matt</RightP>
   </StyledAboutWrapper>
 );
 

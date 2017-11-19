@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import Link from "gatsby-link";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import { rhythm } from "../utils/typography";
 import { navStyles } from "./mixins";
 import COLORS from "../utils/styles";
@@ -14,6 +14,23 @@ const StyledNav = styled.nav`
   flex-direction: column;
   border-bottom: 1px solid ${COLORS.NAV_BORDER};
   ${navStyles}
+
+  ${props => props.hide && css`
+    position: absolute;
+    z-index: 1;
+    top: 0;
+    opacity: 1;
+    width: 100%;
+    box-shadow: none;
+    background-color: transparent;
+    border-bottom: none;
+    color: #fff;
+
+    a,
+    a:hover {
+      color: #fff;
+    }
+  `}
 `;
 
 const StyledHeader = styled.h3`
@@ -30,8 +47,8 @@ const StyledLinkContainer = styled.div`
   }
 `;
 
-const Navbar = ({ children, title }) => (
-  <StyledNav>
+const Navbar = ({ children, title, hide }) => (
+  <StyledNav hide={hide}>
     <Link to="/">
       <StyledHeader>{title}</StyledHeader>
     </Link>
@@ -44,7 +61,8 @@ const Navbar = ({ children, title }) => (
 );
 
 Navbar.propTypes = {
-  title: PropTypes.string.isRequired
+  title: PropTypes.string.isRequired,
+  hide: PropTypes.bool.isRequired
 };
 
 export default Navbar;

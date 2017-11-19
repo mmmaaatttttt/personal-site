@@ -1,45 +1,36 @@
 import React from "react";
-import styled, { keyframes } from "styled-components";
-import Link from "gatsby-link";
-import { emojify } from 'react-emojione';
+import styled from "styled-components";
+import { fadeIn } from "../utils/styles";
 
-const wave = keyframes`
-  0% {
-    transform: rotate(0deg);
-  }
-
-  25% {
-    transform: rotate(-20deg);
-  }
-
-  50% {
-    transform: rotate(0deg);
-  }
-
-  75% {
-    transform: rotate(20deg);
-  }
-
-  100% {
-    transform: rotate(0deg);
-  }
+const StyledHome = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+  animation: ${fadeIn} 2s 0.5s forwards;
+  opacity: 0;
 `;
 
-const StyledEmoji = styled.div`
-  & span {
-    animation: ${wave} 2s linear 2;
-    font-size: 40rem;
-  }
+const StyledH1 = styled.h1`
+  font-size: 500%;
 `;
+
+const StyledH2 = styled.h2`
+  animation: ${fadeIn} 1s 1.5s forwards;
+  opacity: 0;
+`;
+
+const StyledP = styled.p`
+  animation: ${fadeIn} 1s 2.5s forwards;
+  opacity: 0;
+`
 
 const Home = () => (
-  <div>
-    <h1>Hi. I'm Matt.</h1>
-    <StyledEmoji>
-      {emojify(':raised_hand_with_fingers_splayed:')} 
-    </StyledEmoji>
-    <p>Use the nav bar to explore the site. You'll figure it out. I'm sure of it.</p>
-  </div>
+  <StyledHome>
+    <StyledH1>Hi!</StyledH1>
+    <StyledH2>I'm Matt. 👋</StyledH2>
+    <StyledP>Use the nav bar to explore the site. You'll figure it out.</StyledP>
+  </StyledHome>
 );
 
 export default Home;
