@@ -6,6 +6,7 @@ import { generateData } from "../../utils/mathHelpers";
 import PropTypes from "prop-types";
 import Axis from "../molecules/Axis";
 import LinePlot from "../atoms/LinePlot";
+import StyledAxisLabel from "../atoms/StyledAxisLabel";
 import styled, { css } from "styled-components";
 import media from "../../utils/media";
 
@@ -83,7 +84,17 @@ class Graph extends Component {
   }
 
   render() {
-    const { data, width, height, padding, id, double, index } = this.props;
+    const {
+      data,
+      width,
+      height,
+      padding,
+      id,
+      double,
+      index,
+      xLabel,
+      yLabel
+    } = this.props;
     const graphs = this.transformData();
     const sliceIdxs = graphs.length === 4 && index === 1 ? [2, 4] : [0, 2];
     const colors = this.getColors().slice(...sliceIdxs);
@@ -122,10 +133,10 @@ class Graph extends Component {
           <defs>
             <clipPath id={`clip-path-${id}`}>
               <rect
-                x={padding}
+                x={0}
                 y={padding}
                 height={height - 2 * padding}
-                width={width - 2 * padding}
+                width={width - padding}
               />
             </clipPath>
           </defs>
@@ -144,6 +155,17 @@ class Graph extends Component {
               tickShift={height / 2 - padding}
             />
             {linePlots}
+            <StyledAxisLabel x={width} y={height / 2} dy={30} dx={-60}>
+              {xLabel}
+            </StyledAxisLabel>
+            <StyledAxisLabel
+              x={10}
+              y={height / 2}
+              transform={`rotate(-90 10,${height / 2})`}
+              dy={10}
+            >
+              {yLabel}
+            </StyledAxisLabel>
           </g>
         </svg>
       </StyledGraph>
@@ -179,7 +201,7 @@ Graph.defaultProps = {
   min: 0,
   max: 20,
   step: 0.1,
-  padding: 20
+  padding: 30
 };
 
 export default Graph;

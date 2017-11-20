@@ -116,7 +116,9 @@ const visualizationData = [
     smallestY: 5,
     largestY: 100,
     diffEq: diffEq1,
-    id: "vis1"
+    id: "vis1",
+    xLabel: "Time",
+    yLabel: "Feelings"
   },
   {
     initialData: graph2Data,
@@ -126,7 +128,9 @@ const visualizationData = [
     largestY: 200,
     diffEq: diffEq2,
     step: 0.02,
-    id: "vis2"
+    id: "vis2",
+    xLabel: "Time",
+    yLabel: "Feelings"
   },
   {
     initialData: graph3Data,
@@ -135,7 +139,9 @@ const visualizationData = [
     smallestY: 5,
     largestY: 200,
     diffEq: diffEq3,
-    id: "vis3"
+    id: "vis3",
+    xLabel: "Time",
+    yLabel: "Feelings"
   },
   {
     initialData: graph2Data,
@@ -145,7 +151,9 @@ const visualizationData = [
     largestY: 200,
     diffEq: diffEq4,
     step: 0.02,
-    id: "vis2"
+    id: "vis2",
+    xLabel: "Time",
+    yLabel: "Feelings"
   }
 ];
 

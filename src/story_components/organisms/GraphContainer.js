@@ -64,7 +64,9 @@ class GraphContainer extends Component {
       max,
       step,
       padding,
-      id
+      id,
+      xLabel,
+      yLabel
     } = this.props.data;
     const { values } = this.state;
     const data = initialData.map(d => {
@@ -92,6 +94,8 @@ class GraphContainer extends Component {
             step={step}
             padding={padding}
             id={id}
+            xLabel={xLabel}
+            yLabel={yLabel}
           />
         </StyledGraphContainer>
         <StyledCaptionContainer>
@@ -123,7 +127,9 @@ GraphContainer.propTypes = {
     min: PropTypes.number,
     max: PropTypes.number,
     step: PropTypes.number,
-    id: PropTypes.string.isRequired
+    id: PropTypes.string.isRequired,
+    xLabel: PropTypes.string.isRequired,
+    yLabel: PropTypes.string.isRequired,
   }).isRequired,
   caption: PropTypes.string.isRequired
 };
