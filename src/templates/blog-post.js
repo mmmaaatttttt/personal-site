@@ -4,6 +4,7 @@ import styled from "styled-components";
 import { sizes, fadeIn } from "../utils/styles";
 import images from "../utils/images";
 import { rhythm } from "../utils/typography";
+import { Share } from "react-twitter-widgets";
 
 const StyledPostWrapper = styled.div`
   width: 100%;
@@ -47,7 +48,7 @@ const StyledTitleWrapper = styled.div`
       1px 1px 1px #000;
 `
 
-export default ({ data }) => {
+export default ({ data, location }) => {
   const post = data.markdownRemark;
   return (
     <StyledPostWrapper>
@@ -59,6 +60,13 @@ export default ({ data }) => {
       </StyledMainImage>
       <StyledTextWrapper>
         {stripFrontMatterAndCompile(post.internal.content)}
+        <Share
+          url={window.location.href}
+          options={{
+            size: "large",
+            via: "mmmaaatttttt",
+            text: post.frontmatter.title
+          }} />
       </StyledTextWrapper>
     </StyledPostWrapper>
   );
@@ -75,6 +83,7 @@ export const query = graphql`
         title
         date(formatString: "MMMM DD, YYYY")
         featured_image
+        caption
       }
     }
   }
