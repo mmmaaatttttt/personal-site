@@ -6,11 +6,11 @@ import styled from "styled-components";
 import media from "../../utils/media";
 import { rhythm } from "../../utils/typography";
 
-const StyledGraphContainer = styled.div`
+const StyledVisualizationContainer = styled.div`
   width: 150%;
   margin-left: -25%;
   display: flex;
-  margin-bottom: ${rhythm(1)};
+  flex-direction: column;
 
   ${media.medium`
     width: 130%;
@@ -20,6 +20,17 @@ const StyledGraphContainer = styled.div`
     width: 100%;
     margin-left: 0;
   `};
+`;
+
+const StyledGraphContainer = styled.div`
+  display: flex;
+`;
+
+const StyledCaptionContainer = styled.p`
+  text-align: center;
+  font-weight: 700;
+  font-size: 85%;
+  margin-top: ${rhythm(0.15)};
 `;
 
 class GraphContainer extends Component {
@@ -63,25 +74,30 @@ class GraphContainer extends Component {
       return newObj;
     });
     return (
-      <StyledGraphContainer>
-        <SliderContainer
-          handleValueChange={this.handleValueChange}
-          data={data}
-        />
-        <Graph
-          data={data}
-          width={width}
-          height={height}
-          smallestY={smallestY}
-          largestY={largestY}
-          diffEq={diffEq}
-          min={min}
-          max={max}
-          step={step}
-          padding={padding}
-          id={id}
-        />
-      </StyledGraphContainer>
+      <StyledVisualizationContainer>
+        <StyledGraphContainer>
+          <SliderContainer
+            handleValueChange={this.handleValueChange}
+            data={data}
+          />
+          <Graph
+            data={data}
+            width={width}
+            height={height}
+            smallestY={smallestY}
+            largestY={largestY}
+            diffEq={diffEq}
+            min={min}
+            max={max}
+            step={step}
+            padding={padding}
+            id={id}
+          />
+        </StyledGraphContainer>
+        <StyledCaptionContainer>
+          {this.props.caption}
+        </StyledCaptionContainer>
+      </StyledVisualizationContainer>
     );
   }
 }
@@ -108,7 +124,8 @@ GraphContainer.propTypes = {
     max: PropTypes.number,
     step: PropTypes.number,
     id: PropTypes.string.isRequired
-  }).isRequired
+  }).isRequired,
+  caption: PropTypes.string.isRequired
 };
 
 export default GraphContainer;
