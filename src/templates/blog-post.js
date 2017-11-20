@@ -61,7 +61,7 @@ export default ({ data, location }) => {
       <StyledTextWrapper>
         {stripFrontMatterAndCompile(post.internal.content)}
         <Share
-          url={window.location.href}
+          url={`${process.env.GATSBY_BASE_URL}${location.pathname}`}
           options={{
             size: "large",
             via: "mmmaaatttttt",
