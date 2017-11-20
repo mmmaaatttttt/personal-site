@@ -15,15 +15,20 @@ const StyledVisualizationContainer = styled.div`
   ${media.medium`
     width: 130%;
     margin-left: -15%;
-  `} ${media.small`
-    display: block;
+  `}
+
+  ${media.small`
     width: 100%;
     margin-left: 0;
-  `};
+  `}
 `;
 
 const StyledGraphContainer = styled.div`
   display: flex;
+
+  ${media.small`
+    flex-direction: column;
+  `};
 `;
 
 const StyledCaptionContainer = styled.p`
