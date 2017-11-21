@@ -39,7 +39,7 @@ const StyledTitleWrapper = styled.div`
   align-items: center;
   justify-content: center;
   opacity: 0;
-  animation: ${fadeIn} 2s 0.5s forwards;
+  animation: ${fadeIn} 1.5s 0.5s forwards;
   color: white;
   text-shadow: 3px 3px 1px #000,
      -1px -1px 1px #000,
