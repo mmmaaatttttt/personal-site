@@ -26,9 +26,7 @@ export default ({ children, data, location }) => (
       title={data.site.siteMetadata.title}
       hide={/\/stories\/.+/.test(location.pathname)}
     />
-    <StyledContentArea>{children({
-      location: { pathname: location.pathname }
-    })}</StyledContentArea>
+    <StyledContentArea>{children()}</StyledContentArea>
     <Footer />
   </StyledPageWrapper>
 );
