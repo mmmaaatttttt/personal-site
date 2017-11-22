@@ -6,7 +6,7 @@
     "develop": "gatsby develop",
     "build": "gatsby build",
     "serve": "gatsby serve",
-    "deploy": "gatsby build && gh-pages -d public --branch master"
+    "deploy": "gatsby build && s3-deploy './public/**' --cwd './public/' --region us-east-1 --bucket mattlane.us --deleteRemoved"
   },
   "dependencies": {
     "animate.css": "^3.5.2",
@@ -29,6 +29,6 @@
     "typography-theme-alton": "^0.15.10"
   },
   "devDependencies": {
-    "gh-pages": "^1.1.0"
+    "s3-deploy": "^0.8.0"
   }
 }
