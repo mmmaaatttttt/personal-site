@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Component } from "react";
 import styled from "styled-components";
 import Navbar from "./Navbar";
 import Footer from "./Footer";
@@ -20,16 +20,33 @@ const StyledPageWrapper = styled.div`
   flex-direction: column;
 `
 
-export default ({ children, data, location }) => (
-  <StyledPageWrapper>
-    <Navbar
-      title={data.site.siteMetadata.title}
-      hide={/\/stories\/.+/.test(location.pathname)}
-    />
-    <StyledContentArea>{children()}</StyledContentArea>
-    <Footer />
-  </StyledPageWrapper>
-);
+class App extends Component {
+  constructor(props) {
+    super(props);
+    this.state = { show: false };
+  }
+
+  componentDidMount() {
+    this.setState({ show: true })
+  }
+
+  render() {
+    const { children, data, location } = this.props;
+    const display = this.state.show ? "flex" : "none";
+    return (
+      <StyledPageWrapper style={{display}}>
+        <Navbar
+          title={data.site.siteMetadata.title}
+          hide={/\/stories\/.+/.test(location.pathname)}
+        />
+        <StyledContentArea>{children()}</StyledContentArea>
+        <Footer />
+      </StyledPageWrapper>
+    )
+  }
+}
+
+export default App;
 
 export const query = graphql`
   query LayoutQuery {

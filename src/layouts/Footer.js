@@ -32,6 +32,17 @@ const StyledIconArea = styled.div`
   `}
 `;
 
+const StyledCCImageWrapper = styled.div`
+  display: flex;
+  flex: 1;
+  align-items: center;
+
+  img {
+    width: 100%;
+    height: auto;
+  }
+`
+
 const StyledCCArea = styled.div`
   display: flex;
   justify-content: center;
@@ -66,10 +77,13 @@ const Footer = () => (
         rel="license" 
         href="http://creativecommons.org/licenses/by-nc/4.0/"
       >
-        <img 
-          alt="Creative Commons License" 
-          style={{borderWidth:0}} 
-          src="https://i.creativecommons.org/l/by-nc/4.0/88x31.png" />
+        <StyledCCImageWrapper>
+          <img 
+            alt="Creative Commons License" 
+            style={{borderWidth:0}} 
+            src="https://i.creativecommons.org/l/by-nc/4.0/88x31.png"
+          />
+        </StyledCCImageWrapper>
       </a>
       <small>Content here is licensed under CC-BY-NC (unless stated otherwise.)</small>
     </StyledCCArea>
