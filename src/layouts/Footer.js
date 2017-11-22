@@ -16,17 +16,25 @@ const StyledFooter = styled.footer`
   position: relative;
   z-index: 1;
   ${navStyles}
+
+  small {
+    font-size: 60%;
+  }
 `;
 
 const StyledIconArea = styled.div`
   min-width: ${rhythm(4)};
   display: flex;
   justify-content: space-between;
+
+  ${media.small`
+    font-size: 80%;
+  `}
 `;
 
 const StyledCCArea = styled.div`
   display: flex;
-  align-items: center;
+  justify-content: center;
 
   img {
     margin: 0;
@@ -38,6 +46,10 @@ const StyledCCArea = styled.div`
   }
 
   ${media.small`
+    a {
+      margin-right: 0;
+    }
+
     small {
       display: none;
     }
@@ -46,6 +58,9 @@ const StyledCCArea = styled.div`
 
 const Footer = () => (
   <StyledFooter>
+    <Link to="/terms">
+      <small>Terms & Privacy</small>
+    </Link>
     <StyledCCArea>
       <a 
         rel="license" 

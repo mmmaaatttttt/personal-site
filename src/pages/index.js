@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { fadeIn } from "../utils/styles";
+import { rhythm } from "../utils/typography";
 
 const StyledHome = styled.div`
   display: flex;
@@ -9,6 +10,7 @@ const StyledHome = styled.div`
   justify-content: space-around;
   animation: ${fadeIn} 2s 0.5s forwards;
   opacity: 0;
+  padding: ${rhythm(1)};
 `;
 
 const StyledH1 = styled.h1`
