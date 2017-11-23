@@ -42,7 +42,7 @@ where _a_ measures the strength of A's response to B's feelings, and similarly f
 
 If you play around with this visualization a bit, you may reach a somewhat unsettling conclusion: none of the relationships captured by the model seem particularly healthy. By adjusting the sliders, here are some of the relationships you can model:
 
-1. One in which each person's feelings oscillate between poisitive and negative, with the two parties never really in sync with one another.
+1. One in which each person's feelings oscillate between positive and negative, with the two parties never really in sync with one another.
 2. One in which the relationship explodes into an exponentially increasing mutual mania or hatred.
 3. One in which the relationship explodes in different directions for each person. While one person's feelings become increasingly positive, the other person's feelings become increasingly negative.
 4. One in which the feelings stabilize, but only at 0, meaning that each person grows indifferent to the other over time.
