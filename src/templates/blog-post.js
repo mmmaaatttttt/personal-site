@@ -5,6 +5,7 @@ import { sizes, fadeIn } from "../utils/styles";
 import images from "../utils/images";
 import { rhythm } from "../utils/typography";
 import { Share } from "react-twitter-widgets";
+import media from "../utils/media";
 
 const StyledPostWrapper = styled.div`
   width: 100%;
@@ -39,13 +40,35 @@ const StyledTitleWrapper = styled.div`
   align-items: center;
   justify-content: center;
   opacity: 0;
+  text-align: center;
   animation: ${fadeIn} 1.5s 0.5s forwards;
   color: white;
+  padding: ${rhythm(1)};
   text-shadow: 3px 3px 1px #000,
      -1px -1px 1px #000,
       1px -1px 1px #000,
      -1px 1px 1px #000,
       1px 1px 1px #000;
+
+  ${media.small`
+    margin-top: ${rhythm(1)};
+
+    h1 {
+      font-size: ${rhythm(1)};
+    }
+    h2 {
+      font-size: ${rhythm(0.75)};
+    }
+  `}
+
+  ${media.extraSmall`
+    h1 {
+      font-size: ${rhythm(0.6)};
+    }
+    h2 {
+      font-size: ${rhythm(0.45)};
+    }
+  `}
 `
 
 export default ({ data, location }) => {

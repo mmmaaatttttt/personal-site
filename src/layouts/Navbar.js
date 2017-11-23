@@ -5,6 +5,7 @@ import styled, { css } from "styled-components";
 import { rhythm } from "../utils/typography";
 import { navStyles } from "./mixins";
 import COLORS from "../utils/styles";
+import media from "../utils/media";
 
 const StyledNav = styled.nav`
   display: flex;
@@ -31,20 +32,33 @@ const StyledNav = styled.nav`
       color: #fff;
     }
   `}
+
+  ${media.extraSmall`
+    flex-direction: row;
+    align-items: center;
+  `}
 `;
 
 const StyledHeader = styled.h3`
   margin-bottom: ${rhythm(0.25)};
+
+  ${media.extraSmall`
+    margin-bottom: 0;
+    font-size: ${rhythm(0.5)};
+  `}
 `;
 
 const StyledLinkContainer = styled.div`
   display: flex;
-  width: 25%;
   justify-content: center;
 
   & > * {
     margin: 0 ${rhythm(0.25)};
   }
+
+  ${media.extraSmall`
+    font-size: ${rhythm(0.4)};
+  `}
 `;
 
 const Navbar = ({ children, title, hide }) => (
