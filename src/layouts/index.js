@@ -40,7 +40,7 @@ class App extends Component {
       <StyledPageWrapper style={{display}}>
         <Helmet>
           <title>{data.site.siteMetadata.title}</title>
-          <meta name="twitter:card" content="summary" />
+          <meta name="twitter:card" content="summary_large_image" />
           <meta name="twitter:site" content="@mmmaaatttttt" />
           <meta name="twitter:title" content={data.site.siteMetadata.title} />
           <meta name="og:title" content={data.site.siteMetadata.title} />
