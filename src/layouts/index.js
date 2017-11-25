@@ -35,22 +35,22 @@ class App extends Component {
   render() {
     const { children, data, location } = this.props;
     const display = this.state.show ? "flex" : "none";
-    const url = `${process.env.GATSBY_BASE_URL}${location.pathname}`
+    const { title, description, siteUrl } = data.site.siteMetadata
     return (
       <StyledPageWrapper style={{display}}>
         <Helmet>
-          <title>{data.site.siteMetadata.title}</title>
+          <title>{title}</title>
           <meta name="twitter:card" content="summary_large_image" />
           <meta name="twitter:site" content="@mmmaaatttttt" />
-          <meta name="twitter:title" content={data.site.siteMetadata.title} />
-          <meta name="og:title" content={data.site.siteMetadata.title} />
-          <meta name="twitter:description" content="Inside the mind of Matt Lane." />
-          <meta name="og:description" content="Inside the mind of Matt Lane." />
-          <meta name="og:url" content={url} />
-          <meta name="og:image" content={`${process.env.GATSBY_BASE_URL}${logo}`} />
+          <meta name="twitter:title" content={title} />
+          <meta name="og:title" content={title} />
+          <meta name="twitter:description" content={description} />
+          <meta name="og:description" content={description} />
+          <meta name="og:url" content={`${siteUrl}${location.pathname}`} />
+          <meta name="og:image" content={`${siteUrl}${logo}`} />
         </Helmet>
         <Navbar
-          title={data.site.siteMetadata.title}
+          title={title}
           hide={/\/stories\/.+/.test(location.pathname)}
         />
         <StyledContentArea>{children()}</StyledContentArea>
@@ -67,6 +67,8 @@ export const query = graphql`
     site {
       siteMetadata {
         title
+        description
+        siteUrl
       }
     }
   }

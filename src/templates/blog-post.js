@@ -74,36 +74,38 @@ const StyledTitleWrapper = styled.div`
 
 export default ({ data, location }) => {
   const post = data.markdownRemark;
-  const title = `${post.frontmatter.title} - ${data.site.siteMetadata.title}`
-  const image = images[post.frontmatter.featured_image];
-  const url = `${process.env.GATSBY_BASE_URL}${location.pathname}`
+  const { title, siteUrl } = data.site.siteMetadata
+  const { featured_image, caption, date } = post.frontmatter;
+  const postTitle = post.frontmatter.title;
+  const fullTitle = `${postTitle} - ${title}`
+  const image = images[featured_image];
   return (
     <StyledPostWrapper>
       <Helmet>
-        <title>{title}</title>
+        <title>{fullTitle}</title>
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content={title} />
-        <meta name="og:title" content={title} />
-        <meta name="twitter:description" content={post.frontmatter.caption} />
-        <meta name="og:description" content={post.frontmatter.caption} />
-        <meta name="twitter:image" content={`${process.env.GATSBY_BASE_URL}${image}`}/>
-        <meta name="og:image" content={`${process.env.GATSBY_BASE_URL}${image}`}/>
-        <meta name="og:url" content={url}/>
+        <meta name="twitter:title" content={fullTitle} />
+        <meta name="og:title" content={fullTitle} />
+        <meta name="twitter:description" content={caption} />
+        <meta name="og:description" content={caption} />
+        <meta name="twitter:image" content={`${siteUrl}${image}`}/>
+        <meta name="og:image" content={`${siteUrl}${image}`}/>
+        <meta name="og:url" content={`${siteUrl}${location.pathname}`}/>
       </Helmet>
       <StyledMainImage image={image}>
         <StyledTitleWrapper>
-          <h1>{post.frontmatter.title}</h1>
-          <h2>{post.frontmatter.date}</h2>
+          <h1>{postTitle}</h1>
+          <h2>{date}</h2>
         </StyledTitleWrapper>
       </StyledMainImage>
       <StyledTextWrapper>
         {stripFrontMatterAndCompile(post.internal.content)}
         <Share
-          url={url}
+          url={`${siteUrl}${location.pathname}`}
           options={{
             size: "large",
             via: "mmmaaatttttt",
-            text: post.frontmatter.title
+            text: postTitle
           }} />
       </StyledTextWrapper>
     </StyledPostWrapper>
@@ -115,6 +117,7 @@ export const query = graphql`
     site {
       siteMetadata {
         title
+        siteUrl
       }
     }
     markdownRemark(fields: { slug: { eq: $slug } }) {
