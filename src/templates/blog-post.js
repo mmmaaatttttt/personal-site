@@ -87,7 +87,7 @@ export default ({ data, location }) => {
         <meta name="twitter:description" content={post.frontmatter.caption} />
         <meta name="og:description" content={post.frontmatter.caption} />
         <meta name="twitter:image" content={image}/>
-        <meta name="og:image" content={image}/>
+        <meta name="og:image" content={`${process.env.GATSBY_BASE_URL}${logo}`}/>
         <meta name="og:url" content={url}/>
       </Helmet>
       <StyledMainImage image={image}>

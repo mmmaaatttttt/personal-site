@@ -47,7 +47,7 @@ class App extends Component {
           <meta name="twitter:description" content="Inside the mind of Matt Lane." />
           <meta name="og:description" content="Inside the mind of Matt Lane." />
           <meta name="og:url" content={url} />
-          <meta name="og:image" content={logo} />
+          <meta name="og:image" content={`${process.env.GATSBY_BASE_URL}${logo}`} />
         </Helmet>
         <Navbar
           title={data.site.siteMetadata.title}
