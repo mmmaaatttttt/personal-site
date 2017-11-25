@@ -10,7 +10,6 @@ module.exports = {
         path: `${__dirname}/src/`
       }
     },
-    `gatsby-transformer-remark`,
     {
       resolve: `gatsby-plugin-typography`,
       options: {
@@ -23,6 +22,8 @@ module.exports = {
         trackingId: 'UA-110074252-1',
         anonymize: true
       },
-  },
+    },
+    `gatsby-transformer-remark`,
+    `gatsby-plugin-react-helmet`
   ]
 };
