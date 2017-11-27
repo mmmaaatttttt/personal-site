@@ -44,6 +44,8 @@ const StyledExcerptArea = styled.div`
   `};
 
   ${media.extraSmall`
+    margin: 0;
+
     * {
       font-size: 100%;
     }
@@ -64,6 +66,11 @@ const StyledImageWrapper = styled.div`
 
 const StyledStory = styled.div`
   border-bottom: 1px solid ${COLORS.NAV_BORDER};
+
+  ${media.extraSmall`
+    margin: 0 ${rhythm(0.5)};
+    padding-bottom: ${rhythm(0.5)};
+  `}
 `;
 
 const Story = ({title, date, image, caption, slug, timeToRead}) => (
