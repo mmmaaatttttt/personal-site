@@ -11,7 +11,7 @@ const StyledFooter = styled.footer`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: ${rhythm(0.5)} ${rhythm(1)};
+  padding: ${rhythm(0.5)};
   border-top: 1px solid ${COLORS.NAV_BORDER};
   position: relative;
   z-index: 1;
@@ -22,10 +22,23 @@ const StyledFooter = styled.footer`
   }
 `;
 
+const StyledLink = styled(Link)`
+  flex-grow: 1;
+  flex-basis: 0;
+`
+
 const StyledIconArea = styled.div`
   min-width: ${rhythm(4)};
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-end;
+  align-items: center;
+  flex-grow: 1;
+  flex-basis: 0;
+
+  a {
+    display: flex;
+    margin-left: ${rhythm(0.35)};
+  }
 
   ${media.small`
     font-size: 80%;
@@ -46,6 +59,8 @@ const StyledCCImageWrapper = styled.div`
 const StyledCCArea = styled.div`
   display: flex;
   justify-content: center;
+  flex-grow: 2;
+  flex-basis: 0;
 
   img {
     margin: 0;
@@ -56,7 +71,7 @@ const StyledCCArea = styled.div`
     margin-right: ${rhythm(0.5)};
   }
 
-  ${media.small`
+  ${media.medium`
     a {
       margin-right: 0;
     }
@@ -69,9 +84,9 @@ const StyledCCArea = styled.div`
 
 const Footer = () => (
   <StyledFooter>
-    <Link to="/terms">
+    <StyledLink to="/terms">
       <small>Terms & Privacy</small>
-    </Link>
+    </StyledLink>
     <StyledCCArea>
       <a 
         rel="license" 
@@ -85,7 +100,7 @@ const Footer = () => (
           />
         </StyledCCImageWrapper>
       </a>
-      <small>Content here is licensed under CC-BY-NC (unless stated otherwise.)</small>
+      <small>Content licensed under CC-BY-NC (unless stated otherwise).</small>
     </StyledCCArea>
     <StyledIconArea>
       <a href="https://twitter.com/mmmaaatttttt">
@@ -96,6 +111,9 @@ const Footer = () => (
       </a>
       <a href="https://www.amazon.com/Power-Up-Unlocking-Hidden-Mathematics-Video/dp/0691161518">
         <i className="fa fa-book fa-2x" />
+      </a>
+      <a href="/rss.xml">
+        <i className="fa fa-rss fa-2x" />
       </a>
     </StyledIconArea>
   </StyledFooter>
