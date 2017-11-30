@@ -28,8 +28,7 @@ const StyledLink = styled(Link)`
 
 const StyledExcerptArea = styled.div`
   flex-direction: column;
-  margin: ${rhythm(1)};
-  margin-top: 0;
+  margin: 0 ${rhythm(1)};
 
   p {
     margin: 0;
@@ -57,6 +56,8 @@ const StyledImageWrapper = styled.div`
 
   img {
     border-radius: 8px;
+    margin-bottom: 0;
+    display: block;
   }
 
   ${media.extraSmall`
@@ -66,6 +67,12 @@ const StyledImageWrapper = styled.div`
 
 const StyledStory = styled.div`
   border-bottom: 1px solid ${COLORS.NAV_BORDER};
+  padding: ${rhythm(0.75)} 0;
+  animation-delay: ${props => props.delay}s;
+
+  &:first-child {
+    padding-top: 0;
+  }
 
   ${media.extraSmall`
     margin: 0 ${rhythm(0.5)};
@@ -73,8 +80,20 @@ const StyledStory = styled.div`
   `}
 `;
 
-const Story = ({title, date, image, caption, slug, timeToRead}) => (
-  <StyledStory className="animated bounceInRight">
+const Story = ({
+  title,
+  date,
+  image,
+  caption,
+  slug,
+  timeToRead,
+  direction,
+  delay
+}) => (
+  <StyledStory
+    className={`animated bounceIn${direction}`}
+    delay={delay}
+  >
     <StyledLink to={slug}>
       <StyledImageWrapper>
         <img src={image}/>
@@ -91,7 +110,7 @@ const Story = ({title, date, image, caption, slug, timeToRead}) => (
 export default ({ data }) => (
   <div>
     {/*<h4>{data.allMarkdownRemark.totalCount} Stories</h4>*/}
-    {data.allMarkdownRemark.edges.map(({ node }) => (
+    {data.allMarkdownRemark.edges.map(({ node }, index) => (
       <Story
         key={node.fields.slug}
         title={node.frontmatter.title}
@@ -100,6 +119,8 @@ export default ({ data }) => (
         caption={node.frontmatter.caption}
         slug={node.fields.slug}
         timeToRead={node.timeToRead}
+        direction={index === 0 ? "Left" : "Right"}
+        delay={index / 2}
       />
     ))}
   </div>
