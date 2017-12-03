@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import Graph from "./Graph";
 import SliderContainer from "../molecules/SliderContainer";
+import StyledCaptionContainer from "../atoms/StyledCaptionContainer";
 import PropTypes from "prop-types";
 import styled from "styled-components";
 import media from "../../utils/media";
@@ -95,6 +96,9 @@ class DoubleGraphContainer extends Component {
           index={1}
           double
         />
+        <StyledCaptionContainer>
+          {this.props.caption}
+        </StyledCaptionContainer>
       </StyledDoubleGraphContainer>
     );
   }

@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import Graph from "./Graph";
 import SliderContainer from "../molecules/SliderContainer";
+import StyledCaptionContainer from "../atoms/StyledCaptionContainer";
 import PropTypes from "prop-types";
 import styled from "styled-components";
 import media from "../../utils/media";
@@ -29,13 +30,6 @@ const StyledGraphContainer = styled.div`
   ${media.small`
     flex-direction: column;
   `};
-`;
-
-const StyledCaptionContainer = styled.p`
-  text-align: center;
-  font-weight: 700;
-  font-size: 85%;
-  margin-top: ${rhythm(0.15)};
 `;
 
 class GraphContainer extends Component {
