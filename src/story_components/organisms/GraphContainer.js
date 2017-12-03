@@ -1,28 +1,11 @@
 import React, { Component } from "react";
 import Graph from "./Graph";
 import SliderContainer from "../molecules/SliderContainer";
-import StyledCaptionContainer from "../atoms/StyledCaptionContainer";
 import PropTypes from "prop-types";
 import styled from "styled-components";
 import media from "../../utils/media";
 import { rhythm } from "../../utils/typography";
-
-const StyledVisualizationContainer = styled.div`
-  width: 150%;
-  margin-left: -25%;
-  display: flex;
-  flex-direction: column;
-
-  ${media.medium`
-    width: 130%;
-    margin-left: -15%;
-  `}
-
-  ${media.small`
-    width: 100%;
-    margin-left: 0;
-  `}
-`;
+import withCaption from "../../hocs/withCaption";
 
 const StyledGraphContainer = styled.div`
   display: flex;
@@ -75,32 +58,27 @@ class GraphContainer extends Component {
       return newObj;
     });
     return (
-      <StyledVisualizationContainer>
-        <StyledGraphContainer>
-          <SliderContainer
-            handleValueChange={this.handleValueChange}
-            data={data}
-          />
-          <Graph
-            data={data}
-            width={width}
-            height={height}
-            smallestY={smallestY}
-            largestY={largestY}
-            diffEq={diffEq}
-            min={min}
-            max={max}
-            step={step}
-            padding={padding}
-            id={id}
-            xLabel={xLabel}
-            yLabel={yLabel}
-          />
-        </StyledGraphContainer>
-        <StyledCaptionContainer>
-          {this.props.caption}
-        </StyledCaptionContainer>
-      </StyledVisualizationContainer>
+      <StyledGraphContainer>
+        <SliderContainer
+          handleValueChange={this.handleValueChange}
+          data={data}
+        />
+        <Graph
+          data={data}
+          width={width}
+          height={height}
+          smallestY={smallestY}
+          largestY={largestY}
+          diffEq={diffEq}
+          min={min}
+          max={max}
+          step={step}
+          padding={padding}
+          id={id}
+          xLabel={xLabel}
+          yLabel={yLabel}
+        />
+      </StyledGraphContainer>
     );
   }
 }
@@ -129,8 +107,7 @@ GraphContainer.propTypes = {
     id: PropTypes.string.isRequired,
     xLabel: PropTypes.string.isRequired,
     yLabel: PropTypes.string.isRequired,
-  }).isRequired,
-  caption: PropTypes.string.isRequired
+  }).isRequired
 };
 
-export default GraphContainer;
+export default withCaption(GraphContainer);

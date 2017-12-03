@@ -1,21 +1,13 @@
 import React, { Component } from "react";
 import Graph from "./Graph";
 import SliderContainer from "../molecules/SliderContainer";
-import StyledCaptionContainer from "../atoms/StyledCaptionContainer";
 import PropTypes from "prop-types";
 import styled from "styled-components";
-import media from "../../utils/media";
+import withCaption from "../../hocs/withCaption";
 
 const StyledDoubleGraphContainer = styled.div`
-  width: 150%;
-  margin-left: -25%;
   display: flex;
   flex-wrap: wrap;
-
-  ${media.medium`
-    width: 100%;
-    margin-left: 0;
-  `};
 `;
 
 class DoubleGraphContainer extends Component {
@@ -96,9 +88,6 @@ class DoubleGraphContainer extends Component {
           index={1}
           double
         />
-        <StyledCaptionContainer>
-          {this.props.caption}
-        </StyledCaptionContainer>
       </StyledDoubleGraphContainer>
     );
   }
@@ -129,4 +118,4 @@ DoubleGraphContainer.propTypes = {
   }).isRequired
 };
 
-export default DoubleGraphContainer;
+export default withCaption(DoubleGraphContainer);
