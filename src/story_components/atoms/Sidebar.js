@@ -12,7 +12,7 @@ const StyledSidebarContent = styled.div`
   position: absolute;
   width: calc((100vw - ${sizes.maxWidthContent} - ${rhythm(2)}) / 2);
   background-color: ${lighten(0.48, COLORS.LINK)};
-  ${props => props.direction}: ${rhythm(1)};
+  ${props => props.direction}: ${rhythm(0.75)};
   font-style: italic;
   font-size: ${rhythm(0.4)};
   line-height: 2;

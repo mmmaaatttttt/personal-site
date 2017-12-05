@@ -8,6 +8,10 @@ const StyledParagraph = styled.p`
   .katex * {
     font-family: inherit !important;
   }
+  .delimcenter {
+    top: 0.1em !important;
+    font-size: 2rem;
+  }
 `;
 
 class Latex extends Component {
