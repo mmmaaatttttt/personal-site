@@ -7,11 +7,6 @@ import { lighten } from "polished";
 import SliderTicks from "./SliderTicks";
 import Icon from "../atoms/icon";
 
-const orderFromId = id => {
-  const nums = id.split("|").map(Number);
-  return nums[0] + 2 * nums[1] + 1;
-};
-
 const StyledIconWrapper = styled.p`
   margin: 0 ${rhythm(0.5)};
   line-height: 1;
@@ -29,7 +24,6 @@ const StyledSliderArea = styled.div`
     props.double &&
     css`
       width: 50%;
-      order: ${props => orderFromId(props.id)};
     `};
 `;
 
