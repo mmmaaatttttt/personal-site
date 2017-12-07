@@ -24,17 +24,10 @@ const StyledSliderContainer = styled.div`
 `;
 
 const SliderContainer = ({ data, handleValueChange, double }) => {
-  const sliders = data
-    .sort((d1, d2) => {
-      const d1Ids = d1.id.split("|").map(Number);
-      const d2Ids = d2.id.split("|").map(Number);
-      if (d1Ids[0] !== d2Ids[0]) return d1Ids[0] - d2Ids[0];
-      return d1Ids[1] - d2Ids[1];
-    })
-    .map(d => (
+  const sliders = data.map((d, idx) => (
       <LabeledSlider
-        key={d.id}
-        id={d.id}
+        key={idx}
+        idx={idx}
         min={d.min}
         max={d.max}
         value={d.value}
@@ -52,7 +45,6 @@ const SliderContainer = ({ data, handleValueChange, double }) => {
 SliderContainer.propTypes = {
   data: PropTypes.arrayOf(
     PropTypes.shape({
-      id: PropTypes.string.isRequired,
       min: PropTypes.number.isRequired,
       max: PropTypes.number.isRequired,
       value: PropTypes.number.isRequired,

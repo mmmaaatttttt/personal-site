@@ -13,80 +13,80 @@ const graph2Data = [
     max: 5,
     initialValue: 1,
     title: "A's Initial Feelings",
-    id: "0|0",
-    color: PERSON_A_COLOR
+    color: PERSON_A_COLOR,
+    equationParameter: true
   },
   {
     min: -5,
     max: 5,
     initialValue: -4,
     title: "A's Response to B's Feelings for A",
-    id: "0|1",
-    color: PERSON_A_COLOR
+    color: PERSON_A_COLOR,
+    equationParameter: false
   },
   {
     min: -5,
     max: 5,
     initialValue: 1.1,
     title: "A's Response to A's Feelings",
-    id: "0|2",
-    color: PERSON_A_COLOR
+    color: PERSON_A_COLOR,
+    equationParameter: false
   },
   {
     min: -5,
     max: 5,
     initialValue: 1,
     title: "B's Initial Feelings for A",
-    id: "1|0",
-    color: PERSON_B_COLOR
+    color: PERSON_B_COLOR,
+    equationParameter: true
   },
   {
     min: -5,
     max: 5,
     initialValue: 3,
     title: "B's Response to A & C's Feelings",
-    id: "1|1",
-    color: PERSON_B_COLOR
+    color: PERSON_B_COLOR,
+    equationParameter: false
   },
   {
     min: -5,
     max: 5,
     initialValue: -2,
     title: "B's Response to B's Feelings",
-    id: "1|2",
-    color: PERSON_B_COLOR
+    color: PERSON_B_COLOR,
+    equationParameter: false
   },
   {
     min: -5,
     max: 5,
     initialValue: 0,
     title: "B's Initial Feelings for C",
-    id: "2|0",
-    color: PERSON_B_COLOR
+    color: PERSON_B_COLOR,
+    equationParameter: true
   },
   {
     min: -5,
     max: 5,
     initialValue: 0,
     title: "C's Initial Feelings",
-    id: "3|0",
-    color: PERSON_C_COLOR
+    color: PERSON_C_COLOR,
+    equationParameter: true
   },
   {
     min: -5,
     max: 5,
     initialValue: 1.5,
     title: "C's Response to B's Feelings for C",
-    id: "3|1",
-    color: PERSON_C_COLOR
+    color: PERSON_C_COLOR,
+    equationParameter: false
   },
   {
     min: -5,
     max: 5,
     initialValue: -1,
     title: "C's Response to C's Feelings",
-    id: "3|2",
-    color: PERSON_C_COLOR
+    color: PERSON_C_COLOR,
+    equationParameter: false
   }
 ];
 
@@ -104,7 +104,7 @@ const diffEq3 = (b, a, c, d, f, e) => (x, y) => [
 const visualizationData = [
   {
     initialData: graph1Data.map((d, i) => {
-      const newVals = [4, 3, -2, -5, 1, -2];
+      const newVals = [4, 3, 1, -2, -5, -2];
       return { ...d, initialValue: newVals[i] };
     }),
     width: 800,
@@ -112,8 +112,10 @@ const visualizationData = [
     smallestY: 5,
     largestY: 200,
     diffEqs: [diffEq1, diffEq2],
-    ids: ["vis1", "vis2"],
-    step: 0.02
+    svgIds: ["vis1", "vis2"],
+    step: 0.02,
+    xLabel: "Time",
+    yLabel: "Feelings"
   },
   {
     initialData: graph2Data,
@@ -122,8 +124,10 @@ const visualizationData = [
     smallestY: 5,
     largestY: 200,
     diffEqs: [diffEq3, diffEq3],
-    ids: ["vis3", "vis4"],
-    step: 0.02
+    svgIds: ["vis3", "vis4"],
+    step: 0.02,
+    xLabel: "Time",
+    yLabel: "Feelings"
   }
 ];
 

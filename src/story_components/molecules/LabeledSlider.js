@@ -34,7 +34,7 @@ const StyledTitle = styled.p`
 `
 
 const LabeledSlider = ({
-  id,
+  idx,
   min,
   max,
   value,
@@ -47,7 +47,7 @@ const LabeledSlider = ({
 }) => {
   const fraction = (value - min) / (max - min);
   return (
-    <StyledSliderArea double={double} id={id}>
+    <StyledSliderArea double={double}>
       <StyledTitle>{title}</StyledTitle>
       <section>
         <StyledIconWrapper>
@@ -58,7 +58,7 @@ const LabeledSlider = ({
           max={max}
           value={value}
           step={(max - min) / 100}
-          onChange={v => handleValueChange(id, v)}
+          onChange={v => handleValueChange(idx, v)}
           activeColor={lighten(0.2, color)}
           height={sliderHeight}
           padding={sliderPadding}
@@ -80,7 +80,7 @@ const LabeledSlider = ({
 };
 
 LabeledSlider.propTypes = {
-  id: PropTypes.string.isRequired,
+  idx: PropTypes.number.isRequired,
   min: PropTypes.number.isRequired,
   max: PropTypes.number.isRequired,
   value: PropTypes.number.isRequired,

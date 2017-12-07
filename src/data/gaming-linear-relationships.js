@@ -6,58 +6,59 @@ const graph1Data = [
     max: 5,
     initialValue: 3,
     title: "A's Initial Feelings",
-    id: "0|0",
-    color: PERSON_A_COLOR
+    color: PERSON_A_COLOR,
+    equationParameter: false
   },
   {
     min: -5,
     max: 5,
     initialValue: -1,
     title: "A's Response to B's Feelings",
-    id: "0|1",
-    color: PERSON_A_COLOR
+    color: PERSON_A_COLOR,
+    equationParameter: true
   },
   {
     min: -5,
     max: 5,
     initialValue: -3,
     title: "B's Initial Feelings",
-    id: "1|0",
-    color: PERSON_B_COLOR
+    color: PERSON_B_COLOR,
+    equationParameter: false
   },
   {
     min: -5,
     max: 5,
     initialValue: 1,
     title: "B's Response to A's Feelings",
-    id: "1|1",
-    color: PERSON_B_COLOR
+    color: PERSON_B_COLOR,
+    equationParameter: true
   }
 ];
 
 const graph2Data = [
-  ...graph1Data,
+  ...graph1Data.slice(0,2),
   {
     min: -5,
     max: 5,
     initialValue: -0.3,
     title: "A's Response to A's Feelings",
-    id: "0|2",
-    color: PERSON_A_COLOR
+    color: PERSON_A_COLOR,
+    equationParameter: true
   },
+  ...graph1Data.slice(2),
   {
     min: -5,
     max: 5,
     initialValue: 0,
     title: "B's Response to B's Feelings",
-    id: "1|2",
-    color: PERSON_B_COLOR
+    color: PERSON_B_COLOR,
+    equationParameter: true
   }
 ];
 
 const graph3Data = [
-  ...graph2Data.filter(d => +d.id.split("|")[1] !== 0).map((d, i) => {
-    const newVals = [1, 2, -5, -5];
+  ...graph2Data.slice(1,3).map((d, i) => {
+    const newVals = [1, -5];
     return { ...d, initialValue: newVals[i] };
   }),
   {
@@ -65,32 +66,36 @@ const graph3Data = [
     max: 5,
     initialValue: 1,
     title: "A's Intrinsic Appeal",
-    id: "0|3",
-    color: PERSON_A_COLOR
+    color: PERSON_A_COLOR,
+    equationParameter: true
   },
   {
     min: -5,
     max: 5,
     initialValue: 3,
     title: "A's Response to B's Intrinsic Appeal",
-    id: "0|4",
-    color: PERSON_A_COLOR
+    color: PERSON_A_COLOR,
+    equationParameter: true
   },
+  ...graph2Data.slice(4).map((d, i) => {
+    const newVals = [2, -5];
+    return { ...d, initialValue: newVals[i] };
+  }),
   {
     min: -5,
     max: 5,
     initialValue: 4,
     title: "B's Intrinsic Appeal",
-    id: "1|3",
-    color: PERSON_B_COLOR
+    color: PERSON_B_COLOR,
+    equationParameter: true
   },
   {
     min: -5,
     max: 5,
     initialValue: 2,
     title: "B's Response to A's Intrinsic Appeal",
-    id: "1|4",
-    color: PERSON_B_COLOR
+    color: PERSON_B_COLOR,
+    equationParameter: true
   }
 ];
 
@@ -99,14 +104,12 @@ const diffEq2 = (a, b, c, d) => (x, y) => [
   a * y[1] + b * y[0],
   c * y[0] + d * y[1]
 ];
-const diffEq3 = (a, b, c, d, e, f, g, h) => (x, y) => [
-  a * y[1] + b * y[0] + d * g,
-  e * y[0] + f * y[1] + h * c
-];
-const diffEq4 = (a, b, c, d) => (x, y) => [
-  a * y[1] * (1 - Math.abs(y[1])) + b * y[0],
-  c * y[0] * (1 - Math.abs(y[0])) + d * y[1]
-];
+const diffEq3 = (a, b, c, d, e, f, g, h) => (
+  (x, y) => [
+    a * y[1] + b * y[0] + d * g,
+    e * y[0] + f * y[1] + h * c
+  ]
+);
 
 const visualizationData = [
   {
@@ -116,9 +119,10 @@ const visualizationData = [
     smallestY: 5,
     largestY: 100,
     diffEq: diffEq1,
-    id: "vis1",
+    svgId: "vis1",
     xLabel: "Time",
-    yLabel: "Feelings"
+    yLabel: "Feelings",
+    colors: [PERSON_A_COLOR, PERSON_B_COLOR]
   },
   {
     initialData: graph2Data,
@@ -128,9 +132,10 @@ const visualizationData = [
     largestY: 200,
     diffEq: diffEq2,
     step: 0.02,
-    id: "vis2",
+    svgId: "vis2",
     xLabel: "Time",
-    yLabel: "Feelings"
+    yLabel: "Feelings",
+    colors: [PERSON_A_COLOR, PERSON_B_COLOR]
   },
   {
     initialData: graph3Data,
@@ -139,21 +144,10 @@ const visualizationData = [
     smallestY: 5,
     largestY: 200,
     diffEq: diffEq3,
-    id: "vis3",
+    svgId: "vis3",
     xLabel: "Time",
-    yLabel: "Feelings"
-  },
-  {
-    initialData: graph2Data,
-    width: 800,
-    height: 800,
-    smallestY: 5,
-    largestY: 200,
-    diffEq: diffEq4,
-    step: 0.02,
-    id: "vis2",
-    xLabel: "Time",
-    yLabel: "Feelings"
+    yLabel: "Feelings",
+    colors: [PERSON_A_COLOR, PERSON_B_COLOR]
   }
 ];
 

@@ -14,19 +14,14 @@ class DoubleGraphContainer extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      values: props.data.initialData.map(d => ({
-        id: d.id,
-        value: d.initialValue
-      }))
+      values: props.data.initialData.map(d => d.initialValue)
     };
     this.handleValueChange = this.handleValueChange.bind(this);
   }
 
-  handleValueChange(id, newVal) {
-    console.log(newVal);
-    const newValues = this.state.values.map(
-      v => (v.id === id ? { id, value: newVal } : v)
-    );
+  handleValueChange(idx, newVal) {
+    const newValues = [...this.state.values];
+    newValues[idx] = newVal;
     this.setState({ values: newValues });
   }
 
@@ -42,15 +37,35 @@ class DoubleGraphContainer extends Component {
       max,
       step,
       padding,
-      ids
+      svgIds,
+      xLabel,
+      yLabel
     } = this.props.data;
     const { values } = this.state;
-    const data = initialData.map(d => {
-      const value = values.find(v => v.id === d.id).value;
-      const newObj = { ...d, value };
+    const data = initialData.map((d, i) => {
+      const newObj = { ...d, value: values[i] };
       delete newObj.initialValue;
       return newObj;
     });
+    const graphs = [0, 1].map(idx => (
+      <Graph
+        key={idx}
+        data={data}
+        width={width}
+        height={height}
+        smallestY={smallestY}
+        largestY={largestY}
+        diffEq={diffEqs[idx]}
+        min={min}
+        max={max}
+        step={step}
+        padding={padding}
+        svgId={svgIds[idx]}
+        xLabel={xLabel}
+        yLabel={yLabel}
+        double
+      />
+    ))
     return (
       <StyledDoubleGraphContainer>
         <SliderContainer
@@ -58,36 +73,7 @@ class DoubleGraphContainer extends Component {
           data={data}
           double
         />
-        <Graph
-          data={data}
-          width={width}
-          height={height}
-          smallestY={smallestY}
-          largestY={largestY}
-          diffEq={diffEqs[0]}
-          min={min}
-          max={max}
-          step={step}
-          padding={padding}
-          id={ids[0]}
-          index={0}
-          double
-        />
-        <Graph
-          data={data}
-          width={width}
-          height={height}
-          smallestY={smallestY}
-          largestY={largestY}
-          diffEq={diffEqs[1]}
-          min={min}
-          max={max}
-          step={step}
-          padding={padding}
-          id={ids[1]}
-          index={1}
-          double
-        />
+        {graphs}
       </StyledDoubleGraphContainer>
     );
   }
@@ -100,9 +86,9 @@ DoubleGraphContainer.propTypes = {
         min: PropTypes.number.isRequired,
         max: PropTypes.number.isRequired,
         initialValue: PropTypes.number.isRequired,
-        id: PropTypes.string.isRequired,
         title: PropTypes.string.isRequired,
-        color: PropTypes.string.isRequired
+        color: PropTypes.string.isRequired,
+        equationParameter: PropTypes.bool.isRequired
       })
     ).isRequired,
     width: PropTypes.number.isRequired,
@@ -114,7 +100,9 @@ DoubleGraphContainer.propTypes = {
     min: PropTypes.number,
     max: PropTypes.number,
     step: PropTypes.number,
-    ids: PropTypes.arrayOf(PropTypes.string).isRequired
+    svgIds: PropTypes.arrayOf(PropTypes.string).isRequired,
+    xLabel: PropTypes.string.isRequired,
+    yLabel: PropTypes.string.isRequired
   }).isRequired
 };
 

@@ -5,7 +5,7 @@ import visualizationData from "../../data/gaming-linear-relationships.js";
 
 const GamingLinearRelationships = ({ idx, caption }) => (
   <GraphContainer
-    data={visualizationData[idx]}
+    {...visualizationData[idx]}
     caption={`Figure ${idx+1}: ${caption}`}
   />
 );
