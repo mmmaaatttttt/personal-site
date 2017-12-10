@@ -109,7 +109,7 @@ class GraphContainer extends Component {
 
       const linePlots = allGraphData
         .map((graphData, j) => {
-          const colorIdx = ( i + j * ( i + 1 ) ) % colors.length;
+          const colorIdx = ( 2 * i + j) % colors.length;
           return (
             <LinePlot
               key={j}
@@ -135,6 +135,7 @@ class GraphContainer extends Component {
           yLabel={yLabel}
           xScale={xScale}
           yScale={yScale}
+          double={double}
         >
           {linePlots}
         </Graph>
@@ -142,10 +143,11 @@ class GraphContainer extends Component {
     })
 
     return (
-      <StyledGraphContainer>
+      <StyledGraphContainer double={double}>
         <SliderContainer
           handleValueChange={this.handleValueChange}
           data={data}
+          double={double}
         />
         {graphs}
       </StyledGraphContainer>
