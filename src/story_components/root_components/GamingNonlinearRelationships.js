@@ -4,15 +4,17 @@ import PropTypes from "prop-types";
 import visualizationData from "../../data/gaming-nonlinear-relationships.js";
 
 const GamingNonlinearRelationships = ({ idx, caption }) => (
-  <DoubleGraphContainer
+  <GraphContainer
     data={visualizationData[idx]}
     caption={`Figure ${idx+1}: ${caption}`}
+    double
   />
 );
 
 GamingNonlinearRelationships.propTypes = {
   idx: PropTypes.number.isRequired,
-  caption: PropTypes.string.isRequired
+  caption: PropTypes.string.isRequired,
+  double: PropTypes.bool.isRequired
 };
 
 export default GamingNonlinearRelationships;

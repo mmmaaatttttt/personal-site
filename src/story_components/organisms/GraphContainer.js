@@ -3,7 +3,7 @@ import Graph from "./Graph";
 import LinePlot from "../atoms/LinePlot";
 import SliderContainer from "../molecules/SliderContainer";
 import PropTypes from "prop-types";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import { scaleLinear } from "d3-scale";
 import { extent, max } from "d3-array";
 import media from "../../utils/media";
@@ -14,9 +14,15 @@ import withCaption from "../../hocs/withCaption";
 const StyledGraphContainer = styled.div`
   display: flex;
 
-  ${media.small`
-    flex-direction: column;
-  `};
+  ${props => props.double && css`
+    flex-wrap: wrap;
+  `}
+
+  ${props => !props.double && css`
+    ${media.small`
+      flex-direction: column;
+    `};
+  `}
 `;
 
 class GraphContainer extends Component {
@@ -44,7 +50,7 @@ class GraphContainer extends Component {
   }
 
   transformData(data) {
-    const { min, max, step, diffEq, colors } = this.props;
+    const { min, max, step, diffEqs, colors } = this.props;
     const diffEqValues = data.filter(d => d.equationParameter)
                              .map(d => d.value);
     const graphCount = colors.length;
@@ -58,7 +64,7 @@ class GraphContainer extends Component {
       step,
       initialValues,
       diffEqValues,
-      diffEq
+      diffEqs[0]
     );
   }
 
@@ -74,7 +80,7 @@ class GraphContainer extends Component {
       max,
       step,
       padding,
-      svgId,
+      svgIds,
       xLabel,
       yLabel,
       colors
@@ -121,7 +127,7 @@ class GraphContainer extends Component {
           max={max}
           step={step}
           padding={padding}
-          svgId={svgId}
+          svgId={svgIds[0]}
           xLabel={xLabel}
           yLabel={yLabel}
           xScale={xScale}
@@ -149,22 +155,24 @@ GraphContainer.propTypes = {
   height: PropTypes.number.isRequired,
   smallestY: PropTypes.number.isRequired,
   largestY: PropTypes.number.isRequired,
-  diffEq: PropTypes.func.isRequired,
+  diffEqs: PropTypes.arrayOf(PropTypes.func).isRequired,
   padding: PropTypes.number.isRequired,
   min: PropTypes.number.isRequired,
   max: PropTypes.number.isRequired,
   step: PropTypes.number.isRequired,
-  svgId: PropTypes.string.isRequired,
+  svgIds: PropTypes.arrayOf(PropTypes.string).isRequired,
   xLabel: PropTypes.string.isRequired,
   yLabel: PropTypes.string.isRequired,
-  colors: PropTypes.arrayOf(PropTypes.string).isRequired
+  colors: PropTypes.arrayOf(PropTypes.string).isRequired,
+  double: PropTypes.bool.isRequired,
 };
 
 GraphContainer.defaultProps = {
   min: 0,
   max: 20,
   step: 0.1,
-  padding: 30
+  padding: 30,
+  double: false
 };
 
 export default withCaption(GraphContainer);

@@ -118,8 +118,8 @@ const visualizationData = [
     height: 500,
     smallestY: 5,
     largestY: 100,
-    diffEq: diffEq1,
-    svgId: "vis1",
+    diffEqs: [diffEq1],
+    svgIds: ["vis1"],
     xLabel: "Time",
     yLabel: "Feelings",
     colors: [PERSON_A_COLOR, PERSON_B_COLOR]
@@ -130,9 +130,9 @@ const visualizationData = [
     height: 600,
     smallestY: 5,
     largestY: 200,
-    diffEq: diffEq2,
+    diffEqs: [diffEq2],
     step: 0.02,
-    svgId: "vis2",
+    svgIds: ["vis2"],
     xLabel: "Time",
     yLabel: "Feelings",
     colors: [PERSON_A_COLOR, PERSON_B_COLOR]
@@ -143,8 +143,8 @@ const visualizationData = [
     height: 650,
     smallestY: 5,
     largestY: 200,
-    diffEq: diffEq3,
-    svgId: "vis3",
+    diffEqs: [diffEq3],
+    svgIds: ["vis3"],
     xLabel: "Time",
     yLabel: "Feelings",
     colors: [PERSON_A_COLOR, PERSON_B_COLOR]
