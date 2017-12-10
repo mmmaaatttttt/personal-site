@@ -49,8 +49,8 @@ class GraphContainer extends Component {
     return [-yMax, yMax];
   }
 
-  transformData(data) {
-    const { min, max, step, diffEqs, colors } = this.props;
+  transformData(data, diffEq) {
+    const { min, max, step, colors } = this.props;
     const diffEqValues = data.filter(d => d.equationParameter)
                              .map(d => d.value);
     const graphCount = colors.length;
@@ -64,7 +64,7 @@ class GraphContainer extends Component {
       step,
       initialValues,
       diffEqValues,
-      diffEqs[0]
+      diffEq
     );
   }
 
@@ -73,9 +73,7 @@ class GraphContainer extends Component {
       initialData,
       width,
       height,
-      smallestY,
-      largestY,
-      diffEq,
+      diffEqs,
       min,
       max,
       step,
@@ -83,7 +81,8 @@ class GraphContainer extends Component {
       svgIds,
       xLabel,
       yLabel,
-      colors
+      colors,
+      double
     } = this.props;
     const { values } = this.state;
     // data is all data from original source file
@@ -93,41 +92,45 @@ class GraphContainer extends Component {
       delete newObj.initialValue;
       return newObj;
     });
-    const graphs = this.transformData(data);
-    const xScale = scaleLinear()
-      .domain(extent(graphs[0], d => d.x))
-      .range([padding, width - padding]);
 
-    const yScale = scaleLinear()
-      .domain(this.getYDomain(graphs))
-      .range([height - padding, padding]);
+    const graphs = Array.from({length: +double + 1}, (_, i) => {
+      // need to slice for the last set of visualizations, unfortunately 
+      // for most visualizations, this has no effect
+      const sliceIdx = double && i === 1 && colors.length === 4 ? 2 : 0;
+      const allGraphData = this.transformData(data, diffEqs[i])
+        .slice(sliceIdx, sliceIdx + 2);
+      const xScale = scaleLinear()
+        .domain(extent(allGraphData[0], d => d.x))
+        .range([padding, width - padding]);
 
-    const linePlots = graphs
-      // .slice(...sliceIdxs)
-      .map((graphData, i) => (
-        <LinePlot
-          key={i}
-          stroke={colors[i]}
-          graphData={graphData}
-          xScale={xScale}
-          yScale={yScale}
-        />
-      ));
+      const yScale = scaleLinear()
+        .domain(this.getYDomain(allGraphData))
+        .range([height - padding, padding]);
 
-    return (
-      <StyledGraphContainer>
-        <SliderContainer
-          handleValueChange={this.handleValueChange}
-          data={data}
-        />
+      const linePlots = allGraphData
+        .map((graphData, j) => {
+          const colorIdx = ( i + j * ( i + 1 ) ) % colors.length;
+          return (
+            <LinePlot
+              key={j}
+              stroke={colors[colorIdx]}
+              graphData={graphData}
+              xScale={xScale}
+              yScale={yScale}
+            />
+          )
+        });
+
+      return (
         <Graph
+          key={i}
           width={width}
           height={height}
           min={min}
           max={max}
           step={step}
           padding={padding}
-          svgId={svgIds[0]}
+          svgId={svgIds[i]}
           xLabel={xLabel}
           yLabel={yLabel}
           xScale={xScale}
@@ -135,6 +138,16 @@ class GraphContainer extends Component {
         >
           {linePlots}
         </Graph>
+      )
+    })
+
+    return (
+      <StyledGraphContainer>
+        <SliderContainer
+          handleValueChange={this.handleValueChange}
+          data={data}
+        />
+        {graphs}
       </StyledGraphContainer>
     );
   }

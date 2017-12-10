@@ -14,7 +14,7 @@ const graph2Data = [
     initialValue: 1,
     title: "A's Initial Feelings",
     color: PERSON_A_COLOR,
-    equationParameter: true
+    equationParameter: false
   },
   {
     min: -5,
@@ -22,7 +22,7 @@ const graph2Data = [
     initialValue: -4,
     title: "A's Response to B's Feelings for A",
     color: PERSON_A_COLOR,
-    equationParameter: false
+    equationParameter: true
   },
   {
     min: -5,
@@ -30,7 +30,7 @@ const graph2Data = [
     initialValue: 1.1,
     title: "A's Response to A's Feelings",
     color: PERSON_A_COLOR,
-    equationParameter: false
+    equationParameter: true
   },
   {
     min: -5,
@@ -38,7 +38,7 @@ const graph2Data = [
     initialValue: 1,
     title: "B's Initial Feelings for A",
     color: PERSON_B_COLOR,
-    equationParameter: true
+    equationParameter: false
   },
   {
     min: -5,
@@ -46,7 +46,7 @@ const graph2Data = [
     initialValue: 3,
     title: "B's Response to A & C's Feelings",
     color: PERSON_B_COLOR,
-    equationParameter: false
+    equationParameter: true
   },
   {
     min: -5,
@@ -54,7 +54,7 @@ const graph2Data = [
     initialValue: -2,
     title: "B's Response to B's Feelings",
     color: PERSON_B_COLOR,
-    equationParameter: false
+    equationParameter: true
   },
   {
     min: -5,
@@ -62,7 +62,7 @@ const graph2Data = [
     initialValue: 0,
     title: "B's Initial Feelings for C",
     color: PERSON_B_COLOR,
-    equationParameter: true
+    equationParameter: false
   },
   {
     min: -5,
@@ -70,7 +70,7 @@ const graph2Data = [
     initialValue: 0,
     title: "C's Initial Feelings",
     color: PERSON_C_COLOR,
-    equationParameter: true
+    equationParameter: false
   },
   {
     min: -5,
@@ -78,7 +78,7 @@ const graph2Data = [
     initialValue: 1.5,
     title: "C's Response to B's Feelings for C",
     color: PERSON_C_COLOR,
-    equationParameter: false
+    equationParameter: true
   },
   {
     min: -5,
@@ -86,7 +86,7 @@ const graph2Data = [
     initialValue: -1,
     title: "C's Response to C's Feelings",
     color: PERSON_C_COLOR,
-    equationParameter: false
+    equationParameter: true
   }
 ];
 
@@ -115,7 +115,8 @@ const visualizationData = [
     svgIds: ["vis1", "vis2"],
     step: 0.02,
     xLabel: "Time",
-    yLabel: "Feelings"
+    yLabel: "Feelings",
+    colors: [PERSON_A_COLOR, PERSON_B_COLOR]
   },
   {
     initialData: graph2Data,
@@ -127,7 +128,8 @@ const visualizationData = [
     svgIds: ["vis3", "vis4"],
     step: 0.02,
     xLabel: "Time",
-    yLabel: "Feelings"
+    yLabel: "Feelings",
+    colors: [PERSON_A_COLOR, PERSON_B_COLOR, PERSON_B_COLOR, PERSON_C_COLOR]
   }
 ];
 
