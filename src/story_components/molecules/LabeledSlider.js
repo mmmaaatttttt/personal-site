@@ -14,17 +14,16 @@ const StyledIconWrapper = styled.p`
 
 const StyledSliderArea = styled.div`
   text-align: center;
+  flex: 1;
+
+  ${props => props.double && css`
+    flex: 0;
+  `}
 
   section {
     display: flex;
     align-items: center;
   }
-
-  ${props =>
-    props.double &&
-    css`
-      width: 50%;
-    `};
 `;
 
 const StyledTitle = styled.p`

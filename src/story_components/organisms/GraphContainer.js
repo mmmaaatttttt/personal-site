@@ -84,7 +84,9 @@ class GraphContainer extends Component {
       colors,
       double
     } = this.props;
+
     const { values } = this.state;
+    
     // data is all data from original source file
     // plus most recent values from inside of state
     const data = initialData.map((d, i) => {
@@ -92,6 +94,8 @@ class GraphContainer extends Component {
       delete newObj.initialValue;
       return newObj;
     });
+
+    const uniqueColors = colors.filter((c, i) => colors.indexOf(c) === i);
 
     const graphs = Array.from({length: +double + 1}, (_, i) => {
       // need to slice for the last set of visualizations, unfortunately 
@@ -148,6 +152,7 @@ class GraphContainer extends Component {
           handleValueChange={this.handleValueChange}
           data={data}
           double={double}
+          colors={uniqueColors}
         />
         {graphs}
       </StyledGraphContainer>

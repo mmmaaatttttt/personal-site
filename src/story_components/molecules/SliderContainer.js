@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import LabeledSlider from "./LabeledSlider";
+import SliderGroup from "./SliderGroup";
 import styled, { css } from "styled-components";
 import media from "../../utils/media";
 
@@ -23,22 +23,18 @@ const StyledSliderContainer = styled.div`
     `};
 `;
 
-const SliderContainer = ({ data, handleValueChange, double }) => {
-  const sliders = data.map((d, idx) => (
-      <LabeledSlider
-        key={idx}
-        idx={idx}
-        min={d.min}
-        max={d.max}
-        value={d.value}
-        handleValueChange={handleValueChange}
-        title={d.title}
-        color={d.color}
-        double={double}
-      />
-    ));
+const SliderContainer = ({ data, handleValueChange, double, colors }) => {
+  const dataWithIndex = data.map((d, i) => ({...d, originalIdx: i}));
+  const sliderGroups = colors.map(color => (
+    <SliderGroup
+      key={color}
+      data={dataWithIndex.filter(d => d.color === color)}
+      handleValueChange={handleValueChange}
+      double={double}
+    />
+  ));
   return (
-    <StyledSliderContainer double={double}>{sliders}</StyledSliderContainer>
+    <StyledSliderContainer double={double}>{sliderGroups}</StyledSliderContainer>
   );
 };
 
@@ -53,6 +49,7 @@ SliderContainer.propTypes = {
     })
   ),
   handleValueChange: PropTypes.func.isRequired,
+  colors: PropTypes.arrayOf(PropTypes.string).isRequired,
   double: PropTypes.bool
 };
 
