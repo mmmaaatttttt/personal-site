@@ -5,7 +5,7 @@ import {
   PERSON_B_COLOR
 } from "./gaming-linear-relationships";
 
-const PERSON_C_COLOR = "red";
+const PERSON_C_COLOR = "#A05E52";
 
 const graph2Data = [
   {
@@ -127,6 +127,7 @@ const visualizationData = [
     diffEqs: [diffEq3, diffEq3],
     svgIds: ["vis3", "vis4"],
     step: 0.02,
+    max: 40,
     xLabel: "Time",
     yLabel: "Feelings",
     colors: [PERSON_A_COLOR, PERSON_B_COLOR, PERSON_B_COLOR, PERSON_C_COLOR]

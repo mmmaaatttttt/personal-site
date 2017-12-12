@@ -33,8 +33,8 @@ For those of you who prefer equations to visualizations, here's what we're visua
 
 <Latex displayMode={true} str={`
   \\begin{aligned}
-  A\\prime (t) &= a \\times B(t), \\\\
-  B\\prime (t) &= b \\times A(t),
+  A^{\\prime} (t) &= a \\times B(t), \\\\
+  B^{\\prime} (t) &= b \\times A(t),
   \\end{aligned}
 `}/>
 
@@ -67,8 +67,8 @@ As you might have guessed, more sliders means more parameters in our model. In t
 
 <Latex displayMode={true} str={`
   \\begin{aligned}
-  A\\prime (t) &= a \\times B(t) + c \\times A(t), \\\\
-  B\\prime (t) &= b \\times A(t) + d \\times B(t),
+  A^{\\prime} (t) &= a \\times B(t) + c \\times A(t), \\\\
+  B^{\\prime} (t) &= b \\times A(t) + d \\times B(t),
   \\end{aligned}
 `}/>
 
@@ -105,8 +105,8 @@ Once again, here are the equations, if you're into that sort of thing:
 
 <Latex displayMode={true} str={`
   \\begin{aligned}
-  A\\prime (t) &= a \\times B(t) + c \\times A(t) + e \\times B_{appeal}, \\\\
-  B\\prime (t) &= b \\times A(t) + d \\times B(t) + f \\times A_{appeal},
+  A^{\\prime} (t) &= a \\times B(t) + c \\times A(t) + e \\times B_{appeal}, \\\\
+  B^{\\prime} (t) &= b \\times A(t) + d \\times B(t) + f \\times A_{appeal},
   \\end{aligned}
 `}/>
 

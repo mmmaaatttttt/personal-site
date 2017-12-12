@@ -5,9 +5,11 @@ featured_image: "jane_the_virgin.jpg"
 caption: "Love, chaos, and a three body problem."
 ---
 
+_(Note: this is a follow-up to my [previous story](/stories/gaming-relationships-linear). If you haven't read that one, you should! This story assumes you've checked out the earlier one._)
+
 Relationships can be complicated, unpredictable, and dramatic. While this makes for great tabloid fodder or binge-worthy television, it also complicates mathematical modeling. After all, where's the dramatic tension if we can predict how someone's feelings will change at any point in the future?
 
-We attempted just this kind of modeling exercise in our [last story](/stories/gaming-relationships-linear). Equipped with a handful of different models, we explored relationships between two people over time. And while those models grew in complexity, they all shared one common feature: they were _linear_.
+We attempted just this kind of modeling exercise in our last story. Equipped with a handful of different models, we explored relationships between two people over time. And while those models grew in complexity, they all shared one common feature: they were _linear_.
 
 What does this mean? A rigorous explanation gets a little technical, but loosely speaking, there's a limit to how complex the solutions to our linear equations can be. You may have experienced some of these limitations yourself: out of our three models, only one yielded examples of relationships that evolved and stabilized to non-zero values. And even those relationships tended to follow a predictable pattern, with each individual's feelings gradually stabilizing along a smooth, relatively drama-free curve.
 
@@ -44,8 +46,8 @@ So how is the second model different? Well, here are the equations used:
 
 <Latex displayMode={true} str={`
   \\begin{aligned}
-  A\\prime (t) &= a \\times B(t) ( 1 - \\left|B(t)\\right| ) + c \\times A(t), \\\\
-  B\\prime (t) &= b \\times A(t) ( 1 - \\left|A(t)\\right| ) + d \\times B(t),
+  A^{\\prime} (t) &= a \\times B(t) ( 1 - \\left|B(t)\\right| ) + c \\times A(t), \\\\
+  B^{\\prime} (t) &= b \\times A(t) ( 1 - \\left|A(t)\\right| ) + d \\times B(t),
   \\end{aligned}
 `}/>
 
@@ -69,12 +71,51 @@ Because the real world is endlessly complex, it should come as no surprise that 
 
 * * *
 
+### Love and Chaos
+
+But even though the model above is non-linear, there's still a problem: it's highly predictable. If you use a computer to generate solutions to those equations, you can plug in any time value you want and figure out, with a high degree of precision, how each person will feel about the other. Of course, this assumes that you can measure all of the parameters that go into the equations, which is another huge assumption. But for now, let's focus on predictability.
+
+There are some mathematical models that don't give you perfect predictive power, even when you have good information. Models of the weather are a classic example of this. Even our best mathematical models of the weather can't provide accurate forecasts more than a couple of weeks out. You could ask for a better model, but more refined models would almost certainly suffer a similar fate. The reason for this has to do with another mathematical buzzword: _chaos_.
+
+There are a few hallmarks of chaos, but the one we'll concern ourselves with here is also the one that's the most well known. The technical term for it is _sensitivity to initial conditions_, but it's more commonly known as the [_butterfly effect_](https://www.youtube.com/watch?v=B8_dgqfPXFg).
+
+Sensitivity to initial conditions means that if we make small changes to the input values to the system, the system may evolve in an entirely different way. Rather than small perturbations remaining small over time, instead they produce an entirely different trajectory for the system. Or, in the [words](http://mpe2013.org/2013/03/17/chaos-in-an-atmosphere-hanging-on-a-wall/) of mathematician Edward Lorenz, "Chaos: When the present determines the future, but the approximate present does not approximately determine the future."
+
+It should be noted that sensitivity to initial conditions doesn't automatically make a system chaotic. But every chaotic system must have this property. And while linear systems like the ones we've seen so far can never be chaotic, nonlinear systems frequently are.
+
+<Sidebar direction="right">Technically, linear systems of differential equations can be chaotic, but only if they are infinitely dimensional. But that's a rabbit hole for another day.</Sidebar>
+
+* * *
+
 ### The Three Body Problem
 
+While nonlinear systems can be chaotic, the one we looked at earlier in this story isn't. However, we can bring chaos into the relationship in a way that perhaps isn't so surprising: by adding a third party.
+
+Imagine now that Person B is secretly trysting with two people, Person A and Person C. A and C don't know about one another, and so their feelings depend only on their response to B's feelings, and on their response to their own feelings. B's feelings, on the other hand, are a bit more complicated. Person B responds not only to their own feelings, but also to the combined feelings of Person A and Person C. For simplicity, we'll assume that Person A and Person C have equal effect on Person B's feelings, though you could drop this assumption in a slightly more complicated model.
+
+In this scenario, we can think of Person B's feelings in two parts: feelings towards Person A, and feelings towards Person C. However, these two relationships are not independent. As you can see by adjusting the values, altering a parameter in Person A's personality affects both relationships, and similarly for Person C. Even though Person B may want to keep A and C in the dark, the relationships themselves cannot lie.
+
+To see chaos in action, try adjusting one of the parameters just a little bit. For example, if you adjust A's feelings upwards just a couple of ticks, these relationships go absolutely bonkers. If you adjust A's initial feelings down a couple of ticks, things are relatively stable, but there's no rhyme or reason to how the peaks and valleys in each graph change based on this slight adjustment to initial conditions. (Note that I've extended the x-axis out so that the timeline is twice as long as in the other visualizations, so that we can see even more chaotic behavior.)
 
 <GamingNonlinearRelationships idx={1} caption="tbd"/>
 
+This is sensitivity to initial conditions in action. What this means is that even if you were able to accurately measure each of the parameters in the model, the slightest measurement error would destroy the predictive power of the model. While this seems like a bug, maybe it's actually a feature: after all, it doesn't seem reasonable that a mathematical model could predict _any_ future relationship state between a group of people.
 
-https://en.wikipedia.org/wiki/Nonlinear_system#Nonlinear_differential_equations
+In case you're curious, here are the equations used by the model:
 
+<Latex displayMode={true} str={`
+  \\begin{aligned}
+  A^{\\prime} (t) &= a \\times B_{A}(t) ( 1 - \\left|B_{A}(t)\\right| ) + d \\times A(t), \\\\
+  B_{A}^{\\prime} (t) &= b \\times (A(t) - C(t)) ( 1 - \\left|A(t) - C(t)\\right| ) + e \\times B_{A}(t), \\\\
+  C^{\\prime} (t) &= c \\times B_{C}(t) ( 1 - \\left|B_{C}(t)\\right| ) + f \\times C(t), \\\\
+  B_{C}^{\\prime} (t) &= b \\times (C(t) - A(t)) ( 1 - \\left|C(t) - A(t)\\right| ) + e \\times B_{C}(t), \\\\
+  \\end{aligned}
+`}/>
+
+As you can see, compared to the first model in our previous story, things have gotten quite complicated. But the upside is that we have a much more robust model, which is able to capture a wider range of relationship behavior. And indeed, this is often a trade-off when it comes to mathematical modeling: more complexity can often yield richer behavior, but complexity also makes the models more difficult to understand and can make the results of the model less widely applicable.
+
+While we could continue to add complexity to our model, let's stop here. I hope I've convinced you that the cold, logical realm of mathematics can have something interesting to say about human relationships, even if the more interesting models require more sophisticated mathematical machinery. If nothing else, I hope you'll be sympathetic when one of your friends complains that their love life is utter chaos: they may very well be offering an admission as heartbreaking as it is mathematically precise.
+
+Sources:
+- [Power Up: Unlocking the Hidden Mathematics in Video Games](https://www.amazon.com/Power-Up-Unlocking-Hidden-Mathematics-Video/dp/0691161518/), by me!
 - [Dynamical Models of Love](http://sprott.physics.wisc.edu/pubs/paper277.pdf), by J. C. Sprott
