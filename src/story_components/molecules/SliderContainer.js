@@ -20,6 +20,10 @@ const StyledSliderContainer = styled.div`
       width: 100%;
       flex-wrap: wrap;
       flex-direction: row;
+
+      ${media.small`
+        flex-direction: column;
+      `}
     `};
 `;
 

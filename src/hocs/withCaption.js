@@ -9,9 +9,14 @@ const StyledVisualizationContainer = styled.div`
   display: flex;
   flex-direction: column;
 
+  ${media.large`
+    width: 140%;
+    margin-left: -20%;
+  `}
+
   ${media.medium`
-    width: 130%;
-    margin-left: -15%;
+    width: 120%;
+    margin-left: -10%;
   `}
 
   ${media.small`

@@ -9,6 +9,10 @@ const StyledSliderGroup = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
+
+  ${media.small`
+    flex: 0 1 auto;
+  `}
 `;
 
 const SliderGroup = ({ data, handleValueChange, double }) => {

@@ -107,9 +107,8 @@ const Story = ({
   </StyledStory>
 )
 
-export default ({ data }) => (
+const Stories = ({ data }) => (
   <div>
-    {/*<h4>{data.allMarkdownRemark.totalCount} Stories</h4>*/}
     {data.allMarkdownRemark.edges.map(({ node }, index) => (
       <Story
         key={node.fields.slug}
@@ -126,10 +125,11 @@ export default ({ data }) => (
   </div>
 );
 
+export default Stories;
+
 export const query = graphql`
   query StoriesQuery {
     allMarkdownRemark(sort: { fields: [frontmatter___date], order: DESC }) {
-      totalCount
       edges {
         node {
           frontmatter {

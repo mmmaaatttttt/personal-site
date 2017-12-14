@@ -98,7 +98,7 @@ In this scenario, we can think of Person B's feelings in two parts: feelings tow
 
 To see chaos in action, try adjusting one of the parameters just a little bit. For example, if you adjust A's feelings upwards just a couple of ticks, these relationships go absolutely bonkers. If you adjust A's initial feelings down a couple of ticks, things are relatively stable, but there's no rhyme or reason to how the peaks and valleys in each graph change based on this slight adjustment to initial conditions. (Note that I've extended the x-axis out so that the timeline is twice as long as in the other visualizations, so that we can see even more chaotic behavior.)
 
-<GamingNonlinearRelationships idx={1} caption="tbd"/>
+<GamingNonlinearRelationships idx={1} caption="Chaotic relationship dynamics between three people."/>
 
 This is sensitivity to initial conditions in action. What this means is that even if you were able to accurately measure each of the parameters in the model, the slightest measurement error would destroy the predictive power of the model. While this seems like a bug, maybe it's actually a feature: after all, it doesn't seem reasonable that a mathematical model could predict _any_ future relationship state between a group of people.
 
