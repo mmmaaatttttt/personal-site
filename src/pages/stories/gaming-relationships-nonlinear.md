@@ -3,6 +3,7 @@ title: "Gaming Relationships: Nonlinear Approaches"
 date: "2017-12-10"
 featured_image: "jane_the_virgin.jpg"
 caption: "Love, chaos, and a three body problem."
+featured_image_caption: "Jane's relationships may be chaotic, in a mathematically precise sense. Image credit: Jane the Virgin (The CW)."
 ---
 
 _(Note: this is a follow-up to my [previous story](/stories/gaming-relationships-linear). If you haven't read that one, you should! This story assumes you've checked out the earlier one._)

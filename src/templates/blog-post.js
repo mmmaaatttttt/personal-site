@@ -16,6 +16,7 @@ const StyledTextWrapper = styled.div`
   max-width: ${sizes.maxWidthContent};
   margin: 0 auto;
   padding: ${rhythm(0.5)};
+  padding-top: ${rhythm(1.25)};
 `
 
 const StyledMainImage = styled.div`
@@ -28,6 +29,14 @@ const StyledMainImage = styled.div`
   height: 0;
   padding-top: 56.25%;
   margin-top: -${rhythm(1.5)};
+`
+
+const StyledImageCaption = styled.small`
+  display: flex;
+  justify-content: flex-end;
+  margin-right: ${rhythm(0.5)};
+  font-style: italic;
+  color: #7d7d7d;
 `
 
 const StyledTitleWrapper = styled.div`
@@ -75,7 +84,12 @@ const StyledTitleWrapper = styled.div`
 export default ({ data, location }) => {
   const post = data.markdownRemark;
   const { title, siteUrl } = data.site.siteMetadata
-  const { featured_image, caption, date } = post.frontmatter;
+  const {
+    featured_image,
+    caption,
+    date,
+    featured_image_caption
+  } = post.frontmatter;
   const postTitle = post.frontmatter.title;
   const fullTitle = `${postTitle} - ${title}`
   const image = images[featured_image];
@@ -97,6 +111,9 @@ export default ({ data, location }) => {
           <h1>{postTitle}</h1>
           <h2>{date}</h2>
         </StyledTitleWrapper>
+        <StyledImageCaption>
+          {featured_image_caption}
+        </StyledImageCaption>
       </StyledMainImage>
       <StyledTextWrapper>
         {stripFrontMatterAndCompile(post.internal.content)}
@@ -130,6 +147,7 @@ export const query = graphql`
         date(formatString: "MMMM YYYY")
         featured_image
         caption
+        featured_image_caption
       }
     }
   }
