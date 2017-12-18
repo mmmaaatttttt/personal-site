@@ -43,7 +43,7 @@ const StyledExcerptArea = styled.div`
   `};
 
   ${media.extraSmall`
-    margin: 0;
+    margin: ${rhythm(0.5)} 0 0;
 
     * {
       font-size: 100%;
@@ -118,7 +118,7 @@ const Stories = ({ data }) => (
         caption={node.frontmatter.caption}
         slug={node.fields.slug}
         timeToRead={node.timeToRead}
-        direction={index === 0 ? "Left" : "Right"}
+        direction={index % 2 === 0 ? "Left" : "Right"}
         delay={index / 2}
       />
     ))}

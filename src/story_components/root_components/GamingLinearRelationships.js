@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 import GraphContainer from "../organisms/GraphContainer";
 import PropTypes from "prop-types";
 import visualizationData from "../../data/gaming-linear-relationships.js";
