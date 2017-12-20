@@ -1,14 +1,11 @@
-import React from "react";
 import PropTypes from "prop-types";
-import ScrollAnimation from "react-animate-on-scroll";
-import "animate.css/animate.min.css";
 import styled from "styled-components";
 import { rhythm } from "../../utils/typography";
 import { lighten } from "polished";
 import COLORS, { sizes } from "../../utils/styles";
 import media from "../../utils/media";
 
-const StyledSidebarContent = styled.div`
+const StyledSidebar = styled.div`
   position: absolute;
   width: calc((100vw - ${sizes.maxWidthContent} - ${rhythm(2)}) / 2);
   background-color: ${lighten(0.48, COLORS.LINK)};
@@ -25,20 +22,12 @@ const StyledSidebarContent = styled.div`
   `};
 `;
 
-const Sidebar = ({ children, direction }) => (
-  <ScrollAnimation animateIn="fadeIn" animateOnce={true}>
-    <StyledSidebarContent direction={direction}>
-      {children}
-    </StyledSidebarContent>
-  </ScrollAnimation>
-);
-
-Sidebar.propTypes = {
+StyledSidebar.propTypes = {
   direction: PropTypes.oneOf(["left", "right"])
 };
 
-Sidebar.defaultProps = {
+StyledSidebar.defaultProps = {
   direction: "left"
 };
 
-export default Sidebar;
+export default StyledSidebar;

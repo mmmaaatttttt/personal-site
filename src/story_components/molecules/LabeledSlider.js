@@ -5,7 +5,7 @@ import styled, { css } from "styled-components";
 import { rhythm } from "../../utils/typography";
 import { lighten } from "polished";
 import SliderTicks from "./SliderTicks";
-import Icon from "../atoms/icon";
+import SliderIcon from "../atoms/SliderIcon";
 
 const StyledIconWrapper = styled.p`
   margin: 0 ${rhythm(0.5)};
@@ -16,11 +16,11 @@ const StyledSliderArea = styled.div`
   text-align: center;
   flex: 1;
 
-  ${props => props.double && css`
-    flex: 0;
-  `}
-
-  section {
+  ${props =>
+    props.double &&
+    css`
+      flex: 0;
+    `} section {
     display: flex;
     align-items: center;
   }
@@ -30,7 +30,7 @@ const StyledTitle = styled.p`
   margin-bottom: ${rhythm(0.25)};
   font-size: 80%;
   line-height: 1;
-`
+`;
 
 const LabeledSlider = ({
   idx,
@@ -50,7 +50,7 @@ const LabeledSlider = ({
       <StyledTitle>{title}</StyledTitle>
       <section>
         <StyledIconWrapper>
-          <Icon name="minus" color={color} opacity={1 - fraction} />
+          <SliderIcon name="minus" color={color} opacity={1 - fraction} />
         </StyledIconWrapper>
         <StyledSlider
           min={min}
@@ -71,7 +71,7 @@ const LabeledSlider = ({
           />
         </StyledSlider>
         <StyledIconWrapper>
-          <Icon name="plus" color={color} opacity={fraction} />
+          <SliderIcon name="plus" color={color} opacity={fraction} />
         </StyledIconWrapper>
       </section>
     </StyledSliderArea>
