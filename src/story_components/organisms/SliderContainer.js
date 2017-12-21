@@ -1,34 +1,10 @@
 import React from "react";
 import PropTypes from "prop-types";
 import SliderGroup from "./SliderGroup";
-import styled, { css } from "styled-components";
-import media from "../../utils/media";
-
-const StyledSliderContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: space-around;
-  width: 50%;
-
-  ${media.small`
-    width: 100%;
-  `};
-
-  ${props =>
-    props.double &&
-    css`
-      width: 100%;
-      flex-wrap: wrap;
-      flex-direction: row;
-
-      ${media.small`
-        flex-direction: column;
-      `}
-    `};
-`;
+import StyledSliderContainer from "../atoms/StyledSliderContainer";
 
 const SliderContainer = ({ data, handleValueChange, double, colors }) => {
-  const dataWithIndex = data.map((d, i) => ({...d, originalIdx: i}));
+  const dataWithIndex = data.map((d, i) => ({ ...d, originalIdx: i }));
   const sliderGroups = colors.map(color => (
     <SliderGroup
       key={color}
@@ -38,7 +14,9 @@ const SliderContainer = ({ data, handleValueChange, double, colors }) => {
     />
   ));
   return (
-    <StyledSliderContainer double={double}>{sliderGroups}</StyledSliderContainer>
+    <StyledSliderContainer double={double}>
+      {sliderGroups}
+    </StyledSliderContainer>
   );
 };
 

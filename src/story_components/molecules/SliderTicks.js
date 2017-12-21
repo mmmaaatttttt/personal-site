@@ -1,14 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
-import styled from "styled-components";
 import StyledSliderTick from "../atoms/StyledSliderTick";
-
-const StyledTickContainer = styled.div`
-  display: flex;
-  justify-content: space-between;
-  position: absolute;
-  width: 100%;
-`;
+import StyledSpaceBetweenContainer from "../atoms/StyledSpaceBetweenContainer";
 
 const SliderTicks = ({
   count,
@@ -25,7 +18,7 @@ const SliderTicks = ({
       <StyledSliderTick key={i} color={color} width={height} offset={padding} />
     );
   });
-  return <StyledTickContainer>{ticks}</StyledTickContainer>;
+  return <StyledSpaceBetweenContainer>{ticks}</StyledSpaceBetweenContainer>;
 };
 
 SliderTicks.propTypes = {

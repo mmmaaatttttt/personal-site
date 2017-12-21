@@ -2,27 +2,22 @@ import React from "react";
 import PropTypes from "prop-types";
 import Axis from "../molecules/Axis";
 import StyledAxisLabel from "../atoms/StyledAxisLabel";
-import styled, { css } from "styled-components";
-import media from "../../utils/media";
+import StyledGraph from "../atoms/StyledGraph";
 
-const StyledGraph = styled.div`
-  width: 50%;
-
-  ${props =>
-    !props.double &&
-    css`
-      ${media.small`
-        width: 100%;
-      `};
-    `};
-`;
-
-const Graph = ({ width, height, padding, svgId, double, xLabel, yLabel, xScale, yScale, children}) => (
+const Graph = ({
+  width,
+  height,
+  padding,
+  svgId,
+  double,
+  xLabel,
+  yLabel,
+  xScale,
+  yScale,
+  children
+}) => (
   <StyledGraph double={double}>
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      viewBox={`0 0 ${width} ${height}`}
-    >
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox={`0 0 ${width} ${height}`}>
       <defs>
         <clipPath id={`clip-path-${svgId}`}>
           <rect
@@ -81,6 +76,6 @@ Graph.propTypes = {
 
 Graph.defaultProps = {
   double: false
-}
+};
 
 export default Graph;

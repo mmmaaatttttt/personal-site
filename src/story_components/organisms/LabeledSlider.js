@@ -1,36 +1,12 @@
 import React from "react";
 import PropTypes from "prop-types";
-import StyledSlider from "../atoms/StyledSlider";
-import styled, { css } from "styled-components";
-import { rhythm } from "../../utils/typography";
 import { lighten } from "polished";
-import SliderTicks from "./SliderTicks";
+import SliderTicks from "../molecules/SliderTicks";
 import SliderIcon from "../atoms/SliderIcon";
-
-const StyledIconWrapper = styled.p`
-  margin: 0 ${rhythm(0.5)};
-  line-height: 1;
-`;
-
-const StyledSliderArea = styled.div`
-  text-align: center;
-  flex: 1;
-
-  ${props =>
-    props.double &&
-    css`
-      flex: 0;
-    `} section {
-    display: flex;
-    align-items: center;
-  }
-`;
-
-const StyledTitle = styled.p`
-  margin-bottom: ${rhythm(0.25)};
-  font-size: 80%;
-  line-height: 1;
-`;
+import StyledSlider from "../atoms/StyledSlider";
+import StyledIconWrapper from "../atoms/StyledIconWrapper";
+import StyledSliderTitle from "../atoms/StyledSliderTitle";
+import StyledSliderArea from "../atoms/StyledSliderArea";
 
 const LabeledSlider = ({
   idx,
@@ -47,7 +23,7 @@ const LabeledSlider = ({
   const fraction = (value - min) / (max - min);
   return (
     <StyledSliderArea double={double}>
-      <StyledTitle>{title}</StyledTitle>
+      <StyledSliderTitle>{title}</StyledSliderTitle>
       <section>
         <StyledIconWrapper>
           <SliderIcon name="minus" color={color} opacity={1 - fraction} />

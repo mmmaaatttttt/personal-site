@@ -1,29 +1,13 @@
 import React, { Component } from "react";
-import Graph from "./Graph";
-import LinePlot from "../atoms/LinePlot";
-import SliderContainer from "../molecules/SliderContainer";
 import PropTypes from "prop-types";
-import styled, { css } from "styled-components";
 import { scaleLinear } from "d3-scale";
 import { extent, max } from "d3-array";
-import media from "../../utils/media";
-import { rhythm } from "../../utils/typography";
-import { generateData } from "../../utils/mathHelpers";
+import LinePlot from "../atoms/LinePlot";
+import StyledGraphContainer from "../atoms/StyledGraphContainer";
+import Graph from "./Graph";
+import SliderContainer from "./SliderContainer";
 import withCaption from "../../hocs/withCaption";
-
-const StyledGraphContainer = styled.div`
-  display: flex;
-
-  ${props => props.double && css`
-    flex-wrap: wrap;
-  `}
-
-  ${props => !props.double && css`
-    ${media.small`
-      flex-direction: column;
-    `};
-  `}
-`;
+import { generateData } from "../../utils/mathHelpers";
 
 class GraphContainer extends Component {
   constructor(props) {
@@ -51,11 +35,13 @@ class GraphContainer extends Component {
 
   transformData(data, diffEq) {
     const { min, max, step, colors } = this.props;
-    const diffEqValues = data.filter(d => d.equationParameter)
-                             .map(d => d.value);
+    const diffEqValues = data
+      .filter(d => d.equationParameter)
+      .map(d => d.value);
     const graphCount = colors.length;
-    let initialValues = data.filter(d => !d.equationParameter)
-                            .map(d => d.value);
+    let initialValues = data
+      .filter(d => !d.equationParameter)
+      .map(d => d.value);
     if (initialValues.length === 0) initialValues = [0, 0];
     return generateData(
       graphCount,
@@ -86,7 +72,7 @@ class GraphContainer extends Component {
     } = this.props;
 
     const { values } = this.state;
-    
+
     // data is all data from original source file
     // plus most recent values from inside of state
     const data = initialData.map((d, i) => {
@@ -97,12 +83,14 @@ class GraphContainer extends Component {
 
     const uniqueColors = colors.filter((c, i) => colors.indexOf(c) === i);
 
-    const graphs = Array.from({length: +double + 1}, (_, i) => {
-      // need to slice for the last set of visualizations, unfortunately 
+    const graphs = Array.from({ length: +double + 1 }, (_, i) => {
+      // need to slice for the last set of visualizations, unfortunately
       // for most visualizations, this has no effect
       const sliceIdx = double && i === 1 && colors.length === 4 ? 2 : 0;
-      const allGraphData = this.transformData(data, diffEqs[i])
-        .slice(sliceIdx, sliceIdx + 2);
+      const allGraphData = this.transformData(data, diffEqs[i]).slice(
+        sliceIdx,
+        sliceIdx + 2
+      );
       const xScale = scaleLinear()
         .domain(extent(allGraphData[0], d => d.x))
         .range([padding, width - padding]);
@@ -111,19 +99,18 @@ class GraphContainer extends Component {
         .domain(this.getYDomain(allGraphData))
         .range([height - padding, padding]);
 
-      const linePlots = allGraphData
-        .map((graphData, j) => {
-          const colorIdx = ( 2 * i + j) % colors.length;
-          return (
-            <LinePlot
-              key={j}
-              stroke={colors[colorIdx]}
-              graphData={graphData}
-              xScale={xScale}
-              yScale={yScale}
-            />
-          )
-        });
+      const linePlots = allGraphData.map((graphData, j) => {
+        const colorIdx = (2 * i + j) % colors.length;
+        return (
+          <LinePlot
+            key={j}
+            stroke={colors[colorIdx]}
+            graphData={graphData}
+            xScale={xScale}
+            yScale={yScale}
+          />
+        );
+      });
 
       return (
         <Graph
@@ -143,8 +130,8 @@ class GraphContainer extends Component {
         >
           {linePlots}
         </Graph>
-      )
-    })
+      );
+    });
 
     return (
       <StyledGraphContainer double={double}>
@@ -184,7 +171,7 @@ GraphContainer.propTypes = {
   xLabel: PropTypes.string.isRequired,
   yLabel: PropTypes.string.isRequired,
   colors: PropTypes.arrayOf(PropTypes.string).isRequired,
-  double: PropTypes.bool.isRequired,
+  double: PropTypes.bool.isRequired
 };
 
 GraphContainer.defaultProps = {
