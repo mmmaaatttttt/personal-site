@@ -1,9 +1,15 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
+import LabeledSlider from "../organisms/LabeledSlider";
 
 class SimulationStart extends Component {
   render() {
-    return <button onClick={this.props.handleStart}>start</button>;
+    return (
+      <div>
+        <LabeledSlider />
+        <button onClick={this.props.handleStart}>start</button>
+      </div>
+    );
   }
 }
 

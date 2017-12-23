@@ -1,5 +1,7 @@
-const PERSON_A_COLOR = "#FF8E5E";
-const PERSON_B_COLOR = "#52A081";
+import COLORS from "../utils/styles";
+
+const PERSON_A_COLOR = COLORS.ORANGE;
+const PERSON_B_COLOR = COLORS.GREEN;
 const graph1Data = [
   {
     min: -5,
@@ -36,7 +38,7 @@ const graph1Data = [
 ];
 
 const graph2Data = [
-  ...graph1Data.slice(0,2),
+  ...graph1Data.slice(0, 2),
   {
     min: -5,
     max: 5,
@@ -57,7 +59,7 @@ const graph2Data = [
 ];
 
 const graph3Data = [
-  ...graph2Data.slice(1,3).map((d, i) => {
+  ...graph2Data.slice(1, 3).map((d, i) => {
     const newVals = [1, -5];
     return { ...d, initialValue: newVals[i] };
   }),
@@ -104,12 +106,10 @@ const diffEq2 = (a, b, c, d) => (x, y) => [
   a * y[1] + b * y[0],
   c * y[0] + d * y[1]
 ];
-const diffEq3 = (a, b, c, d, e, f, g, h) => (
-  (x, y) => [
-    a * y[1] + b * y[0] + d * g,
-    e * y[0] + f * y[1] + h * c
-  ]
-);
+const diffEq3 = (a, b, c, d, e, f, g, h) => (x, y) => [
+  a * y[1] + b * y[0] + d * g,
+  e * y[0] + f * y[1] + h * c
+];
 
 const visualizationData = [
   {

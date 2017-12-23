@@ -4,8 +4,9 @@ import {
   PERSON_A_COLOR,
   PERSON_B_COLOR
 } from "./gaming-linear-relationships";
+import COLORS from "../utils/styles";
 
-const PERSON_C_COLOR = "#A05E52";
+const PERSON_C_COLOR = COLORS.MAROON;
 
 const graph2Data = [
   {

@@ -4,14 +4,14 @@ import LabeledSlider from "./LabeledSlider";
 import StyledSliderGroup from "../atoms/StyledSliderGroup";
 
 const SliderGroup = ({ data, handleValueChange, double }) => {
+  const handleChangeWithIndex = idx => val => handleValueChange(idx, val);
   const sliders = data.map(d => (
     <LabeledSlider
       key={d.originalIdx}
-      idx={d.originalIdx}
       min={d.min}
       max={d.max}
       value={d.value}
-      handleValueChange={handleValueChange}
+      handleValueChange={handleChangeWithIndex(d.originalIdx)}
       title={d.title}
       color={d.color}
       double={double}

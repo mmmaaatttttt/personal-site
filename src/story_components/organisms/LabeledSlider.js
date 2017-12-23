@@ -7,9 +7,9 @@ import StyledSlider from "../atoms/StyledSlider";
 import StyledIconWrapper from "../atoms/StyledIconWrapper";
 import StyledSliderTitle from "../atoms/StyledSliderTitle";
 import StyledSliderArea from "../atoms/StyledSliderArea";
+import COLORS from "../../utils/styles";
 
 const LabeledSlider = ({
-  idx,
   min,
   max,
   value,
@@ -33,7 +33,7 @@ const LabeledSlider = ({
           max={max}
           value={value}
           step={(max - min) / 100}
-          onChange={v => handleValueChange(idx, v)}
+          onChange={handleValueChange}
           activeColor={lighten(0.2, color)}
           height={sliderHeight}
           padding={sliderPadding}
@@ -55,7 +55,6 @@ const LabeledSlider = ({
 };
 
 LabeledSlider.propTypes = {
-  idx: PropTypes.number.isRequired,
   min: PropTypes.number.isRequired,
   max: PropTypes.number.isRequired,
   value: PropTypes.number.isRequired,
@@ -69,7 +68,8 @@ LabeledSlider.propTypes = {
 
 LabeledSlider.defaultProps = {
   sliderHeight: 6,
-  sliderPadding: 10
+  sliderPadding: 10,
+  color: COLORS.ORANGE
 };
 
 export default LabeledSlider;
