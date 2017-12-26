@@ -6,10 +6,11 @@ import withCaption from "../../hocs/withCaption";
 class EconomySimulation extends Component {
   constructor(props) {
     super(props);
-    this.state = { playing: false, paused: false };
+    this.state = { playing: false, paused: false, personCount: 2 };
     this.handleStart = this.handleStart.bind(this);
     this.handleStop = this.handleStop.bind(this);
     this.handlePause = this.handlePause.bind(this);
+    this.handlePersonCount = this.handlePersonCount.bind(this);
   }
 
   handleStart() {
@@ -24,6 +25,10 @@ class EconomySimulation extends Component {
     this.setState({ paused: !this.state.paused });
   }
 
+  handlePersonCount(newCount) {
+    this.setState({ personCount: newCount });
+  }
+
   render() {
     const header = this.state.playing ? (
       <SimulationStop
@@ -31,7 +36,11 @@ class EconomySimulation extends Component {
         handlePause={this.handlePause}
       />
     ) : (
-      <SimulationStart handleStart={this.handleStart} />
+      <SimulationStart
+        handleStart={this.handleStart}
+        handlePersonCount={this.handlePersonCount}
+        personCount={this.state.personCount}
+      />
     );
     return (
       <div>

@@ -14,7 +14,7 @@ const SliderGroup = ({ data, handleValueChange, double }) => {
       handleValueChange={handleChangeWithIndex(d.originalIdx)}
       title={d.title}
       color={d.color}
-      double={double}
+      flexZero={double}
     />
   ));
   return <StyledSliderGroup double={double}>{sliders}</StyledSliderGroup>;

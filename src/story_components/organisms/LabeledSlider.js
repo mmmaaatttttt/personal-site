@@ -18,15 +18,18 @@ const LabeledSlider = ({
   color,
   sliderHeight,
   sliderPadding,
-  double
+  flexZero,
+  tickCount,
+  minIcon,
+  maxIcon
 }) => {
   const fraction = (value - min) / (max - min);
   return (
-    <StyledSliderArea double={double}>
+    <StyledSliderArea flexZero={flexZero}>
       <StyledSliderTitle>{title}</StyledSliderTitle>
       <section>
         <StyledIconWrapper>
-          <SliderIcon name="minus" color={color} opacity={1 - fraction} />
+          <SliderIcon name={minIcon} color={color} opacity={1 - fraction} />
         </StyledIconWrapper>
         <StyledSlider
           min={min}
@@ -39,7 +42,7 @@ const LabeledSlider = ({
           padding={sliderPadding}
         >
           <SliderTicks
-            count={3}
+            count={tickCount}
             fractionFilled={fraction}
             activeColor={lighten(0.2, color)}
             height={sliderHeight}
@@ -47,7 +50,7 @@ const LabeledSlider = ({
           />
         </StyledSlider>
         <StyledIconWrapper>
-          <SliderIcon name="plus" color={color} opacity={fraction} />
+          <SliderIcon name={maxIcon} color={color} opacity={fraction} />
         </StyledIconWrapper>
       </section>
     </StyledSliderArea>
@@ -63,13 +66,25 @@ LabeledSlider.propTypes = {
   color: PropTypes.string.isRequired,
   sliderHeight: PropTypes.number.isRequired,
   sliderPadding: PropTypes.number.isRequired,
-  double: PropTypes.bool
+  flexZero: PropTypes.bool,
+  tickCount: PropTypes.number.isRequired,
+  minIcon: PropTypes.string.isRequired,
+  maxIcon: PropTypes.string.isRequired
 };
 
 LabeledSlider.defaultProps = {
+  min: 0,
+  max: 100,
+  value: 0,
+  handleValueChange: val => console.log(val),
+  title: "Temporary Title",
+  color: COLORS.ORANGE,
   sliderHeight: 6,
   sliderPadding: 10,
-  color: COLORS.ORANGE
+  flexZero: false,
+  tickCount: 3,
+  minIcon: "minus",
+  maxIcon: "plus"
 };
 
 export default LabeledSlider;

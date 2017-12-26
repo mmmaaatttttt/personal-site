@@ -5,7 +5,7 @@ const StyledSliderArea = styled.div`
   flex: 1;
 
   ${props =>
-    props.double &&
+    props.flexZero &&
     css`
       flex: 0;
     `} section {
