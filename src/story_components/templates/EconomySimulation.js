@@ -1,6 +1,9 @@
 import React, { Component } from "react";
+import PropTypes from "prop-types";
 import SimulationStart from "../molecules/SimulationStart";
 import SimulationStop from "../molecules/SimulationStop";
+import ClippedSVG from "../atoms/ClippedSVG";
+import EconomyForceGraph from "../molecules/EconomyForceGraph";
 import withCaption from "../../hocs/withCaption";
 
 class EconomySimulation extends Component {
@@ -30,7 +33,9 @@ class EconomySimulation extends Component {
   }
 
   render() {
-    const header = this.state.playing ? (
+    const { playing, paused, personCount } = this.state;
+    const { width, height, padding } = this.props;
+    const header = playing ? (
       <SimulationStop
         handleStop={this.handleStop}
         handlePause={this.handlePause}
@@ -39,19 +44,43 @@ class EconomySimulation extends Component {
       <SimulationStart
         handleStart={this.handleStart}
         handlePersonCount={this.handlePersonCount}
-        personCount={this.state.personCount}
+        personCount={personCount}
       />
     );
     return (
       <div>
         {header}
         <div>
-          <p>Playing: {this.state.playing.toString()}</p>
-          <p>Paused: {this.state.paused.toString()}</p>
+          <p>Playing: {playing.toString()}</p>
+          <p>Paused: {paused.toString()}</p>
+          <ClippedSVG
+            width={width}
+            height={height}
+            padding={padding}
+            id="simulation"
+          >
+            <EconomyForceGraph
+              people={personCount}
+              cx={width / 2}
+              cy={height / 2}
+            />
+          </ClippedSVG>
         </div>
       </div>
     );
   }
 }
+
+EconomySimulation.propTypes = {
+  width: PropTypes.number.isRequired,
+  height: PropTypes.number.isRequired,
+  padding: PropTypes.number.isRequired
+};
+
+EconomySimulation.defaultProps = {
+  width: 600,
+  height: 600,
+  padding: 20
+};
 
 export default withCaption(EconomySimulation);
