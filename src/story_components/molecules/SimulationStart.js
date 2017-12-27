@@ -13,7 +13,8 @@ class SimulationStart extends Component {
           title="Population Size"
           value={personCount}
           min={2}
-          max={100}
+          max={50}
+          step={1}
           color={COLORS.MAROON}
           tickCount={2}
           minIcon="user"
