@@ -10,55 +10,41 @@ import { select } from "d3-selection";
 import COLORS from "../../utils/styles";
 
 class EconomyForceGraph extends Component {
-  // constructor(props) {
-  // super(props);
-  // const { cx, cy, people } = this.props;
-  // this.state = {
-  //   nodes: Array.from({ length: people }, (_, i) => ({
-  //     id: i,
-  //     money: 10,
-  //     cx: cx + Math.cos(i * 2 * Math.PI / people) * cx / 2,
-  //     cy: cy + Math.sin(i * 2 * Math.PI / people) * cy / 2
-  //   }))
-  // };
-  // this.handleTick = this.handleTick.bind(this);
-  // }
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.playing && !this.props.playing) {
+      const { cx, cy, people } = this.props;
+      this.simulation = forceSimulation()
+        .force("charge", forceManyBody())
+        .force("center", forceCenter(cx, cy));
 
-  // componentDidMount() {
-  //   const { cx, cy } = this.props;
-  //   this.simulation = forceSimulation()
-  //     .force("charge", forceManyBody())
-  //     .force("center", forceCenter(cx, cy));
+      this.simulation
+        .nodes(this.generateNodes(cx, cy, people))
+        .on("tick", this.forceUpdate.bind(this));
+    }
+  }
 
-  //   this.simulation
-  //     .nodes(this.state.nodes.map(node => ({ ...node })))
-  //     .on("tick", this.handleTick);
-  // }
-
-  // handleTick() {
-  //   const nodes = this.state.nodes.map((node, i) => ({
-  //     ...node,
-  //     cx: this.simulation.nodes()[i].x,
-  //     cy: this.simulation.nodes()[i].y
-  //   }));
-  //   this.setState({ nodes });
-  // }
-
-  render() {
-    const { cx, cy, people } = this.props;
-
-    const nodes = Array.from({ length: people }, (_, i) => ({
+  generateNodes(cx, cy, people) {
+    return Array.from({ length: people }, (_, i) => ({
       id: i,
       money: 10,
       cx: cx + Math.cos(i * 2 * Math.PI / people) * cx / 2,
       cy: cy + Math.sin(i * 2 * Math.PI / people) * cy / 2
     }));
+  }
+
+  render() {
+    const { cx, cy, people, playing, paused } = this.props;
+
+    // check if there's a simulation first, base coordinates off simulation if it exists
+    const nodes = this.simulation
+      ? this.simulation.nodes()
+      : this.generateNodes(cx, cy, people);
 
     const circles = nodes.map((node, i) => (
       <circle
         key={i}
-        cx={node.cx}
-        cy={node.cy}
+        cx={node.x || node.cx}
+        cy={node.y || node.cy}
         r={node.money}
         fill={COLORS.MAROON}
       />

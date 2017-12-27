@@ -63,6 +63,8 @@ class EconomySimulation extends Component {
               people={personCount}
               cx={width / 2}
               cy={height / 2}
+              playing={playing}
+              paused={paused}
             />
           </ClippedSVG>
         </div>
