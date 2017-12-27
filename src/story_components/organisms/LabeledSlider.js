@@ -12,6 +12,7 @@ import COLORS from "../../utils/styles";
 const LabeledSlider = ({
   min,
   max,
+  step,
   value,
   handleValueChange,
   title,
@@ -24,6 +25,7 @@ const LabeledSlider = ({
   maxIcon
 }) => {
   const fraction = (value - min) / (max - min);
+  step = step || (max - min) / 100;
   return (
     <StyledSliderArea flexZero={flexZero}>
       <StyledSliderTitle>{title}</StyledSliderTitle>
@@ -35,7 +37,7 @@ const LabeledSlider = ({
           min={min}
           max={max}
           value={value}
-          step={(max - min) / 100}
+          step={step}
           onChange={handleValueChange}
           activeColor={lighten(0.2, color)}
           height={sliderHeight}
@@ -60,6 +62,7 @@ const LabeledSlider = ({
 LabeledSlider.propTypes = {
   min: PropTypes.number.isRequired,
   max: PropTypes.number.isRequired,
+  step: PropTypes.number,
   value: PropTypes.number.isRequired,
   handleValueChange: PropTypes.func.isRequired,
   title: PropTypes.string.isRequired,
