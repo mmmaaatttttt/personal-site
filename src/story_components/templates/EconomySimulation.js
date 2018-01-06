@@ -3,17 +3,23 @@ import PropTypes from "prop-types";
 import SimulationStart from "../molecules/SimulationStart";
 import SimulationStop from "../molecules/SimulationStop";
 import ClippedSVG from "../atoms/ClippedSVG";
-import EconomyForceGraph from "../molecules/EconomyForceGraph";
+import EconomyNodeGroup from "../molecules/EconomyNodeGroup";
 import withCaption from "../../hocs/withCaption";
 
 class EconomySimulation extends Component {
   constructor(props) {
     super(props);
-    this.state = { playing: false, paused: false, personCount: 2 };
+    const money = Math.sqrt(props.totalWealth / 2);
+    this.state = {
+      playing: false,
+      paused: false,
+      people: [{ id: 0, money }, { id: 1, money }]
+    };
     this.handleStart = this.handleStart.bind(this);
     this.handleStop = this.handleStop.bind(this);
     this.handlePause = this.handlePause.bind(this);
     this.handlePersonCount = this.handlePersonCount.bind(this);
+    this.handleTrade = this.handleTrade.bind(this);
   }
 
   handleStart() {
@@ -29,11 +35,32 @@ class EconomySimulation extends Component {
   }
 
   handlePersonCount(newCount) {
-    this.setState({ personCount: newCount });
+    const money = Math.sqrt(this.props.totalWealth / newCount);
+    this.setState({
+      people: Array.from({ length: newCount }, (_, i) => ({
+        id: i,
+        money
+      }))
+    });
+  }
+
+  handleTrade(traders, amount) {
+    const newPeople = [...this.state.people];
+    const buyId = traders[0].id;
+    const sellId = traders[1].id;
+    newPeople[buyId] = {
+      ...newPeople[buyId],
+      money: newPeople[buyId].money - amount
+    };
+    newPeople[sellId] = {
+      ...newPeople[sellId],
+      money: newPeople[sellId].money + amount
+    };
+    this.setState({ people: newPeople });
   }
 
   render() {
-    const { playing, paused, personCount } = this.state;
+    const { playing, paused, people } = this.state;
     const { width, height, padding } = this.props;
     const header = playing ? (
       <SimulationStop
@@ -44,7 +71,7 @@ class EconomySimulation extends Component {
       <SimulationStart
         handleStart={this.handleStart}
         handlePersonCount={this.handlePersonCount}
-        personCount={personCount}
+        personCount={people.length}
       />
     );
     return (
@@ -59,12 +86,13 @@ class EconomySimulation extends Component {
             padding={padding}
             id="simulation"
           >
-            <EconomyForceGraph
-              people={personCount}
+            <EconomyNodeGroup
+              people={people}
               cx={width / 2}
               cy={height / 2}
               playing={playing}
               paused={paused}
+              handleTrade={this.handleTrade}
             />
           </ClippedSVG>
         </div>
@@ -76,13 +104,15 @@ class EconomySimulation extends Component {
 EconomySimulation.propTypes = {
   width: PropTypes.number.isRequired,
   height: PropTypes.number.isRequired,
-  padding: PropTypes.number.isRequired
+  padding: PropTypes.number.isRequired,
+  totalWealth: PropTypes.number.isRequired
 };
 
 EconomySimulation.defaultProps = {
   width: 600,
   height: 600,
-  padding: 20
+  padding: 20,
+  totalWealth: 5000
 };
 
 export default withCaption(EconomySimulation);

@@ -26,4 +26,13 @@ function generateData(
   return data;
 }
 
-export { generateData };
+function choices(arr, num) {
+  const values = new Set();
+  while (values.size < num) {
+    const randomIdx = Math.floor(Math.random() * arr.length);
+    values.add(arr[randomIdx]);
+  }
+  return Array.from(values);
+}
+
+export { generateData, choices };
