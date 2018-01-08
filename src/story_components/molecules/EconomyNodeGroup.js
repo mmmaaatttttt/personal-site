@@ -28,6 +28,7 @@ class EconomyNodeGroup extends Component {
   }
 
   handleUpdate(person, i) {
+    console.log("in handleUpdate");
     const { playing, paused, cx, cy, people, totalWealth } = this.props;
     const { traders, tradeAmount, tradeComplete } = this.state;
     const timing = { duration: 300 };
@@ -45,27 +46,43 @@ class EconomyNodeGroup extends Component {
 
       if (tradeAmount && !tradeComplete) {
         radius += tradeAmount;
+        console.log("FIRST RADIUS", radius, 0, tradeAmount);
         timing.delay = 200;
         timing.ease = easeBounceOut;
+      }
+
+      if (tradeComplete) {
+        console.log("SECOND RADIUS", radius, 1);
+        timing.delay = 800;
       }
     }
 
     if (traders && traders[1].id === i) {
+      // console.log("STATE", this.state);
       timing.duration = 500;
       timing.delay = 500;
 
       if (!tradeComplete) {
+        // console.log("center!");
         x = cx + cx / 4;
         y = cy;
       }
 
       if (tradeAmount && !tradeComplete) {
+        console.log("RADIUS PRE TRANSFER", radius, 1);
         radius -= tradeAmount;
+        console.log("FIRST RADIUS", radius, 1);
         timing.delay = 200;
         timing.ease = easeBounceOut;
       }
-    }
 
+      if (tradeComplete) {
+        console.log("SECOND RADIUS", radius, 1);
+        timing.delay = 800;
+      }
+    }
+    // if (traders && (traders[1].id === i || traders[0].id === i))
+    //   console.log(timing);
     return {
       x: [x],
       y: [y],
@@ -83,17 +100,21 @@ class EconomyNodeGroup extends Component {
           const shouldRestart =
             traders && tradeAmount && tradeComplete && activeVis;
           if (shouldMakeTraders) {
+            console.log("should make traders");
             this.setState({
               traders: choices(people, 2)
             });
           } else if (shouldStartTrade) {
+            console.log("should start trade");
             const maxTrade = Math.min(traders[0].money, traders[1].money);
             this.setState({ tradeAmount: Math.random() * maxTrade }, () =>
               this.props.handleTrade(traders, this.state.tradeAmount)
             );
           } else if (shouldEndTrade) {
+            console.log("should end trade");
             this.setState({ tradeComplete: true });
           } else if (shouldRestart) {
+            console.log("should restart");
             this.setState({
               traders: null,
               tradeAmount: null,
@@ -126,9 +147,7 @@ class EconomyNodeGroup extends Component {
             timing
           };
         }}
-        update={
-          this.props.playing ? this.handleUpdate : this.handleUpdate.bind(this)
-        }
+        update={this.handleUpdate}
         leave={person => ({
           x: [this.getRootOfUnity(0).x],
           y: [this.getRootOfUnity(0).y],
@@ -139,7 +158,15 @@ class EconomyNodeGroup extends Component {
         {nodes => (
           <g>
             {nodes.map(({ key, state: { x, y, radius, color } }) => (
-              <circle key={key} cx={x} cy={y} fill={color} r={radius} />
+              <circle
+                key={key}
+                cx={x}
+                cy={y}
+                fill={color}
+                r={radius}
+                stroke="black"
+                strokeWidth={1}
+              />
             ))}
           </g>
         )}

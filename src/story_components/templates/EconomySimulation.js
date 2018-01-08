@@ -5,6 +5,7 @@ import SimulationStop from "../molecules/SimulationStop";
 import ClippedSVG from "../atoms/ClippedSVG";
 import EconomyNodeGroup from "../molecules/EconomyNodeGroup";
 import withCaption from "../../hocs/withCaption";
+import StyledNarrowContainer from "../atoms/StyledNarrowContainer";
 
 class EconomySimulation extends Component {
   constructor(props) {
@@ -56,6 +57,11 @@ class EconomySimulation extends Component {
       ...newPeople[sellId],
       money: newPeople[sellId].money + amount
     };
+    console.log(
+      "in handleTrade!",
+      newPeople[buyId].money,
+      newPeople[sellId].money
+    );
     this.setState({ people: newPeople });
   }
 
@@ -75,7 +81,7 @@ class EconomySimulation extends Component {
       />
     );
     return (
-      <div>
+      <StyledNarrowContainer width="60%">
         {header}
         <div>
           <p>Playing: {playing.toString()}</p>
@@ -96,7 +102,7 @@ class EconomySimulation extends Component {
             />
           </ClippedSVG>
         </div>
-      </div>
+      </StyledNarrowContainer>
     );
   }
 }
