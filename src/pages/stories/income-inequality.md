@@ -9,3 +9,11 @@ featured_image_caption: "Monopoly man sitting in on a Senate hearing in the wake
 Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nisi provident maxime optio omnis animi accusamus, aperiam distinctio adipisci eveniet nostrum nemo aut esse voluptatem ab in, dolores odit ad pariatur.
 
 <EconomySimulation caption="test"/>
+
+1. here's what you might expect.
+
+2. here's what you actually see.
+
+3. here's the data.
+
+4. what kind of model makes sense?

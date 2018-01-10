@@ -14,13 +14,12 @@ class EconomySimulation extends Component {
     this.state = {
       playing: false,
       paused: false,
-      people: [{ id: 0, money }, { id: 1, money }]
+      people: 2
     };
     this.handleStart = this.handleStart.bind(this);
     this.handleStop = this.handleStop.bind(this);
     this.handlePause = this.handlePause.bind(this);
     this.handlePersonCount = this.handlePersonCount.bind(this);
-    this.handleTrade = this.handleTrade.bind(this);
   }
 
   handleStart() {
@@ -36,33 +35,7 @@ class EconomySimulation extends Component {
   }
 
   handlePersonCount(newCount) {
-    const money = Math.sqrt(this.props.totalWealth / newCount);
-    this.setState({
-      people: Array.from({ length: newCount }, (_, i) => ({
-        id: i,
-        money
-      }))
-    });
-  }
-
-  handleTrade(traders, amount) {
-    const newPeople = [...this.state.people];
-    const buyId = traders[0].id;
-    const sellId = traders[1].id;
-    newPeople[buyId] = {
-      ...newPeople[buyId],
-      money: newPeople[buyId].money - amount
-    };
-    newPeople[sellId] = {
-      ...newPeople[sellId],
-      money: newPeople[sellId].money + amount
-    };
-    console.log(
-      "in handleTrade!",
-      newPeople[buyId].money,
-      newPeople[sellId].money
-    );
-    this.setState({ people: newPeople });
+    this.setState({ people: newCount });
   }
 
   render() {
@@ -77,7 +50,7 @@ class EconomySimulation extends Component {
       <SimulationStart
         handleStart={this.handleStart}
         handlePersonCount={this.handlePersonCount}
-        personCount={people.length}
+        personCount={people}
       />
     );
     return (
@@ -94,11 +67,10 @@ class EconomySimulation extends Component {
           >
             <EconomyNodeGroup
               people={people}
-              cx={width / 2}
-              cy={height / 2}
+              width={width}
+              height={height}
               playing={playing}
               paused={paused}
-              handleTrade={this.handleTrade}
             />
           </ClippedSVG>
         </div>
@@ -117,7 +89,7 @@ EconomySimulation.propTypes = {
 EconomySimulation.defaultProps = {
   width: 600,
   height: 600,
-  padding: 20,
+  padding: 0,
   totalWealth: 5000
 };
 
