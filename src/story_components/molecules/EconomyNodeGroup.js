@@ -33,34 +33,39 @@ class EconomyNodeGroup extends Component {
 
   componentWillUpdate(nextProps) {
     this.simulation.nodes(this.generateNodes(nextProps));
-    // figure out wtf is up with the coordinates
   }
 
   generateNodes(props) {
-    // generate them so there's a guarantee of no intersection
     const { width, height, people, playing, paused } = props;
     const { cos, sin, PI, random } = Math;
     const velocity = 10;
     const r = 10;
     const currentNodes = this.simulation.nodes();
     if (people < currentNodes.length) return currentNodes.slice(0, people);
-    return currentNodes.concat(
-      Array.from({ length: people - currentNodes.length }, () => {
-        const theta = 2 * PI * random();
-        const node = {
-          x: random() * (width - 2 * r) + r,
-          y: random() * (height - 2 * r) + r,
-          vx: velocity * cos(theta),
-          vy: velocity * sin(theta),
-          r
-        };
-        if (!playing || paused) {
-          node.fx = node.x;
-          node.fy = node.y;
-        }
-        return node;
-      })
-    );
+    const newNodes = [...currentNodes];
+    while (newNodes.length < people) {
+      const theta = 2 * PI * random();
+      const vx = velocity * cos(theta);
+      const vy = velocity * sin(theta);
+      let x, y;
+      // ensure that nodes don't intersect
+      // not optimal, but there aren't many nodes
+      do {
+        x = random() * (width - 2 * r) + r;
+        y = random() * (height - 2 * r) + r;
+      } while (
+        newNodes.some(
+          node => (node.x - x) ** 2 + (node.y - y) ** 2 < (3 * r) ** 2
+        )
+      );
+      const node = { x, y, vx, vy, r };
+      if (!playing || paused) {
+        node.fx = node.x;
+        node.fy = node.y;
+      }
+      newNodes.push(node);
+    }
+    return newNodes;
   }
 
   updateNodes() {}
