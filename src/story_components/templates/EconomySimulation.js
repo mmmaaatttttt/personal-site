@@ -7,6 +7,7 @@ import EconomyNodeGroup from "../molecules/EconomyNodeGroup";
 import withCaption from "../../hocs/withCaption";
 import StyledNarrowContainer from "../atoms/StyledNarrowContainer";
 import { euclideanDistance } from "../../utils/mathHelpers";
+import COLORS from "../../utils/styles";
 
 class EconomySimulation extends Component {
   constructor(props) {
@@ -80,6 +81,8 @@ class EconomySimulation extends Component {
             height={height}
             padding={padding}
             id="simulation"
+            borderColor={COLORS.MAROON}
+            borderWidth="3px"
           >
             <EconomyNodeGroup
               speeds={speeds}
