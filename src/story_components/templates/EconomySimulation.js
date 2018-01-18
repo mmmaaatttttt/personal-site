@@ -6,59 +6,75 @@ import ClippedSVG from "../atoms/ClippedSVG";
 import EconomyNodeGroup from "../molecules/EconomyNodeGroup";
 import withCaption from "../../hocs/withCaption";
 import StyledNarrowContainer from "../atoms/StyledNarrowContainer";
+import { euclideanDistance } from "../../utils/mathHelpers";
 
 class EconomySimulation extends Component {
   constructor(props) {
     super(props);
-    const money = Math.sqrt(props.totalWealth / 2);
     this.state = {
       playing: false,
       paused: false,
-      people: 2
+      speeds: new Array(2).fill(this.props.initialV),
+      velocityMultiplier: 1
     };
-    this.handleStart = this.handleStart.bind(this);
-    this.handleStop = this.handleStop.bind(this);
-    this.handlePause = this.handlePause.bind(this);
-    this.handlePersonCount = this.handlePersonCount.bind(this);
   }
 
-  handleStart() {
+  handleStart = () => {
     this.setState({ playing: true });
-  }
+  };
 
-  handleStop() {
-    this.setState({ playing: false, paused: false });
-  }
+  handleStop = () => {
+    this.setState({
+      playing: false,
+      paused: false,
+      velocityMultiplier: 1,
+      speeds: new Array(2).fill(this.props.initialV)
+    });
+  };
 
-  handlePause() {
+  handlePause = () => {
     this.setState({ paused: !this.state.paused });
-  }
+  };
 
-  handlePersonCount(newCount) {
-    this.setState({ people: newCount });
-  }
+  handleSpeedCount = newCount => {
+    this.setState({ speeds: new Array(newCount).fill(this.props.initialV) });
+  };
+
+  handleVelocityChange = newMultiplier => {
+    this.setState({ velocityMultiplier: newMultiplier });
+  };
+
+  handleCollision = (node1, node2) => {
+    // NOTE: velocity isn't conserved, energy is
+    const speeds = [...this.state.speeds];
+    speeds[node1.i] =
+      euclideanDistance(node1.vx, node1.vy) / this.state.velocityMultiplier;
+    speeds[node2.i] =
+      euclideanDistance(node2.vx, node2.vy) / this.state.velocityMultiplier;
+    this.setState({ speeds });
+  };
 
   render() {
-    const { playing, paused, people } = this.state;
-    const { width, height, padding } = this.props;
+    const { playing, paused, speeds, velocityMultiplier } = this.state;
+    const { width, height, padding, initialV } = this.props;
     const header = playing ? (
       <SimulationStop
         handleStop={this.handleStop}
         handlePause={this.handlePause}
+        handleVelocityChange={this.handleVelocityChange}
+        velocityMultiplier={velocityMultiplier}
       />
     ) : (
       <SimulationStart
         handleStart={this.handleStart}
-        handlePersonCount={this.handlePersonCount}
-        personCount={people}
+        handleSpeedCount={this.handleSpeedCount}
+        nodeCount={speeds.length}
       />
     );
     return (
       <StyledNarrowContainer width="60%">
         {header}
         <div>
-          <p>Playing: {playing.toString()}</p>
-          <p>Paused: {paused.toString()}</p>
           <ClippedSVG
             width={width}
             height={height}
@@ -66,11 +82,14 @@ class EconomySimulation extends Component {
             id="simulation"
           >
             <EconomyNodeGroup
-              people={people}
+              speeds={speeds}
               width={width}
               height={height}
               playing={playing}
               paused={paused}
+              velocityMultiplier={velocityMultiplier}
+              handleCollision={this.handleCollision}
+              initialV={initialV}
             />
           </ClippedSVG>
         </div>
@@ -83,14 +102,14 @@ EconomySimulation.propTypes = {
   width: PropTypes.number.isRequired,
   height: PropTypes.number.isRequired,
   padding: PropTypes.number.isRequired,
-  totalWealth: PropTypes.number.isRequired
+  initialV: PropTypes.number.isRequired
 };
 
 EconomySimulation.defaultProps = {
   width: 600,
   height: 600,
   padding: 0,
-  totalWealth: 5000
+  initialV: 10
 };
 
 export default withCaption(EconomySimulation);

@@ -4,15 +4,22 @@ import { forceSimulation } from "d3-force";
 import { forceBounce } from "d3-force-bounce";
 import { forceSurface } from "d3-force-surface";
 import { select } from "d3-selection";
+import { scaleLinear } from "d3-scale";
+import { euclideanDistance } from "../../utils/mathHelpers";
 import COLORS from "../../utils/styles";
 
 class EconomyNodeGroup extends Component {
   componentWillMount() {
-    const { width, height, people } = this.props;
+    const { width, height, handleCollision } = this.props;
     this.simulation = forceSimulation()
       .alphaDecay(0)
       .velocityDecay(0)
-      .force("bounce", forceBounce().radius(node => node.r))
+      .force(
+        "bounce",
+        forceBounce()
+          .radius(node => node.r)
+          .onImpact(handleCollision)
+      )
       .force(
         "surface",
         forceSurface()
@@ -28,25 +35,65 @@ class EconomyNodeGroup extends Component {
 
     this.simulation
       .nodes(this.generateNodes(this.props))
-      .on("tick", this.updateNodes);
+      .on("tick", () => this.updateNodes(this.props));
   }
 
   componentWillUpdate(nextProps) {
-    this.simulation.nodes(this.generateNodes(nextProps));
+    const samePopulation = this.props.speeds.length === nextProps.speeds.length;
+    const sameMultiplier =
+      this.props.velocityMultiplier === nextProps.velocityMultiplier;
+    const resetting =
+      (this.props.playing || this.props.paused) && !nextProps.playing;
+
+    if (!samePopulation) {
+      this.simulation.nodes(this.generateNodes(nextProps));
+    }
+
+    if (!sameMultiplier) {
+      this.simulation.nodes().forEach(node => {
+        ["vx", "vy", "lastVx", "lastVy"].forEach(key => {
+          node[key] = node[key]
+            ? node[key] *
+              nextProps.velocityMultiplier /
+              this.props.velocityMultiplier
+            : node[key];
+        });
+      });
+    }
+
+    if (resetting) {
+      this.clearNodes();
+      this.simulation.nodes(this.generateNodes(nextProps));
+      this.updateNodes(nextProps);
+    }
   }
 
-  generateNodes(props) {
-    const { width, height, people, playing, paused } = props;
+  isMoving() {
+    return this.props.playing && !this.props.paused;
+  }
+
+  clearNodes = () => {
+    this.simulation.nodes([]);
+    select(this.g)
+      .selectAll("circle")
+      .data([])
+      .exit()
+      .remove();
+  };
+
+  generateNodes = props => {
+    const { width, height, speeds } = props;
     const { cos, sin, PI, random } = Math;
-    const velocity = 10;
     const r = 10;
     const currentNodes = this.simulation.nodes();
-    if (people < currentNodes.length) return currentNodes.slice(0, people);
+    if (speeds.length < currentNodes.length)
+      return currentNodes.slice(0, speeds.length);
     const newNodes = [...currentNodes];
-    while (newNodes.length < people) {
+    while (newNodes.length < speeds.length) {
+      const i = newNodes.length;
       const theta = 2 * PI * random();
-      const vx = velocity * cos(theta);
-      const vy = velocity * sin(theta);
+      const vx = speeds[i] * cos(theta);
+      const vy = speeds[i] * sin(theta);
       let x, y;
       // ensure that nodes don't intersect
       // not optimal, but there aren't many nodes
@@ -58,24 +105,23 @@ class EconomyNodeGroup extends Component {
           node => (node.x - x) ** 2 + (node.y - y) ** 2 < (3 * r) ** 2
         )
       );
-      const node = { x, y, vx, vy, r };
+      const node = { i, x, y, vx, vy, r };
       newNodes.push(node);
     }
     return newNodes;
-  }
+  };
 
-  updateNodes = () => {
-    const { playing, paused } = this.props;
-    const shouldMove = playing && !paused;
+  updateNodes = props => {
+    const { speeds, velocityMultiplier, initialV } = props;
+    const isMoving = this.isMoving();
     this.simulation.nodes().forEach(node => {
-      if (shouldMove) {
+      if (isMoving) {
         node.fx = null;
         node.fy = null;
         node.vx = node.vx || node.lastVx;
         node.vy = node.vy || node.lastVy;
         node.lastVx = null;
         node.lastVy = null;
-        this.simulation.restart();
       } else {
         node.lastVx = node.lastVx || node.vx;
         node.lastVy = node.lastVy || node.vy;
@@ -83,7 +129,11 @@ class EconomyNodeGroup extends Component {
         node.fy = node.y;
       }
     });
-    console.log(this.simulation.nodes()[0]);
+
+    const scaledInitialpeed = initialV * velocityMultiplier;
+    const colorScale = scaleLinear()
+      .domain([0, scaledInitialpeed, scaledInitialpeed * 2])
+      .range([COLORS.BLUE, COLORS.MAROON, COLORS.RED]);
 
     let nodes = select(this.g)
       .selectAll("circle")
@@ -95,15 +145,16 @@ class EconomyNodeGroup extends Component {
       .enter()
       .append("circle")
       .attr("r", d => d.r)
-      .attr("fill", COLORS.MAROON)
+      .attr("fill", d => colorScale(euclideanDistance(d.vx, d.vy)))
       .attr("cx", d => d.x)
       .attr("cy", d => d.y);
 
-    if (shouldMove) {
-      nodes.attr("cx", d => d.x).attr("cy", d => d.y);
+    if (isMoving) {
+      nodes
+        .attr("fill", d => colorScale(euclideanDistance(d.vx, d.vy)))
+        .attr("cx", d => d.x)
+        .attr("cy", d => d.y);
     }
-
-    this.forceUpdate();
   };
 
   forceInCanvas = node => {
@@ -115,13 +166,6 @@ class EconomyNodeGroup extends Component {
   };
 
   render() {
-    const { people, playing, paused } = this.props;
-
-    const nodes = select(this.g)
-      .selectAll("circle")
-      .data();
-
-    // look back at this: https://bl.ocks.org/vasturiano/2992bcb530bc2d64519c5b25201492fd
     return <g ref={g => (this.g = g)} />;
   }
 }
@@ -129,9 +173,10 @@ class EconomyNodeGroup extends Component {
 EconomyNodeGroup.propTypes = {
   width: PropTypes.number.isRequired,
   height: PropTypes.number.isRequired,
-  people: PropTypes.number.isRequired,
+  speeds: PropTypes.arrayOf(PropTypes.number).isRequired,
   playing: PropTypes.bool.isRequired,
-  paused: PropTypes.bool.isRequired
+  paused: PropTypes.bool.isRequired,
+  velocityMultiplier: PropTypes.number.isRequired
 };
 
 export default EconomyNodeGroup;

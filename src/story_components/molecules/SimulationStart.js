@@ -1,17 +1,19 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import LabeledSlider from "../organisms/LabeledSlider";
+import StyledButton from "../atoms/StyledButton";
+import StyledFlexContainer from "../atoms/StyledFlexContainer";
 import COLORS from "../../utils/styles";
 
 class SimulationStart extends Component {
   render() {
-    const { handleStart, handlePersonCount, personCount } = this.props;
+    const { handleStart, handleSpeedCount, nodeCount } = this.props;
     return (
-      <div>
+      <StyledFlexContainer column main="center">
         <LabeledSlider
-          handleValueChange={handlePersonCount}
+          handleValueChange={handleSpeedCount}
           title="Population Size"
-          value={personCount}
+          value={nodeCount}
           min={2}
           max={50}
           step={1}
@@ -20,15 +22,18 @@ class SimulationStart extends Component {
           minIcon="user"
           maxIcon="users"
         />
-        <button onClick={handleStart}>start</button>
-      </div>
+        <StyledButton onClick={handleStart} color={COLORS.MAROON}>
+          Start
+        </StyledButton>
+      </StyledFlexContainer>
     );
   }
 }
 
 SimulationStart.propTypes = {
   handleStart: PropTypes.func.isRequired,
-  handlePersonCount: PropTypes.func.isRequired
+  handleSpeedCount: PropTypes.func.isRequired,
+  nodeCount: PropTypes.number.isRequired
 };
 
 export default SimulationStart;
