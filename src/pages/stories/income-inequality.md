@@ -24,9 +24,27 @@ I am a mathematician, though, so instead I'd like you to consider a thought expe
 
 ### Starting from Scratch
 
+Let's imagine that we could blow away all of the complexities in our economy, and create a society where everyone starts out with an equal amount of wealth. The economy is strictly based on bartering: whenever two people meet, they can decide to trade goods between them. This exchange will, of course, have an affect on each individual's wealth.
+
+When two people succesfully barter, presumably they both feel good about the exchange, otherwise they wouldn't go through with it. But it's unlikely that the trade is entirely equal. It's much more likely that after the exchange, one person will have gained some wealth, while the other person will have lost some.
+
+However, to keep things from getting out of hand, there's no concept of debt in our society. When two people meet to barter, the value that they're bartering can never exceed the poorer individual's wealth.
+
+I was first introduced to this idea by mathematician Brian Hayes in his book, [_Group Theory in the Bedroom, and Other Mathematical Diversions_](https://www.amazon.com/Group-Theory-Bedroom-Mathematical-Diversions/dp/0809052172). What first interested me in this hypothetical society is how fair it sounds. Everyone starts out on exactly the same footing, and the rules of the game seem about as fair as can be. Everyone trades in good faith, and nobody can run up a debt by doing so.
+
+If you take a moment to think about how this society is likely to evolve, you might convince yourself that people in the society should behave like gas particles, randomly colliding with one another and exchanging energy. Except instead of energy, these people are exchanging their wealth. Here's what such a simulation might look like:
+
 <EconomySimulation caption="Here's how you might expect our model society to evolve."/>
 
-1. here's what you might expect.
+In the above simulation, each person's wealth is visualized both by his or her speed and by his or her color. Faster circles correspond to wealthier individuals and have a red color, while slower circles correspond to less wealthy individuals and take on more of a blue hue.
+
+SOMETHING ABOUT BAR GRAPH.
+
+Unfortunately, this isn't how our model society actually evolves.
+
+---
+
+### Trickle-Up Economics
 
 2. here's what you actually see.
 
