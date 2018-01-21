@@ -8,7 +8,10 @@ const compile = marksy({
 });
 
 const stripFrontMatterAndCompile = content => {
-  content = content.replace(/^---((.|\n)*)---(\n)*/, "");
+  content = content
+    .split("---")
+    .slice(2)
+    .join("---");
   return compile(content).tree;
 };
 

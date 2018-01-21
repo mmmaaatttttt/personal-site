@@ -49,7 +49,8 @@ ClippedSVG.propTypes = {
 };
 
 ClippedSVG.defaultProps = {
-  padding: 0
+  padding: 0,
+  borderWidth: "0"
 };
 
 export default ClippedSVG;

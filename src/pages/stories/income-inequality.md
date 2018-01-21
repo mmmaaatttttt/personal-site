@@ -12,9 +12,17 @@ Looking at different income groups' share of total income tells a similar story.
 
 By 2007, this gap had significantly widened. The top 20% of earners increased their share of the pie by almost ten points, to 55%. This increase is almost entirely explained by huge gains by the top 1%, who saw their income share nearly **double** to 18.6%. Meanwhile, the bottom 20% of earners saw their share decrease two points, to 5.7%. And given current trends over the past decade, it's hard to imagine the picture has gotten much rosier for most Americans.
 
-<CaptionedImage caption="foo" width="80%" src="cbo_income_graph.png" />
+<CaptionedImage caption="Shares of Income After Transfers and Federal Taxes, 1979 and 2007 (Source: CBO)" width="80%" src="cbo_income_graph.png" />
 
-lorem
+As the income gap grows, so too does the _wealth_ gap, which measures a family's total assets. According to a [2016 CBO report](https://www.cbo.gov/publication/51846), the top 10% of families held 76% of the overall wealth in the United States in 2013, up from 67% in 1989. In contrast, the bottom 50% of families held only 1% of the total wealth in 2013, down from 3% in 1989.
+
+When it comes to income and wealth inequality in America, we're moving in the wrong direction. And I'm not an economist or a policy maker; I have no idea what steps we could take to begin reversing the trend that has emerged over the past 40 years.
+
+I am a mathematician, though, so instead I'd like you to consider a thought experiment.
+
+---
+
+### Starting from Scratch
 
 <EconomySimulation caption="Here's how you might expect our model society to evolve."/>
 
@@ -25,3 +33,9 @@ lorem
 3. here's the data.
 
 4. what kind of model makes sense?
+
+Sources
+
+* https://www.cbo.gov/publication/42729
+* https://www.cbo.gov/publication/51846
+* https://en.wikipedia.org/wiki/Elastic_collision#Two-dimensional

@@ -16,20 +16,15 @@ What does this mean? A rigorous explanation gets a little technical, but loosely
 
 Before talking more about what makes a set of (differential) equations nonlinear, let's take a look at an example.
 
-* * *
+---
 
 ### Nonlinear Relationship Dynamics: First Model
 
 Let's revisit our second model from the previous story. The equations we were modeling were these:
 
-<Latex displayMode={true} str={`
-  \\begin{aligned}
-  A\\prime (t) &= a \\times B(t) + c \\times A(t), \\\\
-  B\\prime (t) &= b \\times A(t) + d \\times B(t),
-  \\end{aligned}
-`}/>
+<Latex displayMode={true} str={`\\begin{aligned} A\\prime (t) &= a \\times B(t) + c \\times A(t), \\\\ B\\prime (t) &= b \\times A(t) + d \\times B(t), \\end{aligned}`}/>
 
-These were the models that gave us four archetypes for people in relationships: _eager beavers_, _narcissistic nerds_, _cautious lovers_, and _hermits_. 
+These were the models that gave us four archetypes for people in relationships: _eager beavers_, _narcissistic nerds_, _cautious lovers_, and _hermits_.
 
 This model gave us some cool pictures, but it also didn't seem to do a great job modeling healthy and realistic relationships. But maybe that's because the assumptions in the model aren't healthy or realistic, either.
 
@@ -45,16 +40,11 @@ As you explore these models, it's pretty clear that the latter one allows for a 
 
 So how is the second model different? Well, here are the equations used:
 
-<Latex displayMode={true} str={`
-  \\begin{aligned}
-  A^{\\prime} (t) &= a \\times B(t) ( 1 - \\left|B(t)\\right| ) + c \\times A(t), \\\\
-  B^{\\prime} (t) &= b \\times A(t) ( 1 - \\left|A(t)\\right| ) + d \\times B(t),
-  \\end{aligned}
-`}/>
+<Latex displayMode={true} str={`\\begin{aligned} A^{\\prime} (t) &= a \\times B(t) ( 1 - \\left|B(t)\\right| ) + c \\times A(t), \\\\ B^{\\prime} (t) &= b \\times A(t) ( 1 - \\left|A(t)\\right| ) + d \\times B(t), \\end{aligned}`}/>
 
 We'll talk more about the notation in just a bit. These equations certainly look a little complicated. But what does it mean for them to be _nonlinear_?
 
-* * *
+---
 
 ### Linear vs. Nonlinear
 
@@ -70,7 +60,7 @@ The linear models we've seen so far are examples of a family of equations that a
 
 Because the real world is endlessly complex, it should come as no surprise that it's also full of nonlinear systems of differential equations. These systems are used to model a wide variety of phenomena, from [predator/prey relationships](https://en.wikipedia.org/wiki/Lotka%E2%80%93Volterra_equations), to the [weather](https://en.wikipedia.org/wiki/Primitive_equations), to [superconductivity](https://en.wikipedia.org/wiki/Ginzburg%E2%80%93Landau_theory). And yes, they're even used to model love.
 
-* * *
+---
 
 ### Love and Chaos
 
@@ -86,7 +76,7 @@ It should be noted that sensitivity to initial conditions doesn't automatically 
 
 <Sidebar direction="right">Technically, linear systems of differential equations can be chaotic, but only if they are infinitely dimensional. But that's a rabbit hole for another day.</Sidebar>
 
-* * *
+---
 
 ### The Three Body Problem
 
@@ -104,19 +94,13 @@ This is sensitivity to initial conditions in action. What this means is that eve
 
 In case you're curious, here are the equations used by the model:
 
-<Latex displayMode={true} str={`
-  \\begin{aligned}
-  A^{\\prime} (t) &= a \\times B_{A}(t) ( 1 - \\left|B_{A}(t)\\right| ) + d \\times A(t), \\\\
-  B_{A}^{\\prime} (t) &= b \\times (A(t) - C(t)) ( 1 - \\left|A(t) - C(t)\\right| ) + e \\times B_{A}(t), \\\\
-  C^{\\prime} (t) &= c \\times B_{C}(t) ( 1 - \\left|B_{C}(t)\\right| ) + f \\times C(t), \\\\
-  B_{C}^{\\prime} (t) &= b \\times (C(t) - A(t)) ( 1 - \\left|C(t) - A(t)\\right| ) + e \\times B_{C}(t), \\\\
-  \\end{aligned}
-`}/>
+<Latex displayMode={true} str={`\\begin{aligned} A^{\\prime} (t) &= a \\times B_{A}(t) ( 1 - \\left|B_{A}(t)\\right| ) + d \\times A(t), \\\\ B_{A}^{\\prime} (t) &= b \\times (A(t) - C(t)) ( 1 - \\left|A(t) - C(t)\\right| ) + e \\times B_{A}(t), \\\\ C^{\\prime} (t) &= c \\times B_{C}(t) ( 1 - \\left|B_{C}(t)\\right| ) + f \\times C(t), \\\\ B_{C}^{\\prime} (t) &= b \\times (C(t) - A(t)) ( 1 - \\left|C(t) - A(t)\\right| ) + e \\times B_{C}(t), \\\\ \\end{aligned}`}/>
 
 As you can see, compared to the first model in our previous story, things have gotten quite complicated. But the upside is that we have a much more robust model, which is able to capture a wider range of relationship behavior. And indeed, this is often a trade-off when it comes to mathematical modeling: more complexity can often yield richer behavior, but complexity also makes the models more difficult to understand and can make the results of the model less widely applicable.
 
 While we could continue to add complexity to our model, let's stop here. I hope I've convinced you that the cold, logical realm of mathematics can have something interesting to say about human relationships, even if the more interesting models require more sophisticated mathematical machinery. If nothing else, I hope you'll be sympathetic when one of your friends complains that their love life is utter chaos: they may very well be offering an admission as heartbreaking as it is mathematically precise.
 
 Sources:
-- [Power Up: Unlocking the Hidden Mathematics in Video Games](https://www.amazon.com/Power-Up-Unlocking-Hidden-Mathematics-Video/dp/0691161518/), by me!
-- [Dynamical Models of Love](http://sprott.physics.wisc.edu/pubs/paper277.pdf), by J. C. Sprott
+
+* [Power Up: Unlocking the Hidden Mathematics in Video Games](https://www.amazon.com/Power-Up-Unlocking-Hidden-Mathematics-Video/dp/0691161518/), by me!
+* [Dynamical Models of Love](http://sprott.physics.wisc.edu/pubs/paper277.pdf), by J. C. Sprott

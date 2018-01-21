@@ -8,7 +8,7 @@ featured_image_caption: "Murray explaining his relationship model. Image credit:
 
 In my book, _[Power Up: Unlocking the Hidden Mathematics in Video Games](https://www.amazon.com/Power-Up-Unlocking-Hidden-Mathematics-Video/dp/0691161518/),_ I write about mathematical models of relationships inspired by games like _The Sims_ and _Skyrim_. I find the models really fun to explore, but there's only so much you can do on the printed page. Here I'd like to provide an overview of what I discuss in the book, along with some more interactive explorations of the models that come up.
 
-The idea of modeling relationships mathematically certainly didn't originate with games. Relationship dynamics have been part of academic research for some time. They've entered popular culture through other mediums, too. One of my favorite examples is this clip from [Flight of the Conchords](https://en.wikipedia.org/wiki/Flight_of_the_Conchords), in which one of the characters, Murray, uses axes to describe his model of friendship. 
+The idea of modeling relationships mathematically certainly didn't originate with games. Relationship dynamics have been part of academic research for some time. They've entered popular culture through other mediums, too. One of my favorite examples is this clip from [Flight of the Conchords](https://en.wikipedia.org/wiki/Flight_of_the_Conchords), in which one of the characters, Murray, uses axes to describe his model of friendship.
 
 <ResponsiveIFrame src="https://www.youtube.com/embed/Vg-zC1xXK3E" heightOverWidth={42/56} />
 
@@ -18,9 +18,9 @@ This is very similar to the way the friendship model works in games like _The Si
 
 Mathematically, though, these models don't do a whole lot for me. There's not much here beyond simple arithmetic. Positive interactions add a certain number of points, negative interactions subtract a certain number of points.
 
-* * *
+---
 
-### Relationship Dynamics: First Model 
+### Relationship Dynamics: First Model
 
 Things get more interesting when you start to think about one person's feelings changing in response to another person's feelings. Steven Strogatz wrote a [one-page treatment](http://ai.stanford.edu/~rajatr/articles/SS_love_dEq.pdf) of this idea in 1988. He begins by imagining two people whose feelings for one another depend entirely on the other person's feelings. In other words, the speed with which person A's feelings for person B are changing at any given point in time depend entirely on how person B is feeling, and vice versa for person A's feelings.
 
@@ -29,15 +29,10 @@ Think about this conceptually for a bit. Suppose that person A's feelings change
 <GamingLinearRelationships idx={0} caption="Visualizing A and B's feelings based on four inputs."/>
 
 For those of you who prefer equations to visualizations, here's what we're visualizing. If _A(t)_ denotes person A's feelings at time _t_, and _B(t)_ denotes person B's feelings at time _t_, then these graphs are determined by:
- 
+
 <Sidebar>Fun fact: if you've studied differential equations, you can solve these equations in terms of trigonometric or exponential functions that you learned about in high school.</Sidebar>
 
-<Latex displayMode={true} str={`
-  \\begin{aligned}
-  A^{\\prime} (t) &= a \\times B(t), \\\\
-  B^{\\prime} (t) &= b \\times A(t),
-  \\end{aligned}
-`}/>
+<Latex displayMode={true} str={`\\begin{aligned} A^{\\prime} (t) &= a \\times B(t), \\\\ B^{\\prime} (t) &= b \\times A(t), \\end{aligned}`}/>
 
 where _a_ measures the strength of A's response to B's feelings, and similarly for _b_. If you're not familiar with this notation, don't sweat it: _A′(t)_ is the calculus-y way of talking about the _speed_ with which A's feelings change. The higher it's value, the more quickly A's feelings are changing.
 
@@ -50,49 +45,44 @@ If you play around with this visualization a bit, you may reach a somewhat unset
 
 Put simply, this model of relationships isn't very optimistic. There's no way to model a relationship that naturally grows over time and stabilizes at some reasonable value.
 
-* * *
+---
 
-### Relationship Dynamics: Second Model 
+### Relationship Dynamics: Second Model
 
 If we want to be able to model a larger class of relationships, we'll need to add more complexity to the model. In the paper I mentioned above, Strogatz offers one possible way to add complexity. Rather than having each person's feelings depend only on the other person's, we should allow them to be a bit more self reflective. In other words, we should allow peoples' feelings to change based on the strength of _their_ current feelings, not just the feelings of their partner.
 
-This requires a few more parameters, since we can now adjust three parameters for each person: their initial feelings, the strength with which they respond to their partner's feelings, and the strength with which they respond to their own feelings. 
+This requires a few more parameters, since we can now adjust three parameters for each person: their initial feelings, the strength with which they respond to their partner's feelings, and the strength with which they respond to their own feelings.
 
 Here's a modified visualization for you to play around with:
 
 <GamingLinearRelationships idx={1} caption="Visualizing A and B's feelings based on six inputs."/>
 
-As you might have guessed, more sliders means more parameters in our model. In the language of calculus, our model now looks like this: 
+As you might have guessed, more sliders means more parameters in our model. In the language of calculus, our model now looks like this:
 
 <Sidebar direction="right">These equations can also be solved in terms of functions you may have encountered in a high school math class!</Sidebar>
 
-<Latex displayMode={true} str={`
-  \\begin{aligned}
-  A^{\\prime} (t) &= a \\times B(t) + c \\times A(t), \\\\
-  B^{\\prime} (t) &= b \\times A(t) + d \\times B(t),
-  \\end{aligned}
-`}/>
+<Latex displayMode={true} str={`\\begin{aligned} A^{\\prime} (t) &= a \\times B(t) + c \\times A(t), \\\\ B^{\\prime} (t) &= b \\times A(t) + d \\times B(t), \\end{aligned}`}/>
 
-Once again, if your calculus is a little rusty and you can feel your eyes glazing over, fret not! All this is saying is that the rate at which each person's feelings change depends not only on their partner's current feelings, but their own feelings as well. The sliders let us control the values of _a_, _b_, _c_, and _d_ (as well as each partner's _initial_ feelings), so that you can explore a wider range of possible relationships. 
+Once again, if your calculus is a little rusty and you can feel your eyes glazing over, fret not! All this is saying is that the rate at which each person's feelings change depends not only on their partner's current feelings, but their own feelings as well. The sliders let us control the values of _a_, _b_, _c_, and _d_ (as well as each partner's _initial_ feelings), so that you can explore a wider range of possible relationships.
 
 In fact, all of these options for values yield four different archetypes, depending on how people respond to the feelings of themselves and their partners. In his book _Nonlinear Dynamics and Chaos_, Strogatz identifies four categories of people. For example, depending on the values of _a_ and _c_, person A could fit into one of these groups:
 
 1. _Eager beavers_. (_a_ > 0, _c_ > 0.) These people respond positively to positive feelings in themselves and their partners.
-2. _Narcissistic Nerds_. (_a_ < 0, _c_ > 0.) These people respond positively to their own positive feelings, but are turned off by positive feelings in their partners. 
+2. _Narcissistic Nerds_. (_a_ < 0, _c_ > 0.) These people respond positively to their own positive feelings, but are turned off by positive feelings in their partners.
 3. _Cautious lovers_. (_a_ > 0, _c_ < 0.) These people respond positively to positive feelings in their partners, but are distrustful of their own positive feelings.
 4. _Hermits_. (_a_ < 0, _c_ < 0.) These people respond negatively to all positive feelings.
 
 With these archetypes in mind, play around with the above visualization and see what sorts of patterns emerge. What happens when two narcissists get together? What abou an eager beaver and a hermit?
 
-Unfortunately, you'll soon discover that in terms of stable healthy relationships, this model doesn't really do any better than the previous one. In fact, in some sense it's even more pessimistic: it can lead to some really horrendous looking relationships, including ones that both oscillate and grow exponentially! 
+Unfortunately, you'll soon discover that in terms of stable healthy relationships, this model doesn't really do any better than the previous one. In fact, in some sense it's even more pessimistic: it can lead to some really horrendous looking relationships, including ones that both oscillate and grow exponentially!
 
-* * *
+---
 
 ### Relationship Dynamics: Third Model
 
 In our quest for a stable, healthy relationship, we keep coming up short. For all of the sliders we can adjust in our visualizations, maybe our models are still too simple.
 
-Fortunately, if you study up on the theory of differential equations, you'll eventually learn that we're not too far off. In fact, there are theorems that specify when systems like the ones we've explored have stable solutions. [Wikipedia](https://en.wikipedia.org/wiki/Matrix_differential_equation) has a primer, but watch out - terse mathematical notation abounds! 
+Fortunately, if you study up on the theory of differential equations, you'll eventually learn that we're not too far off. In fact, there are theorems that specify when systems like the ones we've explored have stable solutions. [Wikipedia](https://en.wikipedia.org/wiki/Matrix_differential_equation) has a primer, but watch out - terse mathematical notation abounds!
 
 As it turns out, we can produce a larger class of stable solutions by accounting for each partner's intrinsic appeal. The terminology here is intentionally vague - if you're curious how this corresponds to actual math, you can check out the equations below. For now, all you need to know is that we can expand the model by asserting that each person in the relationship has some intrinsic, quantifiable level of appeal, and that each person in the relationship responds not only to their own feelings and their partner's feelings, but also to their partner's intrinsic appeal. Such a model is explored in more detail in a 1998 paper by Sergio Rinaldi.
 
@@ -104,34 +94,27 @@ Here's one example of a relationship that stabilizes. What other ones can you fi
 
 Once again, here are the equations, if you're into that sort of thing:
 
-<Latex displayMode={true} str={`
-  \\begin{aligned}
-  A^{\\prime} (t) &= a \\times B(t) + c \\times A(t) + e \\times B_{appeal}, \\\\
-  B^{\\prime} (t) &= b \\times A(t) + d \\times B(t) + f \\times A_{appeal},
-  \\end{aligned}
-`}/>
+<Latex displayMode={true} str={`\\begin{aligned} A^{\\prime} (t) &= a \\times B(t) + c \\times A(t) + e \\times B_{appeal}, \\\\ B^{\\prime} (t) &= b \\times A(t) + d \\times B(t) + f \\times A_{appeal}, \\end{aligned}`}/>
 
-The sliders let us control the values of the eight parameters in the above equations. 
+The sliders let us control the values of the eight parameters in the above equations.
 
-There are some fun facts to note here: 
+There are some fun facts to note here:
 
-1. In Rinaldi's initial paper, he imposes a restriction that _c_ and _d_ are negative, and the rest of the values are positive. If you follow this restriction, you should be able to find quite a few examples of stable relationships. Something to ponder: why might these assumptions make sense? 
+1. In Rinaldi's initial paper, he imposes a restriction that _c_ and _d_ are negative, and the rest of the values are positive. If you follow this restriction, you should be able to find quite a few examples of stable relationships. Something to ponder: why might these assumptions make sense?
 2. While the assumptions in the last point open the door to stable relationships, they aren't sufficient for finding stable relationships. However, given the assumption on _c_ and _d_, the condition for stability is actually pretty simple: we just need _ab_ < -_cd_.
 3. If you adjust the values of the sliders so that _ab_ is close to (but still less than) -_cd_, you may notice another interesting phenomenon: the longer it takes for people to reach their stable values, the higher those values. In other words, the slower the burn, the more satisfying the relationship over time.
 4. In a scenario where the feelings stabilize, if you increase one person's intrinsic appeal, both parties' stable values increase. However, the _other_ person's stable value increases more. Or, as Rinaldi puts it, "there is a touch of altruism in a woman (man) who tries to improve her (his) appeal."
 
-* * *
+---
 
-Of course, even though we can now model an even larger class of relationships, there's still room for improvement. We can generate relationships that stabilize, sure, but the trajectories of these relationships don't seem the most realistic. When in your life have you ever met someone for whom your feelings grew without bound, without any bumps in the road or challenges along the way? Unless you are my wife, the answer is probably never. 
+Of course, even though we can now model an even larger class of relationships, there's still room for improvement. We can generate relationships that stabilize, sure, but the trajectories of these relationships don't seem the most realistic. When in your life have you ever met someone for whom your feelings grew without bound, without any bumps in the road or challenges along the way? Unless you are my wife, the answer is probably never.
 
 We can get some even stranger looking relationship models. But to do so, we'll need to explore an entirely different set of equations. So I'll save such an exploration for next time.
 
-Sources: 
-- [Power Up: Unlocking the Hidden Mathematics in Video Games](https://www.amazon.com/Power-Up-Unlocking-Hidden-Mathematics-Video/dp/0691161518/), by me!
-- [Love Affairs and Differential Equations](http://ai.stanford.edu/~rajatr/articles/SS_love_dEq.pdf), by Steven Strogatz
-- [Nonlinear Dynamics And Chaos](https://www.amazon.com/Nonlinear-Dynamics-Chaos-Applications-Nonlinearity/dp/0738204536), by Steven Strogatz
-- [Introduction to Matrix Differential Equations](https://en.wikipedia.org/wiki/Matrix_differential_equation)
-- [Love Dynamics: The Case of Linear Couples](http://www.sciencedirect.com/science/article/pii/S0096300397100819), by Sergio Rinaldi
+Sources:
 
-
-
+* [Power Up: Unlocking the Hidden Mathematics in Video Games](https://www.amazon.com/Power-Up-Unlocking-Hidden-Mathematics-Video/dp/0691161518/), by me!
+* [Love Affairs and Differential Equations](http://ai.stanford.edu/~rajatr/articles/SS_love_dEq.pdf), by Steven Strogatz
+* [Nonlinear Dynamics And Chaos](https://www.amazon.com/Nonlinear-Dynamics-Chaos-Applications-Nonlinearity/dp/0738204536), by Steven Strogatz
+* [Introduction to Matrix Differential Equations](https://en.wikipedia.org/wiki/Matrix_differential_equation)
+* [Love Dynamics: The Case of Linear Couples](http://www.sciencedirect.com/science/article/pii/S0096300397100819), by Sergio Rinaldi
