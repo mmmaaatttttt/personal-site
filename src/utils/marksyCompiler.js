@@ -4,7 +4,16 @@ import * as components from "../story_components";
 
 const compile = marksy({
   createElement,
-  components
+  components,
+  elements: {
+    a({ href, title, children }) {
+      return (
+        <a href={href} alt={title} target="_blank">
+          {children}
+        </a>
+      );
+    }
+  }
 });
 
 const stripFrontMatterAndCompile = content => {
