@@ -8,3 +8,4 @@ export { default as EconomySimulation } from "./templates/EconomySimulation";
 export { default as Sidebar } from "./molecules/Sidebar";
 export { default as Latex } from "./atoms/Latex";
 export { default as ResponsiveIFrame } from "./molecules/ResponsiveIFrame";
+export { default as CaptionedImage } from "./molecules/CaptionedImage";
