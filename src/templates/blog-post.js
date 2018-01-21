@@ -10,14 +10,14 @@ import { Helmet } from "react-helmet";
 
 const StyledPostWrapper = styled.div`
   width: 100%;
-`
+`;
 
 const StyledTextWrapper = styled.div`
   max-width: ${sizes.maxWidthContent};
   margin: 0 auto;
   padding: ${rhythm(0.5)};
   padding-top: ${rhythm(1.25)};
-`
+`;
 
 const StyledMainImage = styled.div`
   position: relative;
@@ -29,7 +29,7 @@ const StyledMainImage = styled.div`
   height: 0;
   padding-top: 56.25%;
   margin-top: -${rhythm(1.5)};
-`
+`;
 
 const StyledImageCaption = styled.small`
   display: flex;
@@ -37,7 +37,7 @@ const StyledImageCaption = styled.small`
   margin-right: ${rhythm(0.5)};
   font-style: italic;
   color: #7d7d7d;
-`
+`;
 
 const StyledTitleWrapper = styled.div`
   position: absolute;
@@ -54,11 +54,8 @@ const StyledTitleWrapper = styled.div`
   animation: ${fadeIn} 1.5s 0.5s forwards;
   color: white;
   padding: ${rhythm(1)};
-  text-shadow: 3px 3px 1px #000,
-     -1px -1px 1px #000,
-      1px -1px 1px #000,
-     -1px 1px 1px #000,
-      1px 1px 1px #000;
+  text-shadow: 3px 3px 1px #000, -1px -1px 1px #000, 1px -1px 1px #000,
+    -1px 1px 1px #000, 1px 1px 1px #000;
 
   ${media.small`
     margin-top: ${rhythm(1)};
@@ -69,21 +66,19 @@ const StyledTitleWrapper = styled.div`
     h2 {
       font-size: ${rhythm(0.75)};
     }
-  `}
-
-  ${media.extraSmall`
+  `} ${media.extraSmall`
     h1 {
       font-size: ${rhythm(0.6)};
     }
     h2 {
       font-size: ${rhythm(0.45)};
     }
-  `}
-`
+  `};
+`;
 
 export default ({ data, location }) => {
   const post = data.markdownRemark;
-  const { title, siteUrl } = data.site.siteMetadata
+  const { title, siteUrl } = data.site.siteMetadata;
   const {
     featured_image,
     caption,
@@ -91,8 +86,8 @@ export default ({ data, location }) => {
     featured_image_caption
   } = post.frontmatter;
   const postTitle = post.frontmatter.title;
-  const fullTitle = `${postTitle} - ${title}`
-  const image = images[featured_image];
+  const fullTitle = `${postTitle} - ${title}`;
+  const image = images[`featured_images/${featured_image}`];
   return (
     <StyledPostWrapper>
       <Helmet>
@@ -102,18 +97,16 @@ export default ({ data, location }) => {
         <meta name="og:title" content={fullTitle} />
         <meta name="twitter:description" content={caption} />
         <meta name="og:description" content={caption} />
-        <meta name="twitter:image" content={`${siteUrl}${image}`}/>
-        <meta name="og:image" content={`${siteUrl}${image}`}/>
-        <meta name="og:url" content={`${siteUrl}${location.pathname}`}/>
+        <meta name="twitter:image" content={`${siteUrl}${image}`} />
+        <meta name="og:image" content={`${siteUrl}${image}`} />
+        <meta name="og:url" content={`${siteUrl}${location.pathname}`} />
       </Helmet>
       <StyledMainImage image={image}>
         <StyledTitleWrapper>
           <h1>{postTitle}</h1>
           <h2>{date}</h2>
         </StyledTitleWrapper>
-        <StyledImageCaption>
-          {featured_image_caption}
-        </StyledImageCaption>
+        <StyledImageCaption>{featured_image_caption}</StyledImageCaption>
       </StyledMainImage>
       <StyledTextWrapper>
         {stripFrontMatterAndCompile(post.internal.content)}
@@ -123,7 +116,8 @@ export default ({ data, location }) => {
             size: "large",
             via: "mmmaaatttttt",
             text: postTitle
-          }} />
+          }}
+        />
       </StyledTextWrapper>
     </StyledPostWrapper>
   );

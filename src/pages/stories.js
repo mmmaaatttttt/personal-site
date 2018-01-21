@@ -6,7 +6,9 @@ import images from "../utils/images";
 import COLORS from "../utils/styles";
 import media from "../utils/media";
 
-const StyledTitle = styled.h4`margin-bottom: ${rhythm(1 / 4)};`;
+const StyledTitle = styled.h4`
+  margin-bottom: ${rhythm(1 / 4)};
+`;
 
 const StyledDate = styled.h6`
   color: ${COLORS.NAV_BORDER};
@@ -77,7 +79,7 @@ const StyledStory = styled.div`
   ${media.extraSmall`
     margin: 0 ${rhythm(0.5)};
     padding-bottom: ${rhythm(0.5)};
-  `}
+  `};
 `;
 
 const Story = ({
@@ -90,22 +92,21 @@ const Story = ({
   direction,
   delay
 }) => (
-  <StyledStory
-    className={`animated bounceIn${direction}`}
-    delay={delay}
-  >
+  <StyledStory className={`animated bounceIn${direction}`} delay={delay}>
     <StyledLink to={slug}>
       <StyledImageWrapper>
-        <img src={image}/>
+        <img src={image} />
       </StyledImageWrapper>
       <StyledExcerptArea>
         <StyledTitle>{title}</StyledTitle>
-        <StyledDate>{date} - {timeToRead} minute read</StyledDate>
+        <StyledDate>
+          {date} - {timeToRead} minute read
+        </StyledDate>
         <p>{caption}</p>
       </StyledExcerptArea>
     </StyledLink>
   </StyledStory>
-)
+);
 
 const Stories = ({ data }) => (
   <div>
@@ -114,7 +115,7 @@ const Stories = ({ data }) => (
         key={node.fields.slug}
         title={node.frontmatter.title}
         date={node.frontmatter.date}
-        image={images[node.frontmatter.featured_image]}
+        image={images[`featured_images/${node.frontmatter.featured_image}`]}
         caption={node.frontmatter.caption}
         slug={node.fields.slug}
         timeToRead={node.timeToRead}
