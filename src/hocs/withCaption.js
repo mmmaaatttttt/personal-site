@@ -1,7 +1,8 @@
-import React, { Component } from 'react';
+import React from "react";
 import styled from "styled-components";
 import { rhythm } from "../utils/typography";
 import media from "../utils/media";
+import StyledCaptionContainer from "../story_components/atoms/StyledCaptionContainer";
 
 const StyledVisualizationContainer = styled.div`
   width: 150%;
@@ -25,25 +26,16 @@ const StyledVisualizationContainer = styled.div`
   `}
 `;
 
-const StyledCaptionContainer = styled.p`
-  text-align: center;
-  font-weight: 700;
-  font-size: 85%;
-  margin-top: ${rhythm(0.15)};
-`;
-
 function withCaption(ComposedComponent) {
   return props => {
     const { caption, ...otherProps } = props;
     return (
       <StyledVisualizationContainer>
         <ComposedComponent {...otherProps} />
-        <StyledCaptionContainer>
-          {caption}
-        </StyledCaptionContainer>
+        <StyledCaptionContainer>{caption}</StyledCaptionContainer>
       </StyledVisualizationContainer>
-    )
-  }
+    );
+  };
 }
 
 export default withCaption;
