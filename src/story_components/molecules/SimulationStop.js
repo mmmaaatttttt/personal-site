@@ -11,8 +11,11 @@ class SimulationStop extends Component {
       handlePause,
       handleStop,
       handleVelocityChange,
-      velocityMultiplier
+      handleShowingSimulation,
+      velocityMultiplier,
+      showingSimulation
     } = this.props;
+    const btnText = showingSimulation ? "Show Bar Chart" : "Show Simulation";
     return (
       <StyledFlexContainer column main="center">
         <LabeledSlider
@@ -30,6 +33,9 @@ class SimulationStop extends Component {
         <StyledFlexContainer>
           <StyledButton onClick={handlePause} color={COLORS.ORANGE}>
             Pause
+          </StyledButton>
+          <StyledButton onClick={handleShowingSimulation} color={COLORS.BLUE}>
+            {btnText}
           </StyledButton>
           <StyledButton onClick={handleStop} color={COLORS.RED}>
             Reset

@@ -46,6 +46,12 @@ Unfortunately, this isn't how our model society actually evolves.
 
 ### Trickle-Up Economics
 
+Here's what actually happens to society based on our simple bartering rules:
+
+<EconomySimulation caption="Here's how you might expect our model society to evolve."/>
+
+Unlike gas particles bumbling around together, this time around
+
 2. here's what you actually see.
 
 3. here's the data.
