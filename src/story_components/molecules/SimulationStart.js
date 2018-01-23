@@ -21,6 +21,7 @@ class SimulationStart extends Component {
           tickCount={2}
           minIcon="user"
           maxIcon="users"
+          fadeIcons={false}
         />
         <StyledButton onClick={handleStart} color={COLORS.MAROON}>
           Start

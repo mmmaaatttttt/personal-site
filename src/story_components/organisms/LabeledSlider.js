@@ -22,16 +22,19 @@ const LabeledSlider = ({
   flexZero,
   tickCount,
   minIcon,
-  maxIcon
+  maxIcon,
+  fadeIcons
 }) => {
   const fraction = (value - min) / (max - min);
   step = step || (max - min) / 100;
+  const leftOpacity = fadeIcons ? 1 - fraction : 1;
+  const rightOpacity = fadeIcons ? fraction : 1;
   return (
     <StyledSliderArea flexZero={flexZero}>
       <StyledSliderTitle>{title}</StyledSliderTitle>
       <section>
         <StyledIconWrapper>
-          <SliderIcon name={minIcon} color={color} opacity={1 - fraction} />
+          <SliderIcon name={minIcon} color={color} opacity={leftOpacity} />
         </StyledIconWrapper>
         <StyledSlider
           min={min}
@@ -52,7 +55,7 @@ const LabeledSlider = ({
           />
         </StyledSlider>
         <StyledIconWrapper>
-          <SliderIcon name={maxIcon} color={color} opacity={fraction} />
+          <SliderIcon name={maxIcon} color={color} opacity={rightOpacity} />
         </StyledIconWrapper>
       </section>
     </StyledSliderArea>
@@ -72,7 +75,8 @@ LabeledSlider.propTypes = {
   flexZero: PropTypes.bool,
   tickCount: PropTypes.number.isRequired,
   minIcon: PropTypes.string.isRequired,
-  maxIcon: PropTypes.string.isRequired
+  maxIcon: PropTypes.string.isRequired,
+  fadeIcons: PropTypes.bool.isRequired
 };
 
 LabeledSlider.defaultProps = {
@@ -87,7 +91,8 @@ LabeledSlider.defaultProps = {
   flexZero: false,
   tickCount: 3,
   minIcon: "minus",
-  maxIcon: "plus"
+  maxIcon: "plus",
+  fadeIcons: true
 };
 
 export default LabeledSlider;

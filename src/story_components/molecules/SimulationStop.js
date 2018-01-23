@@ -29,6 +29,7 @@ class SimulationStop extends Component {
           tickCount={2}
           minIcon="step-forward"
           maxIcon="fast-forward"
+          fadeIcons={false}
         />
         <StyledFlexContainer>
           <StyledButton onClick={handlePause} color={COLORS.ORANGE}>
