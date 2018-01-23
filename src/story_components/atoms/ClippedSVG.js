@@ -3,27 +3,13 @@ import styled, { css } from "styled-components";
 import PropTypes from "prop-types";
 
 const StyledSVG = styled.svg`
-  ${props =>
-    css`
-      border: ${props.borderWidth} solid ${props.borderColor};
-      border-radius: ${props.borderWidth};
-    `};
+  display: block;
 `;
 
-const ClippedSVG = ({
-  id,
-  width,
-  height,
-  padding,
-  children,
-  borderWidth,
-  borderColor
-}) => (
+const ClippedSVG = ({ id, width, height, padding, children }) => (
   <StyledSVG
     xmlns="http://www.w3.org/2000/svg"
     viewBox={`0 0 ${width} ${height}`}
-    borderWidth={borderWidth}
-    borderColor={borderColor}
   >
     <defs>
       <clipPath id={`clip-path-${id}`}>
@@ -44,13 +30,11 @@ ClippedSVG.propTypes = {
   width: PropTypes.number.isRequired,
   height: PropTypes.number.isRequired,
   padding: PropTypes.number.isRequired,
-  borderColor: PropTypes.string,
-  borderWidth: PropTypes.string
+  style: PropTypes.object
 };
 
 ClippedSVG.defaultProps = {
-  padding: 0,
-  borderWidth: "0"
+  padding: 0
 };
 
 export default ClippedSVG;

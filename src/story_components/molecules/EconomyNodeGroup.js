@@ -24,10 +24,22 @@ class EconomyNodeGroup extends Component {
         "surface",
         forceSurface()
           .surfaces([
-            { from: { x: 0, y: 0 }, to: { x: 0, y: height } },
-            { from: { x: 0, y: height }, to: { x: width, y: height } },
-            { from: { x: width, y: height }, to: { x: width, y: 0 } },
-            { from: { x: width, y: 0 }, to: { x: 0, y: 0 } }
+            {
+              from: { x: 0, y: 0 },
+              to: { x: 0, y: height }
+            },
+            {
+              from: { x: 0, y: height },
+              to: { x: width, y: height }
+            },
+            {
+              from: { x: width, y: height },
+              to: { x: width, y: 0 }
+            },
+            {
+              from: { x: width, y: 0 },
+              to: { x: 0, y: 0 }
+            }
           ])
           .oneWay(true)
           .radius(node => node.r)
@@ -166,7 +178,21 @@ class EconomyNodeGroup extends Component {
   };
 
   render() {
-    return <g ref={g => (this.g = g)} />;
+    const { borderWidth, borderStroke, width, height } = this.props;
+    return (
+      <g>
+        <rect
+          x={0}
+          y={0}
+          width={width}
+          height={height}
+          stroke={borderStroke}
+          strokeWidth={borderWidth}
+          fill="none"
+        />
+        <g ref={g => (this.g = g)} />
+      </g>
+    );
   }
 }
 
@@ -176,7 +202,14 @@ EconomyNodeGroup.propTypes = {
   speeds: PropTypes.arrayOf(PropTypes.number).isRequired,
   playing: PropTypes.bool.isRequired,
   paused: PropTypes.bool.isRequired,
-  velocityMultiplier: PropTypes.number.isRequired
+  velocityMultiplier: PropTypes.number.isRequired,
+  borderWidth: PropTypes.number.isRequired,
+  borderStroke: PropTypes.string.isRequired
+};
+
+EconomyNodeGroup.defaultProps = {
+  borderWidth: 3,
+  borderStroke: COLORS.NAV_BORDER
 };
 
 export default EconomyNodeGroup;

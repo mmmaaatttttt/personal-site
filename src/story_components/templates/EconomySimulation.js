@@ -105,33 +105,29 @@ class EconomySimulation extends Component {
       />
     );
     return (
-      <div>
+      <StyledNarrowContainer width="50%">
         {header}
-        <StyledNarrowContainer width="50%">
-          <div style={{ display: showingSimulation ? "block" : "none" }}>
-            <ClippedSVG
+        <div style={{ display: showingSimulation ? "block" : "none" }}>
+          <ClippedSVG
+            width={width}
+            height={height}
+            padding={padding}
+            id="simulation"
+          >
+            <EconomyNodeGroup
+              speeds={speeds}
               width={width}
               height={height}
-              padding={padding}
-              id="simulation"
-              borderColor={COLORS.MAROON}
-              borderWidth="3px"
-            >
-              <EconomyNodeGroup
-                speeds={speeds}
-                width={width}
-                height={height}
-                playing={playing}
-                paused={paused}
-                velocityMultiplier={velocityMultiplier}
-                handleCollision={this.handleCollision}
-                initialV={initialV}
-              />
-            </ClippedSVG>
-          </div>
-          {barGraphArea}
-        </StyledNarrowContainer>
-      </div>
+              playing={playing}
+              paused={paused}
+              velocityMultiplier={velocityMultiplier}
+              handleCollision={this.handleCollision}
+              initialV={initialV}
+            />
+          </ClippedSVG>
+        </div>
+        {barGraphArea}
+      </StyledNarrowContainer>
     );
   }
 }
