@@ -15,7 +15,7 @@ class SimulationStart extends Component {
           title="Population Size"
           value={nodeCount}
           min={2}
-          max={50}
+          max={30}
           step={1}
           color={COLORS.MAROON}
           tickCount={2}

@@ -2,13 +2,27 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import NodeGroup from "react-move/NodeGroup";
 import { scaleBand } from "d3-scale";
-import Axis from "../molecules/Axis";
 import ClippedSVG from "../atoms/ClippedSVG";
+import CenteredSVGText from "../atoms/CenteredSVGText";
 import COLORS from "../../utils/styles";
 
 class BarGraph extends Component {
+  handleStart = (scale, d, i) => ({
+    x: scale(i),
+    fill: COLORS.MAROON,
+    width: scale.bandwidth(),
+    barHeight: this.props.yScale(d.height)
+  });
+
+  handleEnterAndUpdate = (scale, d, i) => ({
+    x: [scale(i)],
+    width: [scale.bandwidth()],
+    barHeight: [this.props.yScale(d.height)],
+    timing: { duration: 100 }
+  });
+
   render() {
-    const { svgId, width, height, padding, yScale, barData } = this.props;
+    const { svgId, width, height, padding, barData } = this.props;
     const xScale = scaleBand()
       .domain(barData.map((d, i) => i))
       .rangeRound([padding, width - padding])
@@ -16,43 +30,39 @@ class BarGraph extends Component {
 
     return (
       <ClippedSVG id={svgId} width={width} height={height} padding={padding}>
-        <Axis direction="y" scale={yScale} xShift={padding} tickSize={5} />
         <NodeGroup
           data={barData}
           keyAccessor={d => d.key}
-          start={() => ({
-            x: 0,
-            fill: COLORS.MAROON,
-            width: xScale.bandwidth(),
-            barHeight: 0
-          })}
-          enter={(d, i) => ({
-            width: [xScale.bandwidth()],
-            barHeight: [yScale(d.height)],
-            x: [xScale(i)],
-            timing: { duration: 0 }
-          })}
-          update={(d, i) => ({
-            width: [xScale.bandwidth()],
-            barHeight: [yScale(d.height)],
-            x: [xScale(i)],
-            timing: { duration: 0 }
-          })}
+          start={this.handleStart.bind(this, xScale)}
+          enter={this.handleEnterAndUpdate.bind(this, xScale)}
+          update={this.handleEnterAndUpdate.bind(this, xScale)}
           leave={() => {}}
         >
           {bars => (
             <g>
               {bars.map(bar => {
                 const { x, fill, width, barHeight } = bar.state;
+                const fontSize =
+                  bars.length < 11 ? "100%" : `${110 - 1 * bars.length}%`;
                 return (
-                  <rect
-                    x={x}
-                    width={width}
-                    y={barHeight}
-                    height={height - barHeight}
-                    fill={fill}
-                    key={bar.key}
-                  />
+                  <g key={bar.key}>
+                    <rect
+                      x={x}
+                      width={width}
+                      y={barHeight}
+                      height={height - barHeight}
+                      fill={fill}
+                    />
+                    <CenteredSVGText
+                      x={x}
+                      dx={width / 2}
+                      y={barHeight}
+                      dy={-10}
+                      fontSize={fontSize}
+                    >
+                      {bar.key + 1}
+                    </CenteredSVGText>
+                  </g>
                 );
               })}
             </g>
