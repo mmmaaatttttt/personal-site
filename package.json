@@ -11,7 +11,7 @@
   "dependencies": {
     "animate.css": "^3.5.2",
     "aws-cloudfront-invalidate": "^0.1.3",
-    "d3": "^4.11.0",
+    "d3": "^4.12.2",
     "d3-force-bounce": "^0.5.5",
     "d3-force-surface": "^0.5.5",
     "font-awesome": "^4.7.0",
@@ -25,7 +25,7 @@
     "gatsby-source-filesystem": "^1.4.12",
     "gatsby-transformer-remark": "^1.7.7",
     "katex": "^0.9.0-alpha",
-    "marksy": "^5.0.0",
+    "marksy": "^6.0.3",
     "odex": "^2.0.4",
     "polished": "^1.8.0",
     "prop-types": "^15.6.0",
