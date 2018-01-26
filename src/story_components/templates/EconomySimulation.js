@@ -8,8 +8,8 @@ import EconomyNodeGroup from "../molecules/EconomyNodeGroup";
 import BarGraph from "../organisms/BarGraph";
 import withCaption from "../../hocs/withCaption";
 import StyledNarrowContainer from "../atoms/StyledNarrowContainer";
-import { euclideanDistance } from "../../utils/mathHelpers";
 import COLORS from "../../utils/styles";
+import updateSpeeds from "../../data/income-inequality.js";
 
 class EconomySimulation extends Component {
   constructor(props) {
@@ -55,12 +55,15 @@ class EconomySimulation extends Component {
 
   handleCollision = (node1, node2) => {
     // NOTE: velocity isn't conserved, energy is
-    const speeds = [...this.state.speeds];
-    speeds[node1.i] =
-      euclideanDistance(node1.vx, node1.vy) / this.state.velocityMultiplier;
-    speeds[node2.i] =
-      euclideanDistance(node2.vx, node2.vy) / this.state.velocityMultiplier;
-    this.setState({ speeds });
+    const { speeds, velocityMultiplier } = this.state;
+    this.setState({
+      speeds: updateSpeeds[this.props.idx](
+        speeds,
+        node1,
+        node2,
+        velocityMultiplier
+      )
+    });
   };
 
   render() {
@@ -136,7 +139,8 @@ EconomySimulation.propTypes = {
   width: PropTypes.number.isRequired,
   height: PropTypes.number.isRequired,
   padding: PropTypes.number.isRequired,
-  initialV: PropTypes.number.isRequired
+  initialV: PropTypes.number.isRequired,
+  idx: PropTypes.number.isRequired
 };
 
 EconomySimulation.defaultProps = {
