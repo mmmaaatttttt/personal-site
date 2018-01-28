@@ -61,10 +61,10 @@ class EconomySimulation extends Component {
 
   handleCollision = (...nodes) => {
     // NOTE: velocity isn't conserved, energy is
-    const { speeds, velocityMultiplier } = this.state;
+    const { speeds, velocityMultiplier, savingsRate } = this.state;
     const updateFn = updateSpeeds[this.props.idx];
     this.setState({
-      speeds: updateFn(speeds, velocityMultiplier, nodes)
+      speeds: updateFn(speeds, velocityMultiplier, savingsRate, nodes)
     });
   };
 
