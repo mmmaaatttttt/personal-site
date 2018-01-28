@@ -96,7 +96,7 @@ class EconomyNodeGroup extends Component {
   generateNodes = props => {
     const { width, height, speeds } = props;
     const { cos, sin, PI, random } = Math;
-    const r = 10;
+    const r = 15;
     const currentNodes = this.simulation.nodes();
     if (speeds.length < currentNodes.length)
       return currentNodes.slice(0, speeds.length);
@@ -142,9 +142,9 @@ class EconomyNodeGroup extends Component {
       }
     });
 
-    const scaledInitialpeed = initialV * velocityMultiplier;
+    const scaledInitialSpeed = initialV * velocityMultiplier;
     const colorScale = scaleLinear()
-      .domain([0, scaledInitialpeed, scaledInitialpeed * 2])
+      .domain([0, scaledInitialSpeed, scaledInitialSpeed * 2])
       .range([COLORS.BLUE, COLORS.MAROON, COLORS.RED]);
 
     let nodes = select(this.g)
