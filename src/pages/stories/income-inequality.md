@@ -54,6 +54,8 @@ Unfortunately, this isn't how our model society actually evolves.
 
 Here's what actually happens to society based on our simple bartering rules:
 
+<EconomySimulation idx={1} caption="Here's how you might expect our model society to evolve."/>
+
 Unlike gas particles bumbling around together, this time one citizen gradually leeches the wealth away from everyone else. Eventually, almost everyone lives in extreme poverty, with one lucky individually accumulating all of the wealth in the society.
 
 This result is initially surprising for many people (myself included), in large part because the rules seem entirely reasonable and fair. But even for relatively simple systems like this hypothetical society, **fair rules do not necessarily yield desirable outcomes.** Even if we all agree that the rules of this society seem fair, I don't think any of us would want to live in a society governed by these rules.
@@ -80,7 +82,19 @@ It's worth pointing out that the first simulation, the one that yields a fairer 
 2. The distribution of wealth evolves through a sequence of trades between randomly selected pairs of citizens.
 3. The amount of the trade is also random, but can never exceed the wealth of the person who ~~has less~~ _loses wealth in the trade_.
 
-Let's see how this plays out in our previous example, with a two-person society. If the first trade has a value of 50, then one person will walk away with 150 units of wealth, and the second will have only 50 remaining. However, unli
+Let's see how this plays out in our previous example, with a two-person society. If the first trade has a value of 50, then one person will walk away with 150 units of wealth, and the second will have only 50 remaining. However, unlike before, now when the second trade happens, the poorer person has a much better chance of recouping some real wealth. Of course, if the poorer person loses the trade, they will continue to decrease their wealth. But if they win, they can now win as many as 150 units of wealth, rather than just the 50 they could have won before.
+
+Even in an extreme case, the poorest person still has reason to hope. In the case where one person has 199 units of wealth to the other person's 1, the poor person is still quite likely to recoup a significant amount of wealth as soon as they win a trade. Making the value of the trade based on how much the loser has, rather than based on how much the poorest person has, means that wealth flows much more freely between people.
+
+Conceptually, though, this is perhaps a little troubling. While it's nice to imagine a society altruistic enough that the wealthy would so willingly give to the poor, a more sensible interpretation is also much more sinister. In his book, Hayes offers the following take:
+
+> A distinctive characteristic of the trading scheme is that the richer party always has more to lose and the poorer has more to gain. Under these terms, any sensible person would try to do business only with the wealthier partners, and no one would ever willingly choose to trade with a less-affluent person (assuming traders can gauge the wealth of their partners). Thus if trading between non-equals takes place at all, it must be by coercion or deception. In other words, what is being modeled here is theft and fraud.
+
+Can less fair behavior _locally_ (i.e. stealing from individuals) lead to fairer societies _globally_? If so, maybe Robin Hood was onto something.
+
+### Fitness Test
+
+But before you rush into the streets and start smashing windows to take whatever you like, it's worth pausing and thinking about how much this model has to say about our actual reality. It's quite possible that this model doesn't fit reality very well at all.
 
 3. here's the data.
 
@@ -89,8 +103,34 @@ Let's see how this plays out in our previous example, with a two-person society.
 * closed system
 * less mobility
 
+* 82% owned by 1%
+* you can't make a living on patreon
+
+* seems reasonable except at extremes
+* homogenous group savings model
+
 Sources
 
 * https://www.cbo.gov/publication/42729
 * https://www.cbo.gov/publication/51846
 * https://en.wikipedia.org/wiki/Elastic_collision#Two-dimensional
+
+YUP:
+
+* [Statistical mechanics of money](https://arxiv.org/abs/cond-mat/0001432)
+* [Evidence for the exponential distribution of income in the USA](https://arxiv.org/abs/cond-mat/0008305)
+* [Emergent Statistical Wealth Distributions in
+  Simple Monetary Exchange Models: A Critical
+  Review](http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.559.1408&rep=rep1&type=pdf)
+  * probability of winning depends on wealth
+* [Kinetic Exchange Models for Income and Wealth Distributions](https://arxiv.org/abs/0709.1543)
+
+maybe not:
+
+* [Wealth consolidation in a simple model of the economy](http://lptms.u-psud.fr/membres/mezard/Pdf/00_BM_PA.pdf)
+* [Distributions of money in model markets of economy](https://arxiv.org/abs/cond-mat/0205221)
+
+nope :
+
+* [https://en.wikipedia.org/wiki/Kinetic_exchange_models_of_markets](https://en.wikipedia.org/wiki/Kinetic_exchange_models_of_markets)
+* [Evidence for Power-law tail of the Wealth Distribution in India](https://arxiv.org/abs/cond-mat/0502166)

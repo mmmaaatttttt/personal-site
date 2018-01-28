@@ -53,16 +53,12 @@ class EconomySimulation extends Component {
     this.setState({ velocityMultiplier: newMultiplier });
   };
 
-  handleCollision = (node1, node2) => {
+  handleCollision = (...nodes) => {
     // NOTE: velocity isn't conserved, energy is
     const { speeds, velocityMultiplier } = this.state;
+    const updateFn = updateSpeeds[this.props.idx];
     this.setState({
-      speeds: updateSpeeds[this.props.idx](
-        speeds,
-        node1,
-        node2,
-        velocityMultiplier
-      )
+      speeds: updateFn(speeds, velocityMultiplier, nodes)
     });
   };
 
@@ -74,7 +70,7 @@ class EconomySimulation extends Component {
       velocityMultiplier,
       showingSimulation
     } = this.state;
-    const { width, height, padding, initialV } = this.props;
+    const { width, height, padding, initialV, idx } = this.props;
     const yScale = scaleLinear()
       .domain([0, Math.max(...speeds, 2.5 * initialV) ** 2])
       .range([height - padding, padding]);
@@ -99,7 +95,7 @@ class EconomySimulation extends Component {
     );
     const barGraphArea = showingSimulation ? null : (
       <BarGraph
-        svgId="bar-1"
+        svgId={`bar-${idx}`}
         width={width}
         height={height}
         padding={padding}
@@ -115,7 +111,7 @@ class EconomySimulation extends Component {
             width={width}
             height={height}
             padding={padding}
-            id="simulation"
+            id={`simulation-${idx}`}
           >
             <EconomyNodeGroup
               speeds={speeds}
