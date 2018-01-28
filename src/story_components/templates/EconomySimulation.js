@@ -19,7 +19,8 @@ class EconomySimulation extends Component {
       paused: false,
       showingSimulation: true,
       speeds: new Array(2).fill(this.props.initialV),
-      velocityMultiplier: 1
+      velocityMultiplier: 1,
+      savingsRate: 0
     };
   }
 
@@ -33,7 +34,8 @@ class EconomySimulation extends Component {
       paused: false,
       velocityMultiplier: 1,
       showingSimulation: true,
-      speeds: new Array(2).fill(this.props.initialV)
+      speeds: new Array(2).fill(this.props.initialV),
+      savingsRate: 0
     });
   };
 
@@ -53,6 +55,10 @@ class EconomySimulation extends Component {
     this.setState({ velocityMultiplier: newMultiplier });
   };
 
+  handleSavingsChange = newSavingsRate => {
+    this.setState({ savingsRate: newSavingsRate });
+  };
+
   handleCollision = (...nodes) => {
     // NOTE: velocity isn't conserved, energy is
     const { speeds, velocityMultiplier } = this.state;
@@ -68,9 +74,10 @@ class EconomySimulation extends Component {
       paused,
       speeds,
       velocityMultiplier,
-      showingSimulation
+      showingSimulation,
+      savingsRate
     } = this.state;
-    const { width, height, padding, initialV, idx } = this.props;
+    const { width, height, padding, initialV, idx, editSavings } = this.props;
     const yScale = scaleLinear()
       .domain([0, Math.max(...speeds, 2.5 * initialV) ** 2])
       .range([height - padding, padding]);
@@ -91,6 +98,9 @@ class EconomySimulation extends Component {
         handleStart={this.handleStart}
         handleSpeedCount={this.handleSpeedCount}
         nodeCount={speeds.length}
+        editSavings={editSavings}
+        handleSavingsChange={this.handleSavingsChange}
+        savingsRate={savingsRate}
       />
     );
     const barGraphArea = showingSimulation ? null : (
@@ -136,14 +146,16 @@ EconomySimulation.propTypes = {
   height: PropTypes.number.isRequired,
   padding: PropTypes.number.isRequired,
   initialV: PropTypes.number.isRequired,
-  idx: PropTypes.number.isRequired
+  idx: PropTypes.number.isRequired,
+  editSavings: PropTypes.bool.isRequired
 };
 
 EconomySimulation.defaultProps = {
   width: 600,
   height: 600,
   padding: 0,
-  initialV: 10
+  initialV: 10,
+  editSavings: false
 };
 
 export default withCaption(EconomySimulation);

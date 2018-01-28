@@ -44,6 +44,10 @@ const _updateHandlerLeastWealth = (eps, energies) => {
     : [energies[0] - delta, energies[1] + delta];
 };
 
-const updateSpeeds = [normalCollision, collisionMaximizedByLeastWealth];
+const updateSpeeds = [
+  normalCollision,
+  collisionMaximizedByLeastWealth,
+  normalCollision
+];
 
 export default updateSpeeds;

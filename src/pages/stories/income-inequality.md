@@ -96,6 +96,8 @@ Can less fair behavior _locally_ (i.e. stealing from individuals) lead to fairer
 
 But before you rush into the streets and start smashing windows to take whatever you like, it's worth pausing and thinking about how much this model has to say about our actual reality. It's quite possible that this model doesn't fit reality very well at all.
 
+<EconomySimulation idx={2} caption="Here's how you might expect our model society to evolve." editSavings={true} />
+
 3. here's the data.
 
 4. what kind of model makes sense?
