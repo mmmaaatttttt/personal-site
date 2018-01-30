@@ -36,7 +36,7 @@ function choices(arr, num) {
 }
 
 function euclideanDistance(...pts) {
-  return pts.reduce((sum, pt) => sum + pt ** 2, 0) ** (1 / 2);
+  return pts.reduce((sum, pt) => sum + pt ** 2, 0) ** (1 / 2) || 0;
 }
 
 export { generateData, choices, euclideanDistance };

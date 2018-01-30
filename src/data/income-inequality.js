@@ -46,7 +46,10 @@ const _handleCollision = (
   );
   const newSpeeds = [...speeds];
   nodes.forEach((node, idx) => {
-    const scaleFactor = (updatedNewEnergies[idx] / newEnergies[idx]) ** (1 / 2);
+    let scaleFactor = 0;
+    if (updatedNewEnergies[idx] > 1e-6 && newEnergies[idx] > 1e-6) {
+      scaleFactor = (updatedNewEnergies[idx] / newEnergies[idx]) ** (1 / 2);
+    }
     node.vx *= scaleFactor;
     node.vy *= scaleFactor;
     newSpeeds[node.i] = euclideanDistance(node.vx, node.vy) / multiplier;

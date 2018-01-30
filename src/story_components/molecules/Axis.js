@@ -3,13 +3,11 @@ import PropTypes from "prop-types";
 import StyledAxis from "../atoms/StyledAxis";
 import { axisBottom, axisLeft } from "d3-axis";
 import { select } from "d3-selection";
-import { range } from "d3-array";
 
 class Axis extends Component {
   constructor(props) {
     super(props);
     this.drawAxis = this.drawAxis.bind(this);
-    this.tickRange = this.tickRange.bind(this);
   }
 
   componentDidMount() {
@@ -20,14 +18,6 @@ class Axis extends Component {
     this.drawAxis();
   }
 
-  tickRange() {
-    const { scale } = this.props;
-    const tickMin = scale.domain()[0];
-    const tickMax = scale.domain()[1];
-    const step = tickMax > 500 ? (tickMax - tickMin) / 1e3 : 1;
-    return range(tickMin, tickMax + step, step);
-  }
-
   drawAxis() {
     const {
       direction,
@@ -35,7 +25,8 @@ class Axis extends Component {
       xShift,
       yShift,
       tickSize,
-      tickShift
+      tickShift,
+      tickValues
     } = this.props;
     const settings = {
       x: {
@@ -50,7 +41,7 @@ class Axis extends Component {
       .call(
         settings[direction]
           .axis(scale)
-          .tickValues(this.tickRange())
+          .tickValues(tickValues)
           .tickFormat("")
           .tickSize(tickSize)
           .tickSizeOuter(0)
@@ -75,7 +66,8 @@ Axis.propTypes = {
   yShift: PropTypes.number.isRequired,
   xShift: PropTypes.number.isRequired,
   tickSize: PropTypes.number.isRequired,
-  tickShift: PropTypes.number.isRequired
+  tickShift: PropTypes.number.isRequired,
+  tickValues: PropTypes.arrayOf(PropTypes.number).isRequired
 };
 
 Axis.defaultProps = {

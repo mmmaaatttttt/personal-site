@@ -79,7 +79,7 @@ class EconomySimulation extends Component {
     } = this.state;
     const { width, height, padding, initialV, idx, editSavings } = this.props;
     const yScale = scaleLinear()
-      .domain([0, Math.max(...speeds, 2.5 * initialV) ** 2])
+      .domain([0, Math.max(...speeds, 2.5 * initialV) ** 2 + 100])
       .range([height - padding, padding]);
     const barData = speeds
       .map((speed, i) => ({ key: i, height: speed ** 2 }))
@@ -111,6 +111,7 @@ class EconomySimulation extends Component {
         padding={padding}
         barData={barData}
         yScale={yScale}
+        initialV={initialV}
       />
     );
     return (

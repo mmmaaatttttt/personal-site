@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import NodeGroup from "react-move/NodeGroup";
 import { scaleBand } from "d3-scale";
+import { range } from "d3-array";
+import Axis from "../molecules/Axis";
 import ClippedSVG from "../atoms/ClippedSVG";
 import CenteredSVGText from "../atoms/CenteredSVGText";
 import COLORS from "../../utils/styles";
@@ -21,8 +23,16 @@ class BarGraph extends Component {
     timing: { duration: 100 }
   });
 
+  tickValues = () => {
+    const { yScale, initialV } = this.props;
+    const tickMin = yScale.domain()[0];
+    const tickMax = yScale.domain()[1];
+    const step = initialV ** 2;
+    return range(tickMin, tickMax + step, step);
+  };
+
   render() {
-    const { svgId, width, height, padding, barData } = this.props;
+    const { svgId, width, height, padding, barData, yScale } = this.props;
     const xScale = scaleBand()
       .domain(barData.map((d, i) => i))
       .rangeRound([padding, width - padding])
@@ -40,6 +50,13 @@ class BarGraph extends Component {
         >
           {bars => (
             <g>
+              <Axis
+                direction="y"
+                scale={yScale}
+                xShift={padding}
+                tickSize={-width + 2 * padding}
+                tickValues={this.tickValues()}
+              />
               {bars.map(bar => {
                 const { x, fill, width, barHeight } = bar.state;
                 const fontSize =
@@ -84,7 +101,8 @@ BarGraph.propTypes = {
       key: PropTypes.isRequired,
       height: PropTypes.number.isRequired
     })
-  ).isRequired
+  ).isRequired,
+  initialV: PropTypes.number.isRequired
 };
 
 export default BarGraph;

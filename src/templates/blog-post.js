@@ -16,7 +16,6 @@ const StyledTextWrapper = styled.div`
   max-width: ${sizes.maxWidthContent};
   margin: 0 auto;
   padding: ${rhythm(0.5)};
-  padding-top: ${rhythm(1.25)};
 `;
 
 const StyledMainImage = styled.div`
@@ -34,7 +33,7 @@ const StyledMainImage = styled.div`
 const StyledImageCaption = styled.small`
   display: flex;
   justify-content: flex-end;
-  margin-right: ${rhythm(0.5)};
+  margin: 0 ${rhythm(0.5)};
   font-style: italic;
   color: #7d7d7d;
 `;
@@ -106,8 +105,8 @@ export default ({ data, location }) => {
           <h1>{postTitle}</h1>
           <h2>{date}</h2>
         </StyledTitleWrapper>
-        <StyledImageCaption>{featured_image_caption}</StyledImageCaption>
       </StyledMainImage>
+      <StyledImageCaption>{featured_image_caption}</StyledImageCaption>
       <StyledTextWrapper>
         {stripFrontMatterAndCompile(post.internal.content)}
         <Share

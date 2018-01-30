@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
+import { darken } from "polished";
 import { forceSimulation } from "d3-force";
 import { forceBounce } from "d3-force-bounce";
 import { forceSurface } from "d3-force-surface";
@@ -124,14 +125,14 @@ class EconomyNodeGroup extends Component {
   };
 
   updateNodes = props => {
-    const { speeds, velocityMultiplier, initialV } = props;
+    const { velocityMultiplier, initialV } = props;
     const isMoving = this.isMoving();
     this.simulation.nodes().forEach(node => {
       if (isMoving) {
         node.fx = null;
         node.fy = null;
-        node.vx = node.vx || node.lastVx;
-        node.vy = node.vy || node.lastVy;
+        node.vx = node.vx || node.lastVx || 0;
+        node.vy = node.vy || node.lastVy || 0;
         node.lastVx = null;
         node.lastVy = null;
       } else {
@@ -153,20 +154,21 @@ class EconomyNodeGroup extends Component {
 
     nodes.exit().remove();
 
-    nodes
+    const enterNodes = nodes
       .enter()
       .append("circle")
-      .attr("r", d => d.r)
+      .attr("r", d => d.r);
+
+    const nodesToUpdate = isMoving ? enterNodes.merge(nodes) : enterNodes;
+
+    nodesToUpdate
       .attr("fill", d => colorScale(euclideanDistance(d.vx, d.vy)))
+      .attr("stroke", d =>
+        darken(0.3, colorScale(euclideanDistance(d.vx, d.vy)))
+      )
+      .attr("stroke-width", 2)
       .attr("cx", d => d.x)
       .attr("cy", d => d.y);
-
-    if (isMoving) {
-      nodes
-        .attr("fill", d => colorScale(euclideanDistance(d.vx, d.vy)))
-        .attr("cx", d => d.x)
-        .attr("cy", d => d.y);
-    }
   };
 
   forceInCanvas = node => {
@@ -203,6 +205,8 @@ EconomyNodeGroup.propTypes = {
   playing: PropTypes.bool.isRequired,
   paused: PropTypes.bool.isRequired,
   velocityMultiplier: PropTypes.number.isRequired,
+  handleCollision: PropTypes.func.isRequired,
+  initialV: PropTypes.number.isRequired,
   borderWidth: PropTypes.number.isRequired,
   borderStroke: PropTypes.string.isRequired
 };
