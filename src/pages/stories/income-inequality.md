@@ -1,8 +1,8 @@
 ---
-title: "ADD A TITLE HERE"
-date: "2018-01-01"
+title: "Laws of Inequality"
+date: "2018-01-30"
 featured_image: "monopoly_man.jpg"
-caption: "ADD A CAPTION HERE."
+caption: "Exploring income and wealth inequality through physics."
 featured_image_caption: "Monopoly man sitting in on a Senate hearing in the wake of the Equifax data breach during the fall of 2017. Image credit: Aaron P. Bernstein/Reuters."
 ---
 
@@ -108,7 +108,7 @@ While these models certainly leave much to be desired in terms of their realism,
 
 If you'd like to sprinkle just a little bit more realism into the model, there are many directions you can go. For instance, there are models in which the probability of winning a trade isn't 50/50. Instead, people with more wealth are more likely to win the trade, the reasoning being that they're more powerful or influential than the other party.
 
-You can also try to incorporate _savings_ into the model, whereby people set aside a certain portion of their wealth and don't trade with it. Here's a demonstration of how that model evolves. The trading value is based on the losing party's wealth, not on the poorer person's wealth, and before the simulation starts, you can adjust what fraction of their wealth people will save:
+You can also try to incorporate _savings_ into the model, whereby people set aside a certain fraction of their wealth before each time they trade. Here's a demonstration of how that model evolves. The trading value is based on the losing party's wealth, not on the poorer person's wealth, and before the simulation starts, you can adjust what fraction of their wealth people will save:
 
 <EconomySimulation idx={2} caption="Figure 3: Here's a model based on theft and savings." editSavings={true} />
 
