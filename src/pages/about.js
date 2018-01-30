@@ -10,6 +10,7 @@ const StyledAboutWrapper = styled.div`
   max-width: ${sizes.maxWidthContent};
   animation: ${fadeIn} 2s 0.5s forwards;
   opacity: 0;
+  padding: 0 ${rhythm(0.5)};
 `;
 
 const RightP = styled.p`
@@ -51,22 +52,43 @@ const StyledHeadshot = styled.img`
   `};
 `;
 
-const About = ({data}) => (
+const About = ({ data }) => (
   <StyledAboutWrapper>
     <h1>About {data.site.siteMetadata.title}</h1>
     <StyledHeadshotWrapper>
-      <StyledHeadshot src={matt} alt="Matt's face"/>
+      <StyledHeadshot src={matt} alt="Matt's face" />
     </StyledHeadshotWrapper>
-    <p>Hi, I'm Matt Lane. You may remember me from such organizations as <a href="https://www.rithmschool.com">Rithm School</a> (which I co-founded in 2016), <a href="https://www.mathalicious.com">Mathalicious</a>, or from my book, <a href="https://www.amazon.com/Power-Up-Unlocking-Hidden-Mathematics-Video/dp/0691161518">Power-Up: Unlocking the Hidden Mathematics in Video Games</a>.</p>
-    <p>Or, you may not know me at all. In which case, it's nice to meet you. I look forward to creating many wonderful memories together!</p>
-    <p>A little bit about me: I received my Ph.D. in mathematics from UCLA in 2012. I love my family, problem solving, teaching, learning, and ice cream.</p>
-    <p>Even though it's a cesspool, the best way to reach me if you'd like to chat more is probably <a href="https://www.twitter.com/mmmaaatttttt">Twitter</a>. The only bigger cesspool I can think of is the comments section on any website, so for that reason, I don't enable comments on anything I write here.</p>
+    <p>
+      Hi, I'm Matt Lane. You may remember me from such organizations as{" "}
+      <a href="https://www.rithmschool.com">Rithm School</a> (which I co-founded
+      in 2016), <a href="https://www.mathalicious.com">Mathalicious</a>, or from
+      my book,{" "}
+      <a href="https://www.amazon.com/Power-Up-Unlocking-Hidden-Mathematics-Video/dp/0691161518">
+        Power-Up: Unlocking the Hidden Mathematics in Video Games
+      </a>.
+    </p>
+    <p>
+      Or, you may not know me at all. In which case, it's nice to meet you. I
+      look forward to creating many wonderful memories together!
+    </p>
+    <p>
+      A little bit about me: I received my Ph.D. in mathematics from UCLA in
+      2012. I love my family, problem solving, teaching, learning, and ice
+      cream.
+    </p>
+    <p>
+      Even though it's a cesspool, the best way to reach me if you'd like to
+      chat more is probably{" "}
+      <a href="https://www.twitter.com/mmmaaatttttt">Twitter</a>. The only
+      bigger cesspool I can think of is the comments section on any website, so
+      for that reason, I don't enable comments on anything I write here.
+    </p>
     <p>Take a look around, and let me know what you think!</p>
     <RightP>❤️ Matt</RightP>
   </StyledAboutWrapper>
 );
 
-export default About; 
+export default About;
 
 export const query = graphql`
   query AboutQuery {
