@@ -93,12 +93,12 @@ export default ({ data, location }) => {
         <title>{fullTitle}</title>
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content={fullTitle} />
-        <meta name="og:title" content={fullTitle} />
         <meta name="twitter:description" content={caption} />
-        <meta name="og:description" content={caption} />
         <meta name="twitter:image" content={`${siteUrl}${image}`} />
-        <meta name="og:image" content={`${siteUrl}${image}`} />
-        <meta name="og:url" content={`${siteUrl}${location.pathname}`} />
+        <meta property="og:title" content={fullTitle} />
+        <meta property="og:description" content={caption} />
+        <meta property="og:image" content={`${siteUrl}${image}`} />
+        <meta property="og:url" content={`${siteUrl}${location.pathname}`} />
       </Helmet>
       <StyledMainImage image={image}>
         <StyledTitleWrapper>
