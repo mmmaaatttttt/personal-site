@@ -22,7 +22,7 @@ const StyledStoryWrapper = styled.div`
   ${media.small`
     width: 100%;
   `};
-`
+`;
 
 const StyledImage = styled.img`
   border-radius: 8px;
@@ -31,37 +31,42 @@ const StyledImage = styled.img`
   ${media.medium`
     width: 100%;
   `};
-`
+`;
 
-const Error404 = ({data}) => {
-  const { node } = data.allMarkdownRemark.edges[0]
+const Error404 = ({ data }) => {
+  const { node } = data.allMarkdownRemark.edges[0];
   const { slug } = node.fields;
-  const {
-    title,
-    featured_image,
-    caption
-  } = node.frontmatter;
+  const { title, featured_image, caption } = node.frontmatter;
   return (
     <Styled404>
       <h1>Oh no! 😭</h1>
       <p>It seems like the page you're looking for doesn't exist.</p>
-      <p>Please double-check your request and try again. Or, you're welcome to check out my latest story:</p>
+      <p>
+        Please double-check your request and try again. Or, you're welcome to
+        check out my latest story:
+      </p>
       <StyledStoryWrapper>
         <Link to={slug}>
           <h3>{title}</h3>
-          <StyledImage src={images[featured_image]} alt={caption} />
+          <StyledImage
+            src={images[`featured_images/${featured_image}`]}
+            alt={caption}
+          />
         </Link>
         <small>{caption}</small>
       </StyledStoryWrapper>
     </Styled404>
-  )
+  );
 };
 
 export default Error404;
 
 export const query = graphql`
   query LatestStoryQuery {
-    allMarkdownRemark(limit:1 sort: { fields: [frontmatter___date], order: DESC }) {
+    allMarkdownRemark(
+      limit: 1
+      sort: { fields: [frontmatter___date], order: DESC }
+    ) {
       edges {
         node {
           frontmatter {
@@ -78,4 +83,3 @@ export const query = graphql`
     }
   }
 `;
-
