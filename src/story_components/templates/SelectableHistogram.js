@@ -1,10 +1,17 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
+import { csv } from "d3-fetch";
+import { withPrefix } from "gatsby-link";
 import withCaption from "../../hocs/withCaption";
 
 class SelectableHistogram extends Component {
+  componentDidMount() {
+    csv(withPrefix("/data/four_weddings.csv")).then(data =>
+      console.log("DATA", data)
+    );
+  }
+
   render() {
-    debugger;
     return (
       <div>
         <h1>hi</h1>
