@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { scaleLinear } from "d3-scale";
+import { range } from "d3-array";
 import SimulationStart from "../molecules/SimulationStart";
 import SimulationStop from "../molecules/SimulationStop";
 import ClippedSVG from "../atoms/ClippedSVG";
@@ -68,6 +69,12 @@ class EconomySimulation extends Component {
     });
   };
 
+  barGraphTickValues = (min, max) => {
+    const { initialV } = this.props;
+    const step = initialV ** 2;
+    return range(min, max + step, step);
+  };
+
   render() {
     const {
       playing,
@@ -111,7 +118,7 @@ class EconomySimulation extends Component {
         padding={padding}
         barData={barData}
         yScale={yScale}
-        initialV={initialV}
+        tickValues={this.barGraphTickValues.bind(this, ...yScale.domain())}
       />
     );
     return (

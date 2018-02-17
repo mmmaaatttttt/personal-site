@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import NodeGroup from "react-move/NodeGroup";
 import { scaleBand } from "d3-scale";
-import { range } from "d3-array";
 import Axis from "../molecules/Axis";
 import ClippedSVG from "../atoms/ClippedSVG";
 import CenteredSVGText from "../atoms/CenteredSVGText";
@@ -22,14 +21,6 @@ class BarGraph extends Component {
     barHeight: [this.props.yScale(d.height)],
     timing: { duration: 100 }
   });
-
-  tickValues = () => {
-    const { yScale, initialV } = this.props;
-    const tickMin = yScale.domain()[0];
-    const tickMax = yScale.domain()[1];
-    const step = initialV ** 2;
-    return range(tickMin, tickMax + step, step);
-  };
 
   render() {
     const { svgId, width, height, padding, barData, yScale } = this.props;
@@ -55,7 +46,7 @@ class BarGraph extends Component {
                 scale={yScale}
                 xShift={padding}
                 tickSize={-width + 2 * padding}
-                tickValues={this.tickValues()}
+                tickValues={this.props.tickValues()}
               />
               {bars.map(bar => {
                 const { x, fill, width, barHeight } = bar.state;
@@ -102,7 +93,7 @@ BarGraph.propTypes = {
       height: PropTypes.number.isRequired
     })
   ).isRequired,
-  initialV: PropTypes.number.isRequired
+  tickValues: PropTypes.func.isRequired
 };
 
 export default BarGraph;
