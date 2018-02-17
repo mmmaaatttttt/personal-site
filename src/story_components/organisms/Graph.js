@@ -4,7 +4,6 @@ import Axis from "../molecules/Axis";
 import StyledAxisLabel from "../atoms/StyledAxisLabel";
 import StyledGraph from "../atoms/StyledGraph";
 import ClippedSVG from "../atoms/ClippedSVG";
-import { range } from "d3-array";
 
 const Graph = ({
   width,
@@ -18,11 +17,10 @@ const Graph = ({
   yScale,
   children
 }) => {
-  const tickValues = scale => {
-    const tickMin = scale.domain()[0];
-    const tickMax = scale.domain()[1];
+  const tickStep = scale => {
+    const [tickMin, tickMax] = scale.domain();
     const step = tickMax > 500 ? (tickMax - tickMin) / 1e3 : 1;
-    return range(tickMin, tickMax + step, step);
+    return step;
   };
 
   return (
@@ -33,7 +31,7 @@ const Graph = ({
           scale={yScale}
           xShift={padding}
           tickSize={-width + 2 * padding}
-          tickValues={tickValues(yScale)}
+          tickStep={tickStep(yScale)}
         />
         <Axis
           direction="x"
@@ -41,7 +39,7 @@ const Graph = ({
           yShift={height / 2}
           tickSize={-height + 2 * padding}
           tickShift={height / 2 - padding}
-          tickValues={tickValues(xScale)}
+          tickStep={tickStep(xScale)}
         />
         {children}
         <StyledAxisLabel x={width} y={height / 2} dy={30} dx={-60}>
@@ -64,9 +62,6 @@ Graph.propTypes = {
   width: PropTypes.number.isRequired,
   height: PropTypes.number.isRequired,
   padding: PropTypes.number.isRequired,
-  min: PropTypes.number.isRequired,
-  max: PropTypes.number.isRequired,
-  step: PropTypes.number.isRequired,
   svgId: PropTypes.string.isRequired,
   double: PropTypes.bool.isRequired,
   xLabel: PropTypes.string.isRequired,

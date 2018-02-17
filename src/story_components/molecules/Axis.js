@@ -1,8 +1,23 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import StyledAxis from "../atoms/StyledAxis";
 import { axisBottom, axisLeft } from "d3-axis";
 import { select } from "d3-selection";
+import { range } from "d3-array";
+import styled, { css } from "styled-components";
+
+const StyledAxis = styled.g`
+  & .tick line {
+    stroke: #ccc;
+    stroke-dasharray: 10, 5;
+  }
+  ${props =>
+    props.direction === "x" &&
+    css`
+      & .tick:nth-child(2) {
+        display: none;
+      }
+    `};
+`;
 
 class Axis extends Component {
   constructor(props) {
@@ -26,7 +41,7 @@ class Axis extends Component {
       yShift,
       tickSize,
       tickShift,
-      tickValues
+      tickStep
     } = this.props;
     const settings = {
       x: {
@@ -36,16 +51,18 @@ class Axis extends Component {
         axis: axisLeft
       }
     };
+    const axis = settings[direction]
+      .axis(scale)
+      .tickFormat("")
+      .tickSize(tickSize)
+      .tickSizeOuter(0);
+    if (tickStep)
+      axis.tickValues(
+        range(scale.domain()[0], scale.domain()[1] + tickStep, tickStep)
+      );
     select(this.axis)
       .attr("transform", `translate(${xShift},${yShift})`)
-      .call(
-        settings[direction]
-          .axis(scale)
-          .tickValues(tickValues)
-          .tickFormat("")
-          .tickSize(tickSize)
-          .tickSizeOuter(0)
-      )
+      .call(axis)
       .selectAll(".tick line")
       .attr("transform", `translate(0,${tickShift})`);
   }
@@ -67,7 +84,7 @@ Axis.propTypes = {
   xShift: PropTypes.number.isRequired,
   tickSize: PropTypes.number.isRequired,
   tickShift: PropTypes.number.isRequired,
-  tickValues: PropTypes.arrayOf(PropTypes.number).isRequired
+  tickStep: PropTypes.number
 };
 
 Axis.defaultProps = {

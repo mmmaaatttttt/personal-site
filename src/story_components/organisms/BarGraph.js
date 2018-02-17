@@ -23,7 +23,15 @@ class BarGraph extends Component {
   });
 
   render() {
-    const { svgId, width, height, padding, barData, yScale } = this.props;
+    const {
+      svgId,
+      width,
+      height,
+      padding,
+      barData,
+      yScale,
+      tickStep
+    } = this.props;
     const xScale = scaleBand()
       .domain(barData.map((d, i) => i))
       .rangeRound([padding, width - padding])
@@ -46,7 +54,7 @@ class BarGraph extends Component {
                 scale={yScale}
                 xShift={padding}
                 tickSize={-width + 2 * padding}
-                tickValues={this.props.tickValues()}
+                tickStep={tickStep}
               />
               {bars.map(bar => {
                 const { x, fill, width, barHeight } = bar.state;
