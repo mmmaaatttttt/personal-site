@@ -30,7 +30,8 @@ class BarGraph extends Component {
       padding,
       barData,
       yScale,
-      tickStep
+      tickStep,
+      barLabel
     } = this.props;
     const xScale = scaleBand()
       .domain(barData.map((d, i) => i))
@@ -60,6 +61,17 @@ class BarGraph extends Component {
                 const { x, fill, width, barHeight } = bar.state;
                 const fontSize =
                   bars.length < 11 ? "100%" : `${110 - 1 * bars.length}%`;
+                const text = barLabel ? (
+                  <CenteredSVGText
+                    x={x}
+                    dx={width / 2}
+                    y={barHeight}
+                    dy={-10}
+                    fontSize={fontSize}
+                  >
+                    {barLabel(bar.data)}
+                  </CenteredSVGText>
+                ) : null;
                 return (
                   <g key={bar.key}>
                     <rect
@@ -69,15 +81,7 @@ class BarGraph extends Component {
                       height={height - barHeight}
                       fill={fill}
                     />
-                    <CenteredSVGText
-                      x={x}
-                      dx={width / 2}
-                      y={barHeight}
-                      dy={-10}
-                      fontSize={fontSize}
-                    >
-                      {bar.key + 1}
-                    </CenteredSVGText>
+                    {text}
                   </g>
                 );
               })}
@@ -101,7 +105,8 @@ BarGraph.propTypes = {
       height: PropTypes.number.isRequired
     })
   ).isRequired,
-  tickValues: PropTypes.func.isRequired
+  tickStep: PropTypes.number.isRequired,
+  barLabel: PropTypes.func
 };
 
 export default BarGraph;

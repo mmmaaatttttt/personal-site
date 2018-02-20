@@ -112,6 +112,7 @@ class EconomySimulation extends Component {
         barData={barData}
         yScale={yScale}
         tickStep={initialV ** 2}
+        barLabel={bar => bar.key + 1}
       />
     );
     return (

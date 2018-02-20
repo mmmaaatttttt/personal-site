@@ -1,22 +1,86 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { csv } from "d3-fetch";
+import { histogram, max, range, extent } from "d3-array";
+import { scaleLinear } from "d3-scale";
 import { withPrefix } from "gatsby-link";
 import withCaption from "../../hocs/withCaption";
+import BarGraph from "../organisms/BarGraph";
+import StyledNarrowContainer from "../atoms/StyledNarrowContainer";
 
 class SelectableHistogram extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      data: []
+    };
+  }
+
   componentDidMount() {
-    csv(withPrefix("/data/four_weddings.csv")).then(data =>
-      console.log("DATA", data)
-    );
+    csv(withPrefix("/data/four_weddings.csv"), (row, i, columns) => ({
+      season: +row["Season"],
+      episode: +row["Episode"],
+      title: row["Title"],
+      date: new Date(row["Date"]),
+      name: row["Name"],
+      age: +row["Age"],
+      spouseName: row["Spouse Name"],
+      spouseAge: +row["Spouse Age"] || null,
+      guests: +row["Guest Count"] || null,
+      cost: +row["Budget"] || null,
+      state: row["State"],
+      scoresGiven: columns
+        .filter(colName => /Contestant \d Experience/.test(colName))
+        .map(colName => +row[colName])
+        .filter(Boolean),
+      scoresReceived: {
+        dress: +row["Dress"],
+        venue: +row["Venue"],
+        food: +row["Food"],
+        experience: +row["Experience"]
+      }
+    })).then(data => {
+      this.setState({ data });
+    });
   }
 
   render() {
+    let barGraph = null;
+    if (this.state.data.length) {
+      const maxCost = max(this.state.data, d => d.cost);
+      const thresholds = range(0, maxCost + 10000, 10000);
+      const histogramData = histogram()
+        .value(d => d.cost)
+        .thresholds(thresholds)(this.state.data);
+      const width = 600;
+      const height = 600;
+      const padding = 10;
+      const tickStep = 10;
+      const barData = histogramData.map((d, i) => ({
+        key: i,
+        height: d.length
+      }));
+      const yScale = scaleLinear()
+        .domain([0, max(histogramData, d => d.length) * 1.1])
+        .range([height - padding, padding]);
+      barGraph = (
+        <BarGraph
+          svgId="histogram"
+          width={width}
+          height={height}
+          padding={padding}
+          yScale={yScale}
+          barData={barData}
+          tickStep={tickStep}
+          barLabel={bar => bar.height}
+        />
+      );
+    }
     return (
-      <div>
+      <StyledNarrowContainer width="50%">
         <h1>hi</h1>
-        <p>{JSON.stringify(this.props.data, null, 4)}</p>
-      </div>
+        {barGraph}
+      </StyledNarrowContainer>
     );
   }
 }
@@ -26,24 +90,3 @@ SelectableHistogram.propTypes = {};
 SelectableHistogram.defaultProps = {};
 
 export default withCaption(SelectableHistogram);
-
-export const query = graphql`
-  query BoogersQuery {
-    allMarkdownRemark(sort: { fields: [frontmatter___date], order: DESC }) {
-      edges {
-        node {
-          frontmatter {
-            title
-            date(formatString: "MMMM YYYY")
-            featured_image
-            caption
-          }
-          fields {
-            slug
-          }
-          timeToRead
-        }
-      }
-    }
-  }
-`;
