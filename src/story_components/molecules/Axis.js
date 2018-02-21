@@ -1,22 +1,34 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { axisBottom, axisLeft } from "d3-axis";
-import { select } from "d3-selection";
+import { select, selectAll } from "d3-selection";
 import { range } from "d3-array";
+import { format } from "d3-format";
 import styled, { css } from "styled-components";
 
 const StyledAxis = styled.g`
-  & .tick line {
-    stroke: #ccc;
-    stroke-dasharray: 10, 5;
+  .tick text {
+    font-size: 16px;
   }
+
+  .tick:last-child text {
+    display: none;
+  }
+
   ${props =>
-    props.direction === "x" &&
+    !props.tickFormat &&
     css`
-      & .tick:nth-child(2) {
-        display: none;
+      & .tick line {
+        stroke: #ccc;
+        stroke-dasharray: 10, 5;
       }
-    `};
+    `} ${props =>
+      props.direction === "x" &&
+      css`
+        & .tick:nth-child(2) {
+          display: none;
+        }
+      `};
 `;
 
 class Axis extends Component {
@@ -41,7 +53,8 @@ class Axis extends Component {
       yShift,
       tickSize,
       tickShift,
-      tickStep
+      tickStep,
+      tickFormat
     } = this.props;
     const settings = {
       x: {
@@ -53,9 +66,10 @@ class Axis extends Component {
     };
     const axis = settings[direction]
       .axis(scale)
-      .tickFormat("")
-      .tickSize(tickSize)
-      .tickSizeOuter(0);
+      .tickFormat(tickFormat ? format(tickFormat) : "");
+    if (tickSize) {
+      axis.tickSize(tickSize).tickSizeOuter(0);
+    }
     if (tickStep)
       axis.tickValues(
         range(scale.domain()[0], scale.domain()[1] + tickStep, tickStep)
@@ -65,13 +79,23 @@ class Axis extends Component {
       .call(axis)
       .selectAll(".tick line")
       .attr("transform", `translate(0,${tickShift})`);
+
+    if (tickFormat) {
+      selectAll(".tick text")
+        .attr("transform", "rotate(90)")
+        .style("text-anchor", "start")
+        .attr("dx", "0.5em")
+        .attr("dy", "-0.2em");
+    }
   }
 
   render() {
+    const { direction, tickFormat } = this.props;
     return (
       <StyledAxis
         innerRef={axis => (this.axis = axis)}
-        direction={this.props.direction}
+        direction={direction}
+        tickFormat={tickFormat}
       />
     );
   }
@@ -82,15 +106,17 @@ Axis.propTypes = {
   scale: PropTypes.func.isRequired,
   yShift: PropTypes.number.isRequired,
   xShift: PropTypes.number.isRequired,
-  tickSize: PropTypes.number.isRequired,
+  tickSize: PropTypes.number,
   tickShift: PropTypes.number.isRequired,
-  tickStep: PropTypes.number
+  tickStep: PropTypes.number,
+  tickFormat: PropTypes.string.isRequired
 };
 
 Axis.defaultProps = {
   xShift: 0,
   yShift: 0,
-  tickShift: 0
+  tickShift: 0,
+  tickFormat: ""
 };
 
 export default Axis;

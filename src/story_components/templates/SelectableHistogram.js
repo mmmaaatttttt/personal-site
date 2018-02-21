@@ -48,17 +48,22 @@ class SelectableHistogram extends Component {
     let barGraph = null;
     if (this.state.data.length) {
       const maxCost = max(this.state.data, d => d.cost);
-      const thresholds = range(0, maxCost + 10000, 10000);
+      const thresholds = range(0, maxCost + 20000, 10000);
       const histogramData = histogram()
         .value(d => d.cost)
         .thresholds(thresholds)(this.state.data);
+      histogramData[0].x0 = thresholds[0];
+      histogramData[histogramData.length - 1].x1 =
+        thresholds[thresholds.length - 1];
       const width = 600;
       const height = 600;
-      const padding = 10;
+      const padding = 0;
       const tickStep = 10;
       const barData = histogramData.map((d, i) => ({
         key: i,
-        height: d.length
+        height: d.length,
+        x0: d.x0,
+        x1: d.x1
       }));
       const yScale = scaleLinear()
         .domain([0, max(histogramData, d => d.length) * 1.1])
@@ -73,6 +78,8 @@ class SelectableHistogram extends Component {
           barData={barData}
           tickStep={tickStep}
           barLabel={bar => bar.height}
+          histogram
+          thresholds={thresholds}
         />
       );
     }

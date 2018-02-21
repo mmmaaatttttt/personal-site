@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import NodeGroup from "react-move/NodeGroup";
-import { scaleBand } from "d3-scale";
+import { scaleBand, scaleLinear } from "d3-scale";
 import Axis from "../molecules/Axis";
 import ClippedSVG from "../atoms/ClippedSVG";
 import CenteredSVGText from "../atoms/CenteredSVGText";
@@ -9,15 +9,19 @@ import COLORS from "../../utils/styles";
 
 class BarGraph extends Component {
   handleStart = (scale, d, i) => ({
-    x: scale(i),
+    x: this.props.histogram ? scale(d.x0) + 1 : scale(i),
     fill: COLORS.MAROON,
-    width: scale.bandwidth(),
+    width: this.props.histogram
+      ? scale(d.x1) - scale(d.x0) - 2
+      : scale.bandwidth(),
     barHeight: this.props.yScale(d.height)
   });
 
   handleEnterAndUpdate = (scale, d, i) => ({
-    x: [scale(i)],
-    width: [scale.bandwidth()],
+    x: [this.props.histogram ? scale(d.x0) + 1 : scale(i)],
+    width: [
+      this.props.histogram ? scale(d.x1) - scale(d.x0) - 2 : scale.bandwidth()
+    ],
     barHeight: [this.props.yScale(d.height)],
     timing: { duration: 100 }
   });
@@ -31,13 +35,26 @@ class BarGraph extends Component {
       barData,
       yScale,
       tickStep,
-      barLabel
+      barLabel,
+      histogram,
+      thresholds
     } = this.props;
-    const xScale = scaleBand()
-      .domain(barData.map((d, i) => i))
-      .rangeRound([padding, width - padding])
-      .padding(0.1);
 
+    const xScale = histogram
+      ? scaleLinear()
+          .domain([thresholds[0], thresholds[thresholds.length - 1]])
+          .rangeRound([padding, width - padding])
+      : scaleBand()
+          .domain(barData.map((d, i) => i))
+          .rangeRound([padding, width - padding])
+          .padding(0.1);
+    let paddingBottom = 0;
+    if (histogram) {
+      paddingBottom = 60;
+      const range = yScale.range();
+      range[0] -= paddingBottom;
+      yScale.range(range);
+    }
     return (
       <ClippedSVG id={svgId} width={width} height={height} padding={padding}>
         <NodeGroup
@@ -78,13 +95,22 @@ class BarGraph extends Component {
                       x={x}
                       width={width}
                       y={barHeight}
-                      height={height - barHeight}
+                      height={height - barHeight - paddingBottom}
                       fill={fill}
                     />
                     {text}
                   </g>
                 );
               })}
+              {histogram ? (
+                <Axis
+                  direction="x"
+                  scale={xScale}
+                  yShift={height - paddingBottom}
+                  tickStep={thresholds[1] - thresholds[0]}
+                  tickFormat="$.2s"
+                />
+              ) : null}
             </g>
           )}
         </NodeGroup>
@@ -106,7 +132,9 @@ BarGraph.propTypes = {
     })
   ).isRequired,
   tickStep: PropTypes.number.isRequired,
-  barLabel: PropTypes.func
+  barLabel: PropTypes.func,
+  histogram: PropTypes.bool,
+  thresholds: PropTypes.arrayOf(PropTypes.number)
 };
 
 export default BarGraph;
