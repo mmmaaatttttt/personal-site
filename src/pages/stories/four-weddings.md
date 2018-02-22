@@ -1,5 +1,5 @@
 ---
-title: "Four Weddings RENAME"
+title: "Four (Hundred and Thirty-Two) Weddings"
 date: "2018-02-28"
 featured_image: "four_weddings.jpg"
 caption: "ADD A CAPTION"

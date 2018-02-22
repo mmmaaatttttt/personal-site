@@ -8,23 +8,28 @@ import CenteredSVGText from "../atoms/CenteredSVGText";
 import COLORS from "../../utils/styles";
 
 class BarGraph extends Component {
-  handleStart = (scale, d, i) => ({
-    x: this.props.histogram ? scale(d.x0) + 1 : scale(i),
-    fill: COLORS.MAROON,
-    width: this.props.histogram
-      ? scale(d.x1) - scale(d.x0) - 2
-      : scale.bandwidth(),
-    barHeight: this.props.yScale(d.height)
-  });
+  handleStart = (scale, d, i) => {
+    const { histogram, color, yScale } = this.props;
+    return {
+      x: histogram ? scale(d.x0) + 1 : scale(i),
+      fill: color,
+      width: histogram ? scale(d.x1) - scale(d.x0) - 2 : scale.bandwidth(),
+      barHeight: yScale(d.height)
+    };
+  };
 
-  handleEnterAndUpdate = (scale, d, i) => ({
-    x: [this.props.histogram ? scale(d.x0) + 1 : scale(i)],
-    width: [
-      this.props.histogram ? scale(d.x1) - scale(d.x0) - 2 : scale.bandwidth()
-    ],
-    barHeight: [this.props.yScale(d.height)],
-    timing: { duration: 100 }
-  });
+  handleEnterAndUpdate = (scale, d, i) => {
+    const { histogram, yScale, timing } = this.props;
+    return {
+      x: [histogram ? scale(d.x0) + 1 : scale(i)],
+      width: [histogram ? scale(d.x1) - scale(d.x0) - 2 : scale.bandwidth()],
+      barHeight: [yScale(d.height)],
+      timing: {
+        duration: timing.duration,
+        delay: timing.delay * i || 0
+      }
+    };
+  };
 
   render() {
     const {
@@ -136,7 +141,14 @@ BarGraph.propTypes = {
   barLabel: PropTypes.func,
   histogram: PropTypes.bool,
   thresholds: PropTypes.arrayOf(PropTypes.number),
-  tickFormat: PropTypes.string
+  tickFormat: PropTypes.string,
+  color: PropTypes.string.isRequired,
+  timing: PropTypes.object.isRequired
+};
+
+BarGraph.defaultProps = {
+  color: COLORS.MAROON,
+  timing: { duration: 100 }
 };
 
 export default BarGraph;

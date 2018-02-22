@@ -7,6 +7,7 @@ import { scaleLinear } from "d3-scale";
 import { withPrefix } from "gatsby-link";
 import withCaption from "../../hocs/withCaption";
 import BarGraph from "../organisms/BarGraph";
+import COLORS from "../../utils/styles";
 import StyledNarrowContainer from "../atoms/StyledNarrowContainer";
 import "react-select/dist/react-select.css";
 
@@ -88,6 +89,8 @@ class SelectableHistogram extends Component {
           histogram
           thresholds={thresholds}
           tickFormat={format}
+          color={COLORS.ORANGE}
+          timing={{ duration: 500, delay: 25 }}
         />
       );
     }
@@ -106,8 +109,6 @@ class SelectableHistogram extends Component {
     );
   }
 }
-
-SelectableHistogram.propTypes = {};
 
 SelectableHistogram.defaultProps = {
   selectOptions: [
