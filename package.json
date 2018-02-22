@@ -34,6 +34,7 @@
     "react-animate-on-scroll": "^1.4.0",
     "react-helmet": "^5.2.0",
     "react-move": "^2.6.0",
+    "react-select": "^1.2.1",
     "react-twitter-widgets": "^1.7.1",
     "styled-components": "^2.2.1",
     "typography-theme-alton": "^0.15.10"
