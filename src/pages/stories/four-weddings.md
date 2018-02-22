@@ -13,11 +13,12 @@ featured_image_caption: "ADD AN IMAGE CAPTION."
 
 * Winning Weddings
 
-* Predictors
+  * circle chart (% of winners who spent most, 2nd most, 3rd most, 4th most, also toggleable to cost per person)
 
-* circle chart (% of winners who spent most, 2nd most, 3rd most, 4th most, also toggleable to cost per person)
-* scatterplot (bunch of stuff vs total points: cost, cost per person, wife's age, number of people, exp points given)
-* general histograms
+- Predictors
+
+- scatterplot (bunch of stuff vs total points: cost, cost per person, wife's age, number of people, exp points given)
+- general histograms
 
   * wedding size
   * total spend

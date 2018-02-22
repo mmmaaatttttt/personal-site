@@ -37,7 +37,8 @@ class BarGraph extends Component {
       tickStep,
       barLabel,
       histogram,
-      thresholds
+      thresholds,
+      tickFormat
     } = this.props;
 
     const xScale = histogram
@@ -108,7 +109,7 @@ class BarGraph extends Component {
                   scale={xScale}
                   yShift={height - paddingBottom}
                   tickStep={thresholds[1] - thresholds[0]}
-                  tickFormat="$.2s"
+                  tickFormat={tickFormat}
                 />
               ) : null}
             </g>
@@ -134,7 +135,8 @@ BarGraph.propTypes = {
   tickStep: PropTypes.number.isRequired,
   barLabel: PropTypes.func,
   histogram: PropTypes.bool,
-  thresholds: PropTypes.arrayOf(PropTypes.number)
+  thresholds: PropTypes.arrayOf(PropTypes.number),
+  tickFormat: PropTypes.string
 };
 
 export default BarGraph;
