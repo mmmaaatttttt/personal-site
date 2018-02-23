@@ -8,7 +8,8 @@ const COLORS = {
   GREEN: "#52A081",
   MAROON: "#A05E52",
   BLUE: "#5ECFFF",
-  RED: "#FF3C23"
+  RED: "#FF3C23",
+  PURPLE: "#E15BFF"
 };
 
 const sizes = {
