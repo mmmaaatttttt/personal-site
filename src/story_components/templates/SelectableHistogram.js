@@ -5,6 +5,7 @@ import { csv } from "d3-fetch";
 import { histogram, max, range, extent } from "d3-array";
 import { scaleLinear } from "d3-scale";
 import { withPrefix } from "gatsby-link";
+import { handleCSV } from "../../data/four-weddings";
 import withCaption from "../../hocs/withCaption";
 import BarGraph from "../organisms/BarGraph";
 import COLORS from "../../utils/styles";
@@ -20,29 +21,7 @@ class SelectableHistogram extends Component {
   handleChange = selectedOption => this.setState({ selectedOption });
 
   componentDidMount() {
-    csv(withPrefix("/data/four_weddings.csv"), (row, i, columns) => ({
-      season: +row["Season"],
-      episode: +row["Episode"],
-      title: row["Title"],
-      date: new Date(row["Date"]),
-      name: row["Name"],
-      age: +row["Age"],
-      spouseName: row["Spouse Name"],
-      spouseAge: +row["Spouse Age"] || null,
-      guests: +row["Guest Count"] || null,
-      cost: +row["Budget"] || null,
-      state: row["State"],
-      scoresGiven: columns
-        .filter(colName => /Contestant \d Experience/.test(colName))
-        .map(colName => +row[colName])
-        .filter(Boolean),
-      scoresReceived: {
-        dress: +row["Dress"],
-        venue: +row["Venue"],
-        food: +row["Food"],
-        experience: +row["Experience"]
-      }
-    })).then(data => {
+    csv(withPrefix("/data/four_weddings.csv"), handleCSV).then(data => {
       this.setState({ data });
     });
   }
