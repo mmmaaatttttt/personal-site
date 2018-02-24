@@ -12,3 +12,4 @@ export { default as CaptionedImage } from "./molecules/CaptionedImage";
 export {
   default as SelectableHistogram
 } from "./templates/SelectableHistogram";
+export { default as SelectableHeatMap } from "./templates/SelectableHeatMap";

@@ -29,8 +29,7 @@ ClippedSVG.propTypes = {
   id: PropTypes.string.isRequired,
   width: PropTypes.number.isRequired,
   height: PropTypes.number.isRequired,
-  padding: PropTypes.number.isRequired,
-  style: PropTypes.object
+  padding: PropTypes.number.isRequired
 };
 
 ClippedSVG.defaultProps = {

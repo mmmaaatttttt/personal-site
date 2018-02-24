@@ -11,6 +11,10 @@ featured_image_caption: "ADD AN IMAGE CAPTION."
   * heat map (color by # of weddings or avg cost)
   * histogram of ppl demographics (amount spent, spend per person, age, wedding size, age gap)
 
+ <SelectableHeatMap />
+
+ <SelectableHistogram />
+
 * Winning Weddings
 
   * circle chart (% of winners who spent most, 2nd most, 3rd most, 4th most, also toggleable to cost per person)
@@ -27,5 +31,3 @@ featured_image_caption: "ADD AN IMAGE CAPTION."
   * total points received
   * age gap between ppl
   * wife's age
-
-  <SelectableHistogram />
