@@ -14,11 +14,6 @@ class USMap extends Component {
     us: null
   };
 
-  static defaultProps = {
-    scale: 2000,
-    translate: [800, 450]
-  };
-
   componentWillMount() {
     const { scale, translate } = this.props;
     const projection = geoAlbers()
@@ -45,23 +40,24 @@ class USMap extends Component {
 
   render() {
     const { us } = this.state;
+    let { fillAccessor, colors } = this.props;
     let paths = null;
     if (us) {
       const { states } = us.objects;
       const domain = extent(
-        states.geometries,
-        d => (d.properties.values ? d.properties.values.length : 0)
+        states.geometries.filter(d => d.properties.values),
+        d => fillAccessor(d.properties.values)
       );
       const colorScale = scaleLinear()
         .domain(domain)
-        .range(["#ffecd1", "orange"]);
+        .range(colors);
       paths = feature(us, states).features.map(feature => {
         const { values } = feature.properties;
         return (
           <path
             d={this.path(feature)}
             key={feature.id}
-            fill={values ? colorScale(values.length) : "#eee"}
+            fill={values ? colorScale(fillAccessor(values)) : "#eee"}
             stroke="white"
             strokeWidth="4px"
           />
@@ -69,17 +65,24 @@ class USMap extends Component {
       });
     }
     return (
-      <ClippedSVG id="map" width={1600} height={900}>
+      <ClippedSVG id="us-map" width={1600} height={900}>
         {paths}
       </ClippedSVG>
     );
   }
 }
 
+USMap.defaultProps = {
+  scale: 2000,
+  translate: [800, 450]
+};
+
 USMap.propTypes = {
   scale: PropTypes.number.isRequired,
   translate: PropTypes.arrayOf(PropTypes.number).isRequired,
-  data: PropTypes.arrayOf(PropTypes.object)
+  data: PropTypes.arrayOf(PropTypes.object),
+  fillAccessor: PropTypes.func.isRequired,
+  colors: PropTypes.arrayOf(PropTypes.string).isRequired
 };
 
 export default USMap;

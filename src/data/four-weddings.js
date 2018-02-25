@@ -1,5 +1,8 @@
 import { csv } from "d3-fetch";
 import { withPrefix } from "gatsby-link";
+import COLORS from "../utils/styles";
+import { lighten } from "polished";
+import { average } from "../utils/mathHelpers";
 
 const getData = () => csv(withPrefix("data/four_weddings.csv"), handleCSV);
 
@@ -41,6 +44,21 @@ const selectOptionsHistogram = [
   }
 ];
 
+const selectOptionsMap = [
+  {
+    value: "weddingCount",
+    label: "Number of Weddings",
+    accessor: values => values.length,
+    colors: [lighten(0.375, COLORS.ORANGE), COLORS.ORANGE]
+  },
+  {
+    value: "avgCost",
+    label: "Average Wedding Cost",
+    accessor: values => average(values, d => d.cost),
+    colors: [lighten(0.45, COLORS.GREEN), COLORS.GREEN]
+  }
+];
+
 const handleCSV = (row, i, columns) => ({
   season: +row["Season"],
   episode: +row["Episode"],
@@ -65,4 +83,4 @@ const handleCSV = (row, i, columns) => ({
   }
 });
 
-export { getData, selectOptionsHistogram };
+export { getData, selectOptionsHistogram, selectOptionsMap };

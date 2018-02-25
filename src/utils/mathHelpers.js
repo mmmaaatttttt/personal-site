@@ -39,4 +39,11 @@ function euclideanDistance(...pts) {
   return pts.reduce((sum, pt) => sum + pt ** 2, 0) ** (1 / 2) || 0;
 }
 
-export { generateData, choices, euclideanDistance };
+const average = (nums, accessor) => {
+  if (!nums.length) return 0;
+  if (!accessor) accessor = num => num;
+  const total = nums.reduce((sum, cur) => sum + accessor(cur), 0);
+  return total / nums.length;
+};
+
+export { generateData, choices, euclideanDistance, average };

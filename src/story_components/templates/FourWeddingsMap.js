@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import SelectableHeatMap from "../organisms/SelectableHeatMap";
 import PropTypes from "prop-types";
-import { getData } from "../../data/four-weddings.js";
+import { getData, selectOptionsMap } from "../../data/four-weddings.js";
 
 class FourWeddingsMap extends Component {
   state = {
@@ -16,7 +16,11 @@ class FourWeddingsMap extends Component {
     const { weddingData } = this.state;
     const { caption } = this.props;
     return weddingData.length ? (
-      <SelectableHeatMap data={weddingData} caption={`${caption}`} />
+      <SelectableHeatMap
+        data={weddingData}
+        caption={`${caption}`}
+        selectOptions={selectOptionsMap}
+      />
     ) : null;
   }
 }
