@@ -1,3 +1,46 @@
+import { csv } from "d3-fetch";
+import { withPrefix } from "gatsby-link";
+
+const getData = () => csv(withPrefix("data/four_weddings.csv"), handleCSV);
+
+const selectOptionsHistogram = [
+  {
+    value: "cost",
+    label: "Wedding Cost",
+    accessor: d => d.cost,
+    step: 10000,
+    format: "$.2s"
+  },
+  {
+    value: "guests",
+    label: "Guest Count",
+    accessor: d => d.guests,
+    step: 50,
+    format: ".0f"
+  },
+  {
+    value: "costPerGuest",
+    label: "Wedding Cost Per Guest",
+    accessor: d => (d.guests ? d.cost / d.guests : null),
+    step: 100,
+    format: "$.0f"
+  },
+  {
+    value: "age",
+    label: "Bride Age",
+    accessor: d => d.age,
+    step: 2,
+    format: ".0f"
+  },
+  {
+    value: "ageGap",
+    label: "Age Gap (Spouse Age - Bride Age)",
+    accessor: d => (d.spouseAge ? d.spouseAge - d.age : null),
+    step: 2,
+    format: ".0f"
+  }
+];
+
 const handleCSV = (row, i, columns) => ({
   season: +row["Season"],
   episode: +row["Episode"],
@@ -22,4 +65,4 @@ const handleCSV = (row, i, columns) => ({
   }
 });
 
-export { handleCSV };
+export { getData, selectOptionsHistogram };
