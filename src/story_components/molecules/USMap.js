@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
+import NodeGroup from "react-move/NodeGroup";
 import { geoPath, geoAlbers } from "d3-geo";
 import { scaleLinear } from "d3-scale";
 import { json } from "d3-fetch";
@@ -38,6 +39,15 @@ class USMap extends Component {
     });
   }
 
+  handleEnterAndUpdate = (scale, accessor, d) => {
+    return {
+      fill: [
+        d.properties.values ? scale(accessor(d.properties.values)) : "#eee"
+      ],
+      timing: { duration: 500 }
+    };
+  };
+
   render() {
     const { us } = this.state;
     let { fillAccessor, colors } = this.props;
@@ -51,18 +61,34 @@ class USMap extends Component {
       const colorScale = scaleLinear()
         .domain(domain)
         .range(colors);
-      paths = feature(us, states).features.map(feature => {
-        const { values } = feature.properties;
-        return (
-          <path
-            d={this.path(feature)}
-            key={feature.id}
-            fill={values ? colorScale(fillAccessor(values)) : "#eee"}
-            stroke="white"
-            strokeWidth="4px"
-          />
-        );
-      });
+      paths = (
+        <NodeGroup
+          data={feature(us, states).features}
+          keyAccessor={feature => feature.id}
+          start={() => ({ fill: "white" })}
+          enter={this.handleEnterAndUpdate.bind(this, colorScale, fillAccessor)}
+          update={this.handleEnterAndUpdate.bind(
+            this,
+            colorScale,
+            fillAccessor
+          )}
+          leave={() => {}}
+        >
+          {states => (
+            <g>
+              {states.map(curState => (
+                <path
+                  d={this.path(curState.data)}
+                  key={curState.key}
+                  fill={curState.state.fill}
+                  stroke="white"
+                  strokeWidth="4px"
+                />
+              ))}
+            </g>
+          )}
+        </NodeGroup>
+      );
     }
     return (
       <ClippedSVG id="us-map" width={1600} height={900}>
