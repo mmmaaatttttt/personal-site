@@ -8,11 +8,17 @@ import { nest } from "d3-collection";
 import { extent } from "d3-array";
 import { feature } from "topojson";
 import { withPrefix } from "gatsby-link";
+import Tooltip from "../molecules/Tooltip";
 import ClippedSVG from "../atoms/ClippedSVG";
 
 class USMap extends Component {
   state = {
-    us: null
+    us: null,
+    tooltipVisible: false,
+    tooltipX: 0,
+    tooltipY: 0,
+    tooltipTitle: "",
+    tooltipBody: ""
   };
 
   componentWillMount() {
@@ -48,8 +54,30 @@ class USMap extends Component {
     };
   };
 
+  handleTooltipShow = (data, e) => {
+    const { getTooltipTitle, getTooltipBody } = this.props;
+    this.setState({
+      tooltipVisible: true,
+      tooltipX: e.pageX,
+      tooltipY: e.pageY,
+      tooltipTitle: getTooltipTitle(data),
+      tooltipBody: getTooltipBody(data)
+    });
+  };
+
+  handleTooltipHide = e => {
+    this.setState({ tooltipVisible: false });
+  };
+
   render() {
-    const { us } = this.state;
+    const {
+      us,
+      tooltipVisible,
+      tooltipX,
+      tooltipY,
+      tooltipTitle,
+      tooltipBody
+    } = this.state;
     let { fillAccessor, colors } = this.props;
     let paths = null;
     if (us) {
@@ -83,6 +111,16 @@ class USMap extends Component {
                   fill={curState.state.fill}
                   stroke="white"
                   strokeWidth="4px"
+                  onMouseMove={this.handleTooltipShow.bind(
+                    this,
+                    curState.data.properties
+                  )}
+                  onMouseLeave={this.handleTooltipHide}
+                  onTouchMove={this.handleTooltipShow.bind(
+                    this,
+                    curState.data.properties
+                  )}
+                  onTouchEnd={this.handleTooltipHide}
                 />
               ))}
             </g>
@@ -91,9 +129,18 @@ class USMap extends Component {
       );
     }
     return (
-      <ClippedSVG id="us-map" width={1600} height={900}>
-        {paths}
-      </ClippedSVG>
+      <div>
+        <ClippedSVG id="us-map" width={1600} height={900}>
+          {paths}
+        </ClippedSVG>
+        <Tooltip
+          visible={tooltipVisible}
+          x={tooltipX}
+          y={tooltipY}
+          title={tooltipTitle}
+          body={tooltipBody}
+        />
+      </div>
     );
   }
 }
@@ -108,7 +155,9 @@ USMap.propTypes = {
   translate: PropTypes.arrayOf(PropTypes.number).isRequired,
   data: PropTypes.arrayOf(PropTypes.object),
   fillAccessor: PropTypes.func.isRequired,
-  colors: PropTypes.arrayOf(PropTypes.string).isRequired
+  colors: PropTypes.arrayOf(PropTypes.string).isRequired,
+  getTooltipTitle: PropTypes.func.isRequired,
+  getTooltipBody: PropTypes.func.isRequired
 };
 
 export default USMap;

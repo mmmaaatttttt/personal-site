@@ -18,7 +18,7 @@ class SelectableHeatMap extends Component {
 
   render() {
     const { value, label, accessor, colors } = this.state.selectedOption;
-    const { selectOptions, data } = this.props;
+    const { selectOptions, data, getTooltipTitle, getTooltipBody } = this.props;
     return (
       <div>
         <StyledNarrowContainer width="50%">
@@ -31,7 +31,13 @@ class SelectableHeatMap extends Component {
             clearable={false}
           />
         </StyledNarrowContainer>
-        <USMap data={data} fillAccessor={accessor} colors={colors} />
+        <USMap
+          data={data}
+          fillAccessor={accessor}
+          colors={colors}
+          getTooltipTitle={getTooltipTitle}
+          getTooltipBody={getTooltipBody}
+        />
       </div>
     );
   }
@@ -39,7 +45,9 @@ class SelectableHeatMap extends Component {
 
 SelectableHeatMap.propTypes = {
   data: PropTypes.arrayOf(PropTypes.object).isRequired,
-  selectOptions: PropTypes.arrayOf(PropTypes.object).isRequired
+  selectOptions: PropTypes.arrayOf(PropTypes.object).isRequired,
+  getTooltipTitle: PropTypes.func.isRequired,
+  getTooltipBody: PropTypes.func.isRequired
 };
 
 export default withCaption(SelectableHeatMap);
