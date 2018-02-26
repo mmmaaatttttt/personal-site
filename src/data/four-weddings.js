@@ -1,12 +1,9 @@
-import { csv } from "d3-fetch";
-import { withPrefix } from "gatsby-link";
 import COLORS from "../utils/styles";
 import { lighten } from "polished";
 import { average } from "../utils/mathHelpers";
+import { format } from "d3-format";
 
-const getData = () => csv(withPrefix("data/four_weddings.csv"), handleCSV);
-
-const selectOptionsHistogram = [
+const selectOptionsHistogramOne = [
   {
     value: "cost",
     label: "Wedding Cost",
@@ -59,28 +56,44 @@ const selectOptionsMap = [
   }
 ];
 
-const handleCSV = (row, i, columns) => ({
-  season: +row["Season"],
-  episode: +row["Episode"],
-  title: row["Title"],
-  date: new Date(row["Date"]),
-  name: row["Name"],
-  age: +row["Age"],
-  spouseName: row["Spouse Name"],
-  spouseAge: +row["Spouse Age"] || null,
-  guests: +row["Guest Count"] || null,
-  cost: +row["Budget"] || null,
-  state: row["State"],
-  scoresGiven: columns
-    .filter(colName => /Contestant \d Experience/.test(colName))
-    .map(colName => +row[colName])
-    .filter(Boolean),
-  scoresReceived: {
-    dress: +row["Dress"],
-    venue: +row["Venue"],
-    food: +row["Food"],
-    experience: +row["Experience"]
+const selectOptionsPieChart = [
+  {
+    value: "cost",
+    label: "Rankings by Cost",
+    accessor: () => {}
+  },
+  {
+    value: "costPerGuest",
+    label: "Rankings by Cost Per Guest",
+    accessor: () => {}
   }
-});
+];
 
-export { getData, selectOptionsHistogram, selectOptionsMap };
+const mapTooltipTitle = properties => properties.name;
+
+const mapTooltipBody = properties => {
+  const weddingCount = properties.values && properties.values.length;
+  if (weddingCount) {
+    const averageCost = average(properties.values, d => d.cost);
+    return [
+      `Number of weddings: ${weddingCount}`,
+      `Average Cost: ${format("$,.0f")(averageCost)}`
+    ];
+  }
+  return `No weddings for this state.`;
+};
+
+const selectOptions = {
+  map: selectOptionsMap,
+  histogramOne: selectOptionsHistogramOne,
+  pie: selectOptionsPieChart
+};
+
+const tooltipHelpers = {
+  map: {
+    title: mapTooltipTitle,
+    body: mapTooltipBody
+  }
+};
+
+export { selectOptions, tooltipHelpers };

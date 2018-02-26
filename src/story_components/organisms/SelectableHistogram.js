@@ -3,7 +3,6 @@ import PropTypes from "prop-types";
 import Select from "react-select";
 import { histogram, max, range, extent } from "d3-array";
 import { scaleLinear } from "d3-scale";
-import { handleCSV } from "../../data/four-weddings";
 import withCaption from "../../hocs/withCaption";
 import BarGraph from "./BarGraph";
 import COLORS from "../../utils/styles";
@@ -18,7 +17,7 @@ class SelectableHistogram extends Component {
   handleChange = selectedOption => this.setState({ selectedOption });
 
   render() {
-    const { value, label, accessor, step, format } = this.state.selectedOption;
+    const { value, accessor, step, format } = this.state.selectedOption;
     const { selectOptions, data } = this.props;
     const validData = data.filter(d => accessor(d) !== null);
     const vals = extent(validData, accessor);

@@ -4,7 +4,6 @@ import Select from "react-select";
 import StyledNarrowContainer from "../atoms/StyledNarrowContainer";
 import { json, csv } from "d3-fetch";
 import { withPrefix } from "gatsby-link";
-import { handleCSV } from "../../data/four-weddings";
 import withCaption from "../../hocs/withCaption";
 import USMap from "../molecules/USMap";
 import "react-select/dist/react-select.css";
@@ -17,7 +16,7 @@ class SelectableHeatMap extends Component {
   handleChange = selectedOption => this.setState({ selectedOption });
 
   render() {
-    const { value, label, accessor, colors } = this.state.selectedOption;
+    const { value, accessor, colors } = this.state.selectedOption;
     const { selectOptions, data, getTooltipTitle, getTooltipBody } = this.props;
     return (
       <div>

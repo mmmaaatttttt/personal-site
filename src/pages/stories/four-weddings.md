@@ -11,9 +11,9 @@ featured_image_caption: "ADD AN IMAGE CAPTION."
   * heat map (color by # of weddings or avg cost)
   * histogram of ppl demographics (amount spent, spend per person, age, wedding size, age gap)
 
- <FourWeddingsMap caption="Figure 1: Geographic wedding demographics. Hover over a state to learn more." />
+ <FourWeddingsVisualization visType="map" caption="Figure 1: Geographic wedding demographics. Hover over a state to learn more." />
 
- <FourWeddingsHistogram caption="Figure 2: Basic information for the brides and their weddings."/>
+ <FourWeddingsVisualization visType="histogramOne" caption="Figure 2: Basic information for the brides and their weddings."/>
 
 * Winning Weddings
 

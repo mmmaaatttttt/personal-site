@@ -10,6 +10,5 @@ export { default as Latex } from "./atoms/Latex";
 export { default as ResponsiveIFrame } from "./molecules/ResponsiveIFrame";
 export { default as CaptionedImage } from "./molecules/CaptionedImage";
 export {
-  default as FourWeddingsHistogram
-} from "./templates/FourWeddingsHistogram";
-export { default as FourWeddingsMap } from "./templates/FourWeddingsMap";
+  default as FourWeddingsVisualization
+} from "./templates/FourWeddingsVisualization";
