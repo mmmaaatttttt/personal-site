@@ -17,7 +17,9 @@ featured_image_caption: "ADD AN IMAGE CAPTION."
 
 * Winning Weddings
 
-  * circle chart (% of winners who spent most, 2nd most, 3rd most, 4th most, also toggleable to cost per person)
+   <FourWeddingsVisualization visType="pie" caption="Figure 3: ADD A CAPTION."/>
+
+  * circle chart (% of winners who spent most, 2nd most, 3rd most, 4th most, also toggleable to cost per person. also see rankings based on exp points received, or exp points gained)
 
 - Predictors
 

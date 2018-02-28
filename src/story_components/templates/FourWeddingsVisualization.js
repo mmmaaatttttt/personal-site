@@ -34,7 +34,13 @@ class FourWeddingsVisualization extends Component {
         venue: +row["Venue"],
         food: +row["Food"],
         experience: +row["Experience"]
-      }
+      },
+      ranking: +row["Ranking"],
+      expGivenRanking: +row["Experience Given Ranking"],
+      expDiffRanking: +row["Experience Diff Ranking"],
+      expReceivedRanking: +row["Overall Experience Ranking"],
+      costRanking: +row["Cost Ranking"],
+      costPerGuestRanking: +row["Cost Per Guest Ranking"]
     })).then(weddingData => this.setState({ weddingData }));
   }
 

@@ -56,16 +56,40 @@ const selectOptionsMap = [
   }
 ];
 
+const __pieHelper = (data, rankKey) =>
+  data.filter(d => d.ranking === 1).reduce(
+    (totals, bride) => {
+      totals[bride[rankKey] - 1]++;
+      return totals;
+    },
+    [0, 0, 0, 0]
+  );
+
 const selectOptionsPieChart = [
   {
     value: "cost",
     label: "Rankings by Cost",
-    accessor: () => {}
+    chartValues: data => __pieHelper(data, "costRanking")
   },
   {
     value: "costPerGuest",
     label: "Rankings by Cost Per Guest",
-    accessor: () => {}
+    chartValues: data => __pieHelper(data, "costPerGuestRanking")
+  },
+  {
+    value: "expGiven",
+    label: "Rankings by Overall Experience Points Given",
+    chartValues: data => __pieHelper(data, "expGivenRanking")
+  },
+  {
+    value: "expReceived",
+    label: "Rankings by Overall Experience Points Received",
+    chartValues: data => __pieHelper(data, "expReceivedRanking")
+  },
+  {
+    value: "expDiff",
+    label: "Rankings by Experience Points Gap (Received - Given)",
+    chartValues: data => __pieHelper(data, "expDiffRanking")
   }
 ];
 

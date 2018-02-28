@@ -1,9 +1,9 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import Select from "react-select";
-import { scaleLinear } from "d3-scale";
 import withCaption from "../../hocs/withCaption";
 import StyledNarrowContainer from "../atoms/StyledNarrowContainer";
+import PieChart from "../molecules/PieChart";
 import "react-select/dist/react-select.css";
 
 class SelectablePieChart extends Component {
@@ -14,8 +14,8 @@ class SelectablePieChart extends Component {
   handleChange = selectedOption => this.setState({ selectedOption });
 
   render() {
-    const { value } = this.state.selectedOption;
-    const { selectOptions } = this.props;
+    const { value, chartValues } = this.state.selectedOption;
+    const { selectOptions, data } = this.props;
     return (
       <StyledNarrowContainer width="50%">
         <Select
@@ -26,7 +26,7 @@ class SelectablePieChart extends Component {
           searchable={false}
           clearable={false}
         />
-        <div>PIE CHART</div>
+        <PieChart values={chartValues(data)} padding={20} />
       </StyledNarrowContainer>
     );
   }

@@ -78,7 +78,7 @@ class USMap extends Component {
       tooltipTitle,
       tooltipBody
     } = this.state;
-    let { fillAccessor, colors } = this.props;
+    const { fillAccessor, colors } = this.props;
     let paths = null;
     if (us) {
       const { states } = us.objects;
