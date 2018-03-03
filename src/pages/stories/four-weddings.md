@@ -61,15 +61,33 @@ In this way, it's harder to game the system, since each bride is forced to dole 
 
 This means that the maximum possible score a wedding can receive is 120 points: 30 points in each category. On the other hand, the minimum possible score is 27 (9 points in each of the ranked categories, and 0 for overall experience).
 
+In the event that there's a tie in total score, the winner is the person with the higher overall experience score. There are tie-breaking rules in the event tha the overall experience scores are the same too, but we won't go into them here, because this was a rare occurrence and the rules changed over the course of the show.
+
 ### Winning Weddings
 
-Now that we know a bit more about
+Now that we know a bit more about how the game is played, let's explore some statistics that might predict the winning wedding.
 
-  <FourWeddingsVisualization visType="pie" caption="Figure 3: ADD A CAPTION."/>
+One natural hypothesis is that wedding budget should have some predictive power. After all, more money likely means a fancier dress, better food, a more elaborate venue, or all of the above!
 
-* circle chart (% of winners who spent most, 2nd most, 3rd most, 4th most, also toggleable to cost per person. also see rankings based on exp points received, or exp points gained)
+How can we look at the effect of wedding budget on the final outcome? One way to do it is to group the winners by whether they had the highest, second highest, third highest, or lowest budget among their foursome. If budget has little impact, you'd expect brides with the lowest budget to win about as often as brides with the highest budget. In other words, you'd expect each group to win roughly 25% of the time.
 
-- Predictors
+However, that's not what happens. As the chart below shows, weddings with the highest budget in their group won 45% of the time. On the other end of the spectrum, weddings with the lowest budget in their group won only 11% of the time. Perhaps unsurprisingly, people who spend more on weddings tend to have the weddings that people enjoy the most.
+
+<FourWeddingsVisualization visType="pie" caption="Figure 3: Share of winning weddings by rankings in different categories. First place rankings are blue, second place rankings are green, then orange, then red."/>
+
+There are a few other stats you can play around with in the pie chart. Initially I'd thought that budget per guest might be a strong predictor of success as well, but it turns out to be weaker than the budget on its own (32.4% vs. 45%).
+
+The other predictors you can explore don't have to do with budget, and instead involve the experience points ratings that the brides give and receive. First, note that the number of overall experience points a bride gives out doesn't seem to have an effect on the likelihood of her winning. This isn't so surprising; there's no real incentive for altruism on the show.
+
+On the other hand, getting the highest overall experience score is an even stronger predictor for winning than budget: 60.6% of winners had the highest experience score in the group. Again, this shouldn't be so surprising: if people rate your wedding high in overall experience, it's probable that they also ranked your food, dress, or venue highly as well. In addition, as mentioned before, overall experience score is used as a tie-breaker in the event that multiple people tie for highest total.
+
+Here's where things take an interesting turn. The last category you can examine is what I call the _overall experience gap_, that is, the difference between how many overall experience points a bride _received_, and how many overall experience points a bride _gave_. As you can see, this gap is the second best predictor for success among winners: over half of all winning brides also had the largest overall experience gap!
+
+Of course, this doesn't necessarily mean that brides with popular weddings are sabotaging their competitors by giving them poor experience scores. In fact, since winning is strongly associated with high experience scores, it could be that the gap is larger for women who win simply because the overall experience scores they received were so high.
+
+### Plotting All The Things
+
+* Predictors
 
  <FourWeddingsVisualization visType="histogramTwo" caption="Figure 4: ADD A CAPTION"/>
 
