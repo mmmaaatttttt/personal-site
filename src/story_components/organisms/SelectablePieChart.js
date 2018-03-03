@@ -19,7 +19,7 @@ class SelectablePieChart extends Component {
     return (
       <StyledNarrowContainer width="50%">
         <Select
-          name="bar-data"
+          name="pie-data"
           value={value}
           onChange={this.handleChange}
           options={selectOptions}
