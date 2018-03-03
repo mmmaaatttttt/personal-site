@@ -23,7 +23,7 @@ class FourWeddingsVisualization extends Component {
       spouseName: row["Spouse Name"],
       spouseAge: +row["Spouse Age"] || null,
       guests: +row["Guest Count"] || null,
-      cost: +row["Budget"] || null,
+      budget: +row["Budget"] || null,
       state: row["State"],
       scoresGiven: columns
         .filter(colName => /Contestant \d Experience/.test(colName))
@@ -39,8 +39,8 @@ class FourWeddingsVisualization extends Component {
       expGivenRanking: +row["Experience Given Ranking"],
       expDiffRanking: +row["Experience Diff Ranking"],
       expReceivedRanking: +row["Overall Experience Ranking"],
-      costRanking: +row["Cost Ranking"],
-      costPerGuestRanking: +row["Cost Per Guest Ranking"]
+      budgetRanking: +row["Budget Ranking"],
+      budgetPerGuestRanking: +row["Budget Per Guest Ranking"] || null
     })).then(weddingData => this.setState({ weddingData }));
   }
 
@@ -50,7 +50,8 @@ class FourWeddingsVisualization extends Component {
     const components = {
       map: SelectableHeatMap,
       histogramOne: SelectableHistogram,
-      pie: SelectablePieChart
+      pie: SelectablePieChart,
+      histogramTwo: SelectableHistogram
     };
     if (weddingData.length) {
       const Component = components[visType];
