@@ -65,7 +65,7 @@ class SelectableHistogram extends Component {
           histogram
           thresholds={thresholds}
           tickFormat={format}
-          color={COLORS.ORANGE}
+          color={COLORS.BLUE}
           timing={{ duration: 500, delay: 25 }}
         />
       </StyledNarrowContainer>
