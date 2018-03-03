@@ -16,6 +16,16 @@ const StyledTextWrapper = styled.div`
   max-width: ${sizes.maxWidthContent};
   margin: 0 auto;
   padding: ${rhythm(0.5)};
+
+  table {
+    table-layout: fixed;
+  }
+
+  th,
+  td {
+    text-align: center;
+    border: 1px solid hsla(0, 0%, 0%, 0.12);
+  }
 `;
 
 const StyledMainImage = styled.div`
