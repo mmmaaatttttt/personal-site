@@ -5,6 +5,7 @@ import { withPrefix } from "gatsby-link";
 import SelectableHistogram from "../organisms/SelectableHistogram";
 import SelectableHeatMap from "../organisms/SelectableHeatMap";
 import SelectablePieChart from "../organisms/SelectablePieChart";
+import SelectableScatterplot from "../organisms/SelectableScatterplot";
 import { selectOptions, tooltipHelpers } from "../../data/four-weddings.js";
 
 class FourWeddingsVisualization extends Component {
@@ -50,7 +51,8 @@ class FourWeddingsVisualization extends Component {
     const components = {
       map: SelectableHeatMap,
       histogram: SelectableHistogram,
-      pie: SelectablePieChart
+      pie: SelectablePieChart,
+      scatter: SelectableScatterplot
     };
     if (weddingData.length) {
       const Component = components[visType];

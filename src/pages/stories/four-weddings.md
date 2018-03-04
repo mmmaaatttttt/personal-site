@@ -87,6 +87,8 @@ Of course, this doesn't necessarily mean that brides with popular weddings are s
 
 ### Plotting All The Things
 
+ <FourWeddingsVisualization visType="scatter" caption="Figure 4: scatterplot"/>
+
 * Predictors
 
 * scatterplot (bunch of stuff vs total points: cost, cost per person, wife's age, number of people, exp points given)
