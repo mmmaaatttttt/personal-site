@@ -30,7 +30,7 @@ In terms of average budget, New York and New Jersey take the cake; weddings in t
 
 For more detailed budget information, here's a histogram with budget information for every wedding on the show. You can also look at breakdowns of the number of guests at the wedding, budget per guest, bride's age, spouse's age, and the age gap between the two people getting married.
 
- <FourWeddingsVisualization visType="histogramOne" caption="Figure 2: Basic information for the brides and their weddings."/>
+ <FourWeddingsVisualization visType="histogram" caption="Figure 2: Basic information for the brides and their weddings."/>
 
 The chart should speak for itself, but here are some additional highlights:
 
@@ -88,8 +88,6 @@ Of course, this doesn't necessarily mean that brides with popular weddings are s
 ### Plotting All The Things
 
 * Predictors
-
- <FourWeddingsVisualization visType="histogramTwo" caption="Figure 4: ADD A CAPTION"/>
 
 * scatterplot (bunch of stuff vs total points: cost, cost per person, wife's age, number of people, exp points given)
 * general histograms

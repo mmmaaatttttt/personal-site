@@ -3,7 +3,7 @@ import { lighten } from "polished";
 import { average } from "../utils/mathHelpers";
 import { format } from "d3-format";
 
-const selectOptionsHistogramOne = [
+const selectOptionsHistogram = [
   {
     value: "budget",
     label: "Wedding Budget",
@@ -100,43 +100,7 @@ const selectOptionsPieChart = [
   }
 ];
 
-const selectOptionsHistogramTwo = [
-  {
-    value: "totalPoints",
-    label: "Total Points Received",
-    accessor: d => {
-      let total = 0;
-      for (let category in d.scoresReceived) {
-        total += d.scoresReceived[category];
-      }
-      return total;
-    },
-    step: 5,
-    format: ".0f"
-  },
-  {
-    value: "totalExp",
-    label: "Experience Points Received",
-    accessor: d => d.scoresReceived.experience,
-    step: 1,
-    format: ".0f"
-  },
-  {
-    value: "totalExpGiven",
-    label: "Experience Points Given",
-    accessor: d => d.scoresGiven.reduce((t, c) => t + c, 0),
-    step: 1,
-    format: ".0f"
-  },
-  {
-    value: "expGap",
-    label: "Experience Points Gap (Received - Given)",
-    accessor: d =>
-      d.scoresReceived.experience - d.scoresGiven.reduce((t, c) => t + c, 0),
-    step: 1,
-    format: ".0f"
-  }
-];
+const selectOptionsScatter = [];
 
 const mapTooltipTitle = properties => properties.name;
 
@@ -154,9 +118,9 @@ const mapTooltipBody = properties => {
 
 const selectOptions = {
   map: selectOptionsMap,
-  histogramOne: selectOptionsHistogramOne,
+  histogram: selectOptionsHistogram,
   pie: selectOptionsPieChart,
-  histogramTwo: selectOptionsHistogramTwo
+  scatter: selectOptionsScatter
 };
 
 const tooltipHelpers = {

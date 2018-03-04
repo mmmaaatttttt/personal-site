@@ -49,9 +49,8 @@ class FourWeddingsVisualization extends Component {
     const { caption, visType } = this.props;
     const components = {
       map: SelectableHeatMap,
-      histogramOne: SelectableHistogram,
-      pie: SelectablePieChart,
-      histogramTwo: SelectableHistogram
+      histogram: SelectableHistogram,
+      pie: SelectablePieChart
     };
     if (weddingData.length) {
       const Component = components[visType];
