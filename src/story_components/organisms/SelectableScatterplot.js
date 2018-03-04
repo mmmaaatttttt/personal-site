@@ -16,6 +16,15 @@ class SelectableScatterplot extends Component {
   render() {
     const { value, chartValues } = this.state.selectedOption;
     const { selectOptions, data } = this.props;
+    const scatterData = data
+      .filter(d => d.budget && d.guests && d.age)
+      .map(d => ({
+        cx: d.budget,
+        cy: d.guests,
+        area: d.age,
+        fill: "#ccc",
+        key: `${d.season}:${d.episode} - ${d.description}`
+      }));
     return (
       <StyledNarrowContainer width="50%">
         <Select
@@ -26,7 +35,7 @@ class SelectableScatterplot extends Component {
           searchable={false}
           clearable={false}
         />
-        <Scatterplot />
+        <Scatterplot data={scatterData} />
       </StyledNarrowContainer>
     );
   }

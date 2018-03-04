@@ -25,6 +25,7 @@ class FourWeddingsVisualization extends Component {
       spouseAge: +row["Spouse Age"] || null,
       guests: +row["Guest Count"] || null,
       budget: +row["Budget"] || null,
+      description: row["Description"],
       state: row["State"],
       scoresGiven: columns
         .filter(colName => /Contestant \d Experience/.test(colName))
