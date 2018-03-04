@@ -112,6 +112,12 @@ class GraphContainer extends Component {
         );
       });
 
+      const tickStep = scale => {
+        const [tickMin, tickMax] = scale.domain();
+        const step = tickMax > 500 ? (tickMax - tickMin) / 1e3 : 1;
+        return step;
+      };
+
       return (
         <Graph
           key={i}
@@ -127,6 +133,7 @@ class GraphContainer extends Component {
           xScale={xScale}
           yScale={yScale}
           double={double}
+          tickStep={tickStep}
         >
           {linePlots}
         </Graph>

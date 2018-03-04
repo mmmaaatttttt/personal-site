@@ -15,14 +15,9 @@ const Graph = ({
   yLabel,
   xScale,
   yScale,
-  children
+  children,
+  tickStep
 }) => {
-  const tickStep = scale => {
-    const [tickMin, tickMax] = scale.domain();
-    const step = tickMax > 500 ? (tickMax - tickMin) / 1e3 : 1;
-    return step;
-  };
-
   return (
     <StyledGraph double={double}>
       <ClippedSVG id={svgId} width={width} height={height} padding={padding}>
@@ -31,7 +26,7 @@ const Graph = ({
           scale={yScale}
           xShift={padding}
           tickSize={-width + 2 * padding}
-          tickStep={tickStep(yScale)}
+          tickStep={tickStep && tickStep(yScale)}
         />
         <Axis
           direction="x"
@@ -39,7 +34,7 @@ const Graph = ({
           yShift={height / 2}
           tickSize={-height + 2 * padding}
           tickShift={height / 2 - padding}
-          tickStep={tickStep(xScale)}
+          tickStep={tickStep && tickStep(xScale)}
         />
         {children}
         <StyledAxisLabel x={width} y={height / 2} dy={30} dx={-60}>
@@ -67,7 +62,8 @@ Graph.propTypes = {
   xLabel: PropTypes.string.isRequired,
   yLabel: PropTypes.string.isRequired,
   xScale: PropTypes.func.isRequired,
-  yScale: PropTypes.func.isRequired
+  yScale: PropTypes.func.isRequired,
+  tickStep: PropTypes.func
 };
 
 Graph.defaultProps = {
