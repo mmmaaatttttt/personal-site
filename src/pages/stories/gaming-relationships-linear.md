@@ -26,7 +26,7 @@ Things get more interesting when you start to think about one person's feelings 
 
 Think about this conceptually for a bit. Suppose that person A's feelings change in opposition to person B: when person B's feelings grow too string, person A begins to push away. But when person B begins to retreat, person A shows more interest. On the other hand, suppose that person B's feelings change in parallel with person A: when person A's feelings are strong, so are person B's, and when they're not, neither is person B's. In this case, if person B has feelings for person A, person A will react by pushing person B away. This, in turn, will cause person B to drift away, which will cause person A to to feel more strongly. This will cause person B to feel more strongly too, which will push person A away again, and the cycle repeats.
 
-<GamingLinearRelationships idx={0} caption="Visualizing A and B's feelings based on four inputs."/>
+<GamingLinearRelationships idx={0} caption="Figure 1: Visualizing A and B's feelings based on four inputs."/>
 
 For those of you who prefer equations to visualizations, here's what we're visualizing. If _A(t)_ denotes person A's feelings at time _t_, and _B(t)_ denotes person B's feelings at time _t_, then these graphs are determined by:
 
@@ -55,7 +55,7 @@ This requires a few more parameters, since we can now adjust three parameters fo
 
 Here's a modified visualization for you to play around with:
 
-<GamingLinearRelationships idx={1} caption="Visualizing A and B's feelings based on six inputs."/>
+<GamingLinearRelationships idx={1} caption="Figure 2: Visualizing A and B's feelings based on six inputs."/>
 
 As you might have guessed, more sliders means more parameters in our model. In the language of calculus, our model now looks like this:
 
@@ -90,7 +90,7 @@ This brings us to our final final visualization, which will let you play around 
 
 Here's one example of a relationship that stabilizes. What other ones can you find?
 
-<GamingLinearRelationships idx={2} caption="Visualizing A and B's feelings based on eight inputs."/>
+<GamingLinearRelationships idx={2} caption="Figure 3: Visualizing A and B's feelings based on eight inputs."/>
 
 Once again, here are the equations, if you're into that sort of thing:
 
