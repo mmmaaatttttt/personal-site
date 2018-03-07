@@ -6,6 +6,7 @@ const cross = props => (props.column ? "justify-content" : "align-items");
 
 const StyledFlexContainer = styled.div`
   display: flex;
+  flex: 1;
   ${props =>
     props.column &&
     css`

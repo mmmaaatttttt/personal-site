@@ -114,7 +114,6 @@ const visualizationData = [
     largestY: 200,
     diffEqs: [diffEq1, diffEq2],
     svgIds: ["vis1", "vis2"],
-    step: 0.02,
     xLabel: "Time",
     yLabel: "Feelings",
     colors: [PERSON_A_COLOR, PERSON_B_COLOR]
@@ -127,7 +126,6 @@ const visualizationData = [
     largestY: 200,
     diffEqs: [diffEq3, diffEq3],
     svgIds: ["vis3", "vis4"],
-    step: 0.02,
     max: 40,
     xLabel: "Time",
     yLabel: "Feelings",

@@ -2,7 +2,6 @@ import React from "react";
 import PropTypes from "prop-types";
 import Axis from "../molecules/Axis";
 import StyledAxisLabel from "../atoms/StyledAxisLabel";
-import StyledGraph from "../atoms/StyledGraph";
 import ClippedSVG from "../atoms/ClippedSVG";
 
 const Graph = ({
@@ -10,7 +9,6 @@ const Graph = ({
   height,
   padding,
   svgId,
-  double,
   xLabel,
   yLabel,
   xScale,
@@ -19,7 +17,7 @@ const Graph = ({
   tickStep
 }) => {
   return (
-    <StyledGraph double={double}>
+    <div>
       <ClippedSVG id={svgId} width={width} height={height} padding={padding}>
         <Axis
           direction="y"
@@ -49,7 +47,7 @@ const Graph = ({
           {yLabel}
         </StyledAxisLabel>
       </ClippedSVG>
-    </StyledGraph>
+    </div>
   );
 };
 
@@ -58,16 +56,11 @@ Graph.propTypes = {
   height: PropTypes.number.isRequired,
   padding: PropTypes.number.isRequired,
   svgId: PropTypes.string.isRequired,
-  double: PropTypes.bool.isRequired,
   xLabel: PropTypes.string.isRequired,
   yLabel: PropTypes.string.isRequired,
   xScale: PropTypes.func.isRequired,
   yScale: PropTypes.func.isRequired,
   tickStep: PropTypes.func
-};
-
-Graph.defaultProps = {
-  double: false
 };
 
 export default Graph;

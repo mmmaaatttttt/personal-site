@@ -5,7 +5,6 @@ import { scaleLinear } from "d3-scale";
 import visualizationData from "../../data/gaming-linear-relationships.js";
 import withCaption from "../../hocs/withCaption";
 import { generateData } from "../../utils/mathHelpers";
-import GraphContainer from "../organisms/GraphContainer";
 import Graph from "../organisms/Graph";
 import SliderContainer from "../organisms/SliderContainer";
 import LinePlot from "../atoms/LinePlot";
@@ -25,7 +24,6 @@ class GamingLinearRelationships extends Component {
   };
 
   getYDomain = graphData => {
-    // this method is broken - FIX IT!
     const { largestY, smallestY } = visualizationData[this.props.idx];
     let yMax = max([...graphData[0], ...graphData[1]], d => Math.abs(d.y));
     yMax = Math.min(Math.max(Math.ceil(yMax), smallestY), largestY);
@@ -61,6 +59,7 @@ class GamingLinearRelationships extends Component {
   };
 
   render() {
+    const { min, max, step, padding, idx } = this.props;
     const {
       initialData,
       width,
@@ -70,8 +69,7 @@ class GamingLinearRelationships extends Component {
       xLabel,
       yLabel,
       colors
-    } = visualizationData[this.props.idx];
-    const { min, max, step, padding } = this.props;
+    } = visualizationData[idx];
     const { values } = this.state;
 
     // data is all data from original source file

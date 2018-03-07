@@ -34,7 +34,7 @@ What seems more likely is that your response to your partner's feelings may depe
 
 Let's take a look at a model that takes a more nuanced approach to how each person responds to the feelings of their partner. Below are a couple of graphs. The first one is the same one from the previous story, whose equations are given above. The second one is a modified version in which each person's response to their partner will flip if the partner's feelings become too intense. (For more on this model, check out _Dynamical Models of Love_, a paper by J. C. Sprott. There's a link at the end of this story.)
 
-<GamingNonlinearRelationships idx={0} caption="On the left, our linear model from before; on the right, a new and nonlinear model."/>
+<GamingNonlinearRelationships idx={0} caption="Figure 1: On the left, our linear model from before; on the right, a new and nonlinear model."/>
 
 As you explore these models, it's pretty clear that the latter one allows for a larger family of relationships. For example, the second model allows for relationships that stabilize but still have some variation.
 
@@ -88,7 +88,7 @@ In this scenario, we can think of Person B's feelings in two parts: feelings tow
 
 To see chaos in action, try adjusting one of the parameters just a little bit. For example, if you adjust A's feelings upwards just a couple of ticks, these relationships go absolutely bonkers. If you adjust A's initial feelings down a couple of ticks, things are relatively stable, but there's no rhyme or reason to how the peaks and valleys in each graph change based on this slight adjustment to initial conditions. (Note that I've extended the x-axis out so that the timeline is twice as long as in the other visualizations, so that we can see even more chaotic behavior.)
 
-<GamingNonlinearRelationships idx={1} caption="Chaotic relationship dynamics between three people."/>
+<GamingNonlinearRelationships idx={1} caption="Figure 2: Chaotic relationship dynamics between three people." max={40}/>
 
 This is sensitivity to initial conditions in action. What this means is that even if you were able to accurately measure each of the parameters in the model, the slightest measurement error would destroy the predictive power of the model. While this seems like a bug, maybe it's actually a feature: after all, it doesn't seem reasonable that a mathematical model could predict _any_ future relationship state between a group of people.
 
