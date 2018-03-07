@@ -5,11 +5,7 @@ const StyledSliderArea = styled.div`
   flex: 1;
   width: 100%;
 
-  ${props =>
-    props.flexZero &&
-    css`
-      flex: 0;
-    `} section {
+  section {
     display: flex;
     align-items: center;
   }

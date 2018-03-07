@@ -19,7 +19,6 @@ const LabeledSlider = ({
   color,
   sliderHeight,
   sliderPadding,
-  flexZero,
   tickCount,
   minIcon,
   maxIcon,
@@ -30,7 +29,7 @@ const LabeledSlider = ({
   const leftOpacity = fadeIcons ? 1 - fraction : 1;
   const rightOpacity = fadeIcons ? fraction : 1;
   return (
-    <StyledSliderArea flexZero={flexZero}>
+    <StyledSliderArea>
       <StyledSliderTitle>{title}</StyledSliderTitle>
       <section>
         <StyledIconWrapper>
@@ -72,7 +71,6 @@ LabeledSlider.propTypes = {
   color: PropTypes.string.isRequired,
   sliderHeight: PropTypes.number.isRequired,
   sliderPadding: PropTypes.number.isRequired,
-  flexZero: PropTypes.bool,
   tickCount: PropTypes.number.isRequired,
   minIcon: PropTypes.string.isRequired,
   maxIcon: PropTypes.string.isRequired,
@@ -88,7 +86,6 @@ LabeledSlider.defaultProps = {
   color: COLORS.ORANGE,
   sliderHeight: 6,
   sliderPadding: 10,
-  flexZero: false,
   tickCount: 3,
   minIcon: "minus",
   maxIcon: "plus",

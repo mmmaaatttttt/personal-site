@@ -1,9 +1,9 @@
 import React from "react";
 import PropTypes from "prop-types";
 import LabeledSlider from "./LabeledSlider";
-import StyledSliderGroup from "../atoms/StyledSliderGroup";
+import StyledFlexContainer from "../atoms/StyledFlexContainer";
 
-const SliderGroup = ({ data, handleValueChange, double }) => {
+const SliderGroup = ({ data, handleValueChange }) => {
   const handleChangeWithIndex = idx => val => handleValueChange(idx, val);
   const sliders = data.map(d => (
     <LabeledSlider
@@ -14,10 +14,13 @@ const SliderGroup = ({ data, handleValueChange, double }) => {
       handleValueChange={handleChangeWithIndex(d.originalIdx)}
       title={d.title}
       color={d.color}
-      flexZero={double}
     />
   ));
-  return <StyledSliderGroup double={double}>{sliders}</StyledSliderGroup>;
+  return (
+    <StyledFlexContainer column cross="center">
+      {sliders}
+    </StyledFlexContainer>
+  );
 };
 
 SliderGroup.propTypes = {
@@ -31,8 +34,7 @@ SliderGroup.propTypes = {
       originalIdx: PropTypes.number.isRequired
     })
   ),
-  handleValueChange: PropTypes.func.isRequired,
-  double: PropTypes.bool
+  handleValueChange: PropTypes.func.isRequired
 };
 
 export default SliderGroup;

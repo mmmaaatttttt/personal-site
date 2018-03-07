@@ -6,7 +6,7 @@ import visualizationData from "../../data/gaming-nonlinear-relationships.js";
 import withCaption from "../../hocs/withCaption";
 import { generateData } from "../../utils/mathHelpers";
 import Graph from "../organisms/Graph";
-import SliderContainer from "../organisms/SliderContainer";
+import SliderGroup from "../organisms/SliderGroup";
 import LinePlot from "../atoms/LinePlot";
 import StyledColumnLayout from "../atoms/StyledColumnLayout";
 import StyledFlexContainer from "../atoms/StyledFlexContainer";
@@ -76,7 +76,7 @@ class GamingNonlinearRelationships extends Component {
     // data is all data from original source file
     // plus most recent values from inside of state
     const data = initialData.map((d, i) => {
-      const newObj = { ...d, value: values[i] };
+      const newObj = { ...d, value: values[i], originalIdx: i };
       delete newObj.initialValue;
       return newObj;
     });
@@ -133,14 +133,17 @@ class GamingNonlinearRelationships extends Component {
       );
     });
 
+    const sliderGroups = uniqueColors.map(color => (
+      <SliderGroup
+        key={color}
+        data={data.filter(d => d.color === color)}
+        handleValueChange={this.handleValueChange}
+      />
+    ));
+
     return (
       <StyledFlexContainer column>
-        <SliderContainer
-          handleValueChange={this.handleValueChange}
-          data={data}
-          double={false}
-          colors={uniqueColors}
-        />
+        <StyledColumnLayout break="small">{sliderGroups}</StyledColumnLayout>
         <StyledColumnLayout>{graphs}</StyledColumnLayout>
       </StyledFlexContainer>
     );

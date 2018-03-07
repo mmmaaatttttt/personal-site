@@ -21,7 +21,9 @@ StyledFlexContainer.propTypes = {
     "flex-end",
     "center",
     "baseline",
-    "stretch"
+    "stretch",
+    "space-between",
+    "space-around"
   ])
 };
 

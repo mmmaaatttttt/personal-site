@@ -6,9 +6,10 @@ import visualizationData from "../../data/gaming-linear-relationships.js";
 import withCaption from "../../hocs/withCaption";
 import { generateData } from "../../utils/mathHelpers";
 import Graph from "../organisms/Graph";
-import SliderContainer from "../organisms/SliderContainer";
+import SliderGroup from "../organisms/SliderGroup";
 import LinePlot from "../atoms/LinePlot";
 import StyledColumnLayout from "../atoms/StyledColumnLayout";
+import StyledFlexContainer from "../atoms/StyledFlexContainer";
 
 class GamingLinearRelationships extends Component {
   state = {
@@ -75,7 +76,7 @@ class GamingLinearRelationships extends Component {
     // data is all data from original source file
     // plus most recent values from inside of state
     const data = initialData.map((d, i) => {
-      const newObj = { ...d, value: values[i] };
+      const newObj = { ...d, value: values[i], originalIdx: i };
       delete newObj.initialValue;
       return newObj;
     });
@@ -97,13 +98,17 @@ class GamingLinearRelationships extends Component {
       />
     ));
 
+    const sliderGroups = colors.map(color => (
+      <SliderGroup
+        key={color}
+        data={data.filter(d => d.color === color)}
+        handleValueChange={this.handleValueChange}
+      />
+    ));
+
     return (
       <StyledColumnLayout break="small">
-        <SliderContainer
-          handleValueChange={this.handleValueChange}
-          data={data}
-          colors={colors}
-        />
+        <StyledFlexContainer column>{sliderGroups}</StyledFlexContainer>
         <Graph
           width={width}
           height={height}
