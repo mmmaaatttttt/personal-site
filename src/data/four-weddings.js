@@ -2,6 +2,7 @@ import COLORS from "../utils/styles";
 import { lighten } from "polished";
 import { average } from "../utils/mathHelpers";
 import { format } from "d3-format";
+import { scaleOrdinal } from "d3-scale";
 
 const selectOptionsHistogram = [
   {
@@ -102,12 +103,90 @@ const selectOptionsPieChart = [
 
 const selectOptionsScatter = [
   {
-    value: "test1",
-    label: "Test 1"
+    value: "budget",
+    label: "Wedding Budget",
+    accessor: d => d.budget,
+    radiusOption: true
   },
   {
-    value: "test2",
-    label: "Test 2"
+    value: "guestCount",
+    label: "Guest Count",
+    accessor: d => d.guests,
+    radiusOption: true
+  },
+  {
+    value: "budgetPerGuest",
+    label: "Budget Per Guest",
+    accessor: d => d.guests && d.budget / d.guests,
+    radiusOption: true
+  },
+  {
+    value: "brideAge",
+    label: "Bride's Age",
+    accessor: d => d.age,
+    radiusOption: true
+  },
+  {
+    value: "spouseAge",
+    label: "Spouse's Age",
+    accessor: d => d.spouseAge,
+    radiusOption: true
+  },
+  {
+    value: "ageGap",
+    label: "Age Gap (Spouse Age - Bride Age)",
+    accessor: d => d.spouseAge && d.spouseAge - d.age,
+    radiusOption: false
+  },
+  {
+    value: "totalPoints",
+    label: "Total Points Received",
+    accessor: d => {
+      let total = 0;
+      for (let key in d.scoresReceived) {
+        total += d.scoresReceived[key];
+      }
+      return total;
+    },
+    radiusOption: true
+  },
+  {
+    value: "expPointsReceived",
+    label: "Overall Experience Points Received",
+    accessor: d => d.scoresReceived.experience,
+    radiusOption: true
+  },
+  {
+    value: "expPointsGiven",
+    label: "Overall Experience Points Given",
+    accessor: d => d.scoresGiven.reduce((total, score) => total + score),
+    radiusOption: true
+  },
+  {
+    value: "expPointsGap",
+    label: "Overall Experience Points Gap (Received - Given)",
+    accessor: d =>
+      d.scoresReceived.experience -
+      d.scoresGiven.reduce((total, score) => total + score),
+    radiusOption: false
+  },
+  {
+    value: "dressScore",
+    label: "Dress Score",
+    accessor: d => d.scoresReceived.dress,
+    radiusOption: true
+  },
+  {
+    value: "foodScore",
+    label: "Food Score",
+    accessor: d => d.scoresReceived.food,
+    radiusOption: true
+  },
+  {
+    value: "venueScore",
+    label: "Venue Score",
+    accessor: d => d.scoresReceived.venue,
+    radiusOption: true
   }
 ];
 
@@ -139,4 +218,15 @@ const tooltipHelpers = {
   }
 };
 
-export { selectOptions, tooltipHelpers };
+const graphOptions = {
+  pie: {
+    colorScale: scaleOrdinal().range([
+      COLORS.BLUE,
+      COLORS.GREEN,
+      COLORS.ORANGE,
+      COLORS.RED
+    ])
+  }
+};
+
+export { selectOptions, tooltipHelpers, graphOptions };

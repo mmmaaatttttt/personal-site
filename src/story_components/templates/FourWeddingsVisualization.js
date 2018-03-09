@@ -6,7 +6,11 @@ import SelectableHistogram from "../organisms/SelectableHistogram";
 import SelectableHeatMap from "../organisms/SelectableHeatMap";
 import SelectablePieChart from "../organisms/SelectablePieChart";
 import SelectableScatterplot from "../organisms/SelectableScatterplot";
-import { selectOptions, tooltipHelpers } from "../../data/four-weddings.js";
+import {
+  selectOptions,
+  tooltipHelpers,
+  graphOptions
+} from "../../data/four-weddings.js";
 
 class FourWeddingsVisualization extends Component {
   state = {
@@ -60,7 +64,8 @@ class FourWeddingsVisualization extends Component {
       const props = {
         data: weddingData,
         caption,
-        selectOptions: selectOptions[visType]
+        selectOptions: selectOptions[visType],
+        graphOptions: graphOptions[visType]
       };
       const tooltip = tooltipHelpers[visType];
       if (tooltip) {

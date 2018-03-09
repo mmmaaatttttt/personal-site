@@ -1,11 +1,8 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-// import { arc, pie } from "d3-shape";
-// import { format } from "d3-format";
 import NodeGroup from "react-move/NodeGroup";
 import { extent } from "d3-array";
 import { scaleLinear } from "d3-scale";
-// import COLORS from "../../utils/styles";
 import Graph from "./Graph";
 
 class Scatterplot extends Component {
@@ -21,7 +18,7 @@ class Scatterplot extends Component {
       .range([height - padding, padding]);
     const areaScale = scaleLinear()
       .domain(extent(data, d => d.area))
-      .range([25, 2500]);
+      .range([25, 900]);
     const circles = (
       <NodeGroup
         data={data}
@@ -33,7 +30,6 @@ class Scatterplot extends Component {
           r: 0
         })}
         enter={({ area }) => {
-          debugger;
           return {
             r: [areaScale(area) ** (1 / 2)],
             timing: { duration: 500 }

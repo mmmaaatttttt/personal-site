@@ -3,22 +3,15 @@ import PropTypes from "prop-types";
 import { arc, pie } from "d3-shape";
 import { format } from "d3-format";
 import NodeGroup from "react-move/NodeGroup";
-import { scaleOrdinal } from "d3-scale";
-import COLORS from "../../utils/styles";
+
 import ClippedSVG from "../atoms/ClippedSVG";
 
 class PieChart extends Component {
   render() {
-    const { values, width, height, padding } = this.props;
+    const { values, width, height, padding, colorScale } = this.props;
     const arcs = pie().sortValues(
       (a, b) => values.indexOf(a) - values.indexOf(b)
     )(values);
-    const colorScale = scaleOrdinal().range([
-      COLORS.BLUE,
-      COLORS.GREEN,
-      COLORS.ORANGE,
-      COLORS.RED
-    ]);
     const pathArc = arc()
       .innerRadius(0)
       .outerRadius(width / 2 - padding);
@@ -80,7 +73,8 @@ PieChart.propTypes = {
   values: PropTypes.arrayOf(PropTypes.number).isRequired,
   width: PropTypes.number.isRequired,
   height: PropTypes.number.isRequired,
-  padding: PropTypes.number.isRequired
+  padding: PropTypes.number.isRequired,
+  colorScale: PropTypes.func.isRequired
 };
 
 PieChart.defaultProps = {
