@@ -54,7 +54,10 @@ class Tooltip extends Component {
   componentDidUpdate() {
     const { offsetWidth, offsetHeight } = this.tooltipDiv;
     const { offsetWidth: stateWidth, offsetHeight: stateHeight } = this.state;
-    if (offsetWidth !== stateWidth || offsetHeight !== stateHeight) {
+    const distance =
+      Math.abs(offsetWidth - stateWidth) + Math.abs(offsetHeight - stateHeight);
+    if (distance > 2) {
+      // debugger; // maximum call stack issue!
       this.setState({ offsetWidth, offsetHeight });
     }
   }
