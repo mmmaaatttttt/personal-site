@@ -62,14 +62,13 @@ class BarGraph extends Component {
       yScale.range(range);
     }
     return (
-      <ClippedSVG id={svgId} width={width} height={height} padding={padding}>
+      <ClippedSVG id={svgId} width={width} height={height}>
         <NodeGroup
           data={barData}
           keyAccessor={d => d.key}
           start={this.handleStart.bind(this, xScale)}
           enter={this.handleEnterAndUpdate.bind(this, xScale)}
           update={this.handleEnterAndUpdate.bind(this, xScale)}
-          leave={() => {}}
         >
           {bars => (
             <g>
@@ -77,6 +76,7 @@ class BarGraph extends Component {
                 direction="y"
                 scale={yScale}
                 xShift={padding}
+                yShift={padding}
                 tickSize={-width + 2 * padding}
                 tickStep={tickStep}
               />

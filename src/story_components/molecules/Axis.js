@@ -11,24 +11,10 @@ const StyledAxis = styled.g`
     font-size: 16px;
   }
 
-  .tick:last-child text {
-    display: none;
+  & .tick line {
+    stroke: #ccc;
+    stroke-dasharray: 10, 5;
   }
-
-  ${props =>
-    !props.tickFormat &&
-    css`
-      & .tick line {
-        stroke: #ccc;
-        stroke-dasharray: 10, 5;
-      }
-    `} ${props =>
-      props.direction === "x" &&
-      css`
-        & .tick:nth-child(2) {
-          display: none;
-        }
-      `};
 `;
 
 class Axis extends Component {
@@ -81,11 +67,16 @@ class Axis extends Component {
       .attr("transform", `translate(0,${tickShift})`);
 
     if (tickFormat) {
-      selectAll(".tick text")
-        .attr("transform", "rotate(90)")
-        .style("text-anchor", "start")
-        .attr("dx", "0.5em")
-        .attr("dy", "-0.2em");
+      const labels = select(this.axis).selectAll(".tick text");
+      if (direction === "x")
+        labels
+          .attr("transform", "rotate(90)")
+          .style("text-anchor", "start")
+          .attr("x", "9")
+          .attr("y", 0)
+          .attr("dx", 0)
+          .attr("dy", "0.35em");
+      else labels.style("text-anchor", "end");
     }
   }
 

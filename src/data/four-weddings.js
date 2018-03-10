@@ -106,37 +106,37 @@ const selectOptionsScatter = [
     value: "budget",
     label: "Wedding Budget",
     accessor: d => d.budget,
-    radiusOption: true
+    format: "$.2s"
   },
   {
     value: "guestCount",
     label: "Guest Count",
     accessor: d => d.guests,
-    radiusOption: true
+    format: ".0f"
   },
   {
     value: "budgetPerGuest",
     label: "Budget Per Guest",
     accessor: d => d.guests && d.budget / d.guests,
-    radiusOption: true
+    format: "$.0f"
   },
   {
     value: "brideAge",
     label: "Bride's Age",
     accessor: d => d.age,
-    radiusOption: true
+    format: ".0f"
   },
   {
     value: "spouseAge",
     label: "Spouse's Age",
     accessor: d => d.spouseAge,
-    radiusOption: true
+    format: ".0f"
   },
   {
     value: "ageGap",
     label: "Age Gap (Spouse Age - Bride Age)",
     accessor: d => d.spouseAge && d.spouseAge - d.age,
-    radiusOption: false
+    format: ".0f"
   },
   {
     value: "totalPoints",
@@ -148,19 +148,19 @@ const selectOptionsScatter = [
       }
       return total;
     },
-    radiusOption: true
+    format: ".0f"
   },
   {
     value: "expPointsReceived",
     label: "Overall Experience Points Received",
     accessor: d => d.scoresReceived.experience,
-    radiusOption: true
+    format: ".0f"
   },
   {
     value: "expPointsGiven",
     label: "Overall Experience Points Given",
     accessor: d => d.scoresGiven.reduce((total, score) => total + score),
-    radiusOption: true
+    format: ".0f"
   },
   {
     value: "expPointsGap",
@@ -168,25 +168,25 @@ const selectOptionsScatter = [
     accessor: d =>
       d.scoresReceived.experience -
       d.scoresGiven.reduce((total, score) => total + score),
-    radiusOption: false
+    format: ".0f"
   },
   {
     value: "dressScore",
     label: "Dress Score",
     accessor: d => d.scoresReceived.dress,
-    radiusOption: true
+    format: ".0f"
   },
   {
     value: "foodScore",
     label: "Food Score",
     accessor: d => d.scoresReceived.food,
-    radiusOption: true
+    format: ".0f"
   },
   {
     value: "venueScore",
     label: "Venue Score",
     accessor: d => d.scoresReceived.venue,
-    radiusOption: true
+    format: ".0f"
   }
 ];
 
@@ -226,6 +226,11 @@ const graphOptions = {
       COLORS.ORANGE,
       COLORS.RED
     ])
+  },
+  scatter: {
+    colorScale: scaleOrdinal()
+      .domain([1, 2, 3, 4])
+      .range([COLORS.BLUE, COLORS.GREEN, COLORS.ORANGE, COLORS.RED])
   }
 };
 

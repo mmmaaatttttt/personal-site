@@ -60,7 +60,7 @@ class GamingLinearRelationships extends Component {
   };
 
   render() {
-    const { min, max, step, padding, idx } = this.props;
+    const { min, max, step, svgPadding, graphPadding, idx } = this.props;
     const {
       initialData,
       width,
@@ -83,10 +83,10 @@ class GamingLinearRelationships extends Component {
     const graphData = this.transformData(data, diffEqs[0]);
     const xScale = scaleLinear()
       .domain(extent(graphData[0], d => d.x))
-      .range([padding, width - padding]);
+      .range([graphPadding, width - graphPadding]);
     const yScale = scaleLinear()
       .domain(this.getYDomain(graphData))
-      .range([height - padding, padding]);
+      .range([height - graphPadding, graphPadding]);
 
     const linePlots = graphData.map((plot, i) => (
       <LinePlot
@@ -115,9 +115,11 @@ class GamingLinearRelationships extends Component {
           min={min}
           max={max}
           step={step}
-          padding={padding}
+          svgPadding={svgPadding}
+          graphPadding={graphPadding}
           svgId={svgIds[0]}
           xLabel={xLabel}
+          xLabelPosition={"center-right"}
           yLabel={yLabel}
           xScale={xScale}
           yScale={yScale}
@@ -135,14 +137,16 @@ GamingLinearRelationships.propTypes = {
   min: PropTypes.number.isRequired,
   max: PropTypes.number.isRequired,
   step: PropTypes.number.isRequired,
-  padding: PropTypes.number.isRequired
+  svgPadding: PropTypes.number.isRequired,
+  graphPadding: PropTypes.number.isRequired
 };
 
 GamingLinearRelationships.defaultProps = {
   min: 0,
   max: 20,
   step: 0.1,
-  padding: 30
+  svgPadding: 30,
+  graphPadding: 30
 };
 
 export default withCaption(GamingLinearRelationships);

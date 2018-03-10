@@ -9,8 +9,7 @@ import "react-select/dist/react-select.css";
 class SelectableScatterplot extends Component {
   state = {
     selectedOptionX: this.props.selectOptions[0],
-    selectedOptionY: this.props.selectOptions[1],
-    selectedOptionR: this.props.selectOptions[2]
+    selectedOptionY: this.props.selectOptions[1]
   };
 
   handleChange = (key, selectedOption) =>
@@ -18,10 +17,19 @@ class SelectableScatterplot extends Component {
 
   render() {
     const { selectedOptionX, selectedOptionY, selectedOptionR } = this.state;
-    const { accessor: accessorX } = selectedOptionX;
-    const { accessor: accessorY } = selectedOptionY;
-    const { accessor: accessorR } = selectedOptionR;
-    const { selectOptions, data } = this.props;
+    const {
+      accessor: accessorX,
+      value: valueX,
+      format: formatX
+    } = selectedOptionX;
+    const {
+      accessor: accessorY,
+      value: valueY,
+      format: formatY
+    } = selectedOptionY;
+    const accessorR = selectedOptionR ? selectedOptionR.accessor : d => 100;
+    const { selectOptions, data, graphOptions } = this.props;
+    const { colorScale } = graphOptions;
     const scatterData = data
       .filter(
         d =>
@@ -33,14 +41,14 @@ class SelectableScatterplot extends Component {
         cx: accessorX(d),
         cy: accessorY(d),
         area: accessorR(d),
-        fill: "dodgerblue",
+        fill: colorScale(d.ranking),
         key: `${d.season}:${d.episode} - ${d.description}`
       }));
     return (
       <StyledNarrowContainer width="50%">
         <Select
           name="scatter-data-x"
-          value={selectedOptionX.value}
+          value={valueX}
           onChange={option => this.handleChange("selectedOptionX", option)}
           options={selectOptions}
           searchable={false}
@@ -48,21 +56,19 @@ class SelectableScatterplot extends Component {
         />
         <Select
           name="scatter-data-y"
-          value={selectedOptionY.value}
+          value={valueY}
           onChange={option => this.handleChange("selectedOptionY", option)}
           options={selectOptions}
           searchable={false}
           clearable={false}
         />
-        <Select
-          name="scatter-data-r"
-          value={selectedOptionR.value}
-          onChange={option => this.handleChange("selectedOptionR", option)}
-          options={selectOptions.filter(option => option.radiusOption)}
-          searchable={false}
-          clearable={false}
+        <Scatterplot
+          data={scatterData}
+          {...graphOptions}
+          graphPadding={55}
+          tickFormatX={formatX}
+          tickFormatY={formatY}
         />
-        <Scatterplot data={scatterData} />
       </StyledNarrowContainer>
     );
   }
@@ -70,7 +76,8 @@ class SelectableScatterplot extends Component {
 
 SelectableScatterplot.propTypes = {
   data: PropTypes.arrayOf(PropTypes.object).isRequired,
-  selectOptions: PropTypes.arrayOf(PropTypes.object).isRequired
+  selectOptions: PropTypes.arrayOf(PropTypes.object).isRequired,
+  graphOptions: PropTypes.object.isRequired
 };
 
 export default withCaption(SelectableScatterplot);

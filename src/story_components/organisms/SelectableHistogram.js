@@ -32,7 +32,7 @@ class SelectableHistogram extends Component {
     histogramData[lastIdx].x1 = histogramData[lastIdx].x0 + barWidth;
     const width = 600;
     const height = 600;
-    const padding = 0;
+    const padding = 10;
     const tickStep = 10;
     const barData = histogramData.map((d, i) => ({
       key: i,

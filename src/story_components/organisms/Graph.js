@@ -7,37 +7,77 @@ import ClippedSVG from "../atoms/ClippedSVG";
 const Graph = ({
   width,
   height,
-  padding,
+  graphPadding,
+  svgPadding,
   svgId,
   xLabel,
   yLabel,
+  xLabelPosition,
   xScale,
   yScale,
   children,
-  tickStep
+  tickStep,
+  tickFormatX,
+  tickFormatY
 }) => {
+  const labelOptions = {
+    x: {
+      "center-right": {
+        yShift: height / 2,
+        tickSize: -height + 2 * graphPadding,
+        tickShift: height / 2 - graphPadding,
+        label: {
+          x: width,
+          y: height / 2,
+          anchor: "end",
+          dx: -graphPadding,
+          dy: graphPadding
+        }
+      },
+      "bottom-center": {
+        yShift: height - graphPadding,
+        tickShift: 0,
+        label: {
+          x: width / 2,
+          y: height - graphPadding,
+          dx: 0,
+          dy: graphPadding * 0.7,
+          anchor: "middle"
+        }
+      }
+    }
+  };
+  const xOptions = labelOptions.x[xLabelPosition];
   return (
     <div>
-      <ClippedSVG id={svgId} width={width} height={height} padding={padding}>
+      <ClippedSVG id={svgId} width={width} height={height} padding={svgPadding}>
         <Axis
           direction="y"
           scale={yScale}
-          xShift={padding}
-          tickSize={-width + 2 * padding}
+          xShift={graphPadding}
+          tickSize={-width + 2 * graphPadding}
           tickStep={tickStep && tickStep(yScale)}
+          tickFormat={tickFormatY}
         />
         <Axis
           direction="x"
           scale={xScale}
-          yShift={height / 2}
-          tickSize={-height + 2 * padding}
-          tickShift={height / 2 - padding}
+          yShift={xOptions.yShift}
+          tickSize={-height + 2 * graphPadding}
+          tickShift={xOptions.tickShift}
           tickStep={tickStep && tickStep(xScale)}
+          tickFormat={tickFormatX}
+        />
+        <line
+          x1={graphPadding}
+          x2={graphPadding}
+          y1={graphPadding}
+          y2={height - graphPadding}
+          stroke="#000"
+          strokeWidth="1"
         />
         {children}
-        <StyledAxisLabel x={width} y={height / 2} dy={30} dx={-60}>
-          {xLabel}
-        </StyledAxisLabel>
+        <StyledAxisLabel {...xOptions.label}>{xLabel}</StyledAxisLabel>
         <StyledAxisLabel
           x={10}
           y={height / 2}
@@ -54,13 +94,24 @@ const Graph = ({
 Graph.propTypes = {
   width: PropTypes.number.isRequired,
   height: PropTypes.number.isRequired,
-  padding: PropTypes.number.isRequired,
+  graphPadding: PropTypes.number.isRequired,
+  svgPadding: PropTypes.number.isRequired,
   svgId: PropTypes.string.isRequired,
   xLabel: PropTypes.string.isRequired,
+  xLabelPosition: PropTypes.oneOf(["bottom-center", "center-right"]),
   yLabel: PropTypes.string.isRequired,
   xScale: PropTypes.func.isRequired,
   yScale: PropTypes.func.isRequired,
-  tickStep: PropTypes.func
+  tickStep: PropTypes.func,
+  tickFormatX: PropTypes.string.isRequired,
+  tickFormatY: PropTypes.string.isRequired
+};
+
+Graph.defaultProps = {
+  tickFormatX: "",
+  tickFormatY: "",
+  xLabelPosition: "bottom-center",
+  svgPadding: 0
 };
 
 export default Graph;

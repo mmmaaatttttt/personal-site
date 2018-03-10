@@ -1,76 +1,91 @@
-import React, { Component } from "react";
+import React from "react";
 import PropTypes from "prop-types";
 import NodeGroup from "react-move/NodeGroup";
 import { extent } from "d3-array";
 import { scaleLinear } from "d3-scale";
 import Graph from "./Graph";
+import { darken } from "polished";
 
-class Scatterplot extends Component {
-  render() {
-    const { data, width, height, padding, svgId } = this.props;
-    const xLabel = "x axis";
-    const yLabel = "y axis";
-    const xScale = scaleLinear()
-      .domain(extent(data, d => d.cx))
-      .range([padding, width - padding]);
-    const yScale = scaleLinear()
-      .domain(extent(data, d => d.cy))
-      .range([height - padding, padding]);
-    const areaScale = scaleLinear()
-      .domain(extent(data, d => d.area))
-      .range([25, 900]);
-    const circles = (
-      <NodeGroup
-        data={data}
-        keyAccessor={d => d.key}
-        start={({ cx, cy, fill }) => ({
-          cx: xScale(cx),
-          cy: yScale(cy),
-          fill,
-          r: 0
-        })}
-        enter={({ area }) => {
-          return {
-            r: [areaScale(area) ** (1 / 2)],
-            timing: { duration: 500 }
-          };
-        }}
-        update={({ cx, cy, area, fill }) => ({
-          cx: [xScale(cx)],
-          cy: [yScale(cy)],
-          r: [areaScale(area) ** (1 / 2)],
-          fill: [fill],
-          timing: { duration: 500 }
-        })}
+const Scatterplot = ({
+  data,
+  width,
+  height,
+  graphPadding,
+  svgId,
+  xLabel,
+  yLabel,
+  tickFormatX,
+  tickFormatY
+}) => {
+  const xScale = scaleLinear()
+    .domain(extent(data, d => d.cx))
+    .range([graphPadding, width - graphPadding]);
+  const yScale = scaleLinear()
+    .domain(extent(data, d => d.cy))
+    .range([height - graphPadding, graphPadding]);
+  const circles = (
+    <NodeGroup
+      data={data}
+      keyAccessor={d => d.key}
+      start={({ cx, cy, fill }) => ({
+        cx: xScale(cx),
+        cy: yScale(cy),
+        fill,
+        r: 0
+      })}
+      enter={({ area }, i) => {
+        return {
+          r: [area ** (1 / 2)],
+          timing: { duration: 500, delay: i * 2 }
+        };
+      }}
+      update={({ cx, cy, area, fill }, i) => ({
+        cx: [xScale(cx)],
+        cy: [yScale(cy)],
+        r: [area ** (1 / 2)],
+        fill: [fill],
+        timing: { duration: 500, delay: i * 2 }
+      })}
+    >
+      {nodes => (
+        <g>
+          {nodes.map(({ key, data, state }) => {
+            const { cx, cy, r, fill } = state;
+            return (
+              <circle
+                cx={cx}
+                cy={cy}
+                r={r}
+                fill={fill}
+                stroke={darken(0.3, fill)}
+                strokeWidth={2}
+                key={key}
+              />
+            );
+          })}
+        </g>
+      )}
+    </NodeGroup>
+  );
+  return (
+    <div>
+      <Graph
+        svgId={svgId}
+        width={width}
+        height={height}
+        graphPadding={graphPadding}
+        xLabel={xLabel}
+        yLabel={yLabel}
+        xScale={xScale}
+        yScale={yScale}
+        tickFormatX={tickFormatX}
+        tickFormatY={tickFormatY}
       >
-        {nodes => (
-          <g>
-            {nodes.map(({ key, data, state }) => {
-              const { cx, cy, r, fill } = state;
-              return <circle cx={cx} cy={cy} r={r} fill={fill} key={key} />;
-            })}
-          </g>
-        )}
-      </NodeGroup>
-    );
-    return (
-      <div>
-        <Graph
-          svgId={svgId}
-          width={width}
-          height={height}
-          padding={padding}
-          xLabel={xLabel}
-          yLabel={yLabel}
-          xScale={xScale}
-          yScale={yScale}
-        >
-          {circles}
-        </Graph>
-      </div>
-    );
-  }
-}
+        {circles}
+      </Graph>
+    </div>
+  );
+};
 
 Scatterplot.propTypes = {
   data: PropTypes.arrayOf(
@@ -84,14 +99,22 @@ Scatterplot.propTypes = {
   svgId: PropTypes.string.isRequired,
   width: PropTypes.number.isRequired,
   height: PropTypes.number.isRequired,
-  padding: PropTypes.number.isRequired
+  graphPadding: PropTypes.number.isRequired,
+  xLabel: PropTypes.string.isRequired,
+  yLabel: PropTypes.string.isRequired,
+  tickFormatX: PropTypes.string.isRequired,
+  tickFormatY: PropTypes.string.isRequired
 };
 
 Scatterplot.defaultProps = {
   width: 600,
   height: 600,
   svgId: "scatterplot",
-  padding: 0
+  graphPadding: 0,
+  xLabel: "",
+  yLabel: "",
+  tickFormatX: "",
+  tickFormatY: ""
 };
 
 export default Scatterplot;
