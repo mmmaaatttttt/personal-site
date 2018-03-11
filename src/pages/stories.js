@@ -120,7 +120,7 @@ const Stories = ({ data }) => (
         slug={node.fields.slug}
         timeToRead={node.timeToRead}
         direction={index % 2 === 0 ? "Left" : "Right"}
-        delay={index / 2}
+        delay={index / 4}
       />
     ))}
   </div>
