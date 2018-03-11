@@ -1,12 +1,11 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import Select from "react-select";
-import StyledNarrowContainer from "../atoms/StyledNarrowContainer";
 import { json, csv } from "d3-fetch";
 import { withPrefix } from "gatsby-link";
+import StyledSelect from "../atoms/StyledSelect";
+import StyledNarrowContainer from "../atoms/StyledNarrowContainer";
 import withCaption from "../../hocs/withCaption";
 import USMap from "../molecules/USMap";
-import "react-select/dist/react-select.css";
 
 class SelectableHeatMap extends Component {
   state = {
@@ -21,7 +20,7 @@ class SelectableHeatMap extends Component {
     return (
       <div>
         <StyledNarrowContainer width="50%">
-          <Select
+          <StyledSelect
             name="map-data"
             value={value}
             onChange={this.handleChange}

@@ -1,10 +1,11 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import Select from "react-select";
 import withCaption from "../../hocs/withCaption";
 import StyledNarrowContainer from "../atoms/StyledNarrowContainer";
+import StyledFlexContainer from "../atoms/StyledFlexContainer";
+import StyledSelect from "../atoms/StyledSelect";
+import StyledP from "../atoms/StyledP";
 import Scatterplot from "./Scatterplot";
-import "react-select/dist/react-select.css";
 
 class SelectableScatterplot extends Component {
   state = {
@@ -46,22 +47,28 @@ class SelectableScatterplot extends Component {
       }));
     return (
       <StyledNarrowContainer width="50%">
-        <Select
-          name="scatter-data-x"
-          value={valueX}
-          onChange={option => this.handleChange("selectedOptionX", option)}
-          options={selectOptions}
-          searchable={false}
-          clearable={false}
-        />
-        <Select
-          name="scatter-data-y"
-          value={valueY}
-          onChange={option => this.handleChange("selectedOptionY", option)}
-          options={selectOptions}
-          searchable={false}
-          clearable={false}
-        />
+        <StyledFlexContainer cross="center">
+          <StyledP margin="0.5rem">X-Axis:</StyledP>
+          <StyledSelect
+            name="scatter-data-x"
+            value={valueX}
+            onChange={option => this.handleChange("selectedOptionX", option)}
+            options={selectOptions}
+            searchable={false}
+            clearable={false}
+          />
+        </StyledFlexContainer>
+        <StyledFlexContainer cross="center">
+          <StyledP margin="0.5rem">Y-Axis:</StyledP>
+          <StyledSelect
+            name="scatter-data-y"
+            value={valueY}
+            onChange={option => this.handleChange("selectedOptionY", option)}
+            options={selectOptions}
+            searchable={false}
+            clearable={false}
+          />
+        </StyledFlexContainer>
         <Scatterplot
           data={scatterData}
           {...graphOptions}

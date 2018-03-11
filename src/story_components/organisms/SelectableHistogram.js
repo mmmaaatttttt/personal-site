@@ -1,13 +1,12 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import Select from "react-select";
 import { histogram, max, range, extent } from "d3-array";
 import { scaleLinear } from "d3-scale";
 import withCaption from "../../hocs/withCaption";
 import BarGraph from "./BarGraph";
 import COLORS from "../../utils/styles";
 import StyledNarrowContainer from "../atoms/StyledNarrowContainer";
-import "react-select/dist/react-select.css";
+import StyledSelect from "../atoms/StyledSelect";
 
 class SelectableHistogram extends Component {
   state = {
@@ -45,7 +44,7 @@ class SelectableHistogram extends Component {
       .range([height - padding, padding]);
     return (
       <StyledNarrowContainer width="50%">
-        <Select
+        <StyledSelect
           name="bar-data"
           value={value}
           onChange={this.handleChange}

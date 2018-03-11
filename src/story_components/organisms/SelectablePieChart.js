@@ -1,10 +1,9 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import Select from "react-select";
+import StyledSelect from "../atoms/StyledSelect";
 import withCaption from "../../hocs/withCaption";
 import StyledNarrowContainer from "../atoms/StyledNarrowContainer";
 import PieChart from "../molecules/PieChart";
-import "react-select/dist/react-select.css";
 
 class SelectablePieChart extends Component {
   state = {
@@ -18,7 +17,7 @@ class SelectablePieChart extends Component {
     const { selectOptions, data, graphOptions } = this.props;
     return (
       <StyledNarrowContainer width="50%">
-        <Select
+        <StyledSelect
           name="pie-data"
           value={value}
           onChange={this.handleChange}
