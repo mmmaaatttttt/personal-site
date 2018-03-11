@@ -37,6 +37,7 @@ const StyledTooltip = styled.div.attrs({
 
   ul {
     margin-left: ${rhythm(0.5)};
+    margin-bottom: 0;
   }
 
   ul > li {
