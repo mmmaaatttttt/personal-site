@@ -2,8 +2,8 @@
 title: "Four (Hundred and Thirty-Two) Weddings"
 date: "2018-02-28"
 featured_image: "four_weddings.jpg"
-caption: "ADD A CAPTION"
-featured_image_caption: "ADD AN IMAGE CAPTION."
+caption: "Using data to study what makes a wedding work."
+featured_image_caption: "Four brides featured in an episode of four weddings. Image credit: TLC."
 ---
 
 When my wife and I first got engaged, we spent a fair amount of time doing what any newly engaged American couple does: watching a lot of wedding-themed reality television. I'm not ashamed to admit that I've seen more than my fair share of [_Say Yes to the Dress_](https://en.wikipedia.org/wiki/Say_Yes_to_the_Dress). There were other shows that made it into the rotation too. However, the one I remember most fondly was a little gem called [_Four Weddings_](https://en.wikipedia.org/wiki/Four_Weddings), which aired on the TLC Network.
@@ -11,6 +11,10 @@ When my wife and I first got engaged, we spent a fair amount of time doing what 
 This show had everything. It featured couples from all over the country, with a wide variety of wedding themes, budgets, and eccentricities. There was just the right blend of community and competition. And for a math nerd like myself, there were enough numbers flying across the screen to keep my interest.
 
 If you've never seen the show, here's a quick overview. In each episode, four strangers go to each other's weddings, and then rate the weddings on a few different scales. The bride with the highest-scoring wedding receives an all-expenses paid honeymoon (at least, in [most cases](http://www.thelist.com/25422/untold-truth-behind-four-weddings/)). As the show progresses, you get to see not only how everyone rated the weddings, but you also get some basic demographic information about the brides. This includes things like their age, location, wedding size, and wedding budget.
+
+Here's a quick preview clip from one of the episodes, if you'd like a little more context:
+
+<ResponsiveIFrame src="https://www.youtube.com/embed/1f3Cnp3MaXw?rel=0" heightOverWidth={315/560} />
 
 When I first discovered _Four Weddings_, I thought it might be fun to compile the statistics and see what sorts of trends emerged. But alas, this was in the stone age of 2011, before streaming television had taken off to the extent that it has now. In order to collect data, I had to wait for an episode to air, record it on our DVR, and then speed through it as best I could to record any relevant data. This was a slow process, and after a while I threw in the towel.
 
@@ -99,6 +103,8 @@ Here are a few things I noticed:
 * Of the three other categories that are scored, it appears that a strong showing in **venue** is the best predictor of success. Of the weddings that scored 26 or 30 points in venue (the highest marks possible), **66%** won the episode. For food, **50%** of weddings that scored 26 or 30 points won, and for dress only **39%** of weddings that scored 26 or 30 points won.
 
 ### Conclusion
+
+<Sidebar>Full disclosure: several episodes had incorrect tallies, or tallies that were simply impossible given the rules of the game. Where it was clear what the tallies should have been, I've adjusted the data. But there were a couple of times where it wasn't clear why things were off. In those cases, I've left the data as-is. Check out the notes in the CSV for more details.</Sidebar>
 
 So what did I learn from all of this reality television? As expected, on _Four Weddings_, money helps people win honeymoons. Sabotaging the overall experience scores of your peers can also help, though this doesn't seem to be happening too much, as it's pull off without looking like a jerk. Also, if you're going to splurge on one aspect of the wedding, go for the venue.
 
