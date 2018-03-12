@@ -83,25 +83,27 @@ On the other hand, getting the highest overall experience score is an even stron
 
 Here's where things take an interesting turn. The last category you can examine is what I call the _overall experience gap_, that is, the difference between how many overall experience points a bride _received_, and how many overall experience points a bride _gave_. As you can see, this gap is the second best predictor for success among winners: over half of all winning brides also had the largest overall experience gap!
 
-Of course, this doesn't necessarily mean that brides with popular weddings are sabotaging their competitors by giving them poor experience scores. In fact, since winning is strongly associated with high experience scores, it could be that the gap is larger for women who win simply because the overall experience scores they received were so high.
+Of course, this doesn't necessarily mean that brides with popular weddings are sabotaging their competitors by giving them poor experience scores. In fact, since winning is strongly associated with high experience scores, it could be that the gap is larger for women who win simply because the overall experience scores they received were also high in their group.
 
 ### Plotting All The Things
 
- <FourWeddingsVisualization visType="scatter" caption="Figure 4: scatterplot"/>
+To close things out, let's take a kitchen sink approach. Here's a visualizaiton that lets you plot data from every wedding on the show. You can adjust what each axis is displaying, but the colors of the circles always correspond to final rankings. As with the pie chart above, winners are in blue, second place finishers are in green, then orange, and last place finishers are in red.
 
-* Predictors
+<FourWeddingsVisualization visType="scatter" caption="Figure 4: A scatterplot for your enjoyment. Play around with the data at your leisure."/>
 
-* scatterplot (bunch of stuff vs total points: cost, cost per person, wife's age, number of people, exp points given)
-* general histograms
+Here are a few things I noticed:
 
-  * wedding size
-  * total spend
-  * cost per person
-  * experience points given
-  * total points received
-  * age gap between ppl
-  * wife's age
+* Wedding budget may be a predictor of success, it's worth considering whether there's a limit to this rule of thumb. Among the eight weddings that had a budget of $100,000 or more, only two of them were ranked highest in among their foursome.
+* Setting the y-axis to total points received tells a clear story about what it takes to secure a win. Nobody has received a "perfect" score of 120, but if you score 90 or above, you're pretty likely to win. On the flip side, if you score less than 80 points, you're probably not getting that honeymoon. In other words, there's a relatively narrow range where there's a lot of uncertainty about whether or not you'll win.
+* This is part of the reason why even a small experience point gap can help secure a win. In fact, nearly **38%** of all episodes featured a winner and runner-up whose total score differed by no more than three points.
+* Of the three other categories that are scored, it appears that a strong showing in **venue** is the best predictor of success. Of the weddings that scored 26 or 30 points in venue (the highest marks possible), **66%** won the episode. For food, **50%** of weddings that scored 26 or 30 points won, and for dress only **39%** of weddings that scored 26 or 30 points won.
 
-* diff between 1st and second place?
+### Conclusion
 
-NLP for predicting winner
+So what did I learn from all of this reality television? As expected, on _Four Weddings_, money helps people win honeymoons. Sabotaging the overall experience scores of your peers can also help, though this doesn't seem to be happening too much, as it's pull off without looking like a jerk. Also, if you're going to splurge on one aspect of the wedding, go for the venue.
+
+There are probably other conclusions to be drawn from the data, but I'll stop here for now. If you're interested in exploring the data more on your own, [here's](https://github.com/mmmaaatttttt/personal-site/blob/master/static/data/four_weddings.csv) a link to the raw CSV file. If you notice anything interesting, please let me know!
+
+There's plenty more data to mine, too. I just grabbed the lowest-hanging fruit. In an ideal world, I think it would be fun to perform some kind of [sentiment analysis](https://en.wikipedia.org/wiki/Sentiment_analysis) on the transcripts of the episodes, and see if there are any trends that can be pegged to how the women on the show speak.
+
+But alas, there are only so many hours I can devote to this show in good conscience. For now, my own honeymoon with this show is over. But talk to me again in a couple of years, and maybe I'll be ready to review the data one more time.
