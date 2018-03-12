@@ -146,8 +146,8 @@ class USMap extends Component {
 }
 
 USMap.defaultProps = {
-  scale: 2000,
-  translate: [800, 450]
+  scale: 1950,
+  translate: [800, 460]
 };
 
 USMap.propTypes = {
