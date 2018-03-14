@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import StyledNarrowContainer from "../atoms/StyledNarrowContainer";
+import NarrowContainer from "../atoms/NarrowContainer";
 import StyledCaptionContainer from "../atoms/StyledCaptionContainer";
 import images from "../../utils/images";
 
@@ -9,10 +9,10 @@ const NoMarginImg = styled.img`
 `;
 
 const CaptionedImage = ({ width, src, caption }) => (
-  <StyledNarrowContainer width={width}>
+  <NarrowContainer width={width}>
     <NoMarginImg src={images[src]} alt={caption} />
     <StyledCaptionContainer>{caption}</StyledCaptionContainer>
-  </StyledNarrowContainer>
+  </NarrowContainer>
 );
 
 export default CaptionedImage;

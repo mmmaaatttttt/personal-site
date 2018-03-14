@@ -7,7 +7,7 @@ import ClippedSVG from "../atoms/ClippedSVG";
 import EconomyNodeGroup from "../molecules/EconomyNodeGroup";
 import BarGraph from "../organisms/BarGraph";
 import withCaption from "../../hocs/withCaption";
-import StyledNarrowContainer from "../atoms/StyledNarrowContainer";
+import NarrowContainer from "../atoms/NarrowContainer";
 import COLORS from "../../utils/styles";
 import updateSpeeds from "../../data/income-inequality.js";
 
@@ -116,7 +116,7 @@ class EconomySimulation extends Component {
       />
     );
     return (
-      <StyledNarrowContainer width="50%">
+      <NarrowContainer width="50%">
         {header}
         <div style={{ display: showingSimulation ? "block" : "none" }}>
           <ClippedSVG
@@ -138,7 +138,7 @@ class EconomySimulation extends Component {
           </ClippedSVG>
         </div>
         {barGraphArea}
-      </StyledNarrowContainer>
+      </NarrowContainer>
     );
   }
 }

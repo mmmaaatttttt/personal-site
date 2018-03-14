@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import withCaption from "../../hocs/withCaption";
-import StyledNarrowContainer from "../atoms/StyledNarrowContainer";
+import NarrowContainer from "../atoms/NarrowContainer";
 import StyledFlexContainer from "../atoms/StyledFlexContainer";
 import StyledSelect from "../atoms/StyledSelect";
 import StyledP from "../atoms/StyledP";
@@ -46,7 +46,7 @@ class SelectableScatterplot extends Component {
         key: `${d.season}:${d.episode} - ${d.description}`
       }));
     return (
-      <StyledNarrowContainer width="50%">
+      <NarrowContainer width="50%">
         <StyledFlexContainer cross="center">
           <StyledP margin="0.5rem">X-Axis:</StyledP>
           <StyledSelect
@@ -76,7 +76,7 @@ class SelectableScatterplot extends Component {
           tickFormatX={formatX}
           tickFormatY={formatY}
         />
-      </StyledNarrowContainer>
+      </NarrowContainer>
     );
   }
 }

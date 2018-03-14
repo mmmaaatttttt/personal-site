@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import StyledSelect from "../atoms/StyledSelect";
 import withCaption from "../../hocs/withCaption";
-import StyledNarrowContainer from "../atoms/StyledNarrowContainer";
+import NarrowContainer from "../atoms/NarrowContainer";
 import PieChart from "../molecules/PieChart";
 
 class SelectablePieChart extends Component {
@@ -16,7 +16,7 @@ class SelectablePieChart extends Component {
     const { value, chartValues } = this.state.selectedOption;
     const { selectOptions, data, graphOptions } = this.props;
     return (
-      <StyledNarrowContainer width="50%">
+      <NarrowContainer width="50%">
         <StyledSelect
           name="pie-data"
           value={value}
@@ -26,7 +26,7 @@ class SelectablePieChart extends Component {
           clearable={false}
         />
         <PieChart values={chartValues(data)} padding={20} {...graphOptions} />
-      </StyledNarrowContainer>
+      </NarrowContainer>
     );
   }
 }

@@ -5,7 +5,7 @@ import { scaleLinear } from "d3-scale";
 import withCaption from "../../hocs/withCaption";
 import BarGraph from "./BarGraph";
 import COLORS from "../../utils/styles";
-import StyledNarrowContainer from "../atoms/StyledNarrowContainer";
+import NarrowContainer from "../atoms/NarrowContainer";
 import StyledSelect from "../atoms/StyledSelect";
 
 class SelectableHistogram extends Component {
@@ -43,7 +43,7 @@ class SelectableHistogram extends Component {
       .domain([0, max(histogramData, d => d.length) * 1.1])
       .range([height - padding, padding]);
     return (
-      <StyledNarrowContainer width="50%">
+      <NarrowContainer width="50%">
         <StyledSelect
           name="bar-data"
           value={value}
@@ -67,7 +67,7 @@ class SelectableHistogram extends Component {
           color={COLORS.BLUE}
           timing={{ duration: 500, delay: 25 }}
         />
-      </StyledNarrowContainer>
+      </NarrowContainer>
     );
   }
 }

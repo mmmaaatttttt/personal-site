@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { json, csv } from "d3-fetch";
 import { withPrefix } from "gatsby-link";
 import StyledSelect from "../atoms/StyledSelect";
-import StyledNarrowContainer from "../atoms/StyledNarrowContainer";
+import NarrowContainer from "../atoms/NarrowContainer";
 import withCaption from "../../hocs/withCaption";
 import USMap from "../molecules/USMap";
 
@@ -19,7 +19,7 @@ class SelectableHeatMap extends Component {
     const { selectOptions, data, getTooltipTitle, getTooltipBody } = this.props;
     return (
       <div>
-        <StyledNarrowContainer width="50%">
+        <NarrowContainer width="50%">
           <StyledSelect
             name="map-data"
             value={value}
@@ -28,7 +28,7 @@ class SelectableHeatMap extends Component {
             searchable={false}
             clearable={false}
           />
-        </StyledNarrowContainer>
+        </NarrowContainer>
         <USMap
           data={data}
           fillAccessor={accessor}
