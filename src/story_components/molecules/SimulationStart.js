@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import LabeledSlider from "../organisms/LabeledSlider";
 import Button from "../atoms/Button";
-import StyledFlexContainer from "../atoms/StyledFlexContainer";
+import FlexContainer from "../atoms/FlexContainer";
 import COLORS from "../../utils/styles";
 
 const SimulationStart = ({
@@ -13,7 +13,7 @@ const SimulationStart = ({
   handleSavingsChange,
   savingsRate
 }) => (
-  <StyledFlexContainer column main="center">
+  <FlexContainer column main="center">
     <LabeledSlider
       handleValueChange={handleSpeedCount}
       title="Population Size"
@@ -45,7 +45,7 @@ const SimulationStart = ({
     <Button onClick={handleStart} color={COLORS.MAROON}>
       Start
     </Button>
-  </StyledFlexContainer>
+  </FlexContainer>
 );
 
 SimulationStart.propTypes = {

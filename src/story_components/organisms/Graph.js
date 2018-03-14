@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import Axis from "../molecules/Axis";
-import StyledAxisLabel from "../atoms/StyledAxisLabel";
+import AxisLabel from "../atoms/AxisLabel";
 import ClippedSVG from "../atoms/ClippedSVG";
 
 const Graph = ({
@@ -77,15 +77,15 @@ const Graph = ({
           strokeWidth="1"
         />
         {children}
-        <StyledAxisLabel {...xOptions.label}>{xLabel}</StyledAxisLabel>
-        <StyledAxisLabel
+        <AxisLabel {...xOptions.label}>{xLabel}</AxisLabel>
+        <AxisLabel
           x={10}
           y={height / 2}
           transform={`rotate(-90 10,${height / 2})`}
           dy={10}
         >
           {yLabel}
-        </StyledAxisLabel>
+        </AxisLabel>
       </ClippedSVG>
     </div>
   );

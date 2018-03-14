@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 const main = props => (props.column ? "align-items" : "justify-content");
 const cross = props => (props.column ? "justify-content" : "align-items");
 
-const StyledFlexContainer = styled.div`
+const FlexContainer = styled.div`
   display: flex;
   flex: 1;
   ${props =>
@@ -25,15 +25,15 @@ const flexAlignments = [
   "space-around"
 ];
 
-StyledFlexContainer.propTypes = {
+FlexContainer.propTypes = {
   column: PropTypes.bool,
   main: PropTypes.oneOf(flexAlignments),
   cross: PropTypes.oneOf(flexAlignments)
 };
 
-StyledFlexContainer.defaultProps = {
+FlexContainer.defaultProps = {
   main: "stretch",
   cross: "stretch"
 };
 
-export default StyledFlexContainer;
+export default FlexContainer;

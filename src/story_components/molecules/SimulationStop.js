@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import Button from "../atoms/Button";
-import StyledFlexContainer from "../atoms/StyledFlexContainer";
+import FlexContainer from "../atoms/FlexContainer";
 import LabeledSlider from "../organisms/LabeledSlider";
 import COLORS from "../../utils/styles";
 
@@ -15,7 +15,7 @@ const SimulationStop = ({
 }) => {
   const btnText = showingSimulation ? "Show Bar Chart" : "Show Simulation";
   return (
-    <StyledFlexContainer column main="center">
+    <FlexContainer column main="center">
       <LabeledSlider
         handleValueChange={handleVelocityChange}
         title="Average Wealth (a.k.a. Average Speed)"
@@ -29,7 +29,7 @@ const SimulationStop = ({
         maxIcon="fast-forward"
         fadeIcons={false}
       />
-      <StyledFlexContainer>
+      <FlexContainer>
         <Button onClick={handlePause} color={COLORS.ORANGE}>
           Pause
         </Button>
@@ -39,8 +39,8 @@ const SimulationStop = ({
         <Button onClick={handleStop} color={COLORS.RED}>
           Reset
         </Button>
-      </StyledFlexContainer>
-    </StyledFlexContainer>
+      </FlexContainer>
+    </FlexContainer>
   );
 };
 

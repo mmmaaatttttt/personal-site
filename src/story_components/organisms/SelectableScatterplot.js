@@ -1,11 +1,13 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import withCaption from "../../hocs/withCaption";
-import NarrowContainer from "../atoms/NarrowContainer";
-import StyledFlexContainer from "../atoms/StyledFlexContainer";
-import StyledSelect from "../atoms/StyledSelect";
-import StyledP from "../atoms/StyledP";
+import styled from "styled-components";
+import withCaption from "hocs/withCaption";
+import { NarrowContainer, FlexContainer, StyledSelect } from "story_components";
 import Scatterplot from "./Scatterplot";
+
+const StyledParagraph = styled.p`
+  margin: 0.5rem;
+`;
 
 class SelectableScatterplot extends Component {
   state = {
@@ -47,8 +49,8 @@ class SelectableScatterplot extends Component {
       }));
     return (
       <NarrowContainer width="50%">
-        <StyledFlexContainer cross="center">
-          <StyledP margin="0.5rem">X-Axis:</StyledP>
+        <FlexContainer cross="center">
+          <StyledParagraph>X-Axis:</StyledParagraph>
           <StyledSelect
             name="scatter-data-x"
             value={valueX}
@@ -57,9 +59,9 @@ class SelectableScatterplot extends Component {
             searchable={false}
             clearable={false}
           />
-        </StyledFlexContainer>
-        <StyledFlexContainer cross="center">
-          <StyledP margin="0.5rem">Y-Axis:</StyledP>
+        </FlexContainer>
+        <FlexContainer cross="center">
+          <StyledParagraph>Y-Axis:</StyledParagraph>
           <StyledSelect
             name="scatter-data-y"
             value={valueY}
@@ -68,7 +70,7 @@ class SelectableScatterplot extends Component {
             searchable={false}
             clearable={false}
           />
-        </StyledFlexContainer>
+        </FlexContainer>
         <Scatterplot
           data={scatterData}
           {...graphOptions}

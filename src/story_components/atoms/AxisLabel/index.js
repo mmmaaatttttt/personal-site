@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import PropTypes from "prop-types";
 
-const StyledAxisLabel = styled.text`
+const AxisLabel = styled.text`
   text-anchor: ${props => props.anchor};
   font-style: italic;
   font-size: 125%;
@@ -9,12 +9,12 @@ const StyledAxisLabel = styled.text`
   stroke: #fff;
 `;
 
-StyledAxisLabel.propTypes = {
+AxisLabel.propTypes = {
   anchor: PropTypes.oneOf(["start", "middle", "end"]).isRequired
 };
 
-StyledAxisLabel.defaultProps = {
+AxisLabel.defaultProps = {
   anchor: "middle"
 };
 
-export default StyledAxisLabel;
+export default AxisLabel;

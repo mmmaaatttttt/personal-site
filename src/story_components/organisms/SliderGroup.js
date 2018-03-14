@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import LabeledSlider from "./LabeledSlider";
-import StyledFlexContainer from "../atoms/StyledFlexContainer";
+import FlexContainer from "../atoms/FlexContainer";
 
 const SliderGroup = ({ data, handleValueChange }) => {
   const handleChangeWithIndex = idx => val => handleValueChange(idx, val);
@@ -17,9 +17,9 @@ const SliderGroup = ({ data, handleValueChange }) => {
     />
   ));
   return (
-    <StyledFlexContainer column cross="center">
+    <FlexContainer column cross="center">
       {sliders}
-    </StyledFlexContainer>
+    </FlexContainer>
   );
 };
 

@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import StyledSliderTick from "../atoms/StyledSliderTick";
-import StyledFlexContainer from "../atoms/StyledFlexContainer";
+import FlexContainer from "../atoms/FlexContainer";
 
 const SliderTicks = ({
   count,
@@ -11,16 +11,14 @@ const SliderTicks = ({
   height,
   padding
 }) => {
-  const ticks = Array.from({ length: count }, (e, i) => {
+  const ticks = Array.from({ length: count }, (_, i) => {
     const color =
       i / (count - 1) <= fractionFilled ? activeColor : inactiveColor;
     return (
       <StyledSliderTick key={i} color={color} width={height} offset={padding} />
     );
   });
-  return (
-    <StyledFlexContainer main="space-between">{ticks}</StyledFlexContainer>
-  );
+  return <FlexContainer main="space-between">{ticks}</FlexContainer>;
 };
 
 SliderTicks.propTypes = {

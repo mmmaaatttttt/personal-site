@@ -1,13 +1,32 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { lighten } from "polished";
+import styled from "styled-components";
+import COLORS from "utils/styles";
 import SliderTicks from "../molecules/SliderTicks";
-import SliderIcon from "../atoms/SliderIcon";
-import StyledSlider from "../atoms/StyledSlider";
-import StyledIconWrapper from "../atoms/StyledIconWrapper";
-import StyledSliderTitle from "../atoms/StyledSliderTitle";
-import StyledSliderArea from "../atoms/StyledSliderArea";
-import COLORS from "../../utils/styles";
+import { Icon, StyledSlider } from "story_components";
+
+const StyledSliderTitle = styled.p`
+  margin-bottom: ${rhythm(0.25)};
+  font-size: 80%;
+  line-height: 1;
+`;
+
+const StyledSliderArea = styled.div`
+  text-align: center;
+  flex: 1;
+  width: 100%;
+
+  section {
+    display: flex;
+    align-items: center;
+  }
+`;
+
+const StyledIconWrapper = styled.p`
+  margin: 0 ${rhythm(0.5)};
+  line-height: 1;
+`;
 
 const LabeledSlider = ({
   min,
@@ -33,7 +52,7 @@ const LabeledSlider = ({
       <StyledSliderTitle>{title}</StyledSliderTitle>
       <section>
         <StyledIconWrapper>
-          <SliderIcon name={minIcon} color={color} opacity={leftOpacity} />
+          <Icon name={minIcon} color={color} opacity={leftOpacity} disabled />
         </StyledIconWrapper>
         <StyledSlider
           min={min}
@@ -54,7 +73,7 @@ const LabeledSlider = ({
           />
         </StyledSlider>
         <StyledIconWrapper>
-          <SliderIcon name={maxIcon} color={color} opacity={rightOpacity} />
+          <Icon name={maxIcon} color={color} opacity={rightOpacity} />
         </StyledIconWrapper>
       </section>
     </StyledSliderArea>

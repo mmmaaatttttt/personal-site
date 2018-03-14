@@ -1,7 +1,7 @@
 import styled, { css } from "styled-components";
-import media from "../../utils/media";
+import media from "utils/media";
 
-const StyledColumnLayout = styled.div`
+const ColumnLayout = styled.div`
   display: flex;
 
   & > div {
@@ -17,4 +17,4 @@ const StyledColumnLayout = styled.div`
     `};
 `;
 
-export default StyledColumnLayout;
+export default ColumnLayout;

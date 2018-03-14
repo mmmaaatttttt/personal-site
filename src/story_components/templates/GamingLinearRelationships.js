@@ -8,8 +8,8 @@ import { generateData } from "../../utils/mathHelpers";
 import Graph from "../organisms/Graph";
 import SliderGroup from "../organisms/SliderGroup";
 import LinePlot from "../atoms/LinePlot";
-import StyledColumnLayout from "../atoms/StyledColumnLayout";
-import StyledFlexContainer from "../atoms/StyledFlexContainer";
+import ColumnLayout from "../atoms/ColumnLayout";
+import FlexContainer from "../atoms/FlexContainer";
 
 class GamingLinearRelationships extends Component {
   state = {
@@ -107,8 +107,8 @@ class GamingLinearRelationships extends Component {
     ));
 
     return (
-      <StyledColumnLayout break="small">
-        <StyledFlexContainer column>{sliderGroups}</StyledFlexContainer>
+      <ColumnLayout break="small">
+        <FlexContainer column>{sliderGroups}</FlexContainer>
         <Graph
           width={width}
           height={height}
@@ -127,7 +127,7 @@ class GamingLinearRelationships extends Component {
         >
           {linePlots}
         </Graph>
-      </StyledColumnLayout>
+      </ColumnLayout>
     );
   }
 }

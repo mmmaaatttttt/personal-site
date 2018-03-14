@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { rhythm } from "../utils/typography";
 import media from "../utils/media";
-import StyledCaptionContainer from "../story_components/atoms/StyledCaptionContainer";
+import Caption from "../story_components/atoms/Caption";
 
 const StyledVisualizationContainer = styled.div`
   width: 150%;
@@ -32,7 +32,7 @@ function withCaption(ComposedComponent) {
     return (
       <StyledVisualizationContainer>
         <ComposedComponent {...otherProps} />
-        <StyledCaptionContainer>{caption}</StyledCaptionContainer>
+        <Caption>{caption}</Caption>
       </StyledVisualizationContainer>
     );
   };

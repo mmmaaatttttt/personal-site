@@ -8,8 +8,8 @@ import { generateData } from "../../utils/mathHelpers";
 import Graph from "../organisms/Graph";
 import SliderGroup from "../organisms/SliderGroup";
 import LinePlot from "../atoms/LinePlot";
-import StyledColumnLayout from "../atoms/StyledColumnLayout";
-import StyledFlexContainer from "../atoms/StyledFlexContainer";
+import ColumnLayout from "../atoms/ColumnLayout";
+import FlexContainer from "../atoms/FlexContainer";
 
 class GamingNonlinearRelationships extends Component {
   state = {
@@ -144,10 +144,10 @@ class GamingNonlinearRelationships extends Component {
     ));
 
     return (
-      <StyledFlexContainer column>
-        <StyledColumnLayout break="small">{sliderGroups}</StyledColumnLayout>
-        <StyledColumnLayout>{graphs}</StyledColumnLayout>
-      </StyledFlexContainer>
+      <FlexContainer column>
+        <ColumnLayout break="small">{sliderGroups}</ColumnLayout>
+        <ColumnLayout>{graphs}</ColumnLayout>
+      </FlexContainer>
     );
   }
 }
