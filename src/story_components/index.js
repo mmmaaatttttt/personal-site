@@ -1,14 +1,7 @@
-export {
-  default as GamingLinearRelationships
-} from "./templates/GamingLinearRelationships";
-export {
-  default as GamingNonlinearRelationships
-} from "./templates/GamingNonlinearRelationships";
-export { default as EconomySimulation } from "./templates/EconomySimulation";
-export { default as Sidebar } from "./molecules/Sidebar";
-export { default as Latex } from "./atoms/Latex";
-export { default as ResponsiveIFrame } from "./molecules/ResponsiveIFrame";
-export { default as CaptionedImage } from "./molecules/CaptionedImage";
-export {
-  default as FourWeddingsVisualization
-} from "./templates/FourWeddingsVisualization";
+// https://github.com/diegohaz/arc/wiki/Atomic-Design#do-not-worry
+const req = require.context(".", true, /\.\/[^/]+\/[^/]+\/index\.js$/);
+
+req.keys().forEach(key => {
+  const componentName = key.replace(/^.+\/([^/]+)\/index\.js/, "$1");
+  module.exports[componentName] = req(key);
+});
