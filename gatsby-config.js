@@ -21,9 +21,9 @@ module.exports = {
     {
       resolve: `gatsby-plugin-google-analytics`,
       options: {
-        trackingId: 'UA-110074252-1',
+        trackingId: "UA-110074252-1",
         anonymize: true
-      },
+      }
     },
     {
       resolve: `gatsby-plugin-feed`,
@@ -48,7 +48,7 @@ module.exports = {
                   description: edge.node.frontmatter.caption,
                   url: site.siteMetadata.siteUrl + edge.node.fields.slug,
                   guid: site.siteMetadata.siteUrl + edge.node.fields.slug,
-                  custom_elements: [{ 'content:encoded': edge.node.excerpt }],
+                  custom_elements: [{ "content:encoded": edge.node.excerpt }]
                 });
               });
             },
@@ -72,13 +72,14 @@ module.exports = {
                 }
               }
             `,
-            output: '/rss.xml'
+            output: "/rss.xml"
           }
         ]
       }
     },
     `gatsby-transformer-remark`,
     `gatsby-plugin-react-helmet`,
-    `gatsby-plugin-sitemap`
+    `gatsby-plugin-sitemap`,
+    `gatsby-plugin-resolve-src`
   ]
 };
