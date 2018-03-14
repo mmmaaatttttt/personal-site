@@ -1,13 +1,13 @@
 import styled from "styled-components";
 import PropTypes from "prop-types";
 import { darken } from "polished";
-import COLORS from "../../utils/styles";
-import { rhythm } from "../../utils/typography";
+import COLORS from "utils/styles";
+import { rhythm } from "utils/typography";
 
 const color = props => props.color;
 const darkerColor = props => darken(0.1, color(props));
 
-const StyledButton = styled.button`
+const Button = styled.button`
   border-radius: 3px;
   padding: 0.2rem 0.6rem;
   background-color: ${color};
@@ -28,12 +28,12 @@ const StyledButton = styled.button`
   }
 `;
 
-StyledButton.propTypes = {
+Button.propTypes = {
   color: PropTypes.string.isRequired
 };
 
-StyledButton.defaultProps = {
+Button.defaultProps = {
   color: "orange"
 };
 
-export default StyledButton;
+export default Button;

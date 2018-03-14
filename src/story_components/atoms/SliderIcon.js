@@ -1,9 +1,14 @@
-import React from "react";
 import PropTypes from "prop-types";
-import StyledDisabledIcon from "./StyledDisabledIcon";
+import styled from "styled-components";
+
+const DisabledIcon = styled.i`
+  &:hover {
+    cursor: not-allowed;
+  }
+`;
 
 const SliderIcon = ({ name, color, opacity }) => (
-  <StyledDisabledIcon className={`fa fa-${name}`} style={{ color, opacity }} />
+  <DisabledIcon className={`fa fa-${name}`} style={{ color, opacity }} />
 );
 
 SliderIcon.propTypes = {

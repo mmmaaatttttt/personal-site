@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import styled from "styled-components";
 import katex from "katex";
 import PropTypes from "prop-types";
-import { rhythm } from "../../utils/typography";
+import { rhythm } from "utils/typography";
 
 const StyledParagraph = styled.p`
   .katex,

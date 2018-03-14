@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import StyledButton from "../atoms/StyledButton";
+import Button from "../atoms/Button";
 import StyledFlexContainer from "../atoms/StyledFlexContainer";
 import LabeledSlider from "../organisms/LabeledSlider";
 import COLORS from "../../utils/styles";
@@ -30,15 +30,15 @@ const SimulationStop = ({
         fadeIcons={false}
       />
       <StyledFlexContainer>
-        <StyledButton onClick={handlePause} color={COLORS.ORANGE}>
+        <Button onClick={handlePause} color={COLORS.ORANGE}>
           Pause
-        </StyledButton>
-        <StyledButton onClick={handleShowingSimulation} color={COLORS.BLUE}>
+        </Button>
+        <Button onClick={handleShowingSimulation} color={COLORS.BLUE}>
           {btnText}
-        </StyledButton>
-        <StyledButton onClick={handleStop} color={COLORS.RED}>
+        </Button>
+        <Button onClick={handleStop} color={COLORS.RED}>
           Reset
-        </StyledButton>
+        </Button>
       </StyledFlexContainer>
     </StyledFlexContainer>
   );

@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import LabeledSlider from "../organisms/LabeledSlider";
-import StyledButton from "../atoms/StyledButton";
+import Button from "../atoms/Button";
 import StyledFlexContainer from "../atoms/StyledFlexContainer";
 import COLORS from "../../utils/styles";
 
@@ -42,9 +42,9 @@ const SimulationStart = ({
         fadeIcons={false}
       />
     ) : null}
-    <StyledButton onClick={handleStart} color={COLORS.MAROON}>
+    <Button onClick={handleStart} color={COLORS.MAROON}>
       Start
-    </StyledButton>
+    </Button>
   </StyledFlexContainer>
 );
 
