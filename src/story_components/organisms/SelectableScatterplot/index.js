@@ -2,8 +2,12 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import styled from "styled-components";
 import withCaption from "hocs/withCaption";
-import { NarrowContainer, FlexContainer, StyledSelect } from "story_components";
-import Scatterplot from "./Scatterplot";
+import {
+  NarrowContainer,
+  FlexContainer,
+  Scatterplot,
+  StyledSelect
+} from "story_components";
 
 const StyledParagraph = styled.p`
   margin: 0.5rem;

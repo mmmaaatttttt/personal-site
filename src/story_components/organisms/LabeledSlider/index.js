@@ -3,8 +3,7 @@ import PropTypes from "prop-types";
 import { lighten } from "polished";
 import styled from "styled-components";
 import COLORS from "utils/styles";
-import SliderTicks from "../molecules/SliderTicks";
-import { Icon, StyledSlider } from "story_components";
+import { Icon, SliderTicks, StyledSlider } from "story_components";
 
 const StyledSliderTitle = styled.p`
   margin-bottom: ${rhythm(0.25)};

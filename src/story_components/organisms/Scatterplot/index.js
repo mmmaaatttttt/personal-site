@@ -3,8 +3,8 @@ import PropTypes from "prop-types";
 import NodeGroup from "react-move/NodeGroup";
 import { extent } from "d3-array";
 import { scaleLinear } from "d3-scale";
-import Graph from "./Graph";
 import { darken } from "polished";
+import { Graph } from "story_components";
 
 const Scatterplot = ({
   data,

@@ -2,10 +2,8 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { json, csv } from "d3-fetch";
 import { withPrefix } from "gatsby-link";
-import StyledSelect from "../atoms/StyledSelect";
-import NarrowContainer from "../atoms/NarrowContainer";
-import withCaption from "../../hocs/withCaption";
-import USMap from "../molecules/USMap";
+import withCaption from "hocs/withCaption";
+import { NarrowContainer, StyledSelect, USMap } from "story_components";
 
 class SelectableHeatMap extends Component {
   state = {

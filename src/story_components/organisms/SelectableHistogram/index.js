@@ -2,11 +2,9 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { histogram, max, range, extent } from "d3-array";
 import { scaleLinear } from "d3-scale";
-import withCaption from "../../hocs/withCaption";
-import BarGraph from "./BarGraph";
-import COLORS from "../../utils/styles";
-import NarrowContainer from "../atoms/NarrowContainer";
-import StyledSelect from "../atoms/StyledSelect";
+import withCaption from "hocs/withCaption";
+import COLORS from "utils/styles";
+import { BarGraph, NarrowContainer, StyledSelect } from "story_components";
 
 class SelectableHistogram extends Component {
   state = {

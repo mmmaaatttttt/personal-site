@@ -1,8 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import Axis from "../molecules/Axis";
-import AxisLabel from "../atoms/AxisLabel";
-import ClippedSVG from "../atoms/ClippedSVG";
+import { Axis, AxisLabel, ClippedSVG } from "story_components";
 
 const Graph = ({
   width,

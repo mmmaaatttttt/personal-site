@@ -1,9 +1,7 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import StyledSelect from "../atoms/StyledSelect";
-import withCaption from "../../hocs/withCaption";
-import NarrowContainer from "../atoms/NarrowContainer";
-import PieChart from "../molecules/PieChart";
+import withCaption from "hocs/withCaption";
+import { NarrowContainer, PieChart, StyledSelect } from "story_components";
 
 class SelectablePieChart extends Component {
   state = {

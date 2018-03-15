@@ -2,10 +2,8 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import NodeGroup from "react-move/NodeGroup";
 import { scaleBand, scaleLinear } from "d3-scale";
-import Axis from "../molecules/Axis";
-import ClippedSVG from "../atoms/ClippedSVG";
-import CenteredSVGText from "../atoms/CenteredSVGText";
-import COLORS from "../../utils/styles";
+import { Axis, CenteredSVGText, ClippedSVG } from "story_components";
+import COLORS from "utils/styles";
 
 class BarGraph extends Component {
   handleStart = (scale, d, i) => {

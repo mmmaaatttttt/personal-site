@@ -1,7 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import LabeledSlider from "./LabeledSlider";
-import FlexContainer from "../atoms/FlexContainer";
+import { FlexContainer, LabeledSlider } from "story_components";
 
 const SliderGroup = ({ data, handleValueChange }) => {
   const handleChangeWithIndex = idx => val => handleValueChange(idx, val);
