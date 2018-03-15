@@ -2,15 +2,17 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { csv } from "d3-fetch";
 import { withPrefix } from "gatsby-link";
-import SelectableHistogram from "../organisms/SelectableHistogram";
-import SelectableHeatMap from "../organisms/SelectableHeatMap";
-import SelectablePieChart from "../organisms/SelectablePieChart";
-import SelectableScatterplot from "../organisms/SelectableScatterplot";
 import {
   selectOptions,
   tooltipHelpers,
   graphOptions
-} from "../../data/four-weddings.js";
+} from "data/four-weddings.js";
+import {
+  SelectableHeatMap,
+  SelectableHistogram,
+  SelectablePieChart,
+  SelectableScatterplot
+} from "story_components";
 
 class FourWeddingsVisualization extends Component {
   state = {

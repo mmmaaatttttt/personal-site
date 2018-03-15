@@ -2,16 +2,18 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { extent, max } from "d3-array";
 import { scaleLinear } from "d3-scale";
-import visualizationData from "../../data/gaming-nonlinear-relationships.js";
-import withCaption from "../../hocs/withCaption";
-import { generateData } from "../../utils/mathHelpers";
-import Graph from "../organisms/Graph";
-import SliderGroup from "../organisms/SliderGroup";
-import LinePlot from "../atoms/LinePlot";
-import ColumnLayout from "../atoms/ColumnLayout";
-import FlexContainer from "../atoms/FlexContainer";
+import visualizationData from "data/gaming-linear-relationships.js";
+import withCaption from "hocs/withCaption";
+import { generateData } from "utils/mathHelpers";
+import {
+  ColumnLayout,
+  FlexContainer,
+  Graph,
+  LinePlot,
+  SliderGroup
+} from "story_components";
 
-class GamingNonlinearRelationships extends Component {
+class GamingLinearRelationships extends Component {
   state = {
     values: visualizationData[this.props.idx].initialData.map(
       d => d.initialValue
@@ -26,7 +28,7 @@ class GamingNonlinearRelationships extends Component {
 
   getYDomain = graphData => {
     const { largestY, smallestY } = visualizationData[this.props.idx];
-    let yMax = max([].concat(...graphData), d => Math.abs(d.y));
+    let yMax = max([...graphData[0], ...graphData[1]], d => Math.abs(d.y));
     yMax = Math.min(Math.max(Math.ceil(yMax), smallestY), largestY);
     return [-yMax, yMax];
   };
@@ -80,62 +82,25 @@ class GamingNonlinearRelationships extends Component {
       delete newObj.initialValue;
       return newObj;
     });
+    const graphData = this.transformData(data, diffEqs[0]);
+    const xScale = scaleLinear()
+      .domain(extent(graphData[0], d => d.x))
+      .range([graphPadding, width - graphPadding]);
+    const yScale = scaleLinear()
+      .domain(this.getYDomain(graphData))
+      .range([height - graphPadding, graphPadding]);
 
-    const uniqueColors = colors.filter((c, i) => colors.indexOf(c) === i);
+    const linePlots = graphData.map((plot, i) => (
+      <LinePlot
+        key={i}
+        graphData={plot}
+        stroke={colors[i]}
+        xScale={xScale}
+        yScale={yScale}
+      />
+    ));
 
-    const graphs = Array.from({ length: 2 }, (_, i) => {
-      // need to slice for the last set of visualizations, unfortunately
-      // for most visualizations, this has no effect
-      const sliceIdx = i === 1 && colors.length === 4 ? 2 : 0;
-      const allGraphData = this.transformData(data, diffEqs[i]).slice(
-        sliceIdx,
-        sliceIdx + 2
-      );
-      const xScale = scaleLinear()
-        .domain(extent(allGraphData[0], d => d.x))
-        .range([graphPadding, width - graphPadding]);
-
-      const yScale = scaleLinear()
-        .domain(this.getYDomain(allGraphData))
-        .range([height - graphPadding, graphPadding]);
-
-      const linePlots = allGraphData.map((graphData, j) => {
-        const colorIdx = (2 * i + j) % colors.length;
-        return (
-          <LinePlot
-            key={j}
-            stroke={colors[colorIdx]}
-            graphData={graphData}
-            xScale={xScale}
-            yScale={yScale}
-          />
-        );
-      });
-
-      return (
-        <Graph
-          key={i}
-          width={width}
-          height={height}
-          min={min}
-          max={max}
-          step={step}
-          svgPadding={svgPadding}
-          graphPadding={graphPadding}
-          svgId={svgIds[i]}
-          xLabel={xLabel}
-          yLabel={yLabel}
-          xScale={xScale}
-          xLabelPosition={"center-right"}
-          yScale={yScale}
-          tickStep={this.tickStep}
-        >
-          {linePlots}
-        </Graph>
-      );
-    });
-
-    const sliderGroups = uniqueColors.map(color => (
+    const sliderGroups = colors.map(color => (
       <SliderGroup
         key={color}
         data={data.filter(d => d.color === color)}
@@ -144,15 +109,32 @@ class GamingNonlinearRelationships extends Component {
     ));
 
     return (
-      <FlexContainer column>
-        <ColumnLayout break="small">{sliderGroups}</ColumnLayout>
-        <ColumnLayout>{graphs}</ColumnLayout>
-      </FlexContainer>
+      <ColumnLayout break="small">
+        <FlexContainer column>{sliderGroups}</FlexContainer>
+        <Graph
+          width={width}
+          height={height}
+          min={min}
+          max={max}
+          step={step}
+          svgPadding={svgPadding}
+          graphPadding={graphPadding}
+          svgId={svgIds[0]}
+          xLabel={xLabel}
+          xLabelPosition={"center-right"}
+          yLabel={yLabel}
+          xScale={xScale}
+          yScale={yScale}
+          tickStep={this.tickStep}
+        >
+          {linePlots}
+        </Graph>
+      </ColumnLayout>
     );
   }
 }
 
-GamingNonlinearRelationships.propTypes = {
+GamingLinearRelationships.propTypes = {
   idx: PropTypes.number.isRequired,
   min: PropTypes.number.isRequired,
   max: PropTypes.number.isRequired,
@@ -161,12 +143,12 @@ GamingNonlinearRelationships.propTypes = {
   graphPadding: PropTypes.number.isRequired
 };
 
-GamingNonlinearRelationships.defaultProps = {
+GamingLinearRelationships.defaultProps = {
   min: 0,
   max: 20,
-  step: 0.02,
+  step: 0.1,
   svgPadding: 30,
   graphPadding: 30
 };
 
-export default withCaption(GamingNonlinearRelationships);
+export default withCaption(GamingLinearRelationships);

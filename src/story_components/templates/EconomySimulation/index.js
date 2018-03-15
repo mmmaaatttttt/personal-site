@@ -1,28 +1,27 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { scaleLinear } from "d3-scale";
-import SimulationStart from "../molecules/SimulationStart";
-import SimulationStop from "../molecules/SimulationStop";
-import ClippedSVG from "../atoms/ClippedSVG";
-import EconomyNodeGroup from "../molecules/EconomyNodeGroup";
-import BarGraph from "../organisms/BarGraph";
-import withCaption from "../../hocs/withCaption";
-import NarrowContainer from "../atoms/NarrowContainer";
-import COLORS from "../../utils/styles";
-import updateSpeeds from "../../data/income-inequality.js";
+import withCaption from "hocs/withCaption";
+import COLORS from "utils/styles";
+import updateSpeeds from "data/income-inequality.js";
+import {
+  BarGraph,
+  ClippedSVG,
+  EconomyNodeGroup,
+  NarrowContainer,
+  SimulationStart,
+  SimulationStop
+} from "story_components";
 
 class EconomySimulation extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      playing: false,
-      paused: false,
-      showingSimulation: true,
-      speeds: new Array(2).fill(this.props.initialV),
-      velocityMultiplier: 1,
-      savingsRate: 0
-    };
-  }
+  state = {
+    playing: false,
+    paused: false,
+    showingSimulation: true,
+    speeds: new Array(2).fill(this.props.initialV),
+    velocityMultiplier: 1,
+    savingsRate: 0
+  };
 
   handleStart = () => {
     this.setState({ playing: true });
