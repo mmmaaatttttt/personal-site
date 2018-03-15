@@ -6,6 +6,10 @@ import images from "utils/images";
 import COLORS from "utils/styles";
 import media from "utils/media";
 
+const StyledStoriesWrapper = styled.div`
+  margin: ${rhythm(0.5)};
+`;
+
 const StyledTitle = styled.h4`
   margin-bottom: ${rhythm(1 / 4)};
 `;
@@ -109,7 +113,7 @@ const Story = ({
 );
 
 const Stories = ({ data }) => (
-  <div>
+  <StyledStoriesWrapper>
     {data.allMarkdownRemark.edges.map(({ node }, index) => (
       <Story
         key={node.fields.slug}
@@ -123,7 +127,7 @@ const Stories = ({ data }) => (
         delay={index / 4}
       />
     ))}
-  </div>
+  </StyledStoriesWrapper>
 );
 
 export default Stories;
