@@ -8,8 +8,7 @@ import { nest } from "d3-collection";
 import { extent } from "d3-array";
 import { feature } from "topojson";
 import { withPrefix } from "gatsby-link";
-import Tooltip from "../molecules/Tooltip";
-import ClippedSVG from "../atoms/ClippedSVG";
+import { Tooltip, ClippedSVG } from "story_components";
 
 class USMap extends Component {
   state = {

@@ -1,9 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
-import Button from "../atoms/Button";
-import FlexContainer from "../atoms/FlexContainer";
-import LabeledSlider from "../organisms/LabeledSlider";
-import COLORS from "../../utils/styles";
+import { Button, FlexContainer, LabeledSlider } from "story_components";
+import COLORS from "utils/styles";
 
 const SimulationStop = ({
   handlePause,

@@ -1,9 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
-import LabeledSlider from "../organisms/LabeledSlider";
-import Button from "../atoms/Button";
-import FlexContainer from "../atoms/FlexContainer";
-import COLORS from "../../utils/styles";
+import { Button, FlexContainer, LabeledSlider } from "story_components";
+import COLORS from "utils/styles";
 
 const SimulationStart = ({
   handleStart,

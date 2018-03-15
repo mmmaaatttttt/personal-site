@@ -1,8 +1,7 @@
 import React from "react";
 import styled from "styled-components";
-import NarrowContainer from "../atoms/NarrowContainer";
-import Caption from "../atoms/Caption";
-import images from "../../utils/images";
+import { NarrowContainer, Caption } from "story_components";
+import images from "utils/images";
 
 const NoMarginImg = styled.img`
   margin-bottom: 0;

@@ -1,7 +1,17 @@
 import React from "react";
 import PropTypes from "prop-types";
-import StyledSliderTick from "../atoms/StyledSliderTick";
-import FlexContainer from "../atoms/FlexContainer";
+import styled from "styled-components";
+import { StyledSliderTick, FlexContainer } from "story_components";
+
+const StyledSliderTick = styled.div`
+  position: relative;
+  width: ${props => props.width}px;
+  background-color: ${props => props.color};
+  top: -${props => props.offset}px;
+  height: ${props => 2 * props.offset + props.width}px;
+  z-index: -1;
+  border-radius: ${props => props.width}px;
+`;
 
 const SliderTicks = ({
   count,

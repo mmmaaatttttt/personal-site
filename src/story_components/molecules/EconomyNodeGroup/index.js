@@ -6,8 +6,8 @@ import { forceBounce } from "d3-force-bounce";
 import { forceSurface } from "d3-force-surface";
 import { select } from "d3-selection";
 import { scaleLinear } from "d3-scale";
-import { euclideanDistance } from "../../utils/mathHelpers";
-import COLORS from "../../utils/styles";
+import { euclideanDistance } from "utils/mathHelpers";
+import COLORS from "utils/styles";
 
 class EconomyNodeGroup extends Component {
   componentWillMount() {
