@@ -1,4 +1,4 @@
-import COLORS from "../utils/styles";
+import COLORS from "utils/styles";
 
 const PERSON_A_COLOR = COLORS.ORANGE;
 const PERSON_B_COLOR = COLORS.GREEN;

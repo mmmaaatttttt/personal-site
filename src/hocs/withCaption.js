@@ -1,8 +1,8 @@
 import React from "react";
 import styled from "styled-components";
-import { rhythm } from "../utils/typography";
-import media from "../utils/media";
-import Caption from "../story_components/atoms/Caption";
+import { rhythm } from "utils/typography";
+import media from "utils/media";
+import { Caption } from "story_components";
 
 const StyledVisualizationContainer = styled.div`
   width: 150%;

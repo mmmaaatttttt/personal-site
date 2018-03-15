@@ -1,6 +1,6 @@
-import COLORS from "../utils/styles";
+import COLORS from "utils/styles";
 import { lighten } from "polished";
-import { average } from "../utils/mathHelpers";
+import { average } from "utils/mathHelpers";
 import { format } from "d3-format";
 import { scaleOrdinal } from "d3-scale";
 

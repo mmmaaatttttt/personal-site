@@ -1,4 +1,4 @@
-import { euclideanDistance } from "../utils/mathHelpers";
+import { euclideanDistance } from "utils/mathHelpers";
 
 const normalCollision = (speeds, multiplier, savingsRate, nodes) =>
   _handleCollision(
