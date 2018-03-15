@@ -1,10 +1,10 @@
 import marksy from "marksy/components";
 import React, { createElement } from "react";
-import * as components from "../story_components";
+import * as components from "story_components";
 
 const compile = marksy({
   createElement,
-  components,
+  components: components.default,
   elements: {
     a({ href, title, children }) {
       return (

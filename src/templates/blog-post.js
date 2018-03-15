@@ -1,12 +1,12 @@
 import React from "react";
-import stripFrontMatterAndCompile from "../utils/marksyCompiler";
 import styled from "styled-components";
-import { sizes, fadeIn } from "../utils/styles";
-import images from "../utils/images";
-import { rhythm } from "../utils/typography";
 import { Share } from "react-twitter-widgets";
-import media from "../utils/media";
 import { Helmet } from "react-helmet";
+import stripFrontMatterAndCompile from "utils/marksyCompiler";
+import { sizes, fadeIn } from "utils/styles";
+import images from "utils/images";
+import { rhythm } from "utils/typography";
+import media from "utils/media";
 
 const StyledPostWrapper = styled.div`
   width: 100%;

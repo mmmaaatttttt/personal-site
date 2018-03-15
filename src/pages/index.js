@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
-import { fadeIn } from "../utils/styles";
-import { rhythm } from "../utils/typography";
+import { fadeIn } from "utils/styles";
+import { rhythm } from "utils/typography";
 
 const StyledHome = styled.div`
   display: flex;
@@ -25,13 +25,15 @@ const StyledH2 = styled.h2`
 const StyledP = styled.p`
   animation: ${fadeIn} 1s 2.5s forwards;
   opacity: 0;
-`
+`;
 
 const Home = () => (
   <StyledHome>
     <StyledH1>Hi!</StyledH1>
     <StyledH2>I'm Matt. 👋</StyledH2>
-    <StyledP>Use the nav bar to explore the site. You'll figure it out.</StyledP>
+    <StyledP>
+      Use the nav bar to explore the site. You'll figure it out.
+    </StyledP>
   </StyledHome>
 );
 

@@ -1,9 +1,9 @@
 import React from "react";
 import styled from "styled-components";
 import Link from "gatsby-link";
-import { rhythm } from "../utils/typography";
-import images from "../utils/images";
-import media from "../utils/media";
+import { rhythm } from "utils/typography";
+import images from "utils/images";
+import media from "utils/media";
 
 const Styled404 = styled.div`
   display: flex;
