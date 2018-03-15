@@ -1,10 +1,9 @@
 import React from "react";
 import matt from "./images/matt.jpg";
 import styled from "styled-components";
-import { rhythm } from "../utils/typography";
-import COLORS from "../utils/styles";
-import media from "../utils/media";
-import { sizes, fadeIn } from "../utils/styles";
+import { rhythm } from "utils/typography";
+import COLORS, { sizes, fadeIn } from "utils/styles";
+import media from "utils/media";
 
 const StyledAboutWrapper = styled.div`
   max-width: ${sizes.maxWidthContent};

@@ -1,10 +1,10 @@
 import React from "react";
 import styled, { keyframes } from "styled-components";
 import Link from "gatsby-link";
-import { rhythm } from "../utils/typography";
-import images from "../utils/images";
-import COLORS from "../utils/styles";
-import media from "../utils/media";
+import { rhythm } from "utils/typography";
+import images from "utils/images";
+import COLORS from "utils/styles";
+import media from "utils/media";
 
 const StyledTitle = styled.h4`
   margin-bottom: ${rhythm(1 / 4)};
