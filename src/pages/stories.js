@@ -34,7 +34,8 @@ const StyledLink = styled(Link)`
 
 const StyledExcerptArea = styled.div`
   flex-direction: column;
-  margin: 0 ${rhythm(1)};
+  width: 60%;
+  margin: 0 ${rhythm(0.5)};
 
   p {
     margin: 0;
@@ -43,6 +44,7 @@ const StyledExcerptArea = styled.div`
   }
 
   ${media.small`
+    width: 100%;
     * {
       font-size: 70%;
     }
