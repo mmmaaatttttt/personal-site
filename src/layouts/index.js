@@ -1,11 +1,11 @@
 import React, { Component } from "react";
 import styled from "styled-components";
+import { Helmet } from "react-helmet";
 import Navbar from "./Navbar";
 import Footer from "./Footer";
-import { rhythm } from "../utils/typography";
+import { rhythm } from "utils/typography";
 import "katex/dist/katex.min.css";
 import "font-awesome/css/font-awesome.min.css";
-import { Helmet } from "react-helmet";
 import logo from "../pages/images/logo.png";
 
 const StyledContentArea = styled.div`
@@ -20,7 +20,7 @@ const StyledPageWrapper = styled.div`
   display: flex;
   min-height: 100vh;
   flex-direction: column;
-`
+`;
 
 class App extends Component {
   constructor(props) {
@@ -29,15 +29,15 @@ class App extends Component {
   }
 
   componentDidMount() {
-    this.setState({ show: true })
+    this.setState({ show: true });
   }
 
   render() {
     const { children, data, location } = this.props;
     const display = this.state.show ? "flex" : "none";
-    const { title, description, siteUrl } = data.site.siteMetadata
+    const { title, description, siteUrl } = data.site.siteMetadata;
     return (
-      <StyledPageWrapper style={{display}}>
+      <StyledPageWrapper style={{ display }}>
         <Helmet>
           <title>{title}</title>
           <meta name="twitter:card" content="summary_large_image" />
@@ -49,14 +49,11 @@ class App extends Component {
           <meta name="og:url" content={`${siteUrl}${location.pathname}`} />
           <meta name="og:image" content={`${siteUrl}${logo}`} />
         </Helmet>
-        <Navbar
-          title={title}
-          hide={/\/stories\/.+/.test(location.pathname)}
-        />
+        <Navbar title={title} hide={/\/stories\/.+/.test(location.pathname)} />
         <StyledContentArea>{children()}</StyledContentArea>
         <Footer />
       </StyledPageWrapper>
-    )
+    );
   }
 }
 

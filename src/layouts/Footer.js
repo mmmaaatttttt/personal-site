@@ -2,10 +2,10 @@ import React from "react";
 import PropTypes from "prop-types";
 import Link from "gatsby-link";
 import styled from "styled-components";
-import { rhythm } from "../utils/typography";
+import { rhythm } from "utils/typography";
 import { navStyles } from "./mixins";
-import media from "../utils/media";
-import COLORS from "../utils/styles";
+import media from "utils/media";
+import COLORS from "utils/styles";
 
 const StyledFooter = styled.footer`
   display: flex;
@@ -15,9 +15,7 @@ const StyledFooter = styled.footer`
   border-top: 1px solid ${COLORS.NAV_BORDER};
   position: relative;
   z-index: 1;
-  ${navStyles}
-
-  small {
+  ${navStyles} small {
     font-size: 60%;
   }
 `;
@@ -25,7 +23,7 @@ const StyledFooter = styled.footer`
 const StyledLink = styled(Link)`
   flex-grow: 1;
   flex-basis: 0;
-`
+`;
 
 const StyledIconArea = styled.div`
   min-width: ${rhythm(4)};
@@ -42,7 +40,7 @@ const StyledIconArea = styled.div`
 
   ${media.small`
     font-size: 80%;
-  `}
+  `};
 `;
 
 const StyledCCImageWrapper = styled.div`
@@ -54,7 +52,7 @@ const StyledCCImageWrapper = styled.div`
     width: 100%;
     height: auto;
   }
-`
+`;
 
 const StyledCCArea = styled.div`
   display: flex;
@@ -80,7 +78,7 @@ const StyledCCArea = styled.div`
       display: none;
     }
   `};
-`
+`;
 
 const Footer = () => (
   <StyledFooter>
@@ -88,14 +86,11 @@ const Footer = () => (
       <small>Terms & Privacy</small>
     </StyledLink>
     <StyledCCArea>
-      <a 
-        rel="license" 
-        href="http://creativecommons.org/licenses/by-nc/4.0/"
-      >
+      <a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/">
         <StyledCCImageWrapper>
-          <img 
-            alt="Creative Commons License" 
-            style={{borderWidth:0}} 
+          <img
+            alt="Creative Commons License"
+            style={{ borderWidth: 0 }}
             src="https://i.creativecommons.org/l/by-nc/4.0/88x31.png"
           />
         </StyledCCImageWrapper>

@@ -2,10 +2,10 @@ import React from "react";
 import PropTypes from "prop-types";
 import Link from "gatsby-link";
 import styled, { css } from "styled-components";
-import { rhythm } from "../utils/typography";
+import { rhythm } from "utils/typography";
 import { navStyles } from "./mixins";
-import COLORS from "../utils/styles";
-import media from "../utils/media";
+import COLORS from "utils/styles";
+import media from "utils/media";
 
 const StyledNav = styled.nav`
   display: flex;
@@ -16,22 +16,24 @@ const StyledNav = styled.nav`
   border-bottom: 1px solid ${COLORS.NAV_BORDER};
   ${navStyles}
 
-  ${props => props.hide && css`
-    position: absolute;
-    z-index: 1;
-    top: 0;
-    opacity: 1;
-    width: 100%;
-    box-shadow: none;
-    background-color: transparent;
-    border-bottom: none;
-    color: #fff;
-
-    a,
-    a:hover {
+  ${props =>
+    props.hide &&
+    css`
+      position: absolute;
+      z-index: 1;
+      top: 0;
+      opacity: 1;
+      width: 100%;
+      box-shadow: none;
+      background-color: transparent;
+      border-bottom: none;
       color: #fff;
-    }
-  `}
+
+      a,
+      a:hover {
+        color: #fff;
+      }
+    `}
 
   ${media.extraSmall`
     flex-direction: row;
@@ -45,7 +47,7 @@ const StyledHeader = styled.h3`
   ${media.extraSmall`
     margin-bottom: 0;
     font-size: ${rhythm(0.5)};
-  `}
+  `};
 `;
 
 const StyledLinkContainer = styled.div`
@@ -58,7 +60,7 @@ const StyledLinkContainer = styled.div`
 
   ${media.extraSmall`
     font-size: ${rhythm(0.4)};
-  `}
+  `};
 `;
 
 const Navbar = ({ children, title, hide }) => (
