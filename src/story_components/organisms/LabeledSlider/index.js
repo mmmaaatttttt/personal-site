@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import { lighten } from "polished";
 import styled from "styled-components";
 import COLORS from "utils/styles";
+import { rhythm } from "utils/typography";
 import { Icon, SliderTicks, StyledSlider } from "story_components";
 
 const StyledSliderTitle = styled.p`

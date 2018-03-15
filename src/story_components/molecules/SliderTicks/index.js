@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import styled from "styled-components";
-import { StyledSliderTick, FlexContainer } from "story_components";
+import { FlexContainer } from "story_components";
 
 const StyledSliderTick = styled.div`
   position: relative;
