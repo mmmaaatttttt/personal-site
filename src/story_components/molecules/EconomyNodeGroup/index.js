@@ -1,55 +1,27 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { darken } from "polished";
-import { forceSimulation } from "d3-force";
-import { forceBounce } from "d3-force-bounce";
-import { forceSurface } from "d3-force-surface";
 import { select } from "d3-selection";
 import { scaleLinear } from "d3-scale";
 import { euclideanDistance } from "utils/mathHelpers";
+import {
+  initializeSimulation,
+  generateSimulationNodes
+} from "utils/forceSimulationHelpers";
 import COLORS from "utils/styles";
 
 class EconomyNodeGroup extends Component {
   componentWillMount() {
     const { width, height, handleCollision } = this.props;
-    this.simulation = forceSimulation()
-      .alphaDecay(0)
-      .velocityDecay(0)
-      .force(
-        "bounce",
-        forceBounce()
-          .radius(node => node.r)
-          .onImpact(handleCollision)
-      )
-      .force(
-        "surface",
-        forceSurface()
-          .surfaces([
-            {
-              from: { x: 0, y: 0 },
-              to: { x: 0, y: height }
-            },
-            {
-              from: { x: 0, y: height },
-              to: { x: width, y: height }
-            },
-            {
-              from: { x: width, y: height },
-              to: { x: width, y: 0 }
-            },
-            {
-              from: { x: width, y: 0 },
-              to: { x: 0, y: 0 }
-            }
-          ])
-          .oneWay(true)
-          .radius(node => node.r)
-      );
-
-    this.simulation
-      .nodes(this.generateNodes(this.props))
-      .on("tick", () => this.updateNodes(this.props));
+    this.simulation = initializeSimulation(width, height, handleCollision);
+    this.generateNodes(this.props);
+    this.simulation.on("tick", () => this.updateNodes(this.props));
   }
+
+  generateNodes = props => {
+    const { speeds, initialV } = props;
+    generateSimulationNodes(this.simulation, speeds.length, initialV);
+  };
 
   componentWillUpdate(nextProps) {
     const samePopulation = this.props.speeds.length === nextProps.speeds.length;
@@ -59,7 +31,7 @@ class EconomyNodeGroup extends Component {
       (this.props.playing || this.props.paused) && !nextProps.playing;
 
     if (!samePopulation) {
-      this.simulation.nodes(this.generateNodes(nextProps));
+      this.generateNodes(nextProps);
     }
 
     if (!sameMultiplier) {
@@ -76,7 +48,7 @@ class EconomyNodeGroup extends Component {
 
     if (resetting) {
       this.clearNodes();
-      this.simulation.nodes(this.generateNodes(nextProps));
+      this.generateNodes(nextProps);
       this.updateNodes(nextProps);
     }
   }
@@ -92,36 +64,6 @@ class EconomyNodeGroup extends Component {
       .data([])
       .exit()
       .remove();
-  };
-
-  generateNodes = props => {
-    const { width, height, speeds } = props;
-    const { cos, sin, PI, random } = Math;
-    const r = 15;
-    const currentNodes = this.simulation.nodes();
-    if (speeds.length < currentNodes.length)
-      return currentNodes.slice(0, speeds.length);
-    const newNodes = [...currentNodes];
-    while (newNodes.length < speeds.length) {
-      const i = newNodes.length;
-      const theta = 2 * PI * random();
-      const vx = speeds[i] * cos(theta);
-      const vy = speeds[i] * sin(theta);
-      let x, y;
-      // ensure that nodes don't intersect
-      // not optimal, but there aren't many nodes
-      do {
-        x = random() * (width - 2 * r) + r;
-        y = random() * (height - 2 * r) + r;
-      } while (
-        newNodes.some(
-          node => (node.x - x) ** 2 + (node.y - y) ** 2 < (3 * r) ** 2
-        )
-      );
-      const node = { i, x, y, vx, vy, r };
-      newNodes.push(node);
-    }
-    return newNodes;
   };
 
   updateNodes = props => {
