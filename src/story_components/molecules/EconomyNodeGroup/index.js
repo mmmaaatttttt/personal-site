@@ -1,12 +1,12 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import { darken } from "polished";
 import { select } from "d3-selection";
 import { scaleLinear } from "d3-scale";
 import { euclideanDistance } from "utils/mathHelpers";
 import {
   initializeSimulation,
-  generateSimulationNodes
+  generateSimulationNodes,
+  updateSimulationNodes
 } from "utils/forceSimulationHelpers";
 import COLORS from "utils/styles";
 
@@ -21,6 +21,17 @@ class EconomyNodeGroup extends Component {
   generateNodes = props => {
     const { speeds, initialV } = props;
     generateSimulationNodes(this.simulation, speeds.length, initialV);
+  };
+
+  updateNodes = props => {
+    const { velocityMultiplier, initialV } = props;
+    const isMoving = this.props.playing && !this.props.paused;
+    const scaledInitialSpeed = initialV * velocityMultiplier;
+    const colorScale = scaleLinear()
+      .domain([0, scaledInitialSpeed, scaledInitialSpeed * 2])
+      .range([COLORS.BLUE, COLORS.MAROON, COLORS.RED]);
+    const colorFn = d => colorScale(euclideanDistance(d.vx, d.vy));
+    updateSimulationNodes(this.simulation, this.g, colorFn, isMoving);
   };
 
   componentWillUpdate(nextProps) {
@@ -53,10 +64,6 @@ class EconomyNodeGroup extends Component {
     }
   }
 
-  isMoving() {
-    return this.props.playing && !this.props.paused;
-  }
-
   clearNodes = () => {
     this.simulation.nodes([]);
     select(this.g)
@@ -64,61 +71,6 @@ class EconomyNodeGroup extends Component {
       .data([])
       .exit()
       .remove();
-  };
-
-  updateNodes = props => {
-    const { velocityMultiplier, initialV } = props;
-    const isMoving = this.isMoving();
-    this.simulation.nodes().forEach(node => {
-      if (isMoving) {
-        node.fx = null;
-        node.fy = null;
-        node.vx = node.vx || node.lastVx || 0;
-        node.vy = node.vy || node.lastVy || 0;
-        node.lastVx = null;
-        node.lastVy = null;
-      } else {
-        node.lastVx = node.lastVx || node.vx;
-        node.lastVy = node.lastVy || node.vy;
-        node.fx = node.x;
-        node.fy = node.y;
-      }
-    });
-
-    const scaledInitialSpeed = initialV * velocityMultiplier;
-    const colorScale = scaleLinear()
-      .domain([0, scaledInitialSpeed, scaledInitialSpeed * 2])
-      .range([COLORS.BLUE, COLORS.MAROON, COLORS.RED]);
-
-    let nodes = select(this.g)
-      .selectAll("circle")
-      .data(this.simulation.nodes().map(this.forceInCanvas));
-
-    nodes.exit().remove();
-
-    const enterNodes = nodes
-      .enter()
-      .append("circle")
-      .attr("r", d => d.r);
-
-    const nodesToUpdate = isMoving ? enterNodes.merge(nodes) : enterNodes;
-
-    nodesToUpdate
-      .attr("fill", d => colorScale(euclideanDistance(d.vx, d.vy)))
-      .attr("stroke", d =>
-        darken(0.3, colorScale(euclideanDistance(d.vx, d.vy)))
-      )
-      .attr("stroke-width", 2)
-      .attr("cx", d => d.x)
-      .attr("cy", d => d.y);
-  };
-
-  forceInCanvas = node => {
-    const { max, min } = Math;
-    const { width, height } = this.props;
-    node.x = max(node.r, min(width - node.r, node.x));
-    node.y = max(node.r, min(height - node.r, node.y));
-    return node;
   };
 
   render() {

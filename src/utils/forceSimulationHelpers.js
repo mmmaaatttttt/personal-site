@@ -1,6 +1,8 @@
+import { select } from "d3-selection";
 import { forceSimulation } from "d3-force";
 import { forceBounce } from "d3-force-bounce";
 import { forceSurface } from "d3-force-surface";
+import { darken } from "polished";
 
 function initializeSimulation(width, height, handleCollision = null) {
   const bounceForce = forceBounce().radius(node => node.r);
@@ -61,4 +63,55 @@ const generateSimulationNodes = (simulation, nodeCount, velocity, r = 15) => {
   simulation.nodes(newNodes);
 };
 
-export { initializeSimulation, generateSimulationNodes };
+const updateSimulationNodes = (
+  simulation,
+  circleGp,
+  colorFn,
+  isMoving = true
+) => {
+  simulation.nodes().forEach(node => {
+    if (isMoving) {
+      node.fx = null;
+      node.fy = null;
+      node.vx = node.vx || node.lastVx || 0;
+      node.vy = node.vy || node.lastVy || 0;
+      node.lastVx = null;
+      node.lastVy = null;
+    } else {
+      node.lastVx = node.lastVx || node.vx;
+      node.lastVy = node.lastVy || node.vy;
+      node.fx = node.x;
+      node.fy = node.y;
+    }
+  });
+
+  const { x: width, y: height } = simulation.force("surface").surfaces()[1].to;
+  const nodes = select(circleGp)
+    .selectAll("circle")
+    .data(
+      simulation.nodes().map(node => {
+        const { max, min } = Math;
+        node.x = max(node.r, min(width - node.r, node.x));
+        node.y = max(node.r, min(height - node.r, node.y));
+        return node;
+      })
+    );
+
+  nodes.exit().remove();
+
+  const enterNodes = nodes
+    .enter()
+    .append("circle")
+    .attr("r", d => d.r);
+
+  const nodesToUpdate = isMoving ? enterNodes.merge(nodes) : enterNodes;
+
+  nodesToUpdate
+    .attr("fill", colorFn)
+    .attr("stroke", d => darken(0.3, colorFn(d)))
+    .attr("stroke-width", 2)
+    .attr("cx", d => d.x)
+    .attr("cy", d => d.y);
+};
+
+export { initializeSimulation, generateSimulationNodes, updateSimulationNodes };
