@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import PropTypes from "prop-types";
 import { darken } from "polished";
 import COLORS from "utils/styles";
@@ -16,8 +16,12 @@ const Button = styled.button`
   font-size: 80%;
   line-height: 1.4rem;
   margin: 0.5rem;
-
-  &:active,
+  ${props =>
+    props.color === "white" &&
+    css`
+      color: black;
+      border: 1px solid black;
+    `} &:active,
   &:focus {
     outline: none;
   }
@@ -33,7 +37,7 @@ Button.propTypes = {
 };
 
 Button.defaultProps = {
-  color: "orange"
+  color: "white"
 };
 
 export default Button;
