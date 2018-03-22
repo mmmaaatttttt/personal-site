@@ -78,7 +78,7 @@ class GamingLinearRelationships extends Component {
     // data is all data from original source file
     // plus most recent values from inside of state
     const data = initialData.map((d, i) => {
-      const newObj = { ...d, value: values[i], originalIdx: i };
+      const newObj = { ...d, value: values[i], key: i };
       delete newObj.initialValue;
       return newObj;
     });
@@ -100,13 +100,15 @@ class GamingLinearRelationships extends Component {
       />
     ));
 
-    const sliderGroups = colors.map(color => (
-      <SliderGroup
-        key={color}
-        data={data.filter(d => d.color === color)}
-        handleValueChange={this.handleValueChange}
-      />
-    ));
+    const sliderGroups = colors.map(color => {
+      const sliderData = data.filter(d => d.color === color).map(d => ({
+        ...d,
+        tickCount: 3,
+        fadeIcons: true,
+        handleValueChange: val => this.handleValueChange(d.key, val)
+      }));
+      return <SliderGroup key={color} data={sliderData} />;
+    });
 
     return (
       <ColumnLayout break="small">

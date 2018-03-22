@@ -2,17 +2,20 @@ import React from "react";
 import PropTypes from "prop-types";
 import { FlexContainer, LabeledSlider } from "story_components";
 
-const SliderGroup = ({ data, handleValueChange }) => {
-  const handleChangeWithIndex = idx => val => handleValueChange(idx, val);
+const SliderGroup = ({ data }) => {
   const sliders = data.map(d => (
     <LabeledSlider
-      key={d.originalIdx}
+      key={d.key}
       min={d.min}
       max={d.max}
       value={d.value}
-      handleValueChange={handleChangeWithIndex(d.originalIdx)}
+      handleValueChange={d.handleValueChange}
       title={d.title}
       color={d.color}
+      tickCount={d.tickCount}
+      minIcon={d.minIcon}
+      maxIcon={d.maxIcon}
+      fadeIcons={d.fadeIcons}
     />
   ));
   return (
@@ -30,10 +33,14 @@ SliderGroup.propTypes = {
       value: PropTypes.number.isRequired,
       title: PropTypes.string.isRequired,
       color: PropTypes.string.isRequired,
-      originalIdx: PropTypes.number.isRequired
+      key: PropTypes.any.isRequired,
+      handleValueChange: PropTypes.func.isRequired,
+      tickCount: PropTypes.number,
+      minIcon: PropTypes.string,
+      maxIcon: PropTypes.string,
+      fadeIcons: PropTypes.bool
     })
-  ),
-  handleValueChange: PropTypes.func.isRequired
+  )
 };
 
 export default SliderGroup;
