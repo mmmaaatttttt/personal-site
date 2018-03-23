@@ -9,8 +9,9 @@ import {
   ClippedSVG,
   EconomyNodeGroup,
   NarrowContainer,
-  SimulationStart,
-  SimulationStop
+  SliderGroup,
+  ButtonGroup,
+  FlexContainer
 } from "story_components";
 
 class EconomySimulation extends Component {
@@ -83,25 +84,76 @@ class EconomySimulation extends Component {
     const barData = speeds
       .map((speed, i) => ({ key: i, height: speed ** 2 }))
       .sort((s1, s2) => s1.height - s2.height);
-    const header = playing ? (
-      <SimulationStop
-        handleStop={this.handleStop}
-        handlePause={this.handlePause}
-        handleShowingSimulation={this.handleShowingSimulation}
-        handleVelocityChange={this.handleVelocityChange}
-        velocityMultiplier={velocityMultiplier}
-        showingSimulation={showingSimulation}
-      />
-    ) : (
-      <SimulationStart
-        handleStart={this.handleStart}
-        handleSpeedCount={this.handleSpeedCount}
-        nodeCount={speeds.length}
-        editSavings={editSavings}
-        handleSavingsChange={this.handleSavingsChange}
-        savingsRate={savingsRate}
-      />
-    );
+    const headerData = [
+      {
+        sliders: [
+          {
+            handleValueChange: this.handleSpeedCount,
+            title: "Population Size",
+            value: speeds.length,
+            min: 2,
+            max: 30,
+            step: 1,
+            color: COLORS.MAROON,
+            minIcon: "user",
+            maxIcon: "users"
+          }
+        ].concat(
+          editSavings
+            ? {
+                handleValueChange: this.handleSavingsChange,
+                title: "Savings Rate",
+                value: savingsRate,
+                min: 0,
+                max: 1,
+                step: 0.01,
+                color: COLORS.MAROON,
+                minIcon: "thermometer-empty",
+                maxIcon: "thermometer-full"
+              }
+            : []
+        ),
+        buttons: [
+          {
+            color: COLORS.MAROON,
+            handleClick: this.handleStart,
+            buttonText: "Start"
+          }
+        ]
+      },
+      {
+        sliders: [
+          {
+            handleValueChange: this.handleVelocityChange,
+            title: "Average Wealth (a.k.a. Average Speed)",
+            value: velocityMultiplier,
+            min: 0.1,
+            max: 2,
+            step: 0.1,
+            color: COLORS.MAROON,
+            minIcon: "step-forward",
+            maxIcon: "fast-forward"
+          }
+        ],
+        buttons: [
+          {
+            color: COLORS.ORANGE,
+            handleClick: this.handlePause,
+            buttonText: "Pause"
+          },
+          {
+            color: COLORS.BLUE,
+            handleClick: this.handleShowingSimulation,
+            buttonText: showingSimulation ? "Show Chart" : "Show Nodes"
+          },
+          {
+            color: COLORS.RED,
+            handleClick: this.handleStop,
+            buttonText: "Reset"
+          }
+        ]
+      }
+    ];
     const barGraphArea = showingSimulation ? null : (
       <BarGraph
         svgId={`bar-${idx}`}
@@ -116,7 +168,8 @@ class EconomySimulation extends Component {
     );
     return (
       <NarrowContainer width="50%">
-        {header}
+        <SliderGroup data={headerData[+playing].sliders} />
+        <ButtonGroup data={headerData[+playing].buttons} />
         <div style={{ display: showingSimulation ? "block" : "none" }}>
           <ClippedSVG
             width={width}

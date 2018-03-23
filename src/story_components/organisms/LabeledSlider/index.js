@@ -105,10 +105,10 @@ LabeledSlider.defaultProps = {
   color: COLORS.ORANGE,
   sliderHeight: 6,
   sliderPadding: 10,
-  tickCount: 3,
+  tickCount: 2,
   minIcon: "minus",
   maxIcon: "plus",
-  fadeIcons: true
+  fadeIcons: false
 };
 
 export default LabeledSlider;

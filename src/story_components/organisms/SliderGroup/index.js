@@ -3,11 +3,12 @@ import PropTypes from "prop-types";
 import { FlexContainer, LabeledSlider } from "story_components";
 
 const SliderGroup = ({ data }) => {
-  const sliders = data.map(d => (
+  const sliders = data.map((d, i) => (
     <LabeledSlider
-      key={d.key}
+      key={d.hasOwnProperty("key") ? d.key : i}
       min={d.min}
       max={d.max}
+      step={d.step}
       value={d.value}
       handleValueChange={d.handleValueChange}
       title={d.title}
@@ -33,7 +34,7 @@ SliderGroup.propTypes = {
       value: PropTypes.number.isRequired,
       title: PropTypes.string.isRequired,
       color: PropTypes.string.isRequired,
-      key: PropTypes.any.isRequired,
+      key: PropTypes.any,
       handleValueChange: PropTypes.func.isRequired,
       tickCount: PropTypes.number,
       minIcon: PropTypes.string,

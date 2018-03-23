@@ -3,18 +3,25 @@ import PropTypes from "prop-types";
 import { FlexContainer, Button } from "story_components";
 
 const ButtonGroup = ({ data }) => {
-  const buttons = data.map(d => (
-    <Button key={d.key} color={d.color} onClick={d.handleClick} />
+  const buttons = data.map((d, i) => (
+    <Button
+      key={d.hasOwnProperty("key") ? d.key : i}
+      color={d.color}
+      onClick={d.handleClick}
+    >
+      {d.buttonText}
+    </Button>
   ));
-  return <FlexContainer>{buttons}</FlexContainer>;
+  return <FlexContainer main="center">{buttons}</FlexContainer>;
 };
 
 ButtonGroup.propTypes = {
   data: PropTypes.arrayOf(
     PropTypes.shape({
-      key: PropTypes.any.isRequired,
-      color: PropTypes.string.isRequired,
-      handleValueChange: PropTypes.func.isRequired
+      key: PropTypes.any,
+      color: PropTypes.string,
+      buttonText: PropTypes.string.isRequired,
+      handleClick: PropTypes.func.isRequired
     })
   )
 };
