@@ -24,7 +24,8 @@ const StyledSliderArea = styled.div`
 `;
 
 const StyledIconWrapper = styled.p`
-  margin: 0 ${rhythm(0.5)};
+  margin: 0;
+  width: ${rhythm(2)};
   line-height: 1;
 `;
 
