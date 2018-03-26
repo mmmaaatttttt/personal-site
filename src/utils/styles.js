@@ -3,7 +3,8 @@ import { keyframes } from "styled-components";
 const COLORS = {
   LINK: "#ff5700",
   NAV: "#f9f9f9",
-  NAV_BORDER: "#bbb",
+  GRAY: "#bbb",
+  DARK_GRAY: "#555",
   ORANGE: "#FF8F34",
   GREEN: "#52A081",
   MAROON: "#A05E52",

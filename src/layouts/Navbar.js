@@ -13,7 +13,7 @@ const StyledNav = styled.nav`
   align-items: center;
   padding: ${rhythm(0.5)};
   flex-direction: column;
-  border-bottom: 1px solid ${COLORS.NAV_BORDER};
+  border-bottom: 1px solid ${COLORS.GRAY};
   ${navStyles}
 
   ${props =>

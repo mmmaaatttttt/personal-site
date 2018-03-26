@@ -107,7 +107,7 @@ EconomyNodeGroup.propTypes = {
 
 EconomyNodeGroup.defaultProps = {
   borderWidth: 3,
-  borderStroke: COLORS.NAV_BORDER
+  borderStroke: COLORS.GRAY
 };
 
 export default EconomyNodeGroup;

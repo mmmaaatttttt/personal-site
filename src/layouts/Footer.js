@@ -12,7 +12,7 @@ const StyledFooter = styled.footer`
   justify-content: space-between;
   align-items: center;
   padding: ${rhythm(0.5)};
-  border-top: 1px solid ${COLORS.NAV_BORDER};
+  border-top: 1px solid ${COLORS.GRAY};
   position: relative;
   z-index: 1;
   ${navStyles} small {

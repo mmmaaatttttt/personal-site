@@ -15,7 +15,7 @@ const StyledTitle = styled.h4`
 `;
 
 const StyledDate = styled.h6`
-  color: ${COLORS.NAV_BORDER};
+  color: ${COLORS.GRAY};
 
   ${media.small`
     margin-bottom: ${rhythm(1 / 4)};
@@ -74,7 +74,7 @@ const StyledImageWrapper = styled.div`
 `;
 
 const StyledStory = styled.div`
-  border-bottom: 1px solid ${COLORS.NAV_BORDER};
+  border-bottom: 1px solid ${COLORS.GRAY};
   padding: ${rhythm(0.75)} 0;
   animation-delay: ${props => props.delay}s;
 
