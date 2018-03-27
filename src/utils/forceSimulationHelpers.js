@@ -37,12 +37,20 @@ function initializeSimulation(width, height, handleCollision = null) {
     );
 }
 
-const generateSimulationNodes = (simulation, nodeCount, velocity, r = 15) => {
+const generateSimulationNodes = (simulation, nodeData, velocity, r = 15) => {
   const { cos, sin, PI, random } = Math;
   const currentNodes = simulation.nodes();
   const { x: width, y: height } = simulation.force("surface").surfaces()[1].to;
-  const newNodes = currentNodes.slice(0, nodeCount);
-  while (newNodes.length < nodeCount) {
+  if (!Array.isArray(nodeData))
+    nodeData = Array.from({ length: nodeData }, (_, i) => ({ key: i }));
+  const existingNodes = [];
+  const newNodes = [];
+  nodeData.forEach(node => {
+    const currentNode = currentNodes.find(n => n.key === node.key);
+    if (currentNode) existingNodes.push({ ...currentNode, ...node });
+    else newNodes.push(node);
+  });
+  newNodes.forEach(node => {
     const theta = 2 * PI * random();
     const vx = velocity * cos(theta);
     const vy = velocity * sin(theta);
@@ -53,14 +61,13 @@ const generateSimulationNodes = (simulation, nodeCount, velocity, r = 15) => {
       x = random() * (width - 2 * r) + r;
       y = random() * (height - 2 * r) + r;
     } while (
-      newNodes.some(
+      existingNodes.some(
         node => (node.x - x) ** 2 + (node.y - y) ** 2 < (3 * r) ** 2
       )
     );
-    const node = { i: newNodes.length, x, y, vx, vy, r };
-    newNodes.push(node);
-  }
-  simulation.nodes(newNodes);
+    existingNodes.push({ ...node, x, y, vx, vy, r });
+  });
+  simulation.nodes(existingNodes);
 };
 
 const updateSimulationNodes = (
@@ -94,9 +101,9 @@ const updateSimulationNodes = (
         node.x = max(node.r, min(width - node.r, node.x));
         node.y = max(node.r, min(height - node.r, node.y));
         return node;
-      })
+      }),
+      d => d.key
     );
-
   nodes.exit().remove();
 
   const enterNodes = nodes
