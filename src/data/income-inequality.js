@@ -30,7 +30,7 @@ const _handleCollision = (
   nodes,
   updateHandler
 ) => {
-  const originalEnergies = nodes.map(node => speeds[node.i] ** 2);
+  const originalEnergies = nodes.map(node => speeds[node.key] ** 2);
   const newEnergies = nodes.map(
     node => (euclideanDistance(node.vx, node.vy) / multiplier) ** 2
   );
@@ -52,7 +52,7 @@ const _handleCollision = (
     }
     node.vx *= scaleFactor;
     node.vy *= scaleFactor;
-    newSpeeds[node.i] = euclideanDistance(node.vx, node.vy) / multiplier;
+    newSpeeds[node.key] = euclideanDistance(node.vx, node.vy) / multiplier;
   });
   return newSpeeds;
 };
