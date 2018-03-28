@@ -30,7 +30,9 @@ class HarassmentSimulation extends Component {
     this.setState({
       playing: false,
       paused: false,
-      velocityMultiplier: 1
+      velocityMultiplier: 1,
+      blueCount: 1,
+      brownCount: 1
     });
   };
 
