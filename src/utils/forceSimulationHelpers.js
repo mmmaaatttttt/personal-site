@@ -94,7 +94,7 @@ const updateSimulationNodes = (
 
   const { x: width, y: height } = simulation.force("surface").surfaces()[1].to;
   const nodes = select(circleGp)
-    .selectAll("circle")
+    .selectAll("circle.node")
     .data(
       simulation.nodes().map(node => {
         const { max, min } = Math;
@@ -109,6 +109,7 @@ const updateSimulationNodes = (
   const enterNodes = nodes
     .enter()
     .append("circle")
+    .classed("node", true)
     .attr("r", d => d.r);
 
   const nodesToUpdate = isMoving ? enterNodes.merge(nodes) : enterNodes;

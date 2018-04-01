@@ -1,7 +1,9 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { select } from "d3-selection";
+import { transition } from "d3-transition";
 import { euclideanDistance } from "utils/mathHelpers";
+import { interval } from "d3-timer";
 import {
   initializeSimulation,
   generateSimulationNodes,
@@ -45,6 +47,35 @@ class HarassmentNodeGroup extends Component {
     const scaledInitialSpeed = initialV * velocityMultiplier;
     const colorFn = d => d.properties.color;
     updateSimulationNodes(this.simulation, this.g, colorFn, isMoving);
+    let test = Math.random();
+    if (test < 0.01 && isMoving) {
+      const nodes = this.simulation.nodes();
+      const randomIdx = Math.floor(nodes.length * Math.random());
+      const soundWave = interval(() => {
+        soundWave.__calledCount++;
+        if (soundWave.__calledCount <= 5) {
+          const randomNode = nodes[randomIdx];
+          // prettier-ignore
+          select(this.g)
+            .insert("circle", "circle")
+            .attr("cx", randomNode.x)
+            .attr("cy", randomNode.y)
+            .attr("r", randomNode.r * 2)
+            .attr("fill", "none")
+            .attr("stroke", COLORS.RED)
+            .classed("shout", true)
+          .transition()
+            .duration(2000)
+            .ease(Math.sqrt)
+            .attr("r", randomNode.r * 5)
+            .style("stroke-opacity", 1e-6)
+            .remove();
+        } else {
+          soundWave.stop();
+        }
+      }, 100);
+      soundWave.__calledCount = 0;
+    }
   };
 
   componentWillUpdate(nextProps) {

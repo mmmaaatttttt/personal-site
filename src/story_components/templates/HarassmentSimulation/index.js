@@ -156,7 +156,7 @@ HarassmentSimulation.defaultProps = {
   width: 900,
   height: 600,
   padding: 0,
-  initialV: 10
+  initialV: 2
 };
 
 export default withCaption(HarassmentSimulation);
