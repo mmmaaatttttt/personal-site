@@ -58,7 +58,6 @@ class Tooltip extends Component {
     const distance =
       Math.abs(offsetWidth - stateWidth) + Math.abs(offsetHeight - stateHeight);
     if (distance > 2) {
-      // debugger; // maximum call stack issue!
       this.setState({ offsetWidth, offsetHeight });
     }
   }
@@ -66,6 +65,7 @@ class Tooltip extends Component {
   render() {
     const { visible, x, y, title, body } = this.props;
     const { offsetWidth, offsetHeight } = this.state;
+    const titleHTML = title ? <h4>{title}</h4> : null;
     const bodyHTML = Array.isArray(body) ? (
       <ul>
         {body.map((text, i) => (
@@ -84,7 +84,7 @@ class Tooltip extends Component {
         y={y - offsetHeight - 20}
         innerRef={tooltipDiv => (this.tooltipDiv = tooltipDiv)}
       >
-        <h4>{title}</h4>
+        {titleHTML}
         {bodyHTML}
       </StyledTooltip>
     );
