@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
+import { selectAll } from "d3-selection";
 import { scaleLinear } from "d3-scale";
 import withCaption from "hocs/withCaption";
 import COLORS from "utils/styles";
@@ -10,16 +11,19 @@ import {
   HarassmentNodeGroup,
   NarrowContainer,
   SliderGroup,
-  ButtonGroup
+  ButtonGroup,
+  HorizontalBar
 } from "story_components";
 
 class HarassmentSimulation extends Component {
   state = {
     playing: false,
     paused: false,
-    blueCount: 1,
-    brownCount: 1,
-    velocityMultiplier: 1
+    blueCount: 2,
+    brownCount: 2,
+    velocityMultiplier: 1,
+    blueShoutsHeard: new Set(),
+    brownShoutsHeard: new Set()
   };
 
   handleStart = () => {
@@ -27,13 +31,23 @@ class HarassmentSimulation extends Component {
   };
 
   handleStop = () => {
+    selectAll(".shout").remove();
     this.setState({
       playing: false,
       paused: false,
       velocityMultiplier: 1,
-      blueCount: 1,
-      brownCount: 1
+      blueCount: 2,
+      brownCount: 2,
+      blueShoutsHeard: new Set(),
+      brownShoutsHeard: new Set()
     });
+  };
+
+  handleShout = (key, shoutId) => {
+    const set = this.state[key];
+    if (!set.has(shoutId)) {
+      this.setState({ [key]: new Set(set).add(shoutId) });
+    }
   };
 
   handlePause = () => {
@@ -54,7 +68,9 @@ class HarassmentSimulation extends Component {
       paused,
       blueCount,
       brownCount,
-      velocityMultiplier
+      velocityMultiplier,
+      blueShoutsHeard,
+      brownShoutsHeard
     } = this.state;
     const { width, height, padding, initialV, idx } = this.props;
     const headerData = [
@@ -62,9 +78,9 @@ class HarassmentSimulation extends Component {
         sliders: [
           {
             handleValueChange: this.handleCountChange.bind(this, "brownCount"),
-            title: "Number of Brown Eyed People",
+            title: `Number of Brown Eyed People: ${brownCount}`,
             value: brownCount,
-            min: 1,
+            min: 2,
             max: 50,
             step: 1,
             color: COLORS.MAROON,
@@ -73,9 +89,9 @@ class HarassmentSimulation extends Component {
           },
           {
             handleValueChange: this.handleCountChange.bind(this, "blueCount"),
-            title: "Number of Blue Eyed People",
+            title: `Number of Blue Eyed People: ${blueCount}`,
             value: blueCount,
-            min: 1,
+            min: 2,
             max: 50,
             step: 1,
             color: COLORS.BLUE,
@@ -118,6 +134,22 @@ class HarassmentSimulation extends Component {
         ]
       }
     ];
+    const barData = [
+      {
+        size: blueShoutsHeard.size,
+        color: COLORS.BLUE,
+        tooltipText: `Insensitive comments heard by blue: ${
+          blueShoutsHeard.size
+        }`
+      },
+      {
+        size: brownShoutsHeard.size,
+        color: COLORS.MAROON,
+        tooltipText: `Insensitive comments heard by brown: ${
+          brownShoutsHeard.size
+        }`
+      }
+    ];
     return (
       <NarrowContainer width="75%">
         <SliderGroup data={headerData[+playing].sliders} />
@@ -137,8 +169,10 @@ class HarassmentSimulation extends Component {
             paused={paused}
             velocityMultiplier={velocityMultiplier}
             initialV={initialV}
+            handleShout={this.handleShout}
           />
         </ClippedSVG>
+        <HorizontalBar data={barData} />
       </NarrowContainer>
     );
   }
