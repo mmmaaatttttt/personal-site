@@ -19,11 +19,6 @@ class HarassmentNodeGroup extends Component {
     this.simulation = initializeSimulation(width, height, this.handleCollision);
     this.generateNodes(this.props);
     this.simulation.on("tick", () => this.updateNodes(this.props));
-    // DELETE THIS
-    this.shoutsHeard = {
-      [COLORS.BLUE]: new Set(),
-      [COLORS.MAROON]: new Set()
-    };
   }
 
   generateNodes = props => {
@@ -53,7 +48,6 @@ class HarassmentNodeGroup extends Component {
     const scaledInitialSpeed = initialV * velocityMultiplier;
     const colorFn = d => d.properties.color;
     updateSimulationNodes(this.simulation, this.g, colorFn, this.isMoving());
-    let test = Math.random();
     this.__checkIntersections();
   };
 
@@ -77,9 +71,10 @@ class HarassmentNodeGroup extends Component {
   };
 
   __checkIntersections = () => {
-    selectAll(".shout").each((d, i, hmm) => {
+    const { handleShout } = this.props;
+    selectAll(".shout").each((d, i, shouts) => {
       const color = d.nodeKey.split("-")[0];
-      const waveCircle = select(hmm[i]);
+      const waveCircle = select(shouts[i]);
       const waveX = +waveCircle.attr("cx");
       const waveY = +waveCircle.attr("cy");
       const waveR = +waveCircle.attr("r");
@@ -88,23 +83,9 @@ class HarassmentNodeGroup extends Component {
         const { x, y, r } = node;
         const waveDistance = euclideanDistance(x - waveX, y - waveY);
         if (nodeColor !== color && waveDistance < r + waveR) {
-          // DELETE THIS
-          const blueSize = this.shoutsHeard[COLORS.BLUE].size;
-          const brownSize = this.shoutsHeard[COLORS.MAROON].size;
-          // this.shoutsHeard[nodeColor].add(`${node.key}:${d.shoutCount}`);
-          this.shoutsHeard[nodeColor].add(d.shoutCount);
-          if (
-            this.shoutsHeard[COLORS.BLUE].size > blueSize ||
-            this.shoutsHeard[COLORS.MAROON].size > brownSize
-          ) {
-            // console.log("BLUE RECEIVED", this.shoutsHeard[COLORS.BLUE].size);
-            // console.log("BROWN RECEIVED", this.shoutsHeard[COLORS.MAROON].size);
-            console.log(
-              // "RATIO",
-              this.shoutsHeard[COLORS.BLUE].size /
-                (this.shoutsHeard[COLORS.MAROON].size || 1)
-            );
-          }
+          const key =
+            nodeColor === COLORS.BLUE ? "blueShoutsHeard" : "brownShoutsHeard";
+          handleShout(key, d.shoutCount);
         }
       }, this);
     });
@@ -209,6 +190,7 @@ HarassmentNodeGroup.propTypes = {
   paused: PropTypes.bool.isRequired,
   velocityMultiplier: PropTypes.number.isRequired,
   initialV: PropTypes.number.isRequired,
+  handleShout: PropTypes.func.isRequired,
   borderWidth: PropTypes.number.isRequired,
   borderStroke: PropTypes.string.isRequired
 };
