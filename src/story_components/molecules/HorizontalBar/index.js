@@ -16,6 +16,11 @@ const BarContainer = styled.div`
   overflow: hidden;
 `;
 
+const BarTitle = styled.h4`
+  text-align: center;
+  margin-bottom: ${rhythm(0.25)};
+`;
+
 class HorizontalBar extends Component {
   state = {
     tooltipVisible: false,
@@ -46,53 +51,62 @@ class HorizontalBar extends Component {
   };
 
   render() {
-    const { data } = this.props;
+    const { data, title } = this.props;
     const { tooltipVisible, tooltipX, tooltipY } = this.state;
+    const titleHTML = title ? <BarTitle>{title}</BarTitle> : null;
     return (
-      <NodeGroup
-        data={data}
-        keyAccessor={(d, i) => i}
-        start={() => ({ width: 0 })}
-        enter={this.getWidth}
-        update={this.getWidth}
-      >
-        {segments => (
-          <BarContainer
-            onMouseMove={this.handleTooltipShow}
-            onMouseLeave={this.handleTooltipHide}
-            onTouchMove={this.handleTooltipShow}
-            onTouchEnd={this.handleTooltipHide}
-          >
-            {segments.map(({ key, data, state }) => {
-              const { width } = state;
-              const { color: backgroundColor } = data;
-              return (
-                <div
-                  style={{ width: `${width}%`, backgroundColor }}
-                  key={key}
-                />
-              );
-            })}
-            <Tooltip
-              body={data.map(d => d.tooltipText)}
-              visible={tooltipVisible}
-              x={tooltipX}
-              y={tooltipY}
-            />
-          </BarContainer>
-        )}
-      </NodeGroup>
+      <div>
+        {titleHTML}
+        <NodeGroup
+          data={data}
+          keyAccessor={(d, i) => i}
+          start={() => ({ width: 0 })}
+          enter={this.getWidth}
+          update={this.getWidth}
+        >
+          {segments => (
+            <BarContainer
+              onMouseMove={this.handleTooltipShow}
+              onMouseLeave={this.handleTooltipHide}
+              onTouchMove={this.handleTooltipShow}
+              onTouchEnd={this.handleTooltipHide}
+            >
+              {segments.map(({ key, data, state }) => {
+                const { width } = state;
+                const { color: backgroundColor } = data;
+                return (
+                  <div
+                    style={{ width: `${width}%`, backgroundColor }}
+                    key={key}
+                  />
+                );
+              })}
+              <Tooltip
+                body={data.map(d => d.tooltipText)}
+                visible={tooltipVisible}
+                x={tooltipX}
+                y={tooltipY}
+              />
+            </BarContainer>
+          )}
+        </NodeGroup>
+      </div>
     );
   }
 }
 
 HorizontalBar.propTypes = {
+  title: PropTypes.string.isRequired,
   data: PropTypes.arrayOf(
     PropTypes.shape({
       size: PropTypes.number.isRequired,
       color: PropTypes.string.isRequired
     })
-  )
+  ).isRequired
+};
+
+HorizontalBar.defaultProps = {
+  title: ""
 };
 
 export default HorizontalBar;

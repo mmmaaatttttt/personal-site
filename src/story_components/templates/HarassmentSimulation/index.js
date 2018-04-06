@@ -107,19 +107,7 @@ class HarassmentSimulation extends Component {
         ]
       },
       {
-        sliders: [
-          {
-            handleValueChange: this.handleVelocityChange,
-            title: "Average Speed",
-            value: velocityMultiplier,
-            min: 0.1,
-            max: 2,
-            step: 0.1,
-            color: COLORS.DARK_GRAY,
-            minIcon: "step-forward",
-            maxIcon: "fast-forward"
-          }
-        ],
+        sliders: [],
         buttons: [
           {
             color: COLORS.ORANGE,
@@ -134,24 +122,50 @@ class HarassmentSimulation extends Component {
         ]
       }
     ];
-    const barData = [
+    const barInfo = [
       {
-        size: blueShoutsHeard.size,
-        color: COLORS.BLUE,
-        tooltipText: `Insensitive comments heard by blue: ${
-          blueShoutsHeard.size
-        }`
+        title: "Group sizes",
+        data: [
+          {
+            size: blueCount,
+            color: COLORS.BLUE,
+            tooltipText: `Blue count ${blueCount}`
+          },
+          {
+            size: brownCount,
+            color: COLORS.MAROON,
+            tooltipText: `Brown count ${brownCount}`
+          }
+        ]
       },
       {
-        size: brownShoutsHeard.size,
-        color: COLORS.MAROON,
-        tooltipText: `Insensitive comments heard by brown: ${
-          brownShoutsHeard.size
-        }`
+        title: "Comments Overheard by Group",
+        data: [
+          {
+            size: blueShoutsHeard.size,
+            color: COLORS.BLUE,
+            tooltipText: `Insensitive comments heard by blue: ${
+              blueShoutsHeard.size
+            }`
+          },
+          {
+            size: brownShoutsHeard.size,
+            color: COLORS.MAROON,
+            tooltipText: `Insensitive comments heard by brown: ${
+              brownShoutsHeard.size
+            }`
+          }
+        ]
       }
     ];
+    const bars = playing
+      ? barInfo.map((bar, i) => (
+          <HorizontalBar data={bar.data} title={bar.title} key={i} />
+        ))
+      : null;
     return (
       <NarrowContainer width="75%">
+        {bars}
         <SliderGroup data={headerData[+playing].sliders} />
         <ButtonGroup data={headerData[+playing].buttons} />
         <ClippedSVG
@@ -172,7 +186,6 @@ class HarassmentSimulation extends Component {
             handleShout={this.handleShout}
           />
         </ClippedSVG>
-        <HorizontalBar data={barData} />
       </NarrowContainer>
     );
   }
