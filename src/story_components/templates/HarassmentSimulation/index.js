@@ -20,10 +20,10 @@ class HarassmentSimulation extends Component {
     playing: false,
     paused: false,
     blueCount: 2,
-    brownCount: 2,
+    greenCount: 2,
     velocityMultiplier: 1,
     blueShoutsHeard: new Set(),
-    brownShoutsHeard: new Set()
+    greenShoutsHeard: new Set()
   };
 
   handleStart = () => {
@@ -37,9 +37,9 @@ class HarassmentSimulation extends Component {
       paused: false,
       velocityMultiplier: 1,
       blueCount: 2,
-      brownCount: 2,
+      greenCount: 2,
       blueShoutsHeard: new Set(),
-      brownShoutsHeard: new Set()
+      greenShoutsHeard: new Set()
     });
   };
 
@@ -67,23 +67,23 @@ class HarassmentSimulation extends Component {
       playing,
       paused,
       blueCount,
-      brownCount,
+      greenCount,
       velocityMultiplier,
       blueShoutsHeard,
-      brownShoutsHeard
+      greenShoutsHeard
     } = this.state;
     const { width, height, padding, initialV, idx } = this.props;
     const headerData = [
       {
         sliders: [
           {
-            handleValueChange: this.handleCountChange.bind(this, "brownCount"),
-            title: `Number of Brown Eyed People: ${brownCount}`,
-            value: brownCount,
+            handleValueChange: this.handleCountChange.bind(this, "greenCount"),
+            title: `Number of Green Eyed People: ${greenCount}`,
+            value: greenCount,
             min: 2,
             max: 50,
             step: 1,
-            color: COLORS.MAROON,
+            color: COLORS.GREEN,
             minIcon: "user",
             maxIcon: "users"
           },
@@ -132,9 +132,9 @@ class HarassmentSimulation extends Component {
             tooltipText: `Blue count ${blueCount}`
           },
           {
-            size: brownCount,
-            color: COLORS.MAROON,
-            tooltipText: `Brown count ${brownCount}`
+            size: greenCount,
+            color: COLORS.GREEN,
+            tooltipText: `Green count ${greenCount}`
           }
         ]
       },
@@ -149,10 +149,10 @@ class HarassmentSimulation extends Component {
             }`
           },
           {
-            size: brownShoutsHeard.size,
-            color: COLORS.MAROON,
-            tooltipText: `Insensitive comments heard by brown: ${
-              brownShoutsHeard.size
+            size: greenShoutsHeard.size,
+            color: COLORS.GREEN,
+            tooltipText: `Insensitive comments heard by green: ${
+              greenShoutsHeard.size
             }`
           }
         ]
@@ -175,7 +175,7 @@ class HarassmentSimulation extends Component {
           id={`simulation-${idx}`}
         >
           <HarassmentNodeGroup
-            brownCount={brownCount}
+            greenCount={greenCount}
             blueCount={blueCount}
             width={width}
             height={height}

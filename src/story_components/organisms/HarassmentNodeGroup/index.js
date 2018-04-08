@@ -22,23 +22,23 @@ class HarassmentNodeGroup extends Component {
   }
 
   generateNodes = props => {
-    const { blueCount, brownCount, initialV } = props;
-    const { BLUE, MAROON } = COLORS;
+    const { blueCount, greenCount, initialV } = props;
+    const { BLUE, GREEN } = COLORS;
     const blueArr = Array.from({ length: blueCount }, (_, i) => ({
       key: `${BLUE}-${i}`,
       properties: {
         color: BLUE
       }
     }));
-    const brownArr = Array.from({ length: brownCount }, (_, i) => ({
-      key: `${MAROON}-${i}`,
+    const greenArr = Array.from({ length: greenCount }, (_, i) => ({
+      key: `${GREEN}-${i}`,
       properties: {
-        color: MAROON
+        color: GREEN
       }
     }));
     generateSimulationNodes(
       this.simulation,
-      blueArr.concat(brownArr),
+      blueArr.concat(greenArr),
       initialV
     );
   };
@@ -56,8 +56,7 @@ class HarassmentNodeGroup extends Component {
   };
 
   handleCollision = (...nodes) => {
-    const sameColor = nodes[0].properties.color === nodes[1].properties.color;
-    if (sameColor && this.isMoving()) {
+    if (this.isMoving()) {
       nodes.forEach(node => {
         let test = Math.random();
         if (test < 0.1) {
@@ -84,7 +83,7 @@ class HarassmentNodeGroup extends Component {
         const waveDistance = euclideanDistance(x - waveX, y - waveY);
         if (nodeColor !== color && waveDistance < r + waveR) {
           const key =
-            nodeColor === COLORS.BLUE ? "blueShoutsHeard" : "brownShoutsHeard";
+            nodeColor === COLORS.BLUE ? "blueShoutsHeard" : "greenShoutsHeard";
           handleShout(key, d.shoutCount);
         }
       }, this);
@@ -124,7 +123,7 @@ class HarassmentNodeGroup extends Component {
   componentWillUpdate(nextProps) {
     const samePopulation =
       this.props.blueCount === nextProps.blueCount &&
-      this.props.brownCount === nextProps.brownCount;
+      this.props.greenCount === nextProps.greenCount;
     const sameMultiplier =
       this.props.velocityMultiplier === nextProps.velocityMultiplier;
     const resetting =
@@ -184,7 +183,7 @@ class HarassmentNodeGroup extends Component {
 HarassmentNodeGroup.propTypes = {
   width: PropTypes.number.isRequired,
   height: PropTypes.number.isRequired,
-  brownCount: PropTypes.number.isRequired,
+  greenCount: PropTypes.number.isRequired,
   blueCount: PropTypes.number.isRequired,
   playing: PropTypes.bool.isRequired,
   paused: PropTypes.bool.isRequired,
