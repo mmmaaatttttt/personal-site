@@ -59,7 +59,7 @@ class HarassmentNodeGroup extends Component {
     if (this.isMoving()) {
       nodes.forEach(node => {
         let test = Math.random();
-        if (test < 0.1) {
+        if (test < 0.05) {
           this.setState(
             { shoutCount: this.state.shoutCount + 1 },
             this.__generateWave(node)
@@ -109,7 +109,7 @@ class HarassmentNodeGroup extends Component {
         .transition()
           .duration(2000)
           .ease(Math.sqrt)
-          .attr("r", node.r * 10)
+          .attr("r", node.r * 8)
           .style("stroke-opacity", 1e-6)
           .style("fill-opacity", 1e-6)
           .remove();

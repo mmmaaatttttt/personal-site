@@ -19,8 +19,8 @@ class HarassmentSimulation extends Component {
   state = {
     playing: false,
     paused: false,
-    blueCount: 2,
-    greenCount: 2,
+    blueCount: 10,
+    greenCount: 20,
     velocityMultiplier: 1,
     blueShoutsHeard: new Set(),
     greenShoutsHeard: new Set()
@@ -36,8 +36,8 @@ class HarassmentSimulation extends Component {
       playing: false,
       paused: false,
       velocityMultiplier: 1,
-      blueCount: 2,
-      greenCount: 2,
+      blueCount: 10,
+      greenCount: 20,
       blueShoutsHeard: new Set(),
       greenShoutsHeard: new Set()
     });
@@ -78,7 +78,7 @@ class HarassmentSimulation extends Component {
         sliders: [
           {
             handleValueChange: this.handleCountChange.bind(this, "greenCount"),
-            title: `Number of Green Eyed People: ${greenCount}`,
+            title: `Number of Green-eyed People: ${greenCount}`,
             value: greenCount,
             min: 2,
             max: 50,
@@ -89,7 +89,7 @@ class HarassmentSimulation extends Component {
           },
           {
             handleValueChange: this.handleCountChange.bind(this, "blueCount"),
-            title: `Number of Blue Eyed People: ${blueCount}`,
+            title: `Number of Blue-eyed People: ${blueCount}`,
             value: blueCount,
             min: 2,
             max: 50,
@@ -201,7 +201,7 @@ HarassmentSimulation.propTypes = {
 
 HarassmentSimulation.defaultProps = {
   width: 900,
-  height: 600,
+  height: 500,
   padding: 0,
   initialV: 2
 };
