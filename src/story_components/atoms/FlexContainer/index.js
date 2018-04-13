@@ -7,12 +7,14 @@ const cross = props => (props.column ? "justify-content" : "align-items");
 const FlexContainer = styled.div`
   display: flex;
   flex: 1;
-  ${props =>
-    props.column &&
-    css`
-      flex-direction: column;
-    `} ${main}: ${props => props.main};
-    ${cross}: ${props => props.cross};
+  flex-wrap: ${props => (props.wrap ? "wrap" : "nowrap")};
+    ${props =>
+      props.column &&
+      css`
+        flex-direction: column;
+      `}
+    ${main}: ${props => props.main};
+  ${cross}: ${props => props.cross};
 `;
 
 const flexAlignments = [
@@ -26,14 +28,17 @@ const flexAlignments = [
 ];
 
 FlexContainer.propTypes = {
-  column: PropTypes.bool,
-  main: PropTypes.oneOf(flexAlignments),
-  cross: PropTypes.oneOf(flexAlignments)
+  column: PropTypes.bool.isRequired,
+  main: PropTypes.oneOf(flexAlignments).isRequired,
+  cross: PropTypes.oneOf(flexAlignments).isRequired,
+  wrap: PropTypes.bool.isRequired
 };
 
 FlexContainer.defaultProps = {
   main: "stretch",
-  cross: "stretch"
+  cross: "stretch",
+  column: false,
+  wrap: false
 };
 
 export default FlexContainer;
