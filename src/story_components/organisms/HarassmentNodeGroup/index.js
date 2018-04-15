@@ -57,11 +57,25 @@ class HarassmentNodeGroup extends Component {
 
   handleCollision = (...nodes) => {
     if (this.isMoving()) {
-      nodes.forEach(node => {
-        let test = Math.random();
-        if (test < 0.05) {
+      const {
+        blueOnBlueProb: bb,
+        greenOnGreenProb: gg,
+        blueOnGreenProb: bg,
+        greenOnBlueProb: gb
+      } = this.props;
+      const { BLUE, GREEN } = COLORS;
+      const probabilities = {
+        [`${BLUE}:${BLUE}`]: [bb, bb],
+        [`${BLUE}:${GREEN}`]: [bg, gb],
+        [`${GREEN}:${BLUE}`]: [gb, bg],
+        [`${GREEN}:${GREEN}`]: [gg, gg]
+      };
+      const nodeColors = nodes.map(node => node.properties.color).join(":");
+      const probability = probabilities[nodeColors];
+      nodes.forEach((node, i) => {
+        if (Math.random() < probability[i]) {
           this.setState(
-            { shoutCount: this.state.shoutCount + 1 },
+            prevState => ({ shoutCount: prevState.shoutCount + 1 }),
             this.__generateWave(node)
           );
         }
@@ -83,7 +97,9 @@ class HarassmentNodeGroup extends Component {
         const waveDistance = euclideanDistance(x - waveX, y - waveY);
         if (nodeColor !== color && waveDistance < r + waveR) {
           const key =
-            nodeColor === COLORS.BLUE ? "blueShoutsHeard" : "greenShoutsHeard";
+            nodeColor === COLORS.BLUE
+              ? "blueShoutsHeardFromGreen"
+              : "greenShoutsHeardFromBlue";
           handleShout(key, d.shoutCount);
         }
       }, this);
@@ -92,9 +108,11 @@ class HarassmentNodeGroup extends Component {
 
   __generateWave = node => {
     const { shoutCount } = this.state;
+    const { handleShout } = this.props;
     const soundWave = interval(() => {
+      const waveCount = 5;
       soundWave.__calledCount++;
-      if (soundWave.__calledCount <= 5) {
+      if (soundWave.__calledCount <= waveCount && this.isMoving()) {
         // prettier-ignore
         select(this.g)
           .insert("circle", "circle")
@@ -105,13 +123,21 @@ class HarassmentNodeGroup extends Component {
           .attr("fill-opacity", 0.75)
           .attr("stroke", COLORS.RED)
           .classed("shout", true)
-          .datum({ shoutCount, nodeKey: node.key })
+          .datum({ shoutCount, nodeKey: node.key, idx: soundWave.__calledCount })
         .transition()
           .duration(2000)
           .ease(Math.sqrt)
-          .attr("r", node.r * 8)
+        .attr("r", node.r * 8)
           .style("stroke-opacity", 1e-6)
           .style("fill-opacity", 1e-6)
+          .on("end", d => {
+              const color = d.nodeKey.split("-")[0];
+              const key = 
+                color === COLORS.BLUE 
+                  ? "blueShoutsHeardFromBlueOnly"
+                  : "greenShoutsHeardFromGreenOnly";
+              handleShout(key, d.shoutCount);
+          })
           .remove();
       } else {
         soundWave.stop();
@@ -191,7 +217,11 @@ HarassmentNodeGroup.propTypes = {
   initialV: PropTypes.number.isRequired,
   handleShout: PropTypes.func.isRequired,
   borderWidth: PropTypes.number.isRequired,
-  borderStroke: PropTypes.string.isRequired
+  borderStroke: PropTypes.string.isRequired,
+  blueOnBlueProb: PropTypes.number.isRequired,
+  greenOnGreenProb: PropTypes.number.isRequired,
+  blueOnGreenProb: PropTypes.number.isRequired,
+  greenOnBlueProb: PropTypes.number.isRequired
 };
 
 HarassmentNodeGroup.defaultProps = {

@@ -2,9 +2,11 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { selectAll } from "d3-selection";
 import { scaleLinear } from "d3-scale";
+import { darken } from "polished";
 import withCaption from "hocs/withCaption";
 import COLORS from "utils/styles";
-import updateSpeeds from "data/income-inequality.js";
+import { capitalize } from "utils/stringHelpers";
+import updateSpeeds from "data/income-inequality";
 import {
   ClippedSVG,
   FlexContainer,
@@ -22,8 +24,14 @@ class HarassmentSimulation extends Component {
     blueCount: 10,
     greenCount: 20,
     velocityMultiplier: 1,
-    blueShoutsHeard: new Set(),
-    greenShoutsHeard: new Set()
+    blueShoutsHeardFromBlueOnly: new Set(),
+    blueShoutsHeardFromGreen: new Set(),
+    greenShoutsHeardFromBlue: new Set(),
+    greenShoutsHeardFromGreenOnly: new Set(),
+    blueOnBlueProb: 0.05,
+    greenOnGreenProb: 0.05,
+    blueOnGreenProb: 0.05,
+    greenOnBlueProb: 0.05
   };
 
   handleStart = () => {
@@ -38,16 +46,31 @@ class HarassmentSimulation extends Component {
       velocityMultiplier: 1,
       blueCount: 10,
       greenCount: 20,
-      blueShoutsHeard: new Set(),
-      greenShoutsHeard: new Set()
+      blueShoutsHeardFromBlueOnly: new Set(),
+      blueShoutsHeardFromGreen: new Set(),
+      greenShoutsHeardFromBlue: new Set(),
+      greenShoutsHeardFromGreenOnly: new Set(),
+      blueOnBlueProb: 0.05,
+      greenOnGreenProb: 0.05,
+      blueOnGreenProb: 0.05,
+      greenOnBlueProb: 0.05
     });
   };
 
   handleShout = (key, shoutId) => {
-    const set = this.state[key];
-    if (!set.has(shoutId)) {
-      this.setState({ [key]: new Set(set).add(shoutId) });
-    }
+    // shouting has ended, see if the shout was heard by the other group
+    const setStateCond1 =
+      key === "blueShoutsHeardFromBlueOnly" &&
+      !this.state.blueShoutsHeardFromGreen.has(shoutId);
+    const setStateCond2 =
+      key === "greenShoutsHeardFromGreenOnly" &&
+      !this.state.greenShoutsHeardFromBlue.has(shoutId);
+    // shouting is in progress, see if the shout is being heard by the other group
+    const setStateCond3 = !/only/gi.test(key) && !this.state[key].has(shoutId);
+    if (setStateCond1 || setStateCond2 || setStateCond3)
+      this.setState(prevState => ({
+        [key]: new Set(prevState[key]).add(shoutId)
+      }));
   };
 
   handlePause = () => {
@@ -58,8 +81,8 @@ class HarassmentSimulation extends Component {
     this.setState({ velocityMultiplier: newMultiplier });
   };
 
-  handleCountChange = (color, newCount) => {
-    this.setState({ [color]: newCount });
+  handleSliderChange = (stateKey, newVal) => {
+    this.setState({ [stateKey]: newVal });
   };
 
   render() {
@@ -69,18 +92,24 @@ class HarassmentSimulation extends Component {
       blueCount,
       greenCount,
       velocityMultiplier,
-      blueShoutsHeard,
-      greenShoutsHeard
+      blueShoutsHeardFromGreen,
+      greenShoutsHeardFromBlue,
+      blueShoutsHeardFromBlueOnly,
+      greenShoutsHeardFromGreenOnly,
+      blueOnBlueProb,
+      greenOnGreenProb,
+      blueOnGreenProb,
+      greenOnBlueProb
     } = this.state;
     const { width, height, padding, initialV, idx } = this.props;
     const headerData = [
       {
         sliders: [
           {
-            handleValueChange: this.handleCountChange.bind(this, "greenCount"),
+            handleValueChange: this.handleSliderChange.bind(this, "greenCount"),
             title: `Number of Green-eyed People: ${greenCount}`,
             value: greenCount,
-            min: 2,
+            min: 1,
             max: 50,
             step: 1,
             color: COLORS.GREEN,
@@ -88,10 +117,10 @@ class HarassmentSimulation extends Component {
             maxIcon: "users"
           },
           {
-            handleValueChange: this.handleCountChange.bind(this, "blueCount"),
+            handleValueChange: this.handleSliderChange.bind(this, "blueCount"),
             title: `Number of Blue-eyed People: ${blueCount}`,
             value: blueCount,
-            min: 2,
+            min: 1,
             max: 50,
             step: 1,
             color: COLORS.BLUE,
@@ -122,6 +151,35 @@ class HarassmentSimulation extends Component {
         ]
       }
     ];
+    if (idx > 0) {
+      let newSliders = [
+        "greenOnGreenProb",
+        "blueOnBlueProb",
+        "greenOnBlueProb",
+        "blueOnGreenProb"
+      ]
+        .map(key => ({
+          key,
+          nodes: key.match(/green|blue/gi).map(capitalize)
+        }))
+        .map(obj => {
+          const title = `${obj.nodes[0]} remark during ${obj.nodes
+            .map(n => n[0])
+            .join("-")} interaction`;
+          return {
+            title,
+            handleValueChange: this.handleSliderChange.bind(this, obj.key),
+            value: this.state[obj.key],
+            min: 0,
+            max: 1,
+            step: 0.01,
+            color: COLORS[obj.nodes[0].toUpperCase()],
+            minIcon: "smile-o",
+            maxIcon: "frown-o"
+          };
+        });
+      headerData[0].sliders = [...headerData[0].sliders, ...newSliders];
+    }
     const barInfo = [
       {
         title: "Group sizes",
@@ -142,31 +200,59 @@ class HarassmentSimulation extends Component {
         title: "Comments Overheard by Group",
         data: [
           {
-            size: blueShoutsHeard.size,
+            size: blueShoutsHeardFromGreen.size,
             color: COLORS.BLUE,
             tooltipText: `Insensitive comments heard by blue: ${
-              blueShoutsHeard.size
+              blueShoutsHeardFromGreen.size
             }`
           },
           {
-            size: greenShoutsHeard.size,
+            size: greenShoutsHeardFromBlue.size,
             color: COLORS.GREEN,
             tooltipText: `Insensitive comments heard by green: ${
-              greenShoutsHeard.size
+              greenShoutsHeardFromBlue.size
             }`
           }
         ]
       }
     ];
+    if (idx === 2) {
+      barInfo[1].data = [
+        {
+          size: blueShoutsHeardFromBlueOnly.size,
+          color: darken(0.2, COLORS.BLUE),
+          tooltipText: `Insensitive comments heard only by blue: ${
+            blueShoutsHeardFromBlueOnly.size
+          }`
+        },
+        ...barInfo[1].data,
+        {
+          size: greenShoutsHeardFromGreenOnly.size,
+          color: darken(0.2, COLORS.GREEN),
+          tooltipText: `Insensitive comments heard only by green: ${
+            greenShoutsHeardFromGreenOnly.size
+          }`
+        }
+      ];
+    }
     const bars = playing
       ? barInfo.map((bar, i) => (
           <HorizontalBar data={bar.data} title={bar.title} key={i} />
         ))
       : null;
+    const slidersByColor = color =>
+      headerData[+playing].sliders.filter(s => s.color === COLORS[color]);
     return (
       <NarrowContainer width="75%">
         {bars}
-        <SliderGroup data={headerData[+playing].sliders} />
+        <FlexContainer wrap>
+          <NarrowContainer width="50%" fullWidthAt="small">
+            <SliderGroup data={slidersByColor("GREEN")} />
+          </NarrowContainer>
+          <NarrowContainer width="50%" fullWidthAt="small">
+            <SliderGroup data={slidersByColor("BLUE")} />
+          </NarrowContainer>
+        </FlexContainer>
         <ButtonGroup data={headerData[+playing].buttons} />
         <ClippedSVG
           width={width}
@@ -184,6 +270,10 @@ class HarassmentSimulation extends Component {
             velocityMultiplier={velocityMultiplier}
             initialV={initialV}
             handleShout={this.handleShout}
+            blueOnBlueProb={blueOnBlueProb}
+            greenOnGreenProb={greenOnGreenProb}
+            blueOnGreenProb={blueOnGreenProb}
+            greenOnBlueProb={greenOnBlueProb}
           />
         </ClippedSVG>
       </NarrowContainer>
