@@ -2,12 +2,14 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { select } from "d3-selection";
 import { transition } from "d3-transition";
+import { easeCubicOut } from "d3-ease";
 import { interval } from "d3-timer";
 import { euclideanDistance } from "utils/mathHelpers";
 import {
   initializeSimulation,
   generateSimulationNodes,
-  updateSimulationNodes
+  updateSimulationNodes,
+  colorNodes
 } from "utils/forceSimulationHelpers";
 import COLORS from "utils/styles";
 
@@ -86,6 +88,7 @@ class HarassmentNodeGroup extends Component {
 
   __checkIntersections = () => {
     const { handleShout } = this.props;
+    const nodeSelection = select(this.g).selectAll(".node");
     select(this.g)
       .selectAll(".shout")
       .each((d, i, shouts) => {
@@ -94,11 +97,20 @@ class HarassmentNodeGroup extends Component {
         const waveX = +waveCircle.attr("cx");
         const waveY = +waveCircle.attr("cy");
         const waveR = +waveCircle.attr("r");
-        this.simulation.nodes().forEach(node => {
-          const nodeColor = node.properties.color;
-          const { x, y, r } = node;
+        nodeSelection.each(function(nodeData) {
+          const nodeColor = nodeData.properties.color;
+          const { x, y, r } = nodeData;
           const waveDistance = euclideanDistance(x - waveX, y - waveY);
           if (nodeColor !== color && waveDistance < r + waveR) {
+            const node = select(this);
+            colorNodes(node, COLORS.RED);
+            colorNodes(
+              node
+                .transition()
+                .duration(2000)
+                .ease(easeCubicOut),
+              nodeData.properties.color
+            );
             const key =
               nodeColor === COLORS.BLUE
                 ? "blueShoutsHeardFromGreen"

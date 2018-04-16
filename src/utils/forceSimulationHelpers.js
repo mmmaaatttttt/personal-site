@@ -114,12 +114,23 @@ const updateSimulationNodes = (
 
   const nodesToUpdate = isMoving ? enterNodes.merge(nodes) : enterNodes;
 
-  nodesToUpdate
-    .attr("fill", colorFn)
-    .attr("stroke", d => darken(0.3, colorFn(d)))
-    .attr("stroke-width", 2)
-    .attr("cx", d => d.x)
-    .attr("cy", d => d.y);
+  nodesToUpdate.attr("cx", d => d.x).attr("cy", d => d.y);
+
+  colorNodes(nodesToUpdate, colorFn);
 };
 
-export { initializeSimulation, generateSimulationNodes, updateSimulationNodes };
+function colorNodes(nodeSelection, color) {
+  nodeSelection
+    .attr("fill", color)
+    .attr("stroke", d =>
+      darken(0.3, typeof color === "function" ? color(d) : color)
+    )
+    .attr("stroke-width", 2);
+}
+
+export {
+  initializeSimulation,
+  generateSimulationNodes,
+  updateSimulationNodes,
+  colorNodes
+};
