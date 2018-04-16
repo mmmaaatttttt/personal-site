@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import { selectAll } from "d3-selection";
+import { select } from "d3-selection";
 import { scaleLinear } from "d3-scale";
 import { darken } from "polished";
 import withCaption from "hocs/withCaption";
@@ -39,7 +39,9 @@ class HarassmentSimulation extends Component {
   };
 
   handleStop = () => {
-    selectAll(".shout").remove();
+    select(`#simulation-${this.props.idx}`)
+      .selectAll(".shout")
+      .remove();
     this.setState({
       playing: false,
       paused: false,

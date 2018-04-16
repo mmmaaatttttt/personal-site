@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import { select, selectAll } from "d3-selection";
+import { select } from "d3-selection";
 import { transition } from "d3-transition";
 import { interval } from "d3-timer";
 import { euclideanDistance } from "utils/mathHelpers";
@@ -47,8 +47,9 @@ class HarassmentNodeGroup extends Component {
     const { velocityMultiplier, initialV, blueCount } = props;
     const scaledInitialSpeed = initialV * velocityMultiplier;
     const colorFn = d => d.properties.color;
-    updateSimulationNodes(this.simulation, this.g, colorFn, this.isMoving());
-    this.__checkIntersections();
+    const isMoving = this.isMoving();
+    updateSimulationNodes(this.simulation, this.g, colorFn, isMoving);
+    if (isMoving) this.__checkIntersections();
   };
 
   isMoving = () => {
@@ -85,25 +86,27 @@ class HarassmentNodeGroup extends Component {
 
   __checkIntersections = () => {
     const { handleShout } = this.props;
-    selectAll(".shout").each((d, i, shouts) => {
-      const color = d.nodeKey.split("-")[0];
-      const waveCircle = select(shouts[i]);
-      const waveX = +waveCircle.attr("cx");
-      const waveY = +waveCircle.attr("cy");
-      const waveR = +waveCircle.attr("r");
-      this.simulation.nodes().forEach(node => {
-        const nodeColor = node.properties.color;
-        const { x, y, r } = node;
-        const waveDistance = euclideanDistance(x - waveX, y - waveY);
-        if (nodeColor !== color && waveDistance < r + waveR) {
-          const key =
-            nodeColor === COLORS.BLUE
-              ? "blueShoutsHeardFromGreen"
-              : "greenShoutsHeardFromBlue";
-          handleShout(key, d.shoutCount);
-        }
-      }, this);
-    });
+    select(this.g)
+      .selectAll(".shout")
+      .each((d, i, shouts) => {
+        const color = d.nodeKey.split("-")[0];
+        const waveCircle = select(shouts[i]);
+        const waveX = +waveCircle.attr("cx");
+        const waveY = +waveCircle.attr("cy");
+        const waveR = +waveCircle.attr("r");
+        this.simulation.nodes().forEach(node => {
+          const nodeColor = node.properties.color;
+          const { x, y, r } = node;
+          const waveDistance = euclideanDistance(x - waveX, y - waveY);
+          if (nodeColor !== color && waveDistance < r + waveR) {
+            const key =
+              nodeColor === COLORS.BLUE
+                ? "blueShoutsHeardFromGreen"
+                : "greenShoutsHeardFromBlue";
+            handleShout(key, d.shoutCount);
+          }
+        }, this);
+      });
   };
 
   __generateWave = node => {
