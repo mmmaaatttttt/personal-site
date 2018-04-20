@@ -160,11 +160,9 @@ class HarassmentSimulation extends Component {
           nodes: key.match(/green|blue/gi).map(capitalize)
         }))
         .map(obj => {
-          const title = `${obj.nodes[0]} remark during ${obj.nodes
-            .map(n => n[0])
-            .join("-")} interaction: ${(this.state[obj.key] * 100).toFixed(
+          const title = `${(this.state[obj.key] * 100).toFixed(
             0
-          )}%`;
+          )}% chance of harassment with ${obj.nodes[1]}`;
           return {
             title,
             handleValueChange: this.handleSliderChange.bind(this, obj.key),
@@ -201,14 +199,14 @@ class HarassmentSimulation extends Component {
           {
             size: blueShoutsHeardFromGreen.size,
             color: COLORS.BLUE,
-            tooltipText: `Insensitive comments heard by blue: ${
+            tooltipText: `Harassment heard by blue, coming from green: ${
               blueShoutsHeardFromGreen.size
             }`
           },
           {
             size: greenShoutsHeardFromBlue.size,
             color: COLORS.GREEN,
-            tooltipText: `Insensitive comments heard by green: ${
+            tooltipText: `Harassment heard by green, coming from blue: ${
               greenShoutsHeardFromBlue.size
             }`
           }
@@ -220,7 +218,7 @@ class HarassmentSimulation extends Component {
         {
           size: blueShoutsHeardFromBlueOnly.size,
           color: darken(0.2, COLORS.BLUE),
-          tooltipText: `Insensitive comments heard only by blue: ${
+          tooltipText: `Harassment heard only by blue, coming from blue: ${
             blueShoutsHeardFromBlueOnly.size
           }`
         },
@@ -228,7 +226,7 @@ class HarassmentSimulation extends Component {
         {
           size: greenShoutsHeardFromGreenOnly.size,
           color: darken(0.2, COLORS.GREEN),
-          tooltipText: `Insensitive comments heard only by green: ${
+          tooltipText: `Harassment heard only by green, coming from green: ${
             greenShoutsHeardFromGreenOnly.size
           }`
         }
