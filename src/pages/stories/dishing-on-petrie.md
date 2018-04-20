@@ -68,6 +68,8 @@ Here's a simulation that tries to account for this by breaking apart the probabi
 
 <HarassmentSimulation idx={1}/>
 
+Take a look at what happens if you make it so that people are guarded around members of the opposite group and will never say anything offensive directly to them. In this scenario, things actually get much worse for the underrepresented group in terms of how much harassment they hear compared to the overrepresented group, simply because two people from the smaller group are less likely to interact. This numbers in this case align more closely to Petrie's original multiplier.
+
 ### Commonly Proposed Fixes
 
 I find these sorts of simulations interesting as thought experiments, but it's worth considering how much bearing they have on reality. Unfortunately, there isn't a ton of data (that I know of) that can be used to check against different permutations of the model. And while the model itself suggests a couple of approaches to combat harassment -- namely, hiring more people from underrepresented groups, or sensitivity training for people in overrepresented groups -- neither of these solutions is new or groundbreaking. And in practice, both have their own implementation challenges (check out the previously linked article from The Atlantic for more on this).
