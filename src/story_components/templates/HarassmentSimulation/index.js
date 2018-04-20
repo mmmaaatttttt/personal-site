@@ -23,7 +23,6 @@ class HarassmentSimulation extends Component {
     paused: false,
     blueCount: 10,
     greenCount: 20,
-    velocityMultiplier: 1,
     blueShoutsHeardFromBlueOnly: new Set(),
     blueShoutsHeardFromGreen: new Set(),
     greenShoutsHeardFromBlue: new Set(),
@@ -35,7 +34,13 @@ class HarassmentSimulation extends Component {
   };
 
   handleStart = () => {
-    this.setState({ playing: true });
+    this.setState({
+      playing: true,
+      blueShoutsHeardFromBlueOnly: new Set(),
+      blueShoutsHeardFromGreen: new Set(),
+      greenShoutsHeardFromBlue: new Set(),
+      greenShoutsHeardFromGreenOnly: new Set()
+    });
   };
 
   handleStop = () => {
@@ -45,13 +50,8 @@ class HarassmentSimulation extends Component {
     this.setState({
       playing: false,
       paused: false,
-      velocityMultiplier: 1,
       blueCount: 10,
       greenCount: 20,
-      blueShoutsHeardFromBlueOnly: new Set(),
-      blueShoutsHeardFromGreen: new Set(),
-      greenShoutsHeardFromBlue: new Set(),
-      greenShoutsHeardFromGreenOnly: new Set(),
       blueOnBlueProb: 0.05,
       greenOnGreenProb: 0.05,
       blueOnGreenProb: 0.05,
@@ -79,10 +79,6 @@ class HarassmentSimulation extends Component {
     this.setState({ paused: !this.state.paused });
   };
 
-  handleVelocityChange = newMultiplier => {
-    this.setState({ velocityMultiplier: newMultiplier });
-  };
-
   handleSliderChange = (stateKey, newVal) => {
     this.setState({ [stateKey]: newVal });
   };
@@ -93,7 +89,6 @@ class HarassmentSimulation extends Component {
       paused,
       blueCount,
       greenCount,
-      velocityMultiplier,
       blueShoutsHeardFromGreen,
       greenShoutsHeardFromBlue,
       blueShoutsHeardFromBlueOnly,
@@ -112,7 +107,7 @@ class HarassmentSimulation extends Component {
             title: `Number of Green-eyed People: ${greenCount}`,
             value: greenCount,
             min: 1,
-            max: 50,
+            max: 20,
             step: 1,
             color: COLORS.GREEN,
             minIcon: "user",
@@ -123,7 +118,7 @@ class HarassmentSimulation extends Component {
             title: `Number of Blue-eyed People: ${blueCount}`,
             value: blueCount,
             min: 1,
-            max: 50,
+            max: 20,
             step: 1,
             color: COLORS.BLUE,
             minIcon: "user",
@@ -175,7 +170,7 @@ class HarassmentSimulation extends Component {
             handleValueChange: this.handleSliderChange.bind(this, obj.key),
             value: this.state[obj.key],
             min: 0,
-            max: 1,
+            max: 0.25,
             step: 0.01,
             color: COLORS[obj.nodes[0].toUpperCase()],
             minIcon: "smile-o",
@@ -271,7 +266,6 @@ class HarassmentSimulation extends Component {
             height={height}
             playing={playing}
             paused={paused}
-            velocityMultiplier={velocityMultiplier}
             initialV={initialV}
             handleShout={this.handleShout}
             blueOnBlueProb={blueOnBlueProb}

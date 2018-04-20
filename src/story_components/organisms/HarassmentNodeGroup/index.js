@@ -23,6 +23,28 @@ class HarassmentNodeGroup extends Component {
     this.simulation.on("tick", () => this.updateNodes(this.props));
   }
 
+  componentWillUpdate(nextProps) {
+    const samePopulation =
+      this.props.blueCount === nextProps.blueCount &&
+      this.props.greenCount === nextProps.greenCount;
+    const resetting =
+      (this.props.playing || this.props.paused) && !nextProps.playing;
+
+    if (!samePopulation) {
+      this.generateNodes(nextProps);
+    }
+
+    if (resetting) {
+      this.clearNodes();
+      this.generateNodes(nextProps);
+      this.updateNodes(nextProps);
+    }
+  }
+
+  componentWillUnmount() {
+    this.simulation = null;
+  }
+
   generateNodes = props => {
     const { blueCount, greenCount, initialV } = props;
     const { BLUE, GREEN } = COLORS;
@@ -46,8 +68,6 @@ class HarassmentNodeGroup extends Component {
   };
 
   updateNodes = props => {
-    const { velocityMultiplier, initialV, blueCount } = props;
-    const scaledInitialSpeed = initialV * velocityMultiplier;
     const colorFn = d => d.properties.color;
     const isMoving = this.isMoving();
     updateSimulationNodes(this.simulation, this.g, colorFn, isMoving);
@@ -161,38 +181,6 @@ class HarassmentNodeGroup extends Component {
     soundWave.__calledCount = 0;
   };
 
-  componentWillUpdate(nextProps) {
-    const samePopulation =
-      this.props.blueCount === nextProps.blueCount &&
-      this.props.greenCount === nextProps.greenCount;
-    const sameMultiplier =
-      this.props.velocityMultiplier === nextProps.velocityMultiplier;
-    const resetting =
-      (this.props.playing || this.props.paused) && !nextProps.playing;
-
-    if (!samePopulation) {
-      this.generateNodes(nextProps);
-    }
-
-    if (!sameMultiplier) {
-      this.simulation.nodes().forEach(node => {
-        ["vx", "vy", "lastVx", "lastVy"].forEach(key => {
-          node[key] = node[key]
-            ? node[key] *
-              nextProps.velocityMultiplier /
-              this.props.velocityMultiplier
-            : node[key];
-        });
-      });
-    }
-
-    if (resetting) {
-      this.clearNodes();
-      this.generateNodes(nextProps);
-      this.updateNodes(nextProps);
-    }
-  }
-
   clearNodes = () => {
     this.simulation.nodes([]);
     select(this.g)
@@ -228,7 +216,6 @@ HarassmentNodeGroup.propTypes = {
   blueCount: PropTypes.number.isRequired,
   playing: PropTypes.bool.isRequired,
   paused: PropTypes.bool.isRequired,
-  velocityMultiplier: PropTypes.number.isRequired,
   initialV: PropTypes.number.isRequired,
   handleShout: PropTypes.func.isRequired,
   borderWidth: PropTypes.number.isRequired,
