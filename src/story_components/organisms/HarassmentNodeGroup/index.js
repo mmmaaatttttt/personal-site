@@ -103,11 +103,11 @@ class HarassmentNodeGroup extends Component {
           const waveDistance = euclideanDistance(x - waveX, y - waveY);
           if (nodeColor !== color && waveDistance < r + waveR) {
             const node = select(this);
-            colorNodes(node, COLORS.RED);
             colorNodes(
-              node
+              colorNodes(node.transition(), COLORS.RED)
+                .duration(0)
                 .transition()
-                .duration(2000)
+                .duration(500)
                 .ease(easeCubicOut),
               nodeData.properties.color
             );

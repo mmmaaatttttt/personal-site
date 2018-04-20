@@ -63,10 +63,10 @@ class HarassmentSimulation extends Component {
     // shouting has ended, see if the shout was heard by the other group
     const setStateCond1 =
       key === "blueShoutsHeardFromBlueOnly" &&
-      !this.state.blueShoutsHeardFromGreen.has(shoutId);
+      !this.state.greenShoutsHeardFromBlue.has(shoutId);
     const setStateCond2 =
       key === "greenShoutsHeardFromGreenOnly" &&
-      !this.state.greenShoutsHeardFromBlue.has(shoutId);
+      !this.state.blueShoutsHeardFromGreen.has(shoutId);
     // shouting is in progress, see if the shout is being heard by the other group
     const setStateCond3 = !/only/gi.test(key) && !this.state[key].has(shoutId);
     if (setStateCond1 || setStateCond2 || setStateCond3)
@@ -167,7 +167,9 @@ class HarassmentSimulation extends Component {
         .map(obj => {
           const title = `${obj.nodes[0]} remark during ${obj.nodes
             .map(n => n[0])
-            .join("-")} interaction`;
+            .join("-")} interaction: ${(this.state[obj.key] * 100).toFixed(
+            0
+          )}%`;
           return {
             title,
             handleValueChange: this.handleSliderChange.bind(this, obj.key),

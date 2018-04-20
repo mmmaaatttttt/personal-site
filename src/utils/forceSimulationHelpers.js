@@ -120,7 +120,7 @@ const updateSimulationNodes = (
 };
 
 function colorNodes(nodeSelection, color) {
-  nodeSelection
+  return nodeSelection
     .attr("fill", color)
     .attr("stroke", d =>
       darken(0.3, typeof color === "function" ? color(d) : color)
