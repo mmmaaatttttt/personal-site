@@ -6,79 +6,112 @@ caption: "ADD CAPTION"
 featured_image_caption: "ADD IMAGE CAPTION"
 ---
 
-Many things are rotten in the state of tech. From Susan Fowler's [essay](https://www.susanjfowler.com/blog/2017/2/19/reflecting-on-one-very-strange-year-at-uber) last year on the toxic culture at Uber, to more general reports that [60% of women in tech](https://www.elephantinthevalley.com/) have reported unwanted sexual advances, it's clear that these workplaces aren't quite the bastions of equality and meritocracy that their marketing departments would have us believe.
+Many things are rotten in the state of tech. From Susan Fowler's [essay](https://www.susanjfowler.com/blog/2017/2/19/reflecting-on-one-very-strange-year-at-uber) on the toxic culture at Uber, to reports that [60% of women in tech](https://www.elephantinthevalley.com/) have received unwanted sexual advances, it's clear that these workplaces aren't quite the bastions of equality and progressive values that their marketing departments would have us believe.
 
-Course-correcting these issues has recently become big business. An article published in _The Atlantic_ last year, titled ["Why Is Silicon Valley So Awful to Women?"](https://www.theatlantic.com/magazine/archive/2017/04/why-is-silicon-valley-so-awful-to-women/517788/), gives us some sense of exactly how big:
+Course-correcting these issues has become big business. How big? Take a look at this excerpt from an article published in _The Atlantic_ last year, titled ["Why Is Silicon Valley So Awful to Women?"](https://www.theatlantic.com/magazine/archive/2017/04/why-is-silicon-valley-so-awful-to-women/517788/):
 
 > In January 2015, in a keynote speech at the International Consumer Electronics Show, in Las Vegas, Brian Krzanich, the CEO of Intel, announced that his company would devote $300 million to diversity efforts over the next five years. Two months later, Apple pledged $50 million to partner with nonprofits that work to improve the pipeline of women and minorities going into tech, and that spring Google announced that it would increase its annual budget for promoting diversity from $115 million to $150 million.
 
-Unfortunately, to date these investments haven't substantially moved the needle when it comes to who gets hired at big companies like Apple, Google, or Facebook. At least, not yet.
+Unfortunately, to date these investments haven't substantially moved the needle when it comes to who gets hired at big companies like Apple, Google, or Facebook.
 
-Rather than get on a soap box and propose solutions (whose merits, as a cis-gendered white dude, I feel fairly unqualified to judge), I'd like to take an opportunity to try to dig into some of the problems. More specifically, I'd like to talk about some models of interaction that can yield stark differences in the amount of harassment received by different groups. At the center of it all is a concept called the _Petrie multiplier_, coined in a viral 2013 [blog post](http://blog.ian.gent/2013/10/the-petrie-multiplier-why-attack-on.html) by Ian Gent, and named after computer scientist Karen Petrie.
+But instead of getting on a soap box to propose solutions (whose merits, as a straight, cis-gendered white dude, I feel entirely unqualified to judge), I'd like to take an opportunity to try to dig into some of the problems and explore them systematically. More specifically, I'd like to talk about some models of group interaction that can yield stark differences in how much harassment people receive. At the center of it all is a term called the _Petrie multiplier_, which was coined in a viral 2013 [blog post](http://blog.ian.gent/2013/10/the-petrie-multiplier-why-attack-on.html) by Ian Gent, and was named after computer scientist Karen Petrie.
 
 In what follows, I'd like to discuss the original model, offer up a few different spins on it, and then frame some common efforts by big companies to tackle harassment in terms of these models.
 
 ### A Model of Harassment
 
-As discussed in Gent's post, the Petrie multiplier argues that when one group outnumbers another, the underrepresented group will receive a disproportionate share of harassment in the community, even if everyone in the group is _equally likely_ to harass another person.
+As discussed in Gent's post, the Petrie multiplier argues that when one group of people outnumbers another in a community, the underrepresented group will receive a disproportionate share of harassment, _even if everyone in the group is equally likely to harass_.
 
-In fact, the argument gets even more quantitative. To abstract things a bit, let's imagine that an organization consists only of people with blue eyes and people with green eyes. Let's further suppose that green-eyed people outnumber blue-eyed people by, say, a 2:1 ratio. In this case, Petrie argues that blue-eyed people will experience _four_ times as much harassment as green-eyed people, assuming that both groups harass one another at equal rates. If the greens outnumber the blues by a 3:1 ratio, blues will experience _nine_ times as much harassment. More generally, if there are _m_ times as many greens, blues should experience _m_ &times; _m_ times as much harassment.
+In fact, the argument gets even more quantitative. Let's imagine a community consisting only of people with blue eyes and people with green eyes. Let's further suppose that green-eyed people outnumber blue-eyed people by a 2:1 ratio. In this case, Petrie argues that blue-eyed people will experience _four_ times as much harassment as green-eyed people, assuming that people harass one another at equal rates regardless of group affiliation.
 
-The reason for this is relatively straightforward. Over time, since there are _m_ times as many greens, we should expect the blues to receive _m_ times as much harassment _in total_. But this means they should receive _m_ &times; _m_ times as much harassment as the greens _on average_, since again the greens outnumber the blues by a factor of _m_.
+If the greens outnumber the blues by a 3:1 ratio, blues will experience _nine_ times as much harassment. More generally, if there are _m_ times as many greens, blues should experience _m_ &times; _m_ times as much harassment.
 
-Gent's post simulates the scenario over time: people are selected at random to harass, and they then randomly go harass someone who is not a part of that group.
+The reason for this is relatively straightforward. Since there are _m_ times as many greens, we should expect the blues to receive _m_ times as much harassment _in total_ over time. But this means they should receive _m_ &times; _m_ times as much harassment as the greens _on average_, since there are _m_ times _fewer_ blue-eyed people than green-eyed people.
 
 ### Less Overt Aggressions
 
-There are a couple of common critiques of Gent's post. One is that the model described there has a fixed amount of harassment (say, 70 statements) that then get distributed among the population.
+Gent describes a model of this effect in his blog, which roughly works as follows: a person is selected at random to harass, and they randomly harasses someone who is not a part of that person's group. The simulation clearly demonstrates the Petrie multiplier, but there are a couple of common critiques of the approach. One is that the model described there has a fixed amount of harassment (say, 70 statements) that then get distributed among the population. In other words, once a person gets chosen, they go out into the world looking for someone to harass, which may not be the most realistic.
 
-Another critique is that the harassment in this model is always super overt. Person A goes to person B, says something awful, and then retreats. While this type of harassment certainly exists, the model isn't quite able to capture the kinds of "locker room talk" that happens between members of one group at the expense of members of another group. When people with green eyes get together and talk about people with blue eyes, sometimes those conversations stay private, but not always. (CEOs of giant tech companies have a [history](https://www.recode.net/2017/6/8/15765514/2013-miami-letter-uber-ceo-kalanick-employees-sex-rules-company-celebration) of their [dirty laundry](https://www.newyorker.com/magazine/2010/09/20/the-face-of-facebook) getting [aired publicly](https://techcrunch.com/2014/05/28/confirmed-snapchats-evan-spiegel-is-kind-of-an-ass/) eventually.)
+Another critique is that the harassment in this model is always overt. Person A goes to person B, says something awful, and then retreats. While this type of harassment certainly exists, the model isn't quite able to capture the kinds of "locker room talk" that happens between members of one group at the expense of members of another group.
 
 To that end, I cooked up a simulation that tries to address some of these concerns.
 
-Here's how it works. As before, imagine you have a population with two groups of people: the green eyes and the blue eyes. When the simulation starts, each person will move through the space, colliding at random with other people in the space. You can think of each collision as representing an interaction between the two people.
+Here's how it works. As before, imagine you have a population with two groups of people: folks with green eyes and folks with blue eyes. When the simulation starts, each person will move through the space, colliding at random with other people in the space. You can think of each collision as representing an interaction or a brief conversation between the two people.
 
 <Sidebar>Since the motion is random, this may not make the most realistic model of an office space, where people are more likely to move in similar patterns day-to-day. The model may make more sense in the context of something like an exhibitor's hall at a tech conference.</Sidebar>
 
-When two people interact, there's some small probability that one of them will say something offensive about the group that they're not a part of. It could be overtly offensive, or unintentionally offensive. And, most importantly, the remark may not be directed at someone from the opposite group: for instance, if two greens collide, it's possible that one of them will say something harmful about blues during the exchange, even though no blue-eyed people were part of the collision.
+When two people interact, there's some small probability (currently set at 5%) that one of them will say something offensive about the other group. It could be overtly offensive, or unintentionally so. Most importantly, the remark may not be directed at someone from the opposite group. For instance, if two greens collide, it's possible that one of them will say something harmful about blue-eyed people during the exchange, even though no blue-eyed people were part of the conversation.
 
-However, in this model, as in real life, sound travels. If someone from the other group here's an offensive remark, that remark will be tallied. Over time, the simulation records how many offensive remarks about a group are heard by members of that group.
+However, in this model, as in real life, sound travels. If someone from the other group hears an offensive remark, that remark will be tallied. Over time, the simulation records how many offensive remarks about a group are heard by members of that group. To me, this seems like a reasonable model: if we've learned anything over the past few years, it's that CEOs of giant tech companies have a [history](https://www.recode.net/2017/6/8/15765514/2013-miami-letter-uber-ceo-kalanick-employees-sex-rules-company-celebration) of their [dirty laundry](https://www.newyorker.com/magazine/2010/09/20/the-face-of-facebook) getting [aired publicly](https://techcrunch.com/2014/05/28/confirmed-snapchats-evan-spiegel-is-kind-of-an-ass/) eventually.
 
-Let's explore. The simulation starts with 20 green-eyed people and 10 blue-eyed people, but you can adjust those parameters as you like. Once you're satisfied, start the simulation and watch the population evolve.
+So let's explore. The simulation starts with 20 green-eyed people and 10 blue-eyed people, but you can adjust those parameters as you like. Once you're satisfied, start the simulation and watch the population evolve.
 
 <HarassmentSimulation idx={0}/>
 
-If you pressed for time, let me give you an idea of what will happen. I kept the population at 20 green and 10 blue and ran the simulation for five minutes. At the end of that time, blue-eyed people had observed 175 incidents of harassment, compared to only 97 for green-eyed people. It's not quite the 2:1 ratio that the Petrie multiplier predicts, but even in this scenario, the under-represented group receives a highly disproportionate share of the harassment.
+If you pressed for time, let me give you an idea of what will happen. I kept the population at 20 green and 10 blue and ran the simulation for five minutes. At the end of that time, blue-eyed people had observed 175 incidents of harassment, compared to only 84 for green-eyed people. This aligns pretty closely to the 2:1 ratio that the Petrie multiplier predicts.
 
-Note that in the original argument for the Petrie multiplier, we pass from a 2:1 ratio to a 4:1 ratio by dividing the total amount of harassment each group received by the size of the group. However, such an approach doesn't make as much sense here, because in our case, it's possible for one offensive remark to be heard by _multiple_ people. This wasn't the case in the original article posed by Gent, and so it doesn't make sense to consider a similar average here.
+Remember that in the original multiplier argument, we pass from a 2:1 ratio to a 4:1 ratio by dividing the total amount of harassment each group received by the size of the group. However, such an approach doesn't make as much sense here, because in our case, it's possible for one offensive remark to be heard by _multiple_ people. This wasn't the case in the original article posed by Gent, and so it doesn't make sense to consider a similar average here.
 
-Put more succinctly, while the Petrie effect still holds in this simulation, the multiplier is not quite as strong.
+Put more succinctly, while the Petrie effect still holds in this simulation, it's important not to misinterpret the multiplier in this setting.
 
 ### A Dose of Reality
 
-However, the whole thought experiment rests on a premise that seems a little hard to believe: that both groups are equally likely to say offensive things. What seems more likely is that the smaller group would be less likely to say offensive things, if for no other reason than the fact that there's safety in numbers.
+Another sticking point for me in the original argument is that part of the premise that seems a little hard to believe. In reality, I don't know that we can assume both groups in a community are equally likely to say offensive things. In my mind, what seems more likely is that the smaller group would be less likely to say offensive things, if for no other reason than the fact that there's safety in numbers.
 
 If you're part of a 90% majority and harass a member of the other 10%, what's the likelihood that you'll face consequences? Unless the harassment is particularly egregious, probably not much: the other members of the group may not even view the incident as a big deal. But if you're a member of the 10% and harass a member of the 90%, the majority group is much more likely to take offense, followed by action.
 
 Current tech culture bears this hypothesis out. According to [The Elephant in the Valley](https://www.elephantinthevalley.com/), a survey of over 200+ women in tech with at least 10 years of experience, **90%** reported witnessing "sexist behavior at company offsites and/or industry conferences." I can't imagine that 90% of men would say the same way about their female colleagues' behavior.
 
-So, let's change up the model a bit. It's unlikely that both groups have the same likelihood of harassment. And even within a group, you're probably not as likely to make an off-color remark to everyone you interact with: green-eyed people may feel more comfortable doing so when they interact with another green-eyed person, for instance, and may have the self-awareness to try to keep themselves more in check when interacting with a blue-eyed person.
+So, let's change up the model a bit by acknowledging that it's unlikely that both groups harass at equal rates. In fact, even within a group, rates of harassment are likely to differ based on who you're talking to: green-eyed people may feel more comfortable making an off-color remark when they interact with another green-eyed person, for instance, and may have the self-awareness to try to keep themselves more in check when interacting with a blue-eyed person.
 
-* solutions? more women, better training, better self policing
+Here's a simulation that tries to account for this by breaking apart the probabilities. Now you can adjust the likelihood that a person from either group (blue or green) will say something off-color when interacting with a person from either group (blue or green). I'd argue that people from both groups will tend to be more relaxed about what they say when speaking to someone from their own group, and that people from the larger group will tend to be more careless when speaking to someone in the smaller group. But if you disagree, you can adjust the parameters accordingly.
 
-* looking at number of times the harassment is only heard in one group
+<HarassmentSimulation idx={1}/>
 
-- adjusting parameters
+### Commonly Proposed Fixes
 
-  * multiplier decreases if anyone can say anything to anyone else, but is still large
-  * multiplier decreases again if we count people affected rather than incidents
+I find these sorts of simulations interesting as thought experiments, but it's worth considering how much bearing they have on reality. Unfortunately, there isn't a ton of data (that I know of) that can be used to check against different permutations of the model. And while the model itself suggests a couple of approaches to combat harassment -- namely, hiring more people from underrepresented groups, or sensitivity training for people in overrepresented groups -- neither of these solutions is new or groundbreaking. And in practice, both have their own implementation challenges (check out the previously linked article from The Atlantic for more on this).
 
-- count incidents heard by ppl in power vs ppl out
+Still, the models suggest interesting questions that could potentially be answered with data. And while we're discussing some common sense solutions, I'd like to use the model to examine one more.
 
-https://www.theatlantic.com/magazine/archive/2017/04/why-is-silicon-valley-so-awful-to-women/517788/
-http://iangent.blogspot.com/2013/10/the-petrie-multiplier-why-attack-on.html
-http://www.davidchart.com/2013/10/20/the-petrie-multiplier/
-https://en.wikipedia.org/wiki/Petrie_multiplier
+Below, I've got one final copy of the simulation, but this time we'll count a bit more diligently. Not only will we keep track of every time an offensive comment is heard by a member of the opposite group, we'll also keep track of every time an offensive comment is _not_ heard by a member of the opposite group.
 
-* inclusion = reducing probability
-* diversity = increasing numbers
+Start the simulation and see how the tallies change compared to the previous simulations. To get an even clearer sense of the difference, try making one group much larger than the other.
+
+<HarassmentSimulation idx={2}/>
+
+When we keep track of all kinds of harassment, not just harassment that's received by the opposite group, another dimension of the story presents itself. For instance, I tried running the simulation with a group of 20 greens and 4 blues, leaving all of the probabilities at 5%.
+
+With such a large disparity, it should come as no surprise that the most frequent offensive remark is one said by green and heard by blue. I stopped the simulation after blue-eyed people had heard 100 offensive things from green-eyed people, and here were the tallies:
+
+| Group (20 green, 4 blue total)     | Count |
+| ---------------------------------- | ----- |
+| Heard only by blue, said by blue   | 0     |
+| Heard by blue, said by green       | 100   |
+| Heard by green, said by blue       | 25    |
+| Heard by green, said only by green | 70    |
+
+I then bumped up blue's numbers to 10 and ran the simulation again. Here's what I got:
+
+| Group (20 green, 10 blue total)    | Count |
+| ---------------------------------- | ----- |
+| Heard only by blue, said by blue   | 0     |
+| Heard by blue, said by green       | 100   |
+| Heard by green, said by blue       | 55    |
+| Heard by green, said only by green | 18    |
+
+These tables highlight an important point. When one group is significantly outnumbered by another (as in the first table), the model predicts that most of the harassment the majority group hears will come from **within the majority group itself.** In cases like this, while bringing in more people from underrepresented groups is a nice idea, as is helping teach people not to be overt jerks, it's just as important (if not more so) to encourage people in the majority group to speak up about what other people are saying, _especially_ if they're saying hurtful things about a group that isn't in the room. Put another way, ["don't be evil"](https://en.wikipedia.org/wiki/Don%27t_be_evil) seems woefully inadequate. "Be kind," while also overly broad, may offer a step in the right direction.
+
+### Conclusion
+
+No model is perfect, this one included. For instance, there's no way to model a "few bad apples theory," which might suggest that a majority of the harassment experienced in a group is because of a small number of people. Instead, all of the models here distribute impulses to offend equally among the population. If you're curious about other variations on the model, you can check out the resources at the end.
+
+But all models simplify reality, this one included. That doesn't mean there can't be interesting takeaways. It's important to try to understand communities that are lopsided in their distribution, because so many of our communities are. And the idea that people from underrepresented groups will have a disproportionately poor experience, even in the ideal scenario where everyone is equally sensitive (or insensitive) to others, is absolutely one worth considering.
+
+Sources:
+
+* [Why Is Silicon Valley So Awful to Women?](https://www.theatlantic.com/magazine/archive/2017/04/why-is-silicon-valley-so-awful-to-women/517788/), by Liza Mundy
+* [Elephant in the Valley](https://www.elephantinthevalley.com/)
+* [The Petrie Multiplier: Why an Attack on Sexism in Tech is NOT an Attack on Men](http://iangent.blogspot.com/2013/10/the-petrie-multiplier-why-attack-on.html), by Ian Gent
+* [The Petrie Multiplier](http://www.davidchart.com/2013/10/20/the-petrie-multiplier/), by David Chart
+* [Sociophysics of sexism: normal and anomalous petrie multipliers](http://iopscience.iop.org/article/10.1088/1751-8113/48/27/27FT01), by Iddo Eliazar
