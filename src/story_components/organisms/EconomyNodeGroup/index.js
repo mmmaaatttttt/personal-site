@@ -18,22 +18,6 @@ class EconomyNodeGroup extends Component {
     this.simulation.on("tick", () => this.updateNodes(this.props));
   }
 
-  generateNodes = props => {
-    const { speeds, initialV } = props;
-    generateSimulationNodes(this.simulation, speeds.length, initialV);
-  };
-
-  updateNodes = props => {
-    const { velocityMultiplier, initialV } = props;
-    const isMoving = this.props.playing && !this.props.paused;
-    const scaledInitialSpeed = initialV * velocityMultiplier;
-    const colorScale = scaleLinear()
-      .domain([0, scaledInitialSpeed, scaledInitialSpeed * 2])
-      .range([COLORS.BLUE, COLORS.MAROON, COLORS.RED]);
-    const colorFn = d => colorScale(euclideanDistance(d.vx, d.vy));
-    updateSimulationNodes(this.simulation, this.g, colorFn, isMoving);
-  };
-
   componentWillUpdate(nextProps) {
     const samePopulation = this.props.speeds.length === nextProps.speeds.length;
     const sameMultiplier =
@@ -63,6 +47,28 @@ class EconomyNodeGroup extends Component {
       this.updateNodes(nextProps);
     }
   }
+
+  componentWillUnmount() {
+    this.clearNodes();
+    this.simulation.on("tick", null);
+    this.simulation.stop();
+  }
+
+  generateNodes = props => {
+    const { speeds, initialV } = props;
+    generateSimulationNodes(this.simulation, speeds.length, initialV);
+  };
+
+  updateNodes = props => {
+    const { velocityMultiplier, initialV } = props;
+    const isMoving = this.props.playing && !this.props.paused;
+    const scaledInitialSpeed = initialV * velocityMultiplier;
+    const colorScale = scaleLinear()
+      .domain([0, scaledInitialSpeed, scaledInitialSpeed * 2])
+      .range([COLORS.BLUE, COLORS.MAROON, COLORS.RED]);
+    const colorFn = d => colorScale(euclideanDistance(d.vx, d.vy));
+    updateSimulationNodes(this.simulation, this.g, colorFn, isMoving);
+  };
 
   clearNodes = () => {
     this.simulation.nodes([]);

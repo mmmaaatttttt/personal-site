@@ -69,10 +69,11 @@ class HarassmentSimulation extends Component {
       !this.state.blueShoutsHeardFromGreen.has(shoutId);
     // shouting is in progress, see if the shout is being heard by the other group
     const setStateCond3 = !/only/gi.test(key) && !this.state[key].has(shoutId);
-    if (setStateCond1 || setStateCond2 || setStateCond3)
+    if (setStateCond1 || setStateCond2 || setStateCond3) {
       this.setState(prevState => ({
         [key]: new Set(prevState[key]).add(shoutId)
       }));
+    }
   };
 
   handlePause = () => {

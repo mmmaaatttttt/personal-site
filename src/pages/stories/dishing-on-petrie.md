@@ -2,8 +2,8 @@
 title: "Dishing on Petrie"
 date: "2018-04-30"
 featured_image: "dishing_on_petrie.jpg"
-caption: "ADD CAPTION"
-featured_image_caption: "ADD IMAGE CAPTION"
+caption: "Mathematical models of toxic tech culture."
+featured_image_caption: "Michael Scott teaches us that workplace harassment isn't always intentional. That doesn't make it any less harmful. Image credit: NBC."
 ---
 
 Many things are rotten in the state of tech. From Susan Fowler's [essay](https://www.susanjfowler.com/blog/2017/2/19/reflecting-on-one-very-strange-year-at-uber) on the toxic culture at Uber, to reports that [60% of women in tech](https://www.elephantinthevalley.com/) have received unwanted sexual advances, it's clear that these workplaces aren't quite the bastions of equality and progressive values that their marketing departments would have us believe.

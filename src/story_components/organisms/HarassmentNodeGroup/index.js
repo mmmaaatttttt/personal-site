@@ -42,7 +42,9 @@ class HarassmentNodeGroup extends Component {
   }
 
   componentWillUnmount() {
-    this.simulation = null;
+    this.clearNodes();
+    this.simulation.on("tick", null);
+    this.simulation.stop();
   }
 
   generateNodes = props => {
