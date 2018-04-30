@@ -151,6 +151,13 @@ const visualizationData = [
   }
 ];
 
-export { graph2Data, diffEq2, PERSON_A_COLOR, PERSON_B_COLOR };
+export {
+  graph2Data,
+  diffEq1,
+  diffEq2,
+  diffEq3,
+  PERSON_A_COLOR,
+  PERSON_B_COLOR
+};
 
 export default visualizationData;

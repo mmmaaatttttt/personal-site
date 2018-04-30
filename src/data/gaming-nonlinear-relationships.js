@@ -133,4 +133,6 @@ const visualizationData = [
   }
 ];
 
+export { diffEq2, diffEq3 };
+
 export default visualizationData;
