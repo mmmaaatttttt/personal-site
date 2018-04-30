@@ -1,3 +1,5 @@
+const path = require("path");
+
 module.exports = require("babel-jest").createTransformer({
   presets: [
     [
@@ -16,6 +18,12 @@ module.exports = require("babel-jest").createTransformer({
   plugins: [
     "gatsby/dist/utils/babel-plugin-extract-graphql",
     "add-module-exports",
-    "transform-object-assign"
+    "transform-object-assign",
+    [
+      "module-resolver",
+      {
+        root: ["./src"]
+      }
+    ]
   ]
 });
