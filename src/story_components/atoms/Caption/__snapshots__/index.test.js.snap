@@ -1,0 +1,15 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders successfully 1`] = `
+<p
+  className="sc-bdVaJa bZdCdF"
+/>
+`;
+
+exports[`renders text when passed in successfully 1`] = `
+<p
+  className="sc-bdVaJa bZdCdF"
+>
+  Here's a caption lolz
+</p>
+`;

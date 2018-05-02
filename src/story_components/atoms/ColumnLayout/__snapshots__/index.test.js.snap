@@ -1,0 +1,26 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders children when passed in successfully 1`] = `
+<div
+  className="sc-bdVaJa jIgkmD"
+>
+  <div>
+    Here's a child
+  </div>
+  <div>
+    Here's another
+  </div>
+</div>
+`;
+
+exports[`renders props when passed in 1`] = `
+<div
+  className="sc-bdVaJa bnDUOm"
+/>
+`;
+
+exports[`renders successfully 1`] = `
+<div
+  className="sc-bdVaJa fKcjPB"
+/>
+`;

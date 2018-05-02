@@ -1,5 +1,6 @@
 import styled, { css } from "styled-components";
-import media from "utils/media";
+import PropTypes from "prop-types";
+import media, { sizes } from "utils/media";
 
 const ColumnLayout = styled.div`
   display: flex;
@@ -16,5 +17,9 @@ const ColumnLayout = styled.div`
     `};
     `};
 `;
+
+ColumnLayout.propTypes = {
+  break: PropTypes.oneOf(Object.keys(sizes))
+};
 
 export default ColumnLayout;
