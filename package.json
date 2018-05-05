@@ -9,7 +9,8 @@
     "serve": "gatsby serve",
     "deploy":
       "GATSBY_BASE_URL='https://mattlane.us' gatsby build && s3-deploy './public/**' --cwd './public/' --region us-east-1 --bucket mattlane.us --deleteRemoved && aws-cloudfront-invalidate $npm_config_distribution_id",
-    "test": "jest"
+    "test": "jest",
+    "test:clear": "npx jest --clearCache"
   },
   "dependencies": {
     "animate.css": "^3.6.1",
