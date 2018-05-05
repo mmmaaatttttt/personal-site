@@ -82,6 +82,10 @@ const StyledStory = styled.div`
     padding-top: 0;
   }
 
+  &:last-child {
+    border: none;
+  }
+
   ${media.extraSmall`
     margin: 0 ${rhythm(0.5)};
     padding-bottom: ${rhythm(0.5)};
