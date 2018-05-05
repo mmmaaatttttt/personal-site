@@ -74,7 +74,7 @@ const LabeledSlider = ({
           />
         </StyledSlider>
         <StyledIconWrapper>
-          <Icon name={maxIcon} color={color} opacity={rightOpacity} />
+          <Icon name={maxIcon} color={color} opacity={rightOpacity} disabled />
         </StyledIconWrapper>
       </section>
     </StyledSliderArea>

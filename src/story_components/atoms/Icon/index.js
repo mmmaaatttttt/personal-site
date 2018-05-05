@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import styled, { css } from "styled-components";
 
-const Styled = styled.i`
+const StyledIcon = styled.i`
   ${props =>
     props.disabled &&
     css`
@@ -13,7 +13,11 @@ const Styled = styled.i`
 `;
 
 const Icon = ({ name, color, opacity, disabled, size }) => (
-  <Styled className={`fa fa-${name} fa-${size}x`} style={{ color, opacity }} />
+  <StyledIcon
+    className={`fa fa-${name} fa-${size}x`}
+    style={{ color, opacity }}
+    disabled={disabled}
+  />
 );
 
 Icon.propTypes = {

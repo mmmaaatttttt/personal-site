@@ -1,0 +1,23 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders children when passed in 1`] = `
+<div
+  className="sc-bdVaJa gEpXOI"
+  type={[Function]}
+  width="80%"
+/>
+`;
+
+exports[`renders props when passed in 1`] = `
+<div
+  className="sc-bdVaJa iXaqVX"
+  width="50%"
+/>
+`;
+
+exports[`renders successfully 1`] = `
+<div
+  className="sc-bdVaJa gEpXOI"
+  width="80%"
+/>
+`;

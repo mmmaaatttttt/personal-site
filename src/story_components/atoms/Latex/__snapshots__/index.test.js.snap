@@ -1,0 +1,31 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders props when passed in 1`] = `
+<Latex
+  displayMode={true}
+  str="\\\\begin{aligned} A^{\\\\prime} (t) &= a \\\\times B(t), \\\\\\\\ B^{\\\\prime} (t) &= b \\\\times A(t), \\\\end{aligned}"
+>
+  <styled.p
+    innerRef={[Function]}
+  >
+    <p
+      className="sc-bdVaJa kxrRiE"
+    />
+  </styled.p>
+</Latex>
+`;
+
+exports[`renders successfully 1`] = `
+<Latex
+  displayMode={false}
+  str=""
+>
+  <styled.p
+    innerRef={[Function]}
+  >
+    <p
+      className="sc-bdVaJa kxrRiE"
+    />
+  </styled.p>
+</Latex>
+`;

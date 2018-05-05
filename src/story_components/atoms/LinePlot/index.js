@@ -1,6 +1,8 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { line, curveNatural } from "d3-shape";
+import { scaleLinear } from "d3-scale";
+import COLORS from "utils/styles";
 
 const LinePlot = ({ graphData, xScale, yScale, stroke, strokeWidth }) => {
   const linePath = line()
@@ -41,7 +43,10 @@ LinePlot.propTypes = {
 };
 
 LinePlot.defaultProps = {
-  strokeWidth: "5"
+  xScale: scaleLinear(),
+  yScale: scaleLinear(),
+  strokeWidth: "5",
+  stroke: COLORS.ORANGE
 };
 
 export default LinePlot;

@@ -78,9 +78,7 @@ const StyledSlider = styled(Slider)`
 
 StyledSlider.propTypes = {
   activeColor: PropTypes.string.isRequired,
-  inactiveColor: PropTypes.string.isRequired,
-  height: PropTypes.number.isRequired,
-  padding: PropTypes.number.isRequired
+  inactiveColor: PropTypes.string.isRequired
 };
 
 StyledSlider.defaultProps = {

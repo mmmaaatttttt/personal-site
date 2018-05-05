@@ -33,7 +33,8 @@ Latex.propTypes = {
 };
 
 Latex.defaultProps = {
-  displayMode: false
+  displayMode: false,
+  str: ""
 };
 
 export default Latex;

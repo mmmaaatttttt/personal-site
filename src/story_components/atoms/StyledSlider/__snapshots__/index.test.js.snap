@@ -1,0 +1,69 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders props when passed in 1`] = `
+<ComponentEnhancer(undefined)
+  activeColor="red"
+  activeDotStyle={Object {}}
+  className="sc-bdVaJa iyEPrm"
+  disabled={false}
+  dotStyle={Object {}}
+  dots={false}
+  handle={[Function]}
+  handleStyle={
+    Array [
+      Object {},
+    ]
+  }
+  inactiveColor="black"
+  included={true}
+  marks={Object {}}
+  max={100}
+  min={0}
+  onAfterChange={[Function]}
+  onBeforeChange={[Function]}
+  onChange={[Function]}
+  prefixCls="rc-slider"
+  railStyle={Object {}}
+  step={1}
+  trackStyle={
+    Array [
+      Object {},
+    ]
+  }
+  vertical={false}
+/>
+`;
+
+exports[`renders successfully 1`] = `
+<ComponentEnhancer(undefined)
+  activeColor="#abe2fb"
+  activeDotStyle={Object {}}
+  className="sc-bdVaJa kbRwvP"
+  disabled={false}
+  dotStyle={Object {}}
+  dots={false}
+  handle={[Function]}
+  handleStyle={
+    Array [
+      Object {},
+    ]
+  }
+  inactiveColor="#e9e9e9"
+  included={true}
+  marks={Object {}}
+  max={100}
+  min={0}
+  onAfterChange={[Function]}
+  onBeforeChange={[Function]}
+  onChange={[Function]}
+  prefixCls="rc-slider"
+  railStyle={Object {}}
+  step={1}
+  trackStyle={
+    Array [
+      Object {},
+    ]
+  }
+  vertical={false}
+/>
+`;
