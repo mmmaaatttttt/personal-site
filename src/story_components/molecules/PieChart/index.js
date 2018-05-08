@@ -5,7 +5,16 @@ import { format } from "d3-format";
 import NodeGroup from "react-move/NodeGroup";
 import { ClippedSVG } from "story_components";
 
-const PieChart = ({ values, width, height, padding, colorScale }) => {
+const PieChart = ({
+  children,
+  colorScale,
+  height,
+  padding,
+  showLabels,
+  stroke,
+  values,
+  width
+}) => {
   const arcs = pie().sortValues(
     (a, b) => values.indexOf(a) - values.indexOf(b)
   )(values);
@@ -32,15 +41,10 @@ const PieChart = ({ values, width, height, padding, colorScale }) => {
           {arcNodes.map(({ key, data, state }) => {
             const textCenter = pathArc.centroid(state);
             const { startAngle, endAngle } = state;
-            const percentage = (endAngle - startAngle) / (2 * Math.PI);
-            return (
-              <g key={key}>
-                <path
-                  d={pathArc(state)}
-                  fill={colorScale(key)}
-                  stroke="white"
-                  strokeWidth="3px"
-                />
+            let label = null;
+            if (showLabels) {
+              const percentage = (endAngle - startAngle) / (2 * Math.PI);
+              label = (
                 <text
                   transform={`translate(${textCenter.toString()})`}
                   textAnchor="middle"
@@ -49,6 +53,17 @@ const PieChart = ({ values, width, height, padding, colorScale }) => {
                 >
                   {format(".1%")(percentage)}
                 </text>
+              );
+            }
+            return (
+              <g key={key}>
+                <path
+                  d={pathArc(state)}
+                  fill={colorScale(key)}
+                  stroke={stroke}
+                  strokeWidth="3px"
+                />
+                {label}
               </g>
             );
           })}
@@ -60,23 +75,28 @@ const PieChart = ({ values, width, height, padding, colorScale }) => {
     <div>
       <ClippedSVG id="pie" width={width} height={height}>
         {paths}
+        {children}
       </ClippedSVG>
     </div>
   );
 };
 
 PieChart.propTypes = {
-  values: PropTypes.arrayOf(PropTypes.number).isRequired,
-  width: PropTypes.number.isRequired,
+  colorScale: PropTypes.func.isRequired,
   height: PropTypes.number.isRequired,
   padding: PropTypes.number.isRequired,
-  colorScale: PropTypes.func.isRequired
+  showLabels: PropTypes.bool.isRequired,
+  stroke: PropTypes.string.isRequired,
+  values: PropTypes.arrayOf(PropTypes.number).isRequired,
+  width: PropTypes.number.isRequired
 };
 
 PieChart.defaultProps = {
-  width: 600,
   height: 600,
-  padding: 0
+  padding: 0,
+  showLabels: true,
+  stroke: "white",
+  width: 600
 };
 
 export default PieChart;

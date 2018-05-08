@@ -1,16 +1,21 @@
 import { keyframes } from "styled-components";
 
 const COLORS = {
-  LINK: "#ff5700",
-  NAV: "#f9f9f9",
-  GRAY: "#bbb",
-  DARK_GRAY: "#555",
-  ORANGE: "#FF8F34",
-  GREEN: "#52A081",
-  MAROON: "#A05E52",
+  BLACK: "#000",
   BLUE: "#5ECFFF",
+  DARK_BLUE: "#2227FF",
+  DARK_GRAY: "#555",
+  DARK_GREEN: "#114F26",
+  GRAY: "#BBB",
+  GREEN: "#52A081",
+  LINK: "#ff5700",
+  MAROON: "#A05E52",
+  NAV: "#f9f9f9",
+  ORANGE: "#FF8F34",
+  PURPLE: "#E15BFF",
   RED: "#FF3C23",
-  PURPLE: "#E15BFF"
+  WHITE: "#FFF",
+  YELLOW: "#FFEC28"
 };
 
 const sizes = {
