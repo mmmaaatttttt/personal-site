@@ -31,6 +31,17 @@ const fadeIn = keyframes`
   }
 `;
 
-export { sizes, fadeIn };
+const fadeColors = (color1, color2) => keyframes`
+  from {
+    background-color: ${color1};
+    box-shadow: 0;
+  }
+  to {
+    background-color: ${color2};
+    box-shadow: 0 0 5px 4px ${color1}
+  }
+`;
+
+export { sizes, fadeIn, fadeColors };
 
 export default COLORS;

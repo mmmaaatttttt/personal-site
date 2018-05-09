@@ -10,29 +10,39 @@ import COLORS from "utils/styles";
 
 class OrchardGame extends Component {
   state = {
-    counts: [4, 4, 4, 4, 5]
+    counts: [4, 4, 4, 4, 5],
+    fruitBasketEnabled: false
   };
 
   updateCounts = idx => {
     this.setState(prevState => {
+      if (idx === prevState.counts.length) return { fruitBasketEnabled: true };
       const newCounts = [...prevState.counts];
       newCounts[idx] = Math.max(newCounts[idx] - 1, 0);
-      return { counts: newCounts };
+      return { counts: newCounts, fruitBasketEnabled: false };
     });
   };
 
   render() {
     const { spinnerColors } = this.props;
-    const { counts } = this.state;
+    const { counts, fruitBasketEnabled } = this.state;
     return (
       <ColumnLayout>
         <Spinner colors={spinnerColors} handleSpinEnd={this.updateCounts} />
         <FlexContainer wrap>
-          {spinnerColors
-            .slice(0, 5)
-            .map((color, i) => (
-              <FruitContainer key={color} color={color} count={counts[i]} />
-            ))}
+          {spinnerColors.slice(0, counts.length).map((color, i) => {
+            const clickable =
+              counts[i] > 0 && i !== counts.length - 1 && fruitBasketEnabled;
+            return (
+              <FruitContainer
+                key={color}
+                color={color}
+                count={counts[i]}
+                clickable={clickable}
+                updateCounts={this.updateCounts.bind(this, i)}
+              />
+            );
+          })}
         </FlexContainer>
       </ColumnLayout>
     );
