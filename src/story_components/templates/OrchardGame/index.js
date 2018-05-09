@@ -1,15 +1,40 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import { Spinner } from "story_components";
+import {
+  ColumnLayout,
+  FlexContainer,
+  FruitContainer,
+  Spinner
+} from "story_components";
 import COLORS from "utils/styles";
 
 class OrchardGame extends Component {
+  state = {
+    counts: [4, 4, 4, 4, 5]
+  };
+
+  updateCounts = idx => {
+    this.setState(prevState => {
+      const newCounts = [...prevState.counts];
+      newCounts[idx] = Math.max(newCounts[idx] - 1, 0);
+      return { counts: newCounts };
+    });
+  };
+
   render() {
+    const { spinnerColors } = this.props;
+    const { counts } = this.state;
     return (
-      <div>
-        <h1>hi</h1>
-        <Spinner colors={this.props.spinnerColors} />
-      </div>
+      <ColumnLayout>
+        <Spinner colors={spinnerColors} handleSpinEnd={this.updateCounts} />
+        <FlexContainer wrap>
+          {spinnerColors
+            .slice(0, 5)
+            .map((color, i) => (
+              <FruitContainer key={color} color={color} count={counts[i]} />
+            ))}
+        </FlexContainer>
+      </ColumnLayout>
     );
   }
 }

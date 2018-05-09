@@ -1,8 +1,8 @@
-import React, { Component } from "react";
+import React, { PureComponent } from "react";
 import PropTypes from "prop-types";
 import Animate from "react-move/Animate";
 import { easeQuadOut } from "d3-ease";
-import { PieChart } from "story_components";
+import { Button, PieChart } from "story_components";
 import COLORS from "utils/styles";
 
 const SpinnerArrow = ({ turns, width, height }) => {
@@ -28,7 +28,7 @@ const SpinnerArrow = ({ turns, width, height }) => {
   );
 };
 
-class Spinner extends Component {
+class Spinner extends PureComponent {
   state = {
     turns: 0
   };
@@ -40,12 +40,24 @@ class Spinner extends Component {
     });
   };
 
+  handleEnd = () => {
+    const { turns } = this.state;
+    const { handleSpinEnd, colors } = this.props;
+    if (turns !== 0) {
+      let trueMod = (turns % 1 + 1) % 1;
+      let idx = Math.floor(trueMod * colors.length);
+      handleSpinEnd(idx);
+    }
+  };
+
   render() {
     const { width, height } = this.props;
     const { turns } = this.state;
     return (
       <div>
-        <button onClick={this.updateTurns}>yo i'm a spinner</button>
+        <Button color={COLORS.ORANGE} onClick={this.updateTurns}>
+          Spin!
+        </Button>
         <PieChart
           colorScale={i => this.props.colors[i]}
           values={this.props.colors.map(c => 1)}
@@ -62,6 +74,9 @@ class Spinner extends Component {
               timing: {
                 duration: 1000 + 2000 * Math.random(),
                 ease: easeQuadOut
+              },
+              events: {
+                end: this.handleEnd
               }
             }}
           >
@@ -74,6 +89,13 @@ class Spinner extends Component {
     );
   }
 }
+
+Spinner.propTypes = {
+  colors: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
+  width: PropTypes.number.isRequired,
+  height: PropTypes.number.isRequired,
+  handleSpinEnd: PropTypes.func
+};
 
 Spinner.defaultProps = {
   width: 300,
