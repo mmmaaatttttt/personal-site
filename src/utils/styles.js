@@ -5,7 +5,7 @@ const COLORS = {
   BLUE: "#5ECFFF",
   DARK_BLUE: "#2227FF",
   DARK_GRAY: "#555",
-  DARK_GREEN: "#114F26",
+  DARK_GREEN: "#00802b",
   GRAY: "#BBB",
   GREEN: "#52A081",
   LINK: "#ff5700",
