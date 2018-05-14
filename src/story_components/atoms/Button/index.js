@@ -28,27 +28,37 @@ const Button = styled.button`
   }
 
   ${props =>
+    props.large &&
+    css`
+      width: 100%;
+      padding: 0.5rem 0.6rem;
+      margin: 0.5rem 0;
+    `}
+
+  ${props =>
     props.color === "white" &&
     css`
       color: black;
       border: 1px solid black;
     `} ${props =>
-    props.disabled &&
-    css`
-      opacity: 0.7;
+  props.disabled &&
+  css`
+    opacity: 0.7;
 
-      &:hover {
-        cursor: not-allowed;
-      }
-    `};
+    &:hover {
+      cursor: not-allowed;
+    }
+  `};
 `;
 
 Button.propTypes = {
-  color: PropTypes.string.isRequired
+  color: PropTypes.string.isRequired,
+  large: PropTypes.bool.isRequired
 };
 
 Button.defaultProps = {
-  color: "white"
+  color: "white",
+  large: false
 };
 
 export default Button;

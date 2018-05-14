@@ -14,11 +14,16 @@ const StyledOverlayContainer = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+  border-radius: 5px;
+
+  button:last-child {
+    margin-bottom: 0;
+  }
 `;
 
 const StyledMessageContainer = styled.div`
   background-color: ${COLORS.WHITE};
-  padding: ${rhythm(1)};
+  padding: ${rhythm(1.5)};
   border-radius: ${rhythm(0.25)};
   text-align: center;
 

@@ -3,25 +3,27 @@ import PropTypes from "prop-types";
 import styled, { css } from "styled-components";
 import { darken } from "polished";
 import { fadeColors } from "utils/styles";
+import media from "utils/media";
 import { NarrowContainer } from "story_components";
 
 const StyledFruitContainer = styled.div`
   border: 4px solid ${props => darken(0.2, props.color)};
   background-color: ${props =>
     props.darken ? darken(0.2, props.color) : props.color};
-  flex: 0 45%;
-  margin: 2.5%;
+  margin: 2%;
+  flex: 1;
   border-radius: 0.5rem;
   display: flex;
   justify-content: center;
   align-items: center;
   color: #fff;
-  font-size: 5rem;
+  font-size: 4rem;
   text-shadow: 2px 2px 6px black;
+  min-height: 5rem;
 
-  &:last-child {
-    flex: 0 95%;
-  }
+  ${media.small`
+    font-size: 3rem;
+  `};
 
   ${props =>
     props.clickable &&

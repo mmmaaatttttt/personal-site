@@ -2,17 +2,24 @@ import React, { PureComponent } from "react";
 import PropTypes from "prop-types";
 import Animate from "react-move/Animate";
 import { easeQuadOut } from "d3-ease";
+import styled from "styled-components";
 import { Button, PieChart } from "story_components";
 import COLORS from "utils/styles";
+
+const StyledMessageWrapper = styled.p`
+  text-align: center;
+  font-style: italic;
+  margin: 16px auto;
+`;
 
 const SpinnerArrow = ({ turns, width, height }) => {
   const lineEnd = height * 0.15;
   const arrowPos = height * 0.02;
   return (
     <g
-      stroke="slategray"
+      stroke={COLORS.DARK_GRAY}
       strokeWidth="6"
-      fill="slategray"
+      fill={COLORS.DARK_GRAY}
       transform={`rotate(${turns * 360} ${width / 2} ${height / 2})`}
     >
       <circle cx={width / 2} cy={height / 2} r={5} />
@@ -60,17 +67,6 @@ class Spinner extends PureComponent {
     const { turns, disabled } = this.state;
     return (
       <div>
-        {message ? (
-          <p>{message}</p>
-        ) : (
-          <Button
-            color={COLORS.ORANGE}
-            onClick={this.updateTurns}
-            disabled={disabled}
-          >
-            Spin!
-          </Button>
-        )}
         <PieChart
           colorScale={i => this.props.colors[i]}
           values={this.props.colors.map(c => 1)}
@@ -98,6 +94,18 @@ class Spinner extends PureComponent {
             )}
           </Animate>
         </PieChart>
+        {message ? (
+          <StyledMessageWrapper>{message}</StyledMessageWrapper>
+        ) : (
+          <Button
+            large
+            color={COLORS.DARK_GRAY}
+            onClick={this.updateTurns}
+            disabled={disabled}
+          >
+            Spin!
+          </Button>
+        )}
       </div>
     );
   }

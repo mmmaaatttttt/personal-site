@@ -3,9 +3,9 @@ import PropTypes from "prop-types";
 import styled from "styled-components";
 import {
   Button,
-  ColumnLayout,
   FlexContainer,
   FruitContainer,
+  NarrowContainer,
   RelativeContainer,
   ScreenOverlay,
   Spinner
@@ -85,68 +85,72 @@ class OrchardGame extends Component {
       gamesWon,
       gameState
     } = this.state;
-    const message = fruitBasketEnabled
-      ? "Please click on a colored square to remove a fruit and resume play."
-      : "";
+    let message = "";
+    if (gameState !== "playing") message = "&nbsp;";
+    if (fruitBasketEnabled) message = "Click on a square to remove a fruit.";
     let overlays = {
-      start: (
-        <ScreenOverlay>
-          <h1>Orchard Game</h1>
-          <p>Games won: {gamesWon}</p>
-          <p>Games played: {gamesPlayed}</p>
-          <Button color={COLORS.GREEN} onClick={this.startGame}>
-            Play
-          </Button>
-          <Button onClick={this.clearData}>Clear Game Data</Button>
-        </ScreenOverlay>
-      ),
-      win: (
-        <ScreenOverlay backgroundColor={COLORS.GREEN}>
-          <h1>You won!</h1>
-          <p>Games won: {gamesWon}</p>
-          <p>Games played: {gamesPlayed}</p>
-          <Button color={COLORS.GREEN} onClick={this.startGame}>
-            Play Again
-          </Button>
-        </ScreenOverlay>
-      ),
-      loss: (
-        <ScreenOverlay backgroundColor={COLORS.RED}>
-          <h1>You lost.</h1>
-          <p>Games won: {gamesWon}</p>
-          <p>Games played: {gamesPlayed}</p>
-          <Button color={COLORS.GREEN} onClick={this.startGame}>
-            Play Again
-          </Button>
-        </ScreenOverlay>
-      )
+      start: {
+        title: "Orchard Game",
+        buttonText: "Play",
+        backgroundColor: COLORS.GRAY
+      },
+      win: {
+        title: "You won!",
+        buttonText: "Play Again",
+        backgroundColor: COLORS.GREEN
+      },
+      loss: {
+        title: "You lost.",
+        buttonText: "Play Again",
+        backgroundColor: COLORS.RED
+      }
     };
     return (
-      <RelativeContainer>
-        {overlays[gameState]}
-        <ColumnLayout break="small">
-          <Spinner
-            colors={spinnerColors}
-            handleSpinEnd={this.updateCounts}
-            message={message}
-          />
-          <FlexContainer wrap>
-            {spinnerColors.slice(0, -1).map((color, i) => {
-              const clickable =
-                counts[i] > 0 && i !== counts.length - 1 && fruitBasketEnabled;
-              return (
-                <FruitContainer
-                  key={color}
-                  color={color}
-                  count={counts[i]}
-                  clickable={clickable}
-                  updateCounts={this.updateCounts.bind(this, i)}
-                />
-              );
-            })}
+      <NarrowContainer width="70%" fullWidthAt="small">
+        <RelativeContainer>
+          {gameState === "playing" ? null : (
+            <ScreenOverlay
+              backgroundColor={overlays[gameState].backgroundColor}
+            >
+              <h1>{overlays[gameState].title}</h1>
+              <p>Games won: {gamesWon}</p>
+              <p>Games played: {gamesPlayed}</p>
+              <Button large color={COLORS.GREEN} onClick={this.startGame}>
+                {overlays[gameState].buttonText}
+              </Button>
+              <Button large onClick={this.clearData}>
+                Clear Game Data
+              </Button>
+            </ScreenOverlay>
+          )}
+          <FlexContainer column>
+            <NarrowContainer width="60%">
+              <Spinner
+                colors={spinnerColors}
+                handleSpinEnd={this.updateCounts}
+                message={message}
+              />
+            </NarrowContainer>
+            <FlexContainer>
+              {spinnerColors.slice(0, -1).map((color, i) => {
+                const clickable =
+                  counts[i] > 0 &&
+                  i !== counts.length - 1 &&
+                  fruitBasketEnabled;
+                return (
+                  <FruitContainer
+                    key={color}
+                    color={color}
+                    count={counts[i]}
+                    clickable={clickable}
+                    updateCounts={this.updateCounts.bind(this, i)}
+                  />
+                );
+              })}
+            </FlexContainer>
           </FlexContainer>
-        </ColumnLayout>
-      </RelativeContainer>
+        </RelativeContainer>
+      </NarrowContainer>
     );
   }
 }
