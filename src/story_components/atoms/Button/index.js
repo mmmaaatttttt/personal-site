@@ -16,12 +16,8 @@ const Button = styled.button`
   font-size: 80%;
   line-height: 1.4rem;
   margin: 0.5rem;
-  ${props =>
-    props.color === "white" &&
-    css`
-      color: black;
-      border: 1px solid black;
-    `} &:active,
+
+  &:active,
   &:focus {
     outline: none;
   }
@@ -30,6 +26,21 @@ const Button = styled.button`
     cursor: pointer;
     background-color: ${darkerColor};
   }
+
+  ${props =>
+    props.color === "white" &&
+    css`
+      color: black;
+      border: 1px solid black;
+    `} ${props =>
+    props.disabled &&
+    css`
+      opacity: 0.7;
+
+      &:hover {
+        cursor: not-allowed;
+      }
+    `};
 `;
 
 Button.propTypes = {

@@ -1,12 +1,12 @@
 import { keyframes } from "styled-components";
 
 const COLORS = {
-  BLACK: "#000",
+  BLACK: "#000000",
   BLUE: "#5ECFFF",
   DARK_BLUE: "#2227FF",
-  DARK_GRAY: "#555",
+  DARK_GRAY: "#555555",
   DARK_GREEN: "#00802b",
-  GRAY: "#BBB",
+  GRAY: "#BBBBBB",
   GREEN: "#52A081",
   LINK: "#ff5700",
   MAROON: "#A05E52",
@@ -14,8 +14,15 @@ const COLORS = {
   ORANGE: "#FF8F34",
   PURPLE: "#E15BFF",
   RED: "#FF3C23",
-  WHITE: "#FFF",
+  WHITE: "#FFFFFF",
   YELLOW: "#FFEC28"
+};
+
+const hexToRgba = (hex, opacity) => {
+  const numbers = [hex.slice(1, 3), hex.slice(3, 5), hex.slice(5, 7)].map(
+    subHex => parseInt(subHex, 16)
+  );
+  return `rgba(${numbers},${opacity})`;
 };
 
 const sizes = {
@@ -42,6 +49,6 @@ const fadeColors = (color1, color2) => keyframes`
   }
 `;
 
-export { sizes, fadeIn, fadeColors };
+export { fadeColors, fadeIn, hexToRgba, sizes };
 
 export default COLORS;

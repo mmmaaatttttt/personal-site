@@ -30,34 +30,47 @@ const SpinnerArrow = ({ turns, width, height }) => {
 
 class Spinner extends PureComponent {
   state = {
-    turns: 0
+    turns: 0,
+    disabled: false
   };
 
   updateTurns = () => {
     this.setState(prevState => {
       const direction = Math.random() < 0.5 ? -1 : 1;
-      return { turns: prevState.turns + direction * (1 + Math.random() * 4) };
+      return {
+        turns: prevState.turns + direction * (1 + Math.random() * 4),
+        disabled: true
+      };
     });
   };
 
   handleEnd = () => {
-    const { turns } = this.state;
-    const { handleSpinEnd, colors } = this.props;
-    if (turns !== 0) {
+    const { turns, disabled } = this.state;
+    if (disabled) {
+      const { handleSpinEnd, colors } = this.props;
       let trueMod = (turns % 1 + 1) % 1;
       let idx = Math.floor(trueMod * colors.length);
       handleSpinEnd(idx);
+      this.setState({ disabled: false });
     }
   };
 
   render() {
-    const { width, height } = this.props;
-    const { turns } = this.state;
+    const { width, height, message } = this.props;
+    const { turns, disabled } = this.state;
     return (
       <div>
-        <Button color={COLORS.ORANGE} onClick={this.updateTurns}>
-          Spin!
-        </Button>
+        {message ? (
+          <p>{message}</p>
+        ) : (
+          <Button
+            color={COLORS.ORANGE}
+            onClick={this.updateTurns}
+            disabled={disabled}
+          >
+            Spin!
+          </Button>
+        )}
         <PieChart
           colorScale={i => this.props.colors[i]}
           values={this.props.colors.map(c => 1)}
@@ -92,14 +105,16 @@ class Spinner extends PureComponent {
 
 Spinner.propTypes = {
   colors: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
-  width: PropTypes.number.isRequired,
+  handleSpinEnd: PropTypes.func,
   height: PropTypes.number.isRequired,
-  handleSpinEnd: PropTypes.func
+  message: PropTypes.string.isRequired,
+  width: PropTypes.number.isRequired
 };
 
 Spinner.defaultProps = {
-  width: 300,
-  height: 300
+  height: 300,
+  message: "",
+  width: 300
 };
 
 export default Spinner;
