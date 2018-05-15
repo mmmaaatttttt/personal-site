@@ -54,4 +54,6 @@ Or, you could let a computer do the heavy lifting for you. For brevity's sake, l
 
 ### That's So Raven
 
+<OrchardGameSimulation caption="Figure 2: SIMULATEZ."/>
+
 ### Quoth the Raven
