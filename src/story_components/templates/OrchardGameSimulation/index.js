@@ -93,11 +93,16 @@ OrchardGameSimulation.defaultProps = {
       return fruitCounts.findIndex(c => c === maxCount);
     },
     function leastPlentiful(fruitCounts) {
-      const minCount = Math.min(...fruitCounts);
+      const minCount = Math.min(...fruitCounts.filter(c => c > 0));
       return fruitCounts.findIndex(c => c === minCount);
     },
     function random(fruitCounts) {
-      return Math.floor(Math.random() * fruitCounts.length);
+      const validIndices = fruitCounts
+        .map((count, idx) => ({ count, idx }))
+        .filter(obj => obj.count > 0)
+        .map(obj => obj.idx);
+      const randomIndex = Math.floor(Math.random() * validIndices.length);
+      return validIndices[randomIndex];
     },
     function favorite(fruitCounts) {
       return fruitCounts.findIndex(c => c > 0);
