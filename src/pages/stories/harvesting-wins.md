@@ -54,6 +54,43 @@ Or, you could let a computer do the heavy lifting for you. For brevity's sake, l
 
 ### That's So Raven
 
-<OrchardGameSimulation caption="Figure 2: SIMULATEZ."/>
+When you click "Play" in the simulation below, your computer will begin playing _First Orchard_ at the rate of 200 games per second. Those 200 games will be evenly split across the four strategies outlined above: 50 games per second for the most plentiful strategy, 50 games per second for the least plentiful strategy, and so on.
 
-### Quoth the Raven
+I'd encourage you to write down guesses for how often each of these strategies will result in a win. When you're ready, watch the simulation go! (You can hover over any of the bars for more information on wins and losses.)
+
+<OrchardGameSimulation caption="Figure 2: Simulating multiple playthroughs of First Orchard."/>
+
+The specific numbers you see will vary, of course, but will even out the longer you let the simulation run. Because I'm a little impatient, I increased the speed of the simulation on my own machine and let it play 100,000,000 games with each strategy. By that point, the percentages are quite stable. Here's the breakdown:
+
+| Strategy        | Probability of Success |
+| --------------- | ---------------------- |
+| Most Plentiful  | 63.1%                  |
+| Least Plentiful | 55.5%                  |
+| Random          | 59.7%                  |
+| Favorite Color  | 58.3%                  |
+
+To summarize, even the worst strategy here (Least Plentiful) gives you a better than 50% chance of a win. The gap between best and worst strategy is less than 8 points. And unfortunately, my son's preferred strategy (Favorite Color) performs worse than selecting randomly, though it's not the worst strategy around.
+
+### After _First Orchard_
+
+If you don't live with a two-year old, there's probably not much reason to play this game. But if you've got older children in the house, it's possible they'll enjoy a very similar game, developed by the same company but targeting children age 3-6. This game is simply called _Orchard Game_.
+
+The rules of this game are nearly the same as for _First Orchard_, but there are some slight variations:
+
+1.  There are 10 fruits of each color to pick, not just 4.
+2.  You need to roll the raven 9 times to lose, not 5.
+3.  When you roll the fruit basket, you can select _two_ fruits to remove, not just one.
+
+<OrchardGameSimulation caption="Figure 2: Simulating multiple playthroughs of Orchard." fruitCounts={[10,10,10,10]} ravenCount={9} wildCardCount={2}/>
+
+100,000,000 games:
+10, 10, 10, 10, 9, 2: 68.4 / 53.2 / 63.2 / 56.8
+
+### Quoth the Raven: So Many Orchards!
+
+variables:
+
+* number of fruit colors
+* number of fruits per color
+* number of raven steps
+* number of fruits to put away with wild card
