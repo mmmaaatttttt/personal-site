@@ -100,7 +100,8 @@ HorizontalBar.propTypes = {
   data: PropTypes.arrayOf(
     PropTypes.shape({
       size: PropTypes.number.isRequired,
-      color: PropTypes.string.isRequired
+      color: PropTypes.string.isRequired,
+      tooltipText: PropTypes.string
     })
   ).isRequired
 };
