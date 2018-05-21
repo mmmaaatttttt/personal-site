@@ -3,12 +3,10 @@
   "description": "Gatsby hello world starter",
   "license": "MIT",
   "scripts": {
-    "develop":
-      "GATSBY_BASE_URL='http://localhost:8000' gatsby develop -H localhost",
+    "develop": "GATSBY_BASE_URL='http://localhost:8000' gatsby develop -H localhost",
     "build": "GATSBY_BASE_URL='https://mattlane.us' gatsby build",
     "serve": "gatsby serve",
-    "deploy":
-      "GATSBY_BASE_URL='https://mattlane.us' gatsby build && s3-deploy './public/**' --cwd './public/' --region us-east-1 --bucket mattlane.us --deleteRemoved && aws-cloudfront-invalidate $npm_config_distribution_id",
+    "deploy": "GATSBY_BASE_URL='https://mattlane.us' gatsby build && s3-deploy './public/**' --cwd './public/' --region us-east-1 --bucket mattlane.us --deleteRemoved && aws-cloudfront-invalidate $npm_config_distribution_id",
     "test": "jest",
     "test:clear": "npx jest --clearCache"
   },
@@ -52,6 +50,7 @@
     "enzyme": "^3.3.0",
     "enzyme-adapter-react-15": "^1.0.5",
     "enzyme-to-json": "^3.3.3",
+    "esm": "^3.0.36",
     "jest": "^22.4.3",
     "react-test-renderer": "^15.6.2",
     "s3-deploy": "^0.8.0"
