@@ -88,6 +88,8 @@ The rules of this game are nearly the same as for _First Orchard_, but there are
 
 ### Quoth the Raven: So Many Orchards!
 
+<OrchardGameHeatData />
+
 variables:
 
 * number of fruit colors
