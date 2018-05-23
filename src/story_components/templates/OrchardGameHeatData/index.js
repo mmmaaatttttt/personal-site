@@ -4,31 +4,30 @@ import { json } from "d3-fetch";
 import { withPrefix } from "gatsby-link";
 import {
   // Button,
-  FlexContainer
-  // HorizontalBar,
-  // NarrowContainer
+  // FlexContainer,
+  HeatChart,
+  NarrowContainer
 } from "story_components";
 import withCaption from "hocs/withCaption";
-// import COLORS from "utils/styles";
 // import { camelCaseToTitle } from "utils/stringHelpers";
 
 class OrchardGameHeatData extends Component {
   state = {
     colorCount: this.props.initialColorCount,
-    wildCardCount: this.props.initialWildCardCount,
-    data: []
+    data: [],
+    shading: this.props.initialShading,
+    wildCardCount: this.props.initialWildCardCount
   };
 
   componentDidMount() {
     json(withPrefix("data/orchard_game.json")).then(data => {
-      debugger;
       this.setState({ data });
     });
   }
 
   render() {
-    let { data, colorCount, wildCardCount } = this.state;
-    let heatData = data
+    const { data, colorCount, wildCardCount, shading } = this.state;
+    const heatData = data
       .filter(d => d.colors === colorCount && d.wildCardCount === wildCardCount)
       .reduce((matrix, obj) => {
         let x = obj.ravenCount - 1;
@@ -37,7 +36,11 @@ class OrchardGameHeatData extends Component {
         matrix[x][y] = obj;
         return matrix;
       }, []);
-    return <h1>hi</h1>;
+    return (
+      <NarrowContainer width="80%">
+        <HeatChart data={heatData} accessor={d => d.probs[shading]} />
+      </NarrowContainer>
+    );
   }
 }
 
