@@ -1,7 +1,5 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import { json, csv } from "d3-fetch";
-import { withPrefix } from "gatsby-link";
 import withCaption from "hocs/withCaption";
 import { NarrowContainer, StyledSelect, USMap } from "story_components";
 
