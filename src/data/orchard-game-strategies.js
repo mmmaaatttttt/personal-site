@@ -8,10 +8,10 @@ const strategies = [
     return fruitCounts.findIndex(c => c === minCount);
   },
   function random(fruitCounts) {
-    const validIndices = fruitCounts
-      .map((count, idx) => ({ count, idx }))
-      .filter(obj => obj.count > 0)
-      .map(obj => obj.idx);
+    const validIndices = [];
+    for (var i = 0; i < fruitCounts.length; i++) {
+      if (fruitCounts[i] > 0) validIndices.push(i);
+    }
     const randomIndex = Math.floor(Math.random() * validIndices.length);
     return validIndices[randomIndex];
   },
