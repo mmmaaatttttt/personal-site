@@ -9,7 +9,7 @@ import {
 import withCaption from "hocs/withCaption";
 import COLORS from "utils/styles";
 import { camelCaseToTitle } from "utils/stringHelpers";
-import strategies from "data/orchard-game-strategies";
+import strategies from "data/orchard-game";
 
 class OrchardGameSimulation extends Component {
   state = {
