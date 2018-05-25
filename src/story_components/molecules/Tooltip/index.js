@@ -16,6 +16,7 @@ const StyledTooltip = styled.div.attrs({
   pointer-events: none;
   padding: ${rhythm(0.5)};
   border-radius: ${rhythm(0.25)};
+  z-index: 100;
 
   &:after {
     top: 100%;
