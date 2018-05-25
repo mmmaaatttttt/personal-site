@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import { FlexContainer, LabeledSlider } from "story_components";
 
-const SliderGroup = ({ data }) => {
+const SliderGroup = ({ data, column }) => {
   const sliders = data.map((d, i) => (
     <LabeledSlider
       key={d.hasOwnProperty("key") ? d.key : i}
@@ -20,7 +20,7 @@ const SliderGroup = ({ data }) => {
     />
   ));
   return (
-    <FlexContainer column cross="center">
+    <FlexContainer column={column} cross="center">
       {sliders}
     </FlexContainer>
   );
@@ -41,7 +41,12 @@ SliderGroup.propTypes = {
       maxIcon: PropTypes.string,
       fadeIcons: PropTypes.bool
     })
-  )
+  ),
+  column: PropTypes.bool.isRequired
+};
+
+SliderGroup.defaultProps = {
+  column: true
 };
 
 export default SliderGroup;
