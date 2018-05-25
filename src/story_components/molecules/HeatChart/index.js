@@ -1,11 +1,35 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { scaleLinear } from "d3-scale";
-import { ClippedSVG } from "story_components";
+import { ClippedSVG, Tooltip } from "story_components";
 import COLORS from "utils/styles";
 
 class HeatChart extends Component {
+  state = {
+    tooltipVisible: false,
+    tooltipX: 0,
+    tooltipY: 0,
+    tooltipBody: ""
+  };
+
+  handleTooltipShow = (datum, e) => {
+    const { getTooltipBody } = this.props;
+    this.setState({
+      tooltipVisible: true,
+      tooltipX: e.pageX,
+      tooltipY: e.pageY,
+      tooltipBody: getTooltipBody(datum)
+    });
+  };
+
+  handleTooltipHide = e => {
+    this.setState({
+      tooltipVisible: false
+    });
+  };
+
   render() {
+    const { tooltipVisible, tooltipX, tooltipY, tooltipBody } = this.state;
     const {
       width,
       height,
@@ -34,15 +58,28 @@ class HeatChart extends Component {
               width={xScale(1) - 2}
               height={height - yScale(0) - 2}
               fill={colorScale(accessor(d))}
+              onMouseMove={this.handleTooltipShow.bind(this, d)}
+              onMouseLeave={this.handleTooltipHide}
+              onTouchMove={this.handleTooltipShow.bind(this, d)}
+              onTouchEnd={this.handleTooltipHide}
             />
           ))
         ),
       []
     );
     return (
-      <ClippedSVG width={width} height={height}>
-        {rects}
-      </ClippedSVG>
+      <div>
+        <ClippedSVG width={width} height={height}>
+          {rects}
+        </ClippedSVG>
+        <Tooltip
+          body={data.map(d => d.tooltipText)}
+          visible={tooltipVisible}
+          x={tooltipX}
+          y={tooltipY}
+          body={tooltipBody}
+        />
+      </div>
     );
   }
 }
@@ -53,7 +90,8 @@ HeatChart.propTypes = {
   data: PropTypes.array.isRequired,
   accessor: PropTypes.func.isRequired,
   colorDomain: PropTypes.arrayOf(PropTypes.number).isRequired,
-  colorRange: PropTypes.arrayOf(PropTypes.string).isRequired
+  colorRange: PropTypes.arrayOf(PropTypes.string).isRequired,
+  getTooltipBody: PropTypes.func.isRequired
 };
 
 HeatChart.defaultProps = {
@@ -62,7 +100,8 @@ HeatChart.defaultProps = {
   data: [],
   accessor: d => d,
   colorDomain: [0, 1],
-  colorRange: [COLORS.RED, COLORS.GREEN]
+  colorRange: [COLORS.RED, COLORS.GREEN],
+  getTooltipBody: d => JSON.stringify(d, null, 4)
 };
 
 export default HeatChart;
