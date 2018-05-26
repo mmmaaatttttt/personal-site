@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { scaleLinear } from "d3-scale";
-import { ClippedSVG, Tooltip } from "story_components";
+import { Axis, AxisLabel, ClippedSVG, Tooltip } from "story_components";
 import COLORS from "utils/styles";
 
 class HeatChart extends Component {
@@ -33,6 +33,7 @@ class HeatChart extends Component {
     const {
       width,
       height,
+      padding,
       data,
       colorDomain,
       colorRange,
@@ -40,10 +41,10 @@ class HeatChart extends Component {
     } = this.props;
     const xScale = scaleLinear()
       .domain([0, data.length])
-      .range([0, width]);
+      .range([padding, width - padding]);
     const yScale = scaleLinear()
-      .domain([-1, Array.isArray(data[0]) ? data[0].length - 1 : 0])
-      .range([height, 0]);
+      .domain([0, Array.isArray(data[0]) ? data[0].length : 0])
+      .range([height - padding, padding]);
     const colorScale = scaleLinear()
       .domain(colorDomain)
       .range(colorRange);
@@ -54,9 +55,9 @@ class HeatChart extends Component {
             <rect
               key={`${x}:${y}`}
               x={xScale(x) + 1}
-              y={yScale(y) + 1}
-              width={xScale(1) - 2}
-              height={height - yScale(0) - 2}
+              y={yScale(y + 1) + 1}
+              width={xScale(1) - 2 - padding}
+              height={height - yScale(1) - 2 - padding}
               fill={colorScale(accessor(d))}
               onMouseMove={this.handleTooltipShow.bind(this, d)}
               onMouseLeave={this.handleTooltipHide}
@@ -71,6 +72,32 @@ class HeatChart extends Component {
       <div>
         <ClippedSVG width={width} height={height}>
           {rects}
+          <Axis
+            direction="x"
+            scale={xScale}
+            yShift={height - padding}
+            tickFormat={","}
+            tickColor={COLORS.BLACK}
+            rotateLabels={false}
+          />
+          <Axis
+            direction="y"
+            scale={yScale}
+            xShift={padding}
+            tickFormat={","}
+            tickColor={COLORS.BLACK}
+          />
+          <AxisLabel x={width / 2} y={height}>
+            Raven Count
+          </AxisLabel>
+          <AxisLabel
+            x={10}
+            y={height / 2}
+            transform={`rotate(-90 10,${height / 2})`}
+            dy={10}
+          >
+            Fruits per Color
+          </AxisLabel>
         </ClippedSVG>
         <Tooltip
           body={data.map(d => d.tooltipText)}
@@ -97,6 +124,7 @@ HeatChart.propTypes = {
 HeatChart.defaultProps = {
   width: 600,
   height: 600,
+  padding: 50,
   data: [],
   accessor: d => d,
   colorDomain: [0, 1],

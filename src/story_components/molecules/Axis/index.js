@@ -12,7 +12,7 @@ const StyledAxis = styled.g`
   }
 
   & .tick line {
-    stroke: #ccc;
+    stroke: ${props => props.tickColor};
     stroke-dasharray: 10, 5;
   }
 `;
@@ -40,7 +40,8 @@ class Axis extends Component {
       tickSize,
       tickShift,
       tickStep,
-      tickFormat
+      tickFormat,
+      rotateLabels
     } = this.props;
     const settings = {
       x: {
@@ -68,7 +69,7 @@ class Axis extends Component {
 
     if (tickFormat) {
       const labels = select(this.axis).selectAll(".tick text");
-      if (direction === "x")
+      if (direction === "x" && rotateLabels)
         labels
           .attr("transform", "rotate(90)")
           .style("text-anchor", "start")
@@ -76,18 +77,16 @@ class Axis extends Component {
           .attr("y", 0)
           .attr("dx", 0)
           .attr("dy", "0.35em");
+      else if ((direction === "x") & !rotateLabels)
+        labels.style("text-anchor", "middle");
       else labels.style("text-anchor", "end");
     }
   }
 
   render() {
-    const { direction, tickFormat } = this.props;
+    const { tickColor } = this.props;
     return (
-      <StyledAxis
-        innerRef={axis => (this.axis = axis)}
-        direction={direction}
-        tickFormat={tickFormat}
-      />
+      <StyledAxis innerRef={axis => (this.axis = axis)} tickColor={tickColor} />
     );
   }
 }
@@ -97,17 +96,21 @@ Axis.propTypes = {
   scale: PropTypes.func.isRequired,
   yShift: PropTypes.number.isRequired,
   xShift: PropTypes.number.isRequired,
+  tickColor: PropTypes.string.isRequired,
   tickSize: PropTypes.number,
   tickShift: PropTypes.number.isRequired,
   tickStep: PropTypes.number,
-  tickFormat: PropTypes.string.isRequired
+  tickFormat: PropTypes.string.isRequired,
+  rotateLabels: PropTypes.bool.isRequired
 };
 
 Axis.defaultProps = {
   xShift: 0,
   yShift: 0,
+  tickColor: "#ccc",
   tickShift: 0,
-  tickFormat: ""
+  tickFormat: "",
+  rotateLabels: true
 };
 
 export default Axis;
