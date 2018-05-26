@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
+import NodeGroup from "react-move/NodeGroup";
 import { scaleLinear } from "d3-scale";
 import { Axis, AxisLabel, ClippedSVG, Tooltip } from "story_components";
 import COLORS from "utils/styles";
@@ -48,30 +49,55 @@ class HeatChart extends Component {
     const colorScale = scaleLinear()
       .domain(colorDomain)
       .range(colorRange);
-    const rects = data.reduce(
+    // do node group stuffs here
+    const rectData = data.reduce(
       (rectArr, row, x) =>
         rectArr.concat(
-          row.map((d, y) => (
-            <rect
-              key={`${x}:${y}`}
-              x={xScale(x) + 1}
-              y={yScale(y + 1) + 1}
-              width={xScale(1) - 2 - padding}
-              height={height - yScale(1) - 2 - padding}
-              fill={colorScale(accessor(d))}
-              onMouseMove={this.handleTooltipShow.bind(this, d)}
-              onMouseLeave={this.handleTooltipHide}
-              onTouchMove={this.handleTooltipShow.bind(this, d)}
-              onTouchEnd={this.handleTooltipHide}
-            />
-          ))
+          row.map((d, y) => ({
+            x: xScale(x) + 1,
+            y: yScale(y + 1) + 1,
+            fill: colorScale(accessor(d)),
+            showFn: this.handleTooltipShow.bind(this, d)
+          }))
         ),
       []
     );
     return (
       <div>
         <ClippedSVG width={width} height={height}>
-          {rects}
+          <NodeGroup
+            data={rectData}
+            keyAccessor={d => `${d.x}:${d.y}`}
+            start={d => d}
+            update={({ fill }, i) => {
+              return {
+                fill: [fill],
+                timing: { duration: 500, delay: i * 10 }
+              };
+            }}
+          >
+            {rects => (
+              <g>
+                {rects.map(({ key, data, state }) => {
+                  const { fill } = state;
+                  return (
+                    <rect
+                      key={key}
+                      x={data.x}
+                      y={data.y}
+                      width={xScale(1) - 2 - padding}
+                      height={height - yScale(1) - 2 - padding}
+                      fill={fill}
+                      onMouseMove={data.showFn}
+                      onMouseLeave={this.handleTooltipHide}
+                      onTouchMove={data.showFn}
+                      onTouchEnd={this.handleTooltipHide}
+                    />
+                  );
+                })}
+              </g>
+            )}
+          </NodeGroup>
           <Axis
             direction="x"
             scale={xScale}
