@@ -150,7 +150,7 @@ HeatChart.propTypes = {
 HeatChart.defaultProps = {
   width: 600,
   height: 600,
-  padding: 50,
+  padding: 45,
   data: [],
   accessor: d => d,
   colorDomain: [0, 1],
