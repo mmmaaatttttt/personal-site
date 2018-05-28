@@ -17,12 +17,27 @@ const StyledFruitContainer = styled.div`
   justify-content: center;
   align-items: center;
   color: #fff;
-  font-size: 4rem;
   text-shadow: 2px 2px 6px black;
   min-height: 5rem;
 
+  p {
+    margin-bottom: 0;
+    text-align: center;
+  }
+
+  h1 {
+    font-size: 4rem;
+    margin: 0;
+  }
+
+  &:hover {
+    cursor: not-allowed;
+  }
+
   ${media.small`
-    font-size: 3rem;
+    h1 {
+      font-size: 3rem;
+    }
   `};
 
   ${props =>
@@ -35,6 +50,12 @@ const StyledFruitContainer = styled.div`
         cursor: pointer;
       }
     `};
+
+  ${props =>
+    props.faded &&
+    css`
+      opacity: 0.3;
+    `};
 `;
 
 class FruitContainer extends PureComponent {
@@ -44,15 +65,25 @@ class FruitContainer extends PureComponent {
   };
 
   render() {
-    const { color, count, clickable } = this.props;
+    const { color, count, clickable, title, faded } = this.props;
+    let text = "";
+    if (count > 0) {
+      text = (
+        <div>
+          <p>{title}</p>
+          <h1>{count}</h1>
+        </div>
+      );
+    }
     return (
       <StyledFruitContainer
         color={color}
         clickable={clickable}
         darken={count === 0}
         onClick={this.handleClick}
+        faded={faded}
       >
-        {count || ""}
+        {text}
       </StyledFruitContainer>
     );
   }
@@ -62,11 +93,18 @@ FruitContainer.propTypes = {
   color: PropTypes.string.isRequired,
   count: PropTypes.number.isRequired,
   clickable: PropTypes.bool.isRequired,
+  faded: PropTypes.bool.isRequired,
+  title: PropTypes.string.isRequired,
   updateCounts: PropTypes.func.isRequired
 };
 
 FruitContainer.defaultProps = {
-  clickable: false
+  color: "#000",
+  count: 0,
+  clickable: false,
+  faded: false,
+  title: "",
+  updateCounts: () => console.log("clicked")
 };
 
 export default FruitContainer;

@@ -132,10 +132,11 @@ class OrchardGame extends Component {
             </NarrowContainer>
             <FlexContainer>
               {spinnerColors.slice(0, -1).map((color, i) => {
+                const isLastColor = i === counts.length - 1;
                 const clickable =
-                  counts[i] > 0 &&
-                  i !== counts.length - 1 &&
-                  fruitBasketEnabled;
+                  counts[i] > 0 && !isLastColor && fruitBasketEnabled;
+                const title = isLastColor ? "Raven" : "Fruit";
+                const faded = isLastColor && fruitBasketEnabled;
                 return (
                   <FruitContainer
                     key={color}
@@ -143,6 +144,8 @@ class OrchardGame extends Component {
                     count={counts[i]}
                     clickable={clickable}
                     updateCounts={this.updateCounts.bind(this, i)}
+                    title={title}
+                    faded={faded}
                   />
                 );
               })}
