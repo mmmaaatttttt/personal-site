@@ -32,9 +32,9 @@ However, to keep things from getting out of hand, there's no concept of debt in 
 
 We can summarize the rules of this society as follows:
 
-1. Everyone starts out with the same amount of wealth.
-2. The distribution of wealth evolves through a sequence of trades between randomly selected pairs of citizens.
-3. The amount of the trade is also random, but can never exceed the wealth of the person who has less.
+1.  Everyone starts out with the same amount of wealth.
+2.  The distribution of wealth evolves through a sequence of trades between randomly selected pairs of citizens.
+3.  The amount of the trade is also random, but can never exceed the wealth of the person who has less.
 
 I was first introduced to this idea by mathematician Brian Hayes in his book, [_Group Theory in the Bedroom, and Other Mathematical Diversions_](https://www.amazon.com/Group-Theory-Bedroom-Mathematical-Diversions/dp/0809052172). What first interested me in this hypothetical society is how fair it sounds. Everyone starts out on exactly the same footing, and the rules of the game seem about as fair as can be. Everyone trades in good faith, and nobody can run up a debt by doing so.
 
@@ -78,9 +78,9 @@ It's worth pointing out that the first simulation, the one that yields a fairer 
 
 <Sidebar>It's an interesting exercise to show that standard laws of physics (i.e. the conservation of energy and momentum) yield these three rules when you have a collection of colliding bodies, as in the first simulation.</Sidebar>
 
-1. Everyone starts out with the same amount of wealth.
-2. The distribution of wealth evolves through a sequence of trades between randomly selected pairs of citizens.
-3. The amount of the trade is also random, but can never exceed the wealth of the person who ~~has less~~ _loses wealth in the trade_.
+1.  Everyone starts out with the same amount of wealth.
+2.  The distribution of wealth evolves through a sequence of trades between randomly selected pairs of citizens.
+3.  The amount of the trade is also random, but can never exceed the wealth of the person who ~~has less~~ _loses wealth in the trade_.
 
 Let's see how this plays out in our previous example, with a two-person society. If the first trade has a value of 50, then one person will walk away with 150 units of wealth, and the second will have only 50 remaining. However, unlike before, now when the second trade happens, the poorer person has a much better chance of recouping some real wealth. Of course, if the poorer person loses the trade, they will continue to decrease their wealth. But if they win, they can now win as many as 150 units of wealth, rather than just the 50 they could have won before.
 
@@ -116,7 +116,7 @@ The outcome here isn't drastically different than before, but by increasing the 
 
 It's also worth pointing out that models involving savings also appear to have a basis in reality. This may seem somewhat surprising, since the model sets one savings rate for the entire population. But for groups of people who work similar jobs, this assumption yields a model that may have some truth in it. More specifically, in [Kinetic Exchange Models for Income and Wealth Distributions](https://arxiv.org/abs/0709.1543), the authors write that for waged income of factory workers in the UK and the USA, and among college students in the USA, the distributions are similar, and can be modeled with some accuracy using the idea of a single savings rate parameter for the entire population.
 
----
+### Conclusion
 
 Income and wealth inequality are just a couple of the crises we're facing, and thus far we're doing a pretty terrible job making things better. It's easy to throw up our hands when faced with issues that are so complex and seemingly intractable. But in these cases, simple models can help. They may not tell us the whole story, but they can tell us a part. And once we understand that part, it's often easier to grapple with enhancements that make the model more realistic, but also more complex.
 
