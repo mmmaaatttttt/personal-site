@@ -20,6 +20,10 @@ class OrchardGameSimulation extends Component {
     }))
   };
 
+  componentDidMount() {
+    this.now = Date.now();
+  }
+
   resetSimulation = () => {
     this.setState({
       playing: false,
@@ -30,36 +34,44 @@ class OrchardGameSimulation extends Component {
     });
   };
 
+  update = () => {
+    const { strategies, wildCardCount } = this.props;
+    let now = Date.now();
+    if (now - this.now > 20) {
+      this.now = now;
+      this.setState(prevState => {
+        const playData = [...prevState.playData];
+        strategies.forEach((strategy, i) => {
+          const isWin = +this.simulateGame(strategy, wildCardCount);
+          playData[i] = {
+            gamesPlayed: playData[i].gamesPlayed + 1,
+            gamesWon: playData[i].gamesWon + isWin
+          };
+        });
+        return { playData };
+      });
+    }
+    if (this.state.playing) {
+      requestAnimationFrame(this.update);
+    }
+  };
+
   togglePlaying = () => {
     this.setState(
       prevState => ({ playing: !prevState.playing }),
       () => {
-        if (this.timerId) return this.clearTimer();
-        const { strategies, wildCardCount } = this.props;
-        this.timerId = setInterval(() => {
-          strategies.forEach((strategy, i) => {
-            this.setState(prevState => {
-              const playData = [...prevState.playData];
-              const isWin = +this.simulateGame(strategy, wildCardCount);
-              playData[i] = {
-                gamesPlayed: playData[i].gamesPlayed + 1,
-                gamesWon: playData[i].gamesWon + isWin
-              };
-              return { playData };
-            });
-          });
-        }, 20);
+        if (!this.state.playing) return;
+        this.update();
       }
     );
   };
 
-  clearTimer = () => {
-    clearTimeout(this.timerId);
-    this.timerId = null;
+  clear = () => {
+    this.now = null;
   };
 
   componentWillUnmount() {
-    this.clearTimer();
+    this.clear();
   }
 
   gameWon = fruitCounts => fruitCounts.every(count => count === 0);
