@@ -4,10 +4,11 @@ import styled from "styled-components";
 import { rhythm } from "utils/typography";
 
 const StyledTooltip = styled.div.attrs({
-  style: ({ visible, x, y }) => ({
+  style: ({ visible, x, y, offsetWidth }) => ({
     display: visible ? "block" : "none",
-    left: `${x}px`,
-    top: `${y}px`
+    left: `${Math.max(x - offsetWidth / 2, 0)}px`,
+    top: `${y}px`,
+    width: x > offsetWidth / 2 ? "auto" : `${2 * x}px`
   })
 })`
   position: absolute;
@@ -81,8 +82,9 @@ class Tooltip extends Component {
     return (
       <StyledTooltip
         visible={visible}
-        x={x - offsetWidth / 2}
+        x={x}
         y={y - offsetHeight - 20}
+        offsetWidth={offsetWidth}
         innerRef={tooltipDiv => (this.tooltipDiv = tooltipDiv)}
       >
         {titleHTML}
