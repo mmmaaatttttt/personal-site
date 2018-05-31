@@ -88,7 +88,7 @@ class OrchardGameSimulation extends Component {
       else if (idx === fruitCounts.length) ravenCount--;
       else {
         for (var i = 0; i < wildCardCount; i++) {
-          const strategicIdx = strategy(fruitCounts);
+          const strategicIdx = strategy.fn(fruitCounts);
           fruitCounts[strategicIdx] = Math.max(
             fruitCounts[strategicIdx] - 1,
             0
@@ -154,7 +154,12 @@ OrchardGameSimulation.propTypes = {
   fruitCounts: PropTypes.arrayOf(PropTypes.number).isRequired,
   ravenCount: PropTypes.number.isRequired,
   wildCardCount: PropTypes.number.isRequired,
-  strategies: PropTypes.arrayOf(PropTypes.func).isRequired
+  strategies: PropTypes.arrayOf(
+    PropTypes.shape({
+      name: PropTypes.string.isRequired,
+      fn: PropTypes.func.isRequired
+    })
+  ).isRequired
 };
 
 OrchardGameSimulation.defaultProps = {
