@@ -1,0 +1,56 @@
+LOW PRIORITY
+- get more heat map data (mayyybeeeee)
+- add meta tags for /stories endpoint
+- refactor harassment components, which are super gross
+- refactor tooltip functionality to HOC
+- do an audit of setState functions to ensure functions are used where next state depends on previous state
+- add id numbers to nodes in economy simulation
+- add more tests
+- sidebars don't always show up
+- fix hot reloading issue for blog links
+- upgrade to font awesome v5
+- line breaks for katex equations on mobile
+- fix orchard game second simulation blowing up chrome (run it, go to other tab for a while, come back and try to interact)
+  - maybe not an issue??
+- MDX! https://github.com/mdx-js/mdx#mdx-syntax, https://github.com/nhducit/gatsby-plugin-mdx
+
+LOWEST PRIORITY
+- look into netlify: https://www.netlify.com/
+- add playgrounds section
+- figure out how to disable katex warning - need access to webpack config (https://stackoverflow.com/questions/43414103/how-to-use-noparse-in-create-react-app)
+- make nav update on story to follow scroll
+  - have share button
+  - have progress bar
+- better way to import data into components
+
+IDEAS
+- keypad hacking
+- knowing what you don't know
+- tipping points
+- treatise on systems thinking
+  - climate
+  - racism
+  - prison industrial complex
+  - libertarianism
+  - tech (doctors required to think through ethical consequences?)
+- treatise on data
+  - fitbit
+  - germany in ww2
+  - quotes
+    - underestimating power of bad actors in large numbers
+  - when you're data-driven, you're merely a passenger
+  - https://mtlynch.io/why-i-quit-google/
+  - https://design.google/library/fair-not-default/
+  - https://svpow.com/2017/03/17/every-attempt-to-manage-academia-makes-it-worse/
+- gun violence: http://www.shootingtracker.com/
+- gerrymandering
+  - https://phys.org/news/2018-03-mathematicians-tool-voting-unfairly-drawn.html
+  - https://www.quantamagazine.org/the-math-behind-gerrymandering-and-wasted-votes-20171012/
+  - https://www.quantamagazine.org/the-mathematics-behind-gerrymandering-20170404/
+- https://www.vox.com/energy-and-environment/2018/3/20/17128478/solar-duck-curve-nrel-researcher?utm_campaign=drvox&utm_content=chorus&utm_medium=social&utm_source=twitter
+- http://www.newsweek.com/gravity-could-trap-alien-civilizations-super-earth-planets-897254
+- jury math 
+  - broadchurch: unanimous or majority
+- bar exam https://www.adaptibar.com/bar-exam-statistics-17.aspx
+- intergalactic climate change: https://www.space.com/40813-climate-change-killed-aliens-easter-island.html
+

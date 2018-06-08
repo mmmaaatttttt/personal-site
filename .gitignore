@@ -63,5 +63,4 @@ typings/
 .cache/
 public
 yarn-error.log
-todo.txt
 .vscode
