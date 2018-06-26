@@ -1,3 +1,7 @@
+- figure out line ordering at intersections
+- handle clicks and mouseovers
+- test for and display number of regions
+
 LOW PRIORITY
 - get more heat map data (mayyybeeeee)
 - add meta tags for /stories endpoint
