@@ -19,7 +19,7 @@ class GerrymanderSample extends Component {
           colorRange={[COLORS.ORANGE, COLORS.GREEN]}
         >
           <InteractiveGrid
-            strokeWidth={6}
+            strokeWidth={8}
             rowCount={rowCount}
             colCount={colCount}
           />

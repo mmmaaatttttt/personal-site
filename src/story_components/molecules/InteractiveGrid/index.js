@@ -5,23 +5,28 @@ import { scaleLinear } from "d3-scale";
 import COLORS from "utils/styles";
 
 const StyledLine = styled.line`
-  stroke: #fff;
+  stroke: ${props => (props.isOn ? COLORS.DARK_GRAY : COLORS.WHITE)};
 
   &:hover {
     cursor: pointer;
-    stroke: ${COLORS.DARK_GRAY};
+    stroke: ${props => (props.isOn ? COLORS.WHITE : COLORS.DARK_GRAY)};
   }
 `;
 
 class InteractiveGrid extends Component {
   state = {
     segments: Array.from({ length: this.props.rowCount * 2 - 1 }, (_, i) =>
-      Array(this.props.colCount - 1 + (i % 2)).fill(0)
+      Array(this.props.colCount - 1 + (i % 2)).fill(false)
     )
   };
 
   handleClick = (row, col) => {
-    this.setState(prevState => {});
+    this.setState(prevState => {
+      const segments = [...prevState.segments];
+      segments[row] = [...prevState.segments[row]];
+      segments[row][col] = !segments[row][col];
+      return { segments };
+    });
   };
 
   render() {
@@ -65,18 +70,32 @@ class InteractiveGrid extends Component {
         />
       );
     });
-    const styledLines = segments.reduce((components, row, colIdx) => {
-      // even rows are vertical
-      // odd rows are horizontal
-      return [
-        ...components,
-        row.map((_, rowIdx) => <StyledLine x1={colIdx} />)
-      ];
+    const styledLines = segments.reduce((components, row, rowIdx) => {
+      let lines = row.map((isOn, colIdx) => {
+        // even rows are vertical
+        // odd rows are horizontal
+        let parity = rowIdx % 2; // 0 if even, 1 if odd
+        let points = {
+          x1: xScale(colIdx + 1 - parity),
+          x2: xScale(colIdx + 1),
+          y1: yScale((rowIdx + parity) / 2),
+          y2: yScale((rowIdx + parity) / 2 + (1 - parity)),
+          isOn
+        };
+        return (
+          <StyledLine
+            {...points}
+            onClick={this.handleClick.bind(this, rowIdx, colIdx)}
+          />
+        );
+      });
+      return [...components, lines];
     }, []);
     return (
       <g strokeWidth={strokeWidth} stroke="white">
         {rowLines}
         {colLines}
+        {styledLines}
         <rect
           x={paddingX}
           y={paddingY}
@@ -85,7 +104,6 @@ class InteractiveGrid extends Component {
           fill="none"
           stroke={COLORS.DARK_GRAY}
         />
-        <StyledLine x1={10} x2={10} y1={0} y2={1000} />
       </g>
     );
   }
