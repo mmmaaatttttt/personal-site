@@ -2,14 +2,15 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import styled from "styled-components";
 import { scaleLinear } from "d3-scale";
-import COLORS from "utils/styles";
+import COLORS, { hexToRgba } from "utils/styles";
 
 const StyledLine = styled.line`
   stroke: ${props => (props.isOn ? COLORS.DARK_GRAY : COLORS.WHITE)};
 
   &:hover {
     cursor: pointer;
-    stroke: ${props => (props.isOn ? COLORS.WHITE : COLORS.DARK_GRAY)};
+    stroke: ${props =>
+      props.isOn ? hexToRgba(COLORS.DARK_GRAY, 0.6) : COLORS.DARK_GRAY};
   }
 `;
 
@@ -17,16 +18,41 @@ class InteractiveGrid extends Component {
   state = {
     segments: Array.from({ length: this.props.rowCount * 2 - 1 }, (_, i) =>
       Array(this.props.colCount - 1 + (i % 2)).fill(false)
-    )
+    ),
+    activeSegmentStatus: null
   };
 
-  handleClick = (row, col) => {
+  componentDidMount() {
+    window.addEventListener("mouseup", this.handleMouseUp);
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener("mouseup", this.handleMouseUp);
+  }
+
+  handleMouseDown = (row, col) => {
     this.setState(prevState => {
       const segments = [...prevState.segments];
       segments[row] = [...prevState.segments[row]];
-      segments[row][col] = !segments[row][col];
-      return { segments };
+      const activeSegmentStatus = !segments[row][col];
+      segments[row][col] = activeSegmentStatus;
+      return { segments, activeSegmentStatus };
     });
+  };
+
+  handleMouseEnter = (row, col) => {
+    if (this.state.activeSegmentStatus !== null) {
+      this.setState(prevState => {
+        const segments = [...prevState.segments];
+        segments[row] = [...prevState.segments[row]];
+        segments[row][col] = prevState.activeSegmentStatus;
+        return { segments };
+      });
+    }
+  };
+
+  handleMouseUp = () => {
+    this.setState({ activeSegmentStatus: null });
   };
 
   render() {
@@ -85,7 +111,9 @@ class InteractiveGrid extends Component {
         return (
           <StyledLine
             {...points}
-            onClick={this.handleClick.bind(this, rowIdx, colIdx)}
+            onMouseDown={this.handleMouseDown.bind(this, rowIdx, colIdx)}
+            onMouseEnter={this.handleMouseEnter.bind(this, rowIdx, colIdx)}
+            onMouseUp={this.handleMouseUp}
           />
         );
       });
