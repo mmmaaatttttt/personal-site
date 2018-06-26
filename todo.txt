@@ -1,5 +1,6 @@
 - figure out line ordering at intersections
 - handle clicks and mouseovers
+  - use different cursors?
 - test for and display number of regions
 
 LOW PRIORITY
