@@ -40,8 +40,13 @@ class InteractiveGrid extends Component {
     });
   };
 
-  handleMouseEnter = (row, col) => {
-    if (this.state.activeSegmentStatus !== null) {
+  handleMouseEnter = (row, col, e) => {
+    // find the number of lines under the mouse
+    // this count will be greater than 2 if at an intersection
+    const lineCount = document
+      .elementsFromPoint(e.pageX, e.pageY)
+      .filter(el => el.tagName === "line").length;
+    if (this.state.activeSegmentStatus !== null && lineCount === 2) {
       this.setState(prevState => {
         const segments = [...prevState.segments];
         segments[row] = [...prevState.segments[row]];
@@ -96,29 +101,42 @@ class InteractiveGrid extends Component {
         />
       );
     });
-    const styledLines = segments.reduce((components, row, rowIdx) => {
-      let lines = row.map((isOn, colIdx) => {
-        // even rows are vertical
-        // odd rows are horizontal
-        let parity = rowIdx % 2; // 0 if even, 1 if odd
-        let points = {
-          x1: xScale(colIdx + 1 - parity),
-          x2: xScale(colIdx + 1),
-          y1: yScale((rowIdx + parity) / 2),
-          y2: yScale((rowIdx + parity) / 2 + (1 - parity)),
-          isOn
-        };
-        return (
-          <StyledLine
-            {...points}
-            onMouseDown={this.handleMouseDown.bind(this, rowIdx, colIdx)}
-            onMouseEnter={this.handleMouseEnter.bind(this, rowIdx, colIdx)}
-            onMouseUp={this.handleMouseUp}
-          />
-        );
-      });
-      return [...components, lines];
-    }, []);
+    const styledLineData = segments
+      .reduce((data, row, rowIdx) => {
+        let lines = row.map((isOn, colIdx) => {
+          // even rows are vertical
+          // odd rows are horizontal
+          let parity = rowIdx % 2; // 0 if even (vertical), 1 if odd (horizontal)
+          // set size based on isOn status
+          let onMultiplier = isOn ? -1 : 1;
+          let xOffset = (strokeWidth / 2) * parity * onMultiplier;
+          let yOffset = (strokeWidth / 2) * (1 - parity) * onMultiplier;
+          return {
+            x1: xScale(colIdx + 1 - parity) + xOffset,
+            x2: xScale(colIdx + 1) - xOffset,
+            y1: yScale((rowIdx + parity) / 2) - yOffset,
+            y2: yScale((rowIdx + parity) / 2 + (1 - parity)) + yOffset,
+            isOn,
+            rowIdx,
+            colIdx
+          };
+        });
+        return [...data, ...lines];
+      }, [])
+      .sort((d1, d2) => d1.isOn - d2.isOn);
+    const styledLines = styledLineData.map(d => (
+      <StyledLine
+        x1={d.x1}
+        x2={d.x2}
+        y1={d.y1}
+        y2={d.y2}
+        isOn={d.isOn}
+        onMouseDown={this.handleMouseDown.bind(this, d.rowIdx, d.colIdx)}
+        onMouseEnter={this.handleMouseEnter.bind(this, d.rowIdx, d.colIdx)}
+        onMouseUp={this.handleMouseUp}
+        key={`${d.rowIdx}:${d.colIdx}`}
+      />
+    ));
     return (
       <g strokeWidth={strokeWidth} stroke="white">
         {rowLines}
