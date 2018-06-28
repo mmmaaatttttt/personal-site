@@ -38,11 +38,13 @@ function euclideanDistance(...pts) {
   return pts.reduce((sum, pt) => sum + pt ** 2, 0) ** (1 / 2) || 0;
 }
 
-function average(nums, accessor) {
+function total(nums, accessor = num => num) {
+  return nums.reduce((sum, cur) => sum + accessor(cur), 0);
+}
+
+function average(nums, accessor = num => num) {
   if (!nums.length) return 0;
-  if (!accessor) accessor = num => num;
-  const total = nums.reduce((sum, cur) => sum + accessor(cur), 0);
-  return total / nums.length;
+  return total(nums, accessor) / nums.length;
 }
 
 function _swap(arr, i, j) {
@@ -58,4 +60,4 @@ function _shuffle(arr) {
   return arr;
 }
 
-export { generateData, choices, euclideanDistance, average };
+export { generateData, choices, euclideanDistance, average, total };
