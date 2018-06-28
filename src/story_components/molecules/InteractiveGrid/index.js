@@ -37,7 +37,7 @@ class InteractiveGrid extends Component {
       const activeSegmentStatus = !segments[row][col];
       segments[row][col] = activeSegmentStatus;
       return { segments, activeSegmentStatus };
-    });
+    }, this.__countRegions);
   };
 
   handleMouseEnter = (row, col, e) => {
@@ -52,12 +52,62 @@ class InteractiveGrid extends Component {
         segments[row] = [...prevState.segments[row]];
         segments[row][col] = prevState.activeSegmentStatus;
         return { segments };
-      });
+      }, this.__countRegions);
     }
   };
 
   handleMouseUp = () => {
     this.setState({ activeSegmentStatus: null });
+  };
+
+  __countRegions = () => {
+    const { rowCount, colCount } = this.props;
+    const visitedYet = Array.from({ length: rowCount }, () =>
+      Array.from({ length: colCount }).fill(false)
+    );
+    const counts = [];
+    visitedYet.forEach((row, rowIdx) => {
+      row.forEach((isVisited, colIdx) => {
+        if (!isVisited) {
+          counts.push(this.__calculateArea(visitedYet, [[rowIdx, colIdx]]));
+        }
+      });
+    });
+    console.log(counts);
+    return counts;
+  };
+
+  __calculateArea = (visitedYet, whereToLook) => {
+    const { segments } = this.state;
+    let count = 0;
+    while (whereToLook.length > 0) {
+      let [row, col] = whereToLook.shift();
+      if (visitedYet[row][col] === false) {
+        visitedYet[row][col] = true;
+        count++;
+        let shouldMoveUp =
+          visitedYet[row - 1] !== undefined &&
+          visitedYet[row - 1][col] === false &&
+          segments[2 * row - 1][col] === false;
+        let shouldMoveRight =
+          visitedYet[row][col + 1] !== undefined &&
+          visitedYet[row][col + 1] === false &&
+          segments[2 * row][col] === false;
+        let shouldMoveDown =
+          visitedYet[row + 1] !== undefined &&
+          visitedYet[row + 1][col] === false &&
+          segments[2 * row + 1][col] === false;
+        let shouldMoveLeft =
+          visitedYet[row][col - 1] !== undefined &&
+          visitedYet[row][col - 1] === false &&
+          segments[2 * row][col - 1] === false;
+        if (shouldMoveUp) whereToLook.push([row - 1, col]);
+        if (shouldMoveRight) whereToLook.push([row, col + 1]);
+        if (shouldMoveDown) whereToLook.push([row + 1, col]);
+        if (shouldMoveLeft) whereToLook.push([row, col - 1]);
+      }
+    }
+    return count;
   };
 
   render() {
