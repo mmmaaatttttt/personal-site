@@ -5,11 +5,20 @@ import media, { sizes } from "utils/media";
 const ColumnLayout = styled.div`
   display: flex;
 
-  & > div {
-    flex: 1;
-  }
-
   ${props =>
+    props.sizes
+      ? props.sizes.map(
+          (size, idx) => css`
+            & > div:nth-child(${idx + 1}) {
+              flex: ${size};
+            }
+          `
+        )
+      : css`
+          & > div {
+            flex: 1;
+          }
+        `} ${props =>
     props.break &&
     css`
       ${media[props.break]`
@@ -19,7 +28,8 @@ const ColumnLayout = styled.div`
 `;
 
 ColumnLayout.propTypes = {
-  break: PropTypes.oneOf(Object.keys(sizes))
+  break: PropTypes.oneOf(Object.keys(sizes)),
+  sizes: PropTypes.arrayOf(PropTypes.number)
 };
 
 export default ColumnLayout;
