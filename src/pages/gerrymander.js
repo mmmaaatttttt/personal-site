@@ -61,18 +61,12 @@ class GerrymanderSample extends Component {
     });
   };
 
-  handleSegmentUpdate = (row, col, e) => {
-    // find the number of lines under the mouse
-    // this count will be greater than 2 if at an intersection
-    const lineCount = document
-      .elementsFromPoint(e.clientX, e.clientY)
-      .filter(el => el.tagName === "line").length;
-    if (lineCount === 2) {
+  handleSegmentUpdate = (row, col, segStatus, e) => {
+    if (segStatus !== null) {
       this.setState(prevState => {
         const segments = [...prevState.segments];
         segments[row] = [...prevState.segments[row]];
-        const activeSegmentStatus = !segments[row][col];
-        segments[row][col] = activeSegmentStatus;
+        segments[row][col] = segStatus;
         return { segments, saveable: true };
       }, this.__countRegions);
     }
