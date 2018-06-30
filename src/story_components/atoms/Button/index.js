@@ -53,12 +53,14 @@ const Button = styled.button`
 
 Button.propTypes = {
   color: PropTypes.string.isRequired,
-  large: PropTypes.bool.isRequired
+  large: PropTypes.bool.isRequired,
+  disabled: PropTypes.bool.isRequired
 };
 
 Button.defaultProps = {
   color: "white",
-  large: false
+  large: false,
+  disabled: false
 };
 
 export default Button;
