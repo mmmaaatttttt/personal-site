@@ -55,7 +55,7 @@ class InteractiveGrid extends Component {
   handleMouseMove = (row, col, e) => {
     const { hovered, activeSegmentStatus } = this.state;
     if (
-      activeSegmentStatus !== null &&
+      activeSegmentStatus === null &&
       (!hovered || hovered[0] !== row || hovered[1] !== col)
     ) {
       this.setState({ hovered: [row, col] });
@@ -67,12 +67,7 @@ class InteractiveGrid extends Component {
   };
 
   handleMouseUp = () => {
-    this.setState({ activeSegmentStatus: null });
-  };
-
-  handleTouch = (row, col, e) => {
-    this.handleMouseDown.bind(this, row, col);
-    this.setState({ hovered: null });
+    this.setState({ activeSegmentStatus: null, hovered: null });
   };
 
   render() {
@@ -86,7 +81,7 @@ class InteractiveGrid extends Component {
       colCount,
       segments
     } = this.props;
-    const { hovered } = this.state;
+    const { activeSegmentStatus, hovered } = this.state;
     const xScale = scaleLinear()
       .domain([0, colCount])
       .range([paddingX, width - paddingX]);
@@ -156,7 +151,10 @@ class InteractiveGrid extends Component {
         onMouseMove={this.handleMouseMove.bind(this, d.rowIdx, d.colIdx)}
         onMouseOut={this.handleMouseOut}
         isHovered={
-          hovered && hovered[0] === d.rowIdx && hovered[1] === d.colIdx
+          activeSegmentStatus === null &&
+          hovered &&
+          hovered[0] === d.rowIdx &&
+          hovered[1] === d.colIdx
         }
         key={`${d.rowIdx}:${d.colIdx}`}
       />

@@ -33,7 +33,7 @@ class GerrymanderSample extends Component {
     segments: Array.from({ length: this.props.rowCount * 2 - 1 }, (_, i) =>
       Array(this.props.colCount - 1 + (i % 2)).fill(false)
     ),
-    counts: [this.props.rowCount * this.props.colCount],
+    districts: [[]],
     saveable: false
   };
 
@@ -41,6 +41,8 @@ class GerrymanderSample extends Component {
     const segments = JSON.parse(localStorage.getItem("segments"));
     if (segments) {
       this.setState({ segments }, this.__countRegions);
+    } else {
+      this.__countRegions();
     }
   }
 
@@ -52,13 +54,16 @@ class GerrymanderSample extends Component {
 
   handleReset = () => {
     localStorage.removeItem("segments");
-    this.setState({
-      segments: Array.from({ length: this.props.rowCount * 2 - 1 }, (_, i) =>
-        Array(this.props.colCount - 1 + (i % 2)).fill(false)
-      ),
-      counts: [this.props.rowCount * this.props.colCount],
-      saveable: false
-    });
+    this.setState(
+      {
+        segments: Array.from({ length: this.props.rowCount * 2 - 1 }, (_, i) =>
+          Array(this.props.colCount - 1 + (i % 2)).fill(false)
+        ),
+        districts: [[]],
+        saveable: false
+      },
+      this.__countRegions
+    );
   };
 
   handleSegmentUpdate = (row, col, segStatus, e) => {
@@ -74,34 +79,38 @@ class GerrymanderSample extends Component {
 
   __countRegions = () => {
     const { rowCount, colCount } = this.props;
-    const { counts } = this.state;
+    const { districts } = this.state;
     const visitedYet = Array.from({ length: rowCount }, () =>
       Array.from({ length: colCount }).fill(false)
     );
-    const newCounts = [];
+    const newDistricts = [];
     visitedYet.forEach((row, rowIdx) => {
       row.forEach((isVisited, colIdx) => {
         if (!isVisited) {
-          newCounts.push(this.__calculateArea(visitedYet, [[rowIdx, colIdx]]));
+          newDistricts.push(
+            this.__calculateArea(visitedYet, [[rowIdx, colIdx]])
+          );
         }
       });
     });
     if (
-      counts.length !== newCounts.length ||
-      counts.some((num, i) => num !== newCounts[i])
+      districts.length !== newDistricts.length ||
+      districts.some(
+        (district, i) => district.length !== newDistricts[i].length
+      )
     ) {
-      this.setState({ counts: newCounts });
+      this.setState({ districts: newDistricts });
     }
   };
 
   __calculateArea = (visitedYet, whereToLook) => {
     const { segments } = this.state;
-    let count = 0;
+    let district = [];
     while (whereToLook.length > 0) {
       let [row, col] = whereToLook.shift();
       if (visitedYet[row][col] === false) {
         visitedYet[row][col] = true;
-        count++;
+        district.push([row, col]);
         let shouldMoveUp =
           visitedYet[row - 1] !== undefined &&
           visitedYet[row - 1][col] === false &&
@@ -124,15 +133,16 @@ class GerrymanderSample extends Component {
         if (shouldMoveLeft) whereToLook.push([row, col - 1]);
       }
     }
-    return count;
+    return district;
   };
 
   render() {
     const { rowCount, colCount, colors } = this.props;
-    const { counts, segments, saveable } = this.state;
+    const { districts, segments, saveable } = this.state;
     const heatData = Array.from({ length: colCount }, () =>
       Array.from({ length: rowCount }, (_, i) => i % 2)
     );
+    console.log(heatData);
     return (
       <NarrowContainer width="80%">
         <h1>Gerrymandering Interactives</h1>
@@ -160,7 +170,7 @@ class GerrymanderSample extends Component {
             colorRange={colors}
           >
             <InteractiveGrid
-              strokeWidth={5}
+              strokeWidth={6}
               rowCount={rowCount}
               colCount={colCount}
               handleSegmentUpdate={this.handleSegmentUpdate}
@@ -168,21 +178,38 @@ class GerrymanderSample extends Component {
             />
           </HeatChart>
           <StyledDistrictData>
-            {counts.length > 6 ? (
+            {districts.length > 6 ? (
               <h2>Too many districts!</h2>
             ) : (
-              Array.from({ length: 6 }).map((_, idx) => (
-                <div key={idx}>
-                  <h4>
-                    District {idx + 1} Size: {counts[idx] || "--"}
-                  </h4>
-                  {counts[idx] === colCount ? (
+              Array.from({ length: 6 }).map((_, idx) => {
+                let size = (districts[idx] && districts[idx].length) || "--";
+                let icon = (
+                  <Icon name="times-circle" color={COLORS.RED} size={2} />
+                );
+                if (districts[idx] && districts[idx].length === colCount) {
+                  icon = (
                     <Icon name="check-circle" color={COLORS.GREEN} size={2} />
-                  ) : (
-                    <Icon name="times-circle" color={COLORS.RED} size={2} />
-                  )}
-                </div>
-              ))
+                  );
+                }
+                let msgByColor = null;
+                let color = COLORS.BLACK;
+                if (districts[idx]) {
+                  let orangeCount = districts[idx].filter(d => d[0] % 2 === 0)
+                    .length;
+                  let purpleCount = districts[idx].length - orangeCount;
+                  msgByColor = `(${orangeCount} orange, ${purpleCount} purple)`;
+                  if (orangeCount > purpleCount) color = COLORS.ORANGE;
+                  if (purpleCount > orangeCount) color = COLORS.PURPLE;
+                }
+                return (
+                  <div key={idx}>
+                    <h4 style={{ color }}>
+                      D{idx + 1}: {size} {msgByColor}
+                    </h4>
+                    {icon}
+                  </div>
+                );
+              })
             )}
             <FlexContainer>
               <Button
