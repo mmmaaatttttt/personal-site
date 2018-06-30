@@ -10,15 +10,14 @@ const StyledLine = styled.line`
   &:hover {
     cursor: pointer;
     stroke: ${props =>
-      props.isOn ? hexToRgba(COLORS.DARK_GRAY, 0.6) : COLORS.DARK_GRAY};
+      props.isOn
+        ? hexToRgba(COLORS.RED, 0.9)
+        : hexToRgba(COLORS.DARK_GRAY, 0.6)};
   }
 `;
 
 class InteractiveGrid extends Component {
   state = {
-    segments: Array.from({ length: this.props.rowCount * 2 - 1 }, (_, i) =>
-      Array(this.props.colCount - 1 + (i % 2)).fill(false)
-    ),
     activeSegmentStatus: null
   };
 
@@ -30,84 +29,23 @@ class InteractiveGrid extends Component {
     window.removeEventListener("mouseup", this.handleMouseUp);
   }
 
-  handleMouseDown = (row, col) => {
-    this.setState(prevState => {
-      const segments = [...prevState.segments];
-      segments[row] = [...prevState.segments[row]];
-      const activeSegmentStatus = !segments[row][col];
-      segments[row][col] = activeSegmentStatus;
-      return { segments, activeSegmentStatus };
-    }, this.__countRegions);
+  handleMouseDown = (row, col, e) => {
+    const { segments } = this.props;
+    e.persist();
+    this.setState({ activeSegmentStatus: !segments[row][col] }, () => {
+      this.props.handleSegmentUpdate(row, col, e);
+    });
   };
 
   handleMouseEnter = (row, col, e) => {
-    // find the number of lines under the mouse
-    // this count will be greater than 2 if at an intersection
-    const lineCount = document
-      .elementsFromPoint(e.pageX, e.pageY)
-      .filter(el => el.tagName === "line").length;
-    if (this.state.activeSegmentStatus !== null && lineCount === 2) {
-      this.setState(prevState => {
-        const segments = [...prevState.segments];
-        segments[row] = [...prevState.segments[row]];
-        segments[row][col] = prevState.activeSegmentStatus;
-        return { segments };
-      }, this.__countRegions);
+    e.persist();
+    if (this.state.activeSegmentStatus !== null) {
+      this.props.handleSegmentUpdate(row, col, e);
     }
   };
 
   handleMouseUp = () => {
     this.setState({ activeSegmentStatus: null });
-  };
-
-  __countRegions = () => {
-    const { rowCount, colCount } = this.props;
-    const visitedYet = Array.from({ length: rowCount }, () =>
-      Array.from({ length: colCount }).fill(false)
-    );
-    const counts = [];
-    visitedYet.forEach((row, rowIdx) => {
-      row.forEach((isVisited, colIdx) => {
-        if (!isVisited) {
-          counts.push(this.__calculateArea(visitedYet, [[rowIdx, colIdx]]));
-        }
-      });
-    });
-    console.log(counts);
-    return counts;
-  };
-
-  __calculateArea = (visitedYet, whereToLook) => {
-    const { segments } = this.state;
-    let count = 0;
-    while (whereToLook.length > 0) {
-      let [row, col] = whereToLook.shift();
-      if (visitedYet[row][col] === false) {
-        visitedYet[row][col] = true;
-        count++;
-        let shouldMoveUp =
-          visitedYet[row - 1] !== undefined &&
-          visitedYet[row - 1][col] === false &&
-          segments[2 * row - 1][col] === false;
-        let shouldMoveRight =
-          visitedYet[row][col + 1] !== undefined &&
-          visitedYet[row][col + 1] === false &&
-          segments[2 * row][col] === false;
-        let shouldMoveDown =
-          visitedYet[row + 1] !== undefined &&
-          visitedYet[row + 1][col] === false &&
-          segments[2 * row + 1][col] === false;
-        let shouldMoveLeft =
-          visitedYet[row][col - 1] !== undefined &&
-          visitedYet[row][col - 1] === false &&
-          segments[2 * row][col - 1] === false;
-        if (shouldMoveUp) whereToLook.push([row - 1, col]);
-        if (shouldMoveRight) whereToLook.push([row, col + 1]);
-        if (shouldMoveDown) whereToLook.push([row + 1, col]);
-        if (shouldMoveLeft) whereToLook.push([row, col - 1]);
-      }
-    }
-    return count;
   };
 
   render() {
@@ -118,9 +56,9 @@ class InteractiveGrid extends Component {
       paddingY,
       strokeWidth,
       rowCount,
-      colCount
+      colCount,
+      segments
     } = this.props;
-    const { segments } = this.state;
     const xScale = scaleLinear()
       .domain([0, colCount])
       .range([paddingX, width - paddingX]);
@@ -212,7 +150,9 @@ InteractiveGrid.propTypes = {
   paddingY: PropTypes.number.isRequired,
   strokeWidth: PropTypes.number.isRequired,
   rowCount: PropTypes.number.isRequired,
-  colCount: PropTypes.number.isRequired
+  colCount: PropTypes.number.isRequired,
+  handleSegmentUpdate: PropTypes.func.isRequired,
+  segments: PropTypes.array.isRequired
 };
 
 InteractiveGrid.defaultProps = {

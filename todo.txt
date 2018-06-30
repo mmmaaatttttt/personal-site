@@ -1,5 +1,6 @@
-- styling when clicking on/off
-- test for and display number of regions
+- clicking in intersection removes all matches, not one
+- hovering on segment and its width?
+- show district data in color of winning party 
 
 LOW PRIORITY
 - get more heat map data (mayyybeeeee)
