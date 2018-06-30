@@ -1,6 +1,5 @@
 - show district data in color of winning party 
 - layout on right side
-- handle touch events as well as mouse events
 
 LOW PRIORITY
 - get more heat map data (mayyybeeeee)

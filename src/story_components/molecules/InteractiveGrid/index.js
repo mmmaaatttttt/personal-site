@@ -38,29 +38,27 @@ class InteractiveGrid extends Component {
     const { segments } = this.props;
     e.persist();
     this.setState({ activeSegmentStatus: !segments[row][col] }, () => {
-      this.props.handleSegmentUpdate(row, col, e);
+      this.props.handleSegmentUpdate(
+        row,
+        col,
+        this.state.activeSegmentStatus,
+        e
+      );
     });
   };
 
   handleMouseEnter = (row, col, e) => {
     e.persist();
-    if (this.state.activeSegmentStatus !== null) {
-      this.props.handleSegmentUpdate(row, col, e);
-    }
+    this.props.handleSegmentUpdate(row, col, this.state.activeSegmentStatus, e);
   };
 
   handleMouseMove = (row, col, e) => {
-    const { hovered } = this.state;
-    const lineCount = document
-      .elementsFromPoint(e.clientX, e.clientY)
-      .filter(el => el.tagName === "line").length;
+    const { hovered, activeSegmentStatus } = this.state;
     if (
-      lineCount === 2 &&
+      activeSegmentStatus !== null &&
       (!hovered || hovered[0] !== row || hovered[1] !== col)
     ) {
       this.setState({ hovered: [row, col] });
-    } else if (lineCount !== 2) {
-      this.setState({ hovered: null });
     }
   };
 
@@ -70,6 +68,11 @@ class InteractiveGrid extends Component {
 
   handleMouseUp = () => {
     this.setState({ activeSegmentStatus: null });
+  };
+
+  handleTouch = (row, col, e) => {
+    this.handleMouseDown.bind(this, row, col);
+    this.setState({ hovered: null });
   };
 
   render() {
@@ -120,17 +123,13 @@ class InteractiveGrid extends Component {
           // even rows are vertical
           // odd rows are horizontal
           let parity = rowIdx % 2; // 0 if even (vertical), 1 if odd (horizontal)
-          // set size based on hovered status
-          let hoverMultiplier = -1;
-          // if (hovered && hovered[0] === rowIdx && hovered[1] === colIdx)
-          // hoverMultiplier = 1;
-          let xOffset = (strokeWidth / 2) * parity * hoverMultiplier;
-          let yOffset = (strokeWidth / 2) * (1 - parity) * hoverMultiplier;
+          let xOffset = (strokeWidth / 2) * parity;
+          let yOffset = (strokeWidth / 2) * (1 - parity);
           return {
-            x1: xScale(colIdx + 1 - parity) + xOffset,
-            x2: xScale(colIdx + 1) - xOffset,
-            y1: yScale((rowIdx + parity) / 2) - yOffset,
-            y2: yScale((rowIdx + parity) / 2 + (1 - parity)) + yOffset,
+            x1: xScale(colIdx + 1 - parity) - xOffset,
+            x2: xScale(colIdx + 1) + xOffset,
+            y1: yScale((rowIdx + parity) / 2) + yOffset,
+            y2: yScale((rowIdx + parity) / 2 + (1 - parity)) - yOffset,
             isOn,
             rowIdx,
             colIdx
