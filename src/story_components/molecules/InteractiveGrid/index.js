@@ -1,24 +1,29 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import { scaleLinear } from "d3-scale";
 import COLORS, { hexToRgba } from "utils/styles";
 
 const StyledLine = styled.line`
   stroke: ${props => (props.isOn ? COLORS.DARK_GRAY : COLORS.WHITE)};
 
-  &:hover {
-    cursor: pointer;
-    stroke: ${props =>
-      props.isOn
-        ? hexToRgba(COLORS.RED, 0.9)
-        : hexToRgba(COLORS.DARK_GRAY, 0.6)};
-  }
+  ${props =>
+    props.isHovered &&
+    css`
+      &:hover {
+        cursor: pointer;
+        stroke: ${props =>
+          props.isOn
+            ? hexToRgba(COLORS.RED, 0.9)
+            : hexToRgba(COLORS.DARK_GRAY, 0.6)};
+      }
+    `};
 `;
 
 class InteractiveGrid extends Component {
   state = {
-    activeSegmentStatus: null
+    activeSegmentStatus: null,
+    hovered: null
   };
 
   componentDidMount() {
@@ -44,6 +49,25 @@ class InteractiveGrid extends Component {
     }
   };
 
+  handleMouseMove = (row, col, e) => {
+    const { hovered } = this.state;
+    const lineCount = document
+      .elementsFromPoint(e.clientX, e.clientY)
+      .filter(el => el.tagName === "line").length;
+    if (
+      lineCount === 2 &&
+      (!hovered || hovered[0] !== row || hovered[1] !== col)
+    ) {
+      this.setState({ hovered: [row, col] });
+    } else if (lineCount !== 2) {
+      this.setState({ hovered: null });
+    }
+  };
+
+  handleMouseOut = () => {
+    this.setState({ hovered: null });
+  };
+
   handleMouseUp = () => {
     this.setState({ activeSegmentStatus: null });
   };
@@ -59,6 +83,7 @@ class InteractiveGrid extends Component {
       colCount,
       segments
     } = this.props;
+    const { hovered } = this.state;
     const xScale = scaleLinear()
       .domain([0, colCount])
       .range([paddingX, width - paddingX]);
@@ -95,10 +120,12 @@ class InteractiveGrid extends Component {
           // even rows are vertical
           // odd rows are horizontal
           let parity = rowIdx % 2; // 0 if even (vertical), 1 if odd (horizontal)
-          // set size based on isOn status
-          let onMultiplier = isOn ? -1 : 1;
-          let xOffset = (strokeWidth / 2) * parity * onMultiplier;
-          let yOffset = (strokeWidth / 2) * (1 - parity) * onMultiplier;
+          // set size based on hovered status
+          let hoverMultiplier = -1;
+          // if (hovered && hovered[0] === rowIdx && hovered[1] === colIdx)
+          // hoverMultiplier = 1;
+          let xOffset = (strokeWidth / 2) * parity * hoverMultiplier;
+          let yOffset = (strokeWidth / 2) * (1 - parity) * hoverMultiplier;
           return {
             x1: xScale(colIdx + 1 - parity) + xOffset,
             x2: xScale(colIdx + 1) - xOffset,
@@ -111,7 +138,13 @@ class InteractiveGrid extends Component {
         });
         return [...data, ...lines];
       }, [])
-      .sort((d1, d2) => d1.isOn - d2.isOn);
+      .sort((d1, d2) => {
+        if (hovered) {
+          if (d1.rowIdx === hovered[0] && d1.colIdx === hovered[1]) return 1;
+          if (d2.rowIdx === hovered[0] && d2.colIdx === hovered[1]) return -1;
+        }
+        return d1.isOn - d2.isOn;
+      });
     const styledLines = styledLineData.map(d => (
       <StyledLine
         x1={d.x1}
@@ -121,7 +154,11 @@ class InteractiveGrid extends Component {
         isOn={d.isOn}
         onMouseDown={this.handleMouseDown.bind(this, d.rowIdx, d.colIdx)}
         onMouseEnter={this.handleMouseEnter.bind(this, d.rowIdx, d.colIdx)}
-        onMouseUp={this.handleMouseUp}
+        onMouseMove={this.handleMouseMove.bind(this, d.rowIdx, d.colIdx)}
+        onMouseOut={this.handleMouseOut}
+        isHovered={
+          hovered && hovered[0] === d.rowIdx && hovered[1] === d.colIdx
+        }
         key={`${d.rowIdx}:${d.colIdx}`}
       />
     ));
