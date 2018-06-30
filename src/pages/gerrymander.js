@@ -142,7 +142,6 @@ class GerrymanderSample extends Component {
     const heatData = Array.from({ length: colCount }, () =>
       Array.from({ length: rowCount }, (_, i) => i % 2)
     );
-    console.log(heatData);
     return (
       <NarrowContainer width="80%">
         <h1>Gerrymandering Interactives</h1>
@@ -211,7 +210,7 @@ class GerrymanderSample extends Component {
                 );
               })
             )}
-            <FlexContainer>
+            <div>
               <Button
                 onClick={this.handleSave}
                 disabled={!saveable}
@@ -222,7 +221,7 @@ class GerrymanderSample extends Component {
               <Button onClick={this.handleReset} color={COLORS.RED}>
                 Reset
               </Button>
-            </FlexContainer>
+            </div>
           </StyledDistrictData>
         </ColumnLayout>
       </NarrowContainer>
