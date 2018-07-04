@@ -32,21 +32,6 @@ IDEAS
 - keypad hacking
 - knowing what you don't know
 - tipping points
-- treatise on systems thinking
-  - climate
-  - racism
-  - prison industrial complex
-  - libertarianism
-  - tech (doctors required to think through ethical consequences?)
-- treatise on data
-  - fitbit
-  - germany in ww2
-  - quotes
-    - underestimating power of bad actors in large numbers
-  - when you're data-driven, you're merely a passenger
-  - https://mtlynch.io/why-i-quit-google/
-  - https://design.google/library/fair-not-default/
-  - https://svpow.com/2017/03/17/every-attempt-to-manage-academia-makes-it-worse/
 - gun violence: http://www.shootingtracker.com/
 - gerrymandering
   - https://phys.org/news/2018-03-mathematicians-tool-voting-unfairly-drawn.html
@@ -62,9 +47,9 @@ IDEAS
 - jury math 
   - broadchurch: unanimous or majority
 - bar exam https://www.adaptibar.com/bar-exam-statistics-17.aspx
-- intergalactic climate change: https://www.space.com/40813-climate-change-killed-aliens-easter-island.html
-- https://www.theatlantic.com/science/archive/2018/05/how-do-aliens-solve-climate-change/561479/
 - what names appear most frequently in pop songs? do they impact names in census data?
+- this is not normal -- things that people think are normally distributed but aren't, and what effect these misconceptions have
+  - income distributions over time?
 
 - gerrymandering
  - visualization with squares, try to "pack and crack"
@@ -75,3 +60,37 @@ IDEAS
    - http://rangevoting.org/GerryExec.html
  - compactness doesn't guarantee anything!
  - efficiency gap visualization(s)?
+
+
+- treatise on systems thinking
+  - climate
+  - racism
+  - prison industrial complex
+  - libertarianism
+  - tech (doctors required to think through ethical consequences?)
+  - nutrition
+  - forests!
+  - math education itself suffers from a lack of systems thinking (not enough integration with ethics, writing, computer science)
+
+
+ TREATISE ON data
+  - fitbit
+    - https://www.wired.com/story/science-says-fitness-trackers-dont-work-wear-one-anyway/
+    - http://time.com/4501018/wearable-weight-loss/?iid=sr-link8
+  - BMI?
+  - germany in ww2
+  - quotes
+    - underestimating power of bad actors in large numbers
+  - when you're data-driven, you're merely a passenger
+  - https://mtlynch.io/why-i-quit-google/
+  - https://design.google/library/fair-not-default/
+  - https://svpow.com/2017/03/17/every-attempt-to-manage-academia-makes-it-worse/
+  - https://www.forbes.com/sites/bernardmarr/2018/05/21/how-much-data-do-we-create-every-day-the-mind-blowing-stats-everyone-should-read/
+- https://www.domo.com/learn/data-never-sleeps-6
+
+  Problems:
+  More data isn’t always better
+  Data you can get isn’t always a good proxy for what you’re trying to measure
+  Gives the impression that transferring knowledge across domains is as simple as currency conversion
+  Invest in people too, not technology (https://www.wired.com/story/willie-brown-middle-school-startup-mentality-failed/)
+  https://medium.com/s/story/data-violence-and-how-bad-engineering-choices-can-damage-society-39e44150e1d4

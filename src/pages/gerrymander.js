@@ -4,7 +4,6 @@ import styled from "styled-components";
 import {
   Button,
   ColumnLayout,
-  FlexContainer,
   HeatChart,
   Icon,
   InteractiveGrid,
