@@ -10,6 +10,8 @@ hello
 
 ### straight up exp growth
 
+<ClimatesChange idx={0} caption="test"/>
+
 ### logistic growth
 
 ### model 1

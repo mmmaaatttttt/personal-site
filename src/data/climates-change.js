@@ -1,106 +1,18 @@
 import COLORS from "utils/styles";
 
 const POPULATION_COLOR = COLORS.BLUE;
-// const graph1Data = [
-//   {
-//     min: -5,
-//     max: 5,
-//     initialValue: 3,
-//     title: "A's Initial Feelings",
-//     color: PERSON_A_COLOR,
-//     equationParameter: false
-//   },
-//   {
-//     min: -5,
-//     max: 5,
-//     initialValue: -1,
-//     title: "A's Response to B's Feelings",
-//     color: PERSON_A_COLOR,
-//     equationParameter: true
-//   },
-//   {
-//     min: -5,
-//     max: 5,
-//     initialValue: -3,
-//     title: "B's Initial Feelings",
-//     color: PERSON_B_COLOR,
-//     equationParameter: false
-//   },
-//   {
-//     min: -5,
-//     max: 5,
-//     initialValue: 1,
-//     title: "B's Response to A's Feelings",
-//     color: PERSON_B_COLOR,
-//     equationParameter: true
-//   }
-// ];
+const graph1Data = [
+  {
+    min: 0.1,
+    max: 10,
+    initialValue: 1,
+    title: "Doubling time for population",
+    color: POPULATION_COLOR,
+    equationParameter: true
+  }
+];
 
-// const graph2Data = [
-//   ...graph1Data.slice(0, 2),
-//   {
-//     min: -5,
-//     max: 5,
-//     initialValue: -0.3,
-//     title: "A's Response to A's Feelings",
-//     color: PERSON_A_COLOR,
-//     equationParameter: true
-//   },
-//   ...graph1Data.slice(2),
-//   {
-//     min: -5,
-//     max: 5,
-//     initialValue: 0,
-//     title: "B's Response to B's Feelings",
-//     color: PERSON_B_COLOR,
-//     equationParameter: true
-//   }
-// ];
-
-// const graph3Data = [
-//   ...graph2Data.slice(1, 3).map((d, i) => {
-//     const newVals = [1, -5];
-//     return { ...d, initialValue: newVals[i] };
-//   }),
-//   {
-//     min: -5,
-//     max: 5,
-//     initialValue: 1,
-//     title: "A's Intrinsic Appeal",
-//     color: PERSON_A_COLOR,
-//     equationParameter: true
-//   },
-//   {
-//     min: -5,
-//     max: 5,
-//     initialValue: 3,
-//     title: "A's Response to B's Intrinsic Appeal",
-//     color: PERSON_A_COLOR,
-//     equationParameter: true
-//   },
-//   ...graph2Data.slice(4).map((d, i) => {
-//     const newVals = [2, -5];
-//     return { ...d, initialValue: newVals[i] };
-//   }),
-//   {
-//     min: -5,
-//     max: 5,
-//     initialValue: 4,
-//     title: "B's Intrinsic Appeal",
-//     color: PERSON_B_COLOR,
-//     equationParameter: true
-//   },
-//   {
-//     min: -5,
-//     max: 5,
-//     initialValue: 2,
-//     title: "B's Response to A's Intrinsic Appeal",
-//     color: PERSON_B_COLOR,
-//     equationParameter: true
-//   }
-// ];
-
-// const diffEq1 = (a, b) => (x, y) => [a * y[1], b * y[0]];
+const exponential = dblTime => (x, y) => [(Math.LN2 / dblTime) * y];
 // const diffEq2 = (a, b, c, d) => (x, y) => [
 //   a * y[1] + b * y[0],
 //   c * y[0] + d * y[1]
@@ -110,53 +22,19 @@ const POPULATION_COLOR = COLORS.BLUE;
 //   e * y[0] + f * y[1] + h * c
 // ];
 
-// const visualizationData = [
-//   {
-//     initialData: graph1Data,
-//     width: 800,
-//     height: 500,
-//     smallestY: 5,
-//     largestY: 100,
-//     diffEqs: [diffEq1],
-//     svgIds: ["vis1"],
-//     xLabel: "Time",
-//     yLabel: "Feelings",
-//     colors: [PERSON_A_COLOR, PERSON_B_COLOR]
-//   },
-//   {
-//     initialData: graph2Data,
-//     width: 800,
-//     height: 600,
-//     smallestY: 5,
-//     largestY: 200,
-//     diffEqs: [diffEq2],
-//     step: 0.02,
-//     svgIds: ["vis2"],
-//     xLabel: "Time",
-//     yLabel: "Feelings",
-//     colors: [PERSON_A_COLOR, PERSON_B_COLOR]
-//   },
-//   {
-//     initialData: graph3Data,
-//     width: 800,
-//     height: 650,
-//     smallestY: 5,
-//     largestY: 200,
-//     diffEqs: [diffEq3],
-//     svgIds: ["vis3"],
-//     xLabel: "Time",
-//     yLabel: "Feelings",
-//     colors: [PERSON_A_COLOR, PERSON_B_COLOR]
-//   }
-// ];
-
-// export {
-//   graph2Data,
-//   diffEq1,
-//   diffEq2,
-//   diffEq3,
-//   PERSON_A_COLOR,
-//   PERSON_B_COLOR
-// };
+const visualizationData = [
+  {
+    initialData: graph1Data,
+    width: 800,
+    height: 500,
+    smallestY: 0,
+    largestY: 100,
+    diffEqs: [exponential],
+    svgIds: ["vis1"],
+    xLabel: "Time",
+    yLabel: "Population",
+    colors: [POPULATION_COLOR]
+  }
+];
 
 export default visualizationData;

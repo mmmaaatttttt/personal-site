@@ -1,3 +1,6 @@
+- put 0 at bottom of graph axis, not middle
+- fix slider icons
+
 LOW PRIORITY
 - get more heat map data (mayyybeeeee)
 - add meta tags for /stories endpoint
@@ -51,6 +54,7 @@ IDEAS
   - http://www.washingtonpost.com/wp-srv/special/politics/gerrymandering/?noredirect=on
 - https://www.vox.com/energy-and-environment/2018/3/20/17128478/solar-duck-curve-nrel-researcher?utm_campaign=drvox&utm_content=chorus&utm_medium=social&utm_source=twitter
 - http://www.newsweek.com/gravity-could-trap-alien-civilizations-super-earth-planets-897254
+- organ donation rates by state?
 - jury math 
   - broadchurch: unanimous or majority
 - bar exam https://www.adaptibar.com/bar-exam-statistics-17.aspx

@@ -2,12 +2,12 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { extent, max } from "d3-array";
 import { scaleLinear } from "d3-scale";
-import visualizationData from "data/gaming-linear-relationships.js";
+import visualizationData from "data/climates-change.js";
 import withCaption from "hocs/withCaption";
 import { generateData } from "utils/mathHelpers";
 import { FlexContainer, Graph, LinePlot, SliderGroup } from "story_components";
 
-class GamingLinearRelationships extends Component {
+class ClimatesChange extends Component {
   state = {
     values: visualizationData[this.props.idx].initialData.map(
       d => d.initialValue
@@ -22,7 +22,7 @@ class GamingLinearRelationships extends Component {
 
   getYDomain = graphData => {
     const { largestY, smallestY } = visualizationData[this.props.idx];
-    let yMax = max([...graphData[0], ...graphData[1]], d => Math.abs(d.y));
+    let yMax = max([].concat(...graphData), d => Math.abs(d.y));
     yMax = Math.min(Math.max(Math.ceil(yMax), smallestY), largestY);
     return [-yMax, yMax];
   };
@@ -43,7 +43,7 @@ class GamingLinearRelationships extends Component {
     let initialValues = data
       .filter(d => !d.equationParameter)
       .map(d => d.value);
-    if (initialValues.length === 0) initialValues = [0, 0];
+    if (initialValues.length === 0) initialValues = [1];
     return generateData(
       graphCount,
       min,
@@ -95,10 +95,11 @@ class GamingLinearRelationships extends Component {
     ));
 
     const sliderGroups = colors.map(color => {
-      const sliderData = data.filter(d => d.color === color).map(d => ({
+      const sliderData = data.filter(d => d.color === color).map((d, i) => ({
         ...d,
-        tickCount: 3,
-        fadeIcons: true,
+        title: `${d.title}: ${values[i].toFixed(1)} units`,
+        tickCount: 2,
+        fadeIcons: false,
         handleValueChange: val => this.handleValueChange(d.key, val)
       }));
       return <SliderGroup key={color} data={sliderData} />;
@@ -130,7 +131,7 @@ class GamingLinearRelationships extends Component {
   }
 }
 
-GamingLinearRelationships.propTypes = {
+ClimatesChange.propTypes = {
   idx: PropTypes.number.isRequired,
   min: PropTypes.number.isRequired,
   max: PropTypes.number.isRequired,
@@ -139,12 +140,12 @@ GamingLinearRelationships.propTypes = {
   graphPadding: PropTypes.number.isRequired
 };
 
-GamingLinearRelationships.defaultProps = {
-  min: 0,
-  max: 20,
+ClimatesChange.defaultProps = {
+  min: 0.1,
+  max: 10,
   step: 0.1,
   svgPadding: 30,
   graphPadding: 30
 };
 
-export default withCaption(GamingLinearRelationships);
+export default withCaption(ClimatesChange);
