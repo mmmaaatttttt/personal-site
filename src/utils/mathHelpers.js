@@ -12,13 +12,14 @@ function generateData(
   const s = new odex.Solver(count);
   s.denseOutput = true;
   const data = Array.from({ length: count }, () => []);
+  s.absoluteTolerance = 1e-10;
+  s.relativeTolerance = 1e-10;
   s.solve(
     diffEq(...diffEqValues),
     min,
     initialValues,
     max,
     s.grid(step, (x, y) => {
-      console.log(x, y, step);
       data.forEach((arr, i) => {
         arr.push({ x, y: y[i] });
       });
