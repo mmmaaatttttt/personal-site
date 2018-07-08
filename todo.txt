@@ -1,4 +1,4 @@
-- fix logistic when growth rate and carrying capacity are maxxed out (bumps b/c solver values are slightly larger than 100). Mess with precision or rounding?
+- change icons for carrying capacity slider
 
 WRITING
 - note that growth rate is inversely proportional to doubling time

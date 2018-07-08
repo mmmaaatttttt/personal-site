@@ -52,7 +52,7 @@ const visualizationData = [
     width: 800,
     height: 500,
     smallestY: 0,
-    largestY: 100,
+    largestY: 101,
     diffEqs: [logistic],
     svgIds: ["vis2"],
     xLabel: "Time",
