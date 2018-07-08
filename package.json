@@ -1,6 +1,6 @@
 {
-  "name": "gatsby-starter-hello-world",
-  "description": "Gatsby hello world starter",
+  "name": "mattlane.us",
+  "description": "Matt Lane personal Gatsby site",
   "license": "MIT",
   "scripts": {
     "develop": "GATSBY_BASE_URL='http://localhost:8000' gatsby develop -H localhost",
@@ -18,8 +18,7 @@
     "d3-force-bounce": "^0.5.5",
     "d3-force-surface": "^0.5.5",
     "d3-transition": "^1.1.1",
-    "font-awesome": "^4.7.0",
-    "gatsby": "^1.9.255",
+    "gatsby": "^1.9.273",
     "gatsby-link": "^1.6.41",
     "gatsby-plugin-feed": "^1.3.21",
     "gatsby-plugin-google-analytics": "^1.0.31",
@@ -45,6 +44,7 @@
     "typography-theme-alton": "^0.15.10"
   },
   "devDependencies": {
+    "@fortawesome/fontawesome-free": "^5.1.0",
     "babel-jest": "^22.4.3",
     "babel-plugin-module-resolver": "^3.1.1",
     "enzyme": "^3.3.0",
