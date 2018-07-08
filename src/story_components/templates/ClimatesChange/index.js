@@ -106,8 +106,8 @@ class ClimatesChange extends Component {
         title: `${d.title}: ${values[i].toFixed(1)} units`,
         tickCount: 2,
         fadeIcons: false,
-        maxIcon: "step-forward",
-        minIcon: "fast-forward",
+        maxIcon: "fast-forward",
+        minIcon: "step-forward",
         handleValueChange: val => this.handleValueChange(d.key, val)
       }));
       return <SliderGroup key={color} data={sliderData} />;
@@ -150,8 +150,8 @@ ClimatesChange.propTypes = {
 };
 
 ClimatesChange.defaultProps = {
-  min: 0.1,
-  max: 10,
+  min: 0,
+  max: 5,
   step: 0.01,
   graphPadding: 30,
   svgPadding: {

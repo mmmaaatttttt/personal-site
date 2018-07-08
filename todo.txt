@@ -1,3 +1,8 @@
+- fix logistic when growth rate and carrying capacity are maxxed out (bumps b/c solver values are slightly larger than 100). Mess with precision or rounding?
+
+WRITING
+- note that growth rate is inversely proportional to doubling time
+
 LOW PRIORITY
 - get more heat map data (mayyybeeeee)
 - add meta tags for /stories endpoint

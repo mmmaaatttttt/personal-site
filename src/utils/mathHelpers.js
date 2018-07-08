@@ -18,6 +18,7 @@ function generateData(
     initialValues,
     max,
     s.grid(step, (x, y) => {
+      console.log(x, y, step);
       data.forEach((arr, i) => {
         arr.push({ x, y: y[i] });
       });

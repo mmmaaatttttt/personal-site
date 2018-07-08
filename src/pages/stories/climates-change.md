@@ -14,6 +14,8 @@ hello
 
 ### logistic growth
 
+<ClimatesChange idx={1} caption="Figure 2: A logistic model of population growth." />
+
 ### model 1
 
 ### model 2
