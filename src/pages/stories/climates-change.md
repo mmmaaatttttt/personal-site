@@ -10,7 +10,7 @@ hello
 
 ### straight up exp growth
 
-<ClimatesChange idx={0} caption="test"/>
+<ClimatesChange idx={0} caption="Figure 1: An exponential model of population growth."/>
 
 ### logistic growth
 

@@ -152,7 +152,7 @@ ClimatesChange.propTypes = {
 ClimatesChange.defaultProps = {
   min: 0.1,
   max: 10,
-  step: 0.1,
+  step: 0.01,
   graphPadding: 30,
   svgPadding: {
     top: 30,
