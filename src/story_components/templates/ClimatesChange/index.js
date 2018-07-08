@@ -5,7 +5,13 @@ import { scaleLinear } from "d3-scale";
 import visualizationData from "data/climates-change.js";
 import withCaption from "hocs/withCaption";
 import { generateData } from "utils/mathHelpers";
-import { FlexContainer, Graph, LinePlot, SliderGroup } from "story_components";
+import {
+  FlexContainer,
+  Graph,
+  LinePlot,
+  NarrowContainer,
+  SliderGroup
+} from "story_components";
 
 class ClimatesChange extends Component {
   state = {
@@ -24,7 +30,7 @@ class ClimatesChange extends Component {
     const { largestY, smallestY } = visualizationData[this.props.idx];
     let yMax = max([].concat(...graphData), d => Math.abs(d.y));
     yMax = Math.min(Math.max(Math.ceil(yMax), smallestY), largestY);
-    return [-yMax, yMax];
+    return [0, yMax];
   };
 
   tickStep = scale => {
@@ -100,13 +106,15 @@ class ClimatesChange extends Component {
         title: `${d.title}: ${values[i].toFixed(1)} units`,
         tickCount: 2,
         fadeIcons: false,
+        maxIcon: "step-forward",
+        minIcon: "fast-forward",
         handleValueChange: val => this.handleValueChange(d.key, val)
       }));
       return <SliderGroup key={color} data={sliderData} />;
     });
 
     return (
-      <div>
+      <NarrowContainer width="70%" fullWidthAt="small">
         <FlexContainer column>{sliderGroups}</FlexContainer>
         <Graph
           width={width}
@@ -118,7 +126,7 @@ class ClimatesChange extends Component {
           graphPadding={graphPadding}
           svgId={svgIds[0]}
           xLabel={xLabel}
-          xLabelPosition={"center-right"}
+          xLabelPosition={"bottom-center"}
           yLabel={yLabel}
           xScale={xScale}
           yScale={yScale}
@@ -126,7 +134,7 @@ class ClimatesChange extends Component {
         >
           {linePlots}
         </Graph>
-      </div>
+      </NarrowContainer>
     );
   }
 }
@@ -136,16 +144,22 @@ ClimatesChange.propTypes = {
   min: PropTypes.number.isRequired,
   max: PropTypes.number.isRequired,
   step: PropTypes.number.isRequired,
-  svgPadding: PropTypes.number.isRequired,
-  graphPadding: PropTypes.number.isRequired
+  graphPadding: PropTypes.number.isRequired,
+  svgPadding: PropTypes.oneOfType([PropTypes.number, PropTypes.object])
+    .isRequired
 };
 
 ClimatesChange.defaultProps = {
   min: 0.1,
   max: 10,
   step: 0.1,
-  svgPadding: 30,
-  graphPadding: 30
+  graphPadding: 30,
+  svgPadding: {
+    top: 30,
+    left: 0,
+    bottom: 0,
+    right: 30
+  }
 };
 
 export default withCaption(ClimatesChange);
