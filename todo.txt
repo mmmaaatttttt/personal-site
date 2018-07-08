@@ -1,4 +1,4 @@
-- change icons for carrying capacity slider
+- need to make initial environment value equal to 0
 
 WRITING
 - note that growth rate is inversely proportional to doubling time
