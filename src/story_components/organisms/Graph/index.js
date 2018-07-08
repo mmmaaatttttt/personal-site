@@ -93,7 +93,15 @@ Graph.propTypes = {
   width: PropTypes.number.isRequired,
   height: PropTypes.number.isRequired,
   graphPadding: PropTypes.number.isRequired,
-  svgPadding: PropTypes.number.isRequired,
+  svgPadding: PropTypes.oneOfType([
+    PropTypes.number,
+    PropTypes.shape({
+      top: PropTypes.number,
+      bottom: PropTypes.number,
+      left: PropTypes.number,
+      bottom: PropTypes.number
+    })
+  ]).isRequired,
   svgId: PropTypes.string.isRequired,
   xLabel: PropTypes.string.isRequired,
   xLabelPosition: PropTypes.oneOf(["bottom-center", "center-right"]),
