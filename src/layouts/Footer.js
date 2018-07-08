@@ -99,16 +99,16 @@ const Footer = () => (
     </StyledCCArea>
     <StyledIconArea>
       <a href="https://twitter.com/mmmaaatttttt">
-        <i className="fa fa-twitter fa-2x" />
+        <i className="fab fa-twitter fa-2x" />
       </a>
       <a href="https://github.com/mmmaaatttttt/personal-site">
-        <i className="fa fa-github fa-2x" />
+        <i className="fab fa-github fa-2x" />
       </a>
       <a href="https://www.amazon.com/Power-Up-Unlocking-Hidden-Mathematics-Video/dp/0691161518">
-        <i className="fa fa-book fa-2x" />
+        <i className="fas fa-book fa-2x" />
       </a>
       <a href="/rss.xml">
-        <i className="fa fa-rss fa-2x" />
+        <i className="fas fa-rss fa-2x" />
       </a>
     </StyledIconArea>
   </StyledFooter>

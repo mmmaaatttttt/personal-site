@@ -12,9 +12,9 @@ const StyledIcon = styled.i`
     `};
 `;
 
-const Icon = ({ name, color, opacity, disabled, size }) => (
+const Icon = ({ name, color, opacity, disabled, size, type }) => (
   <StyledIcon
-    className={`fa fa-${name} fa-${size}x`}
+    className={`fa${type[0]} fa-${name} fa-${size}x`}
     style={{ color, opacity }}
     disabled={disabled}
   />
@@ -25,14 +25,16 @@ Icon.propTypes = {
   color: PropTypes.string.isRequired,
   opacity: PropTypes.number.isRequired,
   size: PropTypes.oneOf([1, 2, 3, 4, 5]).isRequired,
-  disabled: PropTypes.bool.isRequired
+  disabled: PropTypes.bool.isRequired,
+  type: PropTypes.oneOf(["solid", "regular", "light", "brands"]).isRequired
 };
 
 Icon.defaultProps = {
   color: "#000",
   opacity: 1,
   size: 1,
-  disabled: false
+  disabled: false,
+  type: "solid"
 };
 
 export default Icon;

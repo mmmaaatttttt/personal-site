@@ -5,7 +5,7 @@ import Navbar from "./Navbar";
 import Footer from "./Footer";
 import { rhythm } from "utils/typography";
 import "katex/dist/katex.min.css";
-import "font-awesome/css/font-awesome.min.css";
+import "@fortawesome/fontawesome-free/css/all.css";
 import logo from "../pages/images/logo.png";
 
 const StyledContentArea = styled.div`

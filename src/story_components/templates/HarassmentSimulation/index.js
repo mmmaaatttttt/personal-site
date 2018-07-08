@@ -172,8 +172,8 @@ class HarassmentSimulation extends Component {
             max: 0.25,
             step: 0.01,
             color: COLORS[obj.nodes[0].toUpperCase()],
-            minIcon: "smile-o",
-            maxIcon: "frown-o"
+            minIcon: "smile",
+            maxIcon: "frown"
           };
         });
       headerData[0].sliders = [...headerData[0].sliders, ...newSliders];
