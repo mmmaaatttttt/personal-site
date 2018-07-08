@@ -6,6 +6,8 @@ const graph1Data = [
     min: 0,
     max: 5,
     initialValue: 1,
+    maxIcon: "fast-forward",
+    minIcon: "step-forward",
     title: "Growth Rate for the Population",
     color: POPULATION_COLOR,
     equationParameter: true
@@ -17,6 +19,8 @@ const graph2Data = [
     min: 0,
     max: 100,
     initialValue: 10,
+    maxIcon: "users",
+    minIcon: "user",
     title: "Carrying Capacity for the Environment",
     color: POPULATION_COLOR,
     equationParameter: true

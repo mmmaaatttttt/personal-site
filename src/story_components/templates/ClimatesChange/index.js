@@ -106,8 +106,6 @@ class ClimatesChange extends Component {
         title: `${d.title}: ${values[i].toFixed(1)} units`,
         tickCount: 2,
         fadeIcons: false,
-        maxIcon: "fast-forward",
-        minIcon: "step-forward",
         handleValueChange: val => this.handleValueChange(d.key, val)
       }));
       return <SliderGroup key={color} data={sliderData} />;
