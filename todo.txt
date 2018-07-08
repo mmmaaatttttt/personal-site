@@ -1,6 +1,3 @@
-- put 0 at bottom of graph axis, not middle
-- fix slider icons
-
 LOW PRIORITY
 - get more heat map data (mayyybeeeee)
 - add meta tags for /stories endpoint
@@ -14,6 +11,9 @@ LOW PRIORITY
 - upgrade to font awesome v5
 - line breaks for katex equations on mobile
 - MDX! https://github.com/mdx-js/mdx#mdx-syntax, https://github.com/nhducit/gatsby-plugin-mdx
+- add "related stories" to end of each story
+- pagination for stories
+- search for stories
 
 LOWEST PRIORITY
 - look into netlify: https://www.netlify.com/
