@@ -18,7 +18,13 @@ hello
 
 ### model 0
 
+may nix this one due to dependence on integration coefficients.
+
+<ClimatesChange idx={2} caption="Figure 3: Modeling Population along with the environment." />
+
 ### model 1
+
+<ClimatesChange idx={3} caption="Figure 3: Modeling Population along with the environment." />
 
 ### model 2
 

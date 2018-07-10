@@ -1,4 +1,5 @@
 - need to make initial environment value equal to 0
+- decide on consistent set of icons
 
 WRITING
 - note that growth rate is inversely proportional to doubling time
@@ -14,6 +15,7 @@ LOW PRIORITY
 - sidebars don't always show up
 - fix hot reloading issue for blog links
 - upgrade to font awesome v5
+- update packages
 - line breaks for katex equations on mobile
 - MDX! https://github.com/mdx-js/mdx#mdx-syntax, https://github.com/nhducit/gatsby-plugin-mdx
 - add "related stories" to end of each story

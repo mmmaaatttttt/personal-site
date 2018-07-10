@@ -41,21 +41,17 @@ class ClimatesChange extends Component {
 
   transformData = (data, diffEq) => {
     const { min, max, step, idx } = this.props;
-    const { colors } = visualizationData[idx];
+    const { colors, integrationConstants } = visualizationData[idx];
     const diffEqValues = data
       .filter(d => d.equationParameter)
       .map(d => d.value);
     const graphCount = colors.length;
-    let initialValues = data
-      .filter(d => !d.equationParameter)
-      .map(d => d.value);
-    if (initialValues.length === 0) initialValues = [1];
     return generateData(
       graphCount,
       min,
       max,
       step,
-      initialValues,
+      integrationConstants,
       diffEqValues,
       diffEq
     );
@@ -103,7 +99,7 @@ class ClimatesChange extends Component {
     const sliderGroups = colors.map(color => {
       const sliderData = data.filter(d => d.color === color).map((d, i) => ({
         ...d,
-        title: `${d.title}: ${values[i].toFixed(1)} units`,
+        // title: `${d.title}: ${values[i].toFixed(1)} units`,
         tickCount: 2,
         fadeIcons: false,
         handleValueChange: val => this.handleValueChange(d.key, val)
