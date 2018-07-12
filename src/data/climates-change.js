@@ -32,6 +32,16 @@ const graph2Data = [
 const graph3Data = [
   ...graph1Data,
   {
+    min: 0,
+    max: 5,
+    initialValue: 1,
+    maxIcon: "step-forward",
+    minIcon: "fast-forward",
+    title: "Population growth factor due to harvesting resource",
+    color: POPULATION_COLOR,
+    equationParameter: true
+  },
+  {
     min: 1,
     max: 100,
     initialValue: 10,
@@ -60,21 +70,7 @@ const graph3Data = [
     title: "Recovery rate for the environment",
     color: ENVIRONMENT_COLOR,
     equationParameter: true
-  }
-];
-const graph4Data = [
-  ...graph1Data,
-  {
-    min: 0,
-    max: 5,
-    initialValue: 1,
-    maxIcon: "step-forward",
-    minIcon: "fast-forward",
-    title: "Population growth factor due to harvesting resource",
-    color: POPULATION_COLOR,
-    equationParameter: true
   },
-  ...graph3Data.slice(1),
   {
     min: 0,
     max: 5,
@@ -86,20 +82,65 @@ const graph4Data = [
     equationParameter: true
   }
 ];
-
-// const normalizeParameters =
+const graph4Data = [
+  ...graph3Data,
+  {
+    min: 0,
+    max: 1,
+    initialValue: 1,
+    // maxIcon: "step-forward",
+    // minIcon: "fast-forward",
+    title: "How much destruction occurs before resource transition?",
+    color: ENVIRONMENT_COLOR,
+    equationParameter: true
+  },
+  {
+    min: 0,
+    max: 1,
+    initialValue: 1,
+    // maxIcon: "tree",
+    // minIcon: "dizzy",
+    title: "How much destruction occurs during resource transition?",
+    color: ENVIRONMENT_COLOR,
+    equationParameter: true
+  }
+];
+const graph5Data = [
+  ...graph4Data,
+  {
+    min: 0,
+    max: 1,
+    initialValue: 0,
+    // maxIcon: "users",
+    // minIcon: "user",
+    title: "How fragile is the environment?",
+    color: ENVIRONMENT_COLOR,
+    equationParameter: true
+  }
+];
 
 const K = (K_0, e_c, e) => K_0 * (1 - e / e_c);
+const H = x => (1 + Math.tanh(x)) / 2;
 const exponential = A => (x, y) => [A * y];
 const logistic = (A, r) => (x, y) => [A * y * (1 - y / r)];
-const model0 = (A, K_0, e_c, C) => (x, y) => [
-  A * y[0] * (1 - y[0] / K(K_0, e_c, y[1])),
-  -C * y[1]
-];
 const model1 = (A, B, K_0, e_c, C, D) => (x, y) => [
   A * y[0] * (1 - y[0] / K(K_0, e_c, y[1])) + B * y[0],
   -C * y[1] + D * y[0]
 ];
+const model2 = (A, B, K_0, e_c, C, D, phi, lambda) => (x, y) => {
+  const Harg = (y[1] / e_c - phi) / lambda;
+  return [
+    A * y[0] * (1 - y[0] / K(K_0, e_c, y[1])) + B * y[0],
+    -C * y[1] + D * y[0] * (1 - H(Harg))
+  ];
+};
+const model3 = (A, B, K_0, e_c, C, D, phi, lambda, xi) => (x, y) => {
+  const Harg = (y[1] / e_c - phi) / lambda;
+  return [
+    A * y[0] * (1 - y[0] / K(K_0, e_c, y[1])) + B * y[0],
+    -C * y[1] + (xi * y[1] * y[1]) / e_c + D * y[0] * (1 - H(Harg))
+  ];
+};
 
 const visualizationData = [
   {
@@ -134,12 +175,12 @@ const visualizationData = [
     height,
     smallestY: 0,
     largestY: 101,
-    diffEqs: [model0],
-    svgIds: ["model0"],
+    diffEqs: [model1],
+    svgIds: ["model1"],
     xLabel: "Time",
     yLabel: "Population & Environment State",
     colors: [POPULATION_COLOR, ENVIRONMENT_COLOR],
-    integrationConstants: [1, 10]
+    integrationConstants: [1, 0]
   },
   {
     initialData: graph4Data,
@@ -147,8 +188,21 @@ const visualizationData = [
     height,
     smallestY: 0,
     largestY: 101,
-    diffEqs: [model1],
-    svgIds: ["model1"],
+    diffEqs: [model2],
+    svgIds: ["model2"],
+    xLabel: "Time",
+    yLabel: "Population & Environment State",
+    colors: [POPULATION_COLOR, ENVIRONMENT_COLOR],
+    integrationConstants: [1, 0]
+  },
+  {
+    initialData: graph5Data,
+    width,
+    height,
+    smallestY: 0,
+    largestY: 101,
+    diffEqs: [model3],
+    svgIds: ["model3"],
     xLabel: "Time",
     yLabel: "Population & Environment State",
     colors: [POPULATION_COLOR, ENVIRONMENT_COLOR],

@@ -1,5 +1,7 @@
-- need to make initial environment value equal to 0
 - decide on consistent set of icons
+- finalize slider bounds
+- finalize slider locations
+- finalize slider colors
 
 WRITING
 - note that growth rate is inversely proportional to doubling time

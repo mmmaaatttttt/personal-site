@@ -16,16 +16,14 @@ hello
 
 <ClimatesChange idx={1} caption="Figure 2: A logistic model of population growth." />
 
-### model 0
-
-may nix this one due to dependence on integration coefficients.
+### model 1
 
 <ClimatesChange idx={2} caption="Figure 3: Modeling Population along with the environment." />
 
-### model 1
-
-<ClimatesChange idx={3} caption="Figure 3: Modeling Population along with the environment." />
-
 ### model 2
 
+<ClimatesChange idx={3} caption="Figure 4: Fancier model." />
+
 ### model 3
+
+<ClimatesChange idx={4} caption="Figure 5: Fanciest model." />
