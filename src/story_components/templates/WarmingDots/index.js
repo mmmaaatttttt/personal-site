@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { extent, max } from "d3-array";
 import { scaleLinear } from "d3-scale";
-import visualizationData from "data/climates-change.js";
+import visualizationData from "data/warming-dots.js";
 import withCaption from "hocs/withCaption";
 import { generateData } from "utils/mathHelpers";
 import {
