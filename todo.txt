@@ -69,6 +69,7 @@ IDEAS
 - bar exam https://www.adaptibar.com/bar-exam-statistics-17.aspx
 - intergalactic climate change: https://www.space.com/40813-climate-change-killed-aliens-easter-island.html
 - https://www.theatlantic.com/science/archive/2018/05/how-do-aliens-solve-climate-change/561479/
+- what names appear most frequently in pop songs? do they impact names in census data?
 
 - gerrymandering
  - visualization with squares, try to "pack and crack"
