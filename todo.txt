@@ -2,9 +2,9 @@
 - finalize slider bounds
 - finalize slider locations
 - finalize slider colors
-
-WRITING
-- note that growth rate is inversely proportional to doubling time
+- make sure graphs look good in extreme slider conditions
+- fix slider nonsense (when some values are 0)
+- fix last model -- not seeing nonlinear effects?
 
 LOW PRIORITY
 - get more heat map data (mayyybeeeee)

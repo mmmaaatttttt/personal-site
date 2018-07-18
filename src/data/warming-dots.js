@@ -19,8 +19,9 @@ const graph1Data = [
 const graph2Data = [
   ...graph1Data,
   {
-    min: 0,
+    min: 1,
     max: 100,
+    step: 1,
     initialValue: 10,
     maxIcon: "users",
     minIcon: "user",
@@ -44,20 +45,21 @@ const graph3Data = [
   {
     min: 1,
     max: 100,
-    initialValue: 10,
-    maxIcon: "tree",
-    minIcon: "dizzy",
-    title: "Threshold beyond which the environment can't support a population",
-    color: ENVIRONMENT_COLOR,
-    equationParameter: true
-  },
-  {
-    min: 0,
-    max: 100,
+    step: 1,
     initialValue: 10,
     maxIcon: "users",
     minIcon: "user",
     title: "Carrying capacity in a natural (unpolluted) environment",
+    color: ENVIRONMENT_COLOR,
+    equationParameter: true
+  },
+  {
+    min: 1,
+    max: 100,
+    initialValue: 10,
+    maxIcon: "tree",
+    minIcon: "dizzy",
+    title: "Threshold beyond which the environment can't support a population",
     color: ENVIRONMENT_COLOR,
     equationParameter: true
   },
@@ -95,12 +97,13 @@ const graph4Data = [
     equationParameter: true
   },
   {
-    min: 0,
+    min: 0.01,
     max: 1,
-    initialValue: 1,
+    step: 0.01,
+    initialValue: 0,
     // maxIcon: "tree",
     // minIcon: "dizzy",
-    title: "How much destruction occurs during resource transition?",
+    title: "How quickly does the resource transition occur?",
     color: ENVIRONMENT_COLOR,
     equationParameter: true
   }
@@ -109,7 +112,7 @@ const graph5Data = [
   ...graph4Data,
   {
     min: 0,
-    max: 1,
+    max: 2,
     initialValue: 0,
     // maxIcon: "users",
     // minIcon: "user",
@@ -174,7 +177,7 @@ const visualizationData = [
     width,
     height,
     smallestY: 0,
-    largestY: 101,
+    largestY: 1001,
     diffEqs: [model1],
     svgIds: ["model1"],
     xLabel: "Time",
@@ -187,7 +190,7 @@ const visualizationData = [
     width,
     height,
     smallestY: 0,
-    largestY: 101,
+    largestY: 1001,
     diffEqs: [model2],
     svgIds: ["model2"],
     xLabel: "Time",
@@ -200,7 +203,7 @@ const visualizationData = [
     width,
     height,
     smallestY: 0,
-    largestY: 101,
+    largestY: 1001,
     diffEqs: [model3],
     svgIds: ["model3"],
     xLabel: "Time",

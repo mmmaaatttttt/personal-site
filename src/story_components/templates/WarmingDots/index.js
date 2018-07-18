@@ -85,7 +85,6 @@ class ClimatesChange extends Component {
     const yScale = scaleLinear()
       .domain(this.getYDomain(graphData))
       .range([height - graphPadding, graphPadding]);
-
     const linePlots = graphData.map((plot, i) => (
       <LinePlot
         key={i}
@@ -99,7 +98,6 @@ class ClimatesChange extends Component {
     const sliderGroups = colors.map(color => {
       const sliderData = data.filter(d => d.color === color).map((d, i) => ({
         ...d,
-        // title: `${d.title}: ${values[i].toFixed(1)} units`,
         tickCount: 2,
         fadeIcons: false,
         handleValueChange: val => this.handleValueChange(d.key, val)
