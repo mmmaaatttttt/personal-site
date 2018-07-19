@@ -26,7 +26,7 @@ const SliderGroup = ({ data, column }) => {
     </LabeledSliderWrapper>
   ));
   return (
-    <FlexContainer column={column} cross="center">
+    <FlexContainer column={column} cross="center" flex={data.length}>
       {sliders}
     </FlexContainer>
   );
