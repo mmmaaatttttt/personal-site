@@ -175,7 +175,7 @@ const visualizationData = [
   {
     initialData: graph3Data,
     width,
-    height,
+    height: height + 100,
     smallestY: 0,
     largestY: 1001,
     diffEqs: [model1],
@@ -188,7 +188,7 @@ const visualizationData = [
   {
     initialData: graph4Data,
     width,
-    height,
+    height: height + 150,
     smallestY: 0,
     largestY: 1001,
     diffEqs: [model2],
@@ -201,7 +201,7 @@ const visualizationData = [
   {
     initialData: graph5Data,
     width,
-    height,
+    height: height + 200,
     smallestY: 0,
     largestY: 1001,
     diffEqs: [model3],

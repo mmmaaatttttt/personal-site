@@ -6,6 +6,7 @@ import visualizationData from "data/warming-dots.js";
 import withCaption from "hocs/withCaption";
 import { generateData } from "utils/mathHelpers";
 import {
+  ColumnLayout,
   FlexContainer,
   Graph,
   LinePlot,
@@ -70,6 +71,7 @@ class ClimatesChange extends Component {
       colors
     } = visualizationData[idx];
     const { values } = this.state;
+    const sliderCount = initialData.length;
 
     // data is all data from original source file
     // plus most recent values from inside of state
@@ -105,9 +107,11 @@ class ClimatesChange extends Component {
       return <SliderGroup key={color} data={sliderData} />;
     });
 
-    return (
-      <NarrowContainer width="70%" fullWidthAt="small">
-        <FlexContainer column>{sliderGroups}</FlexContainer>
+    const children = [
+      <FlexContainer column key="sliders">
+        {sliderGroups}
+      </FlexContainer>,
+      <FlexContainer cross="center" key="graph">
         <Graph
           width={width}
           height={height}
@@ -123,10 +127,19 @@ class ClimatesChange extends Component {
           xScale={xScale}
           yScale={yScale}
           tickStep={this.tickStep}
+          key="Graph"
         >
           {linePlots}
         </Graph>
+      </FlexContainer>
+    ];
+
+    return sliderCount < 3 ? (
+      <NarrowContainer width="70%" fullWidthAt="small">
+        {children}
       </NarrowContainer>
+    ) : (
+      <ColumnLayout break="small">{children}</ColumnLayout>
     );
   }
 }
