@@ -157,7 +157,7 @@ Climate change is scary, and news articles about it are almost universally depre
 
 The authors of the paper I've outlined here readily admit that these models are simply a starting point. There are plenty of simplifications here, and in reality, the interaction between a species like ours and the environment we live in is incredibly complex. But all models are simplifications, and even if a model doesn't capture every complexity, it can still teach us valuable lessons about our reality.
 
-My takeaways from this model are that climate change requires swift, early action. The earlier we diagnose the problem and the faster we are to remedy it, the more likely we are to find ourselves in a sustainable population curve. And yet, even if we do everything possible to combat climate change (), it's possible that the environmental deck is stacked against us, and we'll find ourselves in a less desirable trajectory.
+My takeaways from this model are that climate change requires swift, early action. The earlier we diagnose the problem and the faster we are to remedy it, the more likely we are to find ourselves in a sustainable population curve. And yet, even if we do everything possible to combat climate change, it's possible that the environmental deck is stacked against us, and we'll find ourselves in a less desirable trajectory.
 
 But even if we fail, maybe somewhere up in the stars there's another pale blue dot capable of succeeding.
 
