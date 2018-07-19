@@ -22,7 +22,7 @@ const graph2Data = [
     min: 1,
     max: 100,
     step: 1,
-    initialValue: 10,
+    initialValue: 100,
     maxIcon: "users",
     minIcon: "user",
     title: "Carrying capacity for the environment",

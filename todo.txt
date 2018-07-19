@@ -1,9 +1,3 @@
-- decide on consistent set of icons
-- finalize slider bounds
-- make sure graphs look good in extreme slider conditions
-- fix slider nonsense (when some values are 0) -- figure out why NaN values are showing up and truncating the solutions
-- fix last model -- not seeing nonlinear effects?
-
 LOW PRIORITY
 - get more heat map data (mayyybeeeee)
 - add meta tags for /stories endpoint
