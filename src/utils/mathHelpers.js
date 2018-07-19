@@ -21,7 +21,9 @@ function generateData(
     max,
     s.grid(step, (x, y) => {
       data.forEach((arr, i) => {
-        arr.push({ x, y: Number.isNaN(y[i]) ? arr[arr.length - 1].y : y[i] });
+        if (!Number.isNaN(y[i])) {
+          arr.push({ x, y: y[i] });
+        }
       });
     })
   );
