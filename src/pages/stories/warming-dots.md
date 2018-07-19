@@ -147,12 +147,23 @@ Now, with all nine parameters at your disposal, what sorts of population graphs 
 
 <WarmingDots idx={4} caption="Figure 5: Including an environmental fragility parameter into the model." />
 
+With the potential for environmental catastrophe, this model highlights another common scenario: **collapse**. This is an even worse case than die-off: not only does the population crash, but it crashes all the way to zero. This is inevitable if the environment is too fragile and becomes damaged enough that a runaway degradation occurs.
+
+You may also discover a fourth possible outcome: **oscillation**. In this scenario, population growth triggers environmental degradation, which leads to a population crash. But when the population crashes, the environment begins to heal, and the population again grows. Unfortunately, this leads to more environmental degradation, followed by another population crash, and so on. While arguable better than total collapse, This seems like a less desirable outcome than a single die-off.
+
 ### Conclusion
 
-lorem
+Climate change is scary, and news articles about it are almost universally depressing. But in the grand scheme of things, it may also be an inevitability; a simple consequence of a technologically advanced species that's thirsty for energy.
+
+The authors of the paper I've outlined here readily admit that these models are simply a starting point. There are plenty of simplifications here, and in reality, the interaction between a species like ours and the environment we live in is incredibly complex. But all models are simplifications, and even if a model doesn't capture every complexity, it can still teach us valuable lessons about our reality.
+
+My takeaways from this model are that climate change requires swift, early action. The earlier we diagnose the problem and the faster we are to remedy it, the more likely we are to find ourselves in a sustainable population curve. And yet, even if we do everything possible to combat climate change (), it's possible that the environmental deck is stacked against us, and we'll find ourselves in a less desirable trajectory.
+
+But even if we fail, maybe somewhere up in the stars there's another pale blue dot capable of succeeding.
 
 Sources:
 
 - [The Anthropocene Generalized: Evolution of Exo-Civilizations and Their Planetary Feedback](https://www.liebertpub.com/doi/10.1089/ast.2017.1671)
 - [Background on Logistic Functions](https://en.wikipedia.org/wiki/Logistic_function)
 - [NASA climate modeling suggests Venus may have been habitable](https://climate.nasa.gov/news/2475/nasa-climate-modeling-suggests-venus-may-have-been-habitable/)
+- [Light of the Stars: Alien Worlds and the Fate of the Earth](https://www.amazon.com/Light-Stars-Alien-Worlds-Earth/dp/0393609014)
