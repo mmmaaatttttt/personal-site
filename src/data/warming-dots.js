@@ -10,7 +10,7 @@ const graph1Data = [
     max: 5,
     initialValue: 1,
     maxIcon: "fast-forward",
-    minIcon: "step-forward",
+    minIcon: "pause",
     title: "Growth rate for the population",
     color: POPULATION_COLOR,
     equationParameter: true
@@ -36,8 +36,8 @@ const graph3Data = [
     min: 0,
     max: 5,
     initialValue: 1,
-    maxIcon: "step-forward",
-    minIcon: "fast-forward",
+    maxIcon: "fast-forward",
+    minIcon: "pause",
     title: "Population growth factor due to harvesting resource",
     color: POPULATION_COLOR,
     equationParameter: true
@@ -67,8 +67,8 @@ const graph3Data = [
     min: 0,
     max: 5,
     initialValue: 1,
-    maxIcon: "recycle",
-    minIcon: "trash",
+    maxIcon: "fast-forward",
+    minIcon: "pause",
     title: "Recovery rate for the environment",
     color: ENVIRONMENT_COLOR,
     equationParameter: true
@@ -77,8 +77,8 @@ const graph3Data = [
     min: 0,
     max: 5,
     initialValue: 1,
-    maxIcon: "dizzy",
-    minIcon: "tree",
+    maxIcon: "fast-forward",
+    minIcon: "pause",
     title: "Rate at which resource depletion harms the environment",
     color: ENVIRONMENT_COLOR,
     equationParameter: true
@@ -90,8 +90,8 @@ const graph4Data = [
     min: 0,
     max: 1,
     initialValue: 1,
-    // maxIcon: "step-forward",
-    // minIcon: "fast-forward",
+    maxIcon: "thermometer-full",
+    minIcon: "thermometer-empty",
     title: "How much destruction occurs before resource transition?",
     color: ENVIRONMENT_COLOR,
     equationParameter: true
@@ -101,9 +101,9 @@ const graph4Data = [
     max: 1,
     step: 0.01,
     initialValue: 0,
-    // maxIcon: "tree",
-    // minIcon: "dizzy",
-    title: "How quickly does the resource transition occur?",
+    maxIcon: "step-forward",
+    minIcon: "fast-forward",
+    title: "How long does it take to transition between resources?",
     color: ENVIRONMENT_COLOR,
     equationParameter: true
   }
@@ -112,10 +112,10 @@ const graph5Data = [
   ...graph4Data,
   {
     min: 0,
-    max: 2,
+    max: 10,
     initialValue: 0,
-    // maxIcon: "users",
-    // minIcon: "user",
+    maxIcon: "dizzy",
+    minIcon: "smile",
     title: "How fragile is the environment?",
     color: ENVIRONMENT_COLOR,
     equationParameter: true
