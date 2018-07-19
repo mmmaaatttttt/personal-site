@@ -1,6 +1,11 @@
 import React from "react";
 import PropTypes from "prop-types";
+import styled from "styled-components";
 import { Axis, AxisLabel, ClippedSVG } from "story_components";
+
+const FullWidth = styled.div`
+  width: 100%;
+`;
 
 const Graph = ({
   width,
@@ -47,7 +52,7 @@ const Graph = ({
   };
   const xOptions = labelOptions.x[xLabelPosition];
   return (
-    <div>
+    <FullWidth>
       <ClippedSVG id={svgId} width={width} height={height} padding={svgPadding}>
         <Axis
           direction="y"
@@ -85,7 +90,7 @@ const Graph = ({
           {yLabel}
         </AxisLabel>
       </ClippedSVG>
-    </div>
+    </FullWidth>
   );
 };
 
