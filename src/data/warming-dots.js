@@ -54,9 +54,10 @@ const graph3Data = [
     equationParameter: true
   },
   {
-    min: 1,
+    min: 5,
     max: 100,
     initialValue: 10,
+    step: 1,
     maxIcon: "tree",
     minIcon: "dizzy",
     title: "Threshold beyond which the environment can't support a population",
@@ -64,7 +65,7 @@ const graph3Data = [
     equationParameter: true
   },
   {
-    min: 0,
+    min: 0.01,
     max: 5,
     initialValue: 1,
     maxIcon: "fast-forward",
@@ -74,7 +75,7 @@ const graph3Data = [
     equationParameter: true
   },
   {
-    min: 0,
+    min: 0.01,
     max: 5,
     initialValue: 1,
     maxIcon: "fast-forward",
@@ -150,8 +151,8 @@ const visualizationData = [
     initialData: graph1Data,
     width,
     height,
-    smallestY: 0,
-    largestY: 100,
+    smallestY: 101,
+    largestY: 101,
     diffEqs: [exponential],
     svgIds: ["vis1"],
     xLabel: "Time",
@@ -163,7 +164,7 @@ const visualizationData = [
     initialData: graph2Data,
     width,
     height,
-    smallestY: 0,
+    smallestY: 101,
     largestY: 101,
     diffEqs: [logistic],
     svgIds: ["vis2"],
