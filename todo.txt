@@ -60,6 +60,8 @@ IDEAS
    - http://rangevoting.org/GerryExec.html
  - compactness doesn't guarantee anything!
  - efficiency gap visualization(s)?
+ - http://cdmaps.polisci.ucla.edu/
+ - http://history.house.gov/Institution/Election-Statistics/Election-Statistics/
 
 
 - treatise on systems thinking

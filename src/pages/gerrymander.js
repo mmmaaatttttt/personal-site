@@ -223,6 +223,8 @@ class GerrymanderSample extends Component {
             </div>
           </StyledDistrictData>
         </ColumnLayout>
+        <p>Here's some other stuff</p>
+        <USMap />
       </NarrowContainer>
     );
   }
