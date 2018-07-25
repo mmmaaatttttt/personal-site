@@ -231,6 +231,11 @@ const voteData = {
       district: 5,
       votes: [{ rep: 124900 + 4901, dem: 163499 + 15753 }]
     },
+    {
+      state: "Delaware",
+      district: 1,
+      votes: [{ rep: 172301, dem: 233554, grn: 8326, lib: 6436 }]
+    },
     { state: "Florida", district: 1, votes: [{ rep: 255107, dem: 114079 }] },
     {
       state: "Florida",
@@ -1262,3 +1267,5 @@ const voteData = {
     }
   ]
 };
+
+export default voteData;
