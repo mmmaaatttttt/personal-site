@@ -29,17 +29,9 @@ class USMap extends Component {
   }
 
   componentDidMount() {
-    json(withPrefix("/data/us-topo.json")).then(us => {
-      const { data } = this.props;
-      const stateData = nest()
-        .key(d => d.state)
-        .entries(data);
-      stateData.forEach(stateObj => {
-        const stateGeometry = us.objects.states.geometries.find(
-          geometry => geometry.properties.name === stateObj.key
-        );
-        stateGeometry.properties.values = stateObj.values;
-      });
+    const { data, addGeometryProperties, topoUrl } = this.props;
+    json(withPrefix(topoUrl)).then(us => {
+      addGeometryProperties(us, data);
       this.setState({ us });
     });
   }
@@ -47,7 +39,8 @@ class USMap extends Component {
   handleEnterAndUpdate = (scale, accessor, d) => {
     return {
       fill: [
-        d.properties.values ? scale(accessor(d.properties.values)) : "#eee"
+        // d.properties.values ? scale(accessor(d.properties.values)) : "#eee"
+        "#eee"
       ],
       timing: { duration: 500 }
     };
@@ -77,21 +70,23 @@ class USMap extends Component {
       tooltipTitle,
       tooltipBody
     } = this.state;
-    const { fillAccessor, colors } = this.props;
+    const { fillAccessor, colors, topoKey, keyAccessor } = this.props;
     let paths = null;
     if (us) {
-      const { states } = us.objects;
-      const domain = extent(
-        states.geometries.filter(d => d.properties.values),
-        d => fillAccessor(d.properties.values)
-      );
+      const geomCollection = us.objects[topoKey];
+      // const domain = extent(
+      //   geomCollection.geometries.filter(d => d.properties.values),
+      //   d => fillAccessor(d.properties.values)
+      // );
       const colorScale = scaleLinear()
-        .domain(domain)
-        .range(colors);
+        // .domain(domain)
+        // .range(colors)
+        .domain([0, 1])
+        .range(["#eee", "#eee"]);
       paths = (
         <NodeGroup
-          data={feature(us, states).features}
-          keyAccessor={feature => feature.id}
+          data={feature(us, geomCollection).features}
+          keyAccessor={keyAccessor}
           start={() => ({ fill: "white" })}
           enter={this.handleEnterAndUpdate.bind(this, colorScale, fillAccessor)}
           update={this.handleEnterAndUpdate.bind(
@@ -101,9 +96,9 @@ class USMap extends Component {
           )}
           leave={() => {}}
         >
-          {states => (
+          {districts => (
             <g>
-              {states.map(curState => (
+              {districts.map(curState => (
                 <path
                   d={this.path(curState.data)}
                   key={curState.key}
@@ -144,19 +139,37 @@ class USMap extends Component {
   }
 }
 
-USMap.defaultProps = {
-  scale: 1950,
-  translate: [800, 460]
-};
-
 USMap.propTypes = {
-  scale: PropTypes.number.isRequired,
-  translate: PropTypes.arrayOf(PropTypes.number).isRequired,
+  addGeometryProperties: PropTypes.func.isRequired,
+  colors: PropTypes.arrayOf(PropTypes.string).isRequired,
   data: PropTypes.arrayOf(PropTypes.object),
   fillAccessor: PropTypes.func.isRequired,
-  colors: PropTypes.arrayOf(PropTypes.string).isRequired,
+  getTooltipBody: PropTypes.func.isRequired,
   getTooltipTitle: PropTypes.func.isRequired,
-  getTooltipBody: PropTypes.func.isRequired
+  keyAccessor: PropTypes.func.isRequired,
+  scale: PropTypes.number.isRequired,
+  topoUrl: PropTypes.string.isRequired,
+  topoKey: PropTypes.string.isRequired,
+  translate: PropTypes.arrayOf(PropTypes.number).isRequired
+};
+
+USMap.defaultProps = {
+  addGeometryProperties: function(us, data) {
+    const stateData = nest()
+      .key(d => d.state)
+      .entries(data);
+    stateData.forEach(stateObj => {
+      const stateGeometry = us.objects.states.geometries.find(
+        geometry => geometry.properties.name === stateObj.key
+      );
+      stateGeometry.properties.values = stateObj.values;
+    });
+  },
+  keyAccessor: feature => feature.id,
+  scale: 1950,
+  topoUrl: "/data/us-topo.json",
+  topoKey: "states",
+  translate: [800, 460]
 };
 
 export default USMap;
