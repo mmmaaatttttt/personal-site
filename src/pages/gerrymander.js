@@ -1,14 +1,17 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import styled from "styled-components";
+import { nest } from "d3-collection";
 import {
   Button,
   ColumnLayout,
   HeatChart,
   Icon,
   InteractiveGrid,
-  NarrowContainer
+  NarrowContainer,
+  USMap
 } from "story_components";
+import voteData from "data/gerrymander";
 import COLORS from "utils/styles";
 
 const StyledDistrictData = styled.div`
@@ -44,6 +47,24 @@ class GerrymanderSample extends Component {
       this.__countRegions();
     }
   }
+
+  addGeometryProperties = (us, allData) => {
+    let data = allData[114];
+    const stateData = nest()
+      .key(d => d.state)
+      .entries(data);
+    stateData.forEach(stateObj => {
+      stateObj.values.forEach(distObj => {
+        const districtGeometry = us.objects.districts114.geometries.find(
+          geom => {
+            const { STATENAME, DISTRICT } = geom.properties;
+            return STATENAME === stateObj.key && +DISTRICT === distObj.district;
+          }
+        );
+        if (districtGeometry) districtGeometry.properties.values = distObj;
+      });
+    });
+  };
 
   handleSave = () => {
     const { segments } = this.state;
@@ -224,7 +245,13 @@ class GerrymanderSample extends Component {
           </StyledDistrictData>
         </ColumnLayout>
         <p>Here's some other stuff</p>
-        <USMap />
+        <USMap
+          topoUrl="/data/districts114.json"
+          topoKey="districts114"
+          data={voteData}
+          addGeometryProperties={this.addGeometryProperties}
+          keyAccessor={feature => feature.properties.ID}
+        />
       </NarrowContainer>
     );
   }
