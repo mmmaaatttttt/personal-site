@@ -98,6 +98,21 @@ class GerrymanderSample extends Component {
     });
   };
 
+  calculateTotalWastedVotes = (votes, party1Accessor, party2Accessor) => {
+    return this.calculateWastedVotes(
+      votes,
+      party1Accessor,
+      party2Accessor
+    ).reduce(
+      (totals, cur) => {
+        totals[0] += cur[0];
+        totals[1] += cur[1];
+        return totals;
+      },
+      [0, 0]
+    );
+  };
+
   calculateTotalVotes = (votes, party1Accessor, party2Accessor) => {
     return votes.reduce(
       (voteTotal, cur) => voteTotal + party1Accessor(cur) + party2Accessor(cur),
@@ -105,42 +120,38 @@ class GerrymanderSample extends Component {
     );
   };
 
-  // calculateEfficiencyGap = (votes, party1Accessor, party2Accessor) => {
-  //   // TODO - calculate wasted votes in separate helper
-  //   // generate table for worked example
-  //   let wastedAndTotalVotes = votes.reduce(
-  //     (curVotes, district) => {
-  //       let party1Votes = party1Accessor(district);
-  //       let party2Votes = party2Accessor(district);
-  //       let votesNeededToWin = Math.ceil((party1Votes + party2Votes + 1) / 2);
-  //       curVotes[0] += party1Votes;
-  //       curVotes[1] += party2Votes;
-  //       curVotes[2] += party1Votes + party2Votes;
-  //       let winningIdx = party1Votes > party2Votes ? 0 : 1;
-  //       curVotes[winningIdx] -= votesNeededToWin;
-  //       return curVotes;
-  //     },
-  //     [0, 0, 0]
-  //   );
-  //   return wastedAndTotalVotes;
-  // };
+  fillAccessor = values => {
+    let demAccessor = v => v.votes.dem;
+    let repAccessor = v => v.votes.rep;
+    let wastedVotes = this.calculateTotalWastedVotes(
+      values,
+      demAccessor,
+      repAccessor
+    );
+    let totalVotes = this.calculateTotalVotes(values, demAccessor, repAccessor);
+    return (wastedVotes[0] - wastedVotes[1]) / totalVotes;
+  };
 
-  addGeometryProperties = (us, allData) => {
-    let data = allData[114];
-    const stateData = nest()
+  addGeometryProperties = (us, data) => {
+    nest()
       .key(d => d.state)
-      .entries(data);
-    stateData.forEach(stateObj => {
-      stateObj.values.forEach(distObj => {
-        const districtGeometry = us.objects.districts114.geometries.find(
-          geom => {
-            const { STATENAME, DISTRICT } = geom.properties;
-            return STATENAME === stateObj.key && +DISTRICT === distObj.district;
-          }
+      .entries(data[114])
+      .map(state => {
+        const values = state.values
+          .map(val => ({
+            ...val,
+            votes: { rep: val.votes.rep, dem: val.votes.dem }
+          }))
+          .filter(val => val.votes.rep && val.votes.dem);
+        return { ...state, values };
+      })
+      .filter(state => state.values.length > 1)
+      .forEach(stateObj => {
+        const stateGeometry = us.objects.states.geometries.find(
+          geometry => geometry.properties.name === stateObj.key
         );
-        if (districtGeometry) districtGeometry.properties.values = distObj;
+        stateGeometry.properties.values = stateObj.values;
       });
-    });
   };
 
   handleSave = () => {
@@ -251,13 +262,10 @@ class GerrymanderSample extends Component {
         this.orangeCount,
         this.purpleCount
       );
-      const totalWastedVotes = wastedVotes.reduce(
-        (totals, cur) => {
-          totals[0] += cur[0];
-          totals[1] += cur[1];
-          return totals;
-        },
-        [0, 0]
+      const totalWastedVotes = this.calculateTotalWastedVotes(
+        districts,
+        this.orangeCount,
+        this.purpleCount
       );
       const totalVotes = this.calculateTotalVotes(
         districts,
@@ -489,7 +497,11 @@ class GerrymanderSample extends Component {
           the gap in these scenarios.)
         </p>
         <USMap
+          addGeometryProperties={this.addGeometryProperties}
+          colors={[COLORS.BLUE, COLORS.RED]}
+          domain={[-0.5, 0.5]}
           data={voteData}
+          fillAccessor={this.fillAccessor}
           getTooltipTitle={() => {}}
           getTooltipBody={() => {}}
         />
