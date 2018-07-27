@@ -41,6 +41,7 @@ IDEAS
   - http://slco.maps.arcgis.com/apps/Cascade/index.html?appid=eeb9eadb9d0d454faadf733ed2f14569
   - http://www.ams.org/publications/journals/notices/201709/rnoti-p1020.pdf
   - http://www.washingtonpost.com/wp-srv/special/politics/gerrymandering/?noredirect=on
+  - https://www.politico.com/f/?id=0000015c-11a2-d46a-a3ff-9da240e10002
 - https://www.vox.com/energy-and-environment/2018/3/20/17128478/solar-duck-curve-nrel-researcher?utm_campaign=drvox&utm_content=chorus&utm_medium=social&utm_source=twitter
 - http://www.newsweek.com/gravity-could-trap-alien-civilizations-super-earth-planets-897254
 - organ donation rates by state?
@@ -60,8 +61,11 @@ IDEAS
    - http://rangevoting.org/GerryExec.html
  - compactness doesn't guarantee anything!
  - efficiency gap visualization(s)?
+ - https://www.theatlantic.com/science/archive/2018/01/efficiency-gap-gerrymandering/551492/
  - http://cdmaps.polisci.ucla.edu/
  - http://history.house.gov/Institution/Election-Statistics/Election-Statistics/
+ - http://turfjs.org/docs#along
+ - https://www.diplateevo.com/gerrymandering-technologists-approach/
 
 
 - treatise on systems thinking
