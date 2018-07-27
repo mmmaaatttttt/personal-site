@@ -39,8 +39,7 @@ class USMap extends Component {
   handleEnterAndUpdate = (scale, accessor, d) => {
     return {
       fill: [
-        // d.properties.values ? scale(accessor(d.properties.values)) : "#eee"
-        "#eee"
+        d.properties.values ? scale(accessor(d.properties.values)) : "#eee"
       ],
       timing: { duration: 500 }
     };
@@ -70,19 +69,18 @@ class USMap extends Component {
       tooltipTitle,
       tooltipBody
     } = this.state;
-    const { fillAccessor, colors, topoKey, keyAccessor } = this.props;
+    let { fillAccessor, colors, topoKey, keyAccessor, domain } = this.props;
     let paths = null;
     if (us) {
       const geomCollection = us.objects[topoKey];
-      // const domain = extent(
-      //   geomCollection.geometries.filter(d => d.properties.values),
-      //   d => fillAccessor(d.properties.values)
-      // );
+      if (!domain)
+        domain = extent(
+          geomCollection.geometries.filter(d => d.properties.values),
+          d => fillAccessor(d.properties.values)
+        );
       const colorScale = scaleLinear()
-        // .domain(domain)
-        // .range(colors)
-        .domain([0, 1])
-        .range(["#eee", "#eee"]);
+        .domain(domain)
+        .range(colors);
       paths = (
         <NodeGroup
           data={feature(us, geomCollection).features}
@@ -143,6 +141,7 @@ USMap.propTypes = {
   addGeometryProperties: PropTypes.func.isRequired,
   colors: PropTypes.arrayOf(PropTypes.string).isRequired,
   data: PropTypes.arrayOf(PropTypes.object),
+  domain: PropTypes.arrayOf(PropTypes.number),
   fillAccessor: PropTypes.func.isRequired,
   getTooltipBody: PropTypes.func.isRequired,
   getTooltipTitle: PropTypes.func.isRequired,
