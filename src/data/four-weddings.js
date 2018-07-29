@@ -53,13 +53,13 @@ const selectOptionsMap = [
   {
     value: "weddingCount",
     label: "Color by Number of Weddings",
-    accessor: values => values.length,
+    accessor: properties => properties.values.length,
     colors: [lighten(0.4, COLORS.RED), COLORS.RED]
   },
   {
     value: "avgBudget",
     label: "Color by Average Wedding Budget",
-    accessor: values => average(values, d => d.budget),
+    accessor: properties => average(properties.values, d => d.budget),
     colors: [lighten(0.4, COLORS.RED), COLORS.RED]
   }
 ];

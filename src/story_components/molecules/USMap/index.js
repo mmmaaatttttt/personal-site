@@ -38,9 +38,7 @@ class USMap extends Component {
 
   handleEnterAndUpdate = (scale, accessor, d) => {
     return {
-      fill: [
-        d.properties.values ? scale(accessor(d.properties.values)) : "#eee"
-      ],
+      fill: [d.properties.values ? scale(accessor(d.properties)) : "#eee"],
       timing: { duration: 500 }
     };
   };
@@ -76,7 +74,7 @@ class USMap extends Component {
       if (!domain)
         domain = extent(
           geomCollection.geometries.filter(d => d.properties.values),
-          d => fillAccessor(d.properties.values)
+          d => fillAccessor(d.properties)
         );
       const colorScale = scaleLinear()
         .domain(domain)
