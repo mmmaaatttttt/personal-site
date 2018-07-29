@@ -44,11 +44,11 @@ const StyledTable = styled.table`
   }
 
   td:nth-child(2) {
-    color: ${COLORS.ORANGE};
+    color: ${COLORS.DARK_BLUE};
   }
 
   td:last-child {
-    color: ${COLORS.PURPLE};
+    color: ${COLORS.RED};
   }
 
   tr:last-child td {
@@ -74,9 +74,9 @@ class GerrymanderSample extends Component {
     }
   }
 
-  orangeCount = district => district.filter(d => d[0] % 2 === 0).length;
+  blueCount = district => district.filter(d => d[0] % 2 === 0).length;
 
-  purpleCount = district => district.filter(d => d[0] % 2 === 1).length;
+  redCount = district => district.filter(d => d[0] % 2 === 1).length;
 
   validDistricts = () => {
     const { districts } = this.state;
@@ -120,7 +120,7 @@ class GerrymanderSample extends Component {
     );
   };
 
-  fillAccessor = values => {
+  __calculateEfficiencyGap = values => {
     let demAccessor = v => v.votes.dem;
     let repAccessor = v => v.votes.rep;
     let wastedVotes = this.calculateTotalWastedVotes(
@@ -130,6 +130,18 @@ class GerrymanderSample extends Component {
     );
     let totalVotes = this.calculateTotalVotes(values, demAccessor, repAccessor);
     return (wastedVotes[0] - wastedVotes[1]) / totalVotes;
+  };
+
+  fillAccessor = properties => properties.efficiencyGap;
+
+  getTooltipBody = d => {
+    if (!d.values) return "Not enough districts.";
+    let favoredParty = d.efficiencyGap < 0 ? "Democrats" : "Republicans";
+    let formattedGap = Math.abs(d.efficiencyGap * 100).toFixed(2);
+    return [
+      `${formattedGap}% efficiency gap in favor of ${favoredParty}.`,
+      `${d.values.length} districts contributed to this calculation.`
+    ];
   };
 
   addGeometryProperties = (us, data) => {
@@ -151,6 +163,9 @@ class GerrymanderSample extends Component {
           geometry => geometry.properties.name === stateObj.key
         );
         stateGeometry.properties.values = stateObj.values;
+        stateGeometry.properties.efficiencyGap = this.__calculateEfficiencyGap(
+          stateObj.values
+        );
       });
   };
 
@@ -259,21 +274,21 @@ class GerrymanderSample extends Component {
     if (this.validDistricts()) {
       const wastedVotes = this.calculateWastedVotes(
         districts,
-        this.orangeCount,
-        this.purpleCount
+        this.blueCount,
+        this.redCount
       );
       const totalWastedVotes = this.calculateTotalWastedVotes(
         districts,
-        this.orangeCount,
-        this.purpleCount
+        this.blueCount,
+        this.redCount
       );
       const totalVotes = this.calculateTotalVotes(
         districts,
-        this.orangeCount,
-        this.purpleCount
+        this.blueCount,
+        this.redCount
       );
-      let first = { idx: 0, color: COLORS.ORANGE, name: "orange" };
-      let second = { idx: 1, color: COLORS.PURPLE, name: "purple" };
+      let first = { idx: 0, color: COLORS.DARK_BLUE, name: "blue" };
+      let second = { idx: 1, color: COLORS.RED, name: "red" };
       if (totalWastedVotes[1] > totalWastedVotes[0])
         [first, second] = [second, first];
       let eg =
@@ -305,8 +320,8 @@ class GerrymanderSample extends Component {
           <thead>
             <tr>
               <th>District</th>
-              <th>Wasted Votes (Orange)</th>
-              <th>Wasted Votes (Purple)</th>
+              <th>Wasted Votes (Blue)</th>
+              <th>Wasted Votes (Red)</th>
             </tr>
           </thead>
           <tbody>
@@ -336,9 +351,9 @@ class GerrymanderSample extends Component {
         <h2>1. Create your own Gerrymander!</h2>
         <p>
           Imagine a region with 54 citizens, evenly divided among two parties
-          (the orange party and the purple party). You are part of a committee
-          tasked with dividing this region into six contiguous districts of the
-          same size: 9 citizens each.
+          (the blue party and the red party). You are part of a committee tasked
+          with dividing this region into six contiguous districts of the same
+          size: 9 citizens each.
         </p>
         <p>
           Each district will have a representative in the government that is
@@ -380,11 +395,11 @@ class GerrymanderSample extends Component {
                 let msgByColor = null;
                 let color = COLORS.BLACK;
                 if (districts[idx]) {
-                  let orangeTotal = this.orangeCount(districts[idx]);
-                  let purpleTotal = this.purpleCount(districts[idx]);
-                  msgByColor = `(${orangeTotal} orange, ${purpleTotal} purple)`;
-                  if (orangeTotal > purpleTotal) color = COLORS.ORANGE;
-                  if (purpleTotal > orangeTotal) color = COLORS.PURPLE;
+                  let blueTotal = this.blueCount(districts[idx]);
+                  let redTotal = this.redCount(districts[idx]);
+                  msgByColor = `(${blueTotal} blue, ${redTotal} red)`;
+                  if (blueTotal > redTotal) color = COLORS.DARK_BLUE;
+                  if (redTotal > blueTotal) color = COLORS.RED;
                 }
                 return (
                   <div key={idx}>
@@ -494,17 +509,27 @@ class GerrymanderSample extends Component {
           tallies for Democrat and Republican candidates are considered. In the
           event that a district did not have both a Republican and a Democrat on
           the ballot, that district has been ignored. (TO DO: better estimate
-          the gap in these scenarios.)
+          the gap in these scenarios, and include historical data so you can see
+          how the efficiency gap changes across time in different states.)
         </p>
         <USMap
           addGeometryProperties={this.addGeometryProperties}
-          colors={[COLORS.BLUE, COLORS.RED]}
-          domain={[-0.5, 0.5]}
+          colors={[COLORS.DARK_BLUE, COLORS.WHITE, COLORS.RED]}
+          domain={[-0.5, 0, 0.5]}
           data={voteData}
           fillAccessor={this.fillAccessor}
-          getTooltipTitle={() => {}}
-          getTooltipBody={() => {}}
+          getTooltipTitle={d => d.name}
+          getTooltipBody={this.getTooltipBody}
         />
+        <p>Problems with this metric</p>
+        <p>Other attempts to measure and fix gerrymandering</p>
+        <ul>
+          <li />
+        </ul>
+        <p>Questions</p>
+        <ul>
+          <li>Has gerrymandering gotten worse over time?</li>
+        </ul>
       </NarrowContainer>
     );
   }
@@ -519,7 +544,7 @@ GerrymanderSample.propTypes = {
 GerrymanderSample.defaultProps = {
   rowCount: 6,
   colCount: 9,
-  colors: [COLORS.ORANGE, COLORS.PURPLE]
+  colors: [COLORS.DARK_BLUE, COLORS.RED]
 };
 
 export default GerrymanderSample;

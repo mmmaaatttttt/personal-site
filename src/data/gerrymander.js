@@ -3,6 +3,7 @@
 // working families party votes go to candidate main party
 // democratic-farmer-labor -> democrat
 // only rep, dem, lib, green
+// http://www.fairvote.org/shifts_in_incumbency_advantage_in_the_us_house
 const voteData = {
   114: [
     { state: "Alabama", district: 1, votes: { rep: 208083 } },
