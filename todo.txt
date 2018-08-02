@@ -1,5 +1,6 @@
 - show district data in color of winning party 
 - layout on right side
+- add ability to save multiple districts?
 
 LOW PRIORITY
 - get more heat map data (mayyybeeeee)
@@ -11,7 +12,6 @@ LOW PRIORITY
 - add more tests
 - sidebars don't always show up
 - fix hot reloading issue for blog links
-- upgrade to font awesome v5
 - update packages
 - line breaks for katex equations on mobile
 - MDX! https://github.com/mdx-js/mdx#mdx-syntax, https://github.com/nhducit/gatsby-plugin-mdx
@@ -29,6 +29,12 @@ LOWEST PRIORITY
 - better way to import data into components
 
 - gerrymandering
+- data
+- http://cdmaps.polisci.ucla.edu/
+- http://history.house.gov/Institution/Election-Statistics/Election-Statistics/
+- http://turfjs.org/docs#along
+
+- sources
 - https://phys.org/news/2018-03-mathematicians-tool-voting-unfairly-drawn.html
 - https://www.quantamagazine.org/the-math-behind-gerrymandering-and-wasted-votes-20171012/
 - https://www.quantamagazine.org/the-mathematics-behind-gerrymandering-20170404/
@@ -42,9 +48,6 @@ LOWEST PRIORITY
 - http://rangevoting.org/GerryExec.html
 - compactness doesn't guarantee anything!
 - https://www.theatlantic.com/science/archive/2018/01/efficiency-gap-gerrymandering/551492/
-- http://cdmaps.polisci.ucla.edu/
-- http://history.house.gov/Institution/Election-Statistics/Election-Statistics/
-- http://turfjs.org/docs#along
 - https://www.diplateevo.com/gerrymandering-technologists-approach/
 - https://projects.fivethirtyeight.com/redistricting-maps
 https://arxiv.org/pdf/1803.02857.pdf
