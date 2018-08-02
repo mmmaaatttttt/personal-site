@@ -171,6 +171,8 @@ class InteractiveGrid extends Component {
           height={height - 2 * paddingY}
           fill="none"
           stroke={COLORS.DARK_GRAY}
+          rx={10}
+          ry={10}
         />
       </g>
     );
