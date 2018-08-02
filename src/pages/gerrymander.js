@@ -2,33 +2,9 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import styled from "styled-components";
 import { nest } from "d3-collection";
-import {
-  Button,
-  ColumnLayout,
-  HeatChart,
-  Icon,
-  InteractiveGrid,
-  NarrowContainer,
-  USMap
-} from "story_components";
+import { NarrowContainer, USMap } from "story_components";
 import voteData from "data/gerrymander";
 import COLORS from "utils/styles";
-
-const StyledDistrictData = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: space-around;
-  align-items: center;
-
-  & > div {
-    display: flex;
-    align-items: center;
-  }
-
-  h4 {
-    margin: 0 0.5rem 0 0;
-  }
-`;
 
 const StyledTable = styled.table`
   width: 75%;
@@ -349,117 +325,8 @@ class GerrymanderSample extends Component {
       <NarrowContainer width="80%" style={{ padding: "1rem" }}>
         <h1>Gerrymandering Interactives</h1>
         <h2>1. Create your own Gerrymander!</h2>
-        <p>
-          Imagine a region with 54 citizens, evenly divided among two parties
-          (the blue party and the red party). You are part of a committee tasked
-          with dividing this region into six contiguous districts of the same
-          size: 9 citizens each.
-        </p>
-        <p>
-          Each district will have a representative in the government that is
-          elected by members from that district.
-        </p>
-        <p>
-          How would you draw congressional lines to divide this region into six
-          districts?
-        </p>
-        <ColumnLayout break="small" sizes={[3, 2]}>
-          <HeatChart
-            data={heatData}
-            axes={false}
-            tooltip={false}
-            colorRange={colors}
-          >
-            <InteractiveGrid
-              strokeWidth={6}
-              rowCount={rowCount}
-              colCount={colCount}
-              handleSegmentUpdate={this.handleSegmentUpdate}
-              segments={segments}
-            />
-          </HeatChart>
-          <StyledDistrictData>
-            {districts.length > 6 ? (
-              <h2>Too many districts!</h2>
-            ) : (
-              Array.from({ length: 6 }).map((_, idx) => {
-                let size = (districts[idx] && districts[idx].length) || "--";
-                let icon = (
-                  <Icon name="times-circle" color={COLORS.RED} size={2} />
-                );
-                if (districts[idx] && districts[idx].length === colCount) {
-                  icon = (
-                    <Icon name="check-circle" color={COLORS.GREEN} size={2} />
-                  );
-                }
-                let msgByColor = null;
-                let color = COLORS.BLACK;
-                if (districts[idx]) {
-                  let blueTotal = this.blueCount(districts[idx]);
-                  let redTotal = this.redCount(districts[idx]);
-                  msgByColor = `(${blueTotal} blue, ${redTotal} red)`;
-                  if (blueTotal > redTotal) color = COLORS.DARK_BLUE;
-                  if (redTotal > blueTotal) color = COLORS.RED;
-                }
-                return (
-                  <div key={idx}>
-                    <h4 style={{ color }}>
-                      D{idx + 1}: {size} {msgByColor}
-                    </h4>
-                    {icon}
-                  </div>
-                );
-              })
-            )}
-            <div>
-              <Button
-                onClick={this.handleSave}
-                disabled={!saveable}
-                color={COLORS.GREEN}
-              >
-                {saveable ? "Save" : "Saved"}
-              </Button>
-              <Button onClick={this.handleReset} color={COLORS.RED}>
-                Reset
-              </Button>
-            </div>
-          </StyledDistrictData>
-        </ColumnLayout>
         <h2>2. An Introduction to Gerrymandering</h2>
-        <p>
-          The problem of subdividing regions equal sizes based on population is
-          one that the United States grapples with every 10 years, based on the
-          latest census data.
-        </p>
-        <p>
-          States with multiple representatives are required to draw
-          congressional district lines every decade. Unfortunately, the process
-          of drawing these lines is ripe for manipulation. When one party is in
-          power, it's possible for them to draw congressional boundaries in a
-          way that grant them even more power, by exploiting geography to
-          bolster their representation in Congress. This process is called{" "}
-          <b>gerrymandering</b>.
-        </p>
-        <p>
-          Typically gerrymandering is achieved by combining two strategies:{" "}
-          <b>packing</b> and <b>cracking</b>. Packing refers to consolidating
-          large numbers of one party into a small number of districts. Cracking
-          is the opposite: diluting the voting power of a large bloc of voters
-          in one part by splitting them up so that they form minorities in
-          multiple districts.
-        </p>
-        <p>
-          Long considered an esoteric political topic, gerrymandering has
-          received a great deal of attention recently. In part this is due to
-          some high profile Supreme Court cases, along with the advent of
-          technologies that make gerrymandering easier to do.
-        </p>
-        <p>
-          But as gerrymandering has become more well-known, techniques for
-          combating it have begun springing up as well. One of the most common
-          new techniques is also relatively simple, and requires little more
-          than basic arithmetic.
-        </p>
+
         <h2>3. Quantifying Gerrymandering: The Efficiency Gap</h2>
         <p>
           Voting is inherently an inefficient mechanism for electing officials
