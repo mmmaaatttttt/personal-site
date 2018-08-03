@@ -1,10 +1,9 @@
 import React from "react";
 import { Router } from "react-router-dom";
 import { Provider } from "react-redux";
-import createStore from "./src/reducers";
+import createStore from "./src/store/reducers";
 
 const store = createStore();
-console.log("in gatsby-browser");
 
 export const replaceRouterComponent = ({ history }) => {
   const ConnectedRouterWrapper = ({ children }) => (
