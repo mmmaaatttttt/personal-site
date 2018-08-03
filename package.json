@@ -37,8 +37,10 @@
     "react-animate-on-scroll": "^1.6.2",
     "react-helmet": "^5.2.0",
     "react-move": "^2.7.0",
+    "react-redux": "^5.0.7",
     "react-select": "^1.2.1",
     "react-twitter-widgets": "^1.7.1",
+    "redux": "^4.0.0",
     "styled-components": "^2.4.0",
     "topojson": "^3.0.2",
     "typography-theme-alton": "^0.15.10"
