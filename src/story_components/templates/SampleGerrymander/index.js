@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
+import { connect } from "react-redux";
 import styled from "styled-components";
 import {
   Button,
@@ -8,6 +9,10 @@ import {
   Icon,
   InteractiveGrid
 } from "story_components";
+import {
+  setDistrictCounts,
+  unsetDistrictCounts
+} from "store/actions/mind-the-gerrymandered-gap";
 import COLORS from "utils/styles";
 
 const StyledDistrictData = styled.div`
@@ -26,14 +31,16 @@ const StyledDistrictData = styled.div`
   }
 `;
 
+const INITIAL_STATE = (rowCount, colCount) => ({
+  segments: Array.from({ length: rowCount * 2 - 1 }, (_, i) =>
+    Array(colCount - 1 + (i % 2)).fill(false)
+  ),
+  districts: [[]],
+  saveable: false
+});
+
 class SampleGerrymander extends Component {
-  state = {
-    segments: Array.from({ length: this.props.rowCount * 2 - 1 }, (_, i) =>
-      Array(this.props.colCount - 1 + (i % 2)).fill(false)
-    ),
-    districts: [[]],
-    saveable: false
-  };
+  state = INITIAL_STATE(this.props.rowCount, this.props.colCount);
 
   componentDidMount() {
     const segments = JSON.parse(localStorage.getItem("segments"));
@@ -41,7 +48,7 @@ class SampleGerrymander extends Component {
       this.setState({ segments }, this.__countRegions);
     } else {
       this.__countRegions();
-      this.updateSession();
+      this.updateStore();
     }
   }
 
@@ -66,16 +73,8 @@ class SampleGerrymander extends Component {
 
   handleReset = () => {
     localStorage.removeItem("segments");
-    this.setState(
-      {
-        segments: Array.from({ length: this.props.rowCount * 2 - 1 }, (_, i) =>
-          Array(this.props.colCount - 1 + (i % 2)).fill(false)
-        ),
-        districts: [[]],
-        saveable: false
-      },
-      this.__countRegions
-    );
+    const { rowCount, colCount } = this.props;
+    this.setState(INITIAL_STATE(rowCount, colCount), this.__countRegions);
   };
 
   handleSegmentUpdate = (row, col, segStatus, e) => {
@@ -89,12 +88,13 @@ class SampleGerrymander extends Component {
     }
   };
 
-  updateSession = () => {
+  updateStore = () => {
     const { districts } = this.state;
+    const { unsetDistrictCounts, setDistrictCounts } = this.props;
     if (this.validDistricts()) {
-      sessionStorage.setItem("districts", JSON.stringify(districts));
+      setDistrictCounts(districts);
     } else {
-      sessionStorage.removeItem("districts");
+      unsetDistrictCounts();
     }
   };
 
@@ -119,7 +119,7 @@ class SampleGerrymander extends Component {
       (district, i) => district.length !== newDistricts[i].length
     );
     if (newDistrict || updatedDistrict) {
-      this.setState({ districts: newDistricts }, this.updateSession);
+      this.setState({ districts: newDistricts }, this.updateStore);
     }
   };
 
@@ -241,4 +241,7 @@ SampleGerrymander.defaultProps = {
   colors: [COLORS.DARK_BLUE, COLORS.RED]
 };
 
-export default SampleGerrymander;
+export default connect(
+  null,
+  { setDistrictCounts, unsetDistrictCounts }
+)(SampleGerrymander);
