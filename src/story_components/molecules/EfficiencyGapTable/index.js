@@ -1,29 +1,11 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import styled from "styled-components";
+import { connect } from "react-redux";
 
 class EfficiencyGapTable extends Component {
-  state = {
-    districts: null
-  };
-
-  componentDidMount() {
-    window.addEventListener("storage", this.handleStorageChange);
-  }
-
-  componentWillUnmount() {
-    window.removeEventListener("storage", this.handleStorageChange);
-  }
-
-  handleStorageChange = () => {
-    console.log("hi");
-    this.setState({
-      districts: JSON.parse(sessionStorage.getItem("districts"))
-    });
-  };
-
   render() {
-    const { districts } = this.state;
+    const { districts } = this.props;
     let tableArea = (
       <p>
         To see a sample calculation of the efficiency gap, please finish drawing
@@ -41,4 +23,10 @@ class EfficiencyGapTable extends Component {
   }
 }
 
-export default EfficiencyGapTable;
+function mapStateToProps(state) {
+  return {
+    districts: state["mind-the-gerrymandered-gap"].districts
+  };
+}
+
+export default connect(mapStateToProps)(EfficiencyGapTable);
