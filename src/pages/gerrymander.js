@@ -6,32 +6,6 @@ import { NarrowContainer, USMap } from "story_components";
 import voteData from "data/gerrymander";
 import COLORS from "utils/styles";
 
-const StyledTable = styled.table`
-  width: 75%;
-  margin: 2rem auto;
-
-  th,
-  td {
-    text-align: center;
-  }
-
-  td:first-child {
-    font-weight: bold;
-  }
-
-  td:nth-child(2) {
-    color: ${COLORS.DARK_BLUE};
-  }
-
-  td:last-child {
-    color: ${COLORS.RED};
-  }
-
-  tr:last-child td {
-    color: ${COLORS.BLACK};
-  }
-`;
-
 class GerrymanderSample extends Component {
   state = {
     segments: Array.from({ length: this.props.rowCount * 2 - 1 }, (_, i) =>
@@ -60,39 +34,6 @@ class GerrymanderSample extends Component {
     return (
       districts.length === rowCount &&
       districts.every(d => d.length === colCount)
-    );
-  };
-
-  calculateWastedVotes = (votes, party1Accessor, party2Accessor) => {
-    return votes.map(district => {
-      let party1Votes = party1Accessor(district);
-      let party2Votes = party2Accessor(district);
-      let votesNeededToWin = Math.ceil((party1Votes + party2Votes + 1) / 2);
-      return party1Votes > party2Votes
-        ? [party1Votes - votesNeededToWin, party2Votes]
-        : [party1Votes, party2Votes - votesNeededToWin];
-    });
-  };
-
-  calculateTotalWastedVotes = (votes, party1Accessor, party2Accessor) => {
-    return this.calculateWastedVotes(
-      votes,
-      party1Accessor,
-      party2Accessor
-    ).reduce(
-      (totals, cur) => {
-        totals[0] += cur[0];
-        totals[1] += cur[1];
-        return totals;
-      },
-      [0, 0]
-    );
-  };
-
-  calculateTotalVotes = (votes, party1Accessor, party2Accessor) => {
-    return votes.reduce(
-      (voteTotal, cur) => voteTotal + party1Accessor(cur) + party2Accessor(cur),
-      0
     );
   };
 
@@ -145,182 +86,12 @@ class GerrymanderSample extends Component {
       });
   };
 
-  handleSave = () => {
-    const { segments } = this.state;
-    localStorage.setItem("segments", JSON.stringify(segments));
-    this.setState({ saveable: false });
-  };
-
-  handleReset = () => {
-    localStorage.removeItem("segments");
-    this.setState(
-      {
-        segments: Array.from({ length: this.props.rowCount * 2 - 1 }, (_, i) =>
-          Array(this.props.colCount - 1 + (i % 2)).fill(false)
-        ),
-        districts: [[]],
-        saveable: false
-      },
-      this.__countRegions
-    );
-  };
-
-  handleSegmentUpdate = (row, col, segStatus, e) => {
-    if (segStatus !== null) {
-      this.setState(prevState => {
-        const segments = [...prevState.segments];
-        segments[row] = [...prevState.segments[row]];
-        segments[row][col] = segStatus;
-        return { segments, saveable: true };
-      }, this.__countRegions);
-    }
-  };
-
-  __countRegions = () => {
-    const { rowCount, colCount } = this.props;
-    const { districts } = this.state;
-    const visitedYet = Array.from({ length: rowCount }, () =>
-      Array.from({ length: colCount }).fill(false)
-    );
-    const newDistricts = [];
-    visitedYet.forEach((row, rowIdx) => {
-      row.forEach((isVisited, colIdx) => {
-        if (!isVisited) {
-          newDistricts.push(
-            this.__calculateArea(visitedYet, [[rowIdx, colIdx]])
-          );
-        }
-      });
-    });
-    if (
-      districts.length !== newDistricts.length ||
-      districts.some(
-        (district, i) => district.length !== newDistricts[i].length
-      )
-    ) {
-      this.setState({ districts: newDistricts });
-    }
-  };
-
-  __calculateArea = (visitedYet, whereToLook) => {
-    const { segments } = this.state;
-    let district = [];
-    while (whereToLook.length > 0) {
-      let [row, col] = whereToLook.shift();
-      if (visitedYet[row][col] === false) {
-        visitedYet[row][col] = true;
-        district.push([row, col]);
-        let shouldMoveUp =
-          visitedYet[row - 1] !== undefined &&
-          visitedYet[row - 1][col] === false &&
-          segments[2 * row - 1][col] === false;
-        let shouldMoveRight =
-          visitedYet[row][col + 1] !== undefined &&
-          visitedYet[row][col + 1] === false &&
-          segments[2 * row][col] === false;
-        let shouldMoveDown =
-          visitedYet[row + 1] !== undefined &&
-          visitedYet[row + 1][col] === false &&
-          segments[2 * row + 1][col] === false;
-        let shouldMoveLeft =
-          visitedYet[row][col - 1] !== undefined &&
-          visitedYet[row][col - 1] === false &&
-          segments[2 * row][col - 1] === false;
-        if (shouldMoveUp) whereToLook.push([row - 1, col]);
-        if (shouldMoveRight) whereToLook.push([row, col + 1]);
-        if (shouldMoveDown) whereToLook.push([row + 1, col]);
-        if (shouldMoveLeft) whereToLook.push([row, col - 1]);
-      }
-    }
-    return district;
-  };
-
   render() {
     const { rowCount, colCount, colors } = this.props;
     const { districts, segments, saveable } = this.state;
     const heatData = Array.from({ length: colCount }, () =>
       Array.from({ length: rowCount }, (_, i) => i % 2)
     );
-    let gapExample = (
-      <p>
-        To see a sample calculation of the efficiency gap, please finish drawing
-        your districts above.
-      </p>
-    );
-    if (this.validDistricts()) {
-      const wastedVotes = this.calculateWastedVotes(
-        districts,
-        this.blueCount,
-        this.redCount
-      );
-      const totalWastedVotes = this.calculateTotalWastedVotes(
-        districts,
-        this.blueCount,
-        this.redCount
-      );
-      const totalVotes = this.calculateTotalVotes(
-        districts,
-        this.blueCount,
-        this.redCount
-      );
-      let first = { idx: 0, color: COLORS.DARK_BLUE, name: "blue" };
-      let second = { idx: 1, color: COLORS.RED, name: "red" };
-      if (totalWastedVotes[1] > totalWastedVotes[0])
-        [first, second] = [second, first];
-      let eg =
-        (totalWastedVotes[first.idx] - totalWastedVotes[second.idx]) /
-        totalVotes;
-      let gapCopy = [
-        "( ",
-        <span style={{ color: first.color }}>
-          {totalWastedVotes[first.idx]}
-        </span>,
-        " - ",
-        <span style={{ color: second.color }}>
-          {totalWastedVotes[second.idx]}
-        </span>,
-        ` ) / ${totalVotes} = ${(eg * 100).toFixed(2)}% in favor of ${
-          second.name
-        }.`
-      ];
-      if (eg === 0)
-        gapCopy[gapCopy.length - 1] = ` ) / ${totalVotes} = ${(
-          eg * 100
-        ).toFixed(2)}%.`;
-      gapExample = [
-        <p>
-          Here's a sample efficiency gap calculation based on the districts you
-          created above.
-        </p>,
-        <StyledTable>
-          <thead>
-            <tr>
-              <th>District</th>
-              <th>Wasted Votes (Blue)</th>
-              <th>Wasted Votes (Red)</th>
-            </tr>
-          </thead>
-          <tbody>
-            {wastedVotes.map((overvotes, i) => (
-              <tr key={i}>
-                <td>{i + 1}</td>
-                <td>{overvotes[0]}</td>
-                <td>{overvotes[1]}</td>
-              </tr>
-            ))}
-            <tr>
-              <td>Total</td>
-              <td>{totalWastedVotes[0]}</td>
-              <td>{totalWastedVotes[1]}</td>
-            </tr>
-            <tr>
-              <td>Efficiency Gap</td>
-              <td colSpan="2">{gapCopy}</td>
-            </tr>
-          </tbody>
-        </StyledTable>
-      ];
-    }
     return (
       <NarrowContainer width="80%" style={{ padding: "1rem" }}>
         <h1>Gerrymandering Interactives</h1>
