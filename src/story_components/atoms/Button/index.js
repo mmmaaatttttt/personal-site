@@ -1,8 +1,6 @@
 import styled, { css } from "styled-components";
 import PropTypes from "prop-types";
 import { darken } from "polished";
-import COLORS from "utils/styles";
-import { rhythm } from "utils/typography";
 
 const color = props => props.color;
 const darkerColor = props => darken(0.1, color(props));
