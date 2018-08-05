@@ -24,13 +24,7 @@ It turns out that it's not too hard to gerrymander districts. Let's take a look 
 
 How would you draw congressional lines to divide this region into six districts?
 
-<SampleGerrymander >
-  hello
-  goodbye
-  tight
-</SampleGerrymander>
-
-try this: https://stackoverflow.com/questions/43313372/how-to-listen-to-localstorage-in-react-js
+<SampleGerrymander/>
 
 Typically gerrymandering is achieved by combining two strategies: **packing** and **cracking**. Packing refers to consolidating large numbers of one party into a small number of districts. Cracking is the opposite: diluting the voting power of a large bloc of voters in one part by splitting them up so that they form minorities in multiple districts.
 

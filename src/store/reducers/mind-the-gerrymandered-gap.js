@@ -1,7 +1,7 @@
 import * as t from "../actions/actionTypes";
 
 const DEFAULT_STATE = {
-  districts: null
+  districtCounts: null
 };
 
 export default function mindTheGerrymanderedReducer(
@@ -12,12 +12,12 @@ export default function mindTheGerrymanderedReducer(
     case t.SET_FINISHED_DISTRICT_COUNTS:
       return {
         ...state,
-        districts: action.districts
+        districtCounts: action.districtCounts
       };
     case t.UNSET_FINISHED_DISTRICT_COUNTS:
       return {
         ...state,
-        districts: null
+        ...DEFAULT_STATE
       };
     default:
       return state;

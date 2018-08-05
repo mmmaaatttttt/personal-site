@@ -92,7 +92,9 @@ class SampleGerrymander extends Component {
     const { districts } = this.state;
     const { unsetDistrictCounts, setDistrictCounts } = this.props;
     if (this.validDistricts()) {
-      setDistrictCounts(districts);
+      setDistrictCounts(
+        districts.map(d => [this.blueCount(d), this.redCount(d)])
+      );
     } else {
       unsetDistrictCounts();
     }

@@ -1,6 +1,6 @@
-- show district data in color of winning party 
 - layout on right side
 - add ability to save multiple districts?
+- adjust size of country (30 is too small)
 
 LOW PRIORITY
 - get more heat map data (mayyybeeeee)

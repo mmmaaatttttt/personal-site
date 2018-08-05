@@ -1,3 +1,35 @@
+import { total } from "utils/mathHelpers";
+
+export function calculatedWastedVotes(votes, party1Accessor, party2Accessor) {
+  return votes.map(district => {
+    let party1Votes = party1Accessor(district);
+    let party2Votes = party2Accessor(district);
+    let votesNeededToWin = Math.ceil((party1Votes + party2Votes + 1) / 2);
+    return party1Votes > party2Votes
+      ? [party1Votes - votesNeededToWin, party2Votes]
+      : [party1Votes, party2Votes - votesNeededToWin];
+  });
+}
+
+export function calculateTotalWastedVotes(wastedVotes) {
+  return wastedVotes.reduce(
+    (totals, cur) => {
+      totals[0] += cur[0];
+      totals[1] += cur[1];
+      return totals;
+    },
+    [0, 0]
+  );
+}
+
+export function calculateTotalVotes(votes, party1Accessor, party2Accessor) {
+  return total(votes, num => party1Accessor(num) + party2Accessor(num));
+}
+
+export function calculateEfficiencyGap(totalWasted, totalVotes) {
+  return (totalWasted[0] - totalWasted[1]) / totalVotes;
+}
+
 // no party preference not counted
 // write ins not counted
 // working families party votes go to candidate main party
