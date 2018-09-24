@@ -239,7 +239,7 @@ SampleGerrymander.propTypes = {
 
 SampleGerrymander.defaultProps = {
   rowCount: 6,
-  colCount: 5,
+  colCount: 9,
   colors: [COLORS.DARK_BLUE, COLORS.RED]
 };
 
