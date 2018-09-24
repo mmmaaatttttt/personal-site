@@ -42,7 +42,7 @@ LOWEST PRIORITY
 - http://slco.maps.arcgis.com/apps/Cascade/index.html?appid=eeb9eadb9d0d454faadf733ed2f14569
 - http://www.ams.org/publications/journals/notices/201709/rnoti-p1020.pdf
 - http://www.washingtonpost.com/wp-srv/special/politics/gerrymandering/?noredirect=on
-- https://www.politico.com/f/?id=0000015c-11a2-d46a-a3ff-9da240e10002
+- https://www.politico.com/f/?id=0000015c-11a2-d46a-a3ff-9da240e10002 <-- THIS ONE
 - http://theconversation.com/can-math-solve-the-congressional-districting-problem-44963
 - http://www.ams.org/publicoutreach/feature-column/fc-2014-08
 - http://rangevoting.org/GerryExec.html
