@@ -60,6 +60,8 @@ In the map below, states in this are colored according to the size of the effici
 
 Note that it's impossible to gerrymander a state with only one representative, so those states are greyed out. Also, only vote tallies for Democrat and Republican candidates are considered. In the event that a district did not have both a Republican and a Democrat on the ballot, that district has been ignored. (TO DO: better estimate the gap in these scenarios, and include historical data so you can see how the efficiency gap changes across time in different states.)
 
+<GerrymanderHistoricalMap />
+
 some wrapper over USMap
 addGeometryProperties={this.addGeometryProperties}
 colors={[COLORS.DARK_BLUE, COLORS.WHITE, COLORS.RED]}
