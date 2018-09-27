@@ -1,9 +1,6 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import styled from "styled-components";
-import { nest } from "d3-collection";
 import { NarrowContainer, USMap } from "story_components";
-import voteData from "data/gerrymander";
 import COLORS from "utils/styles";
 
 class GerrymanderSample extends Component {
@@ -40,16 +37,14 @@ class GerrymanderSample extends Component {
   __calculateEfficiencyGap = values => {
     let demAccessor = v => v.votes.dem;
     let repAccessor = v => v.votes.rep;
-    let wastedVotes = this.calculateTotalWastedVotes(
+    let wastedVotes = calculateTotalWastedVotes(
       values,
       demAccessor,
       repAccessor
     );
-    let totalVotes = this.calculateTotalVotes(values, demAccessor, repAccessor);
+    let totalVotes = calculateTotalVotes(values, demAccessor, repAccessor);
     return (wastedVotes[0] - wastedVotes[1]) / totalVotes;
   };
-
-  fillAccessor = properties => properties.efficiencyGap;
 
   getTooltipBody = d => {
     if (!d.values) return "Not enough districts.";
@@ -128,7 +123,6 @@ class GerrymanderSample extends Component {
           number votes each party has wasted, and dividing that tally by the
           total number of votes cast.
         </p>
-        {gapExample}
         <h2>4. The efficiency gap in the wild</h2>
         <p>
           How does the efficiency gap stack up in the real world? Let's take a

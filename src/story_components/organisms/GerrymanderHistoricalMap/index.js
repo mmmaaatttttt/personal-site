@@ -1,7 +1,8 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import { csv } from "d3-fetch";
 import { min, max } from "d3-array";
+import { nest } from "d3-collection";
+import { csv } from "d3-fetch";
 import withCaption from "hocs/withCaption";
 import COLORS from "utils/styles";
 import { NarrowContainer, SliderGroup, USMap } from "story_components";
@@ -13,10 +14,6 @@ class GerrymanderHistoricalMap extends Component {
     maxYear: null,
     currentYear: null,
     currentMinElectors: 2
-  };
-
-  handleSliderUpdate = (key, val) => {
-    this.setState({ [key]: val });
   };
 
   componentDidMount() {
@@ -46,6 +43,36 @@ class GerrymanderHistoricalMap extends Component {
       });
     });
   }
+
+  addGeometryProperties = (us, data) => {
+    nest()
+      .key(d => d.state)
+      .entries(data)
+      .filter(state => state.values.length > 1)
+      .forEach(stateObj => {
+        const stateGeometry = us.objects.states.geometries.find(
+          geometry => geometry.properties.name === stateObj.key
+        );
+        stateGeometry.properties.values = stateObj.values;
+        stateGeometry.properties.efficiencyGap = this.__calculateNormalizedEg(
+          stateObj.values
+        );
+      });
+  };
+
+  getTooltipBody = d => {
+    if (!d.values) return "Not enough districts.";
+    let favoredParty = d.efficiencyGap < 0 ? "Democrats" : "Republicans";
+    let formattedGap = Math.abs(d.efficiencyGap * 100).toFixed(2);
+    return [
+      `${formattedGap}% efficiency gap in favor of ${favoredParty}.`,
+      `${d.values.length} districts total.`
+    ];
+  };
+
+  handleSliderUpdate = (key, val) => {
+    this.setState({ [key]: val });
+  };
 
   render() {
     const {
@@ -79,34 +106,44 @@ class GerrymanderHistoricalMap extends Component {
         color: COLORS.DARK_GRAY
       }
     ];
-    // const { value, accessor, colors } = this.state.selectedOption;
-    // const { selectOptions, data, getTooltipTitle, getTooltipBody } = this.props;
-    return data.length ? (
+    if (data.length === 0)
+      return (
+        <div>
+          <h1>Loading, please wait...</h1>
+        </div>
+      );
+    return (
       <div>
         {/* <NarrowContainer width="50%"> */}
-          <SliderGroup data={sliderData} />
+        <SliderGroup data={sliderData} />
         {/* </NarrowContainer> */}
-        {/* <USMap
-          data={data}
-          fillAccessor={accessor}
-          colors={colors}
-          getTooltipTitle={getTooltipTitle}
-          getTooltipBody={getTooltipBody}
-        /> */}
-      </div>
-    ) : (
-      <div>
-        <h1>Loading, please wait...</h1>
+        <USMap
+          addGeometryProperties={this.addGeometryProperties}
+          colors={[COLORS.DARK_BLUE, COLORS.WHITE, COLORS.RED]}
+          data={data.filter(
+            d =>
+              d.year ===
+              currentYear /* also check that number of districts is sufficient */
+          )}
+          domain={[-0.5, 0, 0.5]}
+          fillAccessor={properties => properties.efficiencyGap}
+          getTooltipTitle={d => d.state}
+          getTooltipBody={this.getTooltipBody}
+        />
       </div>
     );
   }
+
+  __calculateNormalizedEg = values =>
+    values.reduce((acc, value) => {
+      let egForDistrict = (value.rep - value.dem) / (value.dem + value.rep);
+      return acc + egForDistrict;
+    }, 0) / values.length;
 }
 
 GerrymanderHistoricalMap.propTypes = {
   minElectors: PropTypes.number.isRequired,
   maxElectors: PropTypes.number.isRequired
-  // getTooltipTitle: PropTypes.func.isRequired,
-  // getTooltipBody: PropTypes.func.isRequired
 };
 
 GerrymanderHistoricalMap.defaultProps = {

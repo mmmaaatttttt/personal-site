@@ -1,14 +1,8 @@
 import React, { Component } from "react";
-import PropTypes from "prop-types";
 import styled from "styled-components";
 import { connect } from "react-redux";
 import COLORS from "utils/styles";
-import {
-  calculatedWastedVotes,
-  calculateTotalWastedVotes,
-  calculateTotalVotes,
-  calculateEfficiencyGap
-} from "data/gerrymander";
+import { total } from "utils/mathHelpers";
 import { ColoredSpan } from "story_components";
 
 const StyledTable = styled.table`
@@ -38,6 +32,36 @@ const StyledTable = styled.table`
 `;
 
 class EfficiencyGapTable extends Component {
+  calculateWastedVotes = (votes, party1Accessor, party2Accessor) => {
+    return votes.map(district => {
+      let party1Votes = party1Accessor(district);
+      let party2Votes = party2Accessor(district);
+      let votesNeededToWin = Math.ceil((party1Votes + party2Votes + 1) / 2);
+      return party1Votes > party2Votes
+        ? [party1Votes - votesNeededToWin, party2Votes]
+        : [party1Votes, party2Votes - votesNeededToWin];
+    });
+  };
+
+  calculateTotalWastedVotes = wastedVotes => {
+    return wastedVotes.reduce(
+      (totals, cur) => {
+        totals[0] += cur[0];
+        totals[1] += cur[1];
+        return totals;
+      },
+      [0, 0]
+    );
+  };
+
+  calculateTotalVotes = (votes, party1Accessor, party2Accessor) => {
+    return total(votes, num => party1Accessor(num) + party2Accessor(num));
+  };
+
+  calculateEfficiencyGap = (totalWasted, totalVotes) => {
+    return (totalWasted[0] - totalWasted[1]) / totalVotes;
+  };
+
   render() {
     const { districtCounts } = this.props;
     let tableArea = (
@@ -51,10 +75,18 @@ class EfficiencyGapTable extends Component {
     if (districtCounts) {
       let blueAcc = d => d[0];
       let redAcc = d => d[1];
-      let wastedVotes = calculatedWastedVotes(districtCounts, blueAcc, redAcc);
-      let totalWastedVotes = calculateTotalWastedVotes(wastedVotes);
-      let totalVotes = calculateTotalVotes(districtCounts, blueAcc, redAcc);
-      let eg = calculateEfficiencyGap(totalWastedVotes, totalVotes);
+      let wastedVotes = this.calculateWastedVotes(
+        districtCounts,
+        blueAcc,
+        redAcc
+      );
+      let totalWastedVotes = this.calculateTotalWastedVotes(wastedVotes);
+      let totalVotes = this.calculateTotalVotes(
+        districtCounts,
+        blueAcc,
+        redAcc
+      );
+      let eg = this.calculateEfficiencyGap(totalWastedVotes, totalVotes);
       let gapCopyEnd = "";
       if (totalWastedVotes[0] !== totalWastedVotes[1]) {
         let favoredColor = eg < 0 ? "blue" : "red";
@@ -62,13 +94,14 @@ class EfficiencyGapTable extends Component {
       }
       let gapCopy = (
         <div>
-          (<ColoredSpan color={COLORS.DARK_BLUE}>
+          (
+          <ColoredSpan color={COLORS.DARK_BLUE}>
             {totalWastedVotes[0]}
           </ColoredSpan>{" "}
           &ndash;{" "}
           <ColoredSpan color={COLORS.RED}>{totalWastedVotes[1]}</ColoredSpan>)
-          &divide; {totalVotes} = {(Math.abs(eg) * 100).toFixed(2)}%
-          {gapCopyEnd}.
+          &divide; {totalVotes} = {(Math.abs(eg) * 100).toFixed(2)}%{gapCopyEnd}
+          .
         </div>
       );
       tableArea = (
