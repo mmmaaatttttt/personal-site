@@ -5,7 +5,7 @@ import { nest } from "d3-collection";
 import { csv } from "d3-fetch";
 import withCaption from "hocs/withCaption";
 import COLORS from "utils/styles";
-import { NarrowContainer, SliderGroup, USMap } from "story_components";
+import { SliderGroup, USMap } from "story_components";
 
 class GerrymanderHistoricalMap extends Component {
   state = {
@@ -18,7 +18,7 @@ class GerrymanderHistoricalMap extends Component {
 
   componentDidMount() {
     let dataUrl =
-      "https://gist.githubusercontent.com/mmmaaatttttt/667f43a79aa2f0b280e2a99a1b807a00/raw/61cf24bda2fd47cdbfd670267ff100b1af0d82a0/congressional_election_results_1996_2016.csv";
+      "https://gist.githubusercontent.com/mmmaaatttttt/667f43a79aa2f0b280e2a99a1b807a00/raw/5aa105890d32afe83517bbd2dc46303b00e9bc4b/congressional_election_results_1996_2016.csv";
     csv(dataUrl, (row, i, columns) => {
       if (row.District === "Senate" || row.District === "President") return;
       let rowObj = { demEst: false, repEst: false };
@@ -45,28 +45,50 @@ class GerrymanderHistoricalMap extends Component {
   }
 
   addGeometryProperties = (us, data) => {
+    let years = new Set(data.map(d => d.year));
     nest()
       .key(d => d.state)
       .entries(data)
-      .filter(state => state.values.length > 1)
       .forEach(stateObj => {
         const stateGeometry = us.objects.states.geometries.find(
           geometry => geometry.properties.name === stateObj.key
         );
         stateGeometry.properties.values = stateObj.values;
-        stateGeometry.properties.efficiencyGap = this.__calculateNormalizedEg(
-          stateObj.values
-        );
+        stateGeometry.properties.efficiencyGaps = {};
+        for (let year of years) {
+          let eg = this.calculateNormalizedEg(
+            stateObj.values.filter(val => val.year === year)
+          );
+          stateGeometry.properties.efficiencyGaps[year] = eg;
+        }
       });
   };
 
+  calculateNormalizedEg = values =>
+    values.reduce((acc, value) => {
+      let egForDistrict = (value.rep - value.dem) / (value.dem + value.rep);
+      return acc + egForDistrict;
+    }, 0) / values.length;
+
+  fillAccessor = d => {
+    let { currentYear, currentMinElectors } = this.state;
+    let relevantData = d.values.filter(val => val.year === currentYear);
+    if (relevantData.length < currentMinElectors) return null;
+    return d.efficiencyGaps[currentYear];
+  };
+
   getTooltipBody = d => {
-    if (!d.values) return "Not enough districts.";
-    let favoredParty = d.efficiencyGap < 0 ? "Democrats" : "Republicans";
-    let formattedGap = Math.abs(d.efficiencyGap * 100).toFixed(2);
+    let { currentYear, currentMinElectors } = this.state;
+    let districtsForYear = d.values
+      ? d.values.filter(val => val.year === currentYear).length
+      : 1;
+    if (districtsForYear < currentMinElectors) return "Not enough districts.";
+    let gap = d.efficiencyGaps[currentYear];
+    let favoredParty = gap < 0 ? "Democrats" : "Republicans";
+    let formattedGap = Math.abs(gap * 100).toFixed(2);
     return [
       `${formattedGap}% efficiency gap in favor of ${favoredParty}.`,
-      `${d.values.length} districts total.`
+      `${districtsForYear} districts total.`
     ];
   };
 
@@ -85,16 +107,16 @@ class GerrymanderHistoricalMap extends Component {
     const { minElectors, maxElectors } = this.props;
     let sliderData = [
       {
-        title: "Year",
+        title: `Year: ${currentYear}`,
         min: minYear,
         max: maxYear,
         value: currentYear,
-        step: 1,
+        step: 2,
         handleValueChange: this.handleSliderUpdate.bind(this, "currentYear"),
         color: COLORS.DARK_GRAY
       },
       {
-        title: "Minimum Number of Electors",
+        title: `Minimum Number of Electors: ${currentMinElectors}`,
         min: minElectors,
         max: maxElectors,
         value: currentMinElectors,
@@ -114,31 +136,19 @@ class GerrymanderHistoricalMap extends Component {
       );
     return (
       <div>
-        {/* <NarrowContainer width="50%"> */}
         <SliderGroup data={sliderData} />
-        {/* </NarrowContainer> */}
         <USMap
           addGeometryProperties={this.addGeometryProperties}
           colors={[COLORS.DARK_BLUE, COLORS.WHITE, COLORS.RED]}
-          data={data.filter(
-            d =>
-              d.year ===
-              currentYear /* also check that number of districts is sufficient */
-          )}
+          data={data}
           domain={[-0.5, 0, 0.5]}
-          fillAccessor={properties => properties.efficiencyGap}
+          fillAccessor={this.fillAccessor}
           getTooltipTitle={d => d.state}
           getTooltipBody={this.getTooltipBody}
         />
       </div>
     );
   }
-
-  __calculateNormalizedEg = values =>
-    values.reduce((acc, value) => {
-      let egForDistrict = (value.rep - value.dem) / (value.dem + value.rep);
-      return acc + egForDistrict;
-    }, 0) / values.length;
 }
 
 GerrymanderHistoricalMap.propTypes = {

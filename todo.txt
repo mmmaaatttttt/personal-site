@@ -34,6 +34,8 @@ LOWEST PRIORITY
 - http://history.house.gov/Institution/Election-Statistics/Election-Statistics/
 - http://turfjs.org/docs#along
 
+https://fivethirtyeight.com/features/is-gerrymandering-my-fault/
+
 - sources
 - https://phys.org/news/2018-03-mathematicians-tool-voting-unfairly-drawn.html
 - https://www.quantamagazine.org/the-math-behind-gerrymandering-and-wasted-votes-20171012/

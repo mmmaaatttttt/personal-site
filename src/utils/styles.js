@@ -8,6 +8,7 @@ const COLORS = {
   DARK_GREEN: "#00802b",
   GRAY: "#BBBBBB",
   GREEN: "#52A081",
+  LIGHT_GRAY: "#EEEEEE",
   LINK: "#ff5700",
   MAROON: "#A05E52",
   NAV: "#f9f9f9",

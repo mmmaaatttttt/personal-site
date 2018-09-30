@@ -9,6 +9,7 @@ import { extent } from "d3-array";
 import { feature } from "topojson";
 import { withPrefix } from "gatsby-link";
 import { Tooltip, ClippedSVG } from "story_components";
+import COLORS from "utils/styles";
 
 class USMap extends Component {
   state = {
@@ -37,8 +38,12 @@ class USMap extends Component {
   }
 
   handleEnterAndUpdate = (scale, accessor, d) => {
+    let fill = COLORS.LIGHT_GRAY;
+    if (d.properties.values && accessor(d.properties) !== null) {
+      fill = scale(accessor(d.properties));
+    }
     return {
-      fill: [d.properties.values ? scale(accessor(d.properties)) : "#eee"],
+      fill: [fill],
       timing: { duration: 500 }
     };
   };
