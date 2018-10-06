@@ -66,11 +66,11 @@ In other words, if you're concerned about the aggressive use of gerrymandering t
 
 Let's look at another example. Historically, there have been a few long and skinny districts that would fail most tests for compactness. From 2003 to 2013, for instance, California's 23rd district covered hundreds of miles of Pacific coastline, but barely any land farther inland: 
 
-<CaptionedImage caption="The fourth congressional district in Illinois (Source: Wikipedia)" width="100%" src="ca-23.png" />
+<CaptionedImage caption="The 23rd congressional district in California from 2003-2013 (Source: Wikipedia)" width="100%" src="ca-23.png" />
 
 Ohio's 9th district currently has a similar shape; it hugs the southern edge of Lake Erie.
 
-<CaptionedImage caption="The fourth congressional district in Illinois (Source: Wikipedia)" width="100%" src="oh-09.png" />
+<CaptionedImage caption="The ninth congressional district in Ohio (Source: Wikipedia)" width="100%" src="oh-09.png" />
 
 So, are these districts further examples of partisan gerrymandering? Or, were they created because coastal residents in these states are likely to have more similar needs from their representatives compared to folks who live farther away from the water? Looking at the shapes of these districts in isolation, either possibility seems plausible.
 
@@ -98,20 +98,30 @@ As you can see, this calculation has nothing to do with the shape of the distric
 
 Let's take a look at historical data on congressional elections in the United States.
 
-In the map below, states in this are colored according to the size of the efficiency gap. Darker red indicates an efficiency gap favoring Republicans; darker blue indicates an efficiency gap favoring Democrats.
+In the map below, states are colored according to the size of the efficiency gap. Darker red indicates an efficiency gap favoring Republicans; darker blue indicates an efficiency gap favoring Democrats. You can examine results from every congressional election between 1996 and 2016. (If you're curious, you can see the raw data [here](https://gist.githubusercontent.com/mmmaaatttttt/667f43a79aa2f0b280e2a99a1b807a00).)
 
-Note that it's impossible to gerrymander a state with only one representative, so those states are greyed out. Also, only vote tallies for Democrat and Republican candidates are considered. In the event that a district did not have both a Republican and a Democrat on the ballot, that district has been ignored. (TO DO: better estimate the gap in these scenarios, and include historical data so you can see how the efficiency gap changes across time in different states.)
+Note that it's impossible to gerrymander a state with only one representative, so those states are greyed out. For similar reasons, it's difficult to make compelling gerrymandering arguments for states with only a small handful of districts, and the efficiency gap is less powerful as a metric in such cases. For that reason, you can also ignore states with a small number of districts (up to 10), if you choose. 
+
+To the right of the map, you can see a bar chart of how the efficiency gap for each state translates into an expected advantage in terms of the number of congressional seats. The calculation here is straightforward: you just take the efficiency gap for a state and multiply by the number of districts in that state. I'm including this chart because Nicholas Stephanopoulos and Eric McGhee, two academics who first introduced the efficiency gap, proposed the two-seat benchmark as a standard for throwing out a district map as being a partisan gerrymander. Lightly-colored bars correspond to states with a seat gap smaller than two; the fully-colored bars at the right are ones that exceed this two-seat threshold.
+
+Take your time exploring the electoral landscape over time. What do you notice, and what questions come to mind?
 
 <GerrymanderHistoricalMap />
 
-some wrapper over USMap
-addGeometryProperties={this.addGeometryProperties}
-colors={[COLORS.DARK_BLUE, COLORS.WHITE, COLORS.RED]}
-domain={[-0.5, 0, 0.5]}
-data={voteData}
-fillAccessor={this.fillAccessor}
-getTooltipTitle={d => d.name}
-getTooltipBody={this.getTooltipBody}
+SUMMARIZE
+
+### Caveats and Limitations
+
+
+### Notes on the data
+
+1. Also, for races with candidates from more than two parties, only vote tallies for Democrat and Republican candidates are considered. 
+
+2. Estimates
+
+3. Percentages calculated within districts first
+
+### Conclusion
 
 - if data doesn't exist for district, base on:
 
@@ -127,8 +137,6 @@ getTooltipBody={this.getTooltipBody}
 - talk about how increased partisanship and technology are making things worse
 - partisanship vs avg efficiency gaps across states?
 - has gerrymandering gotten worse over time?
-- scatterplot for presidential vote difference vs efficiency gap over time
-
 
 Sources:
 
@@ -138,4 +146,5 @@ Sources:
 - [Extreme Maps](https://www.politico.com/f/?id=0000015c-11a2-d46a-a3ff-9da240e10002)
 - [What Does Compactness Really Mean?](https://blogs.scientificamerican.com/roots-of-unity/what-does-compactness-really-mean/)
 - [America's Most Gerrymandered Congressional Districts](https://www.washingtonpost.com/news/wonk/wp/2014/05/15/americas-most-gerrymandered-congressional-districts/)
+- [Partisan Gerrymandering and the Efficiency Gap](https://chicagounbound.uchicago.edu/cgi/viewcontent.cgi?article=1946&context=public_law_and_legal_theory)
 - CHECK THIS AGAINST FIRST STORY
