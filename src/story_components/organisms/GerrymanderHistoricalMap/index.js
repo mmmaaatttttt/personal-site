@@ -191,7 +191,7 @@ class GerrymanderHistoricalMap extends Component {
     return (
       <div>
         <SliderGroup data={sliderData} />
-        <ColumnLayout>
+        <ColumnLayout break="small">
           <USMap
             addGeometryProperties={this.addGeometryProperties}
             colors={[COLORS.DARK_BLUE, COLORS.WHITE, COLORS.RED]}
@@ -203,14 +203,15 @@ class GerrymanderHistoricalMap extends Component {
           />
           <div>
             <BarGraph
-              svgId="eg-chart"
-              width={width}
-              height={height}
-              padding={padding}
-              yScale={yScale}
-              tickStep={2}
               barData={currentBarData}
               barLabel={bar => bar.key}
+              height={height}
+              labelFontSize={`${(currentMinElectors - 1) / 10 + 1.2}rem`}
+              padding={padding}
+              svgId="eg-chart"
+              tickStep={2}
+              width={width}
+              yScale={yScale}
             />
           </div>
         </ColumnLayout>

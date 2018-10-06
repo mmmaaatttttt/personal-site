@@ -32,17 +32,18 @@ class BarGraph extends Component {
 
   render() {
     const {
-      svgId,
-      width,
-      height,
-      padding,
       barData,
-      yScale,
-      tickStep,
       barLabel,
+      height,
       histogram,
+      labelFontSize,
+      padding,
+      svgId,
       thresholds,
-      tickFormat
+      tickFormat,
+      tickStep,
+      width,
+      yScale
     } = this.props;
 
     const xScale = histogram
@@ -60,6 +61,9 @@ class BarGraph extends Component {
       range[0] -= paddingBottom;
       yScale.range(range);
     }
+    let fontSize = labelFontSize;
+    if (!fontSize)
+      fontSize = barData.length < 11 ? "100%" : `${110 - 1 * barData.length}%`;
     return (
       <ClippedSVG id={svgId} width={width} height={height}>
         <NodeGroup
@@ -81,14 +85,12 @@ class BarGraph extends Component {
               />
               {bars.map(bar => {
                 const { x, fill, width, barHeight } = bar.state;
-                const fontSize =
-                  bars.length < 11 ? "100%" : `${110 - 1 * bars.length}%`;
                 const text = barLabel ? (
                   <CenteredSVGText
                     x={x}
                     dx={width / 2}
                     y={barHeight}
-                    dy={-10}
+                    dy={-12}
                     fontSize={fontSize}
                   >
                     {barLabel(bar.data)}
@@ -125,24 +127,25 @@ class BarGraph extends Component {
 }
 
 BarGraph.propTypes = {
-  svgId: PropTypes.string.isRequired,
-  width: PropTypes.number.isRequired,
-  height: PropTypes.number.isRequired,
-  padding: PropTypes.number.isRequired,
-  yScale: PropTypes.func.isRequired,
   barData: PropTypes.arrayOf(
     PropTypes.shape({
       key: PropTypes.isRequired,
       height: PropTypes.number.isRequired
     })
   ).isRequired,
-  tickStep: PropTypes.number.isRequired,
   barLabel: PropTypes.func,
+  color: PropTypes.string.isRequired,
+  height: PropTypes.number.isRequired,
   histogram: PropTypes.bool,
+  labelFontSize: PropTypes.string,
+  padding: PropTypes.number.isRequired,
   thresholds: PropTypes.arrayOf(PropTypes.number),
   tickFormat: PropTypes.string,
-  color: PropTypes.string.isRequired,
-  timing: PropTypes.object.isRequired
+  tickStep: PropTypes.number.isRequired,
+  timing: PropTypes.object.isRequired,
+  svgId: PropTypes.string.isRequired,
+  width: PropTypes.number.isRequired,
+  yScale: PropTypes.func.isRequired
 };
 
 BarGraph.defaultProps = {
