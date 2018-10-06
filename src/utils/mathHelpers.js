@@ -47,6 +47,17 @@ function average(nums, accessor = num => num) {
   return total(nums, accessor) / nums.length;
 }
 
+function calculateWastedVotes(votes, party1Accessor, party2Accessor) {
+  return votes.map(district => {
+    let party1Votes = party1Accessor(district);
+    let party2Votes = party2Accessor(district);
+    let votesNeededToWin = Math.ceil((party1Votes + party2Votes + 1) / 2);
+    return party1Votes > party2Votes
+      ? [party1Votes - votesNeededToWin, party2Votes]
+      : [party1Votes, party2Votes - votesNeededToWin];
+  });
+}
+
 function _swap(arr, i, j) {
   [arr[i], arr[j]] = [arr[j], arr[i]];
   return arr;
@@ -60,4 +71,11 @@ function _shuffle(arr) {
   return arr;
 }
 
-export { generateData, choices, euclideanDistance, average, total };
+export {
+  average,
+  calculateWastedVotes,
+  choices,
+  euclideanDistance,
+  generateData,
+  total
+};

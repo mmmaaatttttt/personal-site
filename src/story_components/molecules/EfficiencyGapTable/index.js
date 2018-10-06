@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import styled from "styled-components";
 import { connect } from "react-redux";
 import COLORS from "utils/styles";
-import { total } from "utils/mathHelpers";
+import { total, calculateWastedVotes } from "utils/mathHelpers";
 import { ColoredSpan } from "story_components";
 
 const StyledTable = styled.table`
@@ -32,17 +32,6 @@ const StyledTable = styled.table`
 `;
 
 class EfficiencyGapTable extends Component {
-  calculateWastedVotes = (votes, party1Accessor, party2Accessor) => {
-    return votes.map(district => {
-      let party1Votes = party1Accessor(district);
-      let party2Votes = party2Accessor(district);
-      let votesNeededToWin = Math.ceil((party1Votes + party2Votes + 1) / 2);
-      return party1Votes > party2Votes
-        ? [party1Votes - votesNeededToWin, party2Votes]
-        : [party1Votes, party2Votes - votesNeededToWin];
-    });
-  };
-
   calculateTotalWastedVotes = wastedVotes => {
     return wastedVotes.reduce(
       (totals, cur) => {
@@ -75,7 +64,7 @@ class EfficiencyGapTable extends Component {
     if (districtCounts) {
       let blueAcc = d => d[0];
       let redAcc = d => d[1];
-      let wastedVotes = this.calculateWastedVotes(
+      let wastedVotes = calculateWastedVotes(
         districtCounts,
         blueAcc,
         redAcc
