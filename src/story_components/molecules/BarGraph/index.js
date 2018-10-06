@@ -10,18 +10,19 @@ class BarGraph extends Component {
     const { histogram, color, yScale } = this.props;
     return {
       x: histogram ? scale(d.x0) + 1 : scale(i),
-      fill: color,
+      fill: d.color || color,
       width: histogram ? scale(d.x1) - scale(d.x0) - 2 : scale.bandwidth(),
       barHeight: yScale(d.height)
     };
   };
 
   handleEnterAndUpdate = (scale, d, i) => {
-    const { histogram, yScale, timing } = this.props;
+    const { histogram, yScale, timing, color } = this.props;
     return {
       x: [histogram ? scale(d.x0) + 1 : scale(i)],
       width: [histogram ? scale(d.x1) - scale(d.x0) - 2 : scale.bandwidth()],
       barHeight: [yScale(d.height)],
+      fill: d.color || color,
       timing: {
         duration: timing.duration,
         delay: timing.delay * i || 0
