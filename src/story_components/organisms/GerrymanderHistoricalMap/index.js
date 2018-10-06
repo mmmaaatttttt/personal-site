@@ -3,12 +3,16 @@ import PropTypes from "prop-types";
 import { min, max } from "d3-array";
 import { nest } from "d3-collection";
 import { csv } from "d3-fetch";
+import { scaleLinear } from "d3-scale";
+import { lighten } from "polished";
 import withCaption from "hocs/withCaption";
 import COLORS from "utils/styles";
-import { SliderGroup, USMap } from "story_components";
+import { calculateWastedVotes } from "utils/mathHelpers";
+import { BarGraph, ColumnLayout, SliderGroup, USMap } from "story_components";
 
 class GerrymanderHistoricalMap extends Component {
   state = {
+    allBarData: [],
     data: [],
     minYear: null,
     maxYear: null,
@@ -62,13 +66,32 @@ class GerrymanderHistoricalMap extends Component {
           stateGeometry.properties.efficiencyGaps[year] = eg;
         }
       });
+    let allBarData = us.objects.states.geometries
+      .filter(g => g.properties.values)
+      .map(g => {
+        let { efficiencyGaps, name, code: label, values } = g.properties;
+        let seatGaps = {};
+        for (let year in efficiencyGaps) {
+          let districtCount = values.filter(d => d.year === +year).length;
+          seatGaps[year] = efficiencyGaps[year] * districtCount;
+        }
+        return { seatGaps, label, name };
+      });
+    this.setState({ allBarData });
   };
 
-  calculateNormalizedEg = values =>
-    values.reduce((acc, value) => {
-      let egForDistrict = (value.rep - value.dem) / (value.dem + value.rep);
-      return acc + egForDistrict;
-    }, 0) / values.length;
+  calculateNormalizedEg = values => {
+    let repAccessor = d => d.rep;
+    let demAccessor = d => d.dem;
+    let wastedVotes = calculateWastedVotes(values, repAccessor, demAccessor);
+    return (
+      wastedVotes.reduce((acc, wv, i) => {
+        let totalVotes = repAccessor(values[i]) + demAccessor(values[i]);
+        let egPercentForDistrict = (wv[1] - wv[0]) / totalVotes;
+        return acc + egPercentForDistrict;
+      }, 0) / wastedVotes.length
+    );
+  };
 
   fillAccessor = d => {
     let { currentYear, currentMinElectors } = this.state;
@@ -85,10 +108,11 @@ class GerrymanderHistoricalMap extends Component {
     if (districtsForYear < currentMinElectors) return "Not enough districts.";
     let gap = d.efficiencyGaps[currentYear];
     let favoredParty = gap < 0 ? "Democrats" : "Republicans";
-    let formattedGap = Math.abs(gap * 100).toFixed(2);
+    let formattedGap = Math.abs(gap * 100);
     return [
-      `${formattedGap}% efficiency gap in favor of ${favoredParty}.`,
-      `${districtsForYear} districts total.`
+      `${formattedGap.toFixed(2)}% efficiency gap in favor of ${favoredParty}.`,
+      `${districtsForYear} districts total.`,
+      `${((formattedGap * districtsForYear) / 100).toFixed(2)} seat gap.`
     ];
   };
 
@@ -98,6 +122,7 @@ class GerrymanderHistoricalMap extends Component {
 
   render() {
     const {
+      allBarData,
       data,
       minYear,
       maxYear,
@@ -105,6 +130,12 @@ class GerrymanderHistoricalMap extends Component {
       currentMinElectors
     } = this.state;
     const { minElectors, maxElectors } = this.props;
+    if (data.length === 0)
+      return (
+        <div>
+          <h1>Loading, please wait...</h1>
+        </div>
+      );
     let sliderData = [
       {
         title: `Year: ${currentYear}`,
@@ -128,24 +159,61 @@ class GerrymanderHistoricalMap extends Component {
         color: COLORS.DARK_GRAY
       }
     ];
-    if (data.length === 0)
-      return (
-        <div>
-          <h1>Loading, please wait...</h1>
-        </div>
-      );
+    // pararemters for bar graph
+    let width = 1600;
+    let height = 900;
+    let padding = 20;
+    let egMax = 0.5;
+    let yScale = scaleLinear()
+      .domain([0, 6])
+      .range([height - padding, padding]);
+    let currentBarData = allBarData
+      .filter(
+        // throw out bars coming from states with
+        // a small number of electors for the current year
+        barD =>
+          data.filter(d => d.year === currentYear && d.state === barD.name)
+            .length >= currentMinElectors
+      )
+      .map(d => {
+        let seatGap = d.seatGaps[currentYear];
+        let height = Math.abs(seatGap);
+        let color = COLORS.DARK_BLUE;
+        if (seatGap > 0) color = COLORS.RED;
+        if (height < 2) color = lighten(0.4, color);
+        return {
+          key: d.label,
+          height,
+          color
+        };
+      })
+      .sort((a, b) => a.height - b.height);
     return (
       <div>
         <SliderGroup data={sliderData} />
-        <USMap
-          addGeometryProperties={this.addGeometryProperties}
-          colors={[COLORS.DARK_BLUE, COLORS.WHITE, COLORS.RED]}
-          data={data}
-          domain={[-0.5, 0, 0.5]}
-          fillAccessor={this.fillAccessor}
-          getTooltipTitle={d => d.state}
-          getTooltipBody={this.getTooltipBody}
-        />
+        <ColumnLayout>
+          <USMap
+            addGeometryProperties={this.addGeometryProperties}
+            colors={[COLORS.DARK_BLUE, COLORS.WHITE, COLORS.RED]}
+            data={data}
+            domain={[-egMax, 0, egMax]}
+            fillAccessor={this.fillAccessor}
+            getTooltipTitle={d => d.name}
+            getTooltipBody={this.getTooltipBody}
+          />
+          <div>
+            <BarGraph
+              svgId="eg-chart"
+              width={width}
+              height={height}
+              padding={padding}
+              yScale={yScale}
+              tickStep={2}
+              barData={currentBarData}
+              barLabel={bar => bar.key}
+            />
+          </div>
+        </ColumnLayout>
       </div>
     );
   }
