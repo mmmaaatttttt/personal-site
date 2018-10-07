@@ -108,30 +108,25 @@ Take your time exploring the electoral landscape over time. What do you notice, 
 
 <GerrymanderHistoricalMap />
 
-SUMMARIZE
+As you can see, states that have surpassed the two-seat threshold have almost exclusively benefitted Republican representation in congress. Moreover, since the last round of redistricting after the 2010 census, three states have have at least a two-seat Republican edge in the 2012, 2014, and 2016 elections: Pennsylvania, North Carolina, and Michigan. From this perspective, it's less surprising that the Pennsylvania state supreme court tossed out the congressional map earlier this year.
 
 ### Caveats and Limitations
 
+While the efficiency gap can help identify potentially problematic states, it's worth pointing out that the calculation itself has some limitations, both theoretical and practical. In no particular order, here are a few:
 
-### Notes on the data
+1. The focus of the efficiency gap is on the two-party system. When calculating the efficiency gap, then, third party votes are always discarded. In many races these votes are negligible, but not always. This becomes particularly problematic in races where neither the Democrat nor the Republican wins, in which case the votes for the winning candidate are ignored.
 
-1. Also, for races with candidates from more than two parties, only vote tallies for Democrat and Republican candidates are considered. 
+2. On the flip side, it's not true that every congressional race has a Democrat and a Republican on the ballot. In fact, in nearly 14% of the districts considered here (656 out of 4,708), either a Democrat or a Republican (or both) did not run. In such cases, I estimated the vote tallies based on vote tallies in surrounding years, as well as vote shares in nearby Presidential elections. But the efficiency gap relies on good historical data for its results, which can make its calculation more challenging than it might initially seem.
 
-2. Estimates
+3. In our toy example we didn't have to deal with the issue of voter turnout. But in reality, district vote tallies won't always be the same, because turnout will vary. In order to ensure that higher-turnout districts don't skew the results, I first calculated the number of wasted votes per district as a percentage of wasted votes. I then calculated the efficiency gap based on these percentages. This is the same methodology used in [Extreme Maps](https://www.politico.com/f/?id=0000015c-11a2-d46a-a3ff-9da240e10002), a paper on gerrymandering by Laura Royden and Michael Li.
 
-3. Percentages calculated within districts first
+4. Speaking of Royden and Li, they also point out a couple of limitations with the efficiency gap. Here's one: "The efficiency gap rests on the assumption that for every 1 percent increase in vote share, a party should increase its seat share by 2 percent. For close states (where the winning party receives around 50 percent - 60 percent of the vote) this 1:2 ratio has historically been close to actual results for most maps but much less accurate when the winning party receives more than 60 percent of the vote. This makes the efficiency gap a fairly accurate measure for closely contested states but often much less of one for states dominated by one political party."
+
+5. Here's another: "The efficiency gap can also be quite sensitive over time, fluctuating wildly between elections under the same map. States with even a few close districts can see significant swings — sometimes up to multiple seats in the seat gap results — in subsequent elections whose raw vote totals are only slightly different if even one district flips parties, and this volatility can make the efficiency gap problematic to use longterm over a series of years or decades." 
 
 ### Conclusion
 
-- if data doesn't exist for district, base on:
-
-  - average of district results within that decade (i.e. same district lines)
-    if that data doesn't exist, base on presidential results for that decade in that district -
-    https://web.archive.org/web/20111230051047/http://swingstateproject.com/diary/4161
-    https://www.dailykos.com/stories/2012/11/19/1163009/-Daily-Kos-Elections-presidential-results-by-congressional-district-for-the-2012-2008-elections
-  - if no votes for either party, find average of adjacent elections (either pres or non-pres)
-  - also look to nearby districts for data
-  - easier data to scrape: http://clerk.house.gov/member_info/electionInfo/1994/94Stat.htm
+- other tools (shortest splitline)
 
 - problems with the EG
 - talk about how increased partisanship and technology are making things worse
@@ -143,7 +138,7 @@ Sources:
 - [Efforts to limit partisan gerrymandering falter at Supreme Court](https://www.washingtonpost.com/politics/courts_law/supreme-court-sidesteps-decision-on-partisan-gerrymandering/2018/06/18/c909bf26-7303-11e8-805c-4b67019fcfe4_story.html)
 - [Pennsylvania Supreme Court draws 'much more competitive' district map to overturn Republican gerrymander](https://www.washingtonpost.com/news/wonk/wp/2018/02/19/pennsylvania-supreme-court-draws-a-much-more-competitive-district-map-to-overturn-republican-gerrymander/)
 - [Drive Against Gerrymandering Finds New Life in Ballot Initiatives](https://www.nytimes.com/2018/07/23/us/gerrymandering-states.html)
-- [Extreme Maps](https://www.politico.com/f/?id=0000015c-11a2-d46a-a3ff-9da240e10002)
+- [Extreme Maps](https://www.politico.com/f/?id=0000015c-11a2-d46a-a3ff-9da240e10002), by Laura Royden and Michael Li.
 - [What Does Compactness Really Mean?](https://blogs.scientificamerican.com/roots-of-unity/what-does-compactness-really-mean/)
 - [America's Most Gerrymandered Congressional Districts](https://www.washingtonpost.com/news/wonk/wp/2014/05/15/americas-most-gerrymandered-congressional-districts/)
 - [Partisan Gerrymandering and the Efficiency Gap](https://chicagounbound.uchicago.edu/cgi/viewcontent.cgi?article=1946&context=public_law_and_legal_theory)
