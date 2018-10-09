@@ -42,7 +42,7 @@ Historically, gerrymandering has been treated like pornography: you know it when
 
 Because of this, some of the first attempts to measure and detect gerrymandering focused on the geometry of a given district. More specifically, they often focused on the idea of _compactness_, the idea being that districts drawn in good faith should have a relatively compact, non-controversial-looking shape.
 
-But while compactness has a precise [mathematical definition](https://blogs.scientificamerican.com/roots-of-unity/what-does-compactness-really-mean/), in congressional drawing circles the term is more of a loose idea. Some have tried to make the idea of compactness more mathematically precise by framing it terms of areas and perimeters. This idea stems from an interesting mathematical fact: given a fixed length of string, the largest area you can enclose with that string will form a circle. (If you want to get fancy, this is known as the [isoperimetric inequality](https://en.wikipedia.org/wiki/Isoperimetric_inequality).)
+But while compactness has a precise [mathematical definition](https://blogs.scientificamerican.com/roots-of-unity/what-does-compactness-really-mean/), in congressional drawing circles the term is more of a loose idea. Some have tried to make the idea of compactness more mathematically precise. A number of metrics have [been proposed](http://www.ams.org/publicoutreach/feature-column/fc-2014-08), but we'll focus on one of the simpler ones, which frames things in terms of areas and perimeters. This idea stems from an interesting mathematical fact: given a fixed length of string, the largest area you can enclose with that string will form a circle. (If you want to get fancy, this is known as the [isoperimetric inequality](https://en.wikipedia.org/wiki/Isoperimetric_inequality).)
 
 SOME TYPE OF INTERACTIVE HERE.
 
@@ -120,26 +120,33 @@ While the efficiency gap can help identify potentially problematic states, it's 
 
 3. In our toy example we didn't have to deal with the issue of voter turnout. But in reality, district vote tallies won't always be the same, because turnout will vary. In order to ensure that higher-turnout districts don't skew the results, I first calculated the number of wasted votes per district as a percentage of wasted votes. I then calculated the efficiency gap based on these percentages. This is the same methodology used in [Extreme Maps](https://www.politico.com/f/?id=0000015c-11a2-d46a-a3ff-9da240e10002), a paper on gerrymandering by Laura Royden and Michael Li.
 
-4. Speaking of Royden and Li, they also point out a couple of limitations with the efficiency gap. Here's one: "The efficiency gap rests on the assumption that for every 1 percent increase in vote share, a party should increase its seat share by 2 percent. For close states (where the winning party receives around 50 percent - 60 percent of the vote) this 1:2 ratio has historically been close to actual results for most maps but much less accurate when the winning party receives more than 60 percent of the vote. This makes the efficiency gap a fairly accurate measure for closely contested states but often much less of one for states dominated by one political party."
+4. Speaking of Royden and Li, they also point out a couple of limitations with the efficiency gap. Here's one: "The efficiency gap rests on the assumption that for every 1 percent increase in vote share, a party should increase its seat share by 2 percent. For close states (where the winning party receives around 50 percent - 60 percent of the vote) this 1:2 ratio has historically been close to actual results for most maps but much less accurate when the winning party receives more than 60 percent of the vote. This makes the efficiency gap a fairly accurate measure for closely contested states but often much less of one for states dominated by one political party." Massachusetts is a good example here. The state as a whole leans heavily Democratic, so when the efficiency gap suggests partisan gerrymandering in the state, this may not be quite right.
 
-5. Here's another: "The efficiency gap can also be quite sensitive over time, fluctuating wildly between elections under the same map. States with even a few close districts can see significant swings — sometimes up to multiple seats in the seat gap results — in subsequent elections whose raw vote totals are only slightly different if even one district flips parties, and this volatility can make the efficiency gap problematic to use longterm over a series of years or decades." 
+5. Here's another: "The efficiency gap can also be quite sensitive over time, fluctuating wildly between elections under the same map. States with even a few close districts can see significant swings — sometimes up to multiple seats in the seat gap results — in subsequent elections whose raw vote totals are only slightly different if even one district flips parties, and this volatility can make the efficiency gap problematic to use long-term over a series of years or decades." 
+
+6. Here's a fun math fact: a paper posted in October 2017 proved that the desired goals of creating districts that are (a) roughly the same size, (b) relatively compact, and (c) have a tolerable efficiency gap are mutually incompatible. See [An impossibility theorem for gerrymandering](https://arxiv.org/pdf/1710.04193.pdf) for more details.
 
 ### Conclusion
 
-- other tools (shortest splitline)
+Gerrymandering is a thorny problem, and I've only outlined a couple of proposals for detecting it. There are certainly more if you'd like to dig deeper. Some other interesting proposals for addressing gerrymandering include use of the [shortest splitline algorithm](http://rangevoting.org/GerryExec.html), as well as recent advances involving [geometry](https://phys.org/news/2018-03-mathematicians-tool-voting-unfairly-drawn.html) and [differential equations](http://www.math.ucla.edu/~majaco/papers/gerrymandering.pdf).
 
-- problems with the EG
-- talk about how increased partisanship and technology are making things worse
-- partisanship vs avg efficiency gaps across states?
-- has gerrymandering gotten worse over time?
+Others have argued that gerrymandering is but a symptom of a different problem: our gradual self-selection into liberal groups concentrated in cities, and conservative groups concentrated in more rural areas. The thinking here is that it's easier to gerrymander a population that's already divided itself, and according to some analyses, like this one from [FiveThirtyEight](fivethirtyeight.com), gerrymandering is taking too much of the blame for our current political polarization:
+
+<ResponsiveIFrame src="https://fivethirtyeight.abcnews.go.com/video/embed/56134801" heightOverWidth={36/64} />
+
+But regardless of the degree, reduction in gerrymandering is one of the few issues that enjoys broad bipartisan support. Here's hoping that the next few years will see mathematics used on the right side of this fight, rather than being used to draw even more extreme gerrymanders after the 2020 census. I enjoy a funny looking shape as much as the next person, but I enjoy a healthy democracy more.
 
 Sources:
 
-- [Efforts to limit partisan gerrymandering falter at Supreme Court](https://www.washingtonpost.com/politics/courts_law/supreme-court-sidesteps-decision-on-partisan-gerrymandering/2018/06/18/c909bf26-7303-11e8-805c-4b67019fcfe4_story.html)
-- [Pennsylvania Supreme Court draws 'much more competitive' district map to overturn Republican gerrymander](https://www.washingtonpost.com/news/wonk/wp/2018/02/19/pennsylvania-supreme-court-draws-a-much-more-competitive-district-map-to-overturn-republican-gerrymander/)
-- [Drive Against Gerrymandering Finds New Life in Ballot Initiatives](https://www.nytimes.com/2018/07/23/us/gerrymandering-states.html)
+- [Efforts to limit partisan gerrymandering falter at Supreme Court](https://www.washingtonpost.com/politics/courts_law/supreme-court-sidesteps-decision-on-partisan-gerrymandering/2018/06/18/c909bf26-7303-11e8-805c-4b67019fcfe4_story.html), by Robert Barnes.
+- [Pennsylvania Supreme Court draws 'much more competitive' district map to overturn Republican gerrymander](https://www.washingtonpost.com/news/wonk/wp/2018/02/19/pennsylvania-supreme-court-draws-a-much-more-competitive-district-map-to-overturn-republican-gerrymander/), by Christopher Ingraham.
+- [Drive Against Gerrymandering Finds New Life in Ballot Initiatives](https://www.nytimes.com/2018/07/23/us/gerrymandering-states.html), by Michael Wines.
+- [Congressional Redistricting and Gerrymandering](http://www.ams.org/publicoutreach/feature-column/fc-2014-08), by David Austin.
 - [Extreme Maps](https://www.politico.com/f/?id=0000015c-11a2-d46a-a3ff-9da240e10002), by Laura Royden and Michael Li.
-- [What Does Compactness Really Mean?](https://blogs.scientificamerican.com/roots-of-unity/what-does-compactness-really-mean/)
-- [America's Most Gerrymandered Congressional Districts](https://www.washingtonpost.com/news/wonk/wp/2014/05/15/americas-most-gerrymandered-congressional-districts/)
-- [Partisan Gerrymandering and the Efficiency Gap](https://chicagounbound.uchicago.edu/cgi/viewcontent.cgi?article=1946&context=public_law_and_legal_theory)
-- CHECK THIS AGAINST FIRST STORY
+- [What Does Compactness Really Mean?](https://blogs.scientificamerican.com/roots-of-unity/what-does-compactness-really-mean/), by Evelyn Lamb.
+- [America's Most Gerrymandered Congressional Districts](https://www.washingtonpost.com/news/wonk/wp/2014/05/15/americas-most-gerrymandered-congressional-districts/), by Christopher Ingraham.
+- [Partisan Gerrymandering and the Efficiency Gap](https://chicagounbound.uchicago.edu/cgi/viewcontent.cgi?article=1946&context=public_law_and_legal_theory), by Nicholas Stephanopoulos and Eric McGhee.
+- [An impossibility theorem for gerrymandering](https://arxiv.org/pdf/1710.04193.pdf), by Boris Alexeev and Dustin G. Mixon.
+- [Gerrymandering and a cure for it – the shortest splitline algorithm (executive summary)](http://rangevoting.org/GerryExec.html), by Warren D. Smith.
+- [Mathematicians invent tool to judge when voting maps have been unfairly drawn](https://phys.org/news/2018-03-mathematicians-tool-voting-unfairly-drawn.html), by the University of Vermont.
+- [A partial differential equations approach to defeating partisan gerrymandering](http://www.math.ucla.edu/~majaco/papers/gerrymandering.pdf), by Matt Jacobs and Olivia Walch.
