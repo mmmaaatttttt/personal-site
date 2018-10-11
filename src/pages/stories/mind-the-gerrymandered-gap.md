@@ -44,7 +44,7 @@ Because of this, some of the first attempts to measure and detect gerrymandering
 
 But while compactness has a precise [mathematical definition](https://blogs.scientificamerican.com/roots-of-unity/what-does-compactness-really-mean/), in congressional drawing circles the term is more of a loose idea. Some have tried to make the idea of compactness more mathematically precise. A number of metrics have [been proposed](http://www.ams.org/publicoutreach/feature-column/fc-2014-08), but we'll focus on one of the simpler ones, which frames things in terms of areas and perimeters. This idea stems from an interesting mathematical fact: given a fixed length of string, the largest area you can enclose with that string will form a circle. (If you want to get fancy, this is known as the [isoperimetric inequality](https://en.wikipedia.org/wiki/Isoperimetric_inequality).)
 
-SOME TYPE OF INTERACTIVE HERE.
+<IsoperimetricExplorer />
 
 What does this have to do with compactness? Well, if you have a district of a certain area, you can calculate the length of its boundary, and then ask what the area of a circle with that same boundary length would be. By the isoperimetric inequality, the circle will necessarily have a larger area, unless the district too is in the shape of a perfect circle.
 
