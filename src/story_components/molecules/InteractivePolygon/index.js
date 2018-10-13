@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
+import { DraggableCircle } from "story_components";
 
 class InteractivePolygon extends Component {
   state = {
@@ -16,29 +17,39 @@ class InteractivePolygon extends Component {
     nextId: this.props.initialSides + 1
   };
 
+  getCenter = () => {
+    let box = this.polygon.getBBox();
+    return {
+      x: box.x + box.width / 2,
+      y: box.y + box.height / 2
+    };
+  };
+
+  getLength = () => {
+    return this.polygon.getTotalLength();
+  };
+
   getPointsString = () => {
     return this.state.points
       .reduce((str, obj) => `${str} ${obj.x},${obj.y}`, "")
       .trim();
   };
 
-  getLength = () => {
-    return this.polygon.getTotalLength();
-  }
-
-  getCenter = () => {
-    let box = this.polygon.getBBox();
-    return {
-      x: box.x + box.width / 2,
-      y: box.y + box.height / 2
-    }
-  }
+  handleDrag = (idx, coords) => {
+    let points = [...this.state.points];
+    points[idx] = { ...points[idx], ...coords };
+    this.setState({ points });
+  };
 
   render() {
     const { points } = this.state;
-    const radius = 8;
-    let circles = points.map(point => (
-      <circle cx={point.x} cy={point.y} r={radius} key={point.id} />
+    let circles = points.map((point, i) => (
+      <DraggableCircle
+        cx={point.x}
+        cy={point.y}
+        key={point.id}
+        onDrag={this.handleDrag.bind(this, i)}
+      />
     ));
     let lines = points.map((point, i) => {
       let nextPoint = points[(i + 1) % points.length];
@@ -54,7 +65,13 @@ class InteractivePolygon extends Component {
         />
       );
     });
-    let polygon = <polygon points={this.getPointsString()} fill="red" ref={polygon => this.polygon = polygon}/>
+    let polygon = (
+      <polygon
+        points={this.getPointsString()}
+        fill="red"
+        ref={polygon => (this.polygon = polygon)}
+      />
+    );
     return (
       <g>
         {polygon}
