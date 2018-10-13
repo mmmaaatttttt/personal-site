@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { DraggableCircle } from "story_components";
+import COLORS from "utils/styles";
 
 class InteractivePolygon extends Component {
   getPointsString = () => {
@@ -10,12 +11,12 @@ class InteractivePolygon extends Component {
   };
 
   render() {
-    const { points } = this.props;
+    const { fill, points, stroke, strokeWidth } = this.props;
     let circles = points.map((point, i) => (
       <DraggableCircle
         cx={point.x}
         cy={point.y}
-        key={point.id}
+        key={i}
         onDrag={coords => this.props.handleDrag(i, coords)}
       />
     ));
@@ -27,18 +28,13 @@ class InteractivePolygon extends Component {
           x2={nextPoint.x}
           y1={point.y}
           y2={nextPoint.y}
-          stroke="black"
-          strokeWidth="3"
-          key={`${point.id}-${nextPoint.id}`}
+          stroke={stroke}
+          strokeWidth={strokeWidth}
+          key={`${i}-${i + 1}`}
         />
       );
     });
-    let polygon = (
-      <polygon
-        points={this.getPointsString()}
-        fill="red"
-      />
-    );
+    let polygon = <polygon points={this.getPointsString()} fill={fill} />;
     return (
       <g>
         {polygon}
@@ -51,17 +47,23 @@ class InteractivePolygon extends Component {
 
 InteractivePolygon.propTypes = {
   handleDrag: PropTypes.func.isRequired,
+  fill: PropTypes.string.isRequired,
   points: PropTypes.arrayOf(
     PropTypes.shape({
-      id: PropTypes.number.isRequired,
       x: PropTypes.number.isRequired,
       y: PropTypes.number.isRequired
     })
-  ).isRequired
+  ).isRequired,
+  stroke: PropTypes.string.isRequired,
+  strokeWidth: PropTypes.number.isRequired
 };
 
 InteractivePolygon.defaultProps = {
-  handleDrag: coords => console.log(coords)
+  handleDrag: coords => console.log(coords),
+  fill: COLORS.BLACK,
+  points: [],
+  stroke: COLORS.BLACK,
+  strokeWidth: 3
 };
 
 export default InteractivePolygon;

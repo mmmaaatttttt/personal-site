@@ -1,10 +1,13 @@
-- ability to add points to polygon
-- ability to remove points from polygon
+- possible to stop polygon from self intersection?
 - display areas or ratios
   - abstract table into an atom
 - add caption and instructions
 - border for svg?
 - polish styling
+  - circles grow on hover
+  - circles change color on hover
+  - change circle color
+- maybe make dragging easier
 
 LOW PRIORITY
 - get more heat map data (mayyybeeeee)

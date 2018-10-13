@@ -1,29 +1,33 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import { ClippedSVG, InteractivePolygon } from "story_components";
-import { average, euclideanDistance } from "utils/mathHelpers";
+import {
+  ClippedSVG,
+  InteractivePolygon,
+  LabeledSlider
+} from "story_components";
+import { average } from "utils/mathHelpers";
+import COLORS from "utils/styles";
 
 class IsoperimetricExplorer extends Component {
-  state = {
-    points: Array.from({ length: this.props.initialSides }, (_, i) => {
-      const { width, height, initialSides } = this.props;
-      const angle = (2 * Math.PI * i) / initialSides - Math.PI / 2;
+  // need constructor pattern when using a method to initialize state
+  constructor(props) {
+    super(props);
+    this.state = {
+      points: this.generatePointsFromCount(props.initialSides),
+    };
+  }
+
+  generatePointsFromCount = newCount => {
+    return Array.from({ length: newCount }, (_, i) => {
+      const { width, height } = this.props;
+      const angle = (2 * Math.PI * i) / newCount - Math.PI / 2;
       const distance = 100;
       return {
-        id: i,
         x: width / 2 + distance * Math.cos(angle),
         y: height / 2 + distance * Math.sin(angle)
       };
-    }),
-    nextId: this.props.initialSides + 1,
-    bigCircleX: 0,
-    bigCircleY: 0,
-    bigCircleR: 0
+    });
   };
-
-  componentDidMount() {
-    this.updateBigCircle();
-  }
 
   getCenter = () => {
     let { points } = this.state;
@@ -40,34 +44,59 @@ class IsoperimetricExplorer extends Component {
       let xSquare = (point.x - nextPoint.x) ** 2;
       let ySquare = (point.y - nextPoint.y) ** 2;
       let newDistance = (xSquare + ySquare) ** (1 / 2);
-      return length + newDistance
+      return length + newDistance;
     }, 0);
   };
 
   handleDrag = (idx, coords) => {
     let points = [...this.state.points];
     points[idx] = { ...points[idx], ...coords };
-    this.setState({ points }, this.updateBigCircle);
+    this.setState({ points });
   };
 
-  updateBigCircle = () => {
+  handleValueChange = newVal => {
+    this.setState({ points: this.generatePointsFromCount(newVal) });
+  };
+
+  getCircleParams = () => {
     let center = this.getCenter();
-    let radius = this.getLength() / (2 * Math.PI);
-    this.setState({
-      bigCircleX: center.x,
-      bigCircleY: center.y,
-      bigCircleR: radius
-    });
+    let r = this.getLength() / (2 * Math.PI);
+    return {...center, r};
   };
 
   render() {
-    const { width, height } = this.props;
-    const { points, bigCircleX, bigCircleY, bigCircleR } = this.state;
+    const { width, height, initialSides } = this.props;
+    const { points } = this.state;
+    let circleParams = this.getCircleParams();
+    let maxSides = 20;
+    let strokeWidth = 3;
     return (
       <div>
+        <LabeledSlider
+          min={initialSides}
+          max={maxSides}
+          step={1}
+          value={points.length}
+          title={`Number of district sides: ${points.length}`}
+          handleValueChange={this.handleValueChange}
+          color={COLORS.DARK_GRAY}
+        />
         <ClippedSVG width={width} height={height} id="isoperimetric-svg">
-          <circle cx={bigCircleX} cy={bigCircleY} r={bigCircleR} fill="blue" />
-          <InteractivePolygon points={points} handleDrag={this.handleDrag} />
+          <circle
+            cx={circleParams.x}
+            cy={circleParams.y}
+            r={circleParams.r}
+            fill={COLORS.GRAY}
+            stroke={COLORS.DARK_GRAY}
+            strokeWidth={strokeWidth}
+          />
+          <InteractivePolygon
+            points={points}
+            handleDrag={this.handleDrag}
+            strokeWidth={strokeWidth}
+            fill={COLORS.GREEN}
+            stroke={COLORS.DARK_GREEN}
+          />
         </ClippedSVG>
         <p>foo</p>
       </div>
@@ -83,7 +112,7 @@ IsoperimetricExplorer.propTypes = {
 
 IsoperimetricExplorer.defaultProps = {
   width: 600,
-  height: 600,
+  height: 400,
   initialSides: 3
 };
 
