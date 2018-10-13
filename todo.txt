@@ -1,9 +1,10 @@
-- show circle of same perimeter
 - ability to add points to polygon
 - ability to remove points from polygon
 - display areas or ratios
+  - abstract table into an atom
 - add caption and instructions
 - border for svg?
+- polish styling
 
 LOW PRIORITY
 - get more heat map data (mayyybeeeee)

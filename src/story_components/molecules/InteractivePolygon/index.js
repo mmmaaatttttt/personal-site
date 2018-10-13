@@ -3,69 +3,20 @@ import PropTypes from "prop-types";
 import { DraggableCircle } from "story_components";
 
 class InteractivePolygon extends Component {
-  state = {
-    points: Array.from({ length: this.props.initialSides }, (_, i) => {
-      const { cx, cy, initialSides } = this.props;
-      const angle = (2 * Math.PI * i) / initialSides - Math.PI / 2;
-      const distance = 100;
-      return {
-        id: i,
-        x: cx + distance * Math.cos(angle),
-        y: cy + distance * Math.sin(angle)
-      };
-    }),
-    nextId: this.props.initialSides + 1,
-    bigCircleX: 0,
-    bigCircleY: 0,
-    bigCircleR: 0
-  };
-
-  componentDidMount() {
-    this.updateBigCircle();
-  }
-
-  getCenter = () => {
-    let box = this.polygon.getBBox();
-    return {
-      x: box.x + box.width / 2,
-      y: box.y + box.height / 2
-    };
-  };
-
-  getLength = () => {
-    return this.polygon.getTotalLength();
-  };
-
   getPointsString = () => {
-    return this.state.points
+    return this.props.points
       .reduce((str, obj) => `${str} ${obj.x},${obj.y}`, "")
       .trim();
   };
 
-  handleDrag = (idx, coords) => {
-    let points = [...this.state.points];
-    points[idx] = { ...points[idx], ...coords };
-    this.setState({ points }, this.updateBigCircle);
-  };
-
-  updateBigCircle = () => {
-    let center = this.getCenter();
-    let radius = this.getLength() / (2 * Math.PI);
-    this.setState({
-      bigCircleX: center.x,
-      bigCircleY: center.y,
-      bigCircleR: radius,
-    })
-  };
-
   render() {
-    const { points, bigCircleX, bigCircleY, bigCircleR } = this.state;
+    const { points } = this.props;
     let circles = points.map((point, i) => (
       <DraggableCircle
         cx={point.x}
         cy={point.y}
         key={point.id}
-        onDrag={this.handleDrag.bind(this, i)}
+        onDrag={coords => this.props.handleDrag(i, coords)}
       />
     ));
     let lines = points.map((point, i) => {
@@ -86,20 +37,10 @@ class InteractivePolygon extends Component {
       <polygon
         points={this.getPointsString()}
         fill="red"
-        ref={polygon => (this.polygon = polygon)}
-      />
-    );
-    let circleOfSamePerimeter = (
-      <circle
-        cx={bigCircleX}
-        cy={bigCircleY}
-        r={bigCircleR}
-        fill="blue"
       />
     );
     return (
       <g>
-        {circleOfSamePerimeter}
         {polygon}
         {lines}
         {circles}
@@ -109,15 +50,18 @@ class InteractivePolygon extends Component {
 }
 
 InteractivePolygon.propTypes = {
-  cx: PropTypes.number.isRequired,
-  cy: PropTypes.number.isRequired,
-  initialSides: PropTypes.number.isRequired
+  handleDrag: PropTypes.func.isRequired,
+  points: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.number.isRequired,
+      x: PropTypes.number.isRequired,
+      y: PropTypes.number.isRequired
+    })
+  ).isRequired
 };
 
 InteractivePolygon.defaultProps = {
-  cx: 0,
-  cy: 0,
-  initialSides: 3
+  handleDrag: coords => console.log(coords)
 };
 
 export default InteractivePolygon;
