@@ -14,8 +14,15 @@ class InteractivePolygon extends Component {
         y: cy + distance * Math.sin(angle)
       };
     }),
-    nextId: this.props.initialSides + 1
+    nextId: this.props.initialSides + 1,
+    bigCircleX: 0,
+    bigCircleY: 0,
+    bigCircleR: 0
   };
+
+  componentDidMount() {
+    this.updateBigCircle();
+  }
 
   getCenter = () => {
     let box = this.polygon.getBBox();
@@ -38,11 +45,21 @@ class InteractivePolygon extends Component {
   handleDrag = (idx, coords) => {
     let points = [...this.state.points];
     points[idx] = { ...points[idx], ...coords };
-    this.setState({ points });
+    this.setState({ points }, this.updateBigCircle);
+  };
+
+  updateBigCircle = () => {
+    let center = this.getCenter();
+    let radius = this.getLength() / (2 * Math.PI);
+    this.setState({
+      bigCircleX: center.x,
+      bigCircleY: center.y,
+      bigCircleR: radius,
+    })
   };
 
   render() {
-    const { points } = this.state;
+    const { points, bigCircleX, bigCircleY, bigCircleR } = this.state;
     let circles = points.map((point, i) => (
       <DraggableCircle
         cx={point.x}
@@ -72,8 +89,17 @@ class InteractivePolygon extends Component {
         ref={polygon => (this.polygon = polygon)}
       />
     );
+    let circleOfSamePerimeter = (
+      <circle
+        cx={bigCircleX}
+        cy={bigCircleY}
+        r={bigCircleR}
+        fill="blue"
+      />
+    );
     return (
       <g>
+        {circleOfSamePerimeter}
         {polygon}
         {lines}
         {circles}

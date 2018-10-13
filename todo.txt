@@ -1,6 +1,9 @@
-- layout on right side
-- add ability to save multiple districts?
-- adjust size of country (30 is too small)
+- show circle of same perimeter
+- ability to add points to polygon
+- ability to remove points from polygon
+- display areas or ratios
+- add caption and instructions
+- border for svg?
 
 LOW PRIORITY
 - get more heat map data (mayyybeeeee)
