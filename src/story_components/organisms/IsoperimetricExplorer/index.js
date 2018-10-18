@@ -11,11 +11,12 @@ import COLORS from "utils/styles";
 
 class IsoperimetricExplorer extends Component {
   state = {
-    points: []
+    points: [],
+    baseArea: 1
   }
 
   componentDidMount() {
-    this.generatePointsFromCount(this.props.initialSides)
+    this.generatePointsFromCount(this.props.initialSides);
   }
 
   crossingExists = (newPoint, idx) => {
@@ -60,15 +61,26 @@ class IsoperimetricExplorer extends Component {
 
   generatePointsFromCount = newCount => {
     let points = Array.from({ length: newCount }, (_, i) => {
-      const { width, height } = this.props;
+      const { width, height, initialSides } = this.props;
       const angle = (2 * Math.PI * i) / newCount - Math.PI / 2;
-      const distance = 100;
+
+      // normalize the distance so that it's 100 when newCount is 3,
+      // and otherwise is such that the area of the corresponding circle
+      // is constant
+      const distance = initialSides * 100 * Math.sin(Math.PI / initialSides) / 
+        (newCount * Math.sin(Math.PI / newCount));
+     
       return {
         x: width / 2 + distance * Math.cos(angle),
         y: height / 2 + distance * Math.sin(angle)
       };
     });
-    this.setState({ points });
+    
+    this.setState({ points }, () => {
+      // initialize base circle area
+      // so numbers are easier to digest
+      if (this.state.baseArea === 1) this.setBaseArea();
+    });
   };
 
   getCenter = () => {
@@ -110,8 +122,9 @@ class IsoperimetricExplorer extends Component {
   };
 
   getAreaInfo = radius => {
-    let { points } = this.state;
+    let { points, baseArea } = this.state;
     let circleArea = Math.PI * radius ** 2;
+    let normalizedCircleArea = 100 * circleArea / baseArea;
 
     // area calculation for arbitrary polygon, see:
     // https://www.mathopenref.com/coordpolygonarea2.html
@@ -120,7 +133,12 @@ class IsoperimetricExplorer extends Component {
         let nextPoint = points[mod(i + 1, points.length)];
         return area + (point.x + nextPoint.x) * (-point.y + nextPoint.y);
       }, 0) / 2);
-    return { circleArea, polygonArea };
+    let normalizedPolygonArea = 100 * polygonArea / baseArea;
+    return {
+      circleArea: normalizedCircleArea.toFixed(2),
+      polygonArea: normalizedPolygonArea.toFixed(2),
+      ratio: (polygonArea / circleArea).toFixed(2)
+    };
   };
 
   distanceBetween = (lineStart, lineEnd, point) => {
@@ -155,11 +173,16 @@ class IsoperimetricExplorer extends Component {
     return minD;
   };
 
+  setBaseArea = () => {
+    let { r } = this.getCircleParams();
+    this.setState({ baseArea: Math.PI * r ** 2});
+  }
+
   render() {
     const { width, height, initialSides, strokeWidth } = this.props;
     const { points } = this.state;
     let circleParams = this.getCircleParams();
-    let { circleArea, polygonArea } = this.getAreaInfo(circleParams.r);
+    let { circleArea, polygonArea, ratio } = this.getAreaInfo(circleParams.r);
     let maxSides = 20;
     return (
       <div>
@@ -193,7 +216,7 @@ class IsoperimetricExplorer extends Component {
           <tbody>
             <td>Circle Area: {circleArea}</td>
             <td>Polygon Area: {polygonArea}</td>
-            <td>Ratio: {polygonArea / circleArea}</td>
+            <td>Ratio: {ratio}</td>
           </tbody>
         </StyledTable>
       </div>

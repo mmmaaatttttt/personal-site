@@ -1,12 +1,12 @@
 - add caption and instructions
 - border for svg?
-- draw polygons so circle always has area of 100
 - polish styling
   - circles grow on hover
   - circles change color on hover
   - change circle color
 - maybe make dragging easier
 - make isoperimetricexplorer aware of circle radius (fix this)
+- stick the landing (voter suppression, census)
 
 LOW PRIORITY
 - get more heat map data (mayyybeeeee)
