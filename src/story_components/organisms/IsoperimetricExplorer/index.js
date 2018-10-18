@@ -3,21 +3,23 @@ import PropTypes from "prop-types";
 import {
   ClippedSVG,
   InteractivePolygon,
-  LabeledSlider
+  LabeledSlider,
+  StyledTable
 } from "story_components";
 import { average, mod, euclideanDistance } from "utils/mathHelpers";
 import COLORS from "utils/styles";
 
 class IsoperimetricExplorer extends Component {
-  // need constructor pattern when using a method to initialize state
-  constructor(props) {
-    super(props);
-    this.state = {
-      points: this.generatePointsFromCount(props.initialSides)
-    };
+  state = {
+    points: []
+  }
+
+  componentDidMount() {
+    this.generatePointsFromCount(this.props.initialSides)
   }
 
   crossingExists = (newPoint, idx) => {
+    let { strokeWidth } = this.props;
     let { points } = this.state;
     let seg1 = {
       start: points[mod(idx - 1, points.length)],
@@ -28,47 +30,36 @@ class IsoperimetricExplorer extends Component {
       end: points[mod(idx + 1, points.length)]
     };
 
-    // 1. check if curPoint intersects any lines it shouldn't
     for (let i = 0; i < points.length; i++) {
-      let lineStart = points[i];
+      // two ways for there to be a problem:
+      // 1. the newPoint intersects a non-adjacent line segment on the polygon
+      // 2. an adjacent segment to newPoint intersects a point on the polygon
+
+      if (i === idx) continue;
+      let curPt = points[i];
       let nextIdx = mod(i + 1, points.length);
-      let lineEnd = points[nextIdx];
-
-      // skip if either end of the segment is points[i]
-      if (i === idx || nextIdx === idx) continue;
-
-      let distance = this.distanceBetween(lineStart, lineEnd, newPoint);
-      if (distance < 10) return true;
-    }
-
-    // 2. check if seg1 intersects any point it shouldn't.
-    for (let i = 0; i < points.length; i++) {
-      let point = points[i];
-      let nextIdx = mod(i + 1, points.length);
-
-      // skip if either end of the segment is point
-      if (i === idx || nextIdx === idx) continue;
-
-      let distance = this.distanceBetween(seg1.start, seg1.end, point);
-      if (distance < 10) return true;
-    }
-
-    // 3. check if seg2 intersects any point it shouldn't.
-    for (let i = 0; i < points.length; i++) {
-      let point = points[i];
       let prevIdx = mod(i - 1, points.length);
+      let nextPt = points[nextIdx];
 
-      // skip if either end of the segment is point
-      if (i === idx || prevIdx === idx) continue;
+      if (nextIdx !== idx) {
+        let distanceFromNewPointToCurSeg = this.distanceBetween(curPt, nextPt, newPoint);
+        if (distanceFromNewPointToCurSeg < strokeWidth) return true;
 
-      let distance = this.distanceBetween(seg2.start, seg2.end, point);
-      if (distance < 10) return true;
+        let distanceFromSeg1ToCurPt = this.distanceBetween(seg1.start, seg1.end, curPt);
+        if (distanceFromSeg1ToCurPt < strokeWidth) return true;
+      }
+
+      if (idx !== prevIdx) {
+        let distanceFromSeg2ToCurPt = this.distanceBetween(seg2.start, seg2.end, curPt);
+        if (distanceFromSeg2ToCurPt < strokeWidth) return true;
+      }
     }
+
     return false;
   };
 
   generatePointsFromCount = newCount => {
-    return Array.from({ length: newCount }, (_, i) => {
+    let points = Array.from({ length: newCount }, (_, i) => {
       const { width, height } = this.props;
       const angle = (2 * Math.PI * i) / newCount - Math.PI / 2;
       const distance = 100;
@@ -77,6 +68,7 @@ class IsoperimetricExplorer extends Component {
         y: height / 2 + distance * Math.sin(angle)
       };
     });
+    this.setState({ points });
   };
 
   getCenter = () => {
@@ -108,7 +100,7 @@ class IsoperimetricExplorer extends Component {
   };
 
   handleValueChange = newVal => {
-    this.setState({ points: this.generatePointsFromCount(newVal) });
+    this.generatePointsFromCount(newVal);
   };
 
   getCircleParams = () => {
@@ -161,30 +153,14 @@ class IsoperimetricExplorer extends Component {
       Math.abs((x0 - p) * (y1 - y0) - (y0 - q) * (x1 - x0)) /
       denominator ** (1 / 2);
     return minD;
-
-    // let line1xDiff = line1End.x - line1Start.x; // c - a
-    // let line1yDiff = line1End.y - line1Start.y; // d - b
-    // let line2xDiff = line2End.x - line2Start.x; // r - p
-    // let line2yDiff = line2End.y - line2Start.y; // s - q
-    // let det = line1xDiff * line2yDiff - line2xDiff * line1yDiff;
-
-    // if (Math.abs(det) < 1e-8) return false;
-
-    // let cross1 = line2End.x - line1Start.x; // r - a
-    // let cross2 = line2End.y - line1Start.y; // s - b
-    // let lambda = (line2yDiff * cross1 - line2xDiff * cross2) / det;
-    // let gamma = (line1xDiff * cross2 - line1yDiff * cross1) / det;
-
-    // return 0 < lambda && lambda < 1 && (0 < gamma && gamma < 1);
   };
 
   render() {
-    const { width, height, initialSides } = this.props;
+    const { width, height, initialSides, strokeWidth } = this.props;
     const { points } = this.state;
     let circleParams = this.getCircleParams();
     let { circleArea, polygonArea } = this.getAreaInfo(circleParams.r);
     let maxSides = 20;
-    let strokeWidth = 3;
     return (
       <div>
         <LabeledSlider
@@ -213,9 +189,13 @@ class IsoperimetricExplorer extends Component {
             stroke={COLORS.DARK_GREEN}
           />
         </ClippedSVG>
-        <p>Circle Area: {circleArea}</p>
-        <p>Polygon Area: {polygonArea}</p>
-        <p>Ratio: {polygonArea / circleArea}</p>
+        <StyledTable>
+          <tbody>
+            <td>Circle Area: {circleArea}</td>
+            <td>Polygon Area: {polygonArea}</td>
+            <td>Ratio: {polygonArea / circleArea}</td>
+          </tbody>
+        </StyledTable>
       </div>
     );
   }
@@ -224,13 +204,15 @@ class IsoperimetricExplorer extends Component {
 IsoperimetricExplorer.propTypes = {
   width: PropTypes.number.isRequired,
   height: PropTypes.number.isRequired,
-  initialSides: PropTypes.number.isRequired
+  initialSides: PropTypes.number.isRequired,
+  strokeWidth: PropTypes.number.isRequired,
 };
 
 IsoperimetricExplorer.defaultProps = {
   width: 600,
   height: 400,
-  initialSides: 3
+  initialSides: 3,
+  strokeWidth: 3
 };
 
 export default IsoperimetricExplorer;

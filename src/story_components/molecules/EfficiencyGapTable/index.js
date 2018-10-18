@@ -3,15 +3,9 @@ import styled from "styled-components";
 import { connect } from "react-redux";
 import COLORS from "utils/styles";
 import { total, calculateWastedVotes } from "utils/mathHelpers";
-import { ColoredSpan } from "story_components";
+import { ColoredSpan, StyledTable } from "story_components";
 
-const StyledTable = styled.table`
-  th,
-  td {
-    text-align: center;
-    padding: 0.5rem 0;
-  }
-
+const StyledBaseTable = styled(StyledTable)`
   td:first-child {
     font-weight: bold;
   }
@@ -99,7 +93,7 @@ class EfficiencyGapTable extends Component {
             Here's a sample efficiency gap calculation based on the districts
             you created above.
           </p>
-          <StyledTable>
+          <StyledBaseTable>
             <thead>
               <tr>
                 <th>District</th>
@@ -125,7 +119,7 @@ class EfficiencyGapTable extends Component {
                 <td colSpan="2">{gapCopy}</td>
               </tr>
             </tbody>
-          </StyledTable>
+          </StyledBaseTable>
         </div>
       );
     }
