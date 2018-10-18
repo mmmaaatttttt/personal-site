@@ -5,7 +5,7 @@ import {
   InteractivePolygon,
   LabeledSlider
 } from "story_components";
-import { average } from "utils/mathHelpers";
+import { average, mod, euclideanDistance } from "utils/mathHelpers";
 import COLORS from "utils/styles";
 
 class IsoperimetricExplorer extends Component {
@@ -13,9 +13,59 @@ class IsoperimetricExplorer extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      points: this.generatePointsFromCount(props.initialSides),
+      points: this.generatePointsFromCount(props.initialSides)
     };
   }
+
+  crossingExists = (newPoint, idx) => {
+    let { points } = this.state;
+    let seg1 = {
+      start: points[mod(idx - 1, points.length)],
+      end: newPoint
+    };
+    let seg2 = {
+      start: newPoint,
+      end: points[mod(idx + 1, points.length)]
+    };
+
+    // 1. check if curPoint intersects any lines it shouldn't
+    for (let i = 0; i < points.length; i++) {
+      let lineStart = points[i];
+      let nextIdx = mod(i + 1, points.length);
+      let lineEnd = points[nextIdx];
+
+      // skip if either end of the segment is points[i]
+      if (i === idx || nextIdx === idx) continue;
+
+      let distance = this.distanceBetween(lineStart, lineEnd, newPoint);
+      if (distance < 10) return true;
+    }
+
+    // 2. check if seg1 intersects any point it shouldn't.
+    for (let i = 0; i < points.length; i++) {
+      let point = points[i];
+      let nextIdx = mod(i + 1, points.length);
+
+      // skip if either end of the segment is point
+      if (i === idx || nextIdx === idx) continue;
+
+      let distance = this.distanceBetween(seg1.start, seg1.end, point);
+      if (distance < 10) return true;
+    }
+
+    // 3. check if seg2 intersects any point it shouldn't.
+    for (let i = 0; i < points.length; i++) {
+      let point = points[i];
+      let prevIdx = mod(i - 1, points.length);
+
+      // skip if either end of the segment is point
+      if (i === idx || prevIdx === idx) continue;
+
+      let distance = this.distanceBetween(seg2.start, seg2.end, point);
+      if (distance < 10) return true;
+    }
+    return false;
+  };
 
   generatePointsFromCount = newCount => {
     return Array.from({ length: newCount }, (_, i) => {
@@ -40,7 +90,7 @@ class IsoperimetricExplorer extends Component {
   getLength = () => {
     let { points } = this.state;
     return points.reduce((length, point, i) => {
-      let nextPoint = points[(i + 1) % points.length];
+      let nextPoint = points[mod(i + 1, points.length)];
       let xSquare = (point.x - nextPoint.x) ** 2;
       let ySquare = (point.y - nextPoint.y) ** 2;
       let newDistance = (xSquare + ySquare) ** (1 / 2);
@@ -50,8 +100,11 @@ class IsoperimetricExplorer extends Component {
 
   handleDrag = (idx, coords) => {
     let points = [...this.state.points];
-    points[idx] = { ...points[idx], ...coords };
-    this.setState({ points });
+    let newPoint = { ...coords };
+    if (!this.crossingExists(newPoint, idx)) {
+      points[idx] = newPoint;
+      this.setState({ points });
+    }
   };
 
   handleValueChange = newVal => {
@@ -61,13 +114,75 @@ class IsoperimetricExplorer extends Component {
   getCircleParams = () => {
     let center = this.getCenter();
     let r = this.getLength() / (2 * Math.PI);
-    return {...center, r};
+    return { ...center, r };
+  };
+
+  getAreaInfo = radius => {
+    let { points } = this.state;
+    let circleArea = Math.PI * radius ** 2;
+
+    // area calculation for arbitrary polygon, see:
+    // https://www.mathopenref.com/coordpolygonarea2.html
+    let polygonArea =
+      Math.abs(points.reduce((area, point, i) => {
+        let nextPoint = points[mod(i + 1, points.length)];
+        return area + (point.x + nextPoint.x) * (-point.y + nextPoint.y);
+      }, 0) / 2);
+    return { circleArea, polygonArea };
+  };
+
+  distanceBetween = (lineStart, lineEnd, point) => {
+    // a fun calculus problem
+    // to calculate the distance between a segment
+    // and a point not on that segment
+    let x0 = lineStart.x;
+    let x1 = lineEnd.x;
+    let y0 = lineStart.y;
+    let y1 = lineEnd.y;
+    let p = point.x;
+    let q = point.y;
+
+    // the segment is parametrized by
+    // (x0 + t(x0 - x1), y0 + t(y0 - y1)), 0 <= t <=1
+    // using calculus, here's the value of t which minimizes distance to (p, q)
+    let numerator = (x1 - x0) * (p - x0) + (y1 - y0) * (q - y0);
+    let denominator = (x1 - x0) ** 2 + (y1 - y0) ** 2;
+    let t0 = numerator / denominator;
+
+    // distance from the point to the line at t0 is minimal,
+    // unless t0 is outside of [0, 1].
+    if (t0 < 0 || t0 > 1) {
+      let d0 = euclideanDistance(x0 - p, y0 - q);
+      let d1 = euclideanDistance(x1 - p, y1 - q);
+      return Math.min(d0, d1);
+    }
+
+    let minD =
+      Math.abs((x0 - p) * (y1 - y0) - (y0 - q) * (x1 - x0)) /
+      denominator ** (1 / 2);
+    return minD;
+
+    // let line1xDiff = line1End.x - line1Start.x; // c - a
+    // let line1yDiff = line1End.y - line1Start.y; // d - b
+    // let line2xDiff = line2End.x - line2Start.x; // r - p
+    // let line2yDiff = line2End.y - line2Start.y; // s - q
+    // let det = line1xDiff * line2yDiff - line2xDiff * line1yDiff;
+
+    // if (Math.abs(det) < 1e-8) return false;
+
+    // let cross1 = line2End.x - line1Start.x; // r - a
+    // let cross2 = line2End.y - line1Start.y; // s - b
+    // let lambda = (line2yDiff * cross1 - line2xDiff * cross2) / det;
+    // let gamma = (line1xDiff * cross2 - line1yDiff * cross1) / det;
+
+    // return 0 < lambda && lambda < 1 && (0 < gamma && gamma < 1);
   };
 
   render() {
     const { width, height, initialSides } = this.props;
     const { points } = this.state;
     let circleParams = this.getCircleParams();
+    let { circleArea, polygonArea } = this.getAreaInfo(circleParams.r);
     let maxSides = 20;
     let strokeWidth = 3;
     return (
@@ -98,7 +213,9 @@ class IsoperimetricExplorer extends Component {
             stroke={COLORS.DARK_GREEN}
           />
         </ClippedSVG>
-        <p>foo</p>
+        <p>Circle Area: {circleArea}</p>
+        <p>Polygon Area: {polygonArea}</p>
+        <p>Ratio: {polygonArea / circleArea}</p>
       </div>
     );
   }

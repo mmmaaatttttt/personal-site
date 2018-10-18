@@ -58,6 +58,10 @@ function calculateWastedVotes(votes, party1Accessor, party2Accessor) {
   });
 }
 
+function mod(num, base) {
+  return ((num % base) + base) % base;
+}
+
 function _swap(arr, i, j) {
   [arr[i], arr[j]] = [arr[j], arr[i]];
   return arr;
@@ -77,5 +81,6 @@ export {
   choices,
   euclideanDistance,
   generateData,
+  mod,
   total
 };

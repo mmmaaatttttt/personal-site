@@ -3,6 +3,8 @@
   - abstract table into an atom
 - add caption and instructions
 - border for svg?
+- draw polygons so circle always has area of 100
+- update points updating to be less disruptive when adding / removing (i.e. use existing state)
 - polish styling
   - circles grow on hover
   - circles change color on hover
