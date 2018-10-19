@@ -44,7 +44,11 @@ Because of this, some of the first attempts to measure and detect gerrymandering
 
 But while compactness has a precise [mathematical definition](https://blogs.scientificamerican.com/roots-of-unity/what-does-compactness-really-mean/), in congressional drawing circles the term is more of a loose idea. Some have tried to make the idea of compactness more mathematically precise. A number of metrics have [been proposed](http://www.ams.org/publicoutreach/feature-column/fc-2014-08), but we'll focus on one of the simpler ones, which frames things in terms of areas and perimeters. This idea stems from an interesting mathematical fact: given a fixed length of string, the largest area you can enclose with that string will form a circle. (If you want to get fancy, this is known as the [isoperimetric inequality](https://en.wikipedia.org/wiki/Isoperimetric_inequality).)
 
+You can explore this idea yourself with the following interactive. It allows you to explore this inequality by comparing the area of a polygon to the area of a circle with the same same boundary length. Use the slider to choose the number of sides of the polygon. You can then drag the edges of the polygon to adjust its area (the circle will adjust accordingly).
+
 <IsoperimetricExplorer />
+
+As you can see, it's impossible to make a ratio that exceeds 1. This doesn't prove the isoperimetric inequality, but it should make for a convincing demonstration in this case.
 
 What does this have to do with compactness? Well, if you have a district of a certain area, you can calculate the length of its boundary, and then ask what the area of a circle with that same boundary length would be. By the isoperimetric inequality, the circle will necessarily have a larger area, unless the district too is in the shape of a perfect circle.
 
@@ -134,7 +138,11 @@ Others have argued that gerrymandering is but a symptom of a different problem: 
 
 <ResponsiveIFrame src="https://fivethirtyeight.abcnews.go.com/video/embed/56134801" heightOverWidth={36/64} />
 
-But regardless of the degree, reduction in gerrymandering is one of the few issues that enjoys broad bipartisan support. Here's hoping that the next few years will see mathematics used on the right side of this fight, rather than being used to draw even more extreme gerrymanders after the 2020 census. I enjoy a funny looking shape as much as the next person, but I enjoy a healthy democracy more.
+Regardless of the degree, reduction in gerrymandering is one of the few issues that enjoys broad bipartisan support. Here's hoping that the next few years will see mathematics used on the right side of this fight, rather than being used to draw even more extreme gerrymanders in the future.
+
+Finally, it's important to note that even if citizens are able to combat gerrymandering through their legislatures, or even overcome the inherent bias in gerrymandered districts through increased voter turnout, gerrymandering itself is but one of many strategies those in power use to try to maintain their power. Equally as important, if not more so, are continued and systematic efforts at voter suppression. We also need to be vigilant in defending against more fundamental attempts to bias our representation at the census level itself.
+
+But these are topics for another day. If you'd like to learn more about gerrymandering, please check out some of the sources below. And if you can, don't forget to vote!
 
 Sources:
 

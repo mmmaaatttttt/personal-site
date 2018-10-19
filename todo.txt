@@ -1,9 +1,9 @@
-- add caption and instructions
 - polish styling
   - smoother transition to larger circle
 - make isoperimetricexplorer aware of circle radius (fix this)
-- stick the landing (voter suppression, census)
+- attach some handlers to svg? (elt.closest("svg"))
 - change main image
+- PROOFREAD!
 
 LOW PRIORITY
 - get more heat map data (mayyybeeeee)
