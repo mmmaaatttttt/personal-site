@@ -9,6 +9,7 @@ import {
   updateSimulationNodes
 } from "utils/forceSimulationHelpers";
 import COLORS from "utils/styles";
+import { SVGBorder } from "story_components";
 
 class EconomyNodeGroup extends Component {
   componentWillMount() {
@@ -33,8 +34,7 @@ class EconomyNodeGroup extends Component {
       this.simulation.nodes().forEach(node => {
         ["vx", "vy", "lastVx", "lastVy"].forEach(key => {
           node[key] = node[key]
-            ? node[key] *
-              nextProps.velocityMultiplier /
+            ? (node[key] * nextProps.velocityMultiplier) /
               this.props.velocityMultiplier
             : node[key];
         });
@@ -80,18 +80,10 @@ class EconomyNodeGroup extends Component {
   };
 
   render() {
-    const { borderWidth, borderStroke, width, height } = this.props;
+    const { width, height } = this.props;
     return (
       <g>
-        <rect
-          x={0}
-          y={0}
-          width={width}
-          height={height}
-          stroke={borderStroke}
-          strokeWidth={borderWidth}
-          fill="none"
-        />
+        <SVGBorder width={width} height={height} />
         <g ref={g => (this.g = g)} />
       </g>
     );
@@ -106,14 +98,9 @@ EconomyNodeGroup.propTypes = {
   paused: PropTypes.bool.isRequired,
   velocityMultiplier: PropTypes.number.isRequired,
   handleCollision: PropTypes.func.isRequired,
-  initialV: PropTypes.number.isRequired,
-  borderWidth: PropTypes.number.isRequired,
-  borderStroke: PropTypes.string.isRequired
+  initialV: PropTypes.number.isRequired
 };
 
-EconomyNodeGroup.defaultProps = {
-  borderWidth: 3,
-  borderStroke: COLORS.GRAY
-};
+EconomyNodeGroup.defaultProps = {};
 
 export default EconomyNodeGroup;

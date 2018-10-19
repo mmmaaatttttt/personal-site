@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { select } from "d3-selection";
-import { transition } from "d3-transition";
 import { easeCubicOut } from "d3-ease";
 import { interval } from "d3-timer";
 import { euclideanDistance } from "utils/mathHelpers";
@@ -12,6 +11,7 @@ import {
   colorNodes
 } from "utils/forceSimulationHelpers";
 import COLORS from "utils/styles";
+import { SVGBorder } from "story_components";
 
 class HarassmentNodeGroup extends Component {
   state = { shoutCount: 0 };
@@ -193,18 +193,10 @@ class HarassmentNodeGroup extends Component {
   };
 
   render() {
-    const { borderWidth, borderStroke, width, height } = this.props;
+    const { width, height } = this.props;
     return (
       <g>
-        <rect
-          x={0}
-          y={0}
-          width={width}
-          height={height}
-          stroke={borderStroke}
-          strokeWidth={borderWidth}
-          fill="none"
-        />
+        <SVGBorder width={width} height={height} />
         <g ref={g => (this.g = g)} />
       </g>
     );
@@ -220,17 +212,12 @@ HarassmentNodeGroup.propTypes = {
   paused: PropTypes.bool.isRequired,
   initialV: PropTypes.number.isRequired,
   handleShout: PropTypes.func.isRequired,
-  borderWidth: PropTypes.number.isRequired,
-  borderStroke: PropTypes.string.isRequired,
   blueOnBlueProb: PropTypes.number.isRequired,
   greenOnGreenProb: PropTypes.number.isRequired,
   blueOnGreenProb: PropTypes.number.isRequired,
   greenOnBlueProb: PropTypes.number.isRequired
 };
 
-HarassmentNodeGroup.defaultProps = {
-  borderWidth: 3,
-  borderStroke: COLORS.GRAY
-};
+HarassmentNodeGroup.defaultProps = {};
 
 export default HarassmentNodeGroup;

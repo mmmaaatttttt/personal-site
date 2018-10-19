@@ -4,7 +4,8 @@ import {
   ClippedSVG,
   InteractivePolygon,
   LabeledSlider,
-  StyledTable
+  StyledTable,
+  SVGBorder
 } from "story_components";
 import { average, mod, euclideanDistance } from "utils/mathHelpers";
 import COLORS from "utils/styles";
@@ -196,6 +197,7 @@ class IsoperimetricExplorer extends Component {
           color={COLORS.DARK_GRAY}
         />
         <ClippedSVG width={width} height={height} id="isoperimetric-svg">
+          <SVGBorder width={width} height={height} />
           <circle
             cx={circleParams.x}
             cy={circleParams.y}
@@ -214,9 +216,11 @@ class IsoperimetricExplorer extends Component {
         </ClippedSVG>
         <StyledTable>
           <tbody>
-            <td>Circle Area: {circleArea}</td>
-            <td>Polygon Area: {polygonArea}</td>
-            <td>Ratio: {ratio}</td>
+            <tr>
+              <td>Circle Area: {circleArea}</td>
+              <td>Polygon Area: {polygonArea}</td>
+              <td>Ratio: {ratio}</td>
+            </tr>
           </tbody>
         </StyledTable>
       </div>
