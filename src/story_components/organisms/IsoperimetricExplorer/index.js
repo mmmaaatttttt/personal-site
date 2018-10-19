@@ -21,7 +21,7 @@ class IsoperimetricExplorer extends Component {
   }
 
   crossingExists = (newPoint, idx) => {
-    let { strokeWidth } = this.props;
+    let { circleRadius } = this.props;
     let { points } = this.state;
     let seg1 = {
       start: points[mod(idx - 1, points.length)],
@@ -33,7 +33,6 @@ class IsoperimetricExplorer extends Component {
     };
 
     for (let i = 0; i < points.length; i++) {
-      let threshold = 8;
       // two ways for there to be a problem:
       // 1. the newPoint intersects a non-adjacent line segment on the polygon
       // 2. an adjacent segment to newPoint intersects a point on the polygon
@@ -46,15 +45,15 @@ class IsoperimetricExplorer extends Component {
 
       if (nextIdx !== idx) {
         let distanceFromNewPointToCurSeg = this.distanceBetween(curPt, nextPt, newPoint);
-        if (distanceFromNewPointToCurSeg < threshold) return true;
+        if (distanceFromNewPointToCurSeg < circleRadius) return true;
 
         let distanceFromSeg1ToCurPt = this.distanceBetween(seg1.start, seg1.end, curPt);
-        if (distanceFromSeg1ToCurPt < threshold) return true;
+        if (distanceFromSeg1ToCurPt < circleRadius) return true;
       }
 
       if (idx !== prevIdx) {
         let distanceFromSeg2ToCurPt = this.distanceBetween(seg2.start, seg2.end, curPt);
-        if (distanceFromSeg2ToCurPt < threshold) return true;
+        if (distanceFromSeg2ToCurPt < circleRadius) return true;
       }
     }
 
@@ -181,7 +180,7 @@ class IsoperimetricExplorer extends Component {
   }
 
   render() {
-    const { width, height, initialSides, strokeWidth } = this.props;
+    const { width, height, initialSides, strokeWidth, circleRadius } = this.props;
     const { points } = this.state;
     let circleParams = this.getCircleParams();
     let { circleArea, polygonArea, ratio } = this.getAreaInfo(circleParams.r);
@@ -208,11 +207,12 @@ class IsoperimetricExplorer extends Component {
             strokeWidth={strokeWidth}
           />
           <InteractivePolygon
-            points={points}
-            handleDrag={this.handleDrag}
-            strokeWidth={strokeWidth}
+            circleRadius={circleRadius}
             fill={COLORS.GREEN}
+            handleDrag={this.handleDrag}
+            points={points}
             stroke={COLORS.DARK_GREEN}
+            strokeWidth={strokeWidth}
           />
         </ClippedSVG>
         <StyledTable>
@@ -230,17 +230,19 @@ class IsoperimetricExplorer extends Component {
 }
 
 IsoperimetricExplorer.propTypes = {
-  width: PropTypes.number.isRequired,
+  circleRadius: PropTypes.number.isRequired,
   height: PropTypes.number.isRequired,
   initialSides: PropTypes.number.isRequired,
   strokeWidth: PropTypes.number.isRequired,
+  width: PropTypes.number.isRequired
 };
 
 IsoperimetricExplorer.defaultProps = {
-  width: 600,
+  circleRadius: 8,
   height: 400,
   initialSides: 3,
-  strokeWidth: 3
+  strokeWidth: 3,
+  width: 600
 };
 
 export default IsoperimetricExplorer;

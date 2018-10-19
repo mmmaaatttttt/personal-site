@@ -11,14 +11,15 @@ class InteractivePolygon extends Component {
   };
 
   render() {
-    const { fill, points, stroke, strokeWidth } = this.props;
+    const { circleRadius, fill, points, stroke, strokeWidth } = this.props;
     let circles = points.map((point, i) => (
       <DraggableCircle
         cx={point.x}
         cy={point.y}
+        fill={fill}
         key={i}
         onDrag={coords => this.props.handleDrag(i, coords)}
-        fill={fill}
+        r={circleRadius}
         stroke={stroke}
         strokeWidth={strokeWidth}
       />
@@ -49,6 +50,7 @@ class InteractivePolygon extends Component {
 }
 
 InteractivePolygon.propTypes = {
+  circleRadius: PropTypes.number.isRequired,
   handleDrag: PropTypes.func.isRequired,
   fill: PropTypes.string.isRequired,
   points: PropTypes.arrayOf(
@@ -62,6 +64,7 @@ InteractivePolygon.propTypes = {
 };
 
 InteractivePolygon.defaultProps = {
+  circleRadius: 8,
   handleDrag: coords => console.log(coords),
   fill: COLORS.BLACK,
   points: [],
