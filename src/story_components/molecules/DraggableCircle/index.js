@@ -5,23 +5,33 @@ import COLORS from "utils/styles";
 
 const NoScrollCircle = styled.circle`
   touch-action: none;
+  transition: stroke-width 300ms;
 
   &:hover {
     fill: ${props => props.stroke};
+    stroke-width: ${props => props.r * 1.5}
   }
 `;
 
 class DraggableCircle extends Component {
   state = {
     dragging: false,
-    hovering: false
   };
 
-  getMousePosition = (type, e) => {
+  getMousePosition = e => {
     // clientX and clientY need to be normalized
     // see http://www.petercollingridge.co.uk/tutorials/svg/interactive/dragging/
     let CTM = this.circle.getScreenCTM();
-    let { clientX, clientY } = type === "mouse" ? e : e.touches[0];
+    let clientX, clientY;
+    try {
+      // try touch event first
+      clientX = e.touches[0];
+      clientY = e.touches[1];
+    } catch (err) {
+      // no go, assume mouse event
+      clientX = e.clientX;
+      clientY = e.clientY;
+    }
     return {
       x: (clientX - CTM.e) / CTM.a,
       y: (clientY - CTM.f) / CTM.d
@@ -32,31 +42,16 @@ class DraggableCircle extends Component {
     this.setState({ dragging: true }, this.props.onDragStart);
   };
 
-  handleDrag = (type, e) => {
-    e.persist();
-    this.setState({ hovering: true }, () => {
-      if (this.state.dragging) {
-        let coords = this.getMousePosition(type, e);
-        this.props.onDrag(coords);
-      }
-      if (type === "touch") {
-        try {
-          e.preventDefault();
-        } catch (err) {
-          console.warn(err);
-        }
-      }
-    });
+  handleDrag = e => {
+    if (this.state.dragging) {
+      let coords = this.getMousePosition(e);
+      this.props.onDrag(coords);
+    }
   };
 
   handleDragEnd = () => {
     this.setState({ dragging: false }, this.props.onDragEnd);
   };
-
-  handleHoverEnd = () => {
-    console.log("left")
-    this.setState({ dragging: false, hovering: false }, this.props.onDragEnd);
-  }
 
   render() {
     const { cx, cy, r, fill, stroke, strokeWidth } = this.props;
@@ -66,17 +61,18 @@ class DraggableCircle extends Component {
         cx={cx}
         cy={cy}
         fill={fill}
-        r={hovering ? r * 1.5 : r}
+        r={r}
+        hovering={hovering}
         stroke={stroke}
         strokeWidth={strokeWidth}
         onMouseDown={this.handleDragStart}
         onTouchStart={this.handleDragStart}
-        onMouseMove={this.handleDrag.bind(this, "mouse")}
-        onTouchMove={this.handleDrag.bind(this, "touch")}
+        onMouseMove={this.handleDrag}
+        onTouchMove={this.handleDrag}
         onMouseUp={this.handleDragEnd}
-        onMouseLeave={this.handleHoverEnd}
-        onTouchCancel={this.handleHoverEnd}
-        onTouchEnd={this.handleHoverEnd}
+        onMouseLeave={this.handleDragEnd}
+        onTouchCancel={this.handleDragEnd}
+        onTouchEnd={this.handleDragEnd}
         innerRef={circle => (this.circle = circle)}
       />
     );
@@ -98,7 +94,7 @@ DraggableCircle.propTypes = {
 DraggableCircle.defaultProps = {
   cx: 0,
   cy: 0,
-  r: 10,
+  r: 8,
   fill: COLORS.BLACK,
   stroke: COLORS.BLACK,
   strokeWidth: 0

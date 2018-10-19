@@ -33,6 +33,7 @@ class IsoperimetricExplorer extends Component {
     };
 
     for (let i = 0; i < points.length; i++) {
+      let threshold = 8;
       // two ways for there to be a problem:
       // 1. the newPoint intersects a non-adjacent line segment on the polygon
       // 2. an adjacent segment to newPoint intersects a point on the polygon
@@ -45,15 +46,15 @@ class IsoperimetricExplorer extends Component {
 
       if (nextIdx !== idx) {
         let distanceFromNewPointToCurSeg = this.distanceBetween(curPt, nextPt, newPoint);
-        if (distanceFromNewPointToCurSeg < strokeWidth) return true;
+        if (distanceFromNewPointToCurSeg < threshold) return true;
 
         let distanceFromSeg1ToCurPt = this.distanceBetween(seg1.start, seg1.end, curPt);
-        if (distanceFromSeg1ToCurPt < strokeWidth) return true;
+        if (distanceFromSeg1ToCurPt < threshold) return true;
       }
 
       if (idx !== prevIdx) {
         let distanceFromSeg2ToCurPt = this.distanceBetween(seg2.start, seg2.end, curPt);
-        if (distanceFromSeg2ToCurPt < strokeWidth) return true;
+        if (distanceFromSeg2ToCurPt < threshold) return true;
       }
     }
 
