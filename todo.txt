@@ -1,9 +1,6 @@
 - add caption and instructions
 - polish styling
-  - circles grow on hover
-  - circles change color on hover
-  - change circle color
-- maybe make dragging easier
+  - smoother transition to larger circle
 - make isoperimetricexplorer aware of circle radius (fix this)
 - stick the landing (voter suppression, census)
 - change main image

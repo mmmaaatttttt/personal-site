@@ -18,6 +18,9 @@ class InteractivePolygon extends Component {
         cy={point.y}
         key={i}
         onDrag={coords => this.props.handleDrag(i, coords)}
+        fill={fill}
+        stroke={stroke}
+        strokeWidth={strokeWidth}
       />
     ));
     let lines = points.map((point, i) => {
