@@ -4,9 +4,10 @@ import PropTypes from "prop-types";
 
 const StyledSVG = styled.svg`
   display: block;
+  margin-top: ${props => props.marginTop};
 `;
 
-const ClippedSVG = ({ id, width, height, padding, children }) => {
+const ClippedSVG = ({ id, width, height, marginTop, padding, children }) => {
   if (typeof padding === "number") {
     padding = {
       top: padding,
@@ -19,6 +20,7 @@ const ClippedSVG = ({ id, width, height, padding, children }) => {
     <StyledSVG
       xmlns="http://www.w3.org/2000/svg"
       viewBox={`0 0 ${width} ${height}`}
+      marginTop={marginTop}
     >
       <defs>
         <clipPath id={`clip-path-${id}`}>
@@ -39,6 +41,10 @@ ClippedSVG.propTypes = {
   id: PropTypes.string.isRequired,
   width: PropTypes.number.isRequired,
   height: PropTypes.number.isRequired,
+  marginTop: PropTypes.oneOfType([
+    PropTypes.number,
+    PropTypes.string
+  ]).isRequired,
   padding: PropTypes.oneOfType([
     PropTypes.number,
     PropTypes.shape({
@@ -52,6 +58,7 @@ ClippedSVG.propTypes = {
 
 ClippedSVG.defaultProps = {
   padding: 0,
+  marginTop: 0,
   id: "svg"
 };
 

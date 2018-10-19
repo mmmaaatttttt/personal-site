@@ -7,7 +7,6 @@
 - make isoperimetricexplorer aware of circle radius (fix this)
 - stick the landing (voter suppression, census)
 - change main image
-- add space between slider and svg
 
 LOW PRIORITY
 - get more heat map data (mayyybeeeee)

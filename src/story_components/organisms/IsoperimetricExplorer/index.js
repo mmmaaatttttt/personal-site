@@ -196,7 +196,7 @@ class IsoperimetricExplorer extends Component {
           handleValueChange={this.handleValueChange}
           color={COLORS.DARK_GRAY}
         />
-        <ClippedSVG width={width} height={height} id="isoperimetric-svg">
+        <ClippedSVG width={width} height={height} marginTop={"0.5rem"} id="isoperimetric-svg">
           <SVGBorder width={width} height={height} />
           <circle
             cx={circleParams.x}
