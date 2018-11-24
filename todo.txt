@@ -25,6 +25,16 @@ LOWEST PRIORITY
   - have progress bar
 - better way to import data into components
 
+- voter suppression
+
+  - by county:
+
+    - population / number of polling stations / number of poll workers
+
+    - does voting history have an effect? (e.g. more democratic --> fewer stations?)
+
+    - data on number of thrown out ballots?
+
 - treatise on systems thinking
   - climate
   - racism
