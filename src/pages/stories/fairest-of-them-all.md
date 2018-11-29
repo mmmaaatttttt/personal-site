@@ -25,6 +25,8 @@ Let's begin with some scenarios where fairness is essentially self-evident.
 Take, for instance, a simple coin flipping game. Heads, I win; tails, I lose.
 Is this game fair?
 
+<!-- insert coin flip demo here! -->
+
 Well, that probably depends on the coin. If the coin is equally likely to land
 on either side, then neither player is advantaged. In this case, we can conclude
 that the game is fair. If, on the other hand, the coin is weighed in some way,
@@ -71,3 +73,4 @@ probability that a coin lands on heads, and then model how many times you'd like
 to flip a coin. The histogram will adjust accordingly, and show you how likely
 it is for the number of times that heads appears to fall within different ranges.
 
+<CoinFlipHistogram />
