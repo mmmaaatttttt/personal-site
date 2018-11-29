@@ -39,7 +39,7 @@ SliderGroup.propTypes = {
       max: PropTypes.number.isRequired,
       value: PropTypes.number.isRequired,
       title: PropTypes.string.isRequired,
-      color: PropTypes.string.isRequired,
+      color: PropTypes.string,
       key: PropTypes.any,
       handleValueChange: PropTypes.func.isRequired,
       tickCount: PropTypes.number,
