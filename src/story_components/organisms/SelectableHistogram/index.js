@@ -29,7 +29,12 @@ class SelectableHistogram extends Component {
     histogramData[lastIdx].x1 = histogramData[lastIdx].x0 + barWidth;
     const width = 600;
     const height = 600;
-    const padding = 10;
+    const padding = { 
+      top: 10,
+      bottom: 60,
+      left: 10,
+      right: 10
+    };
     const tickStep = 10;
     const barData = histogramData.map((d, i) => ({
       key: i,
@@ -39,7 +44,7 @@ class SelectableHistogram extends Component {
     }));
     const yScale = scaleLinear()
       .domain([0, max(histogramData, d => d.length) * 1.1])
-      .range([height - padding, padding]);
+      .range([height - padding.bottom, padding.top]);
     return (
       <NarrowContainer width="50%">
         <StyledSelect
@@ -51,19 +56,19 @@ class SelectableHistogram extends Component {
           clearable={false}
         />
         <BarGraph
-          svgId="histogram"
-          width={width}
-          height={height}
-          padding={padding}
-          yScale={yScale}
           barData={barData}
-          tickStep={tickStep}
           barLabel={bar => bar.height}
+          color={COLORS.BLUE}
+          height={height}
           histogram
+          padding={padding}
+          svgId="histogram"
           thresholds={thresholds}
           tickFormat={format}
-          color={COLORS.BLUE}
+          tickStep={tickStep}
           timing={{ duration: 500, delay: 25 }}
+          width={width}
+          yScale={yScale}
         />
       </NarrowContainer>
     );
