@@ -57,10 +57,12 @@ class Axis extends Component {
     if (tickSize) {
       axis.tickSize(tickSize).tickSizeOuter(0);
     }
-    if (tickStep)
+    if (tickStep) {
+      let domain = scale.domain();
       axis.tickValues(
-        range(scale.domain()[0], scale.domain()[1] + tickStep, tickStep)
+        range(domain[0], domain[1] + tickStep, tickStep)
       );
+    }
     select(this.axis)
       .attr("transform", `translate(${xShift},${yShift})`)
       .call(axis)
