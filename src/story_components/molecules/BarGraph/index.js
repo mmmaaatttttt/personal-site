@@ -31,7 +31,7 @@ class BarGraph extends Component {
   };
 
   render() {
-    const {
+    let {
       barData,
       barLabel,
       height,
@@ -46,21 +46,23 @@ class BarGraph extends Component {
       yScale
     } = this.props;
 
+    // normalize padding to always be an object
+    if (typeof padding === 'number') {
+      padding = {
+        top: padding,
+        left: padding,
+        right: padding,
+        bottom: padding
+      }
+    }
     const xScale = histogram
       ? scaleLinear()
           .domain([thresholds[0], thresholds[thresholds.length - 1]])
-          .rangeRound([padding, width - padding])
+          .rangeRound([padding.left, width - padding.right])
       : scaleBand()
           .domain(barData.map((d, i) => i))
-          .rangeRound([padding, width - padding])
+          .rangeRound([padding.left, width - padding.right])
           .padding(0.1);
-    let paddingBottom = 0;
-    if (histogram) {
-      paddingBottom = 60;
-      const range = yScale.range();
-      range[0] -= paddingBottom;
-      yScale.range(range);
-    }
     let fontSize = labelFontSize;
     if (!fontSize)
       fontSize = barData.length < 11 ? "100%" : `${110 - 1 * barData.length}%`;
@@ -78,11 +80,11 @@ class BarGraph extends Component {
               <Axis
                 direction="y"
                 scale={yScale}
-                xShift={padding}
-                yShift={padding}
-                tickSize={-width + 2 * padding}
+                xShift={padding.left}
+                yShift={0}
+                tickSize={-width + padding.left + padding.right}
                 tickStep={tickStep}
-              />
+                />
               {bars.map(bar => {
                 const { x, fill, width, barHeight } = bar.state;
                 const text = barLabel ? (
@@ -102,7 +104,7 @@ class BarGraph extends Component {
                       x={x}
                       width={width}
                       y={barHeight}
-                      height={height - barHeight - paddingBottom}
+                      height={height - barHeight - padding.bottom}
                       fill={fill}
                     />
                     {text}
@@ -113,7 +115,7 @@ class BarGraph extends Component {
                 <Axis
                   direction="x"
                   scale={xScale}
-                  yShift={height - paddingBottom}
+                  yShift={height - padding.bottom}
                   tickStep={thresholds[1] - thresholds[0]}
                   tickFormat={tickFormat}
                 />
@@ -130,7 +132,9 @@ BarGraph.propTypes = {
   barData: PropTypes.arrayOf(
     PropTypes.shape({
       key: PropTypes.isRequired,
-      height: PropTypes.number.isRequired
+      height: PropTypes.number.isRequired,
+      x0: PropTypes.number, // required for a histogram
+      x1: PropTypes.number // required for a histogram
     })
   ).isRequired,
   barLabel: PropTypes.func,
@@ -138,7 +142,15 @@ BarGraph.propTypes = {
   height: PropTypes.number.isRequired,
   histogram: PropTypes.bool,
   labelFontSize: PropTypes.string,
-  padding: PropTypes.number.isRequired,
+  padding: PropTypes.oneOfType([
+    PropTypes.number,
+    PropTypes.shape({
+      top: PropTypes.number,
+      bottom: PropTypes.number,
+      left: PropTypes.number,
+      right: PropTypes.number
+    })
+  ]).isRequired,
   thresholds: PropTypes.arrayOf(PropTypes.number),
   tickFormat: PropTypes.string,
   tickStep: PropTypes.number.isRequired,
