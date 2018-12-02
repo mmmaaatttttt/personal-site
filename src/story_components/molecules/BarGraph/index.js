@@ -43,7 +43,8 @@ class BarGraph extends Component {
       tickFormat,
       tickStep,
       width,
-      yScale
+      yScale,
+      yTickFormat
     } = this.props;
 
     // normalize padding to always be an object
@@ -82,9 +83,10 @@ class BarGraph extends Component {
                 scale={yScale}
                 xShift={padding.left}
                 yShift={0}
+                tickFormat={yTickFormat}
                 tickSize={-width + padding.left + padding.right}
                 tickStep={tickStep}
-                />
+              />
               {bars.map(bar => {
                 const { x, fill, width, barHeight } = bar.state;
                 const text = barLabel ? (
@@ -114,10 +116,13 @@ class BarGraph extends Component {
               {histogram ? (
                 <Axis
                   direction="x"
+                  rotateLabels
                   scale={xScale}
-                  yShift={height - padding.bottom}
                   tickStep={thresholds[1] - thresholds[0]}
                   tickFormat={tickFormat}
+                  labelPosition={{y: "0.35em", x: "9", dy: "0"}}
+                  textAnchor="start"
+                  yShift={height - padding.bottom}
                 />
               ) : null}
             </g>
@@ -153,6 +158,7 @@ BarGraph.propTypes = {
   ]).isRequired,
   thresholds: PropTypes.arrayOf(PropTypes.number),
   tickFormat: PropTypes.string,
+  yTickFormat: PropTypes.string,
   tickStep: PropTypes.number.isRequired,
   timing: PropTypes.object.isRequired,
   svgId: PropTypes.string.isRequired,

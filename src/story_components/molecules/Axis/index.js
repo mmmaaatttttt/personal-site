@@ -1,10 +1,10 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { axisBottom, axisLeft } from "d3-axis";
-import { select, selectAll } from "d3-selection";
+import { select } from "d3-selection";
 import { range } from "d3-array";
 import { format } from "d3-format";
-import styled, { css } from "styled-components";
+import styled from "styled-components";
 
 const StyledAxis = styled.g`
   .tick text {
@@ -34,9 +34,11 @@ class Axis extends Component {
   drawAxis() {
     const {
       direction,
+      labelPosition,
       scale,
       xShift,
       yShift,
+      textAnchor,
       tickSize,
       tickShift,
       tickStep,
@@ -71,17 +73,15 @@ class Axis extends Component {
 
     if (tickFormat) {
       const labels = select(this.axis).selectAll(".tick text");
-      if (direction === "x" && rotateLabels)
-        labels
-          .attr("transform", "rotate(90)")
-          .style("text-anchor", "start")
-          .attr("x", "9")
-          .attr("y", 0)
-          .attr("dx", 0)
-          .attr("dy", "0.35em");
-      else if ((direction === "x") & !rotateLabels)
-        labels.style("text-anchor", "middle");
-      else labels.style("text-anchor", "end");
+      labels.style("text-anchor", textAnchor);
+      if (rotateLabels) {
+        labels.attr("transform", "rotate(90)");
+      }
+
+      // fine-tune text label position via x, y, dx, dy attrs
+      for (let attr in labelPosition) {
+        labels.attr(attr, labelPosition[attr]);
+      }
     }
   }
 
@@ -94,25 +94,39 @@ class Axis extends Component {
 }
 
 Axis.propTypes = {
-  direction: PropTypes.string.isRequired,
+  direction: PropTypes.oneOf(["x", "y"]).isRequired,
+  labelPosition: PropTypes.shape({
+    x: PropTypes.string,
+    y: PropTypes.string,
+    dx: PropTypes.string,
+    dy: PropTypes.string
+  }).isRequired,
   scale: PropTypes.func.isRequired,
-  yShift: PropTypes.number.isRequired,
-  xShift: PropTypes.number.isRequired,
+  textAnchor: PropTypes.oneOf(["start", "middle", "end"]),
   tickColor: PropTypes.string.isRequired,
   tickSize: PropTypes.number,
   tickShift: PropTypes.number.isRequired,
   tickStep: PropTypes.number,
   tickFormat: PropTypes.string.isRequired,
-  rotateLabels: PropTypes.bool.isRequired
+  rotateLabels: PropTypes.bool.isRequired,
+  xShift: PropTypes.number.isRequired,
+  yShift: PropTypes.number.isRequired
 };
 
 Axis.defaultProps = {
-  xShift: 0,
-  yShift: 0,
+  labelPosition: {
+    x: "0",
+    y: "0",
+    dx: "0",
+    dy: "0"
+  },
+  textAnchor: "middle",
   tickColor: "#ccc",
   tickShift: 0,
   tickFormat: "",
-  rotateLabels: true
+  rotateLabels: false,
+  xShift: 0,
+  yShift: 0
 };
 
 export default Axis;

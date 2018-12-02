@@ -56,20 +56,25 @@ const Graph = ({
       <ClippedSVG id={svgId} width={width} height={height} padding={svgPadding}>
         <Axis
           direction="y"
+          labelPosition={{x: "-3", dy: "0.32em"}}
           scale={yScale}
-          xShift={graphPadding}
+          textAnchor="end"
           tickSize={-width + 2 * graphPadding}
           tickStep={tickStep && tickStep(yScale)}
           tickFormat={tickFormatY}
+          xShift={graphPadding}
         />
         <Axis
           direction="x"
+          labelPosition={{y: "0.35em", x: "9", dy: "0"}}
+          rotateLabels
           scale={xScale}
-          yShift={xOptions.yShift}
+          textAnchor="start"
           tickSize={-height + 2 * graphPadding}
           tickShift={xOptions.tickShift}
           tickStep={tickStep && tickStep(xScale)}
           tickFormat={tickFormatX}
+          yShift={xOptions.yShift}
         />
         <line
           x1={graphPadding}
@@ -104,7 +109,7 @@ Graph.propTypes = {
       top: PropTypes.number,
       bottom: PropTypes.number,
       left: PropTypes.number,
-      bottom: PropTypes.number
+      right: PropTypes.number
     })
   ]).isRequired,
   svgId: PropTypes.string.isRequired,

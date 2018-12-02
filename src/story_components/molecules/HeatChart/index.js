@@ -108,18 +108,20 @@ class HeatChart extends Component {
             <g>
               <Axis
                 direction="x"
+                labelPosition={{y: "9", dy: "0.71em"}}
                 scale={xScale}
-                yShift={height - paddingY}
                 tickFormat={","}
                 tickColor={COLORS.BLACK}
-                rotateLabels={false}
+                yShift={height - paddingY}
               />
               <Axis
                 direction="y"
+                labelPosition={{x: "-9", dy: "0.32em"}}
                 scale={yScale}
-                xShift={paddingX}
+                textAnchor="end"
                 tickFormat={","}
                 tickColor={COLORS.BLACK}
+                xShift={paddingX}
               />
               <AxisLabel x={width / 2} y={height}>
                 Raven Count
