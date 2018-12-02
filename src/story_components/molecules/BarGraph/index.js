@@ -80,9 +80,12 @@ class BarGraph extends Component {
             <g>
               <Axis
                 direction="y"
+                fontSize="0.6rem"
+                labelPosition={{x: "4", dy: "12"}}
                 scale={yScale}
                 xShift={padding.left}
                 yShift={0}
+                textAnchor="start"
                 tickFormat={yTickFormat}
                 tickSize={-width + padding.left + padding.right}
                 tickStep={tickStep}
