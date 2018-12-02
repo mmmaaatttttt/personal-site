@@ -8,7 +8,7 @@ import styled from "styled-components";
 
 const StyledAxis = styled.g`
   .tick text {
-    font-size: 16px;
+    font-size: ${props => props.fontSize};
   }
 
   & .tick line {
@@ -86,15 +86,20 @@ class Axis extends Component {
   }
 
   render() {
-    const { tickColor } = this.props;
+    const { tickColor, fontSize } = this.props;
     return (
-      <StyledAxis innerRef={axis => (this.axis = axis)} tickColor={tickColor} />
+      <StyledAxis
+        fontSize={fontSize}
+        innerRef={axis => (this.axis = axis)}
+        tickColor={tickColor}
+      />
     );
   }
 }
 
 Axis.propTypes = {
   direction: PropTypes.oneOf(["x", "y"]).isRequired,
+  fontSize: PropTypes.string.isRequired,
   labelPosition: PropTypes.shape({
     x: PropTypes.string,
     y: PropTypes.string,
@@ -114,6 +119,7 @@ Axis.propTypes = {
 };
 
 Axis.defaultProps = {
+  fontSize: "0.8rem",
   labelPosition: {
     x: "0",
     y: "0",
