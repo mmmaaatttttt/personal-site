@@ -58,26 +58,28 @@ class CoinFlipHistogram extends PureComponent {
       }
     ];
     let barData = this.binomialDensityValues(numTrials, headsProb).map(
-      (height, key) => ({ key, height })
+      (height, key) => ({ key, height, x0: key, x1: key + 1 })
     );
     let maxBarHeight = max(barData, d => d.height);
     let yScale = scaleLinear()
                    .domain([0, maxBarHeight])
-                   .range([height, padding]);
+                   .range([height - padding.bottom, padding.top]);
     return (
       <div>
         <SliderGroup data={sliderData} />
         <BarGraph
           barData={barData}
           // barLabel={bar => bar.key}
+          color={COLORS.GREEN}
           height={height}
-          width={width}
+          histogram
           padding={padding}
           svgId="coinflips"
-          yScale={yScale}
-          color={COLORS.GREEN}
-          tickFormat={".2%"}
+          thresholds={barData.map(d => d.key).concat(numTrials+1)}
+          // tickFormat={".2%"}
           tickStep={0.02}
+          width={width}
+          yScale={yScale}
         />
       </div>
     );
@@ -87,13 +89,19 @@ class CoinFlipHistogram extends PureComponent {
 CoinFlipHistogram.propTypes = {
   height: PropTypes.number.isRequired,
   width: PropTypes.number.isRequired,
-  padding: PropTypes.number.isRequired,
+  // padding: PropTypes.number.isRequired,
 };
 
 CoinFlipHistogram.defaultProps = {
   height: 400,
   width: 600,
-  padding: 20
+  padding: {
+    top: 10,
+    left: 10,
+    bottom: 10,
+    right: 10
+  }
+  // padding: 10
 };
 
 export default CoinFlipHistogram;
