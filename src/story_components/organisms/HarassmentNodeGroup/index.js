@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import { select } from "d3-selection";
 import { easeCubicOut } from "d3-ease";
 import { interval } from "d3-timer";
+import "d3-transition";
 import { euclideanDistance } from "utils/mathHelpers";
 import {
   initializeSimulation,
