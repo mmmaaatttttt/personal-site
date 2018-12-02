@@ -62,21 +62,20 @@ class CoinFlipHistogram extends PureComponent {
     );
     let maxBarHeight = max(barData, d => d.height);
     let yScale = scaleLinear()
-                   .domain([0, maxBarHeight])
+                   .domain([0, max([maxBarHeight, 0.1])])
                    .range([height - padding.bottom, padding.top]);
     return (
       <div>
         <SliderGroup data={sliderData} />
         <BarGraph
           barData={barData}
-          // barLabel={bar => bar.key}
           color={COLORS.GREEN}
           height={height}
           histogram
           padding={padding}
           svgId="coinflips"
           thresholds={barData.map(d => d.key).concat(numTrials+1)}
-          // tickFormat={".2%"}
+          yTickFormat={".0%"}
           tickStep={0.02}
           width={width}
           yScale={yScale}

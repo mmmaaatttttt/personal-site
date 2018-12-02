@@ -1,3 +1,5 @@
+- add optional label for dashed lines in bar graph
+- HOTFIX: petrie story is broken
 
 LOW PRIORITY
 - get more heat map data (mayyybeeeee)
