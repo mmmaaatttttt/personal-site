@@ -1,14 +1,15 @@
 import React, { PureComponent } from "react";
 import PropTypes from "prop-types";
 import { scaleLinear } from "d3-scale";
-import {  max } from "d3-array";
-import { BarGraph, SliderGroup } from "story_components";
+import { max } from "d3-array";
+import withCaption from "hocs/withCaption";
+import { BarGraph, NarrowContainer, SliderGroup } from "story_components";
 import COLORS from "utils/styles";
 
 class CoinFlipHistogram extends PureComponent {
   state = {
     headsProb: 0.5,
-    numTrials: 10
+    numTrials: 20
   };
 
   handleSliderChange = (stateKey, val) => {
@@ -35,17 +36,6 @@ class CoinFlipHistogram extends PureComponent {
     
     let sliderData = [
       {
-        min: 0,
-        max: 1,
-        step: 0.01,
-        value: headsProb,
-        title: `Probability of flipping heads: ${(headsProb * 100).toFixed(0)}%`,
-        handleValueChange: val => this.handleSliderChange("headsProb", val),
-        color: COLORS.GREEN,
-        minIcon: "times-circle",
-        maxIcon: "check-circle"
-      },
-      {
         min: 1,
         max: 100,
         step: 1,
@@ -55,6 +45,17 @@ class CoinFlipHistogram extends PureComponent {
         color: COLORS.GREEN,
         minIcon: "circle",
         maxIcon: "coins"
+      },
+      {
+        min: 0,
+        max: 1,
+        step: 0.01,
+        value: headsProb,
+        title: `Probability of flipping heads: ${(headsProb * 100).toFixed(0)}%`,
+        handleValueChange: val => this.handleSliderChange("headsProb", val),
+        color: COLORS.GREEN,
+        minIcon: "times-circle",
+        maxIcon: "check-circle"
       }
     ];
     let barData = this.binomialDensityValues(numTrials, headsProb).map(
@@ -65,7 +66,7 @@ class CoinFlipHistogram extends PureComponent {
                    .domain([0, max([maxBarHeight, 0.1])])
                    .range([height - padding.bottom, padding.top]);
     return (
-      <div>
+      <NarrowContainer width="60%" fullWidthAt="small">
         <SliderGroup data={sliderData} />
         <BarGraph
           barData={barData}
@@ -80,7 +81,7 @@ class CoinFlipHistogram extends PureComponent {
           width={width}
           yScale={yScale}
         />
-      </div>
+      </NarrowContainer>
     );
   }
 }
@@ -88,7 +89,7 @@ class CoinFlipHistogram extends PureComponent {
 CoinFlipHistogram.propTypes = {
   height: PropTypes.number.isRequired,
   width: PropTypes.number.isRequired,
-  // padding: PropTypes.number.isRequired,
+  padding: PropTypes.object.isRequired,
 };
 
 CoinFlipHistogram.defaultProps = {
@@ -97,10 +98,9 @@ CoinFlipHistogram.defaultProps = {
   padding: {
     top: 10,
     left: 10,
-    bottom: 10,
+    bottom: 20,
     right: 10
   }
-  // padding: 10
 };
 
-export default CoinFlipHistogram;
+export default withCaption(CoinFlipHistogram);
