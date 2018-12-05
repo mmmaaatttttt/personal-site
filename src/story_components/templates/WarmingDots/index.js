@@ -98,7 +98,7 @@ class ClimatesChange extends Component {
     ));
 
     const sliderGroups = colors.map(color => {
-      const sliderData = data.filter(d => d.color === color).map((d, i) => ({
+      const sliderData = data.filter(d => d.color === color).map(d => ({
         ...d,
         tickCount: 2,
         fadeIcons: false,

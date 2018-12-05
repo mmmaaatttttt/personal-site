@@ -1,7 +1,5 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import { json } from "d3-fetch";
-import { withPrefix } from "gatsby-link";
 import styled from "styled-components";
 import {
   HeatChart,
