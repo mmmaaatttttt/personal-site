@@ -46,6 +46,8 @@ examples we'll discuss, it's easier to agree on the ideals than on the details.
 Fairness may make sense in the abstract, but how can we ensure that the coin we
 use actually adheres to our sense of fairness?
 
+### A Frequentist Approach
+
 If you don't know whether or not the coin is biased, there are a few different
 ways to avoid getting roped into an unfair game. One way involves a
 **frequentist** approach to probability: we flip a coin many times and use the
@@ -73,4 +75,20 @@ probability that a coin lands on heads, and then model how many times you'd like
 to flip a coin. The histogram will adjust accordingly, and show you how likely
 it is for the number of times that heads appears to fall within different ranges.
 
-<CoinFlipHistogram />
+<CoinFlipHistogram caption="Figure 1: An interactive probability distribution
+for flipping coins."/>
+
+Note that as the number of coin flips increases, the probability distribution
+begins to center around the true probability of getting heads. For example,
+after 100 flips, there's a roughly 95% chance that heads should have appeared
+between 40 and 60 times, and a roughly 99% chance that it should have appeared
+between 37 and 63 times. Depending on your tolerance for unlikely events, a head
+tally outside of one of these two ranges should give you pause.
+
+### A Bayesian Approach
+
+The frequentist approach is a perfectly valid way to try to assess whether or not a coin is fair. But there's another school of thought worth examining as well: the **Bayesian** approach. The biggest difference with the Bayesian model is that we assume the true likelihood of our coin landing on heads is always unknown. The best we can do, then, is try to come up with a probability distribution for our coin, which changes every time we flip the coin and gather new information. If we flip the coin 100 times and it comes up heads 50 times, the distribution will suggest that the coin is unbiased. But if it comes up heads 90 times, the distribution will suggest bias quite strongly.
+
+Let's unpack the mathematics a bit. Suppose you flip a coin _n_ times, and it comes up heads _h_ times. We don't know the probability that the coin will come up heads, so let's call this unknown _p_.
+
+<CoinFlipBayesianModel >
