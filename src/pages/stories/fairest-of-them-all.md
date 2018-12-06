@@ -91,4 +91,4 @@ The frequentist approach is a perfectly valid way to try to assess whether or no
 
 Let's unpack the mathematics a bit. Suppose you flip a coin _n_ times, and it comes up heads _h_ times. We don't know the probability that the coin will come up heads, so let's call this unknown _p_.
 
-<CoinFlipBayesianModel >
+<CoinFlipBayesianModel />
