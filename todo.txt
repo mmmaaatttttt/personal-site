@@ -1,5 +1,7 @@
-- add optional label for dashed lines in bar graph
-- HOTFIX: petrie story is broken
+- check that label doesn't show up in four weddings
+- build beta function graph (use WarmingDots as example)
+- use range instead of slider for second interactive: https://www.npmjs.com/package/rc-slider
+- hand wave through bayes, get to demo. link for further reading: https://www.google.com/search?q=bayesian+model+true+probability+binomial+distribution&oq=bayesian+model+true+probability+binomial+distribution&aqs=chrome..69i57.10463j0j1&sourceid=chrome&ie=UTF-8
 
 LOW PRIORITY
 - get more heat map data (mayyybeeeee)
