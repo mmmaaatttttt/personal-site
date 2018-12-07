@@ -1,96 +1,124 @@
 import React, { PureComponent } from "react";
 import PropTypes from "prop-types";
+import Animate from "react-move/Animate";
 import { scaleLinear } from "d3-scale";
 import { max } from "d3-array";
+import { beta } from "jStat";
 import withCaption from "hocs/withCaption";
-import { Graph, NarrowContainer, SliderGroup, ToggleSwitch } from "story_components";
+import {
+  Button,
+  Graph,
+  LinePlot,
+  NarrowContainer,
+  ToggleSwitch
+} from "story_components";
 import COLORS from "utils/styles";
 
 class CoinFlipBayesianModel extends PureComponent {
   state = {
-    numTrials: 100,
-    numHeads: 50
+    heads: 0,
+    tails: 0,
+    uniform: true
   };
 
-  handleSliderChange = (stateKey, val) => {
-    this.setState({ [stateKey]: val });
+  resetCounts = () => this.setState({ heads: 0, tails: 0 });
+
+  increment = key =>
+    this.setState(prevState => ({ [key]: prevState[key] + 1 }));
+
+  toggleDistribution = () => {
+    this.setState(prevState => ({ uniform: !prevState.uniform }));
   };
-
-  binomialDensityValues(n, p) {
-    if (p === 0 || p === 1) return Array.from({ length: n + 1 }).fill(p);
-    let masses = [(1 - p) ** n];
-    for (var k = 0; k < n; k++) {
-      let lastValue = masses[masses.length - 1];
-
-      // recurrence relation for the kth value in the probability mass function
-      // for the binomial distribution, based on the (k-1)st value
-      let nextValue = ((n - k) * p * lastValue) / ((k + 1) * (1 - p));
-      masses.push(nextValue);
-    }
-    return masses;
-  }
 
   render() {
-    const { numTrials, numHeads } = this.state;
-    const { height, width, padding } = this.props;
-    
-    // let sliderData = [
-    //   {
-    //     min: 1,
-    //     max: 1000,
-    //     step: 1,
-    //     value: numTrials,
-    //     title: `Number of coin flips: ${numTrials}`,
-    //     handleValueChange: val => this.handleSliderChange("numTrials", val),
-    //     color: COLORS.GREEN,
-    //     minIcon: "circle",
-    //     maxIcon: "coins"
-    //   },
-    //   {
-    //     min: 0,
-    //     max: 1000,
-    //     step: 1,
-    //     value: headsProb,
-    //     title: `Number of heads: ${numHeads}`,
-    //     handleValueChange: val => this.handleSliderChange("numHeads", val),
-    //     color: COLORS.GREEN,
-    //     minIcon: "times-circle",
-    //     maxIcon: "check-circle"
-    //   }
-    // ];
-    // let barData = this.binomialDensityValues(numTrials, headsProb).map(
-    //   (height, key) => ({ key, height, x0: key, x1: key + 1 })
-    // );
-    // let maxBarHeight = max(barData, d => d.height);
-    // let yScale = scaleLinear()
-    //                .domain([0, max([maxBarHeight, 0.1])])
-    //                .range([height - padding.bottom, padding.top]);
+    let { heads, tails, uniform } = this.state;
+    // regardless of true values, only show the user counts
+    // corresponding to button clicks
+    let headsDisplay = heads;
+    let tailsDisplay = tails;
+    if (!uniform) {
+      heads += 50;
+      tails += 50;
+    }
+
     return (
       <NarrowContainer width="60%" fullWidthAt="small">
-
-        {/* <SliderGroup data={sliderData} /> */}
-        {/* <Graph /> */}
-        <ToggleSwitch />
+        <ToggleSwitch
+          leftText="All probabilities equally likely"
+          rightText="Fair coin more likely"
+          leftColor={COLORS.RED}
+          rightColor={COLORS.BLUE}
+          handleSwitchChange={this.toggleDistribution}
+        />
+        <Button onClick={() => this.increment("heads")}>
+          Heads: {headsDisplay}
+        </Button>
+        <Button onClick={() => this.increment("tails")}>
+          Tails: {tailsDisplay}
+        </Button>
+        <Button onClick={this.resetCounts}>Reset Counts</Button>
+        <Animate
+          show
+          start={{ heads, tails, color: COLORS.RED }}
+          update={{
+            heads: [heads],
+            tails: [tails],
+            color: [uniform ? COLORS.RED : COLORS.BLUE],
+            timing: { duration: 400 }
+          }}
+        >
+          {({ heads, tails, color }) => {
+            const { graphPadding, height, width, xCoords } = this.props;
+            const graphData = xCoords.map(x => ({
+              x,
+              y: beta.pdf(x, heads + 1, tails + 1)
+            }));
+            const yMax = max(graphData, d => d.y);
+            const xScale = scaleLinear()
+              .domain([0, 1])
+              .range([graphPadding, width - graphPadding]);
+            const yScale = scaleLinear()
+              .domain([0, 1.1 * yMax])
+              .range([height - graphPadding, graphPadding]);
+            return (
+              <Graph
+                width={width}
+                height={height}
+                svgPadding={graphPadding}
+                graphPadding={graphPadding}
+                svgId="bayesian-graph"
+                xLabel="Coin flip distribution"
+                xScale={xScale}
+                yScale={yScale}
+                tickStep={() => 0.1}
+              >
+                <LinePlot
+                  graphData={graphData}
+                  stroke={color}
+                  xScale={xScale}
+                  yScale={yScale}
+                />
+              </Graph>
+            );
+          }}
+        </Animate>
       </NarrowContainer>
     );
   }
 }
 
 CoinFlipBayesianModel.propTypes = {
+  graphPadding: PropTypes.number.isRequired,
   height: PropTypes.number.isRequired,
-  width: PropTypes.number.isRequired,
-  padding: PropTypes.object.isRequired,
+  xCoords: PropTypes.arrayOf(PropTypes.number).isRequired,
+  width: PropTypes.number.isRequired
 };
 
 CoinFlipBayesianModel.defaultProps = {
-  height: 400,
-  width: 600,
-  padding: {
-    top: 10,
-    left: 10,
-    bottom: 20,
-    right: 10
-  }
+  graphPadding: 10,
+  height: 500,
+  width: 800,
+  xCoords: Array.from({ length: 101 }, (_, i) => i / 100)
 };
 
 export default withCaption(CoinFlipBayesianModel);
