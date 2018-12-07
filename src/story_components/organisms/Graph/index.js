@@ -124,10 +124,12 @@ Graph.propTypes = {
 };
 
 Graph.defaultProps = {
+  svgPadding: 0,
   tickFormatX: "",
   tickFormatY: "",
+  xLabel: "",
   xLabelPosition: "bottom-center",
-  svgPadding: 0
+  yLabel: ""
 };
 
 export default Graph;
