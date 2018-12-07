@@ -62,7 +62,7 @@ class GamingLinearRelationships extends Component {
   };
 
   render() {
-    const { min, max, step, svgPadding, graphPadding, idx } = this.props;
+    const { svgPadding, graphPadding, idx } = this.props;
     const {
       initialData,
       width,
@@ -116,9 +116,6 @@ class GamingLinearRelationships extends Component {
         <Graph
           width={width}
           height={height}
-          min={min}
-          max={max}
-          step={step}
           svgPadding={svgPadding}
           graphPadding={graphPadding}
           svgId={svgIds[0]}

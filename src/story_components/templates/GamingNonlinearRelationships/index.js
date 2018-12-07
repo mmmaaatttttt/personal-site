@@ -62,7 +62,7 @@ class GamingNonlinearRelationships extends Component {
   };
 
   render() {
-    const { min, max, step, svgPadding, graphPadding, idx } = this.props;
+    const { svgPadding, graphPadding, idx } = this.props;
     const {
       initialData,
       width,
@@ -119,9 +119,6 @@ class GamingNonlinearRelationships extends Component {
           key={i}
           width={width}
           height={height}
-          min={min}
-          max={max}
-          step={step}
           svgPadding={svgPadding}
           graphPadding={graphPadding}
           svgId={svgIds[i]}
