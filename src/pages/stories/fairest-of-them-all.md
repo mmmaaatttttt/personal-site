@@ -6,7 +6,7 @@ caption: "A mathematical exploration of fairness."
 featured_image_caption: "A map of the United States. Image credit: John-Mark Smith on Unsplash."
 ---
 
-From the playground to the capitol, debates over 
+From the playground to the capitol, debates over
 
 ...
 
@@ -57,12 +57,12 @@ coin might be biased.
 For example, flipping the coin once tells you nothing about whether or not the
 game is fair. Flipping it twice doesn't tell you much either: even if the coin
 is fair, it will land on the same side both times 50% of the time. But what if
-you flip the coin 100 times? or 10,000? Or --- wait for it --- one *billion*
+you flip the coin 100 times? or 10,000? Or --- wait for it --- one _billion_
 times? With more data you can begin to tease out the effects of any bias
-inherent in the system. 
+inherent in the system.
 
 As the number of flips grows, the proportion of flips that land on any one side
-begins to follow a **normal distribution**, or bell curve,  more and more
+begins to follow a **normal distribution**, or bell curve, more and more
 closely. This means that we can estimate the likelihood of certain outcomes by
 calculating the area under normal curve. For example, after 100 flips, there's a
 roughly 95% chance that heads should have appeared between 40 and 60 times.
@@ -95,12 +95,12 @@ unknown. The best we can do, then, is try to come up with a probability
 distribution for our coin, which changes every time we flip the coin and gather
 new information.
 
-In order to implement this approach, we also need a *prior distribution*. In
+In order to implement this approach, we also need a _prior distribution_. In
 other words, absent any data, what do we expect the probability distribution to
 look like? In what follows, we'll offer up two different priors. In the first,
 we'll assume that any heads probability is equally likely: maybe the coin is
 fair, maybe it's much more likely to land on heads, maybe it's much more likely
-to land on tails. 
+to land on tails.
 
 For the second prior, we'll assume that the coin is much more likely to be fair
 than not. If you expect that the coin hasn't been doctored in any way, this
@@ -128,7 +128,6 @@ website](https://ocw.mit.edu/courses/mathematics/18-05-introduction-to-probabili
 
 (As a mathematical aside, the standard Bayesian model for trying to estimate the
 probability of a coin landing on heads involves the Beta function. You can read more about the derivation of the above model [here](https://ocw.mit.edu/courses/sloan-school-of-management/15-097-prediction-machine-learning-and-statistics-spring-2012/lecture-notes/MIT15_097S12_lec15.pdf).)
-
 
 Sources:
 
