@@ -87,8 +87,49 @@ tally outside of one of these two ranges should give you pause.
 
 ### A Bayesian Approach
 
-The frequentist approach is a perfectly valid way to try to assess whether or not a coin is fair. But there's another school of thought worth examining as well: the **Bayesian** approach. The biggest difference with the Bayesian model is that we assume the true likelihood of our coin landing on heads is always unknown. The best we can do, then, is try to come up with a probability distribution for our coin, which changes every time we flip the coin and gather new information. If we flip the coin 100 times and it comes up heads 50 times, the distribution will suggest that the coin is unbiased. But if it comes up heads 90 times, the distribution will suggest bias quite strongly.
+The frequentist approach is a perfectly valid way to try to assess whether or
+not a coin is fair. But there's another school of thought worth examining as
+well: the **Bayesian** approach. The biggest difference with the Bayesian model
+is that we assume the true likelihood of our coin landing on heads is always
+unknown. The best we can do, then, is try to come up with a probability
+distribution for our coin, which changes every time we flip the coin and gather
+new information.
 
-Let's unpack the mathematics a bit. Suppose you flip a coin _n_ times, and it comes up heads _h_ times. We don't know the probability that the coin will come up heads, so let's call this unknown _p_.
+In order to implement this approach, we also need a *prior distribution*. In
+other words, absent any data, what do we expect the probability distribution to
+look like? In what follows, we'll offer up two different priors. In the first,
+we'll assume that any heads probability is equally likely: maybe the coin is
+fair, maybe it's much more likely to land on heads, maybe it's much more likely
+to land on tails. 
+
+For the second prior, we'll assume that the coin is much more likely to be fair
+than not. If you expect that the coin hasn't been doctored in any way, this
+seems like a reasonable hypothesis.
+
+Note that the prior you choose has a significant impact on how the model
+evolves. If you assume any outcome is equally likely, a string of consecutive
+heads will strongly suggest bias. But if start by assuming the coin is likely to
+be fair, it takes more evidence to significantly move the probability distribution.
+
+In the interactive below, you can start with either prior, and then mimick as
+many coin flips as you want. A nice bell shape around 50% represents a coin
+that's likely to be fair, while a curve that's biased towards either side
+suggests that the coin isn't balanced. This reflects the intuitive sense that if
+we flip the coin 100 times and it comes up heads 50 times, the evidence suggests
+that the coin is unbiased. But if it comes up heads 90 times, the evidence
+suggests bias. How much bias it suggests depends on your starting assumption.
 
 <CoinFlipBayesianModel />
+
+Both approaches---frequentist and Bayesian---have their tradeoffs. If you're
+interested in learning more about these approaches, there's a nice article
+available on the MIT [open courseware
+website](https://ocw.mit.edu/courses/mathematics/18-05-introduction-to-probability-and-statistics-spring-2014/readings/MIT18_05S14_Reading20.pdf).
+
+(As a mathematical aside, the standard Bayesian model for trying to estimate the
+probability of a coin landing on heads involves the Beta function. You can read more about the derivation of the above model [here](https://ocw.mit.edu/courses/sloan-school-of-management/15-097-prediction-machine-learning-and-statistics-spring-2012/lecture-notes/MIT15_097S12_lec15.pdf).)
+
+
+Sources:
+
+- [Comparison of frequentist and Bayesian inference](https://ocw.mit.edu/courses/mathematics/18-05-introduction-to-probability-and-statistics-spring-2014/readings/MIT18_05S14_Reading20.pdf), by Jeremy Orloff and Jonathan Bloom.
