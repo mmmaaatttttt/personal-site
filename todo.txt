@@ -1,9 +1,9 @@
+- finish intro
 - check that label doesn't show up in four weddings
 - fix bayes x axis label
 - add tick labels to x axis
 - connect to machine learning: https://www.quora.com/What-is-Bayesian-machine-learning
-
-- move on to third interactive
+- add caption to bayesian interactive
 
 LOW PRIORITY
 - get more heat map data (mayyybeeeee)
