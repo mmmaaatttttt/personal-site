@@ -1,15 +1,9 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import { DraggableCircle } from "story_components";
+import { DraggableCircle, Polygon } from "story_components";
 import COLORS from "utils/styles";
 
 class InteractivePolygon extends Component {
-  getPointsString = () => {
-    return this.props.points
-      .reduce((str, obj) => `${str} ${obj.x},${obj.y}`, "")
-      .trim();
-  };
-
   render() {
     const { circleRadius, fill, points, stroke, strokeWidth } = this.props;
     let circles = points.map((point, i) => (
@@ -38,7 +32,7 @@ class InteractivePolygon extends Component {
         />
       );
     });
-    let polygon = <polygon points={this.getPointsString()} fill={fill} />;
+    let polygon = <Polygon points={points} fill={fill} stroke="none" />;
     return (
       <g>
         {polygon}

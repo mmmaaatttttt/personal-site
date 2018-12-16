@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import { ClippedSVG, LabeledCircle, Tooltip } from "story_components";
+import { ClippedSVG, LabeledCircle, Polygon, Tooltip } from "story_components";
 import COLORS from "utils/styles";
 
 class RentDivision extends Component {
@@ -36,11 +36,13 @@ class RentDivision extends Component {
 
   render() {
     const { width, height } = this.props;
+    const { points } = this.state
     const labeledCircles = this.state.points.map(p => (
       <LabeledCircle {...p} key={`${p.x}|${p.y}`} />
     ));
     return (
       <ClippedSVG width={width} height={height} id="rent">
+        <Polygon points={points.slice(0,3)} fill="none" />
         {labeledCircles}
       </ClippedSVG>
     );
