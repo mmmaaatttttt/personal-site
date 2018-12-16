@@ -51,7 +51,7 @@ ClippedSVG.propTypes = {
       top: PropTypes.number,
       bottom: PropTypes.number,
       left: PropTypes.number,
-      bottom: PropTypes.number
+      right: PropTypes.number
     })
   ]).isRequired
 };
