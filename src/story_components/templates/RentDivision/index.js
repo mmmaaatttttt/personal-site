@@ -12,6 +12,10 @@ class RentDivision extends Component {
     let xBase = width / 2;
     let yBase = height / 2 + 70;
     this.state = {
+      tooltipVisible: false,
+      tooltipX: 0,
+      tooltipY: 0,
+      tooltipBody: "",
       points: [
         {
           x: xBase + r * Math.cos(Math.PI / 2),
@@ -35,9 +39,38 @@ class RentDivision extends Component {
     };
   }
 
+  /** Get coordinates of the three corners of the main triangle. */
   get corners() {
     return this.state.points.slice(0, 3).map(p => ({ x: p.x, y: p.y }));
   }
+
+  /** Determines what data to put in the body of the tooltip.
+   * @param {Object} point - Current point that activated the tooltip
+   */
+  getTooltipBody = point => {
+    const { roomColors } = this.props;
+    return this.getPrices(point).map(
+      (price, idx) => `${roomColors[idx]} room: $${price.toFixed(2)}`
+    );
+  };
+
+  /** Shows the tooltip in desired current position, with relevant data.
+   * @param {Object} point - Current point that activated the tooltip
+   * @param {Object} e - event object
+   */
+  handleTooltipShow = (point, e) => {
+    this.setState({
+      tooltipVisible: true,
+      tooltipX: e.pageX,
+      tooltipY: e.pageY,
+      tooltipBody: this.getTooltipBody(point)
+    });
+  };
+
+  /** Hides the tooltip. */
+  handleTooltipHide = () => {
+    this.setState({ tooltipVisible: false });
+  };
 
   /**
    * Converts a point's x, y coordinates into a triplet
@@ -52,20 +85,40 @@ class RentDivision extends Component {
       euclideanDistance(point.x - c.x, point.y - c.y)
     );
     let totalDistance = total(distances);
-    return distances.map(d => d * rent / totalDistance);
-  }
+    return distances.map(d => (d * rent) / totalDistance);
+  };
 
   render() {
     const { width, height } = this.props;
-    const { points } = this.state;
+    const {
+      points,
+      tooltipVisible,
+      tooltipX,
+      tooltipY,
+      tooltipBody
+    } = this.state;
     const labeledCircles = points.map(p => (
-      <LabeledCircle {...p} key={`${p.x}|${p.y}`} />
+      <LabeledCircle
+        {...p}
+        key={`${p.x}|${p.y}`}
+        handleUpdate={this.handleTooltipShow.bind(this, p)}
+        handleLeave={this.handleTooltipHide}
+      />
     ));
     return (
-      <ClippedSVG width={width} height={height} id="rent">
-        <Polygon points={this.corners} fill="none" />
-        {labeledCircles}
-      </ClippedSVG>
+      <div>
+        <ClippedSVG width={width} height={height} id="rent">
+          <Polygon points={this.corners} fill="none" />
+          {labeledCircles}
+        </ClippedSVG>
+        <Tooltip
+          visible={tooltipVisible}
+          x={tooltipX}
+          y={tooltipY}
+          body={tooltipBody}
+          title="Room Prices"
+        />
+      </div>
     );
   }
 }
@@ -80,7 +133,7 @@ RentDivision.propTypes = {
 
 RentDivision.defaultProps = {
   rent: 2400,
-  roomColors: [COLORS.ORANGE, COLORS.PURPLE, COLORS.GREEN],
+  roomColors: ["Orange", "Green", "Purple"],
   names: ["Alex", "Brett", "Cameron"],
   width: 600,
   height: 600

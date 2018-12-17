@@ -5,6 +5,9 @@
 - connect to machine learning: https://www.quora.com/What-is-Bayesian-machine-learning
 - add caption to bayesian interactive
 
+- add prompts to show algorithm
+  - prompts should follow rules (e.g. you can't pick a non-free room when a free room is an option)
+
 LOW PRIORITY
 - get more heat map data (mayyybeeeee)
 - add meta tags for /stories endpoint

@@ -23,10 +23,8 @@ class HeatChart extends Component {
     });
   };
 
-  handleTooltipHide = e => {
-    this.setState({
-      tooltipVisible: false
-    });
+  handleTooltipHide = () => {
+    this.setState({ tooltipVisible: false });
   };
 
   render() {
