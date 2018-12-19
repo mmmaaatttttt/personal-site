@@ -12,6 +12,7 @@ class RentDivision extends Component {
     let xBase = width / 2;
     let yBase = height / 2 + 70;
     this.state = {
+      activePt: 0,
       tooltipVisible: false,
       tooltipX: 0,
       tooltipY: 0,
@@ -20,20 +21,17 @@ class RentDivision extends Component {
         {
           x: xBase + r * Math.cos(Math.PI / 2),
           y: yBase - r * Math.sin(Math.PI / 2),
-          color: COLORS.ORANGE,
-          label: "A"
+          color: COLORS.BLACK,
         },
         {
           x: xBase + r * Math.cos(Math.PI / 2 + (2 * Math.PI) / 3),
           y: yBase - r * Math.sin(Math.PI / 2 + (2 * Math.PI) / 3),
-          color: COLORS.ORANGE,
-          label: "A"
+          color: COLORS.BLACK,
         },
         {
           x: xBase + r * Math.cos(Math.PI / 2 + (4 * Math.PI) / 3),
           y: yBase - r * Math.sin(Math.PI / 2 + (4 * Math.PI) / 3),
-          color: COLORS.ORANGE,
-          label: "A"
+          color: COLORS.BLACK,
         }
       ]
     };
@@ -91,18 +89,21 @@ class RentDivision extends Component {
   render() {
     const { width, height } = this.props;
     const {
+      activePt,
       points,
       tooltipVisible,
       tooltipX,
       tooltipY,
       tooltipBody
     } = this.state;
-    const labeledCircles = points.map(p => (
+    const labeledCircles = points.map((p, i) => (
       <LabeledCircle
         {...p}
-        key={`${p.x}|${p.y}`}
-        handleUpdate={this.handleTooltipShow.bind(this, p)}
         handleLeave={this.handleTooltipHide}
+        handleUpdate={this.handleTooltipShow.bind(this, p)}
+        key={`${p.x}|${p.y}`}
+        label={p.label}
+        isActive={i === activePt}
       />
     ));
     return (
