@@ -1,6 +1,12 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import { ClippedSVG, LabeledCircle, Polygon, Tooltip } from "story_components";
+import {
+  ClippedSVG,
+  LabeledCircle,
+  Polygon,
+  RadioSelection,
+  Tooltip
+} from "story_components";
 import { euclideanDistance, total } from "utils/mathHelpers";
 import COLORS from "utils/styles";
 
@@ -12,7 +18,7 @@ class RentDivision extends Component {
     let xBase = width / 2;
     let yBase = height / 2 + 70;
     this.state = {
-      activePt: 0,
+      activePtIdx: 0,
       tooltipVisible: false,
       tooltipX: 0,
       tooltipY: 0,
@@ -21,17 +27,17 @@ class RentDivision extends Component {
         {
           x: xBase + r * Math.cos(Math.PI / 2),
           y: yBase - r * Math.sin(Math.PI / 2),
-          color: COLORS.BLACK,
+          color: COLORS.BLACK
         },
         {
           x: xBase + r * Math.cos(Math.PI / 2 + (2 * Math.PI) / 3),
           y: yBase - r * Math.sin(Math.PI / 2 + (2 * Math.PI) / 3),
-          color: COLORS.BLACK,
+          color: COLORS.BLACK
         },
         {
           x: xBase + r * Math.cos(Math.PI / 2 + (4 * Math.PI) / 3),
           y: yBase - r * Math.sin(Math.PI / 2 + (4 * Math.PI) / 3),
-          color: COLORS.BLACK,
+          color: COLORS.BLACK
         }
       ]
     };
@@ -70,6 +76,13 @@ class RentDivision extends Component {
     this.setState({ tooltipVisible: false });
   };
 
+  /** Gets the active roommate, based on the active point in state */
+  getActiveRoommate = () => {
+    const { activePtIdx } = this.state;
+    const { names } = this.props;
+    return names[activePtIdx];
+  };
+
   /**
    * Converts a point's x, y coordinates into a triplet
    * corresponding to rend prices at that point
@@ -89,13 +102,15 @@ class RentDivision extends Component {
   render() {
     const { width, height } = this.props;
     const {
-      activePt,
+      activePtIdx,
       points,
       tooltipVisible,
       tooltipX,
       tooltipY,
       tooltipBody
     } = this.state;
+    const currentRoommate = this.getActiveRoommate();
+    const currentPrices = points[activePtIdx];
     const labeledCircles = points.map((p, i) => (
       <LabeledCircle
         {...p}
@@ -103,7 +118,7 @@ class RentDivision extends Component {
         handleUpdate={this.handleTooltipShow.bind(this, p)}
         key={`${p.x}|${p.y}`}
         label={p.label}
-        isActive={i === activePt}
+        isActive={i === activePtIdx}
       />
     ));
     return (
@@ -112,6 +127,10 @@ class RentDivision extends Component {
           <Polygon points={this.corners} fill="none" />
           {labeledCircles}
         </ClippedSVG>
+        <div>
+          <h2>{currentRoommate}'s Turn</h2>
+          <RadioSelection />
+        </div>
         <Tooltip
           visible={tooltipVisible}
           x={tooltipX}
