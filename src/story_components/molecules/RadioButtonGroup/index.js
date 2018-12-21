@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { Button } from "story_components";
 
-class RadioSelection extends Component {
+class RadioButtonGroup extends Component {
   state = {
     groupVal: ""
   };
@@ -36,14 +36,14 @@ class RadioSelection extends Component {
   }
 }
 
-RadioSelection.propTypes = {
+RadioButtonGroup.propTypes = {
   handleSelect: PropTypes.func.isRequired,
   labels: PropTypes.arrayOf(PropTypes.string).isRequired
 };
 
-RadioSelection.defaultProps = {
+RadioButtonGroup.defaultProps = {
   handleSelect: label => console.log(label),
   labels: ["test1", "test2", "test3"]
 };
 
-export default RadioSelection;
+export default RadioButtonGroup;

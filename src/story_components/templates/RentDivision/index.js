@@ -4,7 +4,7 @@ import {
   ClippedSVG,
   LabeledCircle,
   Polygon,
-  RadioSelection,
+  RadioButtonGroup,
   Tooltip
 } from "story_components";
 import { euclideanDistance, total } from "utils/mathHelpers";
@@ -129,7 +129,7 @@ class RentDivision extends Component {
         </ClippedSVG>
         <div>
           <h2>{currentRoommate}'s Turn</h2>
-          <RadioSelection />
+          <RadioButtonGroup />
         </div>
         <Tooltip
           visible={tooltipVisible}
