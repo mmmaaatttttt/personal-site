@@ -19,6 +19,7 @@ class RentDivision extends Component {
     let yBase = height / 2 + 70;
     this.state = {
       activePtIdx: 0,
+      currentColorIndex: null,
       tooltipVisible: false,
       tooltipX: 0,
       tooltipY: 0,
@@ -99,10 +100,21 @@ class RentDivision extends Component {
     return distances.map(d => (d * rent) / totalDistance);
   };
 
+  /**
+   * Callback that runs after a radio button in the
+   * RadioButtonGroup is changed. Has access to the index
+   * of the radio button.
+   * @param {Number} idx - Index of the currently active ratio button
+   */
+  handleRadioChange = currentColorIndex => {
+    this.setState({ currentColorIndex });
+  };
+
   render() {
-    const { width, height } = this.props;
+    const { width, height, roomColors } = this.props;
     const {
       activePtIdx,
+      currentColorIndex,
       points,
       tooltipVisible,
       tooltipX,
@@ -110,7 +122,15 @@ class RentDivision extends Component {
       tooltipBody
     } = this.state;
     const currentRoommate = this.getActiveRoommate();
-    const currentPrices = points[activePtIdx];
+    const activePoint = points[activePtIdx];
+    const prices = this.getPrices(activePoint);
+    const radioButtonLabels = this.getTooltipBody(activePoint).map(
+      (text, idx) => ({
+        text,
+        color: COLORS[roomColors[idx].toUpperCase()],
+        disabled: prices[idx] === 0
+      })
+    );
     const labeledCircles = points.map((p, i) => (
       <LabeledCircle
         {...p}
@@ -121,6 +141,11 @@ class RentDivision extends Component {
         isActive={i === activePtIdx}
       />
     ));
+    let buttonText = "";
+    if (currentColorIndex !== null) {
+      let currentColor = roomColors[currentColorIndex].toLowerCase();
+      buttonText = `Confirm the ${currentColor} room for ${currentRoommate}.`;
+    }
     return (
       <div>
         <ClippedSVG width={width} height={height} id="rent">
@@ -129,7 +154,11 @@ class RentDivision extends Component {
         </ClippedSVG>
         <div>
           <h2>{currentRoommate}'s Turn</h2>
-          <RadioButtonGroup />
+          <RadioButtonGroup
+            handleRadioChange={this.handleRadioChange}
+            labels={radioButtonLabels}
+            buttonText={buttonText}
+          />
         </div>
         <Tooltip
           visible={tooltipVisible}
