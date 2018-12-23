@@ -15,6 +15,8 @@ const FlexContainer = styled.div`
       `}
     ${main}: ${props => props.main};
   ${cross}: ${props => props.cross};
+  margin: ${props => props.margin};
+  width: ${props => props.width};
 `;
 
 const flexAlignments = [
@@ -32,6 +34,8 @@ FlexContainer.propTypes = {
   cross: PropTypes.oneOf(flexAlignments).isRequired,
   flex: PropTypes.number.isRequired,
   main: PropTypes.oneOf(flexAlignments).isRequired,
+  margin: PropTypes.string.isRequired,
+  width: PropTypes.string.isRequired,
   wrap: PropTypes.bool.isRequired
 };
 
@@ -40,6 +44,8 @@ FlexContainer.defaultProps = {
   cross: "stretch",
   flex: 1,
   main: "stretch",
+  margin: "0",
+  width: "auto",
   wrap: false
 };
 
