@@ -7,6 +7,7 @@ const darkerColor = props => darken(0.1, color(props));
 
 const Button = styled.button`
   border-radius: 3px;
+  box-sizing: border-box;
   padding: 0.2rem 0.6rem;
   background-color: ${color};
   border: none;
