@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import styled from "styled-components";
-import { Button, FlexContainer, Icon } from "story_components";
+import styled, { css } from "styled-components";
+import { Button, FlexContainer, Icon, Strikethrough } from "story_components";
 import COLORS from "../../../utils/styles";
 
 const StyledIconWrapper = styled.span`
@@ -20,6 +20,14 @@ const StyledIconWrapper = styled.span`
   &:hover {
     cursor: pointer;
   }
+
+  ${props =>
+    props.disabled &&
+    css`
+      &:hover {
+        cursor: not-allowed;
+      }
+    `}
 `;
 
 class RadioButtonGroup extends Component {
@@ -37,26 +45,40 @@ class RadioButtonGroup extends Component {
   render() {
     const { labels, handleSelectConfirm, buttonText } = this.props;
     const { selectedIndex } = this.state;
-    const options = labels.map((obj, i) => (
-      <FlexContainer key={obj.text}>
-        <input
-          name="group"
-          type="radio"
-          id={i}
-          value={i}
-          checked={selectedIndex === i}
-          onChange={this.handleRadioChange}
-          hidden
-        />
-        <label htmlFor={i}>
-          <StyledIconWrapper color={obj.color}>
-            {selectedIndex === i ? <Icon name="check" /> : null}
+    const options = labels.map((obj, i) => {
+      let { text, color, disabled } = obj;
+      let textContainer = <span>{text}</span>;
+      let icon = (
+        <StyledIconWrapper color={color}>
+          {selectedIndex === i ? <Icon name="check" /> : null}
+        </StyledIconWrapper>
+      );
+      if (disabled) {
+        textContainer = <Strikethrough>{text}</Strikethrough>;
+        icon = (
+          <StyledIconWrapper color={COLORS.RED} disabled>
+            <Icon name="times" />
           </StyledIconWrapper>
-        </label>
-        <p>{obj.text}</p>
-      </FlexContainer>
-    ));
-    let footer = <em>Please make a selection.</em>;
+        );
+      }
+      return (
+        <FlexContainer key={text} width="90%" margin="4% 0 0 25%">
+          <input
+            name="group"
+            type="radio"
+            id={i}
+            value={i}
+            checked={selectedIndex === i}
+            onChange={this.handleRadioChange}
+            hidden
+            disabled={disabled}
+          />
+          <label htmlFor={i}>{icon}</label>
+          {textContainer}
+        </FlexContainer>
+      );
+    });
+    let footer = <Button disabled>Please make a selection.</Button>;
     if (selectedIndex !== null) {
       let color = labels[selectedIndex].color;
       footer = (
@@ -69,10 +91,10 @@ class RadioButtonGroup extends Component {
       );
     }
     return (
-      <div>
+      <FlexContainer column main="center" cross="center" width="100%">
         {options}
         {footer}
-      </div>
+      </FlexContainer>
     );
   }
 }

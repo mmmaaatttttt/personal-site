@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import {
   ClippedSVG,
+  ColumnLayout,
+  FlexContainer,
   LabeledCircle,
   Polygon,
   RadioButtonGroup,
@@ -110,6 +112,19 @@ class RentDivision extends Component {
     this.setState({ currentColorIndex });
   };
 
+  /**
+   * Determines whether a room choice should be disabled
+   * based on the rules of the game.
+   * For example, everyone should prefer a free room to a not free room,
+   * so if one of the rooms is free, the non-free rooms should not be selectable.
+   * @param {Number} idx - index of the current price in the array of prices
+   */
+  shouldBeDisabled = (prices, idx) => {
+    const anyFreeRooms = prices.some(p => p === 0);
+    const currentPrice = prices[idx];
+    return anyFreeRooms && currentPrice !== 0;
+  }
+
   render() {
     const { width, height, roomColors } = this.props;
     const {
@@ -128,7 +143,7 @@ class RentDivision extends Component {
       (text, idx) => ({
         text,
         color: COLORS[roomColors[idx].toUpperCase()],
-        disabled: prices[idx] === 0
+        disabled: this.shouldBeDisabled(prices, idx)
       })
     );
     const labeledCircles = points.map((p, i) => (
@@ -147,27 +162,29 @@ class RentDivision extends Component {
       buttonText = `Confirm the ${currentColor} room for ${currentRoommate}.`;
     }
     return (
-      <div>
-        <ClippedSVG width={width} height={height} id="rent">
-          <Polygon points={this.corners} fill="none" />
-          {labeledCircles}
-        </ClippedSVG>
+      <ColumnLayout break="extraSmall">
         <div>
+          <ClippedSVG width={width} height={height} id="rent">
+            <Polygon points={this.corners} fill="none" />
+            {labeledCircles}
+          </ClippedSVG>
+          <Tooltip
+            visible={tooltipVisible}
+            x={tooltipX}
+            y={tooltipY}
+            body={tooltipBody}
+            title="Room Prices"
+          />
+        </div>
+        <FlexContainer column main="center">
           <h2>{currentRoommate}'s Turn</h2>
           <RadioButtonGroup
             handleRadioChange={this.handleRadioChange}
             labels={radioButtonLabels}
             buttonText={buttonText}
           />
-        </div>
-        <Tooltip
-          visible={tooltipVisible}
-          x={tooltipX}
-          y={tooltipY}
-          body={tooltipBody}
-          title="Room Prices"
-        />
-      </div>
+        </FlexContainer>
+      </ColumnLayout>
     );
   }
 }
