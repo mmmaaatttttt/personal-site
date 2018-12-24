@@ -21,7 +21,7 @@ class RentDivision extends Component {
     let yBase = height / 2 + 70;
     this.state = {
       activePtIdx: 0,
-      currentColorIndex: null,
+      currentColorIdx: null,
       tooltipVisible: false,
       tooltipX: 0,
       tooltipY: 0,
@@ -30,17 +30,20 @@ class RentDivision extends Component {
         {
           x: xBase + r * Math.cos(Math.PI / 2),
           y: yBase - r * Math.sin(Math.PI / 2),
-          color: COLORS.BLACK
+          color: COLORS.BLACK,
+          label: "A",
         },
         {
           x: xBase + r * Math.cos(Math.PI / 2 + (2 * Math.PI) / 3),
           y: yBase - r * Math.sin(Math.PI / 2 + (2 * Math.PI) / 3),
-          color: COLORS.BLACK
+          color: COLORS.BLACK,
+          label: "B",
         },
         {
           x: xBase + r * Math.cos(Math.PI / 2 + (4 * Math.PI) / 3),
           y: yBase - r * Math.sin(Math.PI / 2 + (4 * Math.PI) / 3),
-          color: COLORS.BLACK
+          color: COLORS.BLACK,
+          label: "C"
         }
       ]
     };
@@ -81,9 +84,10 @@ class RentDivision extends Component {
 
   /** Gets the active roommate, based on the active point in state */
   getActiveRoommate = () => {
-    const { activePtIdx } = this.state;
+    const { activePtIdx, points } = this.state;
+    const firstLetter = points[activePtIdx].label;
     const { names } = this.props;
-    return names[activePtIdx];
+    return names.find(name => name[0] === firstLetter);
   };
 
   /**
@@ -106,10 +110,31 @@ class RentDivision extends Component {
    * Callback that runs after a radio button in the
    * RadioButtonGroup is changed. Has access to the index
    * of the radio button.
-   * @param {Number} idx - Index of the currently active ratio button
+   * @param {Number} currentColorIdx - Index of the currently active ratio button
    */
-  handleRadioChange = currentColorIndex => {
-    this.setState({ currentColorIndex });
+  handleRadioChange = currentColorIdx => {
+    this.setState({ currentColorIdx });
+  };
+
+  /**
+   * Callback that runs after confirmation of a room. Should update
+   * the active point, and change the current roommate. Also needs to
+   * update the mesh if necessary, and determine when this process
+   * can terminate.
+   * @param {Number} roomIdx - Index of the room that was selected.
+   */
+  handleRoomChoice = roomIdx => {
+    const { activePtIdx, currentColorIdx, points } = this.state;
+    const { roomColors } = this.props;
+    const colorStr = roomColors[currentColorIdx].toUpperCase();
+    const color = COLORS[colorStr];
+    let pointsCopy = [...points];
+    pointsCopy[activePtIdx] = { ...points[activePtIdx], color, r: 20 };
+    this.setState(prevState => ({ 
+      activePtIdx: prevState.activePtIdx + 1,
+      currentColorIdx: null,
+      points: pointsCopy
+    }));
   };
 
   /**
@@ -123,13 +148,13 @@ class RentDivision extends Component {
     const anyFreeRooms = prices.some(p => p === 0);
     const currentPrice = prices[idx];
     return anyFreeRooms && currentPrice !== 0;
-  }
+  };
 
   render() {
     const { width, height, roomColors } = this.props;
     const {
       activePtIdx,
-      currentColorIndex,
+      currentColorIdx,
       points,
       tooltipVisible,
       tooltipX,
@@ -157,8 +182,8 @@ class RentDivision extends Component {
       />
     ));
     let buttonText = "";
-    if (currentColorIndex !== null) {
-      let currentColor = roomColors[currentColorIndex].toLowerCase();
+    if (currentColorIdx !== null) {
+      let currentColor = roomColors[currentColorIdx].toLowerCase();
       buttonText = `Confirm the ${currentColor} room for ${currentRoommate}.`;
     }
     return (
@@ -179,6 +204,7 @@ class RentDivision extends Component {
         <FlexContainer column main="center">
           <h2>{currentRoommate}'s Turn</h2>
           <RadioButtonGroup
+            handleSelectConfirm={this.handleRoomChoice}
             handleRadioChange={this.handleRadioChange}
             labels={radioButtonLabels}
             buttonText={buttonText}

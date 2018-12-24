@@ -52,7 +52,7 @@ class LabeledCircle extends Component {
           r={r}
           stroke={color}
         />
-        <CenteredSVGText x={x} y={y}>
+        <CenteredSVGText x={x} y={y} fontSize={`${1.5*r}px`}>
           {label}
         </CenteredSVGText>
       </g>
