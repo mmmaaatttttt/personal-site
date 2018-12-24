@@ -42,6 +42,15 @@ class RadioButtonGroup extends Component {
     });
   };
 
+  /** Reset the selectedIndex state, call handleSelectConfirm from props  */
+  handleConfirm = () => {
+    let confirmedIndex = this.state.selectedIndex;
+    let { handleSelectConfirm } = this.props;
+    this.setState({ selectedIndex: null }, () =>
+      handleSelectConfirm(confirmedIndex)
+    );
+  };
+
   render() {
     const { labels, handleSelectConfirm, buttonText } = this.props;
     const { selectedIndex } = this.state;
@@ -82,10 +91,7 @@ class RadioButtonGroup extends Component {
     if (selectedIndex !== null) {
       let color = labels[selectedIndex].color;
       footer = (
-        <Button
-          onClick={() => handleSelectConfirm(selectedIndex)}
-          color={color}
-        >
+        <Button onClick={this.handleConfirm} color={color}>
           {buttonText}
         </Button>
       );
