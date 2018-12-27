@@ -15,7 +15,7 @@ import COLORS from "utils/styles";
 class RentDivision extends Component {
   constructor(props) {
     super(props);
-    const { height, width } = props;
+    const { height, width, rent } = props;
     const r = height / 2 - 20;
     let xBase = width / 2;
     let yBase = height / 2 + 70;
@@ -32,18 +32,21 @@ class RentDivision extends Component {
           y: yBase - r * Math.sin(Math.PI / 2),
           color: COLORS.BLACK,
           label: "A",
+          prices: [0, rent / 2, rent / 2]
         },
         {
           x: xBase + r * Math.cos(Math.PI / 2 + (2 * Math.PI) / 3),
           y: yBase - r * Math.sin(Math.PI / 2 + (2 * Math.PI) / 3),
           color: COLORS.BLACK,
           label: "B",
+          prices: [rent / 2, 0, rent / 2]
         },
         {
           x: xBase + r * Math.cos(Math.PI / 2 + (4 * Math.PI) / 3),
           y: yBase - r * Math.sin(Math.PI / 2 + (4 * Math.PI) / 3),
           color: COLORS.BLACK,
-          label: "C"
+          label: "C",
+          prices: [rent / 2, rent / 2, 0]
         }
       ]
     };
@@ -59,7 +62,7 @@ class RentDivision extends Component {
    */
   getTooltipBody = point => {
     const { roomColors } = this.props;
-    return this.getPrices(point).map(
+    return point.prices.map(
       (price, idx) => `${roomColors[idx]} room: $${price.toFixed(2)}`
     );
   };
@@ -91,22 +94,6 @@ class RentDivision extends Component {
   };
 
   /**
-   * Converts a point's x, y coordinates into a triplet
-   * corresponding to rend prices at that point
-   * @param {Object} point - Coordinates of the point
-   * @param {number} point.x - x-coord of the point
-   * @param {number} point.y - y-coord of the point
-   */
-  getPrices = point => {
-    const { rent } = this.props;
-    let distances = this.corners.map(c =>
-      euclideanDistance(point.x - c.x, point.y - c.y)
-    );
-    let totalDistance = total(distances);
-    return distances.map(d => (d * rent) / totalDistance);
-  };
-
-  /**
    * Callback that runs after a radio button in the
    * RadioButtonGroup is changed. Has access to the index
    * of the radio button.
@@ -121,20 +108,66 @@ class RentDivision extends Component {
    * the active point, and change the current roommate. Also needs to
    * update the mesh if necessary, and determine when this process
    * can terminate.
-   * @param {Number} roomIdx - Index of the room that was selected.
    */
-  handleRoomChoice = roomIdx => {
+  handleRoomChoice = () => {
     const { activePtIdx, currentColorIdx, points } = this.state;
     const { roomColors } = this.props;
     const colorStr = roomColors[currentColorIdx].toUpperCase();
     const color = COLORS[colorStr];
     let pointsCopy = [...points];
     pointsCopy[activePtIdx] = { ...points[activePtIdx], color, r: 20 };
-    this.setState(prevState => ({ 
-      activePtIdx: prevState.activePtIdx + 1,
-      currentColorIdx: null,
-      points: pointsCopy
-    }));
+    this.setState({ currentColorIdx: null, points: pointsCopy }, () => {
+      if (activePtIdx < points.length - 1) {
+        this.advanceToNext();
+      } else {
+        this.refineMesh();
+      }
+    });
+  };
+
+  /**
+   * Move on to the next point in the mesh.
+   * Called after updating the mesh, if necessary.
+   * @param {Array} points - Array of updated point objects
+   */
+  advanceToNext = () => {
+    this.setState(prevState => {
+      let { points, activePtIdx } = prevState;
+      while (points[activePtIdx].color !== COLORS.BLACK) {
+        activePtIdx++;
+      }
+      return { activePtIdx };
+    });
+  };
+
+  /**
+   * Doubles the number of points in the mesh,
+   * by snagging the midpoint between each existing point
+   * in the mesh.
+   * @param {Function} cb - callback to run after setState call with new mesh
+   */
+  refineMesh = () => {
+    const { points } = this.state;
+    let { names } = this.props;
+    const pointsCopy = [...points];
+    let insertIndex = 1;
+    points.forEach((currentPt, idx) => {
+      let nextPt = points[(idx + 1) % points.length];
+      let x = (currentPt.x + nextPt.x) / 2;
+      let y = (currentPt.y + nextPt.y) / 2;
+      let prices = currentPt.prices.map((price, i) => price / 2 + nextPt.prices[i] / 2);
+      let color = COLORS.BLACK;
+      // the roommate who owns a given point
+      // should be the roommate who doesn't own one of the outer points
+      let label = names
+        .map(name => name[0])
+        .find(ltr => ltr !== currentPt.label && ltr !== nextPt.label);
+      // insert the new point at its appropriate position
+      pointsCopy.splice(insertIndex, 0, { x, y, color, label, prices });
+      // move the pointer so we know where to insert the next point
+      insertIndex += 2;
+    });
+    this.setState({ points: pointsCopy, activePtIdx: 1 });
   };
 
   /**
@@ -163,7 +196,7 @@ class RentDivision extends Component {
     } = this.state;
     const currentRoommate = this.getActiveRoommate();
     const activePoint = points[activePtIdx];
-    const prices = this.getPrices(activePoint);
+    const { prices } = activePoint;
     const radioButtonLabels = this.getTooltipBody(activePoint).map(
       (text, idx) => ({
         text,
@@ -190,7 +223,7 @@ class RentDivision extends Component {
       <ColumnLayout break="extraSmall">
         <div>
           <ClippedSVG width={width} height={height} id="rent">
-            <Polygon points={this.corners} fill="none" />
+            <Polygon points={points} fill="none" />
             {labeledCircles}
           </ClippedSVG>
           <Tooltip

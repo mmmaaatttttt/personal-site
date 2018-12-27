@@ -7,8 +7,8 @@
 - in probability table, highlight the fact that HT and TH are equally likely
 - confirm responsiveness for rent interactive
 
-- add prompts to show algorithm
-  - prompts should follow rules (e.g. you can't pick a non-free room when a free room is an option)
+- reverse engineer nyt article algo
+- points are weird --> need to keep track of adjacencies?
 
 LOW PRIORITY
 - get more heat map data (mayyybeeeee)
