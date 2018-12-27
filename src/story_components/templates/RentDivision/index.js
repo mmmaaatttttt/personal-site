@@ -32,24 +32,25 @@ class RentDivision extends Component {
           y: yBase - r * Math.sin(Math.PI / 2),
           color: COLORS.BLACK,
           label: "A",
-          prices: [0, rent / 2, rent / 2]
+          prices: [0, 0, rent]
         },
         {
           x: xBase + r * Math.cos(Math.PI / 2 + (2 * Math.PI) / 3),
           y: yBase - r * Math.sin(Math.PI / 2 + (2 * Math.PI) / 3),
           color: COLORS.BLACK,
           label: "B",
-          prices: [rent / 2, 0, rent / 2]
+          prices: [rent, 0, 0]
         },
         {
           x: xBase + r * Math.cos(Math.PI / 2 + (4 * Math.PI) / 3),
           y: yBase - r * Math.sin(Math.PI / 2 + (4 * Math.PI) / 3),
           color: COLORS.BLACK,
           label: "C",
-          prices: [rent / 2, rent / 2, 0]
+          prices: [0, rent, 0]
         }
       ]
     };
+    this.state.triangles = [this.state.points];
   }
 
   /** Get coordinates of the three corners of the main triangle. */
@@ -144,30 +145,37 @@ class RentDivision extends Component {
    * Doubles the number of points in the mesh,
    * by snagging the midpoint between each existing point
    * in the mesh.
-   * @param {Function} cb - callback to run after setState call with new mesh
    */
   refineMesh = () => {
-    const { points } = this.state;
+    const { points, triangles } = this.state;
     let { names } = this.props;
     const pointsCopy = [...points];
-    let insertIndex = 1;
-    points.forEach((currentPt, idx) => {
-      let nextPt = points[(idx + 1) % points.length];
-      let x = (currentPt.x + nextPt.x) / 2;
-      let y = (currentPt.y + nextPt.y) / 2;
-      let prices = currentPt.prices.map((price, i) => price / 2 + nextPt.prices[i] / 2);
-      let color = COLORS.BLACK;
-      // the roommate who owns a given point
-      // should be the roommate who doesn't own one of the outer points
-      let label = names
-        .map(name => name[0])
-        .find(ltr => ltr !== currentPt.label && ltr !== nextPt.label);
-      // insert the new point at its appropriate position
-      pointsCopy.splice(insertIndex, 0, { x, y, color, label, prices });
-      // move the pointer so we know where to insert the next point
-      insertIndex += 2;
+    const newTriangles = [];
+    triangles.forEach(corners => {
+      let newPts = [];
+      corners.forEach((currentPt, idx) => {
+        let nextPt = corners[(idx + 1) % corners.length];
+        let x = (currentPt.x + nextPt.x) / 2;
+        let y = (currentPt.y + nextPt.y) / 2;
+        let prices = currentPt.prices.map(
+          (price, i) => price / 2 + nextPt.prices[i] / 2
+        );
+        let color = COLORS.BLACK;
+        // the roommate who owns a given point
+        // should be the roommate who doesn't own one of the outer points
+        let label = names
+          .map(name => name[0])
+          .find(ltr => ltr !== currentPt.label && ltr !== nextPt.label);
+        newPts.push({ x, y, prices, color, label });
+      });
+      newTriangles.push(
+        [corners[0], newPts[0], newPts[2]],
+        [newPts[0], corners[1], newPts[1]],
+        [newPts[2], newPts[1], corners[2]]
+      );
+      pointsCopy.push(...newPts);
     });
-    this.setState({ points: pointsCopy, activePtIdx: 1 });
+    this.setState({ points: pointsCopy, triangles: newTriangles, activePtIdx: 0 }, this.advanceToNext);
   };
 
   /**
@@ -192,7 +200,8 @@ class RentDivision extends Component {
       tooltipVisible,
       tooltipX,
       tooltipY,
-      tooltipBody
+      tooltipBody,
+      triangles
     } = this.state;
     const currentRoommate = this.getActiveRoommate();
     const activePoint = points[activePtIdx];
@@ -214,6 +223,10 @@ class RentDivision extends Component {
         isActive={i === activePtIdx}
       />
     ));
+    let triangleStrokes = triangles.map(corners => {
+      let key = corners.map(c => `${c.x}|${c.y}`).join("|");
+      return <Polygon points={corners} key={key} fill="none" />;
+    });
     let buttonText = "";
     if (currentColorIdx !== null) {
       let currentColor = roomColors[currentColorIdx].toLowerCase();
@@ -223,7 +236,7 @@ class RentDivision extends Component {
       <ColumnLayout break="extraSmall">
         <div>
           <ClippedSVG width={width} height={height} id="rent">
-            <Polygon points={points} fill="none" />
+            {triangleStrokes}
             {labeledCircles}
           </ClippedSVG>
           <Tooltip
