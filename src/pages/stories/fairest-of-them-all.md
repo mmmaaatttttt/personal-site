@@ -428,6 +428,8 @@ Sources:
 - [Probabilistic Modeling and Bayesian Analysis
   ](https://ocw.mit.edu/courses/sloan-school-of-management/15-097-prediction-machine-learning-and-statistics-spring-2012/lecture-notes/MIT15_097S12_lec15.pdf), by Ben Letham and Cynthia Rudin.
 
+- [Rental Harmony: Sperner's Lemma in Fair Division](https://www.math.hmc.edu/~su/papers.dir/rent.pdf), by Francis Edward Su.
+
 - [Various Techniques Used in Connection With
   Random Digits](https://mcnp.lanl.gov/pdf_files/nbs_vonneumann.pdf), by John von Neumann.
 
