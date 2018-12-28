@@ -34,6 +34,21 @@ function choices(arr, num) {
   return _shuffle(arr.slice()).slice(0, num);
 }
 
+/**
+ * Interpolates values between inputs x0 and x1.
+ * For example, when t = 1/2, calculates the average of x0 and x1.
+ *
+ * @param {Number} x0 - first point
+ * @param {Number} x1 - second point
+ * @param {Number} t - fractional distance between x0 and x1. Between 0 and 1.
+ */
+function interpolate(x0, x1, t) {
+  if (t < 0 || t > 1) {
+    throw new Error(`Value of t: ${t}. Value must be between 0 and 1.`);
+  }
+  return x0 * t + x1 * (1 - t);
+}
+
 function euclideanDistance(...pts) {
   return pts.reduce((sum, pt) => sum + pt ** 2, 0) ** (1 / 2) || 0;
 }
@@ -81,6 +96,7 @@ export {
   choices,
   euclideanDistance,
   generateData,
+  interpolate,
   mod,
   total
 };
