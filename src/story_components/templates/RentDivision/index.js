@@ -47,15 +47,15 @@ class RentDivision extends Component {
    */
   generateAllPoints = () => {
     const { corners, initialR, meshLevels } = this.props;
-    const rowCount = 2 ** (meshLevels - 1);
+    const rowCount = 2 ** (meshLevels - 1) + 1;
     let pointsWithoutLabels = Array.from({ length: rowCount }, (_, rowIdx) => {
       if (rowIdx === 0) {
         return [{ ...corners[0], color: COLORS.BLACK, r: initialR }];
       }
-      let fraction = rowIdx / rowCount;
+      let fraction = rowIdx / (rowCount - 1);
       let [top, left, right] = corners;
-      let firstPoint = this.generatePoint(top, left, fraction);
-      let lastPoint = this.generatePoint(top, right, fraction);
+      let firstPoint = this.generatePoint(left, top, fraction);
+      let lastPoint = this.generatePoint(right, top, fraction);
       if (rowIdx === 1) {
         return [firstPoint, lastPoint];
       }

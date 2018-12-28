@@ -7,8 +7,11 @@
 - in probability table, highlight the fact that HT and TH are equally likely
 - confirm responsiveness for rent interactive
 
-- reverse engineer nyt article algo
-- points are weird --> need to keep track of adjacencies?
+- reverse engineer trap door algo
+- show triangles with coloring
+- get rid of wiggle during point selection
+- smaller circles?
+- clearer design for active point
 
 LOW PRIORITY
 - get more heat map data (mayyybeeeee)
