@@ -1,15 +1,18 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
+import { mix } from "polished";
 import {
   ClippedSVG,
   ColumnLayout,
   FlexContainer,
   LabeledCircle,
+  Polygon,
   RadioButtonGroup,
   Tooltip
 } from "story_components";
 import COLORS from "utils/styles";
 import { interpolate } from "utils/mathHelpers";
+import { generateFreqMap } from "utils/arrayHelpers";
 
 class RentDivision extends Component {
   constructor(props) {
@@ -62,7 +65,7 @@ class RentDivision extends Component {
       let points = [firstPoint];
       for (var i = 1; i < rowIdx; i++) {
         let rowFraction = i / rowIdx;
-        let newPoint = this.generatePoint(firstPoint, lastPoint, rowFraction);
+        let newPoint = this.generatePoint(lastPoint, firstPoint, rowFraction);
         points.push(newPoint);
       }
       points.push(lastPoint);
@@ -184,8 +187,8 @@ class RentDivision extends Component {
   /** Gets the active roommate, based on the active point in state */
   getActiveRoommate = () => {
     const { activePtLoc, points } = this.state;
-    let [x, y] = activePtLoc;
-    const firstLetter = points[x][y].label;
+    let [y, x] = activePtLoc;
+    const firstLetter = points[y][x].label;
     const { names } = this.props;
     return names.find(name => name[0] === firstLetter);
   };
@@ -210,14 +213,14 @@ class RentDivision extends Component {
     const { roomColors, initialR } = this.props;
     this.setState(prevState => {
       const { activePtLoc, currentColorIdx, points } = prevState;
-      const [x, y] = activePtLoc;
+      const [y, x] = activePtLoc;
       const colorStr = roomColors[currentColorIdx].toUpperCase();
       const color = COLORS[colorStr];
-      const newPtData = { ...points[x][y], color, r: 2 * initialR };
+      const newPtData = { ...points[y][x], color, r: 2 * initialR };
       const pointsCopy = [...points];
-      const pointsRowCopy = [...pointsCopy[x]];
-      pointsCopy[x] = pointsRowCopy;
-      pointsCopy[x][y] = newPtData;
+      const pointsRowCopy = [...pointsCopy[y]];
+      pointsCopy[y] = pointsRowCopy;
+      pointsCopy[y][x] = newPtData;
       return {
         currentColorIdx: null,
         points: pointsCopy
@@ -234,22 +237,21 @@ class RentDivision extends Component {
     // TODO - this isn't the actual traversal order we want
     this.setState(prevState => {
       let { activePtLoc } = prevState;
-      let [x, y] = activePtLoc;
-      let newLoc = [x, y + 1];
-      if (y === x) newLoc = [x + 1, 0];
+      let [y, x] = activePtLoc;
+      let newLoc = [y, x + 1];
+      if (y === x) newLoc = [y + 1, 0];
       return { activePtLoc: newLoc };
     });
   };
 
   /**
    * Converts the nested array of point data into an array of LabeledCircle components.
-   *
    */
   generateLabeledCircles = () => {
     const { points, activePtLoc } = this.state;
-    const [activeX, activeY] = activePtLoc;
-    return points.reduce((components, pointRow, x) => {
-      let componentRow = pointRow.map((p, y) => (
+    const [activeY, activeX] = activePtLoc;
+    return points.reduce((components, pointRow, y) => {
+      let componentRow = pointRow.map((p, x) => (
         <LabeledCircle
           {...p}
           handleLeave={this.handleTooltipHide}
@@ -261,6 +263,74 @@ class RentDivision extends Component {
       ));
       return [...components, componentRow];
     }, []);
+  };
+
+  /**
+   * Generates colored triangles based off of the point data.
+   */
+  generateTriangles = () => {
+    const { points } = this.state;
+    const components = [];
+    for (let y = 0; y < points.length - 1; y++) {
+      let pointsRow = points[y];
+      for (let x = 0; x < pointsRow.length; x++) {
+        // make a triangle with unique top point
+        let topTrianglePts = [
+          points[y][x], // top corner
+          points[y + 1][x], // bottom left corner
+          points[y + 1][x + 1] // bottom right corner
+        ];
+        let key = topTrianglePts.map(c => `${c.x}|${c.y}`).join("|");
+        components.push(
+          <Polygon
+            points={topTrianglePts}
+            key={key}
+            fill={this.getTriangleColor(topTrianglePts)}
+          />
+        );
+        if (x < pointsRow.length - 1) {
+          // if possible, make a triangle with a unique bottom point
+          let bottomTrianglePts = [
+            points[y][x], // top left corner
+            points[y][x + 1], // top right corner
+            points[y + 1][x + 1], // bottom corner
+          ]
+          let key = bottomTrianglePts.map(c => `${c.x}|${c.y}`).join("|");
+          components.push(
+            <Polygon
+              points={bottomTrianglePts}
+              key={key}
+              fill={this.getTriangleColor(bottomTrianglePts)}
+            />
+          );
+        } 
+      }
+    }
+    return components;
+  };
+
+  /**
+   * Determines the fill of a triangle based on the colors at the corners.
+   * @param {Object} corners - data (including colors) for the three corner points.
+   */
+  getTriangleColor = corners => {
+    const colors = corners.map(c => c.color);
+    const colorMap = generateFreqMap(colors);
+    // Case 1: If any of the colors is black, use the default color
+    if (colorMap.has(COLORS.BLACK)) return COLORS.LIGHT_GRAY;
+
+    // Case 2: If all of the colors are the same, use that color for the fill.
+    if (colorMap.size === 1) return colorMap.keys().next().value;
+
+    // Case 3: If all of the colors are different, use white for the fill.
+    if (colorMap.size === 3) return COLORS.WHITE;
+
+    // Case 4: Otherwise, exactly two corners have the same color.
+    // Fill the triangle in proportion to the colors at the corners.
+    const colorHexes = Array.from(colorMap.keys());
+    const counts = Array.from(colorMap.values());
+    const fraction = counts[0] / (counts[0] + counts[1]);
+    return mix(fraction, ...colorHexes);
   };
 
   /**
@@ -288,8 +358,8 @@ class RentDivision extends Component {
       tooltipBody
     } = this.state;
     const currentRoommate = this.getActiveRoommate();
-    const [activeX, activeY] = activePtLoc;
-    const activePoint = points[activeX][activeY];
+    const [activeY, activeX] = activePtLoc;
+    const activePoint = points[activeY][activeX];
     const { prices } = activePoint;
     const radioButtonLabels = this.getTooltipBody(activePoint).map(
       (text, idx) => ({
@@ -298,20 +368,16 @@ class RentDivision extends Component {
         disabled: this.shouldBeDisabled(prices, idx)
       })
     );
-    // let triangleStrokes = triangles.map(corners => {
-    //   let key = corners.map(c => `${c.x}|${c.y}`).join("|");
-    //   return <Polygon points={corners} key={key} fill="none" />;
-    // });
     let buttonText = "";
     if (currentColorIdx !== null) {
       let currentColor = roomColors[currentColorIdx].toLowerCase();
       buttonText = `Confirm the ${currentColor} room for ${currentRoommate}.`;
     }
     return (
-      <ColumnLayout break="extraSmall">
+      <ColumnLayout break="extraSmall" sizes={[3, 2]}>
         <div>
           <ClippedSVG width={width} height={height} id="rent">
-            {/* {triangleStrokes} */}
+            {this.generateTriangles()}
             {this.generateLabeledCircles()}
           </ClippedSVG>
           <Tooltip
@@ -377,7 +443,7 @@ RentDivision.defaultProps = {
     }
   ],
   height,
-  initialR: 10,
+  initialR: 5,
   meshLevels: 5,
   names: ["Alex", "Brett", "Cameron"],
   rent,
