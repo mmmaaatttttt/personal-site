@@ -20,6 +20,7 @@ class RentDivision extends Component {
     this.state = {
       activePtLoc: [0, 0],
       currentColorIdx: null,
+      finished: false,
       tooltipVisible: false,
       tooltipX: 0,
       tooltipY: 0,
@@ -234,21 +235,91 @@ class RentDivision extends Component {
    * @param {Array} points - Array of updated point objects
    */
   advanceToNext = () => {
-    // TODO - this isn't the actual traversal order we want
     this.setState(prevState => {
-      let { activePtLoc } = prevState;
+      let { activePtLoc, points } = prevState;
       let [y, x] = activePtLoc;
-      let newLoc = [y, x + 1];
-      if (y === x) newLoc = [y + 1, 0];
-      return { activePtLoc: newLoc };
+      let point = points[y][x];
+      // initial cases: need to establish first trap-door
+      if (y === 0) return { activePtLoc: [1, 0] };
+      if (y === 1 && x === 0) return { activePtLoc: [1, 1] };
+      const neighbors = this.generateNeighbors(x, y);
+      console.log("NEIGHBORS", neighbors);
+      for (var i = 0; i < neighbors.length; i++) {
+        let curr = neighbors[i];
+        let next = neighbors[(i + 1) % neighbors.length];
+        let colors = [curr, next, point].map(d => d.color);
+        let colorSet = new Set(colors);
+        // Case 1: curr, next, and point all have different colors: we're done!
+        if (
+          colorSet.size === 3 &&
+          !colorSet.has(null) &&
+          !colorSet.has(COLORS.BLACK)
+        ) {
+          return { finished: true };
+        }
+
+        // Case 2: curr has a different color from point, next has no color:
+        // move on to next
+        if (
+          curr.color !== null &&
+          curr.color !== COLORS.BLACK &&
+          curr.color !== point.color &&
+          next.color === COLORS.BLACK
+        ) {
+          return { activePtLoc: [next.y, next.x] };
+        }
+
+        // Case 3: next has a different color from point, curr has no color:
+        // move on to curr
+        if (
+          next.color !== null &&
+          next.color !== COLORS.BLACK &&
+          next.color !== point.color &&
+          curr.color === COLORS.BLACK
+        ) {
+          return { activePtLoc: [curr.y, curr.x] };
+        }
+      }
+      throw new Error(
+        "Oops, something went wrong, I'm not sure how to advance."
+      );
     });
+  };
+
+  /**
+   * Generates all of the neighbors to a given point.
+   * At most there will be 6 such neighbors.
+   * Returns an array of six objects, consisting of array coordinates and a color.
+   * The color value will be null if the point does not exist.
+   * (Points at the boundary of the triangle will have fewer than 6 neighbors.)
+   * The list starts from the neighbor to the northwest of the current point, and moves clockwise.
+   *
+   * @param {Number} x - the x-coordinate of the current point.
+   * @param {Number} y - the y-coordinate of the current point.
+   */
+  generateNeighbors = (x, y) => {
+    const { points } = this.state;
+    const neighbors = [
+      { x: x - 1, y: y - 1, color: null }, // top left
+      { x, y: y - 1, color: null }, // top right
+      { x: x + 1, y, color: null }, // right
+      { x: x + 1, y: y + 1, color: null }, // bottom right
+      { x, y: y + 1, color: null }, // bottom left
+      { x: x - 1, y, color: null } // left
+    ];
+    neighbors.forEach(n => {
+      if (points[n.y] && points[n.y][n.x]) {
+        n.color = points[n.y][n.x].color;
+      }
+    });
+    return neighbors;
   };
 
   /**
    * Converts the nested array of point data into an array of LabeledCircle components.
    */
   generateLabeledCircles = () => {
-    const { points, activePtLoc } = this.state;
+    const { points, activePtLoc, finished } = this.state;
     const [activeY, activeX] = activePtLoc;
     return points.reduce((components, pointRow, y) => {
       let componentRow = pointRow.map((p, x) => (
@@ -258,7 +329,7 @@ class RentDivision extends Component {
           handleUpdate={this.handleTooltipShow.bind(this, p)}
           key={`${p.x}|${p.y}`}
           label={p.label}
-          isActive={x === activeX && y === activeY}
+          isActive={x === activeX && y === activeY && !finished}
         />
       ));
       return [...components, componentRow];
@@ -293,8 +364,8 @@ class RentDivision extends Component {
           let bottomTrianglePts = [
             points[y][x], // top left corner
             points[y][x + 1], // top right corner
-            points[y + 1][x + 1], // bottom corner
-          ]
+            points[y + 1][x + 1] // bottom corner
+          ];
           let key = bottomTrianglePts.map(c => `${c.x}|${c.y}`).join("|");
           components.push(
             <Polygon
@@ -303,7 +374,7 @@ class RentDivision extends Component {
               fill={this.getTriangleColor(bottomTrianglePts)}
             />
           );
-        } 
+        }
       }
     }
     return components;
@@ -351,6 +422,7 @@ class RentDivision extends Component {
     const {
       activePtLoc,
       currentColorIdx,
+      finished,
       points,
       tooltipVisible,
       tooltipX,
@@ -388,15 +460,19 @@ class RentDivision extends Component {
             title="Room Prices"
           />
         </div>
-        <FlexContainer column main="center">
-          <h2>{currentRoommate}'s Turn</h2>
-          <RadioButtonGroup
-            handleSelectConfirm={this.handleRoomChoice}
-            handleRadioChange={this.handleRadioChange}
-            labels={radioButtonLabels}
-            buttonText={buttonText}
-          />
-        </FlexContainer>
+        {finished ? (
+          <h1>DONEZO</h1>
+        ) : (
+          <FlexContainer column main="center">
+            <h2>{currentRoommate}'s Turn</h2>
+            <RadioButtonGroup
+              handleSelectConfirm={this.handleRoomChoice}
+              handleRadioChange={this.handleRadioChange}
+              labels={radioButtonLabels}
+              buttonText={buttonText}
+            />
+          </FlexContainer>
+        )}
       </ColumnLayout>
     );
   }

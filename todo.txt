@@ -7,11 +7,10 @@
 - in probability table, highlight the fact that HT and TH are equally likely
 - confirm responsiveness for rent interactive
 
-- reverse engineer trap door algo
-- show triangles with coloring
 - get rid of wiggle during point selection
-- smaller circles?
+- ditch 2 column layout
 - clearer design for active point
+- handle end state of algo
 
 LOW PRIORITY
 - get more heat map data (mayyybeeeee)
