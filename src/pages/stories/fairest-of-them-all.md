@@ -229,208 +229,307 @@ is this fair?
 
 ### Fuzzier Fairness
 
-Imagine you sign a lease for an apartment with two friends. Each of you will
-have your own bedroom, but the bedrooms are all different, with their own sets
-of advantages and disadvantages. In order to preserve roommate harmony, it's
-important not only to agree on who gets which room, but also how much each
-person pays. If one room is clearly better than the others, should the person
-who gets that room pay more? If so, how much?
+There are plenty of other scenarios in which the fairness question is murky.
+Here's another one: imagine you sign a lease for an apartment with two friends.
+Each of you will have your own bedroom, but the rooms are all different, with
+their own advantages and disadvantages. In order to preserve roommate harmony,
+you need to decide not only who gets which room, but also how much each person
+pays.
 
-Here's an example of a real-world situation in which fairness becomes even
-fuzzier. After all, people prioritize different things: one of you may really
-want the room with the best view, while another person wants the dark room in
-the back. To complicate things even further, you may have conflicting desires
-which make it difficult to even rank your room preferences. In cases like these,
-how can we determine a fair way to assign rooms and split rent so that everyone
-is content with the outcome?
+Questions of fairness immediately come to the forefront. Should the rent be
+split evenly, regardless of who gets which room? What if one room is clearly
+better than the others? One of one roommate has a strong preference for one
+room, even if it isn't necessarily the best one?
+
+It's easy to see how fairness becomes fuzzy. After all, people prioritize
+different things: one of you may really want the room with the best view, while
+another person wants the dark room in the back. You may even have conflicting
+desires, which make it difficult to rank your room preferences in the first
+place. In cases like these, can we determine a fair way to assign rooms and
+costs so that everyone is content with the outcome?
+
+It turns out that the answer is yes, and the answer comes from a seemingly
+unrelated result in geometry. This connection was first made explicit in a paper
+titled [Rental Harmony: Sperner's Lemma in Fair Division](https://www.math.hmc.edu/~su/papers.dir/rent.pdf), by Francis Edward
+Su.
+
+To understand Su's argument, it helps to work with a concrete example. Let's
+suppose three roommates are trying to find a fair division of a $1,600 rent for
+a three bedroom apartment. (The argument works with more roommates, but the
+geometry is easiest to visualize with 3.)
+
+We need a handful of assumptions on each person's decision making. Here are the
+first two assumptions (I'll save the last one until we need it):
+
+1. Everyone always prefers a free room to a non-free room.
+2. No matter what the division of prices, at least one room will be acceptable
+   to every roommate. (For example, it's never the case that all of the rooms
+   will be too expensive for the roommates.)
+
+Given these two assumptions, here's how we can find a fair division of prices
+for the three rooms:
+
+1. Draw a triangle. Each corner of the triangle represents a pricing scheme
+   where one of the rooms is $1,600, and the other two rooms are free.
+
+2. Subdivide the triangle into a mesh of points. The finer the mesh, the pricing
+   options you'll have. Each option will correspond to a point on one of the
+   triangle's edges or in its interior. You can assign to each point in the mesh
+   a set of prices for each room, based on how close the point is to the
+   corners. For instance, a mesh point in the middle of the triangle corresponds
+   to each room having the same price.
+
+3. Assign each point in the mesh to a roommate. How you assign the points
+   doesn't matter, but you want to be sure that for every small triangle formed
+   by the mesh, each corner is owned by a different roommate.
+
+4. Go through the mesh points, and for each one, ask the owner of the point
+   which room they would prefer at the prices for that point. (There are
+   intelligent ways to traverse the mesh, which we'll get to later.)
+
+5. Once you find a small triangle in the mesh where each roommate selects a
+   different room at the corners, you're finished! You've found a fair division
+   of the rents. If the differences in room prices are too large, you can refine
+   the mesh and play again.
+
+The best way to appreciate this approach is to go through it. So here's an
+example of the algorithm in action, with three roommates deciding between three
+rooms: a green one, an orange one, and a purple one. (You can mouse over any
+point to see the room prices at that point.)
 
 <RentDivision />
 
-It turns out that there's an answer to this question. The solution involves an application of a geometric result known as Sperner's lemma; the connection between the lemma and our present dilemma was first discussed in \cite{su}.
-
-\begin{figure}
-%TODO
-\label{fig:sperner_diagram}
-\caption{TODO.}
-\end{figure}
-
-The setup might seem like a total non-sequitur, but bear with me. Sperner's lemma is a generalization of the scenario depicted in Figure \ref{fig:sperner_diagram}. In that scenario, we are presented with a triangle that has been decomposed into many smaller triangles. Each vertex of each triangle is given one of three colors (red, yellow, or blue). Moreover, the coloring of the vertices is subject to the following restrictions:
-
-\begin{enumerate}
-\item Each vertex of the main triangle is colored differently. In other words, red, yellow, and blue are used precisely one time each to color the vertices of the main triangle. Let's call these vertices the main vertices of the triangle.
-\item Along the three main sides triangle, any vertex must match the color of the main vertex to its left or two its right. For example, in Figure \ref{fig:sperner_diagram}, all vertices on the left side of the triangle are either red or yellow, but are never blue. (There's no such restriction for vertices inside the triangle.)
-\end{enumerate}
-
-Whenever the above restrictions are satisfied, there will be a smaller triangle inside of the main triangle whose vertices are all colored differently. In fact, you're guaranteed to have an odd number of such triangles!
-
-So why is this true, and what does any of this have to do with paying rent? Let's focus on the second question; we'll touch on an answer to the first question as we go. In order to apply Sperner's lemma to our rent problem, we need to make a few assumptions on the roommates:
-
-\begin{enumerate}
-\item There's no way to divide the rent so that someone will reject every room. In other words, no matter how the rent is split, each person is willing to live in at least one of the rooms.
-\item We don't know the details of everyone's preferences, but we assume that people will prefer to live in a free room than in a room that costs money.
-\end{enumerate}
-
-There's a third assumption will need as well, but it's a bit more technical, so we'll save it until it's clear why we need it.
-
-To help make things concrete, let's assume the monthly rent is \$2,400. To find a fair price, we start with a triangle (see Figure \ref{fig:sperner_rent_example1}). Each vertex of the triangle represents a different decomposition of the rent. We'll let the top vertex correspond to the following prices for the three bedrooms: \$1,200, \$0, \$0. Similarly, we'll let the bottom-left vertex correspond to (\$0, \$1,200, \$0), and we'll let the bottom-right vertex correspond to (\$0, \$0, \$1,200). Let's suppose the three roommates are Andrea, Beatrice, and Charlize, and let's label each vertex with a unique letter corresponding to one of the roommates. We'll consider the roommate labeled at a vertex the ``owner'' of that vertex.
-
-\begin{figure}
-%TODO
-\label{fig:sperner_rent_example1}
-\caption{TODO. -- initial triangle}
-\end{figure}
-
-Next, for each vertex we ask the owner of that vertex one question: at these prices, which room would you choose? When we first start off, by our first assumption we know that each roommate will choose a room, and by our second assumption we know that each roommate will choose one of the free rooms. However, it's unlikely that the roommates will agree to any these pricing schemes, since in all of them one roommate is simply freeloading off of the other two.
-
-But now we can subdivide this triangle into smaller triangles, called a mesh. A relatively coarse mesh is shown in Figure \ref{fig:sperner_rent_example2}. Once we've drawn these smaller triangles, we need to determine the room prices and the owner for each new vertex.
-
-We'll set the price breakdown at a vertex based on the price breakdown at the neighboring vertices. For instance, if a new vertex is halfway between to vertices where the prices are known, then the prices at the new vertex should be halfway between the prices at either vertex. If it's two-thirds of the way between one vertex and another, then prices at the new vertex should be 2/3 of prices at the closer vertex, plus 1/3 of prices at the farther vertex. And so on.
-
-\begin{figure}
-%TODO
-\label{fig:sperner_rent_example2}
-\caption{TODO. -- triangle with mesh}
-\end{figure}
-
-As for who owns the vertex, this is not so important. The only restriction we'll impose is that for every small triangle in our mesh, each vertex is owned by a different roommate.
-
-Once we've assigned ownership and determined prices, we'll ask the owner of each vertex the following question: ``At these prices, which room would you pick?'' We now relabel the triangle with the roommate's choice at each vertex. Here's the kicker: Sperner's lemma guarantees the existence of a triangle where every roommate selects a different room! (In fact, it guarantees an odd number of such triangles.)
-
-But how does Sperner's lemma apply? After all, we don't know which room each person will pick at the vertices of the original triangle. Since two of the rooms are free at each corner, we only know that the owner of that corner will pick one of the free rooms. What's more, along the sides of the outer triangle, only one room will be free, so we know by our second assumption that this is the room that will be chosen for each vertex along a side (see Figure \ref{sperner_rent_example3}).
-
-\begin{figure}
-%TODO
-\label{fig:sperner_rent_example3}
-\caption{TODO. -- hypothetical ownership along sides of triangle}
-\end{figure}
-
-This is sort of an inversion of the assumptions of Sperner's lemma. In the original formulation of the lemma, the color at each corner vertex is determined, and the vertices along each side are restricted in color based on the corners they sit between. But in our present scenario, we have the opposite setup: the room selected at each vertex along the outer side is determined, and the three vertices in the corners are restricted based on the sides they sit between.
-
-There are two ways we can try to solve this problem. One way is to construct a new diagram, called a \textit{dual} to the original, for which the original conditions of Sperner's lemma are satisfied (see \cite{vick} for details on this approach).
-
-But we can also prove the desired result directly, using an argument very similar to the proof of Sperner's lemma. The key idea in the proof is to think of the large triangle as a building in which every small triangle is a room. To get from one room to the next, we can move through a sequence of doors.
-
-So what's a door? Well, we can define a door in a number of ways. The key feature of a door is that it should connect a vertices representing different rooms. As in Figure \ref{fig:sperner_rent_example4}, let's define a door to be any edge connecting a choice of room 1 to a choice of room 2. We could have just as easily picked a different pair of rooms, as long as the rooms are different.
-
-\begin{figure}
-%TODO
-\label{fig:sperner_rent_example4}
-\caption{TODO. -- doors}
-\end{figure}
-
-This may seem like a contrived analogy, but thinking of the triangles in terms of rooms and doors is a clever way to prove the existence of a triangle where each room gets chosen. Notice that, as evidenced by Figure \ref{sperner_rent_example3}, there must be exactly one door on the boundary of the main triangle; in particular, one of the edges of the door lies on the bottom-right corner of the triangle.
-
-Imagine that you ``enter'' the triangle through this door. You'll now be in a room which either has another door (if the third vertex corresponds to room 1 or room 2), or has a complete labeling of the vertices. If it's the latter, great! We've found our triangle. If it's the former, we can step through the second door into a new room. But now we're in the same scenario: either this room will have a complete labeling, or it will have a second door! And since no room has more than two doors, it's impossible to double-back and visit a room you've already seen. Since the number of rooms is finite, and since there's only one door from the outside of the diagram, this process must eventually terminate with you finding a fully labeled triangle!
-
-This proves the existence of \textit{one} triangle, but why must there be an odd number? Well, it's possible that there may be doors in the interior of our triangle which aren't accessible from the door to the outside. In this case, these interior doors must necessarily connect pairs of fully-labeled triangles, since there's no way to escape the diagram via a door to the outside (see Figure \ref{fig:sperner_rent_example5}. Therefore, the total number of triangles for which every roommate selects a different room must be odd.
-
-\begin{figure}
-%TODO
-\label{fig:sperner_rent_example5}
-\caption{TODO. -- doors linking }
-\end{figure}
-
-If the roommates select different rooms but still find the difference in prices to be unfair, then we can always subdivide our original triangle into a finer mesh and run through the same process again. By taking finer and finer meshes, the triangles will eventually converge to a single point. And here's where we need our last assumption: if a roommate prefers a given room for a set of prices which converge to some limiting price, then the roommate will still prefer the given room at that limiting price.
-
-Intuitively, this arrangement seems fair: the process doesn't appear to favor one roommate over another, and everyone winds up with a room at a price they find acceptable. In game theoretic terms, this arrangement even has a specific name: it is called \textit{envy-free}, since no roommate would prefer to trade rooms with anyone else.
-
-And while we've only discussed this problem in the context of three roommates, this application of Sperner's lemma applies equally well to any number of roommates. The geometry becomes a little harder to visualize, but the ideas generalize in a natural way. See \cite{su} for more details.
-
-Even without a probability model, then, it's sometimes possible to determine what \textit{feel} like fair divisions of resources. In this sense, then, mathematical fairness (whatever this means) seems to have relatively general applicability.\footnote{For more on the application of Sperner's lemma to fair division of rent, see \cite{sun}.}
-
-\section{Considering Fairness from the Veil of Ignorance}
-
-In the previous section, we saw how mathematics could be applied to questions of fair division. However, when it comes to roommates dividing rent, there's an implicit fairness assumption that doesn't always hold: namely, that each roommate has an equal say in the decision-making. While this may be a reasonable assumption when it comes to friends living together, it's not necessarily true in other contexts. Imagine a group of people who are creating a political system for a new society, for instance, or who are setting policy for an existing one. It's not necessarily true that every voice at the table is equally strong. Nor can it be assumed that everyone negotiation is free of bias, either for the group they represent or against groups that they do not. In cases like this, what does fairness mean, and how can we try to ensure it?
-
-Rather than drawing from mathematical literature, let's address this question from the perspective of political philosophy. One classic thought experiment that attempts to address this question comes from John Rawls, a philosopher who taught at Harvard University for almost 40 years, until his death in 2002. Rawls made many contributions to the fields of moral and political philosophy during his career. The one we'll focus on is called the \textit{veil of ignorance}.
-
-Before we examine the veil of ignorance, let's connect it to the question of fairness. Rawls was very much concerned with fairness as well, so much so that he developed a conception of justice called `justice as fairness'' (\cite{rawls}). As indicated by the name, this conception of justice is intimately tied to ideas of fairness. Early on, Rawls writes,`The most fundamental idea idea in this conception of justice is the idea of society as a \textit{fair} system of social cooperation over time from one generation to the next'' (p. 5, emphasis added).
-
-So what does fairness mean in this context? Later on, Rawls defines fair terms of cooperation as follows: ``These are terms each participant may reasonably accept, and sometimes should accept, provided that everyone else likewise accepts them'' (p. 6). Just as we've uncovered in our mathematical examples, fairness in Rawls' writing connotes a sense of reciprocity: if an agreement can't be accepted by all parties, this may be because it isn't fair.
-
-But still, the question remains: what can we do to ensure that an agreement has been entered into under fair circumstances? Rawls recognized this issue, writing that the circumstances must ``situate free and equal persons fairly and must not permit some to have unfair bargaining advantages over others. Further, threats of force and coercion, deception and fraud, and so on must be ruled out'' (p. 15). This seems all well and good. In practice, however, ensuring that fair agreements are entered into fairly can be quite challenging.
-
-The solution Rawls proposes is the \textit{veil of ignorance}. Here's how he introduces the concept:
-
-\begin{quote}
-[T]he parties are not allowed to know the social positions or the particular comprehensive doctrines of the persons they represent. They also do not know persons' race and ethnic group, sex, or various native endowments such as strength and intelligence, all within the normal range. We express these limits on information figuratively by saying the parties are behind a veil of ignorance. (p. 15)
-\end{quote}
-
-The idea here is to situate negotiators in such a way that they don't know specifics about the community they are representing. To take an extreme case, the veil of ignorance should prohibit the creation of a society that condones slavery, because advocates for slavery may themselves wind up being slaves. The goal is for the lack of information in the veil of ignorance to remove, or at least temper, arguments based on self-interest when trying to forge an agreement.
-
-Rawls discusses the veil of ignorance as it pertains to the creation of society, but the same ideas can be applied to scenarios that are not as grand in scope. Even in the context of our coin-flipping game, the veil of ignorance can be used to help ensure the game is played fairly. When laying out the ground rules, players who argue from the veil of ignorance don't know beforehand who will bringing the coin, who flips the coin, who wins if the coin lands on heads, and so on. This lack of information makes rules aimed at ensuring fairness less controversial. If neither party knows who's responsible for bringing the coin, both parties should be willing to agree to rules against biased coins.
-
-While we can certainly apply the veil of ignorance to scenarios that can be modeled with probability, what makes the idea powerful is that it can be applied even when probabilistic models fails. In fact, the veil of ignorance may be even more helpful in these scenarios. Rawls notes that
-
-\begin{quote}
-The veil of ignorance implies that the parties have no basis for knowing or estimating whether the persons they represent affirm a majority or a minority religious or other doctrine. The point is that the parties cannot take risks by permitting a lesser liberty of conscience for minority religions, say, on the chance that the person each represents belongs to a majority or dominant religion and may, in that event, have an even greater liberty than that secured by equal liberty of conscience.
-
-Were the parties to gamble in this way, they would show that they did not take seriously the religious, philosophical, and moral convictions of the persons they represent. Indeed, they would show that they did not understand the nature of religious belief, or philosophical or moral conviction. (pp. 104-105)
-\end{quote}
-
-In other words, the veil of ignorance is not mutually exclusive of mathematical modeling. However, thinking about a scenario from the veil of ignorance before jumping in to mathematical modeling can help in the development of checks and balances to ensure that an agreement is designed to be fair, regardless of an underlying probability distribution (which may or may not be straightforward to implement).
-
-\section{So what is fairness?}
-
-We've highlighted a few examples of fairness from a mathematical perspective, but these are by no means exhaustive. Fairness also arises in other mathematical contexts. For example, in \cite{lan2010} the authors formulate an axiomatic theory of fairness in the context of network allocation. Indeed, the study of fairness arises quite naturally in network engineering, the goal being to analyze whether or not system resources are being allocated fairly to all users of the network. For more on this, see \cite{jain}.
-
-For our purposes, we'll think of a system as \textit{fair}, provided the following three conditions are met:
-
-\begin{itemize}
-\item At the outset, all parties consider the system from behind a veil of ignorance in order to agree on the system's goals and rules. They then come to an agreement that everyone agrees is fair.
-\item Parties then observe and interact with the system in accordance with the fair agreement.
-\item There is a period of assessment and recalibration based on the system's behavior. Fair agreements don't necessarily imply fair outcomes.
-\end{itemize}
-
-The last point is worth emphasizing. As we saw with the coin-flipping example, just because people enter into an agreement, this doesn't necessarily mean the game itself is fair. And just because the game isn't fair, this doesn't necessarily mean either party was intentionally trying to secure an advantage. Perhaps the coin you agree to use is subtly biased in a way that neither player knew about. This is why collecting data on the coin can be useful, if the game isn't set up in a way that neutralizes the effect of an unfair coin.
-
-This need for feedback and responsiveness is also emphasized in \cite{oneil}. When talking about statistical systems in particular, i.e. those that feed on large datasets in order to function, author Cathy O'Neil writes that ``statistical systems require feedback--something to tell them when they're off track.... Without feedback, however, a statistical engine can continue spinning out faulty and damaging analysis while never learning from its mistakes'' (pp. 6-7). In other words, not only can a lack of feedback and assessment be unfair, it can also break the system in a fundamental way.
-
-Finally, it's important to note that fair in these contexts may involve notions of expected value, but this isn't necessary. The purpose here is to have a useful and consistent framework for talking about fairness, not to lay a rigorous mathematical foundation.
-
-\section{Why fairness?}
-
-As we've seen, fairness involves a certain degree of symmetry: in a fair agreement, equal parties should have equal bargaining power. This isn't to say that fair agreements must necessarily produce fair outcomes; after all, it's not unfair if a football team is bested by a more prepared opponent. But it may be unfair if the rules are applied differently to two equally-matched teams in order to produce a winner.
-
-Through all of this discussion, though, a question lingers: does fairness even matter? After all, in practice, life often seems quite unfair. Instead of trying to increase fairness, why not focus on something like utility, or something even more concrete, like wealth?
-
-There are at least two responses to this question, one moral, one practical. The moral argument is that increasing fairness aligns with the idea of people being created equal, which isn't necessarily true of the other metrics mentioned above. Note that fairness does not imply everyone be granted the same amount of resources. But it does imply a certain fairness in opportunity and in treatment by the institutions of justice. Whether you are born into wealth or abject poverty, a society in which everyone has equal opportunity for upward mobility is one in with greater equality than one in which wealth inequality persists across generations.
-
-The practical argument is that it turns out humans care about fairness. This fact has been borne out in a number of economics experiments, which are summarized in \cite{fehr}. Two illustrative examples come in the form of games: the `ultimatum game'' and the`dictator game.''
-
-Both games involve two people a division of money; for simplicity, let's say the amount of money is \$100. In the ultimatum game, one person proposes a division, which the other person is allowed to accept or reject. If the second person accepts, the pot is split according to the agreement. But if the other person rejects, both people get nothing.
-
-A reasonable division seems like a fifty-fifty split. After all, neither party really has to do much in this game. However, since the second person can't propose a counter-offer, and should only accept or reject, the rational thing would be for the first person to offer the smallest amount of money possible to the second person. If you propose we split the pot so that you get \$99.99 and I get \$0.01, we both walk away with more money if I accept, even though the split is so lopsided.
-
-However, in practice, this sort of extreme rationality is rarely observed. Instead, experimental data shows that a majority of people who propose the offer offer between \$40 and \$50. Similarly, offers of less than \$20 are rejected somewhere between 40\% and 60\% of the time. As to why these offers tend to be rejected, in \cite{fehr} the authors write, `In general, the motive indicated for the rejection of positive, yet`low'', offers is that subjects view them as unfair'' (p. 622).
-
-For people on the receiving end of the offer, then, fairness seems to be a significant factor in their decision. But what about for the folks who are making the offer? Is fairness a factor for them as well, or are they merely offering more than what their rational self-interest would prefer in order to increase the likelihood that the offer is accepted?
-
-One way to answer this question is to consider an alternative to the ultimatum game called the `dictator game.'' This game also involves splitting a sum of money between two parties, but unlike in the ultimatum game, the person who proposes a division can't have their offer rejected. Because the risk of rejection is eliminated, the rational thing to do is for the person proposing the division to simply take all of the money. However, once again, according to \cite{fehr},`In experiments, proposers typically dictate allocations that assign the Recipient on average between 10 and 25 percent of the surplus, with modal allocations at 50 percent and zero. These allocations are much less than proposers’ offers in ultimatum games, although most players do offer something'' (p. 622). While these offers can't be attributed directly to an ingrained sense of fairness, altruism does appear to play a role in how people divide the pot even when they have complete power.
-
-But if rational self-interest isn't our primary motivator, why do so many models assume otherwise? One reason is that competition tends to breed competitive markets, and when competition is the driving factor, incentives for fair play tend to be diminished. In other words, when it comes to competitive markets, \cite{fehr} writes the following:
-
-\begin{blockquote}
-[R]ational individuals will not express their other-regarding preferences in these markets because the market makes the achievement of other-regarding goals impossible or infinitely costly. However, a large amount of economic activity takes place outside competitive markets – in markets with a small number of traders, in markets with informational frictions, in firms and organizations, and under contracts which are neither completely specified nor enforceable. Models based on the self-interest assumption frequently make very misleading predictions in these environments, while models of other-regarding preferences predict much better'' (p. 618).
-\end{blockquote}
-
-In other words, the failure of fairness to rear its head in many economic models is because the systems being modeled don't concern themselves with being fair! But running a business is not the same as nurturing a society, and while healthy competition can be helpful, it's also important for citizens to feel they are being treated fairly.
-
-As we'll see, if fairness isn't being prioritized or even accounted for, this typically means that the system is simply not fair. If for no other reason, our humanity should cause us to question the validity of these types of positions.
-
-https://www.nytimes.com/interactive/2014/science/rent-division-calculator.html
-https://en.wikipedia.org/wiki/Sperner%27s_lemma
+Here are some questions people typically ask after playing around with this fair
+division algorithm: 
+
+**How do you know you can find a triangle in the mesh where each roommate
+selects a different room?** This requires proof! I'll let you fill in the
+details if you're curious, but a couple of hints: first, note that along any
+side of the triangle, the colors of the points are predetermined, because
+exactly one of the rooms is free along each side, and people will always select
+a free room over a non-free room.
+
+If you're curious about details, the key idea in the proof is to think of each
+small triangle in the mesh as a room. Play with the interactive and see if you
+can figure out how it decides which room to move to next. (This is essentially
+an implementation of Su's "trap-door" argument.)
+
+**Is the fair collection of prices unique?** Not necessarily! You're actually
+guaranteed to find an odd number of triangles in the mesh where every corner
+corresponds to a different room. You're also allowed to traverse through the
+mesh in a different way: The New York Times ran an [article about this algorithm](https://www.nytimes.com/interactive/2014/science/rent-division-calculator.html)
+back in 2014, and they used a different mesh traversal method.
+
+**If you take finer and finer meshes, how do you know you'll keep finding
+solutions inside of older solutions?** You don't! Not without the third of Su's
+assumptions, which I'll now state here: if a roommate prefers a given room for a
+set of prices which converge to some limiting price, then the roommate will
+still prefer the given room at that limiting price.
+
+Intuitively, this division algorithm seems fair: the process doesn't appear to
+favor one roommate over another, and everyone winds up with an acceptable room
+at an acceptable price. In game theoretic terms, this arrangement is called
+**envy-free**, since no roommate would prefer to trade rooms with anyone else.
+
+Even without a probability model, then, it's sometimes possible to divide
+resources in a way that *feels* fair. In this sense, then, mathematical fairness
+(whatever this means) seems to have relatively general applicability.
+
+### Beyond Mathematics: Fairness from Behind the Veil of Ignorance
+
+We've now seen many examples of math applied to questions of fairness. However,
+all of our examples thus far have assumed that every participant in a given
+decision has equal say. While this may be true when deciding where to live or
+whether to play a game, it's clearly not always true. In politics, for example,
+not every voice at the table is equally strong. It's also highly unlikely that
+every voice is free of bias. In these more complex cases, what does fairness
+mean, and how can we try to ensure it?
+
+Rather than drawing from mathematical literature, let's address this question
+from the perspective of *political philosophy.* One classic thought experiment
+that attempts to address this question comes from John Rawls, a philosopher who
+taught at Harvard University for almost 40 years, until his death in 2002. Rawls
+made many contributions to the fields of moral and political philosophy during
+his career. The one we'll focus on is called the **veil of ignorance.**
+
+Before we examine the veil of ignorance, let's connect it to the question of
+fairness. In a book titled [Justice as Fairness](https://www.amazon.com/Justice-Fairness-Restatement-John-Rawls/dp/0674005112),
+Rawls says, "The most fundamental idea idea in this conception of justice is the
+idea of society as a *fair* system of social cooperation over time from
+one generation to the next" (p. 5, emphasis added).
+
+So what does fairness mean in this context? Later on, Rawls defines fair terms
+of cooperation as ones that "each participant may reasonably accept, and
+sometimes should accept, provided that everyone else likewise accepts them" (p.
+6). Just as we've uncovered in our mathematical examples, fairness in Rawls'
+writing connotes a sense of reciprocity: if an agreement can't be accepted by
+all parties, this may be because it isn't fair.
+
+But still, the question remains: what can we do to ensure that an agreement has
+been entered into under fair circumstances? Rawls recognized this issue, writing
+that the circumstances must "situate free and equal persons fairly and must not
+permit some to have unfair bargaining advantages over others. Further, threats
+of force and coercion, deception and fraud, and so on must be ruled out" (p.
+15). This seems all well and good. In practice, however, ensuring that fair
+agreements are entered into fairly can be quite challenging.
+
+The solution Rawls proposes is the veil of ignorance. Here's how he introduces
+the concept:
+
+> [T]he parties are not allowed to know the social positions or the particular
+> comprehensive doctrines of the persons they represent. They also do not know
+> persons' race and ethnic group, sex, or various native endowments such as
+> strength and intelligence, all within the normal range. We express these
+> limits on information figuratively by saying the parties are behind a veil of
+> ignorance. (p. 15)
+
+The idea here is to situate negotiators in such a way that they don't know
+specifics about the community they are representing. The goal is for the lack of
+information in the veil of ignorance to remove, or at least temper, arguments
+based on self-interest when trying to forge an agreement.
+
+Rawls discusses the veil of ignorance as it pertains to the creation of society,
+but the same ideas can be applied to scenarios that are not as grand in scope.
+Even in the context of our coin-flipping game, the veil of ignorance can be used
+to help ensure the game is played fairly. When laying out the ground rules,
+players who argue from the veil of ignorance don't know beforehand who will
+bring the coin, who will flip the coin, who will win if the coin lands on heads,
+and so on. This lack of information makes rules aimed at ensuring fairness less
+controversial. If neither party knows who's responsible for bringing the coin,
+both parties should be willing to agree to rules against biased coins.
+
+While we can certainly apply the veil of ignorance to scenarios that can be
+modeled with probability, what makes the idea powerful is that it can be applied
+even when probabilistic models fail. In fact, the veil of ignorance may be even
+*more* helpful in these scenarios. Rawls notes that
+
+> The veil of ignorance implies that the parties have no basis for knowing or
+> estimating whether the persons they represent affirm a majority or a minority
+> religious or other doctrine. The point is that the parties cannot take risks
+> by permitting a lesser liberty of conscience for minority religions, say, on
+> the chance that the person each represents belongs to a majority or dominant
+> religion and may, in that event, have an even greater liberty than that
+> secured by equal liberty of conscience.
+
+> Were the parties to gamble in this way, they would show that they did not take
+seriously the religious, philosophical, and moral convictions of the persons
+they represent. Indeed, they would show that they did not understand the nature
+of religious belief, or philosophical or moral conviction. (pp. 104-105)
+
+In other words, the veil of ignorance is not mutually exclusive of mathematical
+modeling. However, thinking about a scenario from the veil of ignorance before
+jumping in to mathematical modeling can help in the development of checks and
+balances to ensure that an agreement is designed to be fair.
+
+### Why fairness?
+
+As we've seen, fairness involves a certain degree of symmetry: in a fair
+agreement, equal parties should have equal bargaining power. This isn't to say
+that fair agreements must necessarily produce fair outcomes; after all, it's not
+unfair if a football team is bested by a more prepared opponent. But it may be
+unfair if the rules are applied differently to two equally-matched teams in
+order to produce a winner.
+
+Through all of this discussion, though, a question lingers: does fairness even
+matter? After all, in practice, life often seems quite unfair. Instead of trying
+to increase fairness, why not focus on something like utility, or something even
+more concrete, like wealth?
+
+There are at least two responses to this question, one moral, one practical. The
+moral argument is that increasing fairness aligns with the idea of people being
+created equal, which isn't necessarily true of other metrics. Note that fairness
+does not imply everyone should be granted the same amount of resources. But it
+does require fairness in terms of equality of opportunity and in treatment by
+the institutions of justice.
+
+The practical argument is that it turns out humans care about fairness. This
+fact has been borne out in a number of economics experiments, which are
+summarized in a 2006 paper titled [The economics of fairness, reciprocity and altruism--experimental evidence and new theories](https://www.sciencedirect.com/science/article/pii/S1574071406010086). 
+Two illustrative examples come in the form of games:
+the **ultimatum game** and the "**dictator game.**
+
+Both games involve two people and a pot of money, say $100. In the ultimatum
+game, one person proposes a division of the money. The other person can then
+accept that division or reject it. If the second person accepts, the pot is
+split according to the agreement. But if the second person rejects, both people
+get nothing.
+
+A fair division might seem like a 50-50 split. After all, neither party really
+has to do much in this game. Indeed, from the veil of ignorance, most people
+would probably advocate for a 50-50 split of the pot.
+
+On the other hand, since the second person can't propose a counter-offer, and
+should only accept or reject, once the people know their roles, a rational
+choice for the first person would be to offer the smallest amount of money
+possible to the second person. If you propose a split so that you get $99.99 and
+I get $0.01, we both walk away with more money if I accept, even though the
+split is so lopsided.
+
+In practice, people rarely exhibit this sort of extreme rationality.
+Experimental data shows that a majority of people who propose the offer offer
+between $40 and $50. Similarly, offers of less than $20 are rejected
+somewhere between 40% and 60% of the time. As to why these offers tend to be
+rejected, in the paper mentioned above, the authors write that "In general, the motive indicated
+for the rejection of positive, yet 'low', offers is that subjects view them as
+unfair" (p. 622).
+
+For people on the receiving end of the offer, then, fairness seems to be a
+significant factor in their decision. But what about for the folks who are
+making the offer? Is fairness a factor for them as well, or are they merely
+offering more than what their rational self-interest would prefer in order to
+increase the likelihood that the offer is accepted?
+
+One way to answer this question is to consider an alternative to the ultimatum
+game called the "dictator game." This game also involves splitting a sum of
+money between two parties, but this time the first person's offer can't be
+rejected. In this case, the rational thing to do is for the first person to
+simply take all of the money. However, once again, "In experiments, proposers
+typically dictate allocations that assign the Recipient on average between 10
+and 25 percent of the surplus, with modal allocations at 50 percent and zero.
+These allocations are much less than proposers’ offers in ultimatum games,
+although most players do offer something" (p. 622). While these offers can't be
+attributed directly to an ingrained sense of fairness, altruism does appear to
+play a role in how people divide the pot even when they have all of the power.
+
+But if rational self-interest isn't our primary motivator, why do so many models
+assume otherwise? One reason is that capitalism tends to breed competitive
+markets, and when competition is the driving factor, incentives for fair play
+tend to be diminished. In other words, when it comes to competitive markets:
+
+> [R]ational individuals will not express their other-regarding preferences in
+> these markets because the market makes the achievement of other-regarding
+> goals impossible or infinitely costly. However, a large amount of economic
+> activity takes place outside competitive markets – in markets with a small
+> number of traders, in markets with informational frictions, in firms and
+> organizations, and under contracts which are neither completely specified nor
+> enforceable. Models based on the self-interest assumption frequently make very
+> misleading predictions in these environments, while models of other-regarding
+> preferences predict much better (p. 618).
+
+In other words, the failure of fairness to rear its head in many economic models
+is because the systems being modeled don't concern themselves with being fair!
+But running a business is not the same as nurturing a society, and while healthy
+competition can be helpful, it's also important for citizens to feel they are
+being treated fairly.
 
 Sources:
 
+- [An axiomatic theory of fairness in network resource allocation](https://arxiv.org/abs/0906.0557), by Tian Lan, David Kao, Mung Chiang, and Ashutosh Sabharwal.
+
 - [Comparison of frequentist and Bayesian inference](https://ocw.mit.edu/courses/mathematics/18-05-introduction-to-probability-and-statistics-spring-2014/readings/MIT18_05S14_Reading20.pdf), by Jeremy Orloff and Jonathan Bloom.
 
-- [Probabilistic Modeling and Bayesian Analysis
-  ](https://ocw.mit.edu/courses/sloan-school-of-management/15-097-prediction-machine-learning-and-statistics-spring-2012/lecture-notes/MIT15_097S12_lec15.pdf), by Ben Letham and Cynthia Rudin.
+- [Justice as Fairness: A Restatement](https://www.amazon.com/Justice-Fairness-Restatement-John-Rawls/dp/0674005112), by John Rawls.
+
+- [Probabilistic Modeling and Bayesian Analysis](https://ocw.mit.edu/courses/sloan-school-of-management/15-097-prediction-machine-learning-and-statistics-spring-2012/lecture-notes/MIT15_097S12_lec15.pdf), by Ben Letham and Cynthia Rudin.
 
 - [Rental Harmony: Sperner's Lemma in Fair Division](https://www.math.hmc.edu/~su/papers.dir/rent.pdf), by Francis Edward Su.
 
-- [Various Techniques Used in Connection With
-  Random Digits](https://mcnp.lanl.gov/pdf_files/nbs_vonneumann.pdf), by John von Neumann.
+- [To Divide the Rent, Start With a Triangle](https://www.nytimes.com/2014/04/29/science/to-divide-the-rent-start-with-a-triangle.html), by Albert Sun.
+
+- [The economics of fairness, reciprocity and altruism--experimental evidence and new theories](https://www.sciencedirect.com/science/article/pii/S1574071406010086), by Ernst Fehr and Klaus M. Schmidt.
+
+- [Various Techniques Used in Connection With Random Digits](https://mcnp.lanl.gov/pdf_files/nbs_vonneumann.pdf), by John von Neumann.
+
+- [Weapons of math destruction: How big data increases inequality and threatens democracy](https://www.amazon.com/Weapons-Math-Destruction-Increases-Inequality/dp/0553418815), by Cathy O'Neil.
 
 - [Worth the Risk? Modeling Irrational Gambling Behavior](https://scholarworks.umt.edu/cgi/viewcontent.cgi?article=1332&context=tme), by yours truly.
