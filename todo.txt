@@ -1,4 +1,3 @@
-- finish intro
 - check that label doesn't show up in four weddings
 - fix bayes x axis label
 - add tick labels to x axis
@@ -11,6 +10,8 @@
 - ditch 2 column layout
 - clearer design for active point
 - handle end state of algo
+- make adjustable mesh
+- pick card photo
 
 LOW PRIORITY
 - get more heat map data (mayyybeeeee)

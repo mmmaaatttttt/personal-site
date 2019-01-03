@@ -6,13 +6,23 @@ caption: "A mathematical exploration of fairness."
 featured_image_caption: "A map of the United States. Image credit: John-Mark Smith on Unsplash."
 ---
 
-From the playground to the capitol, debates over
+Whether it's a game on the playground or a policy debate on Capitol Hill,
+debates about the fairness of our society and systems is commonplace. But what
+does it mean for something to be fair? Given the volume of debates about
+fairness, it seems like there's not always strong consensus.
 
-...
+Part of this may have to do with the fact that fairness itself can be a fuzzy
+term. It's a word that many of use frequently, but fewer of us (myself included)
+would be able to rigorously define.
 
-In this story, we'll explore a few different meanings of fairness, some more
-mathematical than others. By surveying the landscape, our goal is to develop a
-helpful framework for thinking about mathematical fairness in general.
+So let's think a bit more critically about what it means to be fair. As with
+everything else I write, here I'd like to take a mathematical approach (at least
+until I can't anymore). In this story, we'll explore a few different meanings of
+fairness, some more mathematical than others. By surveying the landscape, our
+goal is to develop a helpful framework for thinking about fairness more
+precisely. We'll see where mathematics can help in the formulation of fairness,
+and where mathematical modeling falls short. We'll also examine research that
+suggests we are, in some sense, hard-wired to favor some notion of fairness.
 
 The concept of fairness can get complicated depending on the context. But in
 some cases, it should be relatively straightforward to define and measure. Let's
@@ -21,17 +31,14 @@ difficult to pin down: games of chance.
 
 ### Fairness and Probability
 
-Let's begin with some scenarios where fairness is essentially self-evident.
-Take, for instance, a simple coin flipping game. Heads, I win; tails, I lose.
-Is this game fair?
-
-<!-- insert coin flip demo here! -->
+Let's begin with some scenarios where fairness is more self-evident. Take, for
+instance, a simple coin flipping game. Heads, I win; tails, I lose. Is this game
+fair?
 
 Well, that probably depends on the coin. If the coin is equally likely to land
-on either side, then neither player is advantaged. In this case, we can conclude
-that the game is fair. If, on the other hand, the coin is weighed in some way,
-so that one side is more likely to land than the other, most would agree that
-the game is unfair.
+on either side, then neither player is advantaged. In this case, the game is
+fair. But if the coin is weighed so it's more likely to land on one side, most
+would argue that the game is unfair.
 
 It's unfair for a couple of reasons. First, one player is advantaged over the
 other without any real reason (it's not as though this is a game of skill). But
