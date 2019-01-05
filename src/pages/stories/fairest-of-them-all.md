@@ -6,81 +6,73 @@ caption: "A mathematical exploration of fairness."
 featured_image_caption: "A map of the United States. Image credit: John-Mark Smith on Unsplash."
 ---
 
-Whether it's a game on the playground or a policy debate on Capitol Hill,
-debates about the fairness of our society and systems is commonplace. But what
-does it mean for something to be fair? Given the volume of debates about
-fairness, it seems like there's not always strong consensus.
+Whether it's a game on the playground or a policy proposal on Capitol Hill,
+debates about the fairness of our society are commonplace. But what does it mean
+for something to be fair? It seems like there's not always strong consensus.
 
 Part of this may have to do with the fact that fairness itself can be a fuzzy
 term. It's a word that many of use frequently, but fewer of us (myself included)
 would be able to rigorously define.
 
 So let's think a bit more critically about what it means to be fair. As with
-everything else I write, here I'd like to take a mathematical approach (at least
+everything else I write here, I'd like to take a mathematical approach (at least
 until I can't anymore). In this story, we'll explore a few different meanings of
-fairness, some more mathematical than others. By surveying the landscape, our
-goal is to develop a helpful framework for thinking about fairness more
-precisely. We'll see where mathematics can help in the formulation of fairness,
-and where mathematical modeling falls short. We'll also examine research that
-suggests we are, in some sense, hard-wired to favor some notion of fairness.
+fairness, some more mathematical than others. By surveying the landscape, we can
+start to develop a framework for thinking about fairness more precisely. We'll
+see where mathematics can help in the formulation of fairness, and where our
+modeling falls short. We'll also examine research that suggests we are, in some
+sense, hard-wired to favor fairness.
 
-The concept of fairness can get complicated depending on the context. But in
-some cases, it should be relatively straightforward to define and measure. Let's
-start simple and begin with some scenarios where fairness shouldn't be too
-difficult to pin down: games of chance.
+In general, fairness can get complicated. But in some cases, it's relatively
+straightforward to define and even measure. Let's start simple and begin with some
+scenarios where fairness shouldn't be too difficult to pin down: games of
+chance.
 
 ### Fairness and Probability
 
-Let's begin with some scenarios where fairness is more self-evident. Take, for
-instance, a simple coin flipping game. Heads, I win; tails, I lose. Is this game
-fair?
+Let's begin with some scenarios where fairness is simple. Take, for instance, a
+coin flipping game. Heads, I win; tails, I lose. Is this game fair?
 
-Well, that probably depends on the coin. If the coin is equally likely to land
-on either side, then neither player is advantaged. In this case, the game is
-fair. But if the coin is weighed so it's more likely to land on one side, most
-would argue that the game is unfair.
+Well, it depends on the coin. If the coin is equally likely to land on either
+side, then neither player is advantaged. In this case, the game is fair. But if
+the coin is weighted on one side, most would argue that the game is unfair.
 
-It's unfair for a couple of reasons. First, one player is advantaged over the
-other without any real reason (it's not as though this is a game of skill). But
-second, if the coin is biased, it's likely that the disadvantaged player won't
-know about the deception. Otherwise, why agree to play the game?
+It's unfair for a couple of reasons. First, one player is unreasonably
+advantaged over the other (it's not as though this is a game of skill). Second,
+if the coin is biased, it's not necessarily true that the disadvantaged player
+will know about the deception. Otherwise, why agree to play the game?
 
 In this case, it seems like fairness is fairly straightforward in principle: the
 game is fair if the coin is just as likely to land on one side as it is on the
 other. But in practice, how can we determine whether or not the game is fair?
-After all, a slight bias in the coin may be hard to detect. As with many other
-examples we'll discuss, it's easier to agree on the ideals than on the details.
-Fairness may make sense in the abstract, but how can we ensure that the coin we
-use actually adheres to our sense of fairness?
+After all, a slight bias in the coin may be hard to detect. It's easier to agree
+on the ideals than on the details. Fairness may make sense in the abstract, but
+how can we ensure that the coin we use actually adheres to our sense of
+fairness?
 
 ### A Frequentist Approach
 
 If you don't know whether or not the coin is biased, there are a few different
 ways to avoid getting roped into an unfair game. One way involves a
 **frequentist** approach to probability: we flip a coin many times and use the
-proportion of flips that land on heads to gain insight into whether or not the
-coin might be biased.
+proportion of flips that land on heads to gain insight into the likelihood that
+the coin is biased.
 
-For example, flipping the coin once tells you nothing about whether or not the
-game is fair. Flipping it twice doesn't tell you much either: even if the coin
-is fair, it will land on the same side both times 50% of the time. But what if
-you flip the coin 100 times? or 10,000? Or --- wait for it --- one _billion_
-times? With more data you can begin to tease out the effects of any bias
-inherent in the system.
+Flipping the coin once tells us nothing about whether the game is fair. Flipping
+it twice doesn't tell us much either: even if the coin is fair, it will land on
+the same side both times 50% of the time. But what if we flip the coin 100
+times? or 10,000? Or --- wait for it --- one _billion_ times? With more data we
+can begin to tease out the effects of any bias inherent in the coin.
 
 As the number of flips grows, the proportion of flips that land on any one side
-begins to follow a **normal distribution**, or bell curve, more and more
-closely. This means that we can estimate the likelihood of certain outcomes by
-calculating the area under normal curve. For example, after 100 flips, there's a
-roughly 95% chance that heads should have appeared between 40 and 60 times.
-Similarly, there's a roughly 99% chance that it should have appeared between 37
-and 63 times. Depending on your tolerance for unlikely events, a head tally
-outside of one of these two ranges should give you pause.
+begins to approximate a **normal distribution**, or bell curve. This means that
+we can estimate the likelihood of certain outcomes by calculating the area under
+that curve. 
 
 Here's a demonstration of what we're getting at. Below, you can adjust the true
 probability that a coin lands on heads, and then model how many times you'd like
 to flip a coin. The histogram will adjust accordingly, and show you how likely
-it is for the number of times that heads appears to fall within different ranges.
+it to have a certain number of coin flips land heads up.
 
 <CoinFlipHistogram caption="Figure 1: An interactive probability distribution
 for flipping coins."/>
@@ -88,50 +80,51 @@ for flipping coins."/>
 Note that as the number of coin flips increases, the probability distribution
 begins to center around the true probability of getting heads. For example,
 after 100 flips, there's a roughly 95% chance that heads should have appeared
-between 40 and 60 times, and a roughly 99% chance that it should have appeared
-between 37 and 63 times. Depending on your tolerance for unlikely events, a head
-tally outside of one of these two ranges should give you pause.
+between 40 and 60 times. Similarly, there's a roughly 99% chance that it should
+have appeared between 37 and 63 times. Depending on your tolerance for unlikely
+events, a head tally outside of one of these two ranges should give you pause.
 
 ### A Bayesian Approach
 
 The frequentist approach is a perfectly valid way to try to assess whether or
-not a coin is fair. But there's another school of thought worth examining as
-well: the **Bayesian** approach. The biggest difference with the Bayesian model
-is that we assume the true likelihood of our coin landing on heads is always
+not a coin is fair.T here's another school of thought worth examining as well:
+the **Bayesian** approach. The biggest difference with the Bayesian model is
+that we assume the true likelihood of our coin landing on heads is always
 unknown. The best we can do, then, is try to come up with a probability
 distribution for our coin, which changes every time we flip the coin and gather
 new information.
 
-In order to implement this approach, we also need a _prior distribution_. In
-other words, absent any data, what do we expect the probability distribution to
-look like? In what follows, we'll offer up two different priors. In the first,
-we'll assume that any heads probability is equally likely: maybe the coin is
-fair, maybe it's much more likely to land on heads, maybe it's much more likely
-to land on tails.
+In order to work with this approach, we also need a **prior distribution**. This
+is a fancy way of saying that we need to make an assumption about how likely
+with think the coin is to be fair, before we've collected any data. Here we'll
+consider two different priors.
+
+In the first, we'll assume that any heads probability is equally likely: maybe
+the coin is fair, maybe it's much more likely to land on heads, maybe it's much
+more likely to land on tails. Who knows? ¯\_(ツ)_/¯
 
 For the second prior, we'll assume that the coin is much more likely to be fair
 than not. If you expect that the coin hasn't been doctored in any way, this
 seems like a reasonable hypothesis.
 
-Note that the prior you choose has a significant impact on how the model
-evolves. If you assume any outcome is equally likely, a string of consecutive
-heads will strongly suggest bias. But if start by assuming the coin is likely to
-be fair, it takes more evidence to significantly move the probability distribution.
+The prior you choose has a significant impact on how the model evolves. If you
+assume any outcome is equally likely, a string of consecutive heads will
+strongly suggest bias. But if you start by assuming the coin is likely to be fair,
+it takes more evidence to significantly move the probability distribution.
 
-In the interactive below, you can start with either prior, and then mimick as
+In the demonstration below, you can start with either prior, and then mimic as
 many coin flips as you want. A nice bell shape around 50% represents a coin
 that's likely to be fair, while a curve that's biased towards either side
-suggests that the coin isn't balanced. This reflects the intuitive sense that if
-we flip the coin 100 times and it comes up heads 50 times, the evidence suggests
-that the coin is unbiased. But if it comes up heads 90 times, the evidence
-suggests bias. How much bias it suggests depends on your starting assumption.
+suggests that the coin isn't balanced. Intuitively, this makes sense: if we flip
+the coin 100 times and it comes up heads 50 times, the evidence suggests that
+the coin is unbiased. But if it comes up heads 90 times, the coin is probably
+biased.
 
 <CoinFlipBayesianModel />
 
 Both approaches---frequentist and Bayesian---have their tradeoffs. If you're
 interested in learning more about these approaches, there's a nice article
-available on the MIT [open courseware
-website](https://ocw.mit.edu/courses/mathematics/18-05-introduction-to-probability-and-statistics-spring-2014/readings/MIT18_05S14_Reading20.pdf).
+available on the MIT [open courseware website](https://ocw.mit.edu/courses/mathematics/18-05-introduction-to-probability-and-statistics-spring-2014/readings/MIT18_05S14_Reading20.pdf).
 
 (As a mathematical aside, the standard Bayesian model for trying to estimate the
 probability of a coin landing on heads involves the Beta function. You can read more about the derivation of the above model [here](https://ocw.mit.edu/courses/sloan-school-of-management/15-097-prediction-machine-learning-and-statistics-spring-2012/lecture-notes/MIT15_097S12_lec15.pdf).)
@@ -139,9 +132,8 @@ probability of a coin landing on heads involves the Beta function. You can read 
 ### Changing the Game
 
 Regardless of your philosophy (frequentist or Bayesian), these examples show
-that there's a way for you to assess whether or not the implementation of this
-game is fair. It's not perfect, but the more data you collect, the more certain
-you can be of the assessment.
+that there's a way for you to assess whether or not the game is fair. It's not
+perfect, but the more data you collect, the more certain you can be.
 
 But if you're worried about the possibility of a biased coin and don't have the
 opportunity to collect data, there's another solution: change the rules of the
@@ -153,9 +145,9 @@ John von Neumann. We have a coin, but we have no idea whether it's fair or not.
 You inspect the coin and see that the two sides of it are different, so the
 probability that it lands on heads is not 0 or 1.
 
-In this case, here are the rules. We flip the coin twice. If it comes up on the
-same side both times, the game continues. If it comes up heads and then tails, I
-win. If it comes up tails and then heads, you win.
+Here are the rules. We flip the coin twice. If it comes up on the same side both
+times, the game continues. If it comes up heads and then tails, I win. If it
+comes up tails and then heads, you win.
 
 So, what are each of our chances of winning? Well, in any given round there are
 four possible outcomes. If we let **H** represent the coin landing on heads, and
@@ -170,13 +162,9 @@ the same!
 
 <CoinFlipTable caption="Figure 3: Examining the likelihood of TH and HT outcomes for different probabilities." />
 
-All of these approaches highlight some important features of fairness. First,
-while fairness is easiest to reason about in the abstract, it's not difficult
-for the implementation of a fair game to be unfair. If I choose to deceive you
-and offer up a coin that has a 75% chance of landing on heads, this game is
-demonstrably unfair, even if we agree on what the rules of a fair game are.
-
-In order to ensure agreement between the abstract rules and the specific
+All of these analyses highlight an important features of fairness: it's not
+difficult to take rules which seem fair and skew them so that the game is
+unfair. In order to ensure agreement between the abstract rules and the specific
 implementation, we've seen two possible approaches. The first is *data*-driven:
 we flip the coin many times and use that data to make judgments about whether or
 not the coin is biased. The second is *system*-driven: we change the rules of
@@ -185,25 +173,24 @@ we need is unavailable or prohibitively expensive to acquire.
 
 ### Fairness and Expected Value
 
-It might be tempting to say that a game is fair if each player is equally likely
-to win, both in theory and in practice. But this viewpoint is a little too
-narrow. After all, there are many games where players aren't equally likely to
-win, but both sides would still consider the game fair.
+As an aside, it might be tempting to say that a game is fair if each player is
+equally likely to win, both in theory and in practice. But this viewpoint is a
+little too narrow. After all, there are many games where players aren't equally
+likely to win, but both sides would still consider the game fair.
 
 For example, suppose we agree to roll a fair die; if the value of the roll is 1,
 you win, but otherwise I win. Clearly this game is unfair. My chances of winning
 are 5/6, or roughly 83%, but your chances are only 1/6. If all we're playing
 for is bragging rights, you're better off walking away.
 
-But what if we're playing for keeps? In this case, fairness depends not only on
-the odds for the game, but also the payouts. Suppose that if I win the game, you
-have to pay me $1, but if you win, I have to pay you $5. If we play this game
-many times, on average you'll win 1 game out of every six, but you'll earn $5
-for each of those wins. On the other hand, you'll lose, on average, 5 games out
-of every six, but you'll only have to pay me $1 for each loss. In more
-mathematical terms, we'd say that the *expected value* of the game is zero.
-
-<DiceRollExpectedValue />
+But what if we're playing for cold, hard cash? In this case, fairness depends
+not only on the odds for the game, but also the payouts. Suppose that if I win
+the game, you have to pay me $1, but if you win, I have to pay you $5. If we
+play this game many times, on average you'll win 1 game out of every six, but
+you'll earn $5 for each of those wins. On the other hand, you'll lose, on
+average, 5 games out of every six, but you'll only have to pay me $1 for each
+loss. In more mathematical terms, we'd say that the *expected value* of the game
+is zero.
 
 An expected value of zero tells us that neither party is favored to profit from
 the game over time. In this sense, the game is fair even though the win
@@ -219,43 +206,38 @@ money, this needn't always be the case. We can talk about the expected happiness
 you'll receive by playing a game, for example, or the expected regret you'll
 feel if you decide not to play. 
 
-Consider gambling, for example. Most people know that casino games are, from a
-mathematical perspective, unfair. And yet, there are still plenty of people who
-gamble, even knowing they should expect to lose money. The language of expected
-value still has a place here, though looking at games from a strictly economic
-perspective is limiting. Instead, it can help to try to quantify other things.
+Consider gambling, for example. There are  plenty of people who gamble, even
+though they expect to lose money. The language of expected value still has a
+place here, but looking at games from a strictly economic perspective is
+limiting. Instead, it can help to try to quantify other things. For instance,
+there are psychological factors at play when it comes to gambling; modeling some
+of these factors can sometimes make the decision to gamble seem more rational
+(I've written about this [elsewhere](https://scholarworks.umt.edu/cgi/viewcontent.cgi?article=1332&context=tme)).
 
-For instance, there are psychological factors at play when it comes to gambling;
-modeling some of these factors can sometimes make the decision to gamble seem
-more rational (I've written about this
-[elsewhere](https://scholarworks.umt.edu/cgi/viewcontent.cgi?article=1332&context=tme)).
 But modeling things in this way doesn't resolve questions of fairness. For
 example, if you really love to play a game even though the odds are against you,
 and I know how much you love the game and exploit this fact for my own benefit,
 is this fair?
 
-### Fuzzier Fairness
+### Fair Division
 
 There are plenty of other scenarios in which the fairness question is murky.
-Here's another one: imagine you sign a lease for an apartment with two friends.
-Each of you will have your own bedroom, but the rooms are all different, with
-their own advantages and disadvantages. In order to preserve roommate harmony,
-you need to decide not only who gets which room, but also how much each person
-pays.
+Imagine you sign a lease for an apartment with two friends. Each of you will
+have your own bedroom, but the rooms are all different, with their own
+advantages and disadvantages. In order to preserve roommate harmony, you need to
+decide not only who gets which room, but also how much each person pays.
 
 Questions of fairness immediately come to the forefront. Should the rent be
-split evenly, regardless of who gets which room? What if one room is clearly
-better than the others? One of one roommate has a strong preference for one
-room, even if it isn't necessarily the best one?
+split evenly? What if one room is clearly better than the others? What if one
+roommate has a strong preference for a specific room, even if it isn't
+necessarily the best one?
 
-It's easy to see how fairness becomes fuzzy. After all, people prioritize
-different things: one of you may really want the room with the best view, while
-another person wants the dark room in the back. You may even have conflicting
-desires, which make it difficult to rank your room preferences in the first
-place. In cases like these, can we determine a fair way to assign rooms and
-costs so that everyone is content with the outcome?
+Fairness quickly becomes fuzzy. After all, people prioritize different things.
+You may even have conflicting desires, which make it difficult to rank your room
+preferences in the first place. In situations like these, can we determine a
+fair way to assign rooms and costs so that everyone is happy?
 
-It turns out that the answer is yes, and the answer comes from a seemingly
+It turns out that the we can, and the argument comes from a seemingly
 unrelated result in geometry. This connection was first made explicit in a paper
 titled [Rental Harmony: Sperner's Lemma in Fair Division](https://www.math.hmc.edu/~su/papers.dir/rent.pdf), by Francis Edward
 Su.
@@ -266,37 +248,34 @@ a three bedroom apartment. (The argument works with more roommates, but the
 geometry is easiest to visualize with 3.)
 
 We need a handful of assumptions on each person's decision making. Here are the
-first two assumptions (I'll save the last one until we need it):
+first two (I'll save the last one until we need it):
 
 1. Everyone always prefers a free room to a non-free room.
 2. No matter what the division of prices, at least one room will be acceptable
    to every roommate. (For example, it's never the case that all of the rooms
-   will be too expensive for the roommates.)
+   will be out of a specific roommate's budget.)
 
-Given these two assumptions, here's how we can find a fair division of prices
-for the three rooms:
+Given these two assumptions, here's how we can find a fair division of prices:
 
 1. Draw a triangle. Each corner of the triangle represents a pricing scheme
-   where one of the rooms is $1,600, and the other two rooms are free.
+   where one of the rooms is the full $1,600, and the other two rooms are free.
 
-2. Subdivide the triangle into a mesh of points. The finer the mesh, the pricing
-   options you'll have. Each option will correspond to a point on one of the
-   triangle's edges or in its interior. You can assign to each point in the mesh
-   a set of prices for each room, based on how close the point is to the
-   corners. For instance, a mesh point in the middle of the triangle corresponds
-   to each room having the same price.
+2. Subdivide the triangle into a mesh of points. The finer the mesh, the more
+   granular pricing options you'll have. Each point in the mesh corresponds to a
+   division of the $1,600 rent for the three rooms. Prices are based on how
+   close the point is to the corners. For instance, a mesh point in the middle
+   of the triangle corresponds to each room having the same price.
 
 3. Assign each point in the mesh to a roommate. How you assign the points
    doesn't matter, but you want to be sure that for every small triangle formed
    by the mesh, each corner is owned by a different roommate.
 
 4. Go through the mesh points, and for each one, ask the owner of the point
-   which room they would prefer at the prices for that point. (There are
-   intelligent ways to traverse the mesh, which we'll get to later.)
+   which room they would prefer at the prices for that point.
 
 5. Once you find a small triangle in the mesh where each roommate selects a
    different room at the corners, you're finished! You've found a fair division
-   of the rents. If the differences in room prices are too large, you can refine
+   of the rent. If the differences in room prices are too large, you can refine
    the mesh and play again.
 
 The best way to appreciate this approach is to go through it. So here's an
@@ -317,7 +296,7 @@ exactly one of the rooms is free along each side, and people will always select
 a free room over a non-free room.
 
 If you're curious about details, the key idea in the proof is to think of each
-small triangle in the mesh as a room. Play with the interactive and see if you
+small triangle in the mesh as a room. Play with the demonstration and see if you
 can figure out how it decides which room to move to next. (This is essentially
 an implementation of Su's "trap-door" argument.)
 
@@ -325,43 +304,38 @@ an implementation of Su's "trap-door" argument.)
 guaranteed to find an odd number of triangles in the mesh where every corner
 corresponds to a different room. You're also allowed to traverse through the
 mesh in a different way: The New York Times ran an [article about this algorithm](https://www.nytimes.com/interactive/2014/science/rent-division-calculator.html)
-back in 2014, and they used a different mesh traversal method.
+back in 2014 using a different traversal method.
 
 **If you take finer and finer meshes, how do you know you'll keep finding
-solutions inside of older solutions?** You don't! Not without the third of Su's
-assumptions, which I'll now state here: if a roommate prefers a given room for a
-set of prices which converge to some limiting price, then the roommate will
-still prefer the given room at that limiting price.
+solutions inside of older solutions?** Here's where Su's third assumption comes
+in handy: if a roommate prefers a given room for a set of prices which converge
+to some limiting price, then the roommate will still prefer that room at that
+limiting price.
 
-Intuitively, this division algorithm seems fair: the process doesn't appear to
-favor one roommate over another, and everyone winds up with an acceptable room
-at an acceptable price. In game theoretic terms, this arrangement is called
+Intuitively, this division algorithm seems fair: the process doesn't favor one
+roommate over another, and everyone winds up with an acceptable room at an
+acceptable price. In game theoretic terms, this arrangement is called
 **envy-free**, since no roommate would prefer to trade rooms with anyone else.
-
-Even without a probability model, then, it's sometimes possible to divide
-resources in a way that *feels* fair. In this sense, then, mathematical fairness
-(whatever this means) seems to have relatively general applicability.
 
 ### Beyond Mathematics: Fairness from Behind the Veil of Ignorance
 
-We've now seen many examples of math applied to questions of fairness. However,
-all of our examples thus far have assumed that every participant in a given
-decision has equal say. While this may be true when deciding where to live or
-whether to play a game, it's clearly not always true. In politics, for example,
-not every voice at the table is equally strong. It's also highly unlikely that
-every voice is free of bias. In these more complex cases, what does fairness
-mean, and how can we try to ensure it?
+We've now seen several examples of math applied to questions of fairness.
+However, all of them so far have assumed that every participant has equal say.
+While this may be true when deciding where to live or whether to play a game,
+it's clearly not always the case. In politics, for example, not every voice at
+the table is equally strong, nor are those voices free of bias. In these more
+complex cases, what does fairness mean, and how can we try to ensure it?
 
 Rather than drawing from mathematical literature, let's address this question
-from the perspective of *political philosophy.* One classic thought experiment
+from the perspective of political philosophy. One classic thought experiment
 that attempts to address this question comes from John Rawls, a philosopher who
-taught at Harvard University for almost 40 years, until his death in 2002. Rawls
-made many contributions to the fields of moral and political philosophy during
-his career. The one we'll focus on is called the **veil of ignorance.**
+taught at Harvard University until his death in 2002. Rawls made many
+contributions to the fields of moral and political philosophy during his career.
+The one we'll focus on is called the **veil of ignorance.**
 
 Before we examine the veil of ignorance, let's connect it to the question of
-fairness. In a book titled [Justice as Fairness](https://www.amazon.com/Justice-Fairness-Restatement-John-Rawls/dp/0674005112),
-Rawls says, "The most fundamental idea idea in this conception of justice is the
+fairness. In his book [Justice as Fairness](https://www.amazon.com/Justice-Fairness-Restatement-John-Rawls/dp/0674005112),
+Rawls says, "The most fundamental idea in this conception of justice is the
 idea of society as a *fair* system of social cooperation over time from
 one generation to the next" (p. 5, emphasis added).
 
@@ -381,7 +355,7 @@ of force and coercion, deception and fraud, and so on must be ruled out" (p.
 agreements are entered into fairly can be quite challenging.
 
 The solution Rawls proposes is the veil of ignorance. Here's how he introduces
-the concept:
+it:
 
 > [T]he parties are not allowed to know the social positions or the particular
 > comprehensive doctrines of the persons they represent. They also do not know
@@ -392,8 +366,7 @@ the concept:
 
 The idea here is to situate negotiators in such a way that they don't know
 specifics about the community they are representing. The goal is for the lack of
-information in the veil of ignorance to remove, or at least temper, arguments
-based on self-interest when trying to forge an agreement.
+information to minimize arguments based on self-interest.
 
 Rawls discusses the veil of ignorance as it pertains to the creation of society,
 but the same ideas can be applied to scenarios that are not as grand in scope.
@@ -401,14 +374,12 @@ Even in the context of our coin-flipping game, the veil of ignorance can be used
 to help ensure the game is played fairly. When laying out the ground rules,
 players who argue from the veil of ignorance don't know beforehand who will
 bring the coin, who will flip the coin, who will win if the coin lands on heads,
-and so on. This lack of information makes rules aimed at ensuring fairness less
-controversial. If neither party knows who's responsible for bringing the coin,
-both parties should be willing to agree to rules against biased coins.
+and so on. This lack of information makes means that both parties should be
+more willing to agree to rules prohibiting biased coins.
 
-While we can certainly apply the veil of ignorance to scenarios that can be
-modeled with probability, what makes the idea powerful is that it can be applied
-even when probabilistic models fail. In fact, the veil of ignorance may be even
-*more* helpful in these scenarios. Rawls notes that
+What makes this idea powerful is that it can be applied even when probabilistic
+models fail. In fact, the veil of ignorance may be even *more* helpful in these
+scenarios. Rawls notes that
 
 > The veil of ignorance implies that the parties have no basis for knowing or
 > estimating whether the persons they represent affirm a majority or a minority
@@ -416,19 +387,14 @@ even when probabilistic models fail. In fact, the veil of ignorance may be even
 > by permitting a lesser liberty of conscience for minority religions, say, on
 > the chance that the person each represents belongs to a majority or dominant
 > religion and may, in that event, have an even greater liberty than that
-> secured by equal liberty of conscience.
-
-> Were the parties to gamble in this way, they would show that they did not take
-seriously the religious, philosophical, and moral convictions of the persons
-they represent. Indeed, they would show that they did not understand the nature
-of religious belief, or philosophical or moral conviction. (pp. 104-105)
+> secured by equal liberty of conscience. (pp. 104-105)
 
 In other words, the veil of ignorance is not mutually exclusive of mathematical
 modeling. However, thinking about a scenario from the veil of ignorance before
 jumping in to mathematical modeling can help in the development of checks and
-balances to ensure that an agreement is designed to be fair.
+balances.
 
-### Why fairness?
+### Conclusion: Why Fairness?
 
 As we've seen, fairness involves a certain degree of symmetry: in a fair
 agreement, equal parties should have equal bargaining power. This isn't to say
@@ -445,9 +411,9 @@ more concrete, like wealth?
 There are at least two responses to this question, one moral, one practical. The
 moral argument is that increasing fairness aligns with the idea of people being
 created equal, which isn't necessarily true of other metrics. Note that fairness
-does not imply everyone should be granted the same amount of resources. But it
-does require fairness in terms of equality of opportunity and in treatment by
-the institutions of justice.
+does not imply everyone should be granted the same quantity of resources. But it
+does align closely with equality of opportunity and in treatment by the
+institutions of justice.
 
 The practical argument is that it turns out humans care about fairness. This
 fact has been borne out in a number of economics experiments, which are
@@ -455,30 +421,24 @@ summarized in a 2006 paper titled [The economics of fairness, reciprocity and al
 Two illustrative examples come in the form of games:
 the **ultimatum game** and the "**dictator game.**
 
-Both games involve two people and a pot of money, say $100. In the ultimatum
-game, one person proposes a division of the money. The other person can then
-accept that division or reject it. If the second person accepts, the pot is
-split according to the agreement. But if the second person rejects, both people
-get nothing.
+Both games involve two people and a pot of money. In the ultimatum game, one
+person proposes a division of the money. The other person can then accept that
+division or reject it. If the second person accepts, the pot is split according
+to the agreement. But if the second person rejects, both people get nothing.
 
-A fair division might seem like a 50-50 split. After all, neither party really
-has to do much in this game. Indeed, from the veil of ignorance, most people
-would probably advocate for a 50-50 split of the pot.
-
-On the other hand, since the second person can't propose a counter-offer, and
-should only accept or reject, once the people know their roles, a rational
-choice for the first person would be to offer the smallest amount of money
-possible to the second person. If you propose a split so that you get $99.99 and
-I get $0.01, we both walk away with more money if I accept, even though the
+A fair division might seem like a 50-50 split. But since the second person can't
+counter the offer, a rational choice for the first person would be to offer the
+smallest amount of money possible. If the pot is $100 and you propose a split of
+$99.99 to $0.01, we both walk away with more money if I accept, even though the
 split is so lopsided.
 
 In practice, people rarely exhibit this sort of extreme rationality.
-Experimental data shows that a majority of people who propose the offer offer
-between $40 and $50. Similarly, offers of less than $20 are rejected
-somewhere between 40% and 60% of the time. As to why these offers tend to be
-rejected, in the paper mentioned above, the authors write that "In general, the motive indicated
-for the rejection of positive, yet 'low', offers is that subjects view them as
-unfair" (p. 622).
+Experimental data shows that a majority of people offer between $40 and $50.
+Similarly, offers of less than $20 are rejected somewhere between 40% and 60% of
+the time. As to why these offers tend to be rejected, in the paper mentioned
+above, the authors write that "In general, the motive indicated for the
+rejection of positive, yet 'low', offers is that subjects view them as unfair"
+(p. 622).
 
 For people on the receiving end of the offer, then, fairness seems to be a
 significant factor in their decision. But what about for the folks who are
