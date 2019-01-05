@@ -25,8 +25,9 @@ const flexAlignments = [
   "center",
   "baseline",
   "stretch",
+  "space-around",
   "space-between",
-  "space-around"
+  "space-evenly"
 ];
 
 FlexContainer.propTypes = {
