@@ -10,7 +10,7 @@ const Button = styled.button`
   box-sizing: border-box;
   padding: 0.2rem 0.6rem;
   background-color: ${color};
-  border: none;
+  border: 1px solid ${color};
   color: white;
   font-size: 80%;
   line-height: 1.4rem;
