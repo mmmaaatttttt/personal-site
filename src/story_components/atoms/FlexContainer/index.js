@@ -17,6 +17,7 @@ const FlexContainer = styled.div`
   ${cross}: ${props => props.cross};
   margin: ${props => props.margin};
   width: ${props => props.width};
+  text-align: ${props => props.textAlign};
 `;
 
 const flexAlignments = [
@@ -36,6 +37,7 @@ FlexContainer.propTypes = {
   flex: PropTypes.number.isRequired,
   main: PropTypes.oneOf(flexAlignments).isRequired,
   margin: PropTypes.string.isRequired,
+  textAlign: PropTypes.string.isRequired,
   width: PropTypes.string.isRequired,
   wrap: PropTypes.bool.isRequired
 };
@@ -46,6 +48,7 @@ FlexContainer.defaultProps = {
   flex: 1,
   main: "stretch",
   margin: "0",
+  textAlign: "left",
   width: "auto",
   wrap: false
 };
