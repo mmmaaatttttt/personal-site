@@ -101,7 +101,7 @@ consider two different priors.
 
 In the first, we'll assume that any heads probability is equally likely: maybe
 the coin is fair, maybe it's much more likely to land on heads, maybe it's much
-more likely to land on tails. Who knows? ¯\_(ツ)_/¯
+more likely to land on tails. Who knows? ¯\\\_(ツ)_/¯
 
 For the second prior, we'll assume that the coin is much more likely to be fair
 than not. If you expect that the coin hasn't been doctored in any way, this
@@ -120,7 +120,7 @@ the coin 100 times and it comes up heads 50 times, the evidence suggests that
 the coin is unbiased. But if it comes up heads 90 times, the coin is probably
 biased.
 
-<CoinFlipBayesianModel />
+<CoinFlipBayesianModel caption="Figure 2: Modeling the likelihood that a coin is fair, given two possible priors." />
 
 Both approaches---frequentist and Bayesian---have their tradeoffs. If you're
 interested in learning more about these approaches, there's a nice article
