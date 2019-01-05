@@ -1,17 +1,16 @@
-- check that label doesn't show up in four weddings
-- fix bayes x axis label
-- add tick labels to x axis
-- connect to machine learning: https://www.quora.com/What-is-Bayesian-machine-learning
-- add caption to bayesian interactive
 - in probability table, highlight the fact that HT and TH are equally likely
-- confirm responsiveness for rent interactive
 
+- confirm responsiveness for rent interactive
+- caption for rent interactive
 - get rid of wiggle during point selection
 - ditch 2 column layout
 - clearer design for active point
 - handle end state of algo
 - make adjustable mesh
+
 - pick card photo
+
+- read through one more time
 
 LOW PRIORITY
 - get more heat map data (mayyybeeeee)

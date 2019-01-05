@@ -7,6 +7,7 @@ import { beta } from "jStat";
 import withCaption from "hocs/withCaption";
 import {
   Button,
+  FlexContainer,
   Graph,
   LinePlot,
   NarrowContainer,
@@ -42,21 +43,23 @@ class CoinFlipBayesianModel extends PureComponent {
     }
 
     return (
-      <NarrowContainer width="60%" fullWidthAt="small">
+      <NarrowContainer width="70%" fullWidthAt="small">
         <ToggleSwitch
-          leftText="All probabilities equally likely"
+          leftText="All probs equally likely"
           rightText="Fair coin more likely"
           leftColor={COLORS.RED}
           rightColor={COLORS.BLUE}
           handleSwitchChange={this.toggleDistribution}
         />
-        <Button onClick={() => this.increment("heads")}>
-          Heads: {headsDisplay}
-        </Button>
-        <Button onClick={() => this.increment("tails")}>
-          Tails: {tailsDisplay}
-        </Button>
-        <Button onClick={this.resetCounts}>Reset Counts</Button>
+        <FlexContainer main="space-evenly">
+          <Button onClick={() => this.increment("heads")}>
+            Heads: {headsDisplay}
+          </Button>
+          <Button onClick={() => this.increment("tails")}>
+            Tails: {tailsDisplay}
+          </Button>
+          <Button onClick={this.resetCounts} color={COLORS.DARK_GRAY}>Reset Counts</Button>
+        </FlexContainer>
         <Animate
           show
           start={{ heads, tails, color: COLORS.RED }}
@@ -76,21 +79,28 @@ class CoinFlipBayesianModel extends PureComponent {
             const yMax = max(graphData, d => d.y);
             const xScale = scaleLinear()
               .domain([0, 1])
-              .range([graphPadding, width - graphPadding]);
+              .range([graphPadding.left, width - graphPadding.right]);
             const yScale = scaleLinear()
               .domain([0, 1.1 * yMax])
-              .range([height - graphPadding, graphPadding]);
+              .range([height - graphPadding.bottom, graphPadding.top]);
             return (
               <Graph
                 width={width}
                 height={height}
-                svgPadding={graphPadding}
+                // svgPadding={{
+                //   top: graphPadding,
+                //   left: 0,
+                //   bottom: 0,
+                //   right: 0
+                // }}
+                svgPadding={0}
                 graphPadding={graphPadding}
                 svgId="bayesian-graph"
                 xLabel="Coin flip distribution"
                 xScale={xScale}
                 yScale={yScale}
                 tickStep={() => 0.1}
+                tickFormatX=".0%"
               >
                 <LinePlot
                   graphData={graphData}
@@ -108,14 +118,24 @@ class CoinFlipBayesianModel extends PureComponent {
 }
 
 CoinFlipBayesianModel.propTypes = {
-  graphPadding: PropTypes.number.isRequired,
+  graphPadding: PropTypes.shape({
+    top: PropTypes.number.isRequired,
+    right: PropTypes.number.isRequired,
+    bottom: PropTypes.number.isRequired,
+    left: PropTypes.number.isRequired,
+  }).isRequired,
   height: PropTypes.number.isRequired,
   xCoords: PropTypes.arrayOf(PropTypes.number).isRequired,
   width: PropTypes.number.isRequired
 };
 
 CoinFlipBayesianModel.defaultProps = {
-  graphPadding: 10,
+  graphPadding: {
+    top: 0,
+    right: 10,
+    bottom: 100,
+    left: 10
+  },
   height: 500,
   width: 800,
   xCoords: Array.from({ length: 101 }, (_, i) => i / 100)
