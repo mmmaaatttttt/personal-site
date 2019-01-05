@@ -1,5 +1,3 @@
-- in probability table, highlight the fact that HT and TH are equally likely
-
 - confirm responsiveness for rent interactive
 - caption for rent interactive
 - get rid of wiggle during point selection

@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { LabeledSlider, StyledTable } from "story_components";
+import { ColoredSpan, LabeledSlider, StyledTable } from "story_components";
 import withCaption from "hocs/withCaption";
 import COLORS from "utils/styles";
 
@@ -12,7 +12,7 @@ class CoinFlipTable extends Component {
     this.setState({ headsProb: val });
   };
 
-  format = (probability, dec=0) => `${(probability * 100).toFixed(dec)}%`;
+  format = (probability, dec = 0) => `${(probability * 100).toFixed(dec)}%`;
 
   render() {
     const { headsProb } = this.state;
@@ -49,8 +49,14 @@ class CoinFlipTable extends Component {
             <tr>
               <td>{formatted.heads}</td>
               <td>{formatted.tails}</td>
-              <td>{formatted.heads} &times; {formatted.tails} = {formatted.pair}</td>
-              <td>{formatted.tails} &times; {formatted.heads} = {formatted.pair}</td>
+              <td>
+                {formatted.heads} &times; {formatted.tails} ={" "}
+                <ColoredSpan color={COLORS.GREEN} bold>{formatted.pair}</ColoredSpan>
+              </td>
+              <td>
+                {formatted.tails} &times; {formatted.heads} ={" "}
+                <ColoredSpan color={COLORS.GREEN} bold>{formatted.pair}</ColoredSpan>
+              </td>
             </tr>
           </tbody>
         </StyledTable>
