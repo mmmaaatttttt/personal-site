@@ -23,28 +23,36 @@ const Graph = ({
   tickFormatX,
   tickFormatY
 }) => {
+  if (typeof graphPadding === "number") {
+    graphPadding = {
+      top: graphPadding,
+      left: graphPadding,
+      right: graphPadding,
+      bottom: graphPadding
+    };
+  }
   const labelOptions = {
     x: {
       "center-right": {
         yShift: height / 2,
-        tickSize: -height + 2 * graphPadding,
-        tickShift: height / 2 - graphPadding,
+        tickSize: -height + graphPadding.top + graphPadding.bottom,
+        tickShift: (-height + graphPadding.top + graphPadding.bottom) / 2,
         label: {
           x: width,
           y: height / 2,
           anchor: "end",
-          dx: -graphPadding,
-          dy: graphPadding
+          dx: -(graphPadding.left + graphPadding.right) / 2,
+          dy: (graphPadding.top + graphPadding.bottom) / 2
         }
       },
       "bottom-center": {
-        yShift: height - graphPadding,
+        yShift: height - graphPadding.bottom,
         tickShift: 0,
         label: {
           x: width / 2,
-          y: height - graphPadding,
+          y: height - graphPadding.bottom,
           dx: 0,
-          dy: graphPadding * 0.7,
+          dy: graphPadding.bottom * 0.7,
           anchor: "middle"
         }
       }
@@ -56,31 +64,31 @@ const Graph = ({
       <ClippedSVG id={svgId} width={width} height={height} padding={svgPadding}>
         <Axis
           direction="y"
-          labelPosition={{x: "-3", dy: "0.32em"}}
+          labelPosition={{ x: "-3", dy: "0.32em" }}
           scale={yScale}
           textAnchor="end"
-          tickSize={-width + 2 * graphPadding}
+          tickSize={-width + graphPadding.left + graphPadding.right}
           tickStep={tickStep && tickStep(yScale)}
           tickFormat={tickFormatY}
-          xShift={graphPadding}
+          xShift={graphPadding.left}
         />
         <Axis
           direction="x"
-          labelPosition={{y: "0.35em", x: "9", dy: "0"}}
+          labelPosition={{ y: "0.35em", x: "9", dy: "0" }}
           rotateLabels
           scale={xScale}
           textAnchor="start"
-          tickSize={-height + 2 * graphPadding}
+          tickSize={-height + graphPadding.top + graphPadding.bottom}
           tickShift={xOptions.tickShift}
           tickStep={tickStep && tickStep(xScale)}
           tickFormat={tickFormatX}
           yShift={xOptions.yShift}
         />
         <line
-          x1={graphPadding}
-          x2={graphPadding}
-          y1={graphPadding}
-          y2={height - graphPadding}
+          x1={graphPadding.left}
+          x2={graphPadding.right}
+          y1={graphPadding.top}
+          y2={height - graphPadding.bottom}
           stroke="#000"
           strokeWidth="1"
         />
@@ -102,7 +110,15 @@ const Graph = ({
 Graph.propTypes = {
   width: PropTypes.number.isRequired,
   height: PropTypes.number.isRequired,
-  graphPadding: PropTypes.number.isRequired,
+  graphPadding: PropTypes.oneOfType([
+    PropTypes.number,
+    PropTypes.shape({
+      top: PropTypes.number,
+      bottom: PropTypes.number,
+      left: PropTypes.number,
+      right: PropTypes.number
+    })
+  ]).isRequired,
   svgPadding: PropTypes.oneOfType([
     PropTypes.number,
     PropTypes.shape({
