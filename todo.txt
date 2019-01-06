@@ -1,12 +1,11 @@
 - confirm responsiveness for rent interactive
 - caption for rent interactive
-- get rid of wiggle during point selection
-- ditch 2 column layout
 - clearer design for active point
 - handle end state of algo
-- make adjustable mesh
+  - make point size based on mesh size
+- polish overall design
 
-- pick card photo
+BUG!! if the mesh size is 3, putting the white trinangle in the middle doesn't cause the game to finish
 
 - read through one more time
 

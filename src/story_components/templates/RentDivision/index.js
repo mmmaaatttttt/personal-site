@@ -2,10 +2,12 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { mix } from "polished";
 import {
+  Button,
   ClippedSVG,
-  ColumnLayout,
   FlexContainer,
   LabeledCircle,
+  LabeledSlider,
+  NarrowContainer,
   Polygon,
   RadioButtonGroup,
   Tooltip
@@ -17,15 +19,18 @@ import { generateFreqMap } from "utils/arrayHelpers";
 class RentDivision extends Component {
   constructor(props) {
     super(props);
+    const initialMeshLevels = 2;
     this.state = {
       activePtLoc: [0, 0],
       currentColorIdx: null,
+      started: false,
       finished: false,
+      meshLevels: initialMeshLevels,
       tooltipVisible: false,
       tooltipX: 0,
       tooltipY: 0,
       tooltipBody: "",
-      points: this.generateAllPoints()
+      points: this.generateAllPoints(initialMeshLevels)
     };
   }
 
@@ -49,8 +54,8 @@ class RentDivision extends Component {
    * Note that this function doesn't add labels. This is done after the data
    * has been generated.
    */
-  generateAllPoints = () => {
-    const { corners, initialR, meshLevels } = this.props;
+  generateAllPoints = meshLevels => {
+    const { corners, initialR } = this.props;
     const rowCount = 2 ** (meshLevels - 1) + 1;
     let pointsWithoutLabels = Array.from({ length: rowCount }, (_, rowIdx) => {
       if (rowIdx === 0) {
@@ -163,7 +168,7 @@ class RentDivision extends Component {
   getTooltipBody = point => {
     const { roomColors } = this.props;
     return point.prices.map(
-      (price, idx) => `${roomColors[idx]} room: $${price.toFixed(2)}`
+      (price, idx) => `${roomColors[idx]}: $${price.toFixed(2)}`
     );
   };
 
@@ -192,6 +197,24 @@ class RentDivision extends Component {
     const firstLetter = points[y][x].label;
     const { names } = this.props;
     return names.find(name => name[0] === firstLetter);
+  };
+
+  /**
+   * Start the demonstration after deciding on the mesh.
+   */
+  handleStart = () => {
+    this.setState({ started: true });
+  };
+
+  /**
+   * Changes the size of the mesh.
+   * @param {Number} newSize - new mesh size
+   */
+  handleMeshSizeChange = newSize => {
+    this.setState({
+      meshLevels: newSize,
+      points: this.generateAllPoints(newSize)
+    });
   };
 
   /**
@@ -243,7 +266,6 @@ class RentDivision extends Component {
       if (y === 0) return { activePtLoc: [1, 0] };
       if (y === 1 && x === 0) return { activePtLoc: [1, 1] };
       const neighbors = this.generateNeighbors(x, y);
-      console.log("NEIGHBORS", neighbors);
       for (var i = 0; i < neighbors.length; i++) {
         let curr = neighbors[i];
         let next = neighbors[(i + 1) % neighbors.length];
@@ -319,8 +341,9 @@ class RentDivision extends Component {
    * Converts the nested array of point data into an array of LabeledCircle components.
    */
   generateLabeledCircles = () => {
-    const { points, activePtLoc, finished } = this.state;
+    const { points, activePtLoc, finished, started } = this.state;
     const [activeY, activeX] = activePtLoc;
+    const startedButNotFinished = started && !startedButNotFinished;
     return points.reduce((components, pointRow, y) => {
       let componentRow = pointRow.map((p, x) => (
         <LabeledCircle
@@ -329,7 +352,7 @@ class RentDivision extends Component {
           handleUpdate={this.handleTooltipShow.bind(this, p)}
           key={`${p.x}|${p.y}`}
           label={p.label}
-          isActive={x === activeX && y === activeY && !finished}
+          isActive={x === activeX && y === activeY && startedButNotFinished}
         />
       ));
       return [...components, componentRow];
@@ -417,18 +440,44 @@ class RentDivision extends Component {
     return anyFreeRooms && currentPrice !== 0;
   };
 
-  render() {
-    const { width, height, roomColors } = this.props;
+  /**
+   * Determines what should show above the triangular mesh.
+   * Option 1: Haven't started yet, should display a slider to refine the mesh
+   * Option 2: Ended, should show final prices and option to play again
+   * Option 3: Started but not finished, should show buttons for room selection
+   */
+  getTopArea = () => {
     const {
       activePtLoc,
       currentColorIdx,
       finished,
+      meshLevels,
       points,
-      tooltipVisible,
-      tooltipX,
-      tooltipY,
-      tooltipBody
+      started
     } = this.state;
+
+    // haven't started yet
+    if (!started) {
+      return (
+        <div>
+          <LabeledSlider
+            min={2}
+            max={6}
+            step={1}
+            value={meshLevels}
+            title="Mesh Size"
+            handleValueChange={this.handleMeshSizeChange}
+          />
+          <Button onClick={this.handleStart} >Start Demonstration</Button>
+        </div>
+      );
+    }
+
+    if (finished) {
+      return <h1>DONEZO</h1>;
+    }
+
+    const { roomColors } = this.props;
     const currentRoommate = this.getActiveRoommate();
     const [activeY, activeX] = activePtLoc;
     const activePoint = points[activeY][activeX];
@@ -445,10 +494,28 @@ class RentDivision extends Component {
       let currentColor = roomColors[currentColorIdx].toLowerCase();
       buttonText = `Confirm the ${currentColor} room for ${currentRoommate}.`;
     }
+
     return (
-      <ColumnLayout break="extraSmall" sizes={[3, 2]}>
-        <div>
-          <ClippedSVG width={width} height={height} id="rent">
+      <FlexContainer column main="stretch" textAlign="center">
+        <h2>{currentRoommate}'s Turn</h2>
+        <RadioButtonGroup
+          handleSelectConfirm={this.handleRoomChoice}
+          handleRadioChange={this.handleRadioChange}
+          labels={radioButtonLabels}
+          buttonText={buttonText}
+        />
+      </FlexContainer>
+    );
+  };
+
+  render() {
+    const { width, height } = this.props;
+    const { tooltipVisible, tooltipX, tooltipY, tooltipBody } = this.state;
+    return (
+      <div>
+        {this.getTopArea()}
+        <NarrowContainer width="70%" fullWidthAt="small">
+          <ClippedSVG width={width} height={height} marginTop="-2rem" id="rent">
             {this.generateTriangles()}
             {this.generateLabeledCircles()}
           </ClippedSVG>
@@ -459,21 +526,8 @@ class RentDivision extends Component {
             body={tooltipBody}
             title="Room Prices"
           />
-        </div>
-        {finished ? (
-          <h1>DONEZO</h1>
-        ) : (
-          <FlexContainer column main="center">
-            <h2>{currentRoommate}'s Turn</h2>
-            <RadioButtonGroup
-              handleSelectConfirm={this.handleRoomChoice}
-              handleRadioChange={this.handleRadioChange}
-              labels={radioButtonLabels}
-              buttonText={buttonText}
-            />
-          </FlexContainer>
-        )}
-      </ColumnLayout>
+        </NarrowContainer>
+      </div>
     );
   }
 }
@@ -496,7 +550,7 @@ RentDivision.propTypes = {
 const width = 600;
 const height = 600;
 const rent = 1600;
-const traingleRad = height / 2 - 20;
+const traingleRad = height / 2;
 const xBase = width / 2;
 const yBase = height / 2 + 70;
 
@@ -520,7 +574,6 @@ RentDivision.defaultProps = {
   ],
   height,
   initialR: 5,
-  meshLevels: 5,
   names: ["Alex", "Brett", "Cameron"],
   rent,
   roomColors: ["Orange", "Green", "Purple"],
