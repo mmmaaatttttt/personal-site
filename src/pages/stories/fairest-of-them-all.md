@@ -239,8 +239,7 @@ fair way to assign rooms and costs so that everyone is happy?
 
 It turns out that the we can, and the argument comes from a seemingly
 unrelated result in geometry. This connection was first made explicit in a paper
-titled [Rental Harmony: Sperner's Lemma in Fair Division](https://www.math.hmc.edu/~su/papers.dir/rent.pdf), by Francis Edward
-Su.
+titled [Rental Harmony: Sperner's Lemma in Fair Division](https://www.math.hmc.edu/~su/papers.dir/rent.pdf), by Francis Edward Su.
 
 To understand Su's argument, it helps to work with a concrete example. Let's
 suppose three roommates are trying to find a fair division of a $1,600 rent for
@@ -283,7 +282,7 @@ example of the algorithm in action, with three roommates deciding between three
 rooms: a green one, an orange one, and a purple one. (You can mouse over any
 point to see the room prices at that point.)
 
-<RentDivision />
+<RentDivision caption="Figure 4: Determining a fair division of rent for three roommates." />
 
 Here are some questions people typically ask after playing around with this fair
 division algorithm: 

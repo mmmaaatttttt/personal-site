@@ -12,6 +12,7 @@ import {
   RadioButtonGroup,
   Tooltip
 } from "story_components";
+import withCaption from "hocs/withCaption";
 import COLORS from "utils/styles";
 import { interpolate } from "utils/mathHelpers";
 import { generateFreqMap } from "utils/arrayHelpers";
@@ -514,7 +515,7 @@ class RentDivision extends Component {
     return (
       <div>
         {this.getTopArea()}
-        <NarrowContainer width="70%" fullWidthAt="small">
+        <NarrowContainer width="60%" fullWidthAt="small">
           <ClippedSVG width={width} height={height} marginTop="-2rem" id="rent">
             {this.generateTriangles()}
             {this.generateLabeledCircles()}
@@ -580,4 +581,4 @@ RentDivision.defaultProps = {
   width
 };
 
-export default RentDivision;
+export default withCaption(RentDivision);

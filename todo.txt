@@ -1,5 +1,4 @@
 - confirm responsiveness for rent interactive
-- caption for rent interactive
 - clearer design for active point
 - handle end state of algo
   - make point size based on mesh size
