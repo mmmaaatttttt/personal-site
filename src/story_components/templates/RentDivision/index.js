@@ -54,25 +54,27 @@ class RentDivision extends Component {
    *
    * Note that this function doesn't add labels. This is done after the data
    * has been generated.
+   * 
+   * @param {Number} meshLevels - size of the mesh
    */
   generateAllPoints = meshLevels => {
     const { corners, initialR } = this.props;
     const rowCount = 2 ** (meshLevels - 1) + 1;
     let pointsWithoutLabels = Array.from({ length: rowCount }, (_, rowIdx) => {
       if (rowIdx === 0) {
-        return [{ ...corners[0], color: COLORS.BLACK, r: initialR }];
+        return [{ ...corners[0], color: COLORS.BLACK, r: initialR / meshLevels }];
       }
       let fraction = rowIdx / (rowCount - 1);
       let [top, left, right] = corners;
-      let firstPoint = this.generatePoint(left, top, fraction);
-      let lastPoint = this.generatePoint(right, top, fraction);
+      let firstPoint = this.generatePoint(left, top, fraction, meshLevels);
+      let lastPoint = this.generatePoint(right, top, fraction, meshLevels);
       if (rowIdx === 1) {
         return [firstPoint, lastPoint];
       }
       let points = [firstPoint];
       for (var i = 1; i < rowIdx; i++) {
         let rowFraction = i / rowIdx;
-        let newPoint = this.generatePoint(lastPoint, firstPoint, rowFraction);
+        let newPoint = this.generatePoint(lastPoint, firstPoint, rowFraction, meshLevels);
         points.push(newPoint);
       }
       points.push(lastPoint);
@@ -125,8 +127,9 @@ class RentDivision extends Component {
    * @param {Object} pt1 - First point
    * @param {Object} pt2 - Second point
    * @param {Number} frac - Number between 0 and 1
+   * @param {Number} meshLevels - meshLevels value
    */
-  generatePoint = (pt1, pt2, frac) => {
+  generatePoint = (pt1, pt2, frac, meshLevels) => {
     const { initialR } = this.props;
     return {
       x: interpolate(pt1.x, pt2.x, frac),
@@ -135,7 +138,7 @@ class RentDivision extends Component {
       prices: pt1.prices.map((price, i) =>
         interpolate(price, pt2.prices[i], frac)
       ),
-      r: initialR
+      r: initialR / meshLevels
     };
   };
 
@@ -237,11 +240,11 @@ class RentDivision extends Component {
   handleRoomChoice = () => {
     const { roomColors, initialR } = this.props;
     this.setState(prevState => {
-      const { activePtLoc, currentColorIdx, points } = prevState;
+      const { activePtLoc, currentColorIdx, points, meshLevels } = prevState;
       const [y, x] = activePtLoc;
       const colorStr = roomColors[currentColorIdx].toUpperCase();
       const color = COLORS[colorStr];
-      const newPtData = { ...points[y][x], color, r: 2 * initialR };
+      const newPtData = { ...points[y][x], color, r: 2 * initialR / meshLevels };
       const pointsCopy = [...points];
       const pointsRowCopy = [...pointsCopy[y]];
       pointsCopy[y] = pointsRowCopy;
@@ -574,7 +577,7 @@ RentDivision.defaultProps = {
     }
   ],
   height,
-  initialR: 5,
+  initialR: 30,
   names: ["Alex", "Brett", "Cameron"],
   rent,
   roomColors: ["Orange", "Green", "Purple"],

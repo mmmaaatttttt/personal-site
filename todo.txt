@@ -1,7 +1,7 @@
 - confirm responsiveness for rent interactive
 - clearer design for active point
 - handle end state of algo
-  - make point size based on mesh size
+- node labels don't look quite centered
 - polish overall design
 
 BUG!! if the mesh size is 3, putting the white trinangle in the middle doesn't cause the game to finish
