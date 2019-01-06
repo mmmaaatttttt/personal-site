@@ -1,9 +1,9 @@
 ---
 title: "The Fairest of Them All"
-date: "2018-12-31"
-featured_image: "mind_the_gerrymandered_gap.jpg"
+date: "2019-01-07"
+featured_image: "fairest_of_them_all.jpg"
 caption: "A mathematical exploration of fairness."
-featured_image_caption: "A map of the United States. Image credit: John-Mark Smith on Unsplash."
+featured_image_caption: "Playing a (hopefully fair) board game. Image credit: Brendan Humphreys from Pexels."
 ---
 
 Whether it's a game on the playground or a policy proposal on Capitol Hill,
