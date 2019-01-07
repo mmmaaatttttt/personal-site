@@ -497,17 +497,22 @@ class RentDivision extends Component {
     // haven't started yet
     if (!started) {
       return (
-        <div>
+        <NarrowContainer width="70%" fullWidthAt="small">
           <LabeledSlider
+            handleValueChange={this.handleMeshSizeChange}
             min={2}
             max={6}
             step={1}
-            value={meshLevels}
+            tickCount={5}
             title="Mesh Size"
-            handleValueChange={this.handleMeshSizeChange}
+            minIcon="compress-arrows-alt"
+            maxIcon="expand-arrows-alt"
+            value={meshLevels}
           />
-          <Button onClick={this.handleStart}>Start Demonstration</Button>
-        </div>
+          <FlexContainer main="center">
+            <Button onClick={this.handleStart}>Start Demonstration</Button>
+          </FlexContainer>
+        </NarrowContainer>
       );
     }
 

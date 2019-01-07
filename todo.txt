@@ -1,5 +1,3 @@
-- more slider points for mesh slider
-  - general slider design
 - clearer design for active point
 - polish overall design
 - confirm responsiveness for rent interactive
