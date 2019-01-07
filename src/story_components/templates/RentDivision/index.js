@@ -4,6 +4,7 @@ import { mix } from "polished";
 import {
   Button,
   ClippedSVG,
+  ColoredSpan,
   FlexContainer,
   LabeledCircle,
   LabeledSlider,
@@ -14,7 +15,7 @@ import {
 } from "story_components";
 import withCaption from "hocs/withCaption";
 import COLORS from "utils/styles";
-import { interpolate } from "utils/mathHelpers";
+import { interpolate, total } from "utils/mathHelpers";
 import { generateFreqMap } from "utils/arrayHelpers";
 
 class RentDivision extends Component {
@@ -25,7 +26,7 @@ class RentDivision extends Component {
       activePtLoc: [0, 0],
       currentColorIdx: null,
       started: false,
-      finished: false,
+      finalCorners: null,
       meshLevels: initialMeshLevels,
       tooltipVisible: false,
       tooltipX: 0,
@@ -54,7 +55,7 @@ class RentDivision extends Component {
    *
    * Note that this function doesn't add labels. This is done after the data
    * has been generated.
-   * 
+   *
    * @param {Number} meshLevels - size of the mesh
    */
   generateAllPoints = meshLevels => {
@@ -62,7 +63,9 @@ class RentDivision extends Component {
     const rowCount = 2 ** (meshLevels - 1) + 1;
     let pointsWithoutLabels = Array.from({ length: rowCount }, (_, rowIdx) => {
       if (rowIdx === 0) {
-        return [{ ...corners[0], color: COLORS.BLACK, r: initialR / meshLevels }];
+        return [
+          { ...corners[0], color: COLORS.BLACK, r: initialR / meshLevels }
+        ];
       }
       let fraction = rowIdx / (rowCount - 1);
       let [top, left, right] = corners;
@@ -74,7 +77,12 @@ class RentDivision extends Component {
       let points = [firstPoint];
       for (var i = 1; i < rowIdx; i++) {
         let rowFraction = i / rowIdx;
-        let newPoint = this.generatePoint(lastPoint, firstPoint, rowFraction, meshLevels);
+        let newPoint = this.generatePoint(
+          lastPoint,
+          firstPoint,
+          rowFraction,
+          meshLevels
+        );
         points.push(newPoint);
       }
       points.push(lastPoint);
@@ -194,11 +202,11 @@ class RentDivision extends Component {
     this.setState({ tooltipVisible: false });
   };
 
-  /** Gets the active roommate, based on the active point in state */
-  getActiveRoommate = () => {
-    const { activePtLoc, points } = this.state;
-    let [y, x] = activePtLoc;
-    const firstLetter = points[y][x].label;
+  /** Gets the fill name of a roommate.
+   * @param {Object} pt - Point with a label
+   */
+  getNameFromLabel = pt => {
+    const firstLetter = pt.label;
     const { names } = this.props;
     return names.find(name => name[0] === firstLetter);
   };
@@ -219,6 +227,19 @@ class RentDivision extends Component {
       meshLevels: newSize,
       points: this.generateAllPoints(newSize)
     });
+  };
+
+  /**
+   * Resets the demo after finding a successful triangle.
+   */
+  handleReset = () => {
+    this.setState(prevState => ({
+      activePtLoc: [0, 0],
+      currentColorIdx: null,
+      started: false,
+      finalCorners: null,
+      points: this.generateAllPoints(prevState.meshLevels)
+    }));
   };
 
   /**
@@ -244,7 +265,11 @@ class RentDivision extends Component {
       const [y, x] = activePtLoc;
       const colorStr = roomColors[currentColorIdx].toUpperCase();
       const color = COLORS[colorStr];
-      const newPtData = { ...points[y][x], color, r: 2 * initialR / meshLevels };
+      const newPtData = {
+        ...points[y][x],
+        color,
+        r: (2 * initialR) / meshLevels
+      };
       const pointsCopy = [...points];
       const pointsRowCopy = [...pointsCopy[y]];
       pointsCopy[y] = pointsRowCopy;
@@ -270,6 +295,7 @@ class RentDivision extends Component {
       if (y === 0) return { activePtLoc: [1, 0] };
       if (y === 1 && x === 0) return { activePtLoc: [1, 1] };
       const neighbors = this.generateNeighbors(x, y);
+      let nextActivePtLoc = null;
       for (var i = 0; i < neighbors.length; i++) {
         let curr = neighbors[i];
         let next = neighbors[(i + 1) % neighbors.length];
@@ -281,7 +307,13 @@ class RentDivision extends Component {
           !colorSet.has(null) &&
           !colorSet.has(COLORS.BLACK)
         ) {
-          return { finished: true };
+          return {
+            finalCorners: [
+              points[curr.y][curr.x],
+              points[next.y][next.x],
+              point
+            ]
+          };
         }
 
         // Case 2: curr has a different color from point, next has no color:
@@ -290,9 +322,11 @@ class RentDivision extends Component {
           curr.color !== null &&
           curr.color !== COLORS.BLACK &&
           curr.color !== point.color &&
-          next.color === COLORS.BLACK
+          next.color === COLORS.BLACK &&
+          !nextActivePtLoc
         ) {
-          return { activePtLoc: [next.y, next.x] };
+          // can't return early because we could have a finished triangle
+          nextActivePtLoc = [next.y, next.x];
         }
 
         // Case 3: next has a different color from point, curr has no color:
@@ -303,12 +337,12 @@ class RentDivision extends Component {
           next.color !== point.color &&
           curr.color === COLORS.BLACK
         ) {
-          return { activePtLoc: [curr.y, curr.x] };
+          // can't return early because we could have a finished triangle
+          nextActivePtLoc = [curr.y, curr.x];
         }
       }
-      throw new Error(
-        "Oops, something went wrong, I'm not sure how to advance."
-      );
+
+      return { activePtLoc: nextActivePtLoc };
     });
   };
 
@@ -345,9 +379,9 @@ class RentDivision extends Component {
    * Converts the nested array of point data into an array of LabeledCircle components.
    */
   generateLabeledCircles = () => {
-    const { points, activePtLoc, finished, started } = this.state;
+    const { points, activePtLoc, finalCorners, started } = this.state;
     const [activeY, activeX] = activePtLoc;
-    const startedButNotFinished = started && !startedButNotFinished;
+    const startedButNotFinished = started && finalCorners === null;
     return points.reduce((components, pointRow, y) => {
       let componentRow = pointRow.map((p, x) => (
         <LabeledCircle
@@ -454,7 +488,7 @@ class RentDivision extends Component {
     const {
       activePtLoc,
       currentColorIdx,
-      finished,
+      finalCorners,
       meshLevels,
       points,
       started
@@ -472,19 +506,46 @@ class RentDivision extends Component {
             title="Mesh Size"
             handleValueChange={this.handleMeshSizeChange}
           />
-          <Button onClick={this.handleStart} >Start Demonstration</Button>
+          <Button onClick={this.handleStart}>Start Demonstration</Button>
         </div>
       );
     }
 
-    if (finished) {
-      return <h1>DONEZO</h1>;
+    if (finalCorners !== null) {
+      const { roomColors, rent } = this.props;
+      const pointData = finalCorners.map(p => {
+        const colorIdx = roomColors.findIndex(
+          c => COLORS[c.toUpperCase()] === p.color
+        );
+        return {
+          name: this.getNameFromLabel(p),
+          color: roomColors[colorIdx],
+          price: p.prices[colorIdx]
+        };
+      });
+      const totalPledged = total(pointData, p => p.price);
+      const rentRemaining = rent - totalPledged;
+      return (
+        <FlexContainer column main="center">
+          <h3>You're within ${rentRemaining.toFixed(0)} of a fair division!</h3>
+          <FlexContainer main="space-between" width="100%">
+            {pointData.map(d => (
+                <ColoredSpan key={d.color} color={COLORS[d.color.toUpperCase()]}>
+                  {d.name} is paying ${d.price.toFixed(2)}
+                </ColoredSpan>
+            ))}
+          </FlexContainer>
+          <p>They can each chip in an additional ${(rentRemaining / 3).toFixed(2)} to make up the remaining cost.</p>
+          <p>If that doesn't seem fair, you can refine the mesh and try again.</p>
+          <Button onClick={this.handleReset}>Try again</Button>
+        </FlexContainer>
+      );
     }
 
     const { roomColors } = this.props;
-    const currentRoommate = this.getActiveRoommate();
     const [activeY, activeX] = activePtLoc;
     const activePoint = points[activeY][activeX];
+    const currentRoommate = this.getNameFromLabel(activePoint);
     const { prices } = activePoint;
     const radioButtonLabels = this.getTooltipBody(activePoint).map(
       (text, idx) => ({

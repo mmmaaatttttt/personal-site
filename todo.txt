@@ -1,10 +1,10 @@
-- confirm responsiveness for rent interactive
-- clearer design for active point
-- handle end state of algo
 - node labels don't look quite centered
+- more slider points for mesh slider
+  - general slider design
+- clearer design for active point
 - polish overall design
+- confirm responsiveness for rent interactive
 
-BUG!! if the mesh size is 3, putting the white trinangle in the middle doesn't cause the game to finish
 
 - read through one more time
 
