@@ -1,4 +1,3 @@
-- node labels don't look quite centered
 - more slider points for mesh slider
   - general slider design
 - clearer design for active point

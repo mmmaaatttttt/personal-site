@@ -13,7 +13,7 @@ const pulse = props => keyframes`
   }
 
   to {
-    stroke-width: ${3*props.r}px;
+    stroke-width: ${3 * props.r}px;
     stroke-opacity: 0;
   }
 `;
@@ -52,7 +52,12 @@ class LabeledCircle extends Component {
           r={r}
           stroke={color}
         />
-        <CenteredSVGText x={x} y={y} fontSize={`${1.5*r}px`}>
+        <CenteredSVGText
+          x={x}
+          y={y}
+          fontSize={`${1.5 * r}px`}
+          baseline="central"
+        >
           {label}
         </CenteredSVGText>
       </g>
