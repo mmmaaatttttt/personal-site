@@ -501,9 +501,9 @@ class RentDivision extends Component {
           <LabeledSlider
             handleValueChange={this.handleMeshSizeChange}
             min={2}
-            max={6}
+            max={5}
             step={1}
-            tickCount={5}
+            tickCount={4}
             title="Mesh Size"
             minIcon="compress-arrows-alt"
             maxIcon="expand-arrows-alt"
@@ -531,17 +531,17 @@ class RentDivision extends Component {
       const totalPledged = total(pointData, p => p.price);
       const rentRemaining = rent - totalPledged;
       return (
-        <FlexContainer column main="center">
+        <FlexContainer column main="center" cross="flex-start" textAlign="center">
           <h3>You're within ${rentRemaining.toFixed(0)} of a fair division!</h3>
-          <FlexContainer main="space-between" width="100%">
+          <FlexContainer main="space-around" width="100%" wrap>
             {pointData.map(d => (
                 <ColoredSpan key={d.color} color={COLORS[d.color.toUpperCase()]}>
                   {d.name} is paying ${d.price.toFixed(2)}
                 </ColoredSpan>
             ))}
           </FlexContainer>
-          <p>They can each chip in an additional ${(rentRemaining / 3).toFixed(2)} to make up the remaining cost.</p>
-          <p>If that doesn't seem fair, you can refine the mesh and try again.</p>
+          <p>They can each chip in an additional ${(rentRemaining / 3).toFixed(2)} to make up the remaining cost. <br/>
+          If that doesn't seem fair, you can refine the mesh and try again.</p>
           <Button onClick={this.handleReset}>Try again</Button>
         </FlexContainer>
       );
@@ -584,8 +584,8 @@ class RentDivision extends Component {
     return (
       <div>
         {this.getTopArea()}
-        <NarrowContainer width="60%" fullWidthAt="small">
-          <ClippedSVG width={width} height={height} marginTop="-2rem" id="rent">
+        <NarrowContainer width="55%" fullWidthAt="small">
+          <ClippedSVG width={width} height={height} marginTop="-1.8rem" id="rent">
             {this.generateTriangles()}
             {this.generateLabeledCircles()}
           </ClippedSVG>

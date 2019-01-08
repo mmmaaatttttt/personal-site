@@ -71,7 +71,7 @@ class RadioButtonGroup extends Component {
         );
       }
       return (
-        <FlexContainer key={text} width="90%" margin="0 1% 3% 1%">
+        <FlexContainer key={text} width="90%" margin="-2% 1% 0 1%" main="center" cross="center">
           <input
             name="group"
             type="radio"
@@ -98,7 +98,7 @@ class RadioButtonGroup extends Component {
     }
     return (
       <div>
-        <FlexContainer main="center" cross="center" width="100%">
+        <FlexContainer main="space-around" cross="center" width="100%" wrap>
           {options}
         </FlexContainer>
         {footer}
