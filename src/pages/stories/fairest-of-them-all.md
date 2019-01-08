@@ -282,7 +282,7 @@ example of the algorithm in action, with three roommates deciding between three
 rooms: a green one, an orange one, and a purple one. (You can mouse over any
 point to see the room prices at that point.)
 
-<RentDivision caption="Figure 4: Determining a fair division of rent for three roommates." />
+<RentDivision captionMarginTop="-2.8em" caption="Figure 4: Determining a fair division of rent for three roommates." />
 
 Here are some questions people typically ask after playing around with this fair
 division algorithm: 
