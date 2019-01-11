@@ -1,5 +1,3 @@
-- read through one more time
-
 LOW PRIORITY
 - get more heat map data (mayyybeeeee)
 - add meta tags for /stories endpoint

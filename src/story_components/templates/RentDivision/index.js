@@ -21,7 +21,7 @@ import { generateFreqMap } from "utils/arrayHelpers";
 class RentDivision extends Component {
   constructor(props) {
     super(props);
-    const initialMeshLevels = 2;
+    const initialMeshLevels = 4;
     this.state = {
       activePtLoc: [0, 0],
       currentColorIdx: null,
