@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { Share } from "react-twitter-widgets";
 import { Helmet } from "react-helmet";
+import { FlexContainer } from "story_components";
 import stripFrontMatterAndCompile from "utils/marksyCompiler";
 import { sizes, fadeIn } from "utils/styles";
 import images from "utils/images";
@@ -97,6 +98,7 @@ export default ({ data, location }) => {
   const postTitle = post.frontmatter.title;
   const fullTitle = `${postTitle} - ${title}`;
   const image = images[`featured_images/${featured_image}`];
+  const githubUrl = `https://github.com/mmmaaatttttt/personal-site/blob/master/src/pages${location.pathname.slice(0, -1)}.md`
   return (
     <StyledPostWrapper>
       <Helmet>
@@ -119,14 +121,19 @@ export default ({ data, location }) => {
       <StyledImageCaption>{featured_image_caption}</StyledImageCaption>
       <StyledTextWrapper>
         {stripFrontMatterAndCompile(post.internal.content)}
-        <Share
-          url={`${siteUrl}${location.pathname}`}
-          options={{
-            size: "large",
-            via: "mmmaaatttttt",
-            text: postTitle
-          }}
-        />
+        <FlexContainer main="space-between">
+          <small>
+            <a href={githubUrl} target="_blank" rel="noopener noreferrer"><em>Edit this story on GitHub</em></a>
+          </small>
+          <Share
+            url={`${siteUrl}${location.pathname}`}
+            options={{
+              size: "large",
+              via: "mmmaaatttttt",
+              text: postTitle
+            }}
+          />
+        </FlexContainer>
       </StyledTextWrapper>
     </StyledPostWrapper>
   );
