@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import MainLayout from "../layouts/MainLayout";
 import { fadeIn } from "utils/styles";
 import { rhythm } from "utils/typography";
 
@@ -27,14 +28,16 @@ const StyledP = styled.p`
   opacity: 0;
 `;
 
-const Home = () => (
-  <StyledHome>
-    <StyledH1>Hi!</StyledH1>
-    <StyledH2>I'm Matt. <span role="img" aria-label="wave">👋</span></StyledH2>
-    <StyledP>
-      Use the nav bar to explore the site. You'll figure it out.
-    </StyledP>
-  </StyledHome>
+const Home = ({ location }) => (
+  <MainLayout location={location}>
+    <StyledHome>
+      <StyledH1>Hi!</StyledH1>
+      <StyledH2>I'm Matt. <span role="img" aria-label="wave">👋</span></StyledH2>
+      <StyledP>
+        Use the nav bar to explore the site. You'll figure it out.
+      </StyledP>
+    </StyledHome>
+  </MainLayout>
 );
 
 export default Home;

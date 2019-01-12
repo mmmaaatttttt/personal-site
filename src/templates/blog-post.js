@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { graphql } from 'gatsby';
 import { Share } from "react-twitter-widgets";
 import { Helmet } from "react-helmet";
+import MainLayout from "../layouts/MainLayout";
 import { FlexContainer } from "story_components";
 import stripFrontMatterAndCompile from "utils/marksyCompiler";
 import { sizes, fadeIn } from "utils/styles";
@@ -101,42 +102,44 @@ export default ({ data, location }) => {
   const image = images[`featured_images/${featured_image}`];
   const githubUrl = `https://github.com/mmmaaatttttt/personal-site/blob/master/src/pages${location.pathname.slice(0, -1)}.md`
   return (
-    <StyledPostWrapper>
-      <Helmet>
-        <title>{fullTitle}</title>
-        <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content={fullTitle} />
-        <meta name="twitter:description" content={caption} />
-        <meta name="twitter:image" content={`${siteUrl}${image}`} />
-        <meta property="og:title" content={fullTitle} />
-        <meta property="og:description" content={caption} />
-        <meta property="og:image" content={`${siteUrl}${image}`} />
-        <meta property="og:url" content={`${siteUrl}${location.pathname}`} />
-      </Helmet>
-      <StyledMainImage image={image}>
-        <StyledTitleWrapper>
-          <h1>{postTitle}</h1>
-          <h2>{date}</h2>
-        </StyledTitleWrapper>
-      </StyledMainImage>
-      <StyledImageCaption>{featured_image_caption}</StyledImageCaption>
-      <StyledTextWrapper>
-        {stripFrontMatterAndCompile(post.internal.content)}
-        <FlexContainer main="space-between">
-          <small>
-            <a href={githubUrl} target="_blank" rel="noopener noreferrer"><em>Edit this story on GitHub</em></a>
-          </small>
-          <Share
-            url={`${siteUrl}${location.pathname}`}
-            options={{
-              size: "large",
-              via: "mmmaaatttttt",
-              text: postTitle
-            }}
-          />
-        </FlexContainer>
-      </StyledTextWrapper>
-    </StyledPostWrapper>
+    <MainLayout location={location} >
+      <StyledPostWrapper>
+        <Helmet>
+          <title>{fullTitle}</title>
+          <meta name="twitter:card" content="summary_large_image" />
+          <meta name="twitter:title" content={fullTitle} />
+          <meta name="twitter:description" content={caption} />
+          <meta name="twitter:image" content={`${siteUrl}${image}`} />
+          <meta property="og:title" content={fullTitle} />
+          <meta property="og:description" content={caption} />
+          <meta property="og:image" content={`${siteUrl}${image}`} />
+          <meta property="og:url" content={`${siteUrl}${location.pathname}`} />
+        </Helmet>
+        <StyledMainImage image={image}>
+          <StyledTitleWrapper>
+            <h1>{postTitle}</h1>
+            <h2>{date}</h2>
+          </StyledTitleWrapper>
+        </StyledMainImage>
+        <StyledImageCaption>{featured_image_caption}</StyledImageCaption>
+        <StyledTextWrapper>
+          {stripFrontMatterAndCompile(post.internal.content)}
+          <FlexContainer main="space-between">
+            <small>
+              <a href={githubUrl} target="_blank" rel="noopener noreferrer"><em>Edit this story on GitHub</em></a>
+            </small>
+            <Share
+              url={`${siteUrl}${location.pathname}`}
+              options={{
+                size: "large",
+                via: "mmmaaatttttt",
+                text: postTitle
+              }}
+            />
+          </FlexContainer>
+        </StyledTextWrapper>
+      </StyledPostWrapper>
+    </MainLayout>
   );
 };
 

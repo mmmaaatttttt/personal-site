@@ -1,10 +1,10 @@
-https://www.gatsbyjs.org/docs/add-seo-component/
-ordering by year
+- add layout component to all pages (pass down location prop)
+- https://www.gatsbyjs.org/docs/add-seo-component/
+- ordering by year
 - add "related stories" to end of each story
 - pagination for stories
 - search for stories
 - make sure all package updates work
-- figure out import path without gatsby-plugin-resolve
 
 LOW PRIORITY
 - get more heat map data (mayyybeeeee)

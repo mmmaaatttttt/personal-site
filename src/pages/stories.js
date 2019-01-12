@@ -2,6 +2,7 @@ import React from "react";
 import { graphql } from 'gatsby';
 import styled from "styled-components";
 import Link from "gatsby-link";
+import MainLayout from "../layouts/MainLayout";
 import { rhythm } from "utils/typography";
 import images from "utils/images";
 import COLORS from "utils/styles";
@@ -119,22 +120,24 @@ const Story = ({
   </StyledStory>
 );
 
-const Stories = ({ data }) => (
-  <StyledStoriesWrapper>
-    {data.allMarkdownRemark.edges.map(({ node }, index) => (
-      <Story
-        key={node.fields.slug}
-        title={node.frontmatter.title}
-        date={node.frontmatter.date}
-        image={images[`featured_images/${node.frontmatter.featured_image}`]}
-        caption={node.frontmatter.caption}
-        slug={node.fields.slug}
-        timeToRead={node.timeToRead}
-        direction={index % 2 === 0 ? "Left" : "Right"}
-        delay={index / 4}
-      />
-    ))}
-  </StyledStoriesWrapper>
+const Stories = ({ data, location }) => (
+  <MainLayout location={location}>
+    <StyledStoriesWrapper>
+      {data.allMarkdownRemark.edges.map(({ node }, index) => (
+        <Story
+          key={node.fields.slug}
+          title={node.frontmatter.title}
+          date={node.frontmatter.date}
+          image={images[`featured_images/${node.frontmatter.featured_image}`]}
+          caption={node.frontmatter.caption}
+          slug={node.fields.slug}
+          timeToRead={node.timeToRead}
+          direction={index % 2 === 0 ? "Left" : "Right"}
+          delay={index / 4}
+        />
+      ))}
+    </StyledStoriesWrapper>
+  </MainLayout>
 );
 
 export default Stories;

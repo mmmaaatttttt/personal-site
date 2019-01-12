@@ -5,6 +5,9 @@ import COLORS from "utils/styles";
 import { total, calculateWastedVotes } from "utils/mathHelpers";
 import { ColoredSpan, StyledTable } from "story_components";
 
+console.log("HERE IS THE STYLED TABLE", StyledTable);
+console.log("HERE IS THE COLORED SPAN", ColoredSpan);
+
 const StyledBaseTable = styled(StyledTable)`
   td:first-child {
     font-weight: bold;
