@@ -30,7 +30,7 @@ const StyledP = styled.p`
 const Home = () => (
   <StyledHome>
     <StyledH1>Hi!</StyledH1>
-    <StyledH2>I'm Matt. 👋</StyledH2>
+    <StyledH2>I'm Matt. <span role="img" aria-label="wave">👋</span></StyledH2>
     <StyledP>
       Use the nav bar to explore the site. You'll figure it out.
     </StyledP>

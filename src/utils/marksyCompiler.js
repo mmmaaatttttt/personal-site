@@ -8,7 +8,7 @@ const compile = marksy({
   elements: {
     a({ href, title, children }) {
       return (
-        <a href={href} alt={title} target="_blank">
+        <a href={href} alt={title} target="_blank" rel="noopener noreferrer">
           {children}
         </a>
       );

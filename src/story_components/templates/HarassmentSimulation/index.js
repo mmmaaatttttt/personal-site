@@ -1,12 +1,10 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { select } from "d3-selection";
-import { scaleLinear } from "d3-scale";
 import { darken } from "polished";
 import withCaption from "hocs/withCaption";
 import COLORS from "utils/styles";
 import { capitalize } from "utils/stringHelpers";
-import updateSpeeds from "data/income-inequality";
 import {
   ClippedSVG,
   FlexContainer,

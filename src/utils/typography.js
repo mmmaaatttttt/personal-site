@@ -12,5 +12,7 @@ altonTheme.overrideThemeStyles = ({ rhythm }, options) => ({
 });
 
 const typography = new Typography(altonTheme);
+const { rhythm } = typography;
 
 export default typography;
+export { rhythm };

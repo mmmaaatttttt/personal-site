@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import { graphql } from 'gatsby';
 import { Share } from "react-twitter-widgets";
 import { Helmet } from "react-helmet";
 import { FlexContainer } from "story_components";

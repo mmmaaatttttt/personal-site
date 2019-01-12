@@ -1,5 +1,6 @@
 import React from "react";
-import styled, { keyframes } from "styled-components";
+import { graphql } from 'gatsby';
+import styled from "styled-components";
 import Link from "gatsby-link";
 import { rhythm } from "utils/typography";
 import images from "utils/images";

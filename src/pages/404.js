@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import { graphql } from 'gatsby';
 import Link from "gatsby-link";
 import { rhythm } from "utils/typography";
 import images from "utils/images";
@@ -39,7 +40,7 @@ const Error404 = ({ data }) => {
   const { title, featured_image, caption } = node.frontmatter;
   return (
     <Styled404>
-      <h1>Oh no! 😭</h1>
+      <h1>Oh no! <span role="img" aria-label="cry-face">😭</span></h1>
       <p>It seems like the page you're looking for doesn't exist.</p>
       <p>
         Please double-check your request and try again. Or, you're welcome to

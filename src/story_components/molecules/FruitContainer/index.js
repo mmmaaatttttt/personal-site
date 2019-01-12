@@ -4,7 +4,6 @@ import styled, { css } from "styled-components";
 import { darken } from "polished";
 import { fadeColors } from "utils/styles";
 import media from "utils/media";
-import { NarrowContainer } from "story_components";
 
 const StyledFruitContainer = styled.div`
   border: 4px solid ${props => darken(0.2, props.color)};

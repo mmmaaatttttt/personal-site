@@ -1,9 +1,10 @@
 import React from "react";
-import matt from "./images/matt.jpg";
+import { graphql } from 'gatsby';
 import styled from "styled-components";
 import { rhythm } from "utils/typography";
 import COLORS, { sizes, fadeIn } from "utils/styles";
 import media from "utils/media";
+import matt from "./images/matt.jpg";
 
 const StyledAboutWrapper = styled.div`
   max-width: ${sizes.maxWidthContent};
@@ -83,7 +84,7 @@ const About = ({ data }) => (
       for that reason, I don't enable comments on anything I write here.
     </p>
     <p>Take a look around, and let me know what you think!</p>
-    <RightP>❤️ Matt</RightP>
+    <RightP><span role="img" aria-label="heart">❤️</span> Matt</RightP>
   </StyledAboutWrapper>
 );
 

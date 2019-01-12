@@ -6,7 +6,7 @@
  * @param {Array} array of values
  */
 function generateFreqMap(arr) {
-  const map = new Map;
+  const map = new Map();
   for (let val of arr) {
     let count = 0;
     if (map.has(val)) count = map.get(val);
