@@ -21,6 +21,7 @@ class Axis extends Component {
   constructor(props) {
     super(props);
     this.drawAxis = this.drawAxis.bind(this);
+    this.axis = React.createRef();
   }
 
   componentDidMount() {
@@ -65,14 +66,14 @@ class Axis extends Component {
         range(domain[0], domain[1] + tickStep, tickStep)
       );
     }
-    select(this.axis)
+    select(this.axis.current)
       .attr("transform", `translate(${xShift},${yShift})`)
       .call(axis)
       .selectAll(".tick line")
       .attr("transform", `translate(0,${tickShift})`);
 
     if (tickFormat) {
-      const labels = select(this.axis).selectAll(".tick text");
+      const labels = select(this.axis.current).selectAll(".tick text");
       labels.style("text-anchor", textAnchor);
       if (rotateLabels) {
         labels.attr("transform", "rotate(90)");
@@ -90,7 +91,7 @@ class Axis extends Component {
     return (
       <StyledAxis
         fontSize={fontSize}
-        innerRef={axis => (this.axis = axis)}
+        ref={this.axis}
         tickColor={tickColor}
       />
     );

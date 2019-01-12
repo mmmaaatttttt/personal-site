@@ -8,6 +8,7 @@ const StyledParagraph = styled.p`
   .katex * {
     font-family: inherit !important;
   }
+
   .delimcenter {
     top: 0.1em !important;
     font-size: 2rem;
@@ -15,14 +16,19 @@ const StyledParagraph = styled.p`
 `;
 
 class Latex extends Component {
+  constructor(props) {
+    super(props);
+    this.pTag = React.createRef(); 
+  }
+
   componentDidMount() {
-    katex.render(this.props.str, this.p, {
+    katex.render(this.props.str, this.pTag.current, {
       displayMode: this.props.displayMode
     });
   }
 
   render() {
-    return <StyledParagraph innerRef={p => (this.p = p)} />;
+    return <StyledParagraph ref={this.pTag} />;
   }
 }
 

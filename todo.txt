@@ -1,4 +1,4 @@
-- add layout component to all pages (pass down location prop)
+- why is first story cut in half?
 - https://www.gatsbyjs.org/docs/add-seo-component/
 - ordering by year
 - add "related stories" to end of each story
