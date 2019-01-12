@@ -5,6 +5,7 @@
 - pagination for stories
 - search for stories
 - make sure all package updates work
+- favor mdx over marksy: https://gatsby-mdx.netlify.com/installation
 
 LOW PRIORITY
 - get more heat map data (mayyybeeeee)
@@ -16,9 +17,7 @@ LOW PRIORITY
 - add more tests
 - sidebars don't always show up
 - fix hot reloading issue for blog links
-- update packages
 - line breaks for katex equations on mobile
-- MDX! https://github.com/mdx-js/mdx#mdx-syntax, https://github.com/nhducit/gatsby-plugin-mdx
 
 
 LOWEST PRIORITY

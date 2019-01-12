@@ -1,4 +1,4 @@
-import marksy from "marksy/components";
+import marksy from "marksy/jsx";
 import React, { createElement } from "react";
 import * as components from "story_components";
 
