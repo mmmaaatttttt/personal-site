@@ -123,7 +123,7 @@ const Story = ({
 const Stories = ({ data, location }) => (
   <MainLayout location={location}>
     <StyledStoriesWrapper>
-      {data.allMarkdownRemark.edges.map(({ node }, index) => (
+      {data.allMdx.edges.map(({ node }, index) => (
         <Story
           key={node.fields.slug}
           title={node.frontmatter.title}
@@ -144,7 +144,7 @@ export default Stories;
 
 export const query = graphql`
   query StoriesQuery {
-    allMarkdownRemark(sort: { fields: [frontmatter___date], order: DESC }) {
+    allMdx(sort: { fields: [frontmatter___date], order: DESC }) {
       edges {
         node {
           frontmatter {

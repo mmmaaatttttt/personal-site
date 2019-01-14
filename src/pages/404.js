@@ -36,7 +36,7 @@ const StyledImage = styled.img`
 `;
 
 const Error404 = ({ data, location }) => {
-  const { node } = data.allMarkdownRemark.edges[0];
+  const { node } = data.allMdx.edges[0];
   const { slug } = node.fields;
   const { title, featured_image, caption } = node.frontmatter;
   return (
@@ -67,7 +67,7 @@ export default Error404;
 
 export const query = graphql`
   query LatestStoryQuery {
-    allMarkdownRemark(
+    allMdx(
       limit: 1
       sort: { fields: [frontmatter___date], order: DESC }
     ) {
