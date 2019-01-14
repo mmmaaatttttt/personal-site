@@ -5,6 +5,7 @@
 - pagination for stories
 - search for stories
 - make sure all package updates work
+- eslint config https://www.gatsbyjs.org/packages/gatsby-plugin-eslint/
 
 
 LOW PRIORITY

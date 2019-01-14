@@ -1,11 +1,11 @@
 import { select } from "d3-selection";
 import { forceSimulation } from "d3-force";
-import { forceBounce } from "d3-force-bounce";
-import { forceSurface } from "d3-force-surface";
+import d3forceBounce from "d3-force-bounce";
+import d3forceSurface from "d3-force-surface";
 import { darken } from "polished";
 
 function initializeSimulation(width, height, handleCollision = null) {
-  const bounceForce = forceBounce().radius(node => node.r);
+  const bounceForce = d3forceBounce().radius(node => node.r);
   if (handleCollision) bounceForce.onImpact(handleCollision);
   return forceSimulation()
     .alphaDecay(0)
@@ -13,7 +13,7 @@ function initializeSimulation(width, height, handleCollision = null) {
     .force("bounce", bounceForce)
     .force(
       "surface",
-      forceSurface()
+      d3forceSurface()
         .surfaces([
           {
             from: { x: 0, y: 0 },
