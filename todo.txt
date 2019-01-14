@@ -1,13 +1,14 @@
-- why is first story cut in half?
+
 - https://www.gatsbyjs.org/docs/add-seo-component/
 - ordering by year
 - add "related stories" to end of each story
 - pagination for stories
 - search for stories
 - make sure all package updates work
-- favor mdx over marksy: https://gatsby-mdx.netlify.com/installation
+
 
 LOW PRIORITY
+- research how data is passed to mdx: https://gatsby-mdx.netlify.com/guides/writing-pages-in-mdx
 - get more heat map data (mayyybeeeee)
 - add meta tags for /stories endpoint
 - refactor harassment components, which are super gross
@@ -18,7 +19,6 @@ LOW PRIORITY
 - sidebars don't always show up
 - fix hot reloading issue for blog links
 - line breaks for katex equations on mobile
-
 
 LOWEST PRIORITY
 - look into netlify: https://www.netlify.com/
