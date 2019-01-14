@@ -38,8 +38,8 @@ class MainLayout extends Component {
     const display = this.state.show ? "flex" : "none";
     return (
       <StaticQuery
-      query={query}
-      render={data => {
+        query={query}
+        render={data => {
           const { title, description, siteUrl } = data.site.siteMetadata;
           return (
             <StyledPageWrapper style={{ display }}>
