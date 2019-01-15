@@ -1,8 +1,86 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`renders children when passed in successfully 1`] = `
-<div
-  className="sc-bdVaJa ipyROz"
+<StyledComponent
+  column={true}
+  cross="stretch"
+  flex={1}
+  forwardedComponent={
+    Object {
+      "$$typeof": Symbol(react.forward_ref),
+      "attrs": Array [],
+      "componentStyle": ComponentStyle {
+        "componentId": "sc-bdVaJa",
+        "isStatic": false,
+        "rules": Array [
+          "
+  display: flex;
+  flex: ",
+          [Function],
+          ";
+  flex-wrap: ",
+          [Function],
+          ";
+    ",
+          [Function],
+          "
+    ",
+          [Function],
+          ": ",
+          [Function],
+          ";
+  ",
+          [Function],
+          ": ",
+          [Function],
+          ";
+  margin: ",
+          [Function],
+          ";
+  width: ",
+          [Function],
+          ";
+  text-align: ",
+          [Function],
+          ";
+",
+        ],
+      },
+      "defaultProps": Object {
+        "column": false,
+        "cross": "stretch",
+        "flex": 1,
+        "main": "stretch",
+        "margin": "0",
+        "textAlign": "left",
+        "width": "auto",
+        "wrap": false,
+      },
+      "displayName": "styled.div",
+      "foldedComponentIds": Array [],
+      "propTypes": Object {
+        "column": [Function],
+        "cross": [Function],
+        "flex": [Function],
+        "main": [Function],
+        "margin": [Function],
+        "textAlign": [Function],
+        "width": [Function],
+        "wrap": [Function],
+      },
+      "render": [Function],
+      "styledComponentId": "sc-bdVaJa",
+      "target": "div",
+      "toString": [Function],
+      "warnTooManyClasses": [Function],
+      "withComponent": [Function],
+    }
+  }
+  forwardedRef={null}
+  main="stretch"
+  margin="0"
+  textAlign="left"
+  width="auto"
   wrap={false}
 >
   <div>
@@ -14,19 +92,175 @@ exports[`renders children when passed in successfully 1`] = `
   <div>
     Here's a third
   </div>
-</div>
+</StyledComponent>
 `;
 
 exports[`renders props when passed in 1`] = `
-<div
-  className="sc-bdVaJa jrcPFz"
+<StyledComponent
+  column={true}
+  cross="center"
+  flex={1}
+  forwardedComponent={
+    Object {
+      "$$typeof": Symbol(react.forward_ref),
+      "attrs": Array [],
+      "componentStyle": ComponentStyle {
+        "componentId": "sc-bdVaJa",
+        "isStatic": false,
+        "rules": Array [
+          "
+  display: flex;
+  flex: ",
+          [Function],
+          ";
+  flex-wrap: ",
+          [Function],
+          ";
+    ",
+          [Function],
+          "
+    ",
+          [Function],
+          ": ",
+          [Function],
+          ";
+  ",
+          [Function],
+          ": ",
+          [Function],
+          ";
+  margin: ",
+          [Function],
+          ";
+  width: ",
+          [Function],
+          ";
+  text-align: ",
+          [Function],
+          ";
+",
+        ],
+      },
+      "defaultProps": Object {
+        "column": false,
+        "cross": "stretch",
+        "flex": 1,
+        "main": "stretch",
+        "margin": "0",
+        "textAlign": "left",
+        "width": "auto",
+        "wrap": false,
+      },
+      "displayName": "styled.div",
+      "foldedComponentIds": Array [],
+      "propTypes": Object {
+        "column": [Function],
+        "cross": [Function],
+        "flex": [Function],
+        "main": [Function],
+        "margin": [Function],
+        "textAlign": [Function],
+        "width": [Function],
+        "wrap": [Function],
+      },
+      "render": [Function],
+      "styledComponentId": "sc-bdVaJa",
+      "target": "div",
+      "toString": [Function],
+      "warnTooManyClasses": [Function],
+      "withComponent": [Function],
+    }
+  }
+  forwardedRef={null}
+  main="center"
+  margin="0"
+  textAlign="left"
+  width="auto"
   wrap={true}
 />
 `;
 
 exports[`renders successfully 1`] = `
-<div
-  className="sc-bdVaJa crTGFb"
+<StyledComponent
+  column={false}
+  cross="stretch"
+  flex={1}
+  forwardedComponent={
+    Object {
+      "$$typeof": Symbol(react.forward_ref),
+      "attrs": Array [],
+      "componentStyle": ComponentStyle {
+        "componentId": "sc-bdVaJa",
+        "isStatic": false,
+        "rules": Array [
+          "
+  display: flex;
+  flex: ",
+          [Function],
+          ";
+  flex-wrap: ",
+          [Function],
+          ";
+    ",
+          [Function],
+          "
+    ",
+          [Function],
+          ": ",
+          [Function],
+          ";
+  ",
+          [Function],
+          ": ",
+          [Function],
+          ";
+  margin: ",
+          [Function],
+          ";
+  width: ",
+          [Function],
+          ";
+  text-align: ",
+          [Function],
+          ";
+",
+        ],
+      },
+      "defaultProps": Object {
+        "column": false,
+        "cross": "stretch",
+        "flex": 1,
+        "main": "stretch",
+        "margin": "0",
+        "textAlign": "left",
+        "width": "auto",
+        "wrap": false,
+      },
+      "displayName": "styled.div",
+      "foldedComponentIds": Array [],
+      "propTypes": Object {
+        "column": [Function],
+        "cross": [Function],
+        "flex": [Function],
+        "main": [Function],
+        "margin": [Function],
+        "textAlign": [Function],
+        "width": [Function],
+        "wrap": [Function],
+      },
+      "render": [Function],
+      "styledComponentId": "sc-bdVaJa",
+      "target": "div",
+      "toString": [Function],
+      "warnTooManyClasses": [Function],
+      "withComponent": [Function],
+    }
+  }
+  forwardedRef={null}
+  main="stretch"
+  margin="0"
+  textAlign="left"
+  width="auto"
   wrap={false}
 />
 `;

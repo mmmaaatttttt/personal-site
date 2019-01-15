@@ -1,69 +1,307 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`renders props when passed in 1`] = `
-<ComponentEnhancer(undefined)
+<StyledComponent
   activeColor="red"
-  activeDotStyle={Object {}}
-  className="sc-bdVaJa iyEPrm"
-  disabled={false}
-  dotStyle={Object {}}
-  dots={false}
-  handle={[Function]}
-  handleStyle={
-    Array [
-      Object {},
-    ]
+  forwardedComponent={
+    Object {
+      "$$typeof": Symbol(react.forward_ref),
+      "Handle": [Function],
+      "Range": [Function],
+      "attrs": Array [],
+      "componentStyle": ComponentStyle {
+        "componentId": "sc-bdVaJa",
+        "isStatic": false,
+        "rules": Array [
+          "
+  position: relative;
+  height: ",
+          [Function],
+          "px;
+  padding: ",
+          [Function],
+          "px 0;
+  width: 100%;
+  border-radius: ",
+          [Function],
+          "px;
+  -ms-touch-action: none;
+  touch-action: none;
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+  display: flex;
+  justify-content: space-between;
+
+  * {
+    box-sizing: border-box;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
   }
+
+  .rc-slider-rail {
+    position: absolute;
+    width: 100%;
+    background-color: ",
+          [Function],
+          ";
+    height: ",
+          [Function],
+          "px;
+    border-radius: ",
+          [Function],
+          "px;
+  }
+
+  .rc-slider-track {
+    position: absolute;
+    left: 0;
+    height: ",
+          [Function],
+          "px;
+    border-radius: ",
+          [Function],
+          "px;
+    background-color: ",
+          [Function],
+          ";
+  }
+
+  .rc-slider-handle {
+    position: absolute;
+    margin-left: -",
+          [Function],
+          "px;
+    margin-top: -",
+          [Function],
+          "px;
+    width: ",
+          [Function],
+          "px;
+    height: ",
+          [Function],
+          "px;
+    cursor: pointer;
+    cursor: grab;
+    border-radius: 50%;
+    border: solid ",
+          [Function],
+          "px
+      ",
+          [Function],
+          ";
+    background-color: ",
+          [Function],
+          ";
+    touch-action: pan-x;
+    transition: border-width 0.5s;
+    z-index: 100;
+  }
+
+  .rc-slider-handle:hover {
+    border-width: 0;
+  }
+
+  .rc-slider-handle:active {
+    border-width: 0;
+    border-color: ",
+          [Function],
+          ";
+    box-shadow: 0 0 ",
+          [Function],
+          "px ",
+          [Function],
+          ";
+    cursor: grabbing;
+  }
+
+  .rc-slider-handle:focus {
+    border-width: 0;
+    border-color: ",
+          [Function],
+          ";
+    box-shadow: 0 0 0 ",
+          [Function],
+          "px ",
+          [Function],
+          ";
+    outline: none;
+  }
+",
+        ],
+      },
+      "createSliderWithTooltip": [Function],
+      "defaultProps": Object {
+        "activeColor": "#abe2fb",
+        "inactiveColor": "#e9e9e9",
+      },
+      "displayName": "Styled(ComponentEnhancer(undefined))",
+      "foldedComponentIds": Array [],
+      "propTypes": Object {
+        "activeColor": [Function],
+        "inactiveColor": [Function],
+      },
+      "render": [Function],
+      "styledComponentId": "sc-bdVaJa",
+      "target": [Function],
+      "toString": [Function],
+      "warnTooManyClasses": [Function],
+      "withComponent": [Function],
+      Symbol(Symbol.hasInstance): [Function],
+    }
+  }
+  forwardedRef={null}
   inactiveColor="black"
-  included={true}
-  marks={Object {}}
-  max={100}
-  min={0}
-  onAfterChange={[Function]}
-  onBeforeChange={[Function]}
-  onChange={[Function]}
-  prefixCls="rc-slider"
-  railStyle={Object {}}
-  step={1}
-  trackStyle={
-    Array [
-      Object {},
-    ]
-  }
-  vertical={false}
 />
 `;
 
 exports[`renders successfully 1`] = `
-<ComponentEnhancer(undefined)
+<StyledComponent
   activeColor="#abe2fb"
-  activeDotStyle={Object {}}
-  className="sc-bdVaJa kbRwvP"
-  disabled={false}
-  dotStyle={Object {}}
-  dots={false}
-  handle={[Function]}
-  handleStyle={
-    Array [
-      Object {},
-    ]
+  forwardedComponent={
+    Object {
+      "$$typeof": Symbol(react.forward_ref),
+      "Handle": [Function],
+      "Range": [Function],
+      "attrs": Array [],
+      "componentStyle": ComponentStyle {
+        "componentId": "sc-bdVaJa",
+        "isStatic": false,
+        "rules": Array [
+          "
+  position: relative;
+  height: ",
+          [Function],
+          "px;
+  padding: ",
+          [Function],
+          "px 0;
+  width: 100%;
+  border-radius: ",
+          [Function],
+          "px;
+  -ms-touch-action: none;
+  touch-action: none;
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+  display: flex;
+  justify-content: space-between;
+
+  * {
+    box-sizing: border-box;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
   }
+
+  .rc-slider-rail {
+    position: absolute;
+    width: 100%;
+    background-color: ",
+          [Function],
+          ";
+    height: ",
+          [Function],
+          "px;
+    border-radius: ",
+          [Function],
+          "px;
+  }
+
+  .rc-slider-track {
+    position: absolute;
+    left: 0;
+    height: ",
+          [Function],
+          "px;
+    border-radius: ",
+          [Function],
+          "px;
+    background-color: ",
+          [Function],
+          ";
+  }
+
+  .rc-slider-handle {
+    position: absolute;
+    margin-left: -",
+          [Function],
+          "px;
+    margin-top: -",
+          [Function],
+          "px;
+    width: ",
+          [Function],
+          "px;
+    height: ",
+          [Function],
+          "px;
+    cursor: pointer;
+    cursor: grab;
+    border-radius: 50%;
+    border: solid ",
+          [Function],
+          "px
+      ",
+          [Function],
+          ";
+    background-color: ",
+          [Function],
+          ";
+    touch-action: pan-x;
+    transition: border-width 0.5s;
+    z-index: 100;
+  }
+
+  .rc-slider-handle:hover {
+    border-width: 0;
+  }
+
+  .rc-slider-handle:active {
+    border-width: 0;
+    border-color: ",
+          [Function],
+          ";
+    box-shadow: 0 0 ",
+          [Function],
+          "px ",
+          [Function],
+          ";
+    cursor: grabbing;
+  }
+
+  .rc-slider-handle:focus {
+    border-width: 0;
+    border-color: ",
+          [Function],
+          ";
+    box-shadow: 0 0 0 ",
+          [Function],
+          "px ",
+          [Function],
+          ";
+    outline: none;
+  }
+",
+        ],
+      },
+      "createSliderWithTooltip": [Function],
+      "defaultProps": Object {
+        "activeColor": "#abe2fb",
+        "inactiveColor": "#e9e9e9",
+      },
+      "displayName": "Styled(ComponentEnhancer(undefined))",
+      "foldedComponentIds": Array [],
+      "propTypes": Object {
+        "activeColor": [Function],
+        "inactiveColor": [Function],
+      },
+      "render": [Function],
+      "styledComponentId": "sc-bdVaJa",
+      "target": [Function],
+      "toString": [Function],
+      "warnTooManyClasses": [Function],
+      "withComponent": [Function],
+      Symbol(Symbol.hasInstance): [Function],
+    }
+  }
+  forwardedRef={null}
   inactiveColor="#e9e9e9"
-  included={true}
-  marks={Object {}}
-  max={100}
-  min={0}
-  onAfterChange={[Function]}
-  onBeforeChange={[Function]}
-  onChange={[Function]}
-  prefixCls="rc-slider"
-  railStyle={Object {}}
-  step={1}
-  trackStyle={
-    Array [
-      Object {},
-    ]
-  }
-  vertical={false}
 />
 `;

@@ -1,26 +1,233 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`renders props when passed in 1`] = `
-<button
-  className="sc-bdVaJa dozLaS"
+<StyledComponent
   color="blue"
+  disabled={false}
+  forwardedComponent={
+    Object {
+      "$$typeof": Symbol(react.forward_ref),
+      "attrs": Array [],
+      "componentStyle": ComponentStyle {
+        "componentId": "sc-bdVaJa",
+        "isStatic": false,
+        "rules": Array [
+          "
+  border-radius: 3px;
+  box-sizing: border-box;
+  padding: 0.2rem 0.6rem;
+  background-color: ",
+          [Function],
+          ";
+  border: 1px solid ",
+          [Function],
+          ";
+  color: white;
+  font-size: 80%;
+  line-height: 1.4rem;
+  margin: 0.5rem;
+
+  &:active,
+  &:focus {
+    outline: none;
+  }
+
+  &:hover {
+    cursor: pointer;
+    background-color: ",
+          [Function],
+          ";
+  }
+
+  ",
+          [Function],
+          "
+
+  ",
+          [Function],
+          " ",
+          [Function],
+          ";
+",
+        ],
+      },
+      "defaultProps": Object {
+        "color": "white",
+        "disabled": false,
+        "large": false,
+      },
+      "displayName": "styled.button",
+      "foldedComponentIds": Array [],
+      "propTypes": Object {
+        "color": [Function],
+        "disabled": [Function],
+        "large": [Function],
+      },
+      "render": [Function],
+      "styledComponentId": "sc-bdVaJa",
+      "target": "button",
+      "toString": [Function],
+      "warnTooManyClasses": [Function],
+      "withComponent": [Function],
+    }
+  }
+  forwardedRef={null}
+  large={false}
 >
   I'm a blue button
-</button>
+</StyledComponent>
 `;
 
 exports[`renders successfully 1`] = `
-<button
-  className="sc-bdVaJa jahWkE"
+<StyledComponent
   color="white"
+  disabled={false}
+  forwardedComponent={
+    Object {
+      "$$typeof": Symbol(react.forward_ref),
+      "attrs": Array [],
+      "componentStyle": ComponentStyle {
+        "componentId": "sc-bdVaJa",
+        "isStatic": false,
+        "rules": Array [
+          "
+  border-radius: 3px;
+  box-sizing: border-box;
+  padding: 0.2rem 0.6rem;
+  background-color: ",
+          [Function],
+          ";
+  border: 1px solid ",
+          [Function],
+          ";
+  color: white;
+  font-size: 80%;
+  line-height: 1.4rem;
+  margin: 0.5rem;
+
+  &:active,
+  &:focus {
+    outline: none;
+  }
+
+  &:hover {
+    cursor: pointer;
+    background-color: ",
+          [Function],
+          ";
+  }
+
+  ",
+          [Function],
+          "
+
+  ",
+          [Function],
+          " ",
+          [Function],
+          ";
+",
+        ],
+      },
+      "defaultProps": Object {
+        "color": "white",
+        "disabled": false,
+        "large": false,
+      },
+      "displayName": "styled.button",
+      "foldedComponentIds": Array [],
+      "propTypes": Object {
+        "color": [Function],
+        "disabled": [Function],
+        "large": [Function],
+      },
+      "render": [Function],
+      "styledComponentId": "sc-bdVaJa",
+      "target": "button",
+      "toString": [Function],
+      "warnTooManyClasses": [Function],
+      "withComponent": [Function],
+    }
+  }
+  forwardedRef={null}
+  large={false}
 />
 `;
 
 exports[`renders text when passed in successfully 1`] = `
-<button
-  className="sc-bdVaJa jahWkE"
+<StyledComponent
   color="white"
+  disabled={false}
+  forwardedComponent={
+    Object {
+      "$$typeof": Symbol(react.forward_ref),
+      "attrs": Array [],
+      "componentStyle": ComponentStyle {
+        "componentId": "sc-bdVaJa",
+        "isStatic": false,
+        "rules": Array [
+          "
+  border-radius: 3px;
+  box-sizing: border-box;
+  padding: 0.2rem 0.6rem;
+  background-color: ",
+          [Function],
+          ";
+  border: 1px solid ",
+          [Function],
+          ";
+  color: white;
+  font-size: 80%;
+  line-height: 1.4rem;
+  margin: 0.5rem;
+
+  &:active,
+  &:focus {
+    outline: none;
+  }
+
+  &:hover {
+    cursor: pointer;
+    background-color: ",
+          [Function],
+          ";
+  }
+
+  ",
+          [Function],
+          "
+
+  ",
+          [Function],
+          " ",
+          [Function],
+          ";
+",
+        ],
+      },
+      "defaultProps": Object {
+        "color": "white",
+        "disabled": false,
+        "large": false,
+      },
+      "displayName": "styled.button",
+      "foldedComponentIds": Array [],
+      "propTypes": Object {
+        "color": [Function],
+        "disabled": [Function],
+        "large": [Function],
+      },
+      "render": [Function],
+      "styledComponentId": "sc-bdVaJa",
+      "target": "button",
+      "toString": [Function],
+      "warnTooManyClasses": [Function],
+      "withComponent": [Function],
+    }
+  }
+  forwardedRef={null}
+  large={false}
 >
   I'm a button
-</button>
+</StyledComponent>
 `;

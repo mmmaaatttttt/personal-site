@@ -1,29 +1,8 @@
-const path = require("path");
-
-module.exports = require("babel-jest").createTransformer({
-  presets: [
-    [
-      "env",
-      {
-        modules: "commonjs",
-        targets: {
-          node: "current"
-        },
-        exclude: ["transform-regenerator", "transform-es2015-typeof-symbol"]
-      }
-    ],
-    "stage-0",
-    "react"
-  ],
+const babelOptions = {
+  presets: ["babel-preset-gatsby"],
   plugins: [
-    "gatsby/dist/utils/babel-plugin-extract-graphql",
-    "add-module-exports",
-    "transform-object-assign",
-    [
-      "module-resolver",
-      {
-        root: ["./src"]
-      }
-    ]
+    [ "module-resolver", { root: ["./src"] } ]
   ]
-});
+}
+
+module.exports = require("babel-jest").createTransformer(babelOptions)

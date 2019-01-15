@@ -1,26 +1,140 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`renders props when passed in 1`] = `
-<text
-  className="sc-bdVaJa ckfnTm"
+<StyledComponent
+  baseline="middle"
   fontSize="80%"
+  forwardedComponent={
+    Object {
+      "$$typeof": Symbol(react.forward_ref),
+      "attrs": Array [],
+      "componentStyle": ComponentStyle {
+        "componentId": "sc-bdVaJa",
+        "isStatic": false,
+        "rules": Array [
+          "
+  text-anchor: middle;
+  alignment-baseline: ",
+          [Function],
+          ";
+  font-size: ",
+          [Function],
+          ";
+",
+        ],
+      },
+      "defaultProps": Object {
+        "baseline": "middle",
+        "fontSize": "100%",
+      },
+      "displayName": "styled.text",
+      "foldedComponentIds": Array [],
+      "propTypes": Object {
+        "baseline": [Function],
+        "fontSize": [Function],
+      },
+      "render": [Function],
+      "styledComponentId": "sc-bdVaJa",
+      "target": "text",
+      "toString": [Function],
+      "warnTooManyClasses": [Function],
+      "withComponent": [Function],
+    }
+  }
+  forwardedRef={null}
 >
   MOAR TEXT
-</text>
+</StyledComponent>
 `;
 
 exports[`renders successfully 1`] = `
-<text
-  className="sc-bdVaJa fyjRRC"
+<StyledComponent
+  baseline="middle"
   fontSize="100%"
+  forwardedComponent={
+    Object {
+      "$$typeof": Symbol(react.forward_ref),
+      "attrs": Array [],
+      "componentStyle": ComponentStyle {
+        "componentId": "sc-bdVaJa",
+        "isStatic": false,
+        "rules": Array [
+          "
+  text-anchor: middle;
+  alignment-baseline: ",
+          [Function],
+          ";
+  font-size: ",
+          [Function],
+          ";
+",
+        ],
+      },
+      "defaultProps": Object {
+        "baseline": "middle",
+        "fontSize": "100%",
+      },
+      "displayName": "styled.text",
+      "foldedComponentIds": Array [],
+      "propTypes": Object {
+        "baseline": [Function],
+        "fontSize": [Function],
+      },
+      "render": [Function],
+      "styledComponentId": "sc-bdVaJa",
+      "target": "text",
+      "toString": [Function],
+      "warnTooManyClasses": [Function],
+      "withComponent": [Function],
+    }
+  }
+  forwardedRef={null}
 />
 `;
 
 exports[`renders text when passed in successfully 1`] = `
-<text
-  className="sc-bdVaJa fyjRRC"
+<StyledComponent
+  baseline="middle"
   fontSize="100%"
+  forwardedComponent={
+    Object {
+      "$$typeof": Symbol(react.forward_ref),
+      "attrs": Array [],
+      "componentStyle": ComponentStyle {
+        "componentId": "sc-bdVaJa",
+        "isStatic": false,
+        "rules": Array [
+          "
+  text-anchor: middle;
+  alignment-baseline: ",
+          [Function],
+          ";
+  font-size: ",
+          [Function],
+          ";
+",
+        ],
+      },
+      "defaultProps": Object {
+        "baseline": "middle",
+        "fontSize": "100%",
+      },
+      "displayName": "styled.text",
+      "foldedComponentIds": Array [],
+      "propTypes": Object {
+        "baseline": [Function],
+        "fontSize": [Function],
+      },
+      "render": [Function],
+      "styledComponentId": "sc-bdVaJa",
+      "target": "text",
+      "toString": [Function],
+      "warnTooManyClasses": [Function],
+      "withComponent": [Function],
+    }
+  }
+  forwardedRef={null}
 >
   Here's some centered text
-</text>
+</StyledComponent>
 `;

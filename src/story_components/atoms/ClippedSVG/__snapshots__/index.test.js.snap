@@ -2,6 +2,7 @@
 
 exports[`renders children when passed in successfully 1`] = `
 <styled.svg
+  marginTop={0}
   viewBox="0 0 500 300"
   xmlns="http://www.w3.org/2000/svg"
 >
@@ -37,6 +38,7 @@ exports[`renders children when passed in successfully 1`] = `
 
 exports[`renders successfully 1`] = `
 <styled.svg
+  marginTop={0}
   viewBox="0 0 600 600"
   xmlns="http://www.w3.org/2000/svg"
 >

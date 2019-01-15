@@ -1,23 +1,194 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`renders children when passed in 1`] = `
-<div
-  className="sc-bdVaJa gEpXOI"
-  type={[Function]}
+<StyledComponent
+  $$typeof={Symbol(react.element)}
+  _owner={null}
+  _store={Object {}}
+  forwardedComponent={
+    Object {
+      "$$typeof": Symbol(react.forward_ref),
+      "attrs": Array [],
+      "componentStyle": ComponentStyle {
+        "componentId": "sc-bdVaJa",
+        "isStatic": false,
+        "rules": Array [
+          "
+  width: ",
+          [Function],
+          ";
+  margin: 0 auto;
+
+  ",
+          [Function],
+          ";
+",
+        ],
+      },
+      "defaultProps": Object {
+        "fullWidthAt": "extraSmall",
+        "width": "80%",
+      },
+      "displayName": "styled.div",
+      "foldedComponentIds": Array [],
+      "propTypes": Object {
+        "fullWidthAt": [Function],
+        "width": [Function],
+      },
+      "render": [Function],
+      "styledComponentId": "sc-bdVaJa",
+      "target": "div",
+      "toString": [Function],
+      "warnTooManyClasses": [Function],
+      "withComponent": [Function],
+    }
+  }
+  forwardedRef={null}
+  fullWidthAt="extraSmall"
+  props={
+    Object {
+      "children": Array [
+        <div>
+          hello
+        </div>,
+        <div>
+          goodbye
+        </div>,
+      ],
+      "fullWidthAt": "small",
+      "width": "75%",
+    }
+  }
+  type={
+    Object {
+      "$$typeof": Symbol(react.forward_ref),
+      "attrs": Array [],
+      "componentStyle": ComponentStyle {
+        "componentId": "sc-bdVaJa",
+        "isStatic": false,
+        "rules": Array [
+          "
+  width: ",
+          [Function],
+          ";
+  margin: 0 auto;
+
+  ",
+          [Function],
+          ";
+",
+        ],
+      },
+      "defaultProps": Object {
+        "fullWidthAt": "extraSmall",
+        "width": "80%",
+      },
+      "displayName": "styled.div",
+      "foldedComponentIds": Array [],
+      "propTypes": Object {
+        "fullWidthAt": [Function],
+        "width": [Function],
+      },
+      "render": [Function],
+      "styledComponentId": "sc-bdVaJa",
+      "target": "div",
+      "toString": [Function],
+      "warnTooManyClasses": [Function],
+      "withComponent": [Function],
+    }
+  }
   width="80%"
 />
 `;
 
 exports[`renders props when passed in 1`] = `
-<div
-  className="sc-bdVaJa iXaqVX"
+<StyledComponent
+  forwardedComponent={
+    Object {
+      "$$typeof": Symbol(react.forward_ref),
+      "attrs": Array [],
+      "componentStyle": ComponentStyle {
+        "componentId": "sc-bdVaJa",
+        "isStatic": false,
+        "rules": Array [
+          "
+  width: ",
+          [Function],
+          ";
+  margin: 0 auto;
+
+  ",
+          [Function],
+          ";
+",
+        ],
+      },
+      "defaultProps": Object {
+        "fullWidthAt": "extraSmall",
+        "width": "80%",
+      },
+      "displayName": "styled.div",
+      "foldedComponentIds": Array [],
+      "propTypes": Object {
+        "fullWidthAt": [Function],
+        "width": [Function],
+      },
+      "render": [Function],
+      "styledComponentId": "sc-bdVaJa",
+      "target": "div",
+      "toString": [Function],
+      "warnTooManyClasses": [Function],
+      "withComponent": [Function],
+    }
+  }
+  forwardedRef={null}
+  fullWidthAt="small"
   width="50%"
 />
 `;
 
 exports[`renders successfully 1`] = `
-<div
-  className="sc-bdVaJa gEpXOI"
+<StyledComponent
+  forwardedComponent={
+    Object {
+      "$$typeof": Symbol(react.forward_ref),
+      "attrs": Array [],
+      "componentStyle": ComponentStyle {
+        "componentId": "sc-bdVaJa",
+        "isStatic": false,
+        "rules": Array [
+          "
+  width: ",
+          [Function],
+          ";
+  margin: 0 auto;
+
+  ",
+          [Function],
+          ";
+",
+        ],
+      },
+      "defaultProps": Object {
+        "fullWidthAt": "extraSmall",
+        "width": "80%",
+      },
+      "displayName": "styled.div",
+      "foldedComponentIds": Array [],
+      "propTypes": Object {
+        "fullWidthAt": [Function],
+        "width": [Function],
+      },
+      "render": [Function],
+      "styledComponentId": "sc-bdVaJa",
+      "target": "div",
+      "toString": [Function],
+      "warnTooManyClasses": [Function],
+      "withComponent": [Function],
+    }
+  }
+  forwardedRef={null}
+  fullWidthAt="extraSmall"
   width="80%"
 />
 `;
