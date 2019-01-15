@@ -41,10 +41,8 @@ ClippedSVG.propTypes = {
   id: PropTypes.string.isRequired,
   width: PropTypes.number.isRequired,
   height: PropTypes.number.isRequired,
-  marginTop: PropTypes.oneOfType([
-    PropTypes.number,
-    PropTypes.string
-  ]).isRequired,
+  marginTop: PropTypes.oneOfType([PropTypes.number, PropTypes.string])
+    .isRequired,
   padding: PropTypes.oneOfType([
     PropTypes.number,
     PropTypes.shape({
@@ -57,9 +55,11 @@ ClippedSVG.propTypes = {
 };
 
 ClippedSVG.defaultProps = {
-  padding: 0,
+  height: 600,
+  id: "svg",
   marginTop: 0,
-  id: "svg"
+  padding: 0,
+  width: 600
 };
 
 export default ClippedSVG;

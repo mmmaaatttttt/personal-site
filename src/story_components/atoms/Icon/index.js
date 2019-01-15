@@ -31,9 +31,10 @@ Icon.propTypes = {
 
 Icon.defaultProps = {
   color: "#000",
+  disabled: false,
+  name: "check",
   opacity: 1,
   size: 1,
-  disabled: false,
   type: "solid"
 };
 

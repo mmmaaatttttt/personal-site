@@ -2,6 +2,8 @@
 
 exports[`matches snapshot 1`] = `
 <StyledComponent
+  bold={true}
+  color="blue"
   forwardedComponent={
     Object {
       "$$typeof": Symbol(react.forward_ref),
@@ -11,44 +13,35 @@ exports[`matches snapshot 1`] = `
         "isStatic": false,
         "rules": Array [
           "
-  width: ",
+  color: ",
           [Function],
           ";
-  margin: 0 auto;
-
-  ",
+  font-weight: ",
           [Function],
           ";
 ",
         ],
       },
       "defaultProps": Object {
-        "fullWidthAt": "extraSmall",
-        "width": "80%",
+        "bold": false,
+        "color": "black",
       },
-      "displayName": "styled.div",
+      "displayName": "styled.span",
       "foldedComponentIds": Array [],
       "propTypes": Object {
-        "fullWidthAt": [Function],
-        "width": [Function],
+        "bold": [Function],
+        "color": [Function],
       },
       "render": [Function],
       "styledComponentId": "sc-bdVaJa",
-      "target": "div",
+      "target": "span",
       "toString": [Function],
       "warnTooManyClasses": [Function],
       "withComponent": [Function],
     }
   }
   forwardedRef={null}
-  fullWidthAt="small"
-  width="75%"
 >
-  <div>
-    hello
-  </div>
-  <div>
-    goodbye
-  </div>
+  i'm blue, da bo dee da bo dah
 </StyledComponent>
 `;

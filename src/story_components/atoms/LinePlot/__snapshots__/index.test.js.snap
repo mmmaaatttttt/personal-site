@@ -1,19 +1,10 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`renders props when passed in 1`] = `
+exports[`matches snapshot 1`] = `
 <path
   d="M0,60C17.77777777777778,34.66666666666666,35.55555555555556,9.333333333333314,50,150C64.44444444444444,290.6666666666667,75.55555555555556,597.3333333333334,100,600C124.44444444444444,602.6666666666666,162.22222222222223,301.3333333333333,200,0"
   fill="none"
   stroke="blue"
   strokeWidth="10"
-/>
-`;
-
-exports[`renders successfully 1`] = `
-<path
-  d="M0,0L100,1.1"
-  fill="none"
-  stroke="#FF8F34"
-  strokeWidth="5"
 />
 `;

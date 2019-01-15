@@ -3,26 +3,21 @@ import { shallow } from "enzyme";
 import toJson from "enzyme-to-json";
 import FlexContainer from ".";
 
-const wrap = (props = {}) => shallow(<FlexContainer {...props} />);
-
 it("renders successfully", () => {
-  const wrapper = wrap();
-  expect(toJson(wrapper)).toMatchSnapshot();
+  shallow(<FlexContainer />);
 });
 
-it("renders props when passed in", () => {
-  const wrapper = wrap({
-    column: true,
-    wrap: true,
-    main: "center",
-    cross: "center"
-  });
-  expect(toJson(wrapper)).toMatchSnapshot();
-});
-
-it("renders children when passed in successfully", () => {
+it("matches snapshot", () => {
   const wrapper = shallow(
-    <FlexContainer column>
+    <FlexContainer
+      column
+      wrap
+      main="center"
+      cross="center"
+      margin="1rem"
+      textAlign="right"
+      width="90%"
+    >
       <div>Here's a child</div>
       <div>Here's another</div>
       <div>Here's a third</div>

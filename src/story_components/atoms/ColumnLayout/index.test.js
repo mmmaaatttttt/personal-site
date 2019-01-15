@@ -3,21 +3,23 @@ import { shallow } from "enzyme";
 import toJson from "enzyme-to-json";
 import ColumnLayout from ".";
 
-const wrap = (props = {}) => shallow(<ColumnLayout {...props} />);
-
 it("renders successfully", () => {
-  const wrapper = wrap();
-  expect(toJson(wrapper)).toMatchSnapshot();
+  shallow(<ColumnLayout />);
 });
 
-it("renders props when passed in", () => {
-  const wrapper = wrap({ break: "small" });
-  expect(toJson(wrapper)).toMatchSnapshot();
-});
-
-it("renders children when passed in successfully", () => {
+it("matches snapshot", () => {
   const wrapper = shallow(
     <ColumnLayout break="large">
+      <div>Here's a child</div>
+      <div>Here's another</div>
+    </ColumnLayout>
+  );
+  expect(toJson(wrapper)).toMatchSnapshot();
+});
+
+it("lets you make columns of different widths", () => {
+  const wrapper = shallow(
+    <ColumnLayout break="small" sizes={[3, 2]}>
       <div>Here's a child</div>
       <div>Here's another</div>
     </ColumnLayout>

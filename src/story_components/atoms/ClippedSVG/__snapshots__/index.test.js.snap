@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`renders children when passed in successfully 1`] = `
+exports[`matches snapshot 1`] = `
 <styled.svg
   marginTop={0}
   viewBox="0 0 500 300"
@@ -33,29 +33,5 @@ exports[`renders children when passed in successfully 1`] = `
       r={100}
     />
   </g>
-</styled.svg>
-`;
-
-exports[`renders successfully 1`] = `
-<styled.svg
-  marginTop={0}
-  viewBox="0 0 600 600"
-  xmlns="http://www.w3.org/2000/svg"
->
-  <defs>
-    <clipPath
-      id="clip-path-svg"
-    >
-      <rect
-        height={560}
-        width={580}
-        x={0}
-        y={20}
-      />
-    </clipPath>
-  </defs>
-  <g
-    clipPath="url(#clip-path-svg)"
-  />
 </styled.svg>
 `;

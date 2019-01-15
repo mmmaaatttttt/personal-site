@@ -1,6 +1,59 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`renders children when passed in successfully 1`] = `
+exports[`lets you make columns of different widths 1`] = `
+<StyledComponent
+  break="small"
+  forwardedComponent={
+    Object {
+      "$$typeof": Symbol(react.forward_ref),
+      "attrs": Array [],
+      "componentStyle": ComponentStyle {
+        "componentId": "sc-bdVaJa",
+        "isStatic": false,
+        "rules": Array [
+          "
+  display: flex;
+
+  ",
+          [Function],
+          " ",
+          [Function],
+          ";
+",
+        ],
+      },
+      "displayName": "styled.div",
+      "foldedComponentIds": Array [],
+      "propTypes": Object {
+        "break": [Function],
+        "sizes": [Function],
+      },
+      "render": [Function],
+      "styledComponentId": "sc-bdVaJa",
+      "target": "div",
+      "toString": [Function],
+      "warnTooManyClasses": [Function],
+      "withComponent": [Function],
+    }
+  }
+  forwardedRef={null}
+  sizes={
+    Array [
+      3,
+      2,
+    ]
+  }
+>
+  <div>
+    Here's a child
+  </div>
+  <div>
+    Here's another
+  </div>
+</StyledComponent>
+`;
+
+exports[`matches snapshot 1`] = `
 <StyledComponent
   break="large"
   forwardedComponent={
@@ -45,83 +98,4 @@ exports[`renders children when passed in successfully 1`] = `
     Here's another
   </div>
 </StyledComponent>
-`;
-
-exports[`renders props when passed in 1`] = `
-<StyledComponent
-  break="small"
-  forwardedComponent={
-    Object {
-      "$$typeof": Symbol(react.forward_ref),
-      "attrs": Array [],
-      "componentStyle": ComponentStyle {
-        "componentId": "sc-bdVaJa",
-        "isStatic": false,
-        "rules": Array [
-          "
-  display: flex;
-
-  ",
-          [Function],
-          " ",
-          [Function],
-          ";
-",
-        ],
-      },
-      "displayName": "styled.div",
-      "foldedComponentIds": Array [],
-      "propTypes": Object {
-        "break": [Function],
-        "sizes": [Function],
-      },
-      "render": [Function],
-      "styledComponentId": "sc-bdVaJa",
-      "target": "div",
-      "toString": [Function],
-      "warnTooManyClasses": [Function],
-      "withComponent": [Function],
-    }
-  }
-  forwardedRef={null}
-/>
-`;
-
-exports[`renders successfully 1`] = `
-<StyledComponent
-  forwardedComponent={
-    Object {
-      "$$typeof": Symbol(react.forward_ref),
-      "attrs": Array [],
-      "componentStyle": ComponentStyle {
-        "componentId": "sc-bdVaJa",
-        "isStatic": false,
-        "rules": Array [
-          "
-  display: flex;
-
-  ",
-          [Function],
-          " ",
-          [Function],
-          ";
-",
-        ],
-      },
-      "displayName": "styled.div",
-      "foldedComponentIds": Array [],
-      "propTypes": Object {
-        "break": [Function],
-        "sizes": [Function],
-      },
-      "render": [Function],
-      "styledComponentId": "sc-bdVaJa",
-      "target": "div",
-      "toString": [Function],
-      "warnTooManyClasses": [Function],
-      "withComponent": [Function],
-    }
-  }
-  forwardedRef={null}
-/>
 `;

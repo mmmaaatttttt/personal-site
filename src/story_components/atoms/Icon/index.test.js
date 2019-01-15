@@ -1,22 +1,15 @@
 import React from "react";
-import { mount } from "enzyme";
+import { shallow } from "enzyme";
 import toJson from "enzyme-to-json";
 import Icon from ".";
 
-const wrap = (props = {}) => mount(<Icon {...props} />);
-
 it("renders successfully", () => {
-  const wrapper = wrap({ name: "user-o", disabled: false });
-  expect(toJson(wrapper)).toMatchSnapshot();
+  shallow(<Icon />);
 });
 
-it("renders other props when passed in", () => {
-  const wrapper = wrap({
-    name: "arrows",
-    size: 2,
-    disabled: true,
-    opacity: 0.5,
-    color: "blue"
-  });
+it("matches snapshot", () => {
+  const wrapper = shallow(
+    <Icon name="arrows" color="orange" opacity={0.5} size={2} disabled />
+  );
   expect(toJson(wrapper)).toMatchSnapshot();
 });

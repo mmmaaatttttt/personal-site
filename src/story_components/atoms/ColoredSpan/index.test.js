@@ -1,18 +1,17 @@
 import React from "react";
 import { shallow } from "enzyme";
 import toJson from "enzyme-to-json";
-import NarrowContainer from ".";
+import ColoredSpan from ".";
 
 it("renders successfully", () => {
-  shallow(<NarrowContainer />);
+  shallow(<ColoredSpan />);
 });
 
 it("matches snapshot", () => {
   const wrapper = shallow(
-    <NarrowContainer width="75%" fullWidthAt="small">
-      <div>hello</div>
-      <div>goodbye</div>
-    </NarrowContainer>
+    <ColoredSpan bold color="blue">
+      i'm blue, da bo dee da bo dah
+    </ColoredSpan>
   );
   expect(toJson(wrapper)).toMatchSnapshot();
 });

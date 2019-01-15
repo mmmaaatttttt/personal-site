@@ -1,101 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`renders children when passed in successfully 1`] = `
-<StyledComponent
-  column={true}
-  cross="stretch"
-  flex={1}
-  forwardedComponent={
-    Object {
-      "$$typeof": Symbol(react.forward_ref),
-      "attrs": Array [],
-      "componentStyle": ComponentStyle {
-        "componentId": "sc-bdVaJa",
-        "isStatic": false,
-        "rules": Array [
-          "
-  display: flex;
-  flex: ",
-          [Function],
-          ";
-  flex-wrap: ",
-          [Function],
-          ";
-    ",
-          [Function],
-          "
-    ",
-          [Function],
-          ": ",
-          [Function],
-          ";
-  ",
-          [Function],
-          ": ",
-          [Function],
-          ";
-  margin: ",
-          [Function],
-          ";
-  width: ",
-          [Function],
-          ";
-  text-align: ",
-          [Function],
-          ";
-",
-        ],
-      },
-      "defaultProps": Object {
-        "column": false,
-        "cross": "stretch",
-        "flex": 1,
-        "main": "stretch",
-        "margin": "0",
-        "textAlign": "left",
-        "width": "auto",
-        "wrap": false,
-      },
-      "displayName": "styled.div",
-      "foldedComponentIds": Array [],
-      "propTypes": Object {
-        "column": [Function],
-        "cross": [Function],
-        "flex": [Function],
-        "main": [Function],
-        "margin": [Function],
-        "textAlign": [Function],
-        "width": [Function],
-        "wrap": [Function],
-      },
-      "render": [Function],
-      "styledComponentId": "sc-bdVaJa",
-      "target": "div",
-      "toString": [Function],
-      "warnTooManyClasses": [Function],
-      "withComponent": [Function],
-    }
-  }
-  forwardedRef={null}
-  main="stretch"
-  margin="0"
-  textAlign="left"
-  width="auto"
-  wrap={false}
->
-  <div>
-    Here's a child
-  </div>
-  <div>
-    Here's another
-  </div>
-  <div>
-    Here's a third
-  </div>
-</StyledComponent>
-`;
-
-exports[`renders props when passed in 1`] = `
+exports[`matches snapshot 1`] = `
 <StyledComponent
   column={true}
   cross="center"
@@ -173,94 +78,19 @@ exports[`renders props when passed in 1`] = `
   }
   forwardedRef={null}
   main="center"
-  margin="0"
-  textAlign="left"
-  width="auto"
+  margin="1rem"
+  textAlign="right"
+  width="90%"
   wrap={true}
-/>
-`;
-
-exports[`renders successfully 1`] = `
-<StyledComponent
-  column={false}
-  cross="stretch"
-  flex={1}
-  forwardedComponent={
-    Object {
-      "$$typeof": Symbol(react.forward_ref),
-      "attrs": Array [],
-      "componentStyle": ComponentStyle {
-        "componentId": "sc-bdVaJa",
-        "isStatic": false,
-        "rules": Array [
-          "
-  display: flex;
-  flex: ",
-          [Function],
-          ";
-  flex-wrap: ",
-          [Function],
-          ";
-    ",
-          [Function],
-          "
-    ",
-          [Function],
-          ": ",
-          [Function],
-          ";
-  ",
-          [Function],
-          ": ",
-          [Function],
-          ";
-  margin: ",
-          [Function],
-          ";
-  width: ",
-          [Function],
-          ";
-  text-align: ",
-          [Function],
-          ";
-",
-        ],
-      },
-      "defaultProps": Object {
-        "column": false,
-        "cross": "stretch",
-        "flex": 1,
-        "main": "stretch",
-        "margin": "0",
-        "textAlign": "left",
-        "width": "auto",
-        "wrap": false,
-      },
-      "displayName": "styled.div",
-      "foldedComponentIds": Array [],
-      "propTypes": Object {
-        "column": [Function],
-        "cross": [Function],
-        "flex": [Function],
-        "main": [Function],
-        "margin": [Function],
-        "textAlign": [Function],
-        "width": [Function],
-        "wrap": [Function],
-      },
-      "render": [Function],
-      "styledComponentId": "sc-bdVaJa",
-      "target": "div",
-      "toString": [Function],
-      "warnTooManyClasses": [Function],
-      "withComponent": [Function],
-    }
-  }
-  forwardedRef={null}
-  main="stretch"
-  margin="0"
-  textAlign="left"
-  width="auto"
-  wrap={false}
-/>
+>
+  <div>
+    Here's a child
+  </div>
+  <div>
+    Here's another
+  </div>
+  <div>
+    Here's a third
+  </div>
+</StyledComponent>
 `;

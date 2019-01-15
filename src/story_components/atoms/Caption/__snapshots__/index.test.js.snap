@@ -1,49 +1,8 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`renders successfully 1`] = `
+exports[`matches snapshot 1`] = `
 <StyledComponent
-  captionMarginTop="0.27rem"
-  forwardedComponent={
-    Object {
-      "$$typeof": Symbol(react.forward_ref),
-      "attrs": Array [],
-      "componentStyle": ComponentStyle {
-        "componentId": "sc-bdVaJa",
-        "isStatic": false,
-        "rules": Array [
-          "
-  text-align: center;
-  font-weight: 700;
-  font-size: 85%;
-  margin-top: ",
-          [Function],
-          ";
-",
-        ],
-      },
-      "defaultProps": Object {
-        "captionMarginTop": "0.27rem",
-      },
-      "displayName": "styled.p",
-      "foldedComponentIds": Array [],
-      "propTypes": Object {
-        "captionMarginTop": [Function],
-      },
-      "render": [Function],
-      "styledComponentId": "sc-bdVaJa",
-      "target": "p",
-      "toString": [Function],
-      "warnTooManyClasses": [Function],
-      "withComponent": [Function],
-    }
-  }
-  forwardedRef={null}
-/>
-`;
-
-exports[`renders text when passed in successfully 1`] = `
-<StyledComponent
-  captionMarginTop="0.27rem"
+  captionMarginTop="10px"
   forwardedComponent={
     Object {
       "$$typeof": Symbol(react.forward_ref),
@@ -80,6 +39,6 @@ exports[`renders text when passed in successfully 1`] = `
   }
   forwardedRef={null}
 >
-  Here's a caption lolz
+  captiony mccaption
 </StyledComponent>
 `;
