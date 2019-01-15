@@ -10,8 +10,7 @@ import {
   EconomyNodeGroup,
   NarrowContainer,
   SliderGroup,
-  ButtonGroup,
-  FlexContainer
+  ButtonGroup
 } from "story_components";
 
 class EconomySimulation extends Component {

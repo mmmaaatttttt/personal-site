@@ -52,7 +52,7 @@ class RadioButtonGroup extends Component {
   };
 
   render() {
-    const { labels, handleSelectConfirm, buttonText } = this.props;
+    const { labels, buttonText } = this.props;
     const { selectedIndex } = this.state;
     const options = labels.map((obj, i) => {
       let { text, color, disabled } = obj;

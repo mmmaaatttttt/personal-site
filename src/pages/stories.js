@@ -107,7 +107,7 @@ const Story = ({
   <StyledStory className={`animated bounceIn${direction}`} delay={delay}>
     <StyledLink to={slug}>
       <StyledImageWrapper>
-        <img src={image} />
+        <img src={image} alt={`Card for ${title}`}/>
       </StyledImageWrapper>
       <StyledExcerptArea>
         <StyledTitle>{title}</StyledTitle>

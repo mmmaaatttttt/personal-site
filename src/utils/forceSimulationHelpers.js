@@ -60,15 +60,24 @@ const generateSimulationNodes = (simulation, nodeData, velocity, r = 15) => {
     do {
       x = random() * (width - 2 * r) + r;
       y = random() * (height - 2 * r) + r;
-    } while (
-      existingNodes.some(
-        node => (node.x - x) ** 2 + (node.y - y) ** 2 < (3 * r) ** 2
-      )
-    );
+    } while (someNodesTouch(existingNodes, x, y, r));
     existingNodes.push({ ...node, x, y, vx, vy, r });
   });
   simulation.nodes(existingNodes);
 };
+
+/**
+ * Checks whether x and y can be used to create a node
+ * without the new node intersecting nodes in an existing
+ * array of nodes.
+ *
+ * @param {Array} nodes
+ * @param {Number} x
+ * @param {Number} y
+ * @returns {Boolean} true if the new node would intersect, otherwise false
+ */
+const someNodesTouch = (nodes, x, y, r) =>
+  nodes.some(node => (node.x - x) ** 2 + (node.y - y) ** 2 < (3 * r) ** 2);
 
 const updateSimulationNodes = (
   simulation,

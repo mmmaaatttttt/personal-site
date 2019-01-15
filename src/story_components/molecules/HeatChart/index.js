@@ -137,7 +137,6 @@ class HeatChart extends Component {
         </ClippedSVG>
         {tooltip ? (
           <Tooltip
-            body={data.map(d => d.tooltipText)}
             visible={tooltipVisible}
             x={tooltipX}
             y={tooltipY}
