@@ -1,15 +1,15 @@
 import React from "react";
 import { shallow } from "enzyme";
 import toJson from "enzyme-to-json";
-import StyledSlider from ".";
+import Strikethrough from ".";
 
 it("renders successfully", () => {
-  shallow(<StyledSlider />);
+  shallow(<Strikethrough />);
 });
 
-it("matches snapshot with props", () => {
+it("matches snapshot", () => {
   const wrapper = shallow(
-    <StyledSlider activeColor="black" inactiveColor="white" />
+    <Strikethrough>striking out</Strikethrough>
   );
   expect(toJson(wrapper)).toMatchSnapshot();
 });

@@ -11,21 +11,24 @@ exports[`matches snapshot 1`] = `
         "isStatic": true,
         "rules": Array [
           "
-  flex: 1;
+  position: relative;
 ",
         ],
       },
-      "displayName": "Styled(StateManager)",
+      "displayName": "styled.div",
       "foldedComponentIds": Array [],
       "render": [Function],
       "styledComponentId": "sc-bdVaJa",
-      "target": [Function],
+      "target": "div",
       "toString": [Function],
       "warnTooManyClasses": [Function],
       "withComponent": [Function],
-      Symbol(Symbol.hasInstance): [Function],
     }
   }
   forwardedRef={null}
-/>
+>
+  <div>
+    hello
+  </div>
+</StyledComponent>
 `;

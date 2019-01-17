@@ -1,15 +1,17 @@
 import React from "react";
 import { shallow } from "enzyme";
 import toJson from "enzyme-to-json";
-import StyledSlider from ".";
+import RelativeContainer from ".";
 
 it("renders successfully", () => {
-  shallow(<StyledSlider />);
+  shallow(<RelativeContainer />);
 });
 
-it("matches snapshot with props", () => {
+it("matches snapshot", () => {
   const wrapper = shallow(
-    <StyledSlider activeColor="black" inactiveColor="white" />
+    <RelativeContainer>
+      <div>hello</div>
+    </RelativeContainer>
   );
   expect(toJson(wrapper)).toMatchSnapshot();
 });

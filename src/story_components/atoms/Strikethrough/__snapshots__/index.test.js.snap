@@ -11,21 +11,22 @@ exports[`matches snapshot 1`] = `
         "isStatic": true,
         "rules": Array [
           "
-  flex: 1;
+  text-decoration: line-through;
 ",
         ],
       },
-      "displayName": "Styled(StateManager)",
+      "displayName": "styled.span",
       "foldedComponentIds": Array [],
       "render": [Function],
       "styledComponentId": "sc-bdVaJa",
-      "target": [Function],
+      "target": "span",
       "toString": [Function],
       "warnTooManyClasses": [Function],
       "withComponent": [Function],
-      Symbol(Symbol.hasInstance): [Function],
     }
   }
   forwardedRef={null}
-/>
+>
+  striking out
+</StyledComponent>
 `;

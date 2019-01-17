@@ -35,6 +35,12 @@ Polygon.propTypes = {
 
 Polygon.defaultProps = {
   fill: COLORS.BLACK,
+  points: [
+    { x: 0, y: 0 },
+    { x: 100, y: 0 },
+    { x: 100, y: 100 },
+    { x: 0, y: 100 }
+  ],
   stroke: COLORS.BLACK,
   strokeWidth: 3
 };
