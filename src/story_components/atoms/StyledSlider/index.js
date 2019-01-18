@@ -71,7 +71,6 @@ const StyledSlider = styled(Slider)`
   .rc-slider-handle:focus {
     border-width: 0;
     border-color: ${darkerMain};
-    box-shadow: 0 0 0 ${props => props.padding}px ${darkerMain};
     outline: none;
   }
 `;
