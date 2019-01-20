@@ -12,6 +12,10 @@ module.exports = {
       options: {
         name: `pages`,
         path: `${__dirname}/src/pages/articles/`
+      },
+      options: {
+        name: `images`,
+        path: `${__dirname}/src/images`
       }
     },
     {
@@ -34,6 +38,8 @@ module.exports = {
     `gatsby-plugin-react-helmet`,
     `gatsby-plugin-sitemap`,
     `gatsby-plugin-resolve-src`,
-    `gatsby-mdx`
+    `gatsby-mdx`,
+    `gatsby-transformer-sharp`,
+    `gatsby-plugin-sharp`
   ]
 };
