@@ -1,11 +1,7 @@
 import { combineReducers, createStore as reduxCreateStore } from "redux";
-const req = require.context(".", true, /\.js$/);
-const combinedReducerObj = req
-  .keys()
-  .filter(key => key !== "./index.js")
-  .reduce((obj, key) => ({ ...obj, [key.match(/[^./]+/)[0]]: req(key).default }), {});
+import mindTheGerrymanderedReducer from "./mind-the-gerrymandered-gap";
 
-const rootReducer = combineReducers(combinedReducerObj);
+const rootReducer = combineReducers(mindTheGerrymanderedReducer);
 
 const createStore = () =>
   reduxCreateStore(
