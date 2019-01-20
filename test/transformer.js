@@ -1,8 +1,6 @@
-const babelOptions = {
-  presets: ["babel-preset-gatsby"],
-  plugins: [
-    [ "module-resolver", { root: ["./src"] } ]
-  ]
-}
+const path = require('path');
+const babelJest = require('babel-jest');
 
-module.exports = require("babel-jest").createTransformer(babelOptions)
+module.exports = babelJest.createTransformer({
+  configFile: path.resolve('.babelrc'),
+});
