@@ -12,7 +12,10 @@ module.exports = {
       options: {
         name: `pages`,
         path: `${__dirname}/src/pages/articles/`
-      },
+      }
+    },
+    {
+      resolve: `gatsby-source-filesystem`,
       options: {
         name: `images`,
         path: `${__dirname}/src/images`
