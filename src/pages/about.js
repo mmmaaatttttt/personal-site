@@ -5,7 +5,7 @@ import MainLayout from "../layouts/MainLayout";
 import { rhythm } from "utils/typography";
 import COLORS, { sizes, fadeIn } from "utils/styles";
 import media from "utils/media";
-import matt from "./images/matt.jpg";
+import matt from "../images/matt.jpg";
 
 const StyledAboutWrapper = styled.div`
   max-width: ${sizes.maxWidthContent};
