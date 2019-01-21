@@ -2,9 +2,9 @@ import React from "react";
 import styled from "styled-components";
 import { graphql } from 'gatsby';
 import Link from "gatsby-link";
+import Img from "gatsby-image";
 import MainLayout from "../layouts/MainLayout";
 import { rhythm } from "utils/typography";
-import images from "utils/images";
 import media from "utils/media";
 
 const Styled404 = styled.div`
@@ -26,9 +26,9 @@ const StyledStoryWrapper = styled.div`
   `};
 `;
 
-const StyledImage = styled.img`
+const StyledImage = styled(Img)`
   border-radius: 8px;
-  margin-bottom: 0;
+  margin: 0 auto;
   width: 75%;
   ${media.medium`
     width: 100%;
@@ -51,10 +51,7 @@ const Error404 = ({ data, location }) => {
         <StyledStoryWrapper>
           <Link to={slug}>
             <h3>{title}</h3>
-            <StyledImage
-              src={images[`featured_images/${featured_image}`]}
-              alt={caption}
-            />
+            <StyledImage fluid={featured_image.childImageSharp.fluid} alt={caption} />
           </Link>
           <small>{caption}</small>
         </StyledStoryWrapper>
@@ -76,7 +73,13 @@ export const query = graphql`
           frontmatter {
             title
             date(formatString: "MMMM, YYYY")
-            featured_image
+            featured_image {
+              childImageSharp {
+                fluid {
+                  ...GatsbyImageSharpFluid
+                }
+              }
+            }
             caption
           }
           fields {

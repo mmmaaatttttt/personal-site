@@ -162,7 +162,13 @@ export const query = graphql`
       frontmatter {
         title
         date(formatString: "MMMM YYYY")
-        featured_image
+        featured_image {
+          childImageSharp {
+            fluid {
+              ...GatsbyImageSharpFluid
+            }
+          }
+        }
         caption
         featured_image_caption
       }
