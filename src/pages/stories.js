@@ -2,9 +2,9 @@ import React from "react";
 import { graphql } from 'gatsby';
 import styled from "styled-components";
 import Link from "gatsby-link";
+import Img from "gatsby-image";
 import MainLayout from "../layouts/MainLayout";
 import { rhythm } from "utils/typography";
-import images from "utils/images";
 import COLORS from "utils/styles";
 import media from "utils/media";
 
@@ -95,19 +95,19 @@ const StyledStory = styled.div`
 `;
 
 const Story = ({
-  title,
-  date,
-  image,
   caption,
-  slug,
-  timeToRead,
+  date,
+  delay,
   direction,
-  delay
+  fluid,
+  slug,
+  title,
+  timeToRead
 }) => (
   <StyledStory className={`animated bounceIn${direction}`} delay={delay}>
     <StyledLink to={slug}>
       <StyledImageWrapper>
-        <img src={image} alt={`Card for ${title}`}/>
+        <Img fluid={fluid} alt={`Card for ${title}`}/>
       </StyledImageWrapper>
       <StyledExcerptArea>
         <StyledTitle>{title}</StyledTitle>
@@ -128,7 +128,7 @@ const Stories = ({ data, location }) => (
           key={node.fields.slug}
           title={node.frontmatter.title}
           date={node.frontmatter.date}
-          image={images[`featured_images/${node.frontmatter.featured_image}`]}
+          fluid={node.frontmatter.featured_image.childImageSharp.fluid}
           caption={node.frontmatter.caption}
           slug={node.fields.slug}
           timeToRead={node.timeToRead}
@@ -152,7 +152,7 @@ export const query = graphql`
             date(formatString: "MMMM YYYY")
             featured_image {
               childImageSharp {
-                fluid {
+                fluid(maxWidth: 500) {
                   ...GatsbyImageSharpFluid
                 }
               }
