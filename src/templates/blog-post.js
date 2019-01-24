@@ -1,9 +1,10 @@
 import React, { Component } from "react";
 import styled from "styled-components";
-import { graphql } from 'gatsby';
+import { graphql } from "gatsby";
 import { Share } from "react-twitter-widgets";
 import { Helmet } from "react-helmet";
 import MDXRenderer from "gatsby-mdx/mdx-renderer";
+import Img from "gatsby-image";
 import MainLayout from "../layouts/MainLayout";
 import { FlexContainer } from "story_components";
 import { sizes, fadeIn } from "utils/styles";
@@ -31,16 +32,20 @@ const StyledTextWrapper = styled.div`
   }
 `;
 
-const StyledMainImage = styled.div`
+const StyledMainImageWrapper = styled.div`
   position: relative;
   top: 0;
   left: 0;
   width: 100%;
-  background-image: url(${props => props.image});
-  background-size: cover;
   height: 0;
   padding-top: 56.25%;
   margin-top: -${rhythm(1.5)};
+
+  .gatsby-image-wrapper {
+    position: absolute !important;
+    width: 100%;
+    top: 0;
+  }
 `;
 
 const StyledImageCaption = styled.small`
@@ -103,9 +108,12 @@ class BlogPost extends Component {
     const postTitle = post.frontmatter.title;
     const fullTitle = `${postTitle} - ${title}`;
     const image = images[`featured_images/${featured_image}`];
-    const githubUrl = `https://github.com/mmmaaatttttt/personal-site/blob/master/src/pages${slug.slice(0, -1)}.md`
+    const githubUrl = `https://github.com/mmmaaatttttt/personal-site/blob/master/src/pages${slug.slice(
+      0,
+      -1
+    )}.md`;
     return (
-      <MainLayout location={location} >
+      <MainLayout location={location}>
         <StyledPostWrapper>
           <Helmet>
             <title>{fullTitle}</title>
@@ -118,18 +126,24 @@ class BlogPost extends Component {
             <meta property="og:image" content={`${siteUrl}${image}`} />
             <meta property="og:url" content={`${siteUrl}${slug}`} />
           </Helmet>
-          <StyledMainImage image={image}>
+          <StyledMainImageWrapper>
+            <Img
+              fluid={post.frontmatter.featured_image.childImageSharp.fluid}
+              alt={`Main image for ${postTitle}`}
+            />
             <StyledTitleWrapper>
               <h1>{postTitle}</h1>
               <h2>{date}</h2>
             </StyledTitleWrapper>
-          </StyledMainImage>
+          </StyledMainImageWrapper>
           <StyledImageCaption>{featured_image_caption}</StyledImageCaption>
           <StyledTextWrapper>
             <MDXRenderer>{post.code.body}</MDXRenderer>
             <FlexContainer main="space-between">
               <small>
-                <a href={githubUrl} target="_blank" rel="noopener noreferrer"><em>Edit this story on GitHub</em></a>
+                <a href={githubUrl} target="_blank" rel="noopener noreferrer">
+                  <em>Edit this story on GitHub</em>
+                </a>
               </small>
               <Share
                 url={`${siteUrl}${slug}`}
