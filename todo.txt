@@ -11,7 +11,22 @@
 - update all helper files and tests
 - integration tests for all stories
 - build breaks! fix this
+- figure out how to run create-index on gatsby server restart
+- add hr tags to posts
+- meta og:image tags for pages that aren't blog-post pages
+- for captioned images, make sure to import them directly in mdx
+- use gatsby-image for images instead of require.context: https://www.gatsbyjs.org/packages/gatsby-image/
+  - https://spectrum.chat/gatsby-js/general/using-variables-in-a-staticquery~abee4d1d-6bc4-4202-afb2-38326d91bd05
+  -- hmm https://github.com/gatsbyjs/gatsby/issues/4123
+- tweed thread on upgrade
+  - gatsby --> 2.0 (layouts)
+  - marksy + remark --> mdx
+  - testing broken --> remove require.context, use create-index
+    - babel-plugin-require-context-hook didn't help
+    - need for gatsby-image
+  
 
+image syntax: ![this works](../../images/ca-23.png "here's a title")
 
 LOW PRIORITY
 - research how data is passed to mdx: https://gatsby-mdx.netlify.com/guides/writing-pages-in-mdx
