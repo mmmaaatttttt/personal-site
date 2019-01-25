@@ -4,13 +4,14 @@ import { graphql } from "gatsby";
 import { Share } from "react-twitter-widgets";
 import { Helmet } from "react-helmet";
 import MDXRenderer from "gatsby-mdx/mdx-renderer";
+import { MDXProvider } from "@mdx-js/tag";
 import Img from "gatsby-image";
 import MainLayout from "../layouts/MainLayout";
 import { FlexContainer } from "story_components";
 import { sizes, fadeIn } from "utils/styles";
-import images from "utils/images";
 import { rhythm } from "utils/typography";
 import media from "utils/media";
+import renderer from "utils/mdxHelpers";
 
 const StyledPostWrapper = styled.div`
   width: 100%;
@@ -29,6 +30,12 @@ const StyledTextWrapper = styled.div`
   td {
     text-align: center;
     border: 1px solid hsla(0, 0%, 0%, 0.12);
+  }
+
+  figcaption.gatsby-resp-image-figcaption {
+    text-align: center;
+    font-weight: 700;
+    font-size: 85%;
   }
 `;
 
@@ -107,11 +114,8 @@ class BlogPost extends Component {
     } = post.frontmatter;
     const postTitle = post.frontmatter.title;
     const fullTitle = `${postTitle} - ${title}`;
-    const image = images[`featured_images/${featured_image}`];
-    const githubUrl = `https://github.com/mmmaaatttttt/personal-site/blob/master/src/pages${slug.slice(
-      0,
-      -1
-    )}.md`;
+    const githubUrl = `https://github.com/mmmaaatttttt/personal-site/blob/master/src/pages${slug.slice(0, -1)}.md`;
+    const { fluid } = featured_image.childImageSharp;
     return (
       <MainLayout location={location}>
         <StyledPostWrapper>
@@ -120,15 +124,15 @@ class BlogPost extends Component {
             <meta name="twitter:card" content="summary_large_image" />
             <meta name="twitter:title" content={fullTitle} />
             <meta name="twitter:description" content={caption} />
-            <meta name="twitter:image" content={`${siteUrl}${image}`} />
+            <meta name="twitter:image" content={`${siteUrl}${fluid.src}`} />
             <meta property="og:title" content={fullTitle} />
             <meta property="og:description" content={caption} />
-            <meta property="og:image" content={`${siteUrl}${image}`} />
+            <meta property="og:image" content={`${siteUrl}${fluid.src}`} />
             <meta property="og:url" content={`${siteUrl}${slug}`} />
           </Helmet>
           <StyledMainImageWrapper>
             <Img
-              fluid={post.frontmatter.featured_image.childImageSharp.fluid}
+              fluid={fluid}
               alt={`Main image for ${postTitle}`}
             />
             <StyledTitleWrapper>
@@ -138,7 +142,9 @@ class BlogPost extends Component {
           </StyledMainImageWrapper>
           <StyledImageCaption>{featured_image_caption}</StyledImageCaption>
           <StyledTextWrapper>
-            <MDXRenderer>{post.code.body}</MDXRenderer>
+            <MDXProvider components={renderer}>
+              <MDXRenderer>{post.code.body}</MDXRenderer>
+            </MDXProvider>
             <FlexContainer main="space-between">
               <small>
                 <a href={githubUrl} target="_blank" rel="noopener noreferrer">
