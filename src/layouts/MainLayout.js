@@ -52,7 +52,6 @@ class MainLayout extends Component {
                 <meta name="twitter:description" content={description} />
                 <meta name="og:description" content={description} />
                 <meta name="og:url" content={`${siteUrl}${location.pathname}`} />
-                <meta name="og:image" content={`${siteUrl}${logo}`} />
               </Helmet>
               <Navbar title={title} hide={/\/stories\/.+/.test(location.pathname)} />
               <StyledContentArea>{children}</StyledContentArea>
