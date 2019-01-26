@@ -1,8 +1,6 @@
 import React from "react";
 import styled from "styled-components";
 import media from "utils/media";
-import PropTypes from "prop-types";
-import { rhythm } from "utils/typography";
 
 const StyledVisualizationContainer = styled.div`
   width: 150%;
