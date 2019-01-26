@@ -143,6 +143,7 @@ GamingLinearRelationships.propTypes = {
 };
 
 GamingLinearRelationships.defaultProps = {
+  idx: 0,
   min: 0,
   max: 20,
   step: 0.1,
