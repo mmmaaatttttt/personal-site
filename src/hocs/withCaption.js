@@ -1,7 +1,8 @@
 import React from "react";
 import styled from "styled-components";
 import media from "utils/media";
-import { Caption } from "story_components";
+import PropTypes from "prop-types";
+import { rhythm } from "utils/typography";
 
 const StyledVisualizationContainer = styled.div`
   width: 150%;
@@ -23,6 +24,13 @@ const StyledVisualizationContainer = styled.div`
     width: 100%;
     margin-left: 0;
   `}
+`;
+
+const Caption = styled.p`
+  text-align: center;
+  font-weight: 700;
+  font-size: 85%;
+  margin-top: ${props => props.captionMarginTop};
 `;
 
 function withCaption(ComposedComponent) {
