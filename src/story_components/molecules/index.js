@@ -3,7 +3,6 @@
 export { default as Axis } from './Axis';
 export { default as BarGraph } from './BarGraph';
 export { default as ButtonGroup } from './ButtonGroup';
-export { default as CaptionedImage } from './CaptionedImage';
 export { default as CoinFlipTable } from './CoinFlipTable';
 export { default as DraggableCircle } from './DraggableCircle';
 export { default as EfficiencyGapTable } from './EfficiencyGapTable';
