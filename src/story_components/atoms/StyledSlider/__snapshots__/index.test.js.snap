@@ -118,11 +118,6 @@ exports[`matches snapshot with props 1`] = `
     border-color: ",
           [Function],
           ";
-    box-shadow: 0 0 0 ",
-          [Function],
-          "px ",
-          [Function],
-          ";
     outline: none;
   }
 ",
