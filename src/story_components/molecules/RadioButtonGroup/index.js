@@ -98,7 +98,7 @@ class RadioButtonGroup extends Component {
     }
     return (
       <div>
-        <FlexContainer main="space-around" cross="center" width="100%" wrap>
+        <FlexContainer main="space-around" cross="center" width="100%" shouldWrap>
           {options}
         </FlexContainer>
         {footer}

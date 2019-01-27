@@ -7,7 +7,7 @@ const cross = props => (props.column ? "justify-content" : "align-items");
 const FlexContainer = styled.div`
   display: flex;
   flex: ${props => props.flex};
-  flex-wrap: ${props => (props.wrap ? "wrap" : "nowrap")};
+  flex-wrap: ${props => (props.shouldWrap ? "wrap" : "nowrap")};
     ${props =>
       props.column &&
       css`
@@ -39,7 +39,7 @@ FlexContainer.propTypes = {
   margin: PropTypes.string.isRequired,
   textAlign: PropTypes.string.isRequired,
   width: PropTypes.string.isRequired,
-  wrap: PropTypes.bool.isRequired
+  shouldWrap: PropTypes.bool.isRequired
 };
 
 FlexContainer.defaultProps = {
@@ -50,7 +50,7 @@ FlexContainer.defaultProps = {
   margin: "0",
   textAlign: "left",
   width: "auto",
-  wrap: false
+  shouldWrap: false
 };
 
 export default FlexContainer;

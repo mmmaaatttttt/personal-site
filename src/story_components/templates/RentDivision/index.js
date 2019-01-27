@@ -533,7 +533,7 @@ class RentDivision extends Component {
       return (
         <FlexContainer column main="center" cross="flex-start" textAlign="center">
           <h3>You're within ${rentRemaining.toFixed(0)} of a fair division!</h3>
-          <FlexContainer main="space-around" width="100%" wrap>
+          <FlexContainer main="space-around" width="100%" shouldWrap>
             {pointData.map(d => (
                 <ColoredSpan key={d.color} color={COLORS[d.color.toUpperCase()]}>
                   {d.name} is paying ${d.price.toFixed(2)}

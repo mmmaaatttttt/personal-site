@@ -241,7 +241,7 @@ class HarassmentSimulation extends Component {
     return (
       <NarrowContainer width="75%">
         {bars}
-        <FlexContainer wrap>
+        <FlexContainer shouldWrap>
           <NarrowContainer width="50%" fullWidthAt="small">
             <SliderGroup data={slidersByColor("GREEN")} />
           </NarrowContainer>

@@ -5,16 +5,13 @@
 - pagination for stories
 - search for stories
 - make sure all package updates work
-- update all atom tests
-- update all molecule tests 
-- figure out failing math helper tests
 - update all helper files and tests
 - integration tests for all stories
 - build breaks! fix this
 - figure out how to run create-index on gatsby server restart
 - add hr tags to posts
+- check broken mathHelpers test in nonlinear story
 - meta og:image tags for pages that aren't blog-post pages
-- for captioned images, make sure to import them directly in mdx
 - use gatsby-image for images instead of require.context: https://www.gatsbyjs.org/packages/gatsby-image/
   - https://spectrum.chat/gatsby-js/general/using-variables-in-a-staticquery~abee4d1d-6bc4-4202-afb2-38326d91bd05
   -- hmm https://github.com/gatsbyjs/gatsby/issues/4123
