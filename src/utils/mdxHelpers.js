@@ -5,7 +5,7 @@ const renderer = {
     if (props.children.type === "figure") return <figure {...props.children.props} />
     return <p {...props} />;
   },
-  a: props => <a target="_blank" rel="noopener noreferrer" {...props} />
+  a: props => <a target="_blank" rel="noopener noreferrer" {...props} >{props.children}</a>
 };
 
 export default renderer;
