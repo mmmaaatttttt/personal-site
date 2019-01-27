@@ -7,7 +7,6 @@ import Footer from "./Footer";
 import { rhythm } from "utils/typography";
 import "katex/dist/katex.min.css";
 import "@fortawesome/fontawesome-free/css/all.css";
-import logo from "../images/logo.png";
 
 const StyledContentArea = styled.div`
   width: 100%;
