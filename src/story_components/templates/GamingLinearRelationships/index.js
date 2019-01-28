@@ -61,10 +61,20 @@ class GamingLinearRelationships extends Component {
     );
   };
 
+  updateData = () => {
+    const { idx } = this.props;
+    const { initialData } = visualizationData[idx];
+    const { values } = this.state;
+    return initialData.map((d, i) => {
+      const newObj = { ...d, value: values[i], key: i };
+      delete newObj.initialValue;
+      return newObj;
+    });
+  };
+
   render() {
     const { svgPadding, graphPadding, idx } = this.props;
     const {
-      initialData,
       width,
       height,
       diffEqs,
@@ -73,15 +83,10 @@ class GamingLinearRelationships extends Component {
       yLabel,
       colors
     } = visualizationData[idx];
-    const { values } = this.state;
 
     // data is all data from original source file
     // plus most recent values from inside of state
-    const data = initialData.map((d, i) => {
-      const newObj = { ...d, value: values[i], key: i };
-      delete newObj.initialValue;
-      return newObj;
-    });
+    const data = this.updateData();
     const graphData = this.transformData(data, diffEqs[0]);
     const xScale = scaleLinear()
       .domain(extent(graphData[0], d => d.x))
@@ -101,12 +106,14 @@ class GamingLinearRelationships extends Component {
     ));
 
     const sliderGroups = colors.map(color => {
-      const sliderData = data.filter(d => d.color === color).map(d => ({
-        ...d,
-        tickCount: 3,
-        fadeIcons: true,
-        handleValueChange: val => this.handleValueChange(d.key, val)
-      }));
+      const sliderData = data
+        .filter(d => d.color === color)
+        .map(d => ({
+          ...d,
+          tickCount: 3,
+          fadeIcons: true,
+          handleValueChange: val => this.handleValueChange(d.key, val)
+        }));
       return <SliderGroup key={color} data={sliderData} />;
     });
 
@@ -152,3 +159,5 @@ GamingLinearRelationships.defaultProps = {
 };
 
 export default withCaption(GamingLinearRelationships);
+
+export { GamingLinearRelationships };
