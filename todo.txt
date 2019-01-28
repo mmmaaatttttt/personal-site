@@ -12,10 +12,7 @@
 - add hr tags to posts
 - check broken mathHelpers test in nonlinear story
 - meta og:image tags for pages that aren't blog-post pages
-- use gatsby-image for images instead of require.context: https://www.gatsbyjs.org/packages/gatsby-image/
-  - https://spectrum.chat/gatsby-js/general/using-variables-in-a-staticquery~abee4d1d-6bc4-4202-afb2-38326d91bd05
-  -- hmm https://github.com/gatsbyjs/gatsby/issues/4123
-- tweed thread on upgrade
+- tweet thread on upgrade
   - gatsby --> 2.0 (layouts)
   - marksy + remark --> mdx
   - testing broken --> remove require.context, use create-index
