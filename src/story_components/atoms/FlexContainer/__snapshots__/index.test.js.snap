@@ -52,9 +52,9 @@ exports[`matches snapshot 1`] = `
         "flex": 1,
         "main": "stretch",
         "margin": "0",
+        "shouldWrap": false,
         "textAlign": "left",
         "width": "auto",
-        "wrap": false,
       },
       "displayName": "styled.div",
       "foldedComponentIds": Array [],
@@ -64,9 +64,9 @@ exports[`matches snapshot 1`] = `
         "flex": [Function],
         "main": [Function],
         "margin": [Function],
+        "shouldWrap": [Function],
         "textAlign": [Function],
         "width": [Function],
-        "wrap": [Function],
       },
       "render": [Function],
       "styledComponentId": "sc-bdVaJa",
@@ -79,6 +79,7 @@ exports[`matches snapshot 1`] = `
   forwardedRef={null}
   main="center"
   margin="1rem"
+  shouldWrap={false}
   textAlign="right"
   width="90%"
   wrap={true}
