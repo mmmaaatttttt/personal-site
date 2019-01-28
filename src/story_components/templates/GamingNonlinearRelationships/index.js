@@ -61,10 +61,20 @@ class GamingNonlinearRelationships extends Component {
     );
   };
 
+  updateData = () => {
+    const { idx } = this.props;
+    const { initialData } = visualizationData[idx];
+    const { values } = this.state;
+    return initialData.map((d, i) => {
+      const newObj = { ...d, value: values[i], key: i };
+      delete newObj.initialValue;
+      return newObj;
+    });
+  };
+
   render() {
     const { svgPadding, graphPadding, idx } = this.props;
     const {
-      initialData,
       width,
       height,
       diffEqs,
@@ -73,18 +83,11 @@ class GamingNonlinearRelationships extends Component {
       yLabel,
       colors
     } = visualizationData[idx];
-    const { values } = this.state;
 
     // data is all data from original source file
     // plus most recent values from inside of state
-    const data = initialData.map((d, i) => {
-      const newObj = { ...d, value: values[i], key: i };
-      delete newObj.initialValue;
-      return newObj;
-    });
-
+    const data = this.updateData();
     const uniqueColors = colors.filter((c, i) => colors.indexOf(c) === i);
-
     const graphs = Array.from({ length: 2 }, (_, i) => {
       // need to slice for the last set of visualizations, unfortunately
       // for most visualizations, this has no effect
@@ -163,6 +166,7 @@ GamingNonlinearRelationships.propTypes = {
 };
 
 GamingNonlinearRelationships.defaultProps = {
+  idx: 0,
   min: 0,
   max: 20,
   step: 0.02,
@@ -171,3 +175,5 @@ GamingNonlinearRelationships.defaultProps = {
 };
 
 export default withCaption(GamingNonlinearRelationships);
+
+export { GamingNonlinearRelationships };
