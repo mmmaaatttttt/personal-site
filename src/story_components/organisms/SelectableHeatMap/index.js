@@ -11,18 +11,17 @@ class SelectableHeatMap extends Component {
   handleChange = selectedOption => this.setState({ selectedOption });
 
   render() {
-    const { value, accessor, colors } = this.state.selectedOption;
+    const { value, label, accessor, colors } = this.state.selectedOption;
     const { selectOptions, data, getTooltipTitle, getTooltipBody } = this.props;
     return (
       <div>
         <NarrowContainer width="50%">
           <StyledSelect
-            name="map-data"
             value={value}
             onChange={this.handleChange}
             options={selectOptions}
-            searchable={false}
-            clearable={false}
+            isSearchable={false}
+            placeholder={label}
           />
         </NarrowContainer>
         <USMap

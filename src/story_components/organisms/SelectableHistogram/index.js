@@ -14,7 +14,7 @@ class SelectableHistogram extends Component {
   handleChange = selectedOption => this.setState({ selectedOption });
 
   render() {
-    const { value, accessor, step, format } = this.state.selectedOption;
+    const { value, label, accessor, step, format } = this.state.selectedOption;
     const { selectOptions, data } = this.props;
     const validData = data.filter(d => accessor(d) !== null);
     const vals = extent(validData, accessor);
@@ -50,10 +50,10 @@ class SelectableHistogram extends Component {
         <StyledSelect
           name="bar-data"
           value={value}
+          placeholder={label}
           onChange={this.handleChange}
           options={selectOptions}
-          searchable={false}
-          clearable={false}
+          isSearchable={false}
         />
         <BarGraph
           barData={barData}

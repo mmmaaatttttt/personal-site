@@ -27,12 +27,14 @@ class SelectableScatterplot extends Component {
     const {
       accessor: accessorX,
       value: valueX,
-      format: formatX
+      format: formatX,
+      label: labelX,
     } = selectedOptionX;
     const {
       accessor: accessorY,
       value: valueY,
-      format: formatY
+      format: formatY,
+      label: labelY
     } = selectedOptionY;
     const accessorR = selectedOptionR ? selectedOptionR.accessor : d => 100;
     const { selectOptions, data, graphOptions } = this.props;
@@ -60,8 +62,8 @@ class SelectableScatterplot extends Component {
             value={valueX}
             onChange={option => this.handleChange("selectedOptionX", option)}
             options={selectOptions}
-            searchable={false}
-            clearable={false}
+            isSearchable={false}
+            placeholder={labelX}
           />
         </FlexContainer>
         <FlexContainer cross="center">
@@ -71,8 +73,8 @@ class SelectableScatterplot extends Component {
             value={valueY}
             onChange={option => this.handleChange("selectedOptionY", option)}
             options={selectOptions}
-            searchable={false}
-            clearable={false}
+            isSearchable={false}
+            placeholder={labelY}
           />
         </FlexContainer>
         <Scatterplot

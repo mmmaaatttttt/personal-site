@@ -11,17 +11,17 @@ class SelectablePieChart extends Component {
   handleChange = selectedOption => this.setState({ selectedOption });
 
   render() {
-    const { value, chartValues } = this.state.selectedOption;
+    const { value, label, chartValues } = this.state.selectedOption;
     const { selectOptions, data, graphOptions } = this.props;
     return (
       <NarrowContainer width="50%">
         <StyledSelect
           name="pie-data"
           value={value}
+          placeholder={label}
           onChange={this.handleChange}
           options={selectOptions}
-          searchable={false}
-          clearable={false}
+          isSearchable={false}
         />
         <PieChart values={chartValues(data)} padding={20} {...graphOptions} />
       </NarrowContainer>
