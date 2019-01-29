@@ -1,0 +1,205 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`smoke and snapshot tests renders first demonstration successfully 1`] = `
+<styled.div
+  fullWidthAt="extraSmall"
+  width="50%"
+>
+  <SliderGroup
+    column={true}
+    data={
+      Array [
+        Object {
+          "color": "#A05E52",
+          "handleValueChange": [Function],
+          "max": 30,
+          "maxIcon": "users",
+          "min": 2,
+          "minIcon": "user",
+          "step": 1,
+          "title": "Population Size",
+          "value": 2,
+        },
+      ]
+    }
+  />
+  <ButtonGroup
+    data={
+      Array [
+        Object {
+          "buttonText": "Start",
+          "color": "#A05E52",
+          "handleClick": [Function],
+        },
+      ]
+    }
+  />
+  <div
+    style={
+      Object {
+        "display": "block",
+      }
+    }
+  >
+    <ClippedSVG
+      height={600}
+      id="simulation-0"
+      marginTop={0}
+      padding={0}
+      width={600}
+    >
+      <EconomyNodeGroup
+        handleCollision={[Function]}
+        height={600}
+        initialV={10}
+        paused={false}
+        playing={false}
+        speeds={
+          Array [
+            10,
+            10,
+          ]
+        }
+        velocityMultiplier={1}
+        width={600}
+      />
+    </ClippedSVG>
+  </div>
+</styled.div>
+`;
+
+exports[`smoke and snapshot tests renders first demonstration successfully 2`] = `
+<styled.div
+  fullWidthAt="extraSmall"
+  width="50%"
+>
+  <SliderGroup
+    column={true}
+    data={
+      Array [
+        Object {
+          "color": "#A05E52",
+          "handleValueChange": [Function],
+          "max": 30,
+          "maxIcon": "users",
+          "min": 2,
+          "minIcon": "user",
+          "step": 1,
+          "title": "Population Size",
+          "value": 2,
+        },
+      ]
+    }
+  />
+  <ButtonGroup
+    data={
+      Array [
+        Object {
+          "buttonText": "Start",
+          "color": "#A05E52",
+          "handleClick": [Function],
+        },
+      ]
+    }
+  />
+  <div
+    style={
+      Object {
+        "display": "block",
+      }
+    }
+  >
+    <ClippedSVG
+      height={600}
+      id="simulation-2"
+      marginTop={0}
+      padding={0}
+      width={600}
+    >
+      <EconomyNodeGroup
+        handleCollision={[Function]}
+        height={600}
+        initialV={10}
+        paused={false}
+        playing={false}
+        speeds={
+          Array [
+            10,
+            10,
+          ]
+        }
+        velocityMultiplier={1}
+        width={600}
+      />
+    </ClippedSVG>
+  </div>
+</styled.div>
+`;
+
+exports[`smoke and snapshot tests renders second demonstration successfully 1`] = `
+<styled.div
+  fullWidthAt="extraSmall"
+  width="50%"
+>
+  <SliderGroup
+    column={true}
+    data={
+      Array [
+        Object {
+          "color": "#A05E52",
+          "handleValueChange": [Function],
+          "max": 30,
+          "maxIcon": "users",
+          "min": 2,
+          "minIcon": "user",
+          "step": 1,
+          "title": "Population Size",
+          "value": 2,
+        },
+      ]
+    }
+  />
+  <ButtonGroup
+    data={
+      Array [
+        Object {
+          "buttonText": "Start",
+          "color": "#A05E52",
+          "handleClick": [Function],
+        },
+      ]
+    }
+  />
+  <div
+    style={
+      Object {
+        "display": "block",
+      }
+    }
+  >
+    <ClippedSVG
+      height={600}
+      id="simulation-1"
+      marginTop={0}
+      padding={0}
+      width={600}
+    >
+      <EconomyNodeGroup
+        handleCollision={[Function]}
+        height={600}
+        initialV={10}
+        paused={false}
+        playing={false}
+        speeds={
+          Array [
+            10,
+            10,
+          ]
+        }
+        velocityMultiplier={1}
+        width={600}
+      />
+    </ClippedSVG>
+  </div>
+</styled.div>
+`;
