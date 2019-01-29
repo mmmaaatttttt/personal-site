@@ -96,7 +96,7 @@ const selectOptionsPieChart = [
   },
   {
     value: "expDiff",
-    label: "Rankings by Experience Points Gap (Received - Given)",
+    label: "Rankings by Exp Gap (Received - Given)",
     chartValues: data => __pieHelper(data, "expDiffRanking")
   }
 ];
@@ -164,7 +164,7 @@ const selectOptionsScatter = [
   },
   {
     value: "expPointsGap",
-    label: "Overall Experience Points Gap (Received - Given)",
+    label: "Overall Exp Gap (Received - Given)",
     accessor: d =>
       d.scoresReceived.experience -
       d.scoresGiven.reduce((total, score) => total + score),
