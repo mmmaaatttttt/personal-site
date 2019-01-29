@@ -39,11 +39,11 @@ class EconomySimulation extends Component {
   };
 
   handlePause = () => {
-    this.setState({ paused: !this.state.paused });
+    this.setState(st => ({ paused: !st.paused }));
   };
 
   handleShowingSimulation = () => {
-    this.setState({ showingSimulation: !this.state.showingSimulation });
+    this.setState(st => ({ showingSimulation: !st.showingSimulation }));
   };
 
   handleSpeedCount = newCount => {
@@ -195,20 +195,23 @@ class EconomySimulation extends Component {
 }
 
 EconomySimulation.propTypes = {
-  width: PropTypes.number.isRequired,
+  editSavings: PropTypes.bool.isRequired,
   height: PropTypes.number.isRequired,
-  padding: PropTypes.number.isRequired,
-  initialV: PropTypes.number.isRequired,
   idx: PropTypes.number.isRequired,
-  editSavings: PropTypes.bool.isRequired
+  initialV: PropTypes.number.isRequired,
+  padding: PropTypes.number.isRequired,
+  width: PropTypes.number.isRequired
 };
 
 EconomySimulation.defaultProps = {
-  width: 600,
+  editSavings: false,
   height: 600,
-  padding: 0,
+  idx: 0,
   initialV: 10,
-  editSavings: false
+  padding: 0,
+  width: 600
 };
 
 export default withCaption(EconomySimulation);
+
+export { EconomySimulation };
