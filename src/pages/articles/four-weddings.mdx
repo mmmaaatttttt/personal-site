@@ -1,10 +1,12 @@
 ---
 title: "Four (Hundred and Thirty-Two) Weddings"
 date: "2018-03-11"
-featured_image: "four_weddings.jpg"
+featured_image: "../../images/featured_images/four_weddings.jpg"
 caption: "Using data to study what makes a wedding work."
 featured_image_caption: "Four brides featured in an episode of four weddings. Image credit: TLC."
 ---
+
+import { FourWeddingsVisualization, ResponsiveIFrame, Sidebar } from "story_components";
 
 When my wife and I first got engaged, we spent a fair amount of time doing what any newly engaged American couple does: watching a lot of wedding-themed reality television. I'm not ashamed to admit that I've seen more than my fair share of [_Say Yes to the Dress_](https://en.wikipedia.org/wiki/Say_Yes_to_the_Dress). There were other shows that made it into the rotation too. However, the one I remember most fondly was a little gem called [_Four Weddings_](https://en.wikipedia.org/wiki/Four_Weddings), which aired on the TLC Network.
 
@@ -22,11 +24,13 @@ Recently, however, I discovered that Four Weddings is [making a comeback](https:
 
 In what follows, I'd like to share with you what I learned.
 
+---
+
 ### "I Do" Demographics
 
 Before we get into the competition aspect of the show, I'd like to start with some basic demographic information regarding the couples and their weddings. First, here's a heat map highlighting where each of those 432 weddings took place. You can also adjust the map to display the average budget per wedding by state.
 
- <FourWeddingsVisualization visType="map" caption="Figure 1: Geographic wedding demographics. Hover over a state to learn more." />
+<FourWeddingsVisualization visType="map" caption="Figure 1: Geographic wedding demographics. Hover over a state to learn more." />
 
 As you can see, brides in most states were not represented in the show. Of the states that made an appearance, New York and Florida are by far the most frequent destinations; these two states alone account for nearly 42% of the weddings in the data set. On the other end of the spectrum, Ohio and New Hampshire are only represented by a single wedding each.
 
@@ -34,7 +38,7 @@ In terms of average budget, New York and New Jersey take the cake; weddings in t
 
 For more detailed budget information, here's a histogram with budget information for every wedding on the show. You can also look at breakdowns of the number of guests at the wedding, budget per guest, bride's age, spouse's age, and the age gap between the two people getting married.
 
- <FourWeddingsVisualization visType="histogram" caption="Figure 2: Basic information for the brides and their weddings."/>
+<FourWeddingsVisualization visType="histogram" caption="Figure 2: Basic information for the brides and their weddings."/>
 
 The chart should speak for itself, but here are some additional highlights:
 
@@ -46,6 +50,8 @@ The chart should speak for itself, but here are some additional highlights:
 * Not all spouses are husbands! There were a handful of same-sex weddings featured on the show.
 
 This demographic information is nice to know, but doesn't really address the question that first piqued my curiosity: _given the data about each wedding, can we predict which wedding will win?_
+
+---
 
 ### Ratings and Rankings
 
@@ -66,6 +72,8 @@ In this way, it's harder to game the system, since each bride is forced to dole 
 This means that the maximum possible score a wedding can receive is 120 points: 30 points in each category. On the other hand, the minimum possible score is 27 (9 points in each of the ranked categories, and 0 for overall experience).
 
 In the event that there's a tie in total score, the winner is the person with the higher overall experience score. There are tie-breaking rules in the event tha the overall experience scores are the same too, but we won't go into them here, because this was a rare occurrence and the rules changed over the course of the show.
+
+---
 
 ### Winning Weddings
 
@@ -89,6 +97,8 @@ Here's where things take an interesting turn. The last category you can examine 
 
 Of course, this doesn't necessarily mean that brides with popular weddings are sabotaging their competitors by giving them poor experience scores. In fact, since winning is strongly associated with high experience scores, it could be that the gap is larger for women who win simply because the overall experience scores they received were also high in their group.
 
+---
+
 ### Plotting All The Things
 
 To close things out, let's take a kitchen sink approach. Here's a visualizaiton that lets you plot data from every wedding on the show. You can adjust what each axis is displaying, but the colors of the circles always correspond to final rankings. As with the pie chart above, winners are in blue, second place finishers are in green, then orange, and last place finishers are in red.
@@ -101,6 +111,8 @@ Here are a few things I noticed:
 * Setting the y-axis to total points received tells a clear story about what it takes to secure a win. Nobody has received a "perfect" score of 120, but if you score 90 or above, you're pretty likely to win. On the flip side, if you score less than 80 points, you're probably not getting that honeymoon. In other words, there's a relatively narrow range where there's a lot of uncertainty about whether or not you'll win.
 * This is part of the reason why even a small experience point gap can help secure a win. In fact, nearly **38%** of all episodes featured a winner and runner-up whose total score differed by no more than three points.
 * Of the three other categories that are scored, it appears that a strong showing in **venue** is the best predictor of success. Of the weddings that scored 26 or 30 points in venue (the highest marks possible), **66%** won the episode. For food, **50%** of weddings that scored 26 or 30 points won, and for dress only **39%** of weddings that scored 26 or 30 points won.
+
+---
 
 ### Conclusion
 
