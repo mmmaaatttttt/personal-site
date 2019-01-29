@@ -3,14 +3,14 @@ import PropTypes from "prop-types";
 import styled from "styled-components";
 import { rhythm } from "utils/typography";
 
-const StyledTooltip = styled.div.attrs({
-  style: ({ visible, x, y, offsetWidth }) => ({
+const StyledTooltip = styled.div.attrs(({ visible, x, y, offsetWidth }) => ({
+  style: {
     display: visible ? "block" : "none",
     left: `${Math.max(x - offsetWidth / 2, 0)}px`,
     top: `${y}px`,
     width: x > offsetWidth / 2 ? "auto" : `${2 * x}px`
-  })
-})`
+  }
+}))`
   position: absolute;
   background-color: rgba(0, 0, 0, 0.6);
   color: white;
@@ -49,13 +49,17 @@ const StyledTooltip = styled.div.attrs({
 `;
 
 class Tooltip extends Component {
-  state = {
-    offsetWidth: 0,
-    offsetHeight: 0
-  };
+  constructor(props) {
+    super(props);
+    this.state = {
+      offsetWidth: 0,
+      offsetHeight: 0
+    };
+    this.tooltipDiv = React.createRef();
+  }
 
   componentDidUpdate() {
-    const { offsetWidth, offsetHeight } = this.tooltipDiv;
+    const { offsetWidth, offsetHeight } = this.tooltipDiv.current;
     const { offsetWidth: stateWidth, offsetHeight: stateHeight } = this.state;
     const distance =
       Math.abs(offsetWidth - stateWidth) + Math.abs(offsetHeight - stateHeight);
@@ -85,7 +89,7 @@ class Tooltip extends Component {
         x={x}
         y={y - offsetHeight - 20}
         offsetWidth={offsetWidth}
-        innerRef={tooltipDiv => (this.tooltipDiv = tooltipDiv)}
+        ref={this.tooltipDiv}
       >
         {titleHTML}
         {bodyHTML}
