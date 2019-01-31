@@ -10,7 +10,9 @@
 - build breaks! fix this
 - figure out how to run create-index on gatsby server restart
 - add hr tags to posts
-- check broken mathHelpers test in nonlinear story
+- use StaticQuery for four weddings (include data section to gatsby-config)
+- remove d3-fetch dependency
+- fix selectable component so it doesn't get so tall on narrow screens
 - meta og:image tags for pages that aren't blog-post pages
 - tweet thread on upgrade
   - gatsby --> 2.0 (layouts)
