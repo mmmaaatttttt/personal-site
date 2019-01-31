@@ -6,7 +6,11 @@ caption: "Using data to study what makes a wedding work."
 featured_image_caption: "Four brides featured in an episode of four weddings. Image credit: TLC."
 ---
 
-import { FourWeddingsVisualization, ResponsiveIFrame, Sidebar } from "story_components";
+import {
+  FourWeddingsVisualization,
+  ResponsiveIFrame,
+  Sidebar
+} from "story_components";
 
 When my wife and I first got engaged, we spent a fair amount of time doing what any newly engaged American couple does: watching a lot of wedding-themed reality television. I'm not ashamed to admit that I've seen more than my fair share of [_Say Yes to the Dress_](https://en.wikipedia.org/wiki/Say_Yes_to_the_Dress). There were other shows that made it into the rotation too. However, the one I remember most fondly was a little gem called [_Four Weddings_](https://en.wikipedia.org/wiki/Four_Weddings), which aired on the TLC Network.
 
@@ -16,7 +20,10 @@ If you've never seen the show, here's a quick overview. In each episode, four st
 
 Here's a quick preview clip from one of the episodes, if you'd like a little more context:
 
-<ResponsiveIFrame src="https://www.youtube.com/embed/1f3Cnp3MaXw?rel=0" heightOverWidth={315/560} />
+<ResponsiveIFrame
+  src="https://www.youtube.com/embed/1f3Cnp3MaXw?rel=0"
+  heightOverWidth={315 / 560}
+/>
 
 When I first discovered _Four Weddings_, I thought it might be fun to compile the statistics and see what sorts of trends emerged. But alas, this was in the stone age of 2011, before streaming television had taken off to the extent that it has now. In order to collect data, I had to wait for an episode to air, record it on our DVR, and then speed through it as best I could to record any relevant data. This was a slow process, and after a while I threw in the towel.
 
@@ -30,24 +37,30 @@ In what follows, I'd like to share with you what I learned.
 
 Before we get into the competition aspect of the show, I'd like to start with some basic demographic information regarding the couples and their weddings. First, here's a heat map highlighting where each of those 432 weddings took place. You can also adjust the map to display the average budget per wedding by state.
 
-<FourWeddingsVisualization visType="map" caption="Figure 1: Geographic wedding demographics. Hover over a state to learn more." />
+<FourWeddingsVisualization
+  visType="map"
+  caption="Figure 1: Geographic wedding demographics. Hover over a state to learn more."
+/>
 
 As you can see, brides in most states were not represented in the show. Of the states that made an appearance, New York and Florida are by far the most frequent destinations; these two states alone account for nearly 42% of the weddings in the data set. On the other end of the spectrum, Ohio and New Hampshire are only represented by a single wedding each.
 
-In terms of average budget, New York and New Jersey take the cake; weddings in these states on the show cost nearly $40,000, on average.
+In terms of average budget, New York and New Jersey take the cake; weddings in these states on the show cost nearly \$40,000, on average.
 
 For more detailed budget information, here's a histogram with budget information for every wedding on the show. You can also look at breakdowns of the number of guests at the wedding, budget per guest, bride's age, spouse's age, and the age gap between the two people getting married.
 
-<FourWeddingsVisualization visType="histogram" caption="Figure 2: Basic information for the brides and their weddings."/>
+<FourWeddingsVisualization
+  visType="histogram"
+  caption="Figure 2: Basic information for the brides and their weddings."
+/>
 
 The chart should speak for itself, but here are some additional highlights:
 
-* Overall, weddings on the show had an average budget of **$31,058**. They had a median budget of **$25,000**.
-* The average guest count was nearly **154**. The median guest count was **145**.
-* The average bride age was **29.2**. The average age of the spouse was **31.6**.
-* The average gap between the age of the spouse and the age of the bride was **2.4** years.
-* **52.5%** of the time, the gap between the age of the bride and the age of the spouse was 3 years or less. **6.7%** of the time, the bride was more than 3 years older than the spouse. **40.7%** of the time, the spouse was at least 3 years older than the bride.
-* Not all spouses are husbands! There were a handful of same-sex weddings featured on the show.
+- Overall, weddings on the show had an average budget of **\$31,058**. They had a median budget of **\$25,000**.
+- The average guest count was nearly **154**. The median guest count was **145**.
+- The average bride age was **29.2**. The average age of the spouse was **31.6**.
+- The average gap between the age of the spouse and the age of the bride was **2.4** years.
+- **52.5%** of the time, the gap between the age of the bride and the age of the spouse was 3 years or less. **6.7%** of the time, the bride was more than 3 years older than the spouse. **40.7%** of the time, the spouse was at least 3 years older than the bride.
+- Not all spouses are husbands! There were a handful of same-sex weddings featured on the show.
 
 This demographic information is nice to know, but doesn't really address the question that first piqued my curiosity: _given the data about each wedding, can we predict which wedding will win?_
 
@@ -85,7 +98,10 @@ How can we look at the effect of wedding budget on the final outcome? One way to
 
 However, that's not what happens. As the chart below shows, weddings with the highest budget in their group won 45% of the time. On the other end of the spectrum, weddings with the lowest budget in their group won only 11% of the time. Perhaps unsurprisingly, people who spend more on weddings tend to have the weddings that people enjoy the most.
 
-<FourWeddingsVisualization visType="pie" caption="Figure 3: Share of winning weddings by rankings in different categories. First place rankings are blue, second place rankings are green, then orange, then red."/>
+<FourWeddingsVisualization
+  visType="pie"
+  caption="Figure 3: Share of winning weddings by rankings in different categories. First place rankings are blue, second place rankings are green, then orange, then red."
+/>
 
 There are a few other stats you can play around with in the pie chart. Initially I'd thought that budget per guest might be a strong predictor of success as well, but it turns out to be weaker than the budget on its own (32.4% vs. 45%).
 
@@ -103,20 +119,29 @@ Of course, this doesn't necessarily mean that brides with popular weddings are s
 
 To close things out, let's take a kitchen sink approach. Here's a visualizaiton that lets you plot data from every wedding on the show. You can adjust what each axis is displaying, but the colors of the circles always correspond to final rankings. As with the pie chart above, winners are in blue, second place finishers are in green, then orange, and last place finishers are in red.
 
-<FourWeddingsVisualization visType="scatter" caption="Figure 4: A scatterplot for your enjoyment. Play around with the data at your leisure."/>
+<FourWeddingsVisualization
+  visType="scatter"
+  caption="Figure 4: A scatterplot for your enjoyment. Play around with the data at your leisure."
+/>
 
 Here are a few things I noticed:
 
-* Wedding budget may be a predictor of success, it's worth considering whether there's a limit to this rule of thumb. Among the eight weddings that had a budget of $100,000 or more, only two of them were ranked highest in among their foursome.
-* Setting the y-axis to total points received tells a clear story about what it takes to secure a win. Nobody has received a "perfect" score of 120, but if you score 90 or above, you're pretty likely to win. On the flip side, if you score less than 80 points, you're probably not getting that honeymoon. In other words, there's a relatively narrow range where there's a lot of uncertainty about whether or not you'll win.
-* This is part of the reason why even a small experience point gap can help secure a win. In fact, nearly **38%** of all episodes featured a winner and runner-up whose total score differed by no more than three points.
-* Of the three other categories that are scored, it appears that a strong showing in **venue** is the best predictor of success. Of the weddings that scored 26 or 30 points in venue (the highest marks possible), **66%** won the episode. For food, **50%** of weddings that scored 26 or 30 points won, and for dress only **39%** of weddings that scored 26 or 30 points won.
+- Wedding budget may be a predictor of success, it's worth considering whether there's a limit to this rule of thumb. Among the eight weddings that had a budget of \$100,000 or more, only two of them were ranked highest in among their foursome.
+- Setting the y-axis to total points received tells a clear story about what it takes to secure a win. Nobody has received a "perfect" score of 120, but if you score 90 or above, you're pretty likely to win. On the flip side, if you score less than 80 points, you're probably not getting that honeymoon. In other words, there's a relatively narrow range where there's a lot of uncertainty about whether or not you'll win.
+- This is part of the reason why even a small experience point gap can help secure a win. In fact, nearly **38%** of all episodes featured a winner and runner-up whose total score differed by no more than three points.
+- Of the three other categories that are scored, it appears that a strong showing in **venue** is the best predictor of success. Of the weddings that scored 26 or 30 points in venue (the highest marks possible), **66%** won the episode. For food, **50%** of weddings that scored 26 or 30 points won, and for dress only **39%** of weddings that scored 26 or 30 points won.
 
 ---
 
 ### Conclusion
 
-<Sidebar>Full disclosure: several episodes had incorrect tallies, or tallies that were simply impossible given the rules of the game. Where it was clear what the tallies should have been, I've adjusted the data. But there were a couple of times where it wasn't clear why things were off. In those cases, I've left the data as-is. Check out the notes in the CSV for more details.</Sidebar>
+<Sidebar>
+  Full disclosure: several episodes had incorrect tallies, or tallies that were
+  simply impossible given the rules of the game. Where it was clear what the
+  tallies should have been, I've adjusted the data. But there were a couple of
+  times where it wasn't clear why things were off. In those cases, I've left the
+  data as-is. Check out the notes in the CSV for more details.
+</Sidebar>
 
 So what did I learn from all of this reality television? As expected, on _Four Weddings_, money helps people win honeymoons. Sabotaging the overall experience scores of your peers can also help, though this doesn't seem to be happening too much, as it's pull off without looking like a jerk. Also, if you're going to splurge on one aspect of the wedding, go for the venue.
 
