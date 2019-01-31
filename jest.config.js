@@ -12,5 +12,6 @@ module.exports = {
   testPathIgnorePatterns: ["/node_modules/", "<rootDir>/.cache/"],
   transform: {
     "^.+\\.jsx?$": "<rootDir>/test/transformer.js"
-  }
+  },
+  transformIgnorePatterns: [`node_modules/(?!(gatsby)/)`]
 };
