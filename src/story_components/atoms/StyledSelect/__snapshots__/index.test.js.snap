@@ -15,6 +15,11 @@ exports[`matches snapshot 1`] = `
 ",
         ],
       },
+      "defaultProps": Object {
+        "styles": Object {
+          "placeholder": [Function],
+        },
+      },
       "displayName": "Styled(StateManager)",
       "foldedComponentIds": Array [],
       "render": [Function],
@@ -27,5 +32,10 @@ exports[`matches snapshot 1`] = `
     }
   }
   forwardedRef={null}
+  styles={
+    Object {
+      "placeholder": [Function],
+    }
+  }
 />
 `;
