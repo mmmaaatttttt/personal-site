@@ -22,6 +22,13 @@ module.exports = {
       }
     },
     {
+      resolve: `gatsby-source-filesystem`,
+      options: {
+        name: `data`,
+        path: `${__dirname}/src/data`
+      }
+    },
+    {
       resolve: `gatsby-plugin-typography`,
       options: {
         pathToConfigModule: `src/utils/typography`
@@ -38,9 +45,6 @@ module.exports = {
       resolve: `gatsby-plugin-feed`,
       options: mdxFeed
     },
-    `gatsby-plugin-react-helmet`,
-    `gatsby-plugin-sitemap`,
-    `gatsby-plugin-resolve-src`,
     {
       resolve: `gatsby-mdx`,
       options: {
@@ -55,7 +59,11 @@ module.exports = {
         ]
       }
     },
+    `gatsby-plugin-react-helmet`,
+    `gatsby-plugin-sitemap`,
+    `gatsby-plugin-resolve-src`,
     `gatsby-transformer-sharp`,
-    `gatsby-plugin-sharp`
+    `gatsby-plugin-sharp`,
+    `gatsby-transformer-csv`,
   ]
 };

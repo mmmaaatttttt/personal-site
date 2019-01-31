@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import { csv } from "d3-fetch";
-import { withPrefix } from "gatsby-link";
+import { StaticQuery, graphql } from 'gatsby';
 import {
   selectOptions,
   tooltipHelpers,
@@ -14,69 +13,68 @@ import {
   SelectableScatterplot
 } from "story_components";
 
-class FourWeddingsVisualization extends Component {
-  state = {
-    weddingData: []
+const PureFourWeddingsVis = ({ data, caption, visType}) => {
+  const components = {
+    map: SelectableHeatMap,
+    histogram: SelectableHistogram,
+    pie: SelectablePieChart,
+    scatter: SelectableScatterplot
   };
+  const Component = components[visType];
+  const props = {
+    data,
+    caption,
+    selectOptions: selectOptions[visType],
+    graphOptions: graphOptions[visType]
+  };
+  const tooltip = tooltipHelpers[visType];
+  if (tooltip) {
+    props.getTooltipTitle = tooltip.title;
+    props.getTooltipBody = tooltip.body;
+  }
+  return <Component {...props} />;
+}
 
-  componentDidMount() {
-    csv(withPrefix("data/four_weddings.csv"), (row, i, columns) => ({
-      season: +row["Season"],
-      episode: +row["Episode"],
-      title: row["Title"],
-      date: new Date(row["Date"]),
-      name: row["Name"],
-      age: +row["Age"],
-      spouseName: row["Spouse Name"],
-      spouseAge: +row["Spouse Age"] || null,
-      guests: +row["Guest Count"] || null,
-      budget: +row["Budget"] || null,
-      description: row["Description"],
-      state: row["State"],
-      scoresGiven: columns
-        .filter(colName => /Contestant \d Experience/.test(colName))
-        .map(colName => +row[colName])
+class FourWeddingsVisualization extends Component {
+  cleanQuery = data => {
+    return data.allFourWeddingsCsv.edges.map(({node}) => ({
+      season: +node["Season"],
+      episode: +node["Episode"],
+      title: node["Title"],
+      date: new Date(node["Date"]),
+      name: node["Name"],
+      age: +node["Age"],
+      spouseName: node["Spouse_Name"],
+      spouseAge: +node["Spouse_Age"] || null,
+      guests: +node["Guest_Count"] || null,
+      budget: +node["Budget"] || null,
+      description: node["Description"],
+      state: node["State"],
+      scoresGiven: [1,2,3,4].map(num => `Contestant_${num}_Experience`)
+        .map(colName => +node[colName])
         .filter(Boolean),
       scoresReceived: {
-        dress: +row["Dress"],
-        venue: +row["Venue"],
-        food: +row["Food"],
-        experience: +row["Experience"]
+        dress: +node["Dress"],
+        venue: +node["Venue"],
+        food: +node["Food"],
+        experience: +node["Experience"]
       },
-      ranking: +row["Ranking"],
-      expGivenRanking: +row["Experience Given Ranking"],
-      expDiffRanking: +row["Experience Diff Ranking"],
-      expReceivedRanking: +row["Overall Experience Ranking"],
-      budgetRanking: +row["Budget Ranking"],
-      budgetPerGuestRanking: +row["Budget Per Guest Ranking"] || null
-    })).then(weddingData => this.setState({ weddingData }));
+      ranking: +node["Ranking"],
+      expGivenRanking: +node["Experience_Given_Ranking"],
+      expDiffRanking: +node["Experience_Diff_Ranking"],
+      expReceivedRanking: +node["Overall_Experience_Ranking"],
+      budgetRanking: +node["Budget_Ranking"],
+      budgetPerGuestRanking: +node["Budget_Per_Guest_Ranking"] || null
+    }))
   }
 
   render() {
-    const { weddingData } = this.state;
-    const { caption, visType } = this.props;
-    const components = {
-      map: SelectableHeatMap,
-      histogram: SelectableHistogram,
-      pie: SelectablePieChart,
-      scatter: SelectableScatterplot
-    };
-    if (weddingData.length) {
-      const Component = components[visType];
-      const props = {
-        data: weddingData,
-        caption,
-        selectOptions: selectOptions[visType],
-        graphOptions: graphOptions[visType]
-      };
-      const tooltip = tooltipHelpers[visType];
-      if (tooltip) {
-        props.getTooltipTitle = tooltip.title;
-        props.getTooltipBody = tooltip.body;
-      }
-      return <Component {...props} />;
-    }
-    return null;
+    return (
+      <StaticQuery
+        query={query}
+        render={data => <PureFourWeddingsVis data={this.cleanQuery(data)} {...this.props} />}
+      />
+    )
   }
 }
 
@@ -85,4 +83,47 @@ FourWeddingsVisualization.propTypes = {
   visType: PropTypes.oneOf(Object.keys(selectOptions))
 };
 
+FourWeddingsVisualization.defaultProps = {
+  caption: "Sample Caption"
+}
+
+const query = graphql`
+  query FourWeddingsQuery {
+    allFourWeddingsCsv {
+      edges {
+        node {
+          Season
+          Episode
+          Title
+          Date
+          Name
+          Age
+          Spouse_Name
+          Spouse_Age
+          Guest_Count
+          Budget
+          Description
+          State
+          Contestant_1_Experience
+          Contestant_2_Experience
+          Contestant_3_Experience
+          Contestant_4_Experience
+          Dress
+          Venue
+          Food
+          Experience
+          Ranking
+          Experience_Given_Ranking
+          Experience_Diff_Ranking
+          Overall_Experience_Ranking
+          Budget_Ranking
+          Budget_Per_Guest_Ranking
+        }
+      }
+    }
+  }
+`;
+
 export default FourWeddingsVisualization;
+
+export { PureFourWeddingsVis };
