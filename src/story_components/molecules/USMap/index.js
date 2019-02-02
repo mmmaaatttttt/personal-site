@@ -3,11 +3,10 @@ import PropTypes from "prop-types";
 import NodeGroup from "react-move/NodeGroup";
 import { geoPath, geoAlbers } from "d3-geo";
 import { scaleLinear } from "d3-scale";
-import { json } from "d3-fetch";
 import { nest } from "d3-collection";
 import { extent } from "d3-array";
 import { feature } from "topojson";
-import { withPrefix } from "gatsby-link";
+import us from "data/json/us-topo.json";
 import { Tooltip, ClippedSVG } from "story_components";
 import COLORS from "utils/styles";
 
@@ -30,11 +29,9 @@ class USMap extends Component {
   }
 
   componentDidMount() {
-    const { data, addGeometryProperties, topoUrl } = this.props;
-    json(withPrefix(topoUrl)).then(us => {
-      addGeometryProperties(us, data);
-      this.setState({ us });
-    });
+    const { data, addGeometryProperties } = this.props;
+    addGeometryProperties(us, data);
+    this.setState({ us });
   }
 
   handleEnterAndUpdate = (scale, accessor, d) => {
@@ -150,7 +147,6 @@ USMap.propTypes = {
   getTooltipTitle: PropTypes.func.isRequired,
   keyAccessor: PropTypes.func.isRequired,
   scale: PropTypes.number.isRequired,
-  topoUrl: PropTypes.string.isRequired,
   topoKey: PropTypes.string.isRequired,
   translate: PropTypes.arrayOf(PropTypes.number).isRequired
 };
@@ -169,7 +165,6 @@ USMap.defaultProps = {
   },
   keyAccessor: feature => feature.id,
   scale: 1950,
-  topoUrl: "/data/us-topo.json",
   topoKey: "states",
   translate: [800, 460]
 };
