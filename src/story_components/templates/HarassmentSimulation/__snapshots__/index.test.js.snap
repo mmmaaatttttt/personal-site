@@ -1,0 +1,380 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`smoke and snapshot tests renders first demonstration successfully 1`] = `
+<styled.div
+  fullWidthAt="extraSmall"
+  width="75%"
+>
+  <styled.div
+    column={false}
+    cross="stretch"
+    flex={1}
+    main="stretch"
+    margin="0"
+    shouldWrap={true}
+    textAlign="left"
+    width="auto"
+  >
+    <styled.div
+      fullWidthAt="small"
+      width="50%"
+    >
+      <SliderGroup
+        column={true}
+        data={
+          Array [
+            Object {
+              "color": "#52A081",
+              "handleValueChange": [Function],
+              "max": 20,
+              "maxIcon": "users",
+              "min": 1,
+              "minIcon": "user",
+              "step": 1,
+              "title": "Number of Green-eyed People: 20",
+              "value": 20,
+            },
+          ]
+        }
+      />
+    </styled.div>
+    <styled.div
+      fullWidthAt="small"
+      width="50%"
+    >
+      <SliderGroup
+        column={true}
+        data={
+          Array [
+            Object {
+              "color": "#5ECFFF",
+              "handleValueChange": [Function],
+              "max": 20,
+              "maxIcon": "users",
+              "min": 1,
+              "minIcon": "user",
+              "step": 1,
+              "title": "Number of Blue-eyed People: 10",
+              "value": 10,
+            },
+          ]
+        }
+      />
+    </styled.div>
+  </styled.div>
+  <ButtonGroup
+    data={
+      Array [
+        Object {
+          "buttonText": "Start",
+          "handleClick": [Function],
+        },
+      ]
+    }
+  />
+  <ClippedSVG
+    height={500}
+    id="simulation-0"
+    marginTop={0}
+    padding={0}
+    width={900}
+  >
+    <HarassmentNodeGroup
+      blueCount={10}
+      blueOnBlueProb={0.05}
+      blueOnGreenProb={0.05}
+      greenCount={20}
+      greenOnBlueProb={0.05}
+      greenOnGreenProb={0.05}
+      handleShout={[Function]}
+      height={500}
+      initialV={2}
+      paused={false}
+      playing={false}
+      width={900}
+    />
+  </ClippedSVG>
+</styled.div>
+`;
+
+exports[`smoke and snapshot tests renders second demonstraction successfully 1`] = `
+<styled.div
+  fullWidthAt="extraSmall"
+  width="75%"
+>
+  <styled.div
+    column={false}
+    cross="stretch"
+    flex={1}
+    main="stretch"
+    margin="0"
+    shouldWrap={true}
+    textAlign="left"
+    width="auto"
+  >
+    <styled.div
+      fullWidthAt="small"
+      width="50%"
+    >
+      <SliderGroup
+        column={true}
+        data={
+          Array [
+            Object {
+              "color": "#52A081",
+              "handleValueChange": [Function],
+              "max": 20,
+              "maxIcon": "users",
+              "min": 1,
+              "minIcon": "user",
+              "step": 1,
+              "title": "Number of Green-eyed People: 20",
+              "value": 20,
+            },
+            Object {
+              "color": "#52A081",
+              "handleValueChange": [Function],
+              "max": 0.25,
+              "maxIcon": "frown",
+              "min": 0,
+              "minIcon": "smile",
+              "step": 0.01,
+              "title": "5% chance of harassment with Green",
+              "value": 0.05,
+            },
+            Object {
+              "color": "#52A081",
+              "handleValueChange": [Function],
+              "max": 0.25,
+              "maxIcon": "frown",
+              "min": 0,
+              "minIcon": "smile",
+              "step": 0.01,
+              "title": "5% chance of harassment with Blue",
+              "value": 0.05,
+            },
+          ]
+        }
+      />
+    </styled.div>
+    <styled.div
+      fullWidthAt="small"
+      width="50%"
+    >
+      <SliderGroup
+        column={true}
+        data={
+          Array [
+            Object {
+              "color": "#5ECFFF",
+              "handleValueChange": [Function],
+              "max": 20,
+              "maxIcon": "users",
+              "min": 1,
+              "minIcon": "user",
+              "step": 1,
+              "title": "Number of Blue-eyed People: 10",
+              "value": 10,
+            },
+            Object {
+              "color": "#5ECFFF",
+              "handleValueChange": [Function],
+              "max": 0.25,
+              "maxIcon": "frown",
+              "min": 0,
+              "minIcon": "smile",
+              "step": 0.01,
+              "title": "5% chance of harassment with Blue",
+              "value": 0.05,
+            },
+            Object {
+              "color": "#5ECFFF",
+              "handleValueChange": [Function],
+              "max": 0.25,
+              "maxIcon": "frown",
+              "min": 0,
+              "minIcon": "smile",
+              "step": 0.01,
+              "title": "5% chance of harassment with Green",
+              "value": 0.05,
+            },
+          ]
+        }
+      />
+    </styled.div>
+  </styled.div>
+  <ButtonGroup
+    data={
+      Array [
+        Object {
+          "buttonText": "Start",
+          "handleClick": [Function],
+        },
+      ]
+    }
+  />
+  <ClippedSVG
+    height={500}
+    id="simulation-1"
+    marginTop={0}
+    padding={0}
+    width={900}
+  >
+    <HarassmentNodeGroup
+      blueCount={10}
+      blueOnBlueProb={0.05}
+      blueOnGreenProb={0.05}
+      greenCount={20}
+      greenOnBlueProb={0.05}
+      greenOnGreenProb={0.05}
+      handleShout={[Function]}
+      height={500}
+      initialV={2}
+      paused={false}
+      playing={false}
+      width={900}
+    />
+  </ClippedSVG>
+</styled.div>
+`;
+
+exports[`smoke and snapshot tests renders third demonstraction successfully 1`] = `
+<styled.div
+  fullWidthAt="extraSmall"
+  width="75%"
+>
+  <styled.div
+    column={false}
+    cross="stretch"
+    flex={1}
+    main="stretch"
+    margin="0"
+    shouldWrap={true}
+    textAlign="left"
+    width="auto"
+  >
+    <styled.div
+      fullWidthAt="small"
+      width="50%"
+    >
+      <SliderGroup
+        column={true}
+        data={
+          Array [
+            Object {
+              "color": "#52A081",
+              "handleValueChange": [Function],
+              "max": 20,
+              "maxIcon": "users",
+              "min": 1,
+              "minIcon": "user",
+              "step": 1,
+              "title": "Number of Green-eyed People: 20",
+              "value": 20,
+            },
+            Object {
+              "color": "#52A081",
+              "handleValueChange": [Function],
+              "max": 0.25,
+              "maxIcon": "frown",
+              "min": 0,
+              "minIcon": "smile",
+              "step": 0.01,
+              "title": "5% chance of harassment with Green",
+              "value": 0.05,
+            },
+            Object {
+              "color": "#52A081",
+              "handleValueChange": [Function],
+              "max": 0.25,
+              "maxIcon": "frown",
+              "min": 0,
+              "minIcon": "smile",
+              "step": 0.01,
+              "title": "5% chance of harassment with Blue",
+              "value": 0.05,
+            },
+          ]
+        }
+      />
+    </styled.div>
+    <styled.div
+      fullWidthAt="small"
+      width="50%"
+    >
+      <SliderGroup
+        column={true}
+        data={
+          Array [
+            Object {
+              "color": "#5ECFFF",
+              "handleValueChange": [Function],
+              "max": 20,
+              "maxIcon": "users",
+              "min": 1,
+              "minIcon": "user",
+              "step": 1,
+              "title": "Number of Blue-eyed People: 10",
+              "value": 10,
+            },
+            Object {
+              "color": "#5ECFFF",
+              "handleValueChange": [Function],
+              "max": 0.25,
+              "maxIcon": "frown",
+              "min": 0,
+              "minIcon": "smile",
+              "step": 0.01,
+              "title": "5% chance of harassment with Blue",
+              "value": 0.05,
+            },
+            Object {
+              "color": "#5ECFFF",
+              "handleValueChange": [Function],
+              "max": 0.25,
+              "maxIcon": "frown",
+              "min": 0,
+              "minIcon": "smile",
+              "step": 0.01,
+              "title": "5% chance of harassment with Green",
+              "value": 0.05,
+            },
+          ]
+        }
+      />
+    </styled.div>
+  </styled.div>
+  <ButtonGroup
+    data={
+      Array [
+        Object {
+          "buttonText": "Start",
+          "handleClick": [Function],
+        },
+      ]
+    }
+  />
+  <ClippedSVG
+    height={500}
+    id="simulation-2"
+    marginTop={0}
+    padding={0}
+    width={900}
+  >
+    <HarassmentNodeGroup
+      blueCount={10}
+      blueOnBlueProb={0.05}
+      blueOnGreenProb={0.05}
+      greenCount={20}
+      greenOnBlueProb={0.05}
+      greenOnGreenProb={0.05}
+      handleShout={[Function]}
+      height={500}
+      initialV={2}
+      paused={false}
+      playing={false}
+      width={900}
+    />
+  </ClippedSVG>
+</styled.div>
+`;

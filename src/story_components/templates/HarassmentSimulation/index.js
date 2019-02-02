@@ -183,12 +183,12 @@ class HarassmentSimulation extends Component {
           {
             size: blueCount,
             color: COLORS.BLUE,
-            tooltipText: `Blue count ${blueCount}`
+            tooltipText: `Blue count: ${blueCount}`
           },
           {
             size: greenCount,
             color: COLORS.GREEN,
-            tooltipText: `Green count ${greenCount}`
+            tooltipText: `Green count: ${greenCount}`
           }
         ]
       },
@@ -277,18 +277,21 @@ class HarassmentSimulation extends Component {
 }
 
 HarassmentSimulation.propTypes = {
-  width: PropTypes.number.isRequired,
   height: PropTypes.number.isRequired,
-  padding: PropTypes.number.isRequired,
+  idx: PropTypes.number.isRequired,
   initialV: PropTypes.number.isRequired,
-  idx: PropTypes.number.isRequired
+  padding: PropTypes.number.isRequired,
+  width: PropTypes.number.isRequired
 };
 
 HarassmentSimulation.defaultProps = {
-  width: 900,
   height: 500,
+  idx: 0,
+  initialV: 2,
   padding: 0,
-  initialV: 2
+  width: 900,
 };
 
 export default withCaption(HarassmentSimulation);
+
+export { HarassmentSimulation };
