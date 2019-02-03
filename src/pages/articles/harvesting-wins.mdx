@@ -1,16 +1,22 @@
 ---
 title: "Harvesting Wins"
 date: "2018-05-28"
-featured_image: "orchard_child.jpg"
+featured_image: "../../images/featured_images/orchard_child.jpg"
 caption: "Modeling the likelihood of board-game victory."
 featured_image_caption: "Adorable child eating fruit. Image credit: Alexas_Fotos on Pixabay."
 ---
+
+import {
+  OrchardGame,
+  OrchardGameSimulation,
+  OrchardGameHeatData
+} from "story_components";
 
 A few months back, my son began to show an interest in board games. At the time he was only two, so we couldn't play anything too complicated (sorry, [Catan](https://en.wikipedia.org/wiki/Catan) lovers). Regardless, I soon discovered that even for very young children, there's a surprising amount of board-game variety.
 
 One of the games we started playing is called _First Orchard_. In this game, players cooperate to harvest fruit from an orchard before it gets discovered by a raven. If all of the fruit is removed before the raven appears, everyone wins; if the raven makes it to the orchard before all of the fruit has been harvested, everyone loses.
 
-<CaptionedImage caption="Box Art for First Orchard (Source: HABA USA)" width="70%" src="first_orchard.jpg" />
+![Box Art for First Orchard](../../images/first_orchard.jpg "Box Art for First Orchard (Source: HABA USA)"){.w-70}
 
 The rules of the game are relatively straightforward. The orchard has sixteen fruits, divided into four fruits of four different colors. On your turn, you roll a six-sided die. If the color on the die matches one of the fruit colors, you're meant to move a fruit of that color out of the orchard. For example, if you roll red and there are three red apples left, you can remove one. If there are no red apples left, you forfeit your turn.
 
@@ -22,7 +28,9 @@ Reading about the rules is way less fun than playing the game. So below I've pro
 
 The tiles on the bottom keep track of how many fruits in each color are remaining. Similarly, the value in the black tile at the bottom right represents the number of paces until the raven reaches the orchard. When you spin, the game automatically removes the correct fruit or advances the raven, unless you land on the white portion of the spinner. This corresponds to the fruit basket wild card, and when this happens, you can click on one of the tiles below the spinner to remove a fruit of your choosing.
 
-<OrchardGame caption="Figure 1: An online orchard game."/>
+<OrchardGame caption="Figure 1: An online orchard game." />
+
+---
 
 ### Don't Feed the Birds
 
@@ -54,13 +62,15 @@ So which of these strategies is the best? You could answer that question by form
 
 Or, you could let a computer do the heavy lifting for you. For brevity's sake, let's take this approach and see where it leads us.
 
+---
+
 ### That's So Raven
 
 When you click "Play" in the simulation below, your computer will begin playing _First Orchard_ at the rate of approximately 200 games per second. Those 200 games will be evenly split across the four strategies outlined above: 50 games per second for the most plentiful strategy, 50 games per second for the least plentiful strategy, and so on.
 
 I'd encourage you to write down guesses for how often each of these strategies will result in a win. When you're ready, watch the simulation go! (You can hover over any of the bars for more information on wins and losses.)
 
-<OrchardGameSimulation caption="Figure 2: Simulating multiple playthroughs of First Orchard."/>
+<OrchardGameSimulation caption="Figure 2: Simulating multiple playthroughs of First Orchard." />
 
 The specific numbers you see will vary, of course, but will even out the longer you let the simulation run. If you really want to know the true values of these probabilities, you can either let the simulation run for a long time, or you can take a different approach. It's hard to determine a formula for these probabilities by hand (though you're welcome to try!). But by using a strategy called [dynamic programming](https://en.wikipedia.org/wiki/Dynamic_programming), it's possible for a computer to determine these probabilities to a high degree of precision.
 
@@ -75,11 +85,13 @@ So that's what I did. Here's the breakdown:
 
 To summarize, even the worst strategy here (Least Plentiful) gives you a better than 50% chance of a win. Also, the gap between best and worst strategy is less than 8 points. And unfortunately, my son's preferred strategy (Favorite Color) performs worse than selecting randomly, though it's not the worst strategy around.
 
+---
+
 ### After _First Orchard_
 
 If you don't live with a two-year old, there's probably not much reason to play this game. But if you've got older children in the house, it's possible they'll enjoy a very similar game, developed by the same company but targeting children age 3-6. This game is simply called _Orchard Game_.
 
-<CaptionedImage caption="Box Art for Orchard Game (Source: HABA USA)" width="70%" src="orchard_game.jpg" />
+![Box Art for Orchard Game](../../images/orchard_game.jpg "Box Art for Orchard Game (Source: HABA USA)"){.w-70}
 
 The rules of this game are nearly the same as for _First Orchard_, but there are some slight variations:
 
@@ -89,7 +101,12 @@ The rules of this game are nearly the same as for _First Orchard_, but there are
 
 How do these changes alter the probability of a win? Let's find out!
 
-<OrchardGameSimulation caption="Figure 2: Simulating multiple playthroughs of Orchard." fruitCounts={[10,10,10,10]} ravenCount={9} wildCardCount={2}/>
+<OrchardGameSimulation
+  caption="Figure 2: Simulating multiple playthroughs of Orchard."
+  fruitCounts={[10, 10, 10, 10]}
+  ravenCount={9}
+  wildCardCount={2}
+/>
 
 Notice that the relative strength of each strategy is the same as before. The most plentiful strategy is the best choice, followed by the random strategy, and then the favorite color strategy. The strategy with the lowest probability of success, as before, is the least plentiful strategy.
 
@@ -103,6 +120,8 @@ Here are approximations to the true probabilities. Like before, I used dynamic p
 | Favorite Color  | 56.8%                  | -1.5   |
 
 As you can see, the strategy is even more important in this version of the game. The difference between the best and the worst strategy has effectively doubled: there's a difference of 15.2 points between the most and least plentiful strategies here, compared to a 7.6 difference in _First Orchard_. It's natural to assume that a game geared towards older children would have more of a focus on the winning strategy, so it's nice to see the numbers bear this assumption out.
+
+---
 
 ### Quoth the Raven: So Many Orchards!
 
@@ -121,20 +140,22 @@ Here's a heat chart that lets you explore the probability of a win based on your
 
 After playing around with this visualization, here are some things I noticed (I'd love to hear about your observations, too!):
 
-* **In all cases displayed, the strategy rankings never change.** The probability of winning with the most plentiful strategy is never less than the probability of winning with the random strategy, which in turn is never less than the probability of winning with the favorite color strategy, which in turn is never less than the probability of winning with the least plentiful strategy.
-* **The game can quickly become too easy or too difficult.** In many cases, there's not a very large gap between a black square (representing a low probability of success) from a green square (representing a high probability of success). For example, if the raven needed to move only 4 spaces in _First Orchard_, the probability of success with the most plentiful strategy drops over 17 points! Conversely, if the raven needed to move 6 spaces, the probability of success with the most plentiful strategy increases by more than 13 points.
-* **Strategy matters more as the game length increases, provided the game isn't too easy or too hard.** Because of the second observation, it's not hard to adjust the game parameters so that a win is either guaranteed or impossible. In these scenarios, the choice of strategy is essentially irrelevant. But in that sweet spot where the game outcome isn't a foregone conclusion, the data suggest that the choice of strategy matters more as the duration of the game increases.
+- **In all cases displayed, the strategy rankings never change.** The probability of winning with the most plentiful strategy is never less than the probability of winning with the random strategy, which in turn is never less than the probability of winning with the favorite color strategy, which in turn is never less than the probability of winning with the least plentiful strategy.
+- **The game can quickly become too easy or too difficult.** In many cases, there's not a very large gap between a black square (representing a low probability of success) from a green square (representing a high probability of success). For example, if the raven needed to move only 4 spaces in _First Orchard_, the probability of success with the most plentiful strategy drops over 17 points! Conversely, if the raven needed to move 6 spaces, the probability of success with the most plentiful strategy increases by more than 13 points.
+- **Strategy matters more as the game length increases, provided the game isn't too easy or too hard.** Because of the second observation, it's not hard to adjust the game parameters so that a win is either guaranteed or impossible. In these scenarios, the choice of strategy is essentially irrelevant. But in that sweet spot where the game outcome isn't a foregone conclusion, the data suggest that the choice of strategy matters more as the duration of the game increases.
 
   In _First Orchard_, for example, the game is likely to end relatively quickly, and the strategy makes less of a difference in the outcome. This isn't as much the case in _Orchard Game_, however, and as the parameters increase even more, so too does the gap between the most and least plentiful strategies. For instance, in the version where there are 5 fruit colors, 12 colors per fruit, you can remove 1 fruit per roll of the fruit basket, and the raven requires 12 rolls to defeat you, the gap between best and worst strategies is over 19 points!
+
+---
 
 ### Conclusion
 
 My two-year-old son doesn't yet appreciate all the great mathematics lurking in this game, but my hope is that this will come in time. If and when it does, there are a number of other interesting questions that I haven't addressed here. Most of these questions take a more mathematical bent; while we've explored a lot of data in this story, we haven't actually _proven_ anything. Here are some questions I'm curious about:
 
-* Can you prove that these relationships among the four strategies **always** holds? Namely, that most plentiful will always be at least as good as random, which will always be at least as good as favorite color, which will always be at least as good as least plentiful?
-* What happens to the gap between the most and least successful strategies as the game lengthens? For instance, if you have _n_ fruits per color and _n_ steps before the raven beats you, what happens to the gap between the most and least plentiful strategies as _n_ grows?
-* What other strategies can you come up with? Can you find a strategy that does better than the most plentiful strategy, or worse than the least plentiful strategy? If not, can you prove that these are the best and worst strategies, respectively?
-* What about mixed strategies? For example, if I play with the most plentiful strategy and my son plays with the favorite color strategy, what's the likelihood that we'll defeat the raven? Is it just an average of those individual strategies, or is it something else?
+- Can you prove that these relationships among the four strategies **always** holds? Namely, that most plentiful will always be at least as good as random, which will always be at least as good as favorite color, which will always be at least as good as least plentiful?
+- What happens to the gap between the most and least successful strategies as the game lengthens? For instance, if you have _n_ fruits per color and _n_ steps before the raven beats you, what happens to the gap between the most and least plentiful strategies as _n_ grows?
+- What other strategies can you come up with? Can you find a strategy that does better than the most plentiful strategy, or worse than the least plentiful strategy? If not, can you prove that these are the best and worst strategies, respectively?
+- What about mixed strategies? For example, if I play with the most plentiful strategy and my son plays with the favorite color strategy, what's the likelihood that we'll defeat the raven? Is it just an average of those individual strategies, or is it something else?
 
 A general theme here is that there are incredibly rich mathematical questions to explore here, all stemming from a game aimed at toddlers. This is the sort of thing I absolutely love, so much so that I wrote a [book](https://www.amazon.com/Power-Up-Unlocking-Hidden-Mathematics-Video/dp/0691161518) about it! The book's focus is on video games specifically, but the theme is the same: interesting, fun mathematics can turn up in the most unexpected places.
 
