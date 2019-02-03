@@ -62,4 +62,6 @@ Button.defaultProps = {
   disabled: false
 };
 
+Button.displayName = "Button";
+
 export default Button;

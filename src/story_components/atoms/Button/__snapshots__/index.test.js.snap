@@ -56,7 +56,7 @@ exports[`matches snapshot with props passed in 1`] = `
         "disabled": false,
         "large": false,
       },
-      "displayName": "styled.button",
+      "displayName": "Button",
       "foldedComponentIds": Array [],
       "propTypes": Object {
         "color": [Function],
