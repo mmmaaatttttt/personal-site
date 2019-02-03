@@ -42,7 +42,7 @@ class OrchardGameHeatData extends Component {
   render() {
     const { colorCount, wildCardCount } = this.state;
     const { selectOptions, sliderMax } = this.props;
-    const { value, accessor } = this.state.selectedOption;
+    const { value, label, accessor } = this.state.selectedOption;
     const heatData = data
       .filter(d => d.colors === colorCount && d.wildCardCount === wildCardCount)
       .reduce((matrix, obj) => {
@@ -96,8 +96,8 @@ class OrchardGameHeatData extends Component {
             value={value}
             onChange={this.handleSelectChange}
             options={selectOptions}
-            searchable={false}
-            clearable={false}
+            isSearchable={false}
+            placeholder={label}
           />
         </StyledSelectWrapper>
         <HeatChart
@@ -146,3 +146,5 @@ OrchardGameHeatData.defaultProps = {
 };
 
 export default withCaption(OrchardGameHeatData);
+
+export { OrchardGameHeatData };

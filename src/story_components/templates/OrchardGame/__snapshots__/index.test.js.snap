@@ -1,0 +1,130 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`smoke and snapshot tests renders first demonstration successfully 1`] = `
+<styled.div
+  fullWidthAt="small"
+  width="70%"
+>
+  <styled.div>
+    <ScreenOverlay
+      backgroundColor="#BBBBBB"
+    >
+      <h1>
+        Orchard Game
+      </h1>
+      <p>
+        Games won: 
+        0
+      </p>
+      <p>
+        Games played: 
+        0
+      </p>
+      <Button
+        color="#52A081"
+        disabled={false}
+        large={true}
+        onClick={[Function]}
+      >
+        Play
+      </Button>
+      <Button
+        color="white"
+        disabled={false}
+        large={true}
+        onClick={[Function]}
+      >
+        Clear Game Data
+      </Button>
+    </ScreenOverlay>
+    <styled.div
+      column={true}
+      cross="stretch"
+      flex={1}
+      main="stretch"
+      margin="0"
+      shouldWrap={false}
+      textAlign="left"
+      width="auto"
+    >
+      <styled.div
+        fullWidthAt="extraSmall"
+        width="60%"
+      >
+        <Spinner
+          colors={
+            Array [
+              "#FF3C23",
+              "#00802b",
+              "#2227FF",
+              "#FFEC28",
+              "#000000",
+              "#FFFFFF",
+            ]
+          }
+          handleSpinEnd={[Function]}
+          height={300}
+          message="&nbsp;"
+          width={300}
+        />
+      </styled.div>
+      <styled.div
+        column={false}
+        cross="stretch"
+        flex={1}
+        main="stretch"
+        margin="0"
+        shouldWrap={false}
+        textAlign="left"
+        width="auto"
+      >
+        <FruitContainer
+          clickable={false}
+          color="#FF3C23"
+          count={4}
+          faded={false}
+          key="#FF3C23"
+          title="Fruit"
+          updateCounts={[Function]}
+        />
+        <FruitContainer
+          clickable={false}
+          color="#00802b"
+          count={4}
+          faded={false}
+          key="#00802b"
+          title="Fruit"
+          updateCounts={[Function]}
+        />
+        <FruitContainer
+          clickable={false}
+          color="#2227FF"
+          count={4}
+          faded={false}
+          key="#2227FF"
+          title="Fruit"
+          updateCounts={[Function]}
+        />
+        <FruitContainer
+          clickable={false}
+          color="#FFEC28"
+          count={4}
+          faded={false}
+          key="#FFEC28"
+          title="Fruit"
+          updateCounts={[Function]}
+        />
+        <FruitContainer
+          clickable={false}
+          color="#000000"
+          count={5}
+          faded={false}
+          key="#000000"
+          title="Raven"
+          updateCounts={[Function]}
+        />
+      </styled.div>
+    </styled.div>
+  </styled.div>
+</styled.div>
+`;

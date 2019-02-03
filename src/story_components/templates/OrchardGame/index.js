@@ -175,3 +175,5 @@ OrchardGame.defaultProps = {
 };
 
 export default withCaption(OrchardGame);
+
+export { OrchardGame };

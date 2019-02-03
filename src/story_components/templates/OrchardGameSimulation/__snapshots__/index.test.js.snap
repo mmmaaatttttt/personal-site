@@ -1,0 +1,128 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`smoke and snapshot tests renders first demonstration successfully 1`] = `
+<styled.div
+  fullWidthAt="small"
+  width="80%"
+>
+  <styled.div
+    column={false}
+    cross="stretch"
+    flex={1}
+    main="center"
+    margin="0"
+    shouldWrap={false}
+    textAlign="left"
+    width="auto"
+  >
+    <Button
+      color="white"
+      disabled={false}
+      large={false}
+      onClick={[Function]}
+    >
+      Play
+    </Button>
+    <Button
+      color="#FF3C23"
+      disabled={false}
+      large={false}
+      onClick={[Function]}
+    >
+      Reset Simulation
+    </Button>
+  </styled.div>
+  <HorizontalBar
+    data={
+      Array [
+        Object {
+          "color": "#52A081",
+          "size": 0,
+          "tooltipText": "Games Won: 0",
+        },
+        Object {
+          "color": "#FF3C23",
+          "size": 0,
+          "tooltipText": "Games Played: 0",
+        },
+        Object {
+          "color": "#BBBBBB",
+          "size": 0,
+          "tooltipText": "Win Percentage: 0.0%",
+        },
+      ]
+    }
+    key="0"
+    title="Most Plentiful Strategy: 0.0%"
+  />
+  <HorizontalBar
+    data={
+      Array [
+        Object {
+          "color": "#52A081",
+          "size": 0,
+          "tooltipText": "Games Won: 0",
+        },
+        Object {
+          "color": "#FF3C23",
+          "size": 0,
+          "tooltipText": "Games Played: 0",
+        },
+        Object {
+          "color": "#BBBBBB",
+          "size": 0,
+          "tooltipText": "Win Percentage: 0.0%",
+        },
+      ]
+    }
+    key="1"
+    title="Least Plentiful Strategy: 0.0%"
+  />
+  <HorizontalBar
+    data={
+      Array [
+        Object {
+          "color": "#52A081",
+          "size": 0,
+          "tooltipText": "Games Won: 0",
+        },
+        Object {
+          "color": "#FF3C23",
+          "size": 0,
+          "tooltipText": "Games Played: 0",
+        },
+        Object {
+          "color": "#BBBBBB",
+          "size": 0,
+          "tooltipText": "Win Percentage: 0.0%",
+        },
+      ]
+    }
+    key="2"
+    title="Random Strategy: 0.0%"
+  />
+  <HorizontalBar
+    data={
+      Array [
+        Object {
+          "color": "#52A081",
+          "size": 0,
+          "tooltipText": "Games Won: 0",
+        },
+        Object {
+          "color": "#FF3C23",
+          "size": 0,
+          "tooltipText": "Games Played: 0",
+        },
+        Object {
+          "color": "#BBBBBB",
+          "size": 0,
+          "tooltipText": "Win Percentage: 0.0%",
+        },
+      ]
+    }
+    key="3"
+    title="Favorite Color Strategy: 0.0%"
+  />
+</styled.div>
+`;
