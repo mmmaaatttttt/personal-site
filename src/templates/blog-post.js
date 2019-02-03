@@ -37,6 +37,21 @@ const StyledTextWrapper = styled.div`
     font-weight: 700;
     font-size: 85%;
   }
+
+  figure {
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  figure.w-70 {
+    width: 70%;
+  }
+
+  ${media.extraSmall`
+    figure.w-70 {
+      width: 100%;
+    }
+  `}
 `;
 
 const StyledMainImageWrapper = styled.div`
