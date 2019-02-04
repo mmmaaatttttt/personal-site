@@ -47,8 +47,13 @@ const StyledTextWrapper = styled.div`
     width: 70%;
   }
 
+  figure.w-80 {
+    width: 80%;
+  }
+
   ${media.extraSmall`
-    figure.w-70 {
+    figure.w-70,
+    figure.w-80 {
       width: 100%;
     }
   `}
