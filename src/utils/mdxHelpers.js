@@ -35,9 +35,7 @@ const extractClasses = str =>
 
 const renderer = {
   p: props => {
-    console.log("PROPS", props);
     if (isFigure(props)) {
-      console.log("FIGURE PROPS", props);
       if (!Array.isArray(props.children))
         return <figure {...props.children.props} />;
       else {
