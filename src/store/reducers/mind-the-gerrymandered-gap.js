@@ -1,6 +1,6 @@
 import * as t from "../actions/actionTypes";
 
-const DEFAULT_STATE = {
+export const DEFAULT_STATE = {
   districtCounts: null
 };
 
