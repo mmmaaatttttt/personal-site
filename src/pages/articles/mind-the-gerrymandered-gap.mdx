@@ -1,14 +1,24 @@
 ---
 title: "Mind the Gerrymandered Gap"
 date: "2018-10-19"
-featured_image: "mind_the_gerrymandered_gap.jpg"
+featured_image: "../../images/featured_images/mind_the_gerrymandered_gap.jpg"
 caption: "An interactive introduction to gerrymandering."
 featured_image_caption: "A map of the United States. Image credit: John-Mark Smith on Unsplash."
 ---
 
+import {
+  EfficiencyGapTable,
+  GerrymanderHistoricalMap,
+  IsoperimetricExplorer,
+  ResponsiveIFrame,
+  SampleGerrymander
+} from "story_components";
+
 2018 has been a big year for raising awareness on how states draw congressional districts. The Supreme Court [heard two cases](https://www.washingtonpost.com/politics/courts_law/supreme-court-sidesteps-decision-on-partisan-gerrymandering/2018/06/18/c909bf26-7303-11e8-805c-4b67019fcfe4_story.html) arguing that the way states delineate these districts is, in certain cases, unconstitutional. Pennsylvania's state supreme court said that its congressional lines violated the state constitution, and then [assigned a new map](https://www.washingtonpost.com/news/wonk/wp/2018/02/19/pennsylvania-supreme-court-draws-a-much-more-competitive-district-map-to-overturn-republican-gerrymander/) when the legislature couldn't come up with one on its own. And voters in Michigan, Missouri, Utah, and Colorado can expect to vote on redistricting measures [this fall](https://www.nytimes.com/2018/07/23/us/gerrymandering-states.html).
 
-So what's wrong with these district lines, and why are things coming to a head now? In this story, we'll outline the problem, explore some strategies for trying to detect when partisan gerrymandering has occurred, and examine some potential fixes. 
+So what's wrong with these district lines, and why are things coming to a head now? In this story, we'll outline the problem, explore some strategies for trying to detect when partisan gerrymandering has occurred, and examine some potential fixes.
+
+---
 
 ### A Brief Introduction to Gerrymandering
 
@@ -18,7 +28,9 @@ There are some basic redistricting rules that states must abide by, such as ensu
 
 Unfortunately, this means that the process of drawing congressional lines is ripe for manipulation. And in many cases, when one party is in power, it's possible for them to draw congressional boundaries in a way that preserves or enhances their power, by exploiting geography to bolster their representation in Congress. This process, as you may well know, is called **gerrymandering**. The name comes from an 1812 political cartoon which drew attention to a wonky looking state senate district. The name itself is a portmanteau of the name of the Governor at the time, Elbridge Gerry, and the word _salamander_, as the district was said to resemble said amphibian. Gerry caught flak for the shape of this district because it was believed that the district was drawn this way to help his party in an upcoming election.
 
-<CaptionedImage caption="In a cruel twist of fate, Gerry pronounced his last name with a hard 'G.' (Source: Wikipedia)" width="60%" src="first_gerrymander.png" />
+![In a cruel twist of fate, Gerry pronounced his last name with a hard 'G.'](../../images/first_gerrymander.png "In a cruel twist of fate, Gerry pronounced his last name with a hard 'G.' (Source: Wikipedia)"){.w-60}
+
+---
 
 ### Gerrymandering for Fun and Profit! (But Mostly for Fun)
 
@@ -26,13 +38,15 @@ It turns out that it's not too hard to gerrymander districts. Let's take a look 
 
 In this scenario, how would you draw congressional lines to divide this region into six districts?
 
-<SampleGerrymander/>
+<SampleGerrymander />
 
 Typically gerrymandering is achieved by combining two strategies: **packing** and **cracking**. Packing refers to consolidating large numbers of one party into a small number of districts. Cracking is the opposite: diluting the voting power of a large bloc of voters in one party by splitting them up so that they form minorities in multiple districts.
 
 Maybe you were magnanimous and tried to give equal representation to all citizens. Or maybe you have a strong preference between red and blue, and tried to dilute the vote for one party. If you're in the latter camp, take another look at the district map you created above. Which districts are packed with voters from one party? Which districts crack up a party by making its members a minority of voters across several districts?
 
 In this simplified example, gerrymandering isn't hard to do. It's also not that hard to detect; since the distribution of voters is evenly split, if the districts heavily favor one party over another, it's a clue that some shenanigans are probably going on.
+
+---
 
 ### Detecting Gerrymandering: A Brief History
 
@@ -56,23 +70,25 @@ The Washington Post did an analysis of every congressional district in 2014 usin
 
 But don't just blindly believe the numbers. Take a look at the district and judge for yourself:
 
-<CaptionedImage caption="The fourth congressional district in Illinois (Source: Wikipedia)" width="100%" src="il-04.png" />
+![The fourth congressional district in Illinois](../../images/il-04.png "The fourth congressional district in Illinois (Source: Wikipedia)")
 
-### Concerns with Compactness 
+---
+
+### Concerns with Compactness
 
 Removed from context, the fourth district of Illinois looks highly suspicious. Its meandering shape through Chicago and out into the 'burbs suggests that there could be some packing going on. And indeed there is, but the reasoning behind it is different than you might expect.
 
 Put simply, the district's shape is a consequence of the Voting Rights Act. The district combines two majority-Hispanic populations into one congressional district. The federal government mandated the creation of such a district in an attempt to remedy previous violations of the Voting Rights Act, and the constitutionality of this district has been upheld by the Supreme Court ([here's](https://www.senate.mn/departments/scr/REDIST/Redsum/ilsum.htm) a reference with more detail if you're interested).
 
-In other words, if you're concerned about the aggressive use of gerrymandering to enhance the power of the already powerful, you need to be a bit careful about using shape alone as your metric. 
+In other words, if you're concerned about the aggressive use of gerrymandering to enhance the power of the already powerful, you need to be a bit careful about using shape alone as your metric.
 
-Let's look at another example. Historically, there have been a few long and skinny districts that would fail most tests for compactness. From 2003 to 2013, for instance, California's 23rd district covered hundreds of miles of Pacific coastline, but barely any land farther inland: 
+Let's look at another example. Historically, there have been a few long and skinny districts that would fail most tests for compactness. From 2003 to 2013, for instance, California's 23rd district covered hundreds of miles of Pacific coastline, but barely any land farther inland:
 
-<CaptionedImage caption="The 23rd congressional district in California from 2003-2013 (Source: Wikipedia)" width="100%" src="ca-23.png" />
+![The 23rd congressional district in California from 2003-2013](../../images/ca-23.png "The 23rd congressional district in California from 2003-2013 (Source: Wikipedia)")
 
 Ohio's 9th district currently has a similar shape; it hugs the southern edge of Lake Erie.
 
-<CaptionedImage caption="The ninth congressional district in Ohio (Source: Wikipedia)" width="100%" src="oh-09.png" />
+![The 9th congressional district in Ohio](../../images/oh-09.png "The 9th congressional district in Ohio (Source: Wikipedia)")
 
 Are these districts further examples of partisan gerrymandering? Or were they created because coastal residents in these states are likely to have similar needs from their representatives? Looking just at the shapes of these districts, either possibility seems plausible.
 
@@ -82,19 +98,23 @@ Therefore, recent advances in gerrymandering detection have focused not on singl
 
 Plenty of people have worked on developing objective mathematical measures that can assess whether or not a state has been excessively gerrymandered. A few different ideas have been explored, but one of the most popular new techniques is also relatively simple, and requires little more than basic arithmetic.
 
+---
+
 ### Quantifying Gerrymandering: The Efficiency Gap
 
 Voting is inherently an inefficient mechanism for electing officials who represent the interests of a large group of people. This is because in most cases, the winner is determined by **winner take all**. In other words, a representative can win with 50.1% of the vote, even though that person is unlikely to represent the interests of 49.9% of the people in his or her district.
 
-In this system, if your candidate loses, it's easy to think of your vote as being wasted, since the official who won and now represents you likely doesn't *actually* represent you. But people who vote for losing candidates aren't the only ones whose votes are wasted. Even votes for winners can be considered wasted, if they're in excess of the simple majority needed to squeeze out a win. In other words, if your candidate won by 10,000 votes, one could consider 9,999 of those votes "wasted," since the candidate still would've won even if the margin had been much smaller.
+In this system, if your candidate loses, it's easy to think of your vote as being wasted, since the official who won and now represents you likely doesn't _actually_ represent you. But people who vote for losing candidates aren't the only ones whose votes are wasted. Even votes for winners can be considered wasted, if they're in excess of the simple majority needed to squeeze out a win. In other words, if your candidate won by 10,000 votes, one could consider 9,999 of those votes "wasted," since the candidate still would've won even if the margin had been much smaller.
 
 The **efficiency gap** is a gerrymandering metric that takes these observations into account. Essentially it calculates the number of wasted votes for each party, and determines whether there's a _systemic bias_ towards wasted votes in one party compared to another.
 
-This gap is calculated by counting the number of votes each party has wasted in each district. Once the total number of wasted votes has been found, we take the difference, and divide it by the total number of votes cast. 
+This gap is calculated by counting the number of votes each party has wasted in each district. Once the total number of wasted votes has been found, we take the difference, and divide it by the total number of votes cast.
 
-<EfficiencyGapTable/>
+<EfficiencyGapTable />
 
 This calculation has nothing to do with the shape of the districts, and everything to do with the resulting election outcome. When a collection of districts yield a high efficiency gap, does this mean that something sinister is going on with redistricting? In order to answer this question more fully, we need to take a look at how this metric fares against actual election data.
+
+---
 
 ### The Efficiency Gap in the Wild
 
@@ -102,7 +122,7 @@ Let's take a look at historical data on congressional elections in the United St
 
 In the map below, states are colored according to the size of the efficiency gap. Darker red indicates a larger efficiency gap favoring Republicans; darker blue indicates a larger efficiency gap favoring Democrats. You can examine results from every congressional election between 1996 and 2016. (If you're curious, you can see the raw data [here](https://gist.githubusercontent.com/mmmaaatttttt/667f43a79aa2f0b280e2a99a1b807a00).)
 
-Note that it's impossible to gerrymander a state with only one representative, so those states are greyed out. For similar reasons, it's difficult to make compelling gerrymandering arguments for states with only a small handful of districts, and the efficiency gap is less powerful as a metric in such cases. For that reason, you can also choose to ignore states with a small number of districts (up to 10). 
+Note that it's impossible to gerrymander a state with only one representative, so those states are greyed out. For similar reasons, it's difficult to make compelling gerrymandering arguments for states with only a small handful of districts, and the efficiency gap is less powerful as a metric in such cases. For that reason, you can also choose to ignore states with a small number of districts (up to 10).
 
 To the right of the map, there is bar chart of how the efficiency gap for each state translates into an expected advantage in terms of the number of congressional seats. The calculation here is straightforward: you just take the efficiency gap for a state and multiply by the number of districts in that state. I'm including this chart because authors Nicholas Stephanopoulos and Eric McGhee, who first introduced the efficiency gap, proposed the two-seat benchmark as a standard for throwing out a district map as being a partisan gerrymander. Lightly-colored bars correspond to states with a seat gap smaller than two; the fully-colored bars at the right are ones that exceed this two-seat threshold.
 
@@ -111,6 +131,8 @@ Take your time exploring the electoral landscape over time. What do you notice, 
 <GerrymanderHistoricalMap />
 
 As you can see, states that have surpassed the two-seat threshold have almost exclusively benefitted Republican representation in congress. Moreover, since the last round of redistricting after the 2010 census, three states have have at least a two-seat Republican edge in the 2012, 2014, and 2016 elections: Pennsylvania, North Carolina, and Michigan. From this perspective, it's less surprising that the Pennsylvania state supreme court tossed out the congressional map earlier this year.
+
+---
 
 ### Caveats and Limitations
 
@@ -124,9 +146,11 @@ While the efficiency gap can help identify potentially problematic states, it's 
 
 4. Speaking of Royden and Li, they also point out a couple of limitations with the efficiency gap. Here's one: "The efficiency gap rests on the assumption that for every 1 percent increase in vote share, a party should increase its seat share by 2 percent. For close states (where the winning party receives around 50 percent - 60 percent of the vote) this 1:2 ratio has historically been close to actual results for most maps but much less accurate when the winning party receives more than 60 percent of the vote. This makes the efficiency gap a fairly accurate measure for closely contested states but often much less of one for states dominated by one political party." Massachusetts is a good example here. The state as a whole leans heavily Democratic, so when the efficiency gap suggests partisan gerrymandering in the state, this may not be quite right.
 
-5. Here's another, again from Royden and Li: "The efficiency gap can also be quite sensitive over time, fluctuating wildly between elections under the same map. States with even a few close districts can see significant swings — sometimes up to multiple seats in the seat gap results — in subsequent elections whose raw vote totals are only slightly different if even one district flips parties, and this volatility can make the efficiency gap problematic to use long-term over a series of years or decades." 
+5. Here's another, again from Royden and Li: "The efficiency gap can also be quite sensitive over time, fluctuating wildly between elections under the same map. States with even a few close districts can see significant swings — sometimes up to multiple seats in the seat gap results — in subsequent elections whose raw vote totals are only slightly different if even one district flips parties, and this volatility can make the efficiency gap problematic to use long-term over a series of years or decades."
 
 6. Here's a fun math fact: a paper posted in October 2017 proved that the desired goals of creating districts that are (a) roughly the same size, (b) relatively compact, and (c) have a tolerable efficiency gap are mutually incompatible. See [An impossibility theorem for gerrymandering](https://arxiv.org/pdf/1710.04193.pdf) for more details.
+
+---
 
 ### Conclusion
 
@@ -134,7 +158,10 @@ Gerrymandering is a thorny problem, and I've only outlined a couple of proposals
 
 Others have argued that gerrymandering is but a symptom of a different problem: our gradual self-selection into liberal groups concentrated in cities, and conservative groups concentrated in more rural areas. The thinking here is that it's easier to gerrymander a population that's already divided itself, and according to some analyses, like this one from [FiveThirtyEight](fivethirtyeight.com), gerrymandering is taking too much of the blame for our current political polarization:
 
-<ResponsiveIFrame src="https://fivethirtyeight.abcnews.go.com/video/embed/56134801" heightOverWidth={36/64} />
+<ResponsiveIFrame
+  src="https://fivethirtyeight.abcnews.go.com/video/embed/56134801"
+  heightOverWidth={36 / 64}
+/>
 
 Regardless of how pervasive a problem it is, reduction in gerrymandering is one of the few issues that enjoys broad bipartisan support. Here's hoping that the next few years will see mathematics used on the right side of this fight, rather than being used to draw even more extreme gerrymanders in the future.
 
