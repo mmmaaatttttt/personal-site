@@ -1,10 +1,12 @@
 ---
 title: "Warming Dots"
 date: "2018-07-19"
-featured_image: "warming_dots.png"
+featured_image: "../../images/featured_images/warming_dots.png"
 caption: "Looking to the stars to understand our future."
 featured_image_caption: "Humans looking to the cosmos for answers, before they are hunted down by predators, in the aptly-named film Predators. Image credit: 20th Century Fox."
 ---
+
+import { WarmingDots } from "story_components";
 
 Sometimes, when the problems of the world seem overwhelming, it's worth remembering how small we really are. Physicist [Carl Sagan](https://en.wikipedia.org/wiki/Carl_Sagan) summed it up nicely when commenting on a 1990 image of the Earth taken by the Voyager 1 space probe, titled _Pale Blue Dot_:
 
@@ -12,7 +14,7 @@ Sometimes, when the problems of the world seem overwhelming, it's worth remember
 
 From this perspective, it's hard not to feel insignificant. This may be cold comfort, but in a twisted way it's sort of comforting. It makes a lot of the problems that we're facing seem less significant as well. After all, what's the worst that can happen? We fail as a species, and the universe marches on.
 
-<CaptionedImage caption="Can you find the pale blue dot? (Source: NASA)" width="80%" src="pale_blue_dot.png" />
+![Can you find the pale blue dot?](../../images/pale_blue_dot.png "Can you find the pale blue dot? (Source: NASA)"){.w-80}
 
 But the Pale Blue Dot perspective is about more than just nihilism. It can also help frame some of our global issues in a new light. Take global warming, for instance. The surface of the Earth is warming because of human activity, and we're at a point where our survival as a species is jeopardized because of the rapid changes we've made to the planet.
 
@@ -21,6 +23,8 @@ On the one hand, if Earth is nothing but a pale blue dot, global warming is just
 This is the perspective of astrophysicist [Adam Frank](http://www.adamfrankscience.com/) and his colleagues, who recently published a paper exploring exactly this idea. If we are not unique in the universe, then perhaps are problems aren't so unique either: in this case, rather than being insignificant, perhaps issues like global warming are themselves common across the universe.
 
 In their paper, the authors propose a few general models of how an issue like climate change could impact a civilization. In this story, I'd like to highlight some of those models in an interactive way. But before we get there, we'll need to talk a bit about in what sense global warming is a problem, and dust off some simple mathematical models that you may have not used since high school.
+
+---
 
 ### Global Collapse
 
@@ -31,6 +35,8 @@ The problem is less about the warming itself, and more about the consequences of
 It's the extinction part that will be our focus here. Put more succinctly, global warming kills. The question is, how successful will it be, and what steps can we take to try to combat it?
 
 In order to answer these questions, we first need to model how a population grows with time. There are many different models we could use. Let's start with the simplest, highlight its deficiencies, and gradually roll out improvements.
+
+---
 
 ### Exponential Growth
 
@@ -44,11 +50,16 @@ Closely tied to the idea of a doubling time is a constant called the **growth ra
 
 Here's an example of an exponential growth curve for a hypothetical population. You can adjust the growth rate and see how that affects the shape of the curve: more specifically, how quickly it shoots up.
 
-<WarmingDots idx={0} caption="Figure 1: An exponential model of population growth."/>
+<WarmingDots
+  idx={0}
+  caption="Figure 1: An exponential model of population growth."
+/>
 
 The problem with an exponential growth model of population is that while it may be suitable for short-term predictions, there's no way for it to be make sense longer term. In the word problem above, for instance, the bacteria will eventually be limited by the size of the Petri dish.
 
 Exponential models of human population suffer from a similar flaw. We live in a world with finite resources, and barring revolutions in interstellar travel, this imposes hard limits on how many people can exist on our planet. Exponential growth, almost by definition, is _unsustainable_ growth. It's simply not feasible for anything to grow both exponentially and in perpetuity.
+
+---
 
 ### The Logistics of Tempering Growth
 
@@ -60,9 +71,14 @@ As a practical matter, determining the carrying capacity of any environment is a
 
 The logistic model of population incorporates two parameters: a growth rate for the population, and an environmental carrying capacity that effectively caps the population. Here's what the model looks like: note that the presence of the carrying capacity gives the logistic function its signature S-shape.
 
-<WarmingDots idx={1} caption="Figure 2: A logistic model of population growth." />
+<WarmingDots
+  idx={1}
+  caption="Figure 2: A logistic model of population growth."
+/>
 
 When we include a carrying capacity in our model, population no longer grows without bound. Instead, the curve begins to bend downward once the population is half of the carrying capacity, and the population will never exceed the carrying capacity. As advertised, the carrying capacity places a hard limit on how big the population can be, which seems much more realistic.
+
+---
 
 ### Consistent Capacity
 
@@ -71,6 +87,8 @@ Our first model for population lacked a mechanism to control unbounded exponenti
 Put another way, our first model was limited by the fact that the carrying capacity was infinite. But our second model is limited by the fact that the carrying capacity is _constant._ In reality, the carrying capacity of a system is probably dependent on a variety of factors. It could depend on the time of year, the populations of other species in the environment, or how destructive population growth is to the environment itself.
 
 This last idea is where Frank and his colleagues begin their interplanetary analysis. Their paper proceeds through three increasingly complex iterations of the idea that carrying capacity depends on a population's interaction with the environment. We're now prepared to tackle their first model, and see its qualitative differences compared to the models we've already considered.
+
+---
 
 ### Population and Environment
 
@@ -87,6 +105,8 @@ The second condition is satisfied, too. As the surface temperature increases, th
 As for the third feature, there's undoubtedly some average temperature beyond which the planet could no longer host life. For an extreme case, we need only look to our neighbor Venus, which has blistering surface temperatures of 864 °F (462 °C), on average. Climate models even suggest that in the distant past, Venus [may have been habitable](https://www.amazon.com/Power-Up-Unlocking-Hidden-Mathematics-Video/dp/0691161518), so perhaps it can provide us with an example for which the environmental health metric for the planet eventually blew past its critical value.
 
 Note that I'm not saying temperature _is_ the environmental health metric. The metric itself is an abstract concept. Thinking about it in terms of temperature is just a helpful way to make the idea more concrete.
+
+---
 
 ### Let's Get Resourceful
 
@@ -109,13 +129,18 @@ In order to graph this model, we need several parameters. Some are the same as i
 
 Whew. That's a lot. But with all of this setup, we're finally ready to explore our third model. Here it is.
 
-<WarmingDots idx={2} caption="Figure 3: Modeling Population along with the environment." />
+<WarmingDots
+  idx={2}
+  caption="Figure 3: Modeling Population along with the environment."
+/>
 
 As you made expect, conditions that seem favorable yield favorable behavior. When the carrying capacity, critical environmental threshold, and recovery rates for the environment are all high and the environmental cost of resource depletion is low, the population grows in much the same way as before, even if the overall environmental health of the system worsens (as indicated by an increasing red graph).
 
 However, things can also go south pretty quickly. For example, if the recovery rate for the environment is low, it's possible for the population to experience an early period of fast growth, following by a significant crash before stabilizing at a much lower value. While the long-term stability might seem desirable, if it comes after the wiping out of more than half of the population, this seems like a steep price to pay.
 
 These two families of trajectories make up two of the four of the possible outcomes discussed in the paper: **sustainability** and **die-off**. Sustainability is what we'd all like to believe our species is capable of: a smooth, gradual increase in population until we reach our planet's carrying capacity. In die-off scenarios, we overshoot the carrying capacity, most of us die, and those who remain can then enjoy a stable population.
+
+---
 
 ### Sustainable Resources
 
@@ -129,9 +154,14 @@ In order to do so, we need to introduce two more parameters. The first one measu
 
 What sorts of new trajectories can you create with these additional parameters?
 
-<WarmingDots idx={3} caption="Figure 4: Modeling environment and population with two resources." />
+<WarmingDots
+  idx={3}
+  caption="Figure 4: Modeling environment and population with two resources."
+/>
 
 Note that if you wait longer before transitioning, or take too long in the transition, in nearly every case the outcome for population worsens. Also, notice that in some cases it's possible to affect the long-term shape of the curves, switching between sustainability and die-off. From this perspective, it seems like we may have some control over our destiny even if we're late to the game, provided that we can fully transition away from fossil fuels quickly.
+
+---
 
 ### Environmental Fragility
 
@@ -143,11 +173,16 @@ For their final variation on the model, the authors included an environmental fr
 
 Now, with all nine parameters at your disposal, what sorts of population graphs can you come up with?
 
-<WarmingDots idx={4} caption="Figure 5: Including an environmental fragility parameter into the model." />
+<WarmingDots
+  idx={4}
+  caption="Figure 5: Including an environmental fragility parameter into the model."
+/>
 
 With the potential for environmental catastrophe, this model highlights another common scenario: **collapse**. This is an even worse case than die-off: not only does the population crash, but it crashes all the way to zero. This is inevitable if the environment is too fragile and becomes damaged enough that a runaway degradation occurs.
 
 You may also discover a fourth possible outcome: **oscillation**. In this scenario, population growth triggers environmental degradation, which leads to a population crash. But when the population crashes, the environment begins to heal, and the population again grows. Unfortunately, this leads to more environmental degradation, followed by another population crash, and so on. While arguably better than total collapse, this seems like a less desirable outcome than a single die-off.
+
+---
 
 ### Conclusion
 

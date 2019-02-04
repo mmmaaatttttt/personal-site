@@ -14,7 +14,7 @@ import {
   SliderGroup
 } from "story_components";
 
-class ClimatesChange extends Component {
+class WarmingDots extends Component {
   state = {
     values: visualizationData[this.props.idx].initialData.map(
       d => d.initialValue
@@ -141,21 +141,22 @@ class ClimatesChange extends Component {
   }
 }
 
-ClimatesChange.propTypes = {
-  idx: PropTypes.number.isRequired,
-  min: PropTypes.number.isRequired,
-  max: PropTypes.number.isRequired,
-  step: PropTypes.number.isRequired,
+WarmingDots.propTypes = {
   graphPadding: PropTypes.number.isRequired,
+  idx: PropTypes.number.isRequired,
+  max: PropTypes.number.isRequired,
+  min: PropTypes.number.isRequired,
+  step: PropTypes.number.isRequired,
   svgPadding: PropTypes.oneOfType([PropTypes.number, PropTypes.object])
     .isRequired
 };
 
-ClimatesChange.defaultProps = {
-  min: 0,
-  max: 10,
-  step: 0.005,
+WarmingDots.defaultProps = {
   graphPadding: 30,
+  idx: 0,
+  max: 10,
+  min: 0,
+  step: 0.005,
   svgPadding: {
     top: 30,
     left: 0,
@@ -164,4 +165,6 @@ ClimatesChange.defaultProps = {
   }
 };
 
-export default withCaption(ClimatesChange);
+export default withCaption(WarmingDots);
+
+export { WarmingDots };
