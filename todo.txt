@@ -10,19 +10,17 @@
 - build breaks! fix this
 - figure out how to run create-index on gatsby server restart
 - add hr tags to posts
-- use StaticQuery for four weddings (include data section to gatsby-config)
-- remove d3-fetch dependency
 - fix selectable component so it doesn't get so tall on narrow screens
 - meta og:image tags for pages that aren't blog-post pages
+- remove all componentWillMounts
 - tweet thread on upgrade
   - gatsby --> 2.0 (layouts)
   - marksy + remark --> mdx
   - testing broken --> remove require.context, use create-index
     - babel-plugin-require-context-hook didn't help
     - need for gatsby-image
-  
+  - not mocking StaticQuery correctly, getting super unhelpful error
 
-image syntax: ![this works](../../images/ca-23.png "here's a title")
 
 LOW PRIORITY
 - research how data is passed to mdx: https://gatsby-mdx.netlify.com/guides/writing-pages-in-mdx
