@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import styled from "styled-components";
+import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import COLORS from "utils/styles";
 import { total, calculateWastedVotes } from "utils/mathHelpers";
@@ -133,4 +134,14 @@ function mapStateToProps(state) {
   };
 }
 
+EfficiencyGapTable.propTypes = {
+  districtCounts: PropTypes.array
+};
+
+EfficiencyGapTable.defaultProps = {
+  districtCounts: null
+};
+
 export default connect(mapStateToProps)(EfficiencyGapTable);
+
+export { EfficiencyGapTable };
