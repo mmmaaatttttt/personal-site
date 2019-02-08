@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import { min, max } from "d3-array";
+import { StaticQuery, graphql } from "gatsby";
+import { extent } from "d3-array";
 import { nest } from "d3-collection";
-import { csv } from "d3-fetch";
 import { scaleLinear } from "d3-scale";
 import { lighten } from "polished";
 import withCaption from "hocs/withCaption";
@@ -10,43 +10,12 @@ import COLORS from "utils/styles";
 import { calculateWastedVotes } from "utils/mathHelpers";
 import { BarGraph, ColumnLayout, SliderGroup, USMap } from "story_components";
 
-class GerrymanderHistoricalMap extends Component {
+class PureHistoricalMap extends Component {
   state = {
     allBarData: [],
-    data: [],
-    minYear: null,
-    maxYear: null,
-    currentYear: null,
+    currentYear: this.props.maxYear,
     currentMinElectors: 2
   };
-
-  componentDidMount() {
-    let dataUrl =
-      "https://gist.githubusercontent.com/mmmaaatttttt/667f43a79aa2f0b280e2a99a1b807a00/raw/5aa105890d32afe83517bbd2dc46303b00e9bc4b/congressional_election_results_1996_2016.csv";
-    csv(dataUrl, (row, i, columns) => {
-      if (row.District === "Senate" || row.District === "President") return;
-      let rowObj = { demEst: false, repEst: false };
-      if (/\*/.test(row.Democrat)) rowObj.demEst = true;
-      if (/\*/.test(row.Republican)) rowObj.repEst = true;
-      return {
-        ...rowObj,
-        year: +row.Year,
-        state: row.State,
-        district: +row.District,
-        dem: +row.Democrat.replace("*", ""),
-        rep: +row.Republican.replace("*", "")
-      };
-    }).then(data => {
-      let minYear = min(data, d => d.year);
-      let maxYear = max(data, d => d.year);
-      this.setState({
-        data,
-        minYear,
-        maxYear,
-        currentYear: maxYear
-      });
-    });
-  }
 
   addGeometryProperties = (us, data) => {
     let years = new Set(data.map(d => d.year));
@@ -121,22 +90,9 @@ class GerrymanderHistoricalMap extends Component {
   };
 
   render() {
-    const {
-      allBarData,
-      data,
-      minYear,
-      maxYear,
-      currentYear,
-      currentMinElectors
-    } = this.state;
-    const { minElectors, maxElectors } = this.props;
-    if (data.length === 0)
-      return (
-        <div>
-          <h1>Loading, please wait...</h1>
-        </div>
-      );
-    let sliderData = [
+    const { allBarData, currentYear, currentMinElectors } = this.state;
+    const { minElectors, maxElectors, minYear, maxYear, data } = this.props;
+    const sliderData = [
       {
         title: `Year: ${currentYear}`,
         min: minYear,
@@ -219,6 +175,45 @@ class GerrymanderHistoricalMap extends Component {
     );
   }
 }
+class GerrymanderHistoricalMap extends Component {
+  cleanQuery = data => {
+    return data.allCongressionalElectionResults19962016Csv.edges
+      .filter(({ node }) => !["Senate", "President"].includes(node["District"]))
+      .map(({ node }) => {
+        let rowObj = { demEst: false, repEst: false };
+        if (/\*/.test(node.Democrat)) rowObj.demEst = true;
+        if (/\*/.test(node.Republican)) rowObj.repEst = true;
+        return {
+          ...rowObj,
+          year: +node.Year,
+          state: node.State,
+          district: +node.District,
+          dem: +node.Democrat.replace("*", ""),
+          rep: +node.Republican.replace("*", "")
+        };
+      });
+  };
+
+  render() {
+    return (
+      <StaticQuery
+        query={query}
+        render={data => {
+          const cleanedData = this.cleanQuery(data);
+          const yearExtent = extent(cleanedData, d => d.year);
+          return (
+            <PureHistoricalMap
+              data={this.cleanQuery(data)}
+              minYear={yearExtent[0]}
+              maxYear={yearExtent[1]}
+              {...this.props}
+            />
+          );
+        }}
+      />
+    );
+  }
+}
 
 GerrymanderHistoricalMap.propTypes = {
   minElectors: PropTypes.number.isRequired,
@@ -230,4 +225,38 @@ GerrymanderHistoricalMap.defaultProps = {
   maxElectors: 10
 };
 
+PureHistoricalMap.propTypes = {
+  data: PropTypes.array.isRequired,
+  maxElectors: PropTypes.number.isRequired,
+  maxYear: PropTypes.number.isRequired,
+  minElectors: PropTypes.number.isRequired,
+  minYear: PropTypes.number.isRequired
+};
+
+PureHistoricalMap.defaultProps = {
+  data: [],
+  maxElectors: 10,
+  maxYear: 2016,
+  minElectors: 2,
+  minYear: 1996
+};
+
+const query = graphql`
+  query GerrymanderQuery {
+    allCongressionalElectionResults19962016Csv {
+      edges {
+        node {
+          Year
+          State
+          District
+          Republican
+          Democrat
+        }
+      }
+    }
+  }
+`;
+
 export default withCaption(GerrymanderHistoricalMap);
+
+export { PureHistoricalMap };
