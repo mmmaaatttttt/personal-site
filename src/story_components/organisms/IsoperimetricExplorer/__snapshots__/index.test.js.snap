@@ -1,0 +1,86 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`smoke and snapshot tests renders first demonstration successfully 1`] = `
+<div>
+  <LabeledSlider
+    color="#555555"
+    fadeIcons={false}
+    handleValueChange={[Function]}
+    max={20}
+    maxIcon="plus"
+    min={3}
+    minIcon="minus"
+    sliderHeight={6}
+    sliderPadding={10}
+    step={1}
+    tickCount={2}
+    title="Number of district sides: 3"
+    value={3}
+  />
+  <ClippedSVG
+    height={400}
+    id="isoperimetric-svg"
+    marginTop="0.5rem"
+    padding={0}
+    width={600}
+  >
+    <SVGBorder
+      borderStroke="#BBBBBB"
+      borderWidth={3}
+      height={400}
+      width={600}
+    />
+    <circle
+      cx={300}
+      cy={200}
+      fill="#BBBBBB"
+      r={82.6993343132688}
+      stroke="#555555"
+      strokeWidth={3}
+    />
+    <InteractivePolygon
+      circleRadius={8}
+      fill="#52A081"
+      handleDrag={[Function]}
+      points={
+        Array [
+          Object {
+            "x": 300,
+            "y": 100,
+          },
+          Object {
+            "x": 386.6025403784439,
+            "y": 250,
+          },
+          Object {
+            "x": 213.39745962155615,
+            "y": 250.00000000000003,
+          },
+        ]
+      }
+      stroke="#00802b"
+      strokeWidth={3}
+    />
+  </ClippedSVG>
+  <styled.table
+    margin="0 0 1.44rem 0"
+  >
+    <tbody>
+      <tr>
+        <td>
+          Circle Area: 
+          100.00
+        </td>
+        <td>
+          Polygon Area: 
+          60.46
+        </td>
+        <td>
+          Ratio: 
+          0.60
+        </td>
+      </tr>
+    </tbody>
+  </styled.table>
+</div>
+`;
