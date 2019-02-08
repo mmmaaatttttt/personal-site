@@ -31,7 +31,7 @@ const StyledDistrictData = styled.div`
   }
 `;
 
-const INITIAL_STATE = (rowCount, colCount) => ({
+const getInitialState = (rowCount, colCount) => ({
   segments: Array.from({ length: rowCount * 2 - 1 }, (_, i) =>
     Array(colCount - 1 + (i % 2)).fill(false)
   ),
@@ -40,7 +40,7 @@ const INITIAL_STATE = (rowCount, colCount) => ({
 });
 
 class SampleGerrymander extends Component {
-  state = INITIAL_STATE(this.props.rowCount, this.props.colCount);
+  state = getInitialState(this.props.rowCount, this.props.colCount);
 
   componentDidMount() {
     const segments = JSON.parse(localStorage.getItem("segments"));
@@ -74,7 +74,7 @@ class SampleGerrymander extends Component {
   handleReset = () => {
     localStorage.removeItem("segments");
     const { rowCount, colCount } = this.props;
-    this.setState(INITIAL_STATE(rowCount, colCount), this.__countRegions);
+    this.setState(getInitialState(rowCount, colCount), this.__countRegions);
   };
 
   handleSegmentUpdate = (row, col, segStatus, e) => {
@@ -232,18 +232,24 @@ class SampleGerrymander extends Component {
 }
 
 SampleGerrymander.propTypes = {
-  rowCount: PropTypes.number.isRequired,
   colCount: PropTypes.number.isRequired,
-  colors: PropTypes.arrayOf(PropTypes.string).isRequired
+  colors: PropTypes.arrayOf(PropTypes.string).isRequired,
+  rowCount: PropTypes.number.isRequired,
+  setDistrictCounts: PropTypes.func.isRequired,
+  unsetDistrictCounts: PropTypes.func.isRequired
 };
 
 SampleGerrymander.defaultProps = {
-  rowCount: 6,
   colCount: 9,
-  colors: [COLORS.DARK_BLUE, COLORS.RED]
+  colors: [COLORS.DARK_BLUE, COLORS.RED],
+  rowCount: 6,
+  setDistrictCounts: () => {},
+  unsetDistrictCounts: () => {}
 };
 
 export default connect(
   null,
   { setDistrictCounts, unsetDistrictCounts }
 )(SampleGerrymander);
+
+export { SampleGerrymander };

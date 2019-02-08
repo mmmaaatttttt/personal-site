@@ -1,0 +1,409 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`smoke and snapshot tests renders first demonstration successfully 1`] = `
+<styled.div
+  break="small"
+  sizes={
+    Array [
+      3,
+      2,
+    ]
+  }
+>
+  <HeatChart
+    accessor={[Function]}
+    axes={false}
+    colorDomain={
+      Array [
+        0,
+        1,
+      ]
+    }
+    colorRange={
+      Array [
+        "#2227FF",
+        "#FF3C23",
+      ]
+    }
+    data={
+      Array [
+        Array [
+          0,
+          1,
+          0,
+          1,
+          0,
+          1,
+        ],
+        Array [
+          0,
+          1,
+          0,
+          1,
+          0,
+          1,
+        ],
+        Array [
+          0,
+          1,
+          0,
+          1,
+          0,
+          1,
+        ],
+        Array [
+          0,
+          1,
+          0,
+          1,
+          0,
+          1,
+        ],
+        Array [
+          0,
+          1,
+          0,
+          1,
+          0,
+          1,
+        ],
+        Array [
+          0,
+          1,
+          0,
+          1,
+          0,
+          1,
+        ],
+        Array [
+          0,
+          1,
+          0,
+          1,
+          0,
+          1,
+        ],
+        Array [
+          0,
+          1,
+          0,
+          1,
+          0,
+          1,
+        ],
+        Array [
+          0,
+          1,
+          0,
+          1,
+          0,
+          1,
+        ],
+      ]
+    }
+    getTooltipBody={[Function]}
+    tooltip={false}
+  >
+    <InteractiveGrid
+      colCount={9}
+      handleSegmentUpdate={[Function]}
+      height={600}
+      paddingX={45}
+      paddingY={45}
+      rowCount={6}
+      segments={
+        Array [
+          Array [
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+          ],
+          Array [
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+          ],
+          Array [
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+          ],
+          Array [
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+          ],
+          Array [
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+          ],
+          Array [
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+          ],
+          Array [
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+          ],
+          Array [
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+          ],
+          Array [
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+          ],
+          Array [
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+          ],
+          Array [
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+          ],
+        ]
+      }
+      strokeWidth={6}
+      width={600}
+    />
+  </HeatChart>
+  <styled.div>
+    <div
+      key="0"
+    >
+      <h4
+        style={
+          Object {
+            "color": "#000000",
+          }
+        }
+      >
+        D
+        1
+        : 
+        54
+         
+        (27 blue, 27 red)
+      </h4>
+      <Icon
+        color="#FF3C23"
+        disabled={false}
+        name="times-circle"
+        opacity={1}
+        size={2}
+        type="solid"
+      />
+    </div>
+    <div
+      key="1"
+    >
+      <h4
+        style={
+          Object {
+            "color": "#000000",
+          }
+        }
+      >
+        D
+        2
+        : 
+        --
+         
+      </h4>
+      <Icon
+        color="#FF3C23"
+        disabled={false}
+        name="times-circle"
+        opacity={1}
+        size={2}
+        type="solid"
+      />
+    </div>
+    <div
+      key="2"
+    >
+      <h4
+        style={
+          Object {
+            "color": "#000000",
+          }
+        }
+      >
+        D
+        3
+        : 
+        --
+         
+      </h4>
+      <Icon
+        color="#FF3C23"
+        disabled={false}
+        name="times-circle"
+        opacity={1}
+        size={2}
+        type="solid"
+      />
+    </div>
+    <div
+      key="3"
+    >
+      <h4
+        style={
+          Object {
+            "color": "#000000",
+          }
+        }
+      >
+        D
+        4
+        : 
+        --
+         
+      </h4>
+      <Icon
+        color="#FF3C23"
+        disabled={false}
+        name="times-circle"
+        opacity={1}
+        size={2}
+        type="solid"
+      />
+    </div>
+    <div
+      key="4"
+    >
+      <h4
+        style={
+          Object {
+            "color": "#000000",
+          }
+        }
+      >
+        D
+        5
+        : 
+        --
+         
+      </h4>
+      <Icon
+        color="#FF3C23"
+        disabled={false}
+        name="times-circle"
+        opacity={1}
+        size={2}
+        type="solid"
+      />
+    </div>
+    <div
+      key="5"
+    >
+      <h4
+        style={
+          Object {
+            "color": "#000000",
+          }
+        }
+      >
+        D
+        6
+        : 
+        --
+         
+      </h4>
+      <Icon
+        color="#FF3C23"
+        disabled={false}
+        name="times-circle"
+        opacity={1}
+        size={2}
+        type="solid"
+      />
+    </div>
+    <div>
+      <Button
+        color="#52A081"
+        disabled={true}
+        large={false}
+        onClick={[Function]}
+      >
+        Saved
+      </Button>
+      <Button
+        color="#FF3C23"
+        disabled={false}
+        large={false}
+        onClick={[Function]}
+      >
+        Reset
+      </Button>
+    </div>
+  </styled.div>
+</styled.div>
+`;
