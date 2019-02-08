@@ -14,14 +14,18 @@ const NoScrollCircle = styled.circle`
 `;
 
 class DraggableCircle extends Component {
-  state = {
-    dragging: false,
-  };
+  constructor(props) {
+    super(props);
+    this.state = {
+      dragging: false
+    };
+    this.circle = React.createRef()
+  }
 
   getMousePosition = e => {
     // clientX and clientY need to be normalized
     // see http://www.petercollingridge.co.uk/tutorials/svg/interactive/dragging/
-    let CTM = this.circle.getScreenCTM();
+    let CTM = this.circle.current.getScreenCTM();
     let clientX, clientY;
     try {
       // try touch event first
@@ -73,7 +77,7 @@ class DraggableCircle extends Component {
         onMouseLeave={this.handleDragEnd}
         onTouchCancel={this.handleDragEnd}
         onTouchEnd={this.handleDragEnd}
-        innerRef={circle => (this.circle = circle)}
+        ref={this.circle}
       />
     );
   }
