@@ -651,3 +651,5 @@ RentDivision.defaultProps = {
 };
 
 export default withCaption(RentDivision);
+
+export { RentDivision };
