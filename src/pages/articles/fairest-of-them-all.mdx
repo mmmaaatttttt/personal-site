@@ -1,10 +1,17 @@
 ---
 title: "The Fairest of Them All"
 date: "2019-01-08"
-featured_image: "fairest_of_them_all.jpg"
+featured_image: "../../images/featured_images/fairest_of_them_all.jpg"
 caption: "A mathematical exploration of fairness."
 featured_image_caption: "Playing a (hopefully fair) board game. Image credit: Brendan Humphreys from Pexels."
 ---
+
+import {
+  CoinFlipHistogram,
+  CoinFlipBayesianModel,
+  CoinFlipTable,
+  RentDivision
+} from "story_components";
 
 Whether it's a game on the playground or a policy proposal on Capitol Hill,
 debates about fairness are commonplace. But what does it mean for something to
@@ -22,6 +29,8 @@ In general, fairness can get complicated. But in some cases, it's relatively
 straightforward to define and even measure. Let's start simple and begin with some
 scenarios where fairness shouldn't be too difficult to pin down: games of
 chance.
+
+---
 
 ### Fairness and Probability
 
@@ -43,6 +52,8 @@ But in practice, how can we determine whether or not the game is fair? After
 all, a slight bias in the coin may be hard to detect. It's easier to agree on
 the ideals than on the details. Fairness may make sense in the abstract, but how
 can we ensure that the coin we use actually adheres to our sense of fairness?
+
+---
 
 ### A Frequentist Approach
 
@@ -76,6 +87,8 @@ between 40 and 60 times. Similarly, there's a roughly 99% chance that it should
 have appeared between 37 and 63 times. Depending on your tolerance for unlikely
 events, a head tally outside of one of these two ranges should give you pause.
 
+---
+
 ### A Bayesian Approach
 
 The more you flip the coin, the more confident you can be in whether it's fair
@@ -95,7 +108,7 @@ consider two different priors.
 
 In the first, we'll assume that any heads probability is equally likely: maybe
 the coin is fair, maybe it's much more likely to land on heads, maybe it's much
-more likely to land on tails. Who knows? ¯\\\_(ツ)_/¯
+more likely to land on tails. Who knows?
 
 For the second prior, we'll assume that the coin is much more likely to be fair
 than not. If you expect that the coin hasn't been doctored in any way, this
@@ -119,6 +132,8 @@ available on the MIT [open courseware website](https://ocw.mit.edu/courses/mathe
 
 (As a mathematical aside, the standard Bayesian model for trying to estimate the
 probability of a coin landing on heads involves the Beta function. You can read more about the derivation of the above model [here](https://ocw.mit.edu/courses/sloan-school-of-management/15-097-prediction-machine-learning-and-statistics-spring-2012/lecture-notes/MIT15_097S12_lec15.pdf).)
+
+---
 
 ### Changing the Game
 
@@ -161,6 +176,8 @@ about whether or not the coin is biased. The second is *system*-driven: we
 change the rules of the game to remove potential sources of bias. This can be
 helpful if the data we need is unavailable or prohibitively expensive to
 acquire.
+
+---
 
 ### Fair Division
 
@@ -259,6 +276,8 @@ roommate over another, and everyone winds up with an acceptable room at an
 acceptable price. In game theoretic terms, this arrangement is called
 **envy-free**, since no roommate would prefer to trade rooms with anyone else.
 
+---
+
 ### Beyond Mathematics: Fairness from Behind the Veil of Ignorance
 
 We've now seen several examples of math applied to questions of fairness.
@@ -324,6 +343,8 @@ that both parties should be more willing to agree to rules prohibiting biased
 coins. Thinking about a scenario from the veil of ignorance can help in the
 development of checks and balances.
 
+---
+
 ### Why Fairness?
 
 As we've seen, fairness involves a certain degree of symmetry: in a fair
@@ -387,6 +408,8 @@ allocations are much less than proposers' offers in ultimatum games, although
 most players do offer something" (p. 622). While these offers can't be
 attributed directly to an ingrained sense of fairness, altruism does appear to
 play a role decision-making even when people have all of the power.
+
+---
 
 ### Conclusion: The Reasonable Ineffectiveness of Self-Interest in Modeling
 
