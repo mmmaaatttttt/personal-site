@@ -104,3 +104,5 @@ CoinFlipHistogram.defaultProps = {
 };
 
 export default withCaption(CoinFlipHistogram);
+
+export { CoinFlipHistogram };

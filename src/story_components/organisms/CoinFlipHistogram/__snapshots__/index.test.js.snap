@@ -1,0 +1,217 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`smoke and snapshot tests renders first demonstration successfully 1`] = `
+<styled.div
+  fullWidthAt="small"
+  width="60%"
+>
+  <SliderGroup
+    column={true}
+    data={
+      Array [
+        Object {
+          "color": "#52A081",
+          "handleValueChange": [Function],
+          "max": 100,
+          "maxIcon": "coins",
+          "min": 1,
+          "minIcon": "circle",
+          "step": 1,
+          "title": "Number of coin flips: 20",
+          "value": 20,
+        },
+        Object {
+          "color": "#52A081",
+          "handleValueChange": [Function],
+          "max": 1,
+          "maxIcon": "check-circle",
+          "min": 0,
+          "minIcon": "times-circle",
+          "step": 0.01,
+          "title": "Probability of flipping heads: 50%",
+          "value": 0.5,
+        },
+      ]
+    }
+  />
+  <BarGraph
+    barData={
+      Array [
+        Object {
+          "height": 9.5367431640625e-7,
+          "key": 0,
+          "x0": 0,
+          "x1": 1,
+        },
+        Object {
+          "height": 0.000019073486328125,
+          "key": 1,
+          "x0": 1,
+          "x1": 2,
+        },
+        Object {
+          "height": 0.0001811981201171875,
+          "key": 2,
+          "x0": 2,
+          "x1": 3,
+        },
+        Object {
+          "height": 0.001087188720703125,
+          "key": 3,
+          "x0": 3,
+          "x1": 4,
+        },
+        Object {
+          "height": 0.004620552062988281,
+          "key": 4,
+          "x0": 4,
+          "x1": 5,
+        },
+        Object {
+          "height": 0.0147857666015625,
+          "key": 5,
+          "x0": 5,
+          "x1": 6,
+        },
+        Object {
+          "height": 0.03696441650390625,
+          "key": 6,
+          "x0": 6,
+          "x1": 7,
+        },
+        Object {
+          "height": 0.0739288330078125,
+          "key": 7,
+          "x0": 7,
+          "x1": 8,
+        },
+        Object {
+          "height": 0.12013435363769531,
+          "key": 8,
+          "x0": 8,
+          "x1": 9,
+        },
+        Object {
+          "height": 0.16017913818359375,
+          "key": 9,
+          "x0": 9,
+          "x1": 10,
+        },
+        Object {
+          "height": 0.17619705200195312,
+          "key": 10,
+          "x0": 10,
+          "x1": 11,
+        },
+        Object {
+          "height": 0.16017913818359375,
+          "key": 11,
+          "x0": 11,
+          "x1": 12,
+        },
+        Object {
+          "height": 0.12013435363769531,
+          "key": 12,
+          "x0": 12,
+          "x1": 13,
+        },
+        Object {
+          "height": 0.0739288330078125,
+          "key": 13,
+          "x0": 13,
+          "x1": 14,
+        },
+        Object {
+          "height": 0.03696441650390625,
+          "key": 14,
+          "x0": 14,
+          "x1": 15,
+        },
+        Object {
+          "height": 0.0147857666015625,
+          "key": 15,
+          "x0": 15,
+          "x1": 16,
+        },
+        Object {
+          "height": 0.004620552062988281,
+          "key": 16,
+          "x0": 16,
+          "x1": 17,
+        },
+        Object {
+          "height": 0.001087188720703125,
+          "key": 17,
+          "x0": 17,
+          "x1": 18,
+        },
+        Object {
+          "height": 0.0001811981201171875,
+          "key": 18,
+          "x0": 18,
+          "x1": 19,
+        },
+        Object {
+          "height": 0.000019073486328125,
+          "key": 19,
+          "x0": 19,
+          "x1": 20,
+        },
+        Object {
+          "height": 9.5367431640625e-7,
+          "key": 20,
+          "x0": 20,
+          "x1": 21,
+        },
+      ]
+    }
+    color="#52A081"
+    height={400}
+    histogram={true}
+    padding={
+      Object {
+        "bottom": 20,
+        "left": 10,
+        "right": 10,
+        "top": 10,
+      }
+    }
+    svgId="coinflips"
+    thresholds={
+      Array [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+      ]
+    }
+    tickStep={0.02}
+    timing={
+      Object {
+        "duration": 100,
+      }
+    }
+    width={600}
+    yScale={[Function]}
+    yTickFormat=".0%"
+  />
+</styled.div>
+`;
