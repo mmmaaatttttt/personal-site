@@ -70,3 +70,5 @@ CoinFlipTable.propTypes = {};
 CoinFlipTable.defaultProps = {};
 
 export default withCaption(CoinFlipTable);
+
+export { CoinFlipTable };
