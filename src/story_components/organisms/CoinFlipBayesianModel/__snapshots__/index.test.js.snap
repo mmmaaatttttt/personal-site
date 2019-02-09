@@ -1,0 +1,161 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`smoke and snapshot tests renders first demonstration successfully 1`] = `
+<styled.div
+  fullWidthAt="small"
+  width="70%"
+>
+  <ToggleSwitch
+    handleSwitchChange={[Function]}
+    leftColor="#FF3C23"
+    leftText="All probs equally likely"
+    rightColor="#5ECFFF"
+    rightText="Fair coin more likely"
+  />
+  <styled.div
+    column={false}
+    cross="stretch"
+    flex={1}
+    main="space-evenly"
+    margin="0"
+    shouldWrap={false}
+    textAlign="left"
+    width="auto"
+  >
+    <Button
+      color="white"
+      disabled={false}
+      large={false}
+      onClick={[Function]}
+    >
+      Heads: 
+      0
+    </Button>
+    <Button
+      color="white"
+      disabled={false}
+      large={false}
+      onClick={[Function]}
+    >
+      Tails: 
+      0
+    </Button>
+    <Button
+      color="#555555"
+      disabled={false}
+      large={false}
+      onClick={[Function]}
+    >
+      Reset Counts
+    </Button>
+  </styled.div>
+  <Animate
+    show={true}
+    start={
+      Object {
+        "color": "#FF3C23",
+        "heads": 0,
+        "tails": 0,
+      }
+    }
+    update={
+      Object {
+        "color": Array [
+          "#FF3C23",
+        ],
+        "heads": Array [
+          0,
+        ],
+        "tails": Array [
+          0,
+        ],
+        "timing": Object {
+          "duration": 400,
+        },
+      }
+    }
+  >
+    <Component />
+  </Animate>
+</styled.div>
+`;
+
+exports[`state changes handles switch change 1`] = `
+<styled.div
+  fullWidthAt="small"
+  width="70%"
+>
+  <ToggleSwitch
+    handleSwitchChange={[Function]}
+    leftColor="#FF3C23"
+    leftText="All probs equally likely"
+    rightColor="#5ECFFF"
+    rightText="Fair coin more likely"
+  />
+  <styled.div
+    column={false}
+    cross="stretch"
+    flex={1}
+    main="space-evenly"
+    margin="0"
+    shouldWrap={false}
+    textAlign="left"
+    width="auto"
+  >
+    <Button
+      color="white"
+      disabled={false}
+      large={false}
+      onClick={[Function]}
+    >
+      Heads: 
+      0
+    </Button>
+    <Button
+      color="white"
+      disabled={false}
+      large={false}
+      onClick={[Function]}
+    >
+      Tails: 
+      0
+    </Button>
+    <Button
+      color="#555555"
+      disabled={false}
+      large={false}
+      onClick={[Function]}
+    >
+      Reset Counts
+    </Button>
+  </styled.div>
+  <Animate
+    show={true}
+    start={
+      Object {
+        "color": "#FF3C23",
+        "heads": 50,
+        "tails": 50,
+      }
+    }
+    update={
+      Object {
+        "color": Array [
+          "#5ECFFF",
+        ],
+        "heads": Array [
+          50,
+        ],
+        "tails": Array [
+          50,
+        ],
+        "timing": Object {
+          "duration": 400,
+        },
+      }
+    }
+  >
+    <Component />
+  </Animate>
+</styled.div>
+`;

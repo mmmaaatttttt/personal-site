@@ -142,3 +142,5 @@ CoinFlipBayesianModel.defaultProps = {
 };
 
 export default withCaption(CoinFlipBayesianModel);
+
+export { CoinFlipBayesianModel };
