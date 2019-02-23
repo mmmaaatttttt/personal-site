@@ -13,6 +13,7 @@
 - fix selectable component so it doesn't get so tall on narrow screens
 - meta og:image tags for pages that aren't blog-post pages
 - remove all componentWillMounts
+- fewer decimal places for orchard-game.js
 - tweet thread on upgrade
   - gatsby --> 2.0 (layouts)
   - marksy + remark --> mdx
