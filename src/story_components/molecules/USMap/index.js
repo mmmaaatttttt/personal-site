@@ -11,17 +11,18 @@ import { Tooltip, ClippedSVG } from "story_components";
 import COLORS from "utils/styles";
 
 class USMap extends Component {
-  state = {
-    us: null,
-    tooltipVisible: false,
-    tooltipX: 0,
-    tooltipY: 0,
-    tooltipTitle: "",
-    tooltipBody: ""
-  };
+  constructor(props) {
+    super(props);
+    this.state = {
+      us: null,
+      tooltipVisible: false,
+      tooltipX: 0,
+      tooltipY: 0,
+      tooltipTitle: "",
+      tooltipBody: ""
+    };
 
-  componentWillMount() {
-    const { scale, translate } = this.props;
+    const { scale, translate } = props;
     const projection = geoAlbers()
       .scale(scale)
       .translate(translate);

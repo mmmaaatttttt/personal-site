@@ -15,13 +15,13 @@ import COLORS from "utils/styles";
 import { SVGBorder } from "story_components";
 
 class HarassmentNodeGroup extends Component {
-  state = { shoutCount: 0 };
-
-  componentWillMount() {
-    const { width, height } = this.props;
+  constructor(props) {
+    super(props);
+    this.state = { shoutCount: 0 };
+    const { width, height } = props;
     this.simulation = initializeSimulation(width, height, this.handleCollision);
-    this.generateNodes(this.props);
-    this.simulation.on("tick", () => this.updateNodes(this.props));
+    this.generateNodes(props);
+    this.simulation.on("tick", this.updateNodes);
   }
 
   componentWillUpdate(nextProps) {
@@ -38,7 +38,7 @@ class HarassmentNodeGroup extends Component {
     if (resetting) {
       this.clearNodes();
       this.generateNodes(nextProps);
-      this.updateNodes(nextProps);
+      this.updateNodes();
     }
   }
 
@@ -70,7 +70,7 @@ class HarassmentNodeGroup extends Component {
     );
   };
 
-  updateNodes = props => {
+  updateNodes = () => {
     const colorFn = d => d.properties.color;
     const isMoving = this.isMoving();
     updateSimulationNodes(this.simulation, this.g, colorFn, isMoving);

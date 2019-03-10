@@ -12,13 +12,14 @@ import COLORS from "utils/styles";
 import { SVGBorder } from "story_components";
 
 class EconomyNodeGroup extends Component {
-  componentWillMount() {
-    const { width, height, handleCollision } = this.props;
+  constructor(props) {
+    super(props);
+    const { width, height, handleCollision } = props;
     this.simulation = initializeSimulation(width, height, handleCollision);
-    this.generateNodes(this.props);
-    this.simulation.on("tick", () => this.updateNodes(this.props));
+    this.generateNodes(props);
+    this.simulation.on("tick", () => this.updateNodes(props));
   }
-
+  
   componentWillUpdate(nextProps) {
     const samePopulation = this.props.speeds.length === nextProps.speeds.length;
     const sameMultiplier =

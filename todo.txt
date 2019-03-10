@@ -1,10 +1,8 @@
-
 - ordering by year
 - add "related stories" to end of each story
 - pagination for stories
 - search for stories
 
-- remove all componentWillMounts
 - fewer decimal places for orchard-game.js
 - tweet thread on upgrade
   - gatsby --> 2.0 (layouts)
@@ -20,7 +18,6 @@
 
 
 LOW PRIORITY
-- research how data is passed to mdx: https://gatsby-mdx.netlify.com/guides/writing-pages-in-mdx
 - get more heat map data (mayyybeeeee)
 - add meta tags for /stories endpoint
 - refactor harassment components, which are super gross
