@@ -1,16 +1,9 @@
 
-- https://www.gatsbyjs.org/docs/add-seo-component/
 - ordering by year
 - add "related stories" to end of each story
 - pagination for stories
 - search for stories
-- make sure all package updates work
-- update all helper files and tests
-- build breaks! fix this
-- figure out how to run create-index on gatsby server restart
-- css broken on  first load in build?
 
-- meta og:image tags for pages that aren't blog-post pages
 - remove all componentWillMounts
 - fewer decimal places for orchard-game.js
 - tweet thread on upgrade

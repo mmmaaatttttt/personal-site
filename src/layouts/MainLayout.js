@@ -7,6 +7,7 @@ import Footer from "./Footer";
 import { rhythm } from "utils/typography";
 import "katex/dist/katex.min.css";
 import "@fortawesome/fontawesome-free/css/all.css";
+import matt from "../images/matt.jpg";
 
 const StyledContentArea = styled.div`
   width: 100%;
@@ -47,10 +48,12 @@ class MainLayout extends Component {
                 <meta name="twitter:card" content="summary_large_image" />
                 <meta name="twitter:site" content="@mmmaaatttttt" />
                 <meta name="twitter:title" content={title} />
-                <meta name="og:title" content={title} />
                 <meta name="twitter:description" content={description} />
+                <meta name="twitter:image" content={`${siteUrl}${matt}`} />
+                <meta name="og:title" content={title} />
                 <meta name="og:description" content={description} />
                 <meta name="og:url" content={`${siteUrl}${location.pathname}`} />
+                <meta name="og:image" content={`${siteUrl}${matt}`} />
               </Helmet>
               <Navbar title={title} hide={/\/stories\/.+/.test(location.pathname)} />
               <StyledContentArea>{children}</StyledContentArea>
