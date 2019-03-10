@@ -28,6 +28,7 @@ module.exports = {
         path: `${__dirname}/src/data/csv`
       }
     },
+    `gatsby-transformer-csv`,
     {
       resolve: `gatsby-plugin-typography`,
       options: {
@@ -64,6 +65,6 @@ module.exports = {
     `gatsby-plugin-resolve-src`,
     `gatsby-transformer-sharp`,
     `gatsby-plugin-sharp`,
-    `gatsby-transformer-csv`,
+    `gatsby-plugin-styled-components`
   ]
 };
