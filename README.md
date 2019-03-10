@@ -21,13 +21,13 @@ To add a post, add a new markdown file in `src/pages/stories`. Each markdown fil
 
 * `title`
 * `date`
-* `featured_image`, which should match the filename of an image in the `featured_images` directory
+* `featured_image`, which should match the filename of an image in the `src/images/featured_images` directory
 * `caption`, a short description of the story which will appear on the `/stories` index page, as well as in any shares of the story on Facebook / Twitter.
 * `featured_image_caption`, a caption for the featured image
 
 All visualizations in stories are built using React.js. To add a visualization, you can write the root React component directly in the markdown file, using JSX syntax. All components used for visualizations in stories should live inside of `src/story_components`.
 
-The site integrates [marksy](https://github.com/cerebral/marksy) for processing React components within the markdown. The app is configured to automatically import all components inside of `story_components` for use in markdown, so you as long as you write a component in that directory, you should be able to immediately reference in markdown!
+The site uses [gatsby-mdx](https://github.com/christopherBiscardi/gatsby-mdx/) for processing React components within the markdown. You can import components directly within `.mdx` files.
 
 ### Deploying
 
