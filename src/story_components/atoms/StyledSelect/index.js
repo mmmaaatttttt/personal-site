@@ -10,6 +10,10 @@ StyledSelect.defaultProps = {
   styles: {
     placeholder: () => ({
       color: COLORS.BLACK
+    }),
+    valueContainer: provided => ({
+      ...provided,
+      flexWrap: "nowrap"
     })
   }
 }
