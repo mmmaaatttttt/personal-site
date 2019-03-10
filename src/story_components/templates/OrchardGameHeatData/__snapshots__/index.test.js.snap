@@ -70,6 +70,7 @@ exports[`smoke and snapshot tests renders first demonstration successfully 1`] =
       styles={
         Object {
           "placeholder": [Function],
+          "valueContainer": [Function],
         }
       }
       value="mostPlentiful"

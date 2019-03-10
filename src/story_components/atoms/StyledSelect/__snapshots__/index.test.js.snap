@@ -18,6 +18,7 @@ exports[`matches snapshot 1`] = `
       "defaultProps": Object {
         "styles": Object {
           "placeholder": [Function],
+          "valueContainer": [Function],
         },
       },
       "displayName": "Styled(StateManager)",
@@ -35,6 +36,7 @@ exports[`matches snapshot 1`] = `
   styles={
     Object {
       "placeholder": [Function],
+      "valueContainer": [Function],
     }
   }
 />
