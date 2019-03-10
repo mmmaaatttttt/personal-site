@@ -9,8 +9,8 @@
   "scripts": {
     "build": "GATSBY_BASE_URL='https://mattlane.us' gatsby build",
     "deploy": "GATSBY_BASE_URL='https://mattlane.us' gatsby build && s3-deploy './public/**' --cwd './public/' --region us-east-1 --bucket mattlane.us --deleteRemoved && aws-cloudfront-invalidate $npm_config_distribution_id",
-    "develop": "GATSBY_BASE_URL='http://localhost:8000' gatsby develop -H localhost",
-    "indices": "create-index ./src/story_components/{atoms,molecules,organisms,templates,}",
+    "develop": "npm run indices && GATSBY_BASE_URL='http://localhost:8000' gatsby develop -H localhost",
+    "indices": "create-index -i ./src/story_components/{atoms,molecules,organisms,templates,}",
     "serve": "gatsby serve",
     "test": "jest",
     "test:watch": "jest --watch",
