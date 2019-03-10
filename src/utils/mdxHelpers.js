@@ -11,10 +11,12 @@ import React from "react";
  * @param {Object} props
  */
 const isFigure = props => {
-  const isImgWithNoStyles = props.children.type === "figure";
+  const isImgWithNoStyles =
+    props.children.props && props.children.props.name === "figure";
   const isImgWithStyles =
     props.children.length === 2 &&
-    props.children[0].type === "figure" &&
+    props.children[0].props &&
+    props.children[0].props.name === "figure" &&
     props.children[1].match(/^{.*}$/);
   return isImgWithNoStyles || isImgWithStyles;
 };
@@ -36,17 +38,25 @@ const extractClasses = str =>
 const renderer = {
   p: props => {
     if (isFigure(props)) {
-      if (!Array.isArray(props.children))
-        return <figure {...props.children.props} />;
-      else {
-        const childProps = props.children[0].props;
+      if (!Array.isArray(props.children)) {
         return (
-          <figure
-            {...childProps}
-            className={`${childProps.className} ${extractClasses(props.children[1])}`}
-          />
+          <figure {...props.children.props.props}>
+            {props.children.props.children}
+          </figure>
         );
       }
+
+      const childProps = props.children[0].props;
+      return (
+        <figure
+          {...childProps.props}
+          className={`${childProps.props.className} ${extractClasses(
+            props.children[1]
+          )}`}
+        >
+          {childProps.children}
+        </figure>
+      );
     }
     return <p {...props} />;
   },

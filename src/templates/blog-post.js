@@ -43,22 +43,25 @@ const StyledTextWrapper = styled.div`
     margin-right: auto;
   }
 
-  figure.w-60 {
+  figure.w-60 > a {
     width: 60%;
+    margin: 0 auto
   }
 
-  figure.w-70 {
+  figure.w-70 > a {
     width: 70%;
+    margin: 0 auto
   }
 
-  figure.w-80 {
+  figure.w-80 > a {
     width: 80%;
+    margin: 0 auto
   }
 
   ${media.extraSmall`
-    figure.w-60,
-    figure.w-70,
-    figure.w-80 {
+    figure.w-60 > a,
+    figure.w-70 > a,
+    figure.w-80 > a {
       width: 100%;
     }
   `}
