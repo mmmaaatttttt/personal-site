@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import { StaticQuery, graphql } from 'gatsby';
+import { StaticQuery, graphql } from "gatsby";
 import {
   selectOptions,
   tooltipHelpers,
@@ -13,7 +13,7 @@ import {
   SelectableScatterplot
 } from "story_components";
 
-const PureFourWeddingsVis = ({ data, caption, visType}) => {
+const PureFourWeddingsVis = ({ data, caption, visType }) => {
   const components = {
     map: SelectableHeatMap,
     histogram: SelectableHistogram,
@@ -33,11 +33,11 @@ const PureFourWeddingsVis = ({ data, caption, visType}) => {
     props.getTooltipBody = tooltip.body;
   }
   return <Component {...props} />;
-}
+};
 
 class FourWeddingsVisualization extends Component {
   cleanQuery = data => {
-    return data.allFourWeddingsCsv.edges.map(({node}) => ({
+    return data.allFourWeddingsCsv.edges.map(({ node }) => ({
       season: +node["Season"],
       episode: +node["Episode"],
       title: node["Title"],
@@ -50,7 +50,8 @@ class FourWeddingsVisualization extends Component {
       budget: +node["Budget"] || null,
       description: node["Description"],
       state: node["State"],
-      scoresGiven: [1,2,3,4].map(num => `Contestant_${num}_Experience`)
+      scoresGiven: [1, 2, 3, 4]
+        .map(num => `Contestant_${num}_Experience`)
         .map(colName => +node[colName])
         .filter(Boolean),
       scoresReceived: {
@@ -65,16 +66,18 @@ class FourWeddingsVisualization extends Component {
       expReceivedRanking: +node["Overall_Experience_Ranking"],
       budgetRanking: +node["Budget_Ranking"],
       budgetPerGuestRanking: +node["Budget_Per_Guest_Ranking"] || null
-    }))
-  }
+    }));
+  };
 
   render() {
     return (
       <StaticQuery
         query={query}
-        render={data => <PureFourWeddingsVis data={this.cleanQuery(data)} {...this.props} />}
+        render={data => (
+          <PureFourWeddingsVis data={this.cleanQuery(data)} {...this.props} />
+        )}
       />
-    )
+    );
   }
 }
 
@@ -85,7 +88,7 @@ FourWeddingsVisualization.propTypes = {
 
 FourWeddingsVisualization.defaultProps = {
   caption: "Sample Caption"
-}
+};
 
 const query = graphql`
   query FourWeddingsQuery {
