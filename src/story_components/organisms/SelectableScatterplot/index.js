@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import styled from "styled-components";
-import withCaption from "hocs/withCaption";
 import {
   NarrowContainer,
   FlexContainer,
@@ -95,4 +94,4 @@ SelectableScatterplot.propTypes = {
   graphOptions: PropTypes.object.isRequired
 };
 
-export default withCaption(SelectableScatterplot);
+export default SelectableScatterplot;

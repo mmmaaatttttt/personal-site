@@ -12,6 +12,7 @@ import {
   SelectablePieChart,
   SelectableScatterplot
 } from "story_components";
+import withCaption from "hocs/withCaption";
 
 const PureFourWeddingsVis = ({ data, caption, visType }) => {
   const components = {
@@ -127,6 +128,6 @@ const query = graphql`
   }
 `;
 
-export default FourWeddingsVisualization;
+export default withCaption(FourWeddingsVisualization);
 
 export { PureFourWeddingsVis };

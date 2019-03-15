@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import withCaption from "hocs/withCaption";
 import { NarrowContainer, StyledSelect, USMap } from "story_components";
 
 class SelectableHeatMap extends Component {
@@ -43,4 +42,4 @@ SelectableHeatMap.propTypes = {
   getTooltipBody: PropTypes.func.isRequired
 };
 
-export default withCaption(SelectableHeatMap);
+export default SelectableHeatMap;

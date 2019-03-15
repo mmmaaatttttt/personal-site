@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { histogram, max, range, extent } from "d3-array";
 import { scaleLinear } from "d3-scale";
-import withCaption from "hocs/withCaption";
 import COLORS from "utils/styles";
 import { BarGraph, NarrowContainer, StyledSelect } from "story_components";
 
@@ -80,4 +79,4 @@ SelectableHistogram.propTypes = {
   selectOptions: PropTypes.arrayOf(PropTypes.object).isRequired
 };
 
-export default withCaption(SelectableHistogram);
+export default SelectableHistogram;

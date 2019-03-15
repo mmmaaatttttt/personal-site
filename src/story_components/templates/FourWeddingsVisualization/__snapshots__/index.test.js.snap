@@ -1,7 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`smoke and snapshot tests matches snapshots 1`] = `
-<Component
+<SelectableHeatMap
   caption="foo"
   data={
     Array [
@@ -283,7 +283,7 @@ exports[`smoke and snapshot tests matches snapshots 1`] = `
 `;
 
 exports[`smoke and snapshot tests matches snapshots 2`] = `
-<Component
+<SelectableHistogram
   caption="foo"
   data={
     Array [
@@ -587,7 +587,7 @@ exports[`smoke and snapshot tests matches snapshots 2`] = `
 `;
 
 exports[`smoke and snapshot tests matches snapshots 3`] = `
-<Component
+<SelectablePieChart
   caption="foo"
   data={
     Array [
@@ -879,7 +879,7 @@ exports[`smoke and snapshot tests matches snapshots 3`] = `
 `;
 
 exports[`smoke and snapshot tests matches snapshots 4`] = `
-<Component
+<SelectableScatterplot
   caption="foo"
   data={
     Array [

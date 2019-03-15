@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import withCaption from "hocs/withCaption";
 import { NarrowContainer, PieChart, StyledSelect } from "story_components";
 
 class SelectablePieChart extends Component {
@@ -35,4 +34,4 @@ SelectablePieChart.propTypes = {
   graphOptions: PropTypes.object.isRequired
 };
 
-export default withCaption(SelectablePieChart);
+export default SelectablePieChart;
