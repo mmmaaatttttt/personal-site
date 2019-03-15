@@ -203,7 +203,7 @@ class GerrymanderHistoricalMap extends Component {
           const yearExtent = extent(cleanedData, d => d.year);
           return (
             <PureHistoricalMap
-              data={this.cleanQuery(data)}
+              data={cleanedData}
               minYear={yearExtent[0]}
               maxYear={yearExtent[1]}
               {...this.props}

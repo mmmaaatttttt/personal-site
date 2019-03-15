@@ -3,7 +3,6 @@
 export { default as CoinFlipBayesianModel } from './CoinFlipBayesianModel';
 export { default as CoinFlipHistogram } from './CoinFlipHistogram';
 export { default as EconomyNodeGroup } from './EconomyNodeGroup';
-export { default as GerrymanderHistoricalMap } from './GerrymanderHistoricalMap';
 export { default as Graph } from './Graph';
 export { default as HarassmentNodeGroup } from './HarassmentNodeGroup';
 export { default as IsoperimetricExplorer } from './IsoperimetricExplorer';
