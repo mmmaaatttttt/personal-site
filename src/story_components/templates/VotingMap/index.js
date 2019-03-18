@@ -113,17 +113,50 @@ PureVotingMap.defaultProps = {
       colors: [COLORS.WHITE, COLORS.GREEN]
     },
     {
-      value: "turnout",
-      label: "Election Turnout",
+      value: "eligible",
+      label: "Eligble Voters (Estimated)",
+      accessor: properties => properties.values[0].eligible_voters_estimated || null,
+      format: ",.0f",
+      colors: [COLORS.WHITE, COLORS.DARK_GRAY]
+    },
+    {
+      value: "participantsPerRegistration",
+      label: "Participants per 100 Registered Voters",
       accessor: properties => {
         const {
           election_participants: ep,
           active_registration: ar
         } = properties.values[0];
-        return ep && ar ? ep / ar : null;
+        return ep && ar ? ep / ar * 100 : null;
       },
-      format: ".2%",
+      format: ".2f",
       colors: [COLORS.WHITE, COLORS.PURPLE]
+    },
+    {
+      value: "registrationsPerEligible",
+      label: "Registered Voters per 100 Eligible Voters",
+      accessor: properties => {
+        const {
+          active_registration: ar,
+          eligible_voters_estimated: ev
+        } = properties.values[0];
+        return ar && ev ? ar / ev * 100 : null;
+      },
+      format: ".2f",
+      colors: [COLORS.WHITE, COLORS.DARK_GREEN]
+    },
+    {
+      value: "turnout",
+      label: "Participants per 100 Eligible Voters",
+      accessor: properties => {
+        const {
+          election_participants: ep,
+          eligible_voters_estimated: ev
+        } = properties.values[0];
+        return ep && ev ? ep / ev * 100 : null;
+      },
+      format: ".2f",
+      colors: [COLORS.WHITE, COLORS.DARK_BLUE]
     }
   ]
 };
@@ -138,6 +171,7 @@ const query = graphql`
           num_jurisdictions
           active_registration
           election_participants
+          eligible_voters_estimated
           jurisdictions_with_precinct_info
           jurisdictions_with_polling_place_info
           jurisdictions_with_poll_worker_count
@@ -153,7 +187,6 @@ const query = graphql`
           participants_in_jurisdictions_with_poll_worker_info
           participants_in_jurisdictions_with_poll_worker_age_info
           participants_in_jurisdictions_with_difficulty_info
-          precincts
           polling_places
           poll_workers
           worker_age_group_1
