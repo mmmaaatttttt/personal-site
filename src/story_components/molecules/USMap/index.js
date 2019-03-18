@@ -6,6 +6,7 @@ import { scaleLinear } from "d3-scale";
 import { nest } from "d3-collection";
 import { extent } from "d3-array";
 import { feature } from "topojson";
+import { isEqual } from "lodash";
 import us from "data/json/us-topo.json";
 import { Tooltip, ClippedSVG } from "story_components";
 import COLORS from "utils/styles";
@@ -33,6 +34,15 @@ class USMap extends Component {
     const { data, addGeometryProperties } = this.props;
     addGeometryProperties(us, data);
     this.setState({ us });
+  }
+
+  componentDidUpdate(prevProps) {
+    const oldData = prevProps.data;
+    const newData = this.props.data;
+    if (!isEqual(oldData, newData)) {
+      this.props.addGeometryProperties(us, newData);
+      this.setState({ us });
+    }
   }
 
   handleEnterAndUpdate = (scale, accessor, d) => {
