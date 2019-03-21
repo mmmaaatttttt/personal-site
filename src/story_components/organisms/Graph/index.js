@@ -141,6 +141,7 @@ Graph.propTypes = {
 
 Graph.defaultProps = {
   svgPadding: 0,
+  graphPadding: 0,
   tickFormatX: "",
   tickFormatY: "",
   xLabel: "",
