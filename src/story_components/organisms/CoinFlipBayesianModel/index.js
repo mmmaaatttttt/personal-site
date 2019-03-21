@@ -87,12 +87,6 @@ class CoinFlipBayesianModel extends PureComponent {
               <Graph
                 width={width}
                 height={height}
-                // svgPadding={{
-                //   top: graphPadding,
-                //   left: 0,
-                //   bottom: 0,
-                //   right: 0
-                // }}
                 svgPadding={0}
                 graphPadding={graphPadding}
                 svgId="bayesian-graph"
