@@ -11,6 +11,7 @@ export { default as OrchardGameHeatData } from './OrchardGameHeatData';
 export { default as OrchardGameSimulation } from './OrchardGameSimulation';
 export { default as RentDivision } from './RentDivision';
 export { default as SampleGerrymander } from './SampleGerrymander';
+export { default as VotingLineChart } from './VotingLineChart';
 export { default as VotingMap } from './VotingMap';
 export { default as WarmingDots } from './WarmingDots';
 
