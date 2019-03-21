@@ -1,14 +1,16 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { line, curveNatural } from "d3-shape";
+import { line, curveNatural, curveLinear } from "d3-shape";
 import { scaleLinear } from "d3-scale";
 import COLORS from "utils/styles";
 
-const LinePlot = ({ graphData, xScale, yScale, stroke, strokeWidth }) => {
+const curves = { curveNatural, curveLinear }
+
+const LinePlot = ({ graphData, xScale, yScale, stroke, strokeWidth, curve }) => {
   const linePath = line()
     .x(d => xScale(d.x))
     .y(d => yScale(d.y))
-    .curve(curveNatural);
+    .curve(curves[curve]);
 
   const truncateData = () =>
     graphData.map(d => {
@@ -30,6 +32,7 @@ const LinePlot = ({ graphData, xScale, yScale, stroke, strokeWidth }) => {
 };
 
 LinePlot.propTypes = {
+  curve: PropTypes.oneOf(Object.keys(curves)),
   graphData: PropTypes.arrayOf(
     PropTypes.shape({
       x: PropTypes.number.isRequired,
@@ -43,6 +46,7 @@ LinePlot.propTypes = {
 };
 
 LinePlot.defaultProps = {
+  curve: "curveNatural",
   graphData: [{ x: 0, y: 0 }, { x: 100, y: 100 }],
   xScale: scaleLinear(),
   yScale: scaleLinear(),
