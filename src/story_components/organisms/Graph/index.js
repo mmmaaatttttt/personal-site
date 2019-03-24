@@ -8,20 +8,21 @@ const FullWidth = styled.div`
 `;
 
 const Graph = ({
-  width,
-  height,
-  graphPadding,
-  svgPadding,
-  svgId,
-  xLabel,
-  yLabel,
-  xLabelPosition,
-  xScale,
-  yScale,
   children,
-  tickStep,
+  graphPadding,
+  height,
+  svgId,
+  svgPadding,
   tickFormatX,
-  tickFormatY
+  tickFormatY,
+  tickStep,
+  width,
+  xLabelPosition,
+  xLabel,
+  xScale,
+  yLabel,
+  yLabelOffset,
+  yScale
 }) => {
   if (typeof graphPadding === "number") {
     graphPadding = {
@@ -86,7 +87,7 @@ const Graph = ({
         />
         <line
           x1={graphPadding.left}
-          x2={graphPadding.right}
+          x2={graphPadding.left}
           y1={graphPadding.top}
           y2={height - graphPadding.bottom}
           stroke="#000"
@@ -99,6 +100,7 @@ const Graph = ({
           y={height / 2}
           transform={`rotate(-90 10,${height / 2})`}
           dy={10}
+          dx={yLabelOffset}
         >
           {yLabel}
         </AxisLabel>
@@ -132,6 +134,7 @@ Graph.propTypes = {
   xLabel: PropTypes.string.isRequired,
   xLabelPosition: PropTypes.oneOf(["bottom-center", "center-right"]),
   yLabel: PropTypes.string.isRequired,
+  yLabelOffset: PropTypes.number.isRequired,
   xScale: PropTypes.func.isRequired,
   yScale: PropTypes.func.isRequired,
   tickStep: PropTypes.func,
@@ -146,7 +149,8 @@ Graph.defaultProps = {
   tickFormatY: "",
   xLabel: "",
   xLabelPosition: "bottom-center",
-  yLabel: ""
+  yLabel: "",
+  yLabelOffset: 0
 };
 
 export default Graph;
