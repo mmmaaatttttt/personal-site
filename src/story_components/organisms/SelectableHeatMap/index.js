@@ -31,7 +31,7 @@ class SelectableHeatMap extends Component {
             value={value}
             onChange={this.handleChange}
             options={selectOptions}
-            isSearchable={false}
+            isSearchable
             placeholder={label}
           />
         </NarrowContainer>
