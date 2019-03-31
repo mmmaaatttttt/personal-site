@@ -1,0 +1,90 @@
+---
+title: "Strength in Numbers"
+date: "2019-03-21"
+featured_image: "../../images/featured_images/fairest_of_them_all.jpg"
+caption: "A mathematical exploration of fairness."
+featured_image_caption: "Playing a (hopefully fair) board game. Image credit: Brendan Humphreys from Pexels."
+---
+
+import {
+  VotingLineChart,
+  VotingMap,
+  VotingPollWorkerAge
+} from "story_components";
+import * as d from "data/strength-in-numbers.js";
+
+Over the past few years, I've read two books that have really left a lasting
+impression. One of them is called [The Merchant of Doubt: How a Handful of Scientists Obscured the Truth on Issues from Tobacco Smoke to Global Warming](https://www.amazon.com/Merchants-Doubt-Handful-Scientists-Obscured/dp/1608193942).
+The subtitle says it all; it's an absolutely depressing true story about how a
+small group of scientists waged a campaign against science itself, with
+remarkable success.
+
+The other is called [Give Us the Ballot: The Modern Struggle for Voting Rights in America](https://www.amazon.com/Give-Us-Ballot-Struggle-America/dp/1250094720).
+Once again, it's all right there in the title. This one's the absolutely
+depressing true story about how a small group of racists waged a campaign against voting rights for historically disenfranchised groups, again with remarkable success.
+
+While these topics may sound like they fall under umbrellas of science, history,
+or civics, there's plenty of related mathematical conversations to be had as
+well. In terms of climate change, I wrote a story [last year](https://mattlane.us/stories/warming-dots/) on general mathematical models
+of how natural resource depletion can affect populations. In this story, I'd
+like to turn a mathematical lens on the topic of voting, and slap a coat of
+paint on what would otherwise be a bunch of tabular data.
+
+---
+
+### The Data
+
+Let's explore results from the past decade of United States elections. Every two
+years, we elect our representatives in Congress, along with potentially a
+senator or a president. Well after the election is complete, the U.S. Assistance
+Commission (EAC) releases survey data on the election. This data includes information
+on things like registration, voter participation, and the number of precincts
+and poll workers. (More information can be found on their [website](https://www.eac.gov/research-and-data/datasets-codebooks-and-surveys/).)
+
+Along with the data, the EAC provides a report summarizing its findings. But
+with a decade of past results to compare against, I was curious about
+visualizing their findings across time. How have election patterns changed since
+2008, if at all? To start answering this question, I pulled out the information I was curious about, and consolidated it by year. If you're interested, you can find the raw data [here](https://github.com/mmmaaatttttt/personal-site/blob/master/src/data/csv/voting_data_2008_2016.csv).
+
+On their own, unfortunately, numbers aren't the greatest storytellers. Let's try to frame all of these values into a more cohesive narrative.
+
+(Note that results for the 2018 election aren't available yet. I'll add that
+data in once it's released.)
+
+---
+
+### The People
+
+Let's start with the fundamentals: who's registered, who's voting, and who isn't
+voting despite eligibility? Using the map below, you can explore how different
+states compare across every election since 2008.
+
+<VotingMap
+  caption="Figure 1: Map visualization of population data by year and state."
+  selectOptions={d.mapOptionsForVoters}
+/>
+
+For a clearer picture of the trend across years within a state, here's a second
+representation of the same data:
+
+<VotingLineChart
+  caption="Figure 2: Line representation of population data by year for a fixed state."
+  selectOptionsForStatistic={d.lineOptionsForVoters}
+/>
+
+---
+
+### The Workers
+
+---
+
+### Conclusion
+
+<VotingPollWorkerAge caption="Figure 3: hi" />
+
+Sources:
+
+- [Election Administration and Voting Survey Datasets, Codebooks, and Survey Instruments](https://www.eac.gov/research-and-data/datasets-codebooks-and-surveys/), by the U.S. Election Assistance Commission
+- [Voter Turnout Data](http://www.electproject.org/home/voter-turnout/voter-turnout-data), by the United States Elections Project
+- [The Merchants of Doubt](https://www.amazon.com/Merchants-Doubt-Handful-Scientists-Obscured/dp/1608193942), by Naomi Oreskes and Erik Conway.
+- [Give Us the Ballot](https://www.amazon.com/Give-Us-Ballot-Struggle-America/dp/1250094720), by Ari Berman.
