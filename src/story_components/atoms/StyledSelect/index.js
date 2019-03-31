@@ -16,6 +16,6 @@ StyledSelect.defaultProps = {
       flexWrap: "nowrap"
     })
   }
-}
+};
 
 export default StyledSelect;

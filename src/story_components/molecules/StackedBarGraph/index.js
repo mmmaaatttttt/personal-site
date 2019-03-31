@@ -114,7 +114,6 @@ class StackedBarGraph extends Component {
                     {barLabel(bar.data)}
                   </CenteredSVGText>
                 ) : null;
-                console.log("BAR", bar);
                 return (
                   <g key={bar.key}>
                     {barHeights.map((bHeight, i) => (
