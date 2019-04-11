@@ -57,7 +57,35 @@ data in once it's released.)
 
 Let's start with the fundamentals: who's registered, who's voting, and who isn't
 voting despite eligibility? Using the map below, you can explore how different
-states compare across every election since 2008.
+states compare across every election since 2008. There are five different
+statistics to choose from:
+
+1. **Active Registered Voters.** How many active registered voters did the state
+report for that year? (Mostly this is taken from EAC reporting, though the New
+York data in 2016 is from
+[this](https://www.elections.ny.gov/NYSBOE/enrollment/county/county_nov16.pdf)
+source.)
+
+2. **Election Participants.** How many ballots were received? Note that in some
+jurisdictions can include rejected provisional ballots. Think of it as a slight
+overestimate for the number of people who successfully voted.
+
+3. **Eligible Voters.** Of all of the folks in the state, how many were
+*eligible* to vote (at least 18 years old, citizens, and no criminal history
+that would deprive them of their right to vote)? These numbers are taken from
+the [United States Elections Project](http://www.electproject.org/home/voter-turnout/voter-turnout-data).
+
+4. **Registration Saturation.** What percentage of eligible voters are active
+registered voters? Note that while this should be a value between 0% and 100%,
+because we're dealing with estimates, there are certain data points with values
+greater than 100%. For example, Kentucky and Maine in 2016 both have saturation
+rates a bit above 100%.
+
+5. **Election Turnout.** What percentage of eligible voters actually
+participated in the election?
+
+Here's how the country has looked through the lens of each of these statistics
+since 2008:
 
 <VotingMap
   caption="Figure 1: Map visualization of population data by year and state."
@@ -72,15 +100,150 @@ representation of the same data:
   selectOptionsForStatistic={d.lineOptionsForVoters}
 />
 
+A few observations:
+
+- As you might expect, presidential election years correspond to substantial
+boosts in registration, participation, and overall turnout. For example, the
+graph of nearly every state's election participant figures show a distinctive
+zigzag shape, sloping up during presidential election years and down for the
+midterms. 
+
+- In terms of turnout, three of the top five states are neighbors (Minnesota,
+Wisconsin, and Iowa). The bottom five performers according to this metric are
+more geographically distributed: the worst offenders are Hawaii, Utah, West
+Virginia, Texas, and Mississippi.
+
+  Here's a table summarizing the findings. You can check out the top or bottom performers for either registration saturation or voter turnout:
+
+  INSERT VIS HERE!
+    - adjust what you're looking at
+
+- Among recent elections, states have had a difficult time surpassing the turnout they witnessed in 2008. In fact, 34 states recorded their highest turnout during that election, as opposed to only 13 during the 2016 election.
+
+For more on the percentages, here are histograms highlighting the distrubtion of registration saturation and turnout by year. Note, once again, the impact of a presidential election:
+
+INSERT VIS HERE!
+
 ---
 
 ### The Workers
+
+What I like about the EAC data is that it doesn't just track how many people
+participated in the election by voting. It also tracks how many people
+participated by *working* on election day. While the data isn't as readily
+available, many report how many poll workers a jurisdiction had, and some even
+go so far as to report information on the ages of poll workers, or the
+difficulty in finding poll workers.
+
+Let's start with the fundamentals. Here are our map and line charts revisited,
+but with the focus on poll workers instead of voters. The statistics you can
+explore are:
+
+1. **% of Jurisdictions Reporting.** What percentage of jursidictions within a
+state reported counts of poll workers on election day? Note that among those
+reporting, an even smaller number provided information on the ages of their poll
+workers or the difficulty in finding poll workers.
+
+2. **Poll Workers.** How many poll workers worked on election day? Since not
+every jurisdiction in a state reports these numbers, the counts you see should
+be considered a lower bound on the number of poll workers.
+
+3. **Polling Places.** How many polling places were there on election day? Since
+not every jurisdiction in a state reports these numbers, the counts you see
+should be considered a lower bound on the number of polling places.
+
+4. **Poll Workers per Polling Place.** On average, how many poll workers were
+there for each polling place?
+
+5. **Poll Workers per 1,000 Election Participants.** How many poll workers were
+there as a fraction of the population? Here we consider only election
+participants from jurisdictions that reported poll worker information.
+
+6. **Polling Places per 1,000 Election Participants.** How many polling places
+were there as a fraction of the population? Here we consider only election
+participants from jurisdictions that reported polling place information.
+
+7. **Average Difficulty of Finding Poll Workers?** All jurisdictions are asked
+to rate the difficulty of finding poll workers for a given election on a scale
+of 1 (very easy) to 5 (very difficult). This shows an average difficulty score
+across the state, taken from jurisdictions that reported a difficulty.
+
+By each of these metrics, here's how the country has changed over time:
+
+<VotingMap
+  caption="Figure 3: Map visualization of poll worker data by year and state."
+  selectOptions={d.mapOptionsForWorkers}
+/>
+
+Just like before, we can also dig into trends across years for a single state:
+
+<VotingLineChart
+  caption="Figure 4: Line representation of poll worker data by year for a fixed state."
+  selectOptionsForStatistic={d.lineOptionsForWorkers}
+/>
+
+What do you notice by exploring these graphs? Here are some things I noticed:
+
+- There's an interesting association between the average number of poll workers
+per polling location and the political leanings of voters within the state.
+Among the five states with the lowest ratio of poll workers to polling places
+(Oklahoma, Alabama, Mississippi, Alaska, Pennsylvania), four of them have
+traditionally leaned Republican. Similarly, among the five states with the
+highest ratio (Oregon, Maryland, New York, Virginia, Hawaii), four have
+traditionally leaned Democrat.
+
+  It should be noted that Oregon is a bit of an outlier, since it has a robust
+  vote by mail system in place. This has the effect of skewing the poll worker
+  per polling place ratio quite high.
+
+- The number of polling places per 1000 participants sometimes says more about
+the mechanics of that state's voting system than anything else. The three states
+with the lowest ratio (Oregon, Washington, Colorado) on average across all
+elections are also the three with the most robust vote by mail programs. On the
+other hand, of the four states with the highest ratio (Utah, West Virginia,
+Mississippi, Pennsylvania), only Utah and West Virginia offer some form of early
+voting.
+
+- With fewer parcipants in off-years, the per capita statistics (poll workers
+and polling places per 1,000 participants) tend to see a boost during the
+midterms.
+
+- Across all states, reported difficulty of finding workers has trended slightly
+upward, from about 3.07 in 2008 to 3.35 in 2016. Total number of jurisdictions
+reporting difficulty also went down substantially between 2014 to 2016 (6,444 to
+3,183).
+
+In addition to reporting on the number of poll workers and the difficulty in
+finding them, some jurisdictions also report statistics on the age distribution
+of poll workers. Here's a breakdown of those age groups by state and year: 
+
+<VotingPollWorkerAge caption="Figure 3: hi" />
+
+In the aggregate, distribution of poll worker ages has been relatively steady across elections.
+
+---
+
+### It's Party Time
+
+One other dimension that we haven't considered yet is the political leanings of election participants. 
+
+-- why looking at election results can be problematic (personality driven, not every congressional district has option from both parties)
+-- here's data on political party affiliation
+-- visualization to show influence of party affiliation --- scatterplot? histogram??
+  -- histogram: bar color = affiliation, slide for year, bins adjust. maybe this is best.
+
+- https://news.gallup.com/poll/114016/state-states-political-party-affiliation.aspx (2008)
+- https://news.gallup.com/poll/146234/number-solidly-democratic-states-cut-half.aspx (2010)
+- https://news.gallup.com/poll/160175/blue-states-outnumber-red-states.aspx (2012)
+- https://news.gallup.com/poll/181475/massachusetts-maryland-democratic-states.aspx (2014)
+- https://news.gallup.com/poll/203117/gop-maintains-edge-state-party-affiliation-2016.aspx (2016)
+
 
 ---
 
 ### Conclusion
 
-<VotingPollWorkerAge caption="Figure 3: hi" />
+
 
 Sources:
 
