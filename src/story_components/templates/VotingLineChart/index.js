@@ -3,9 +3,8 @@ import PropTypes from "prop-types";
 import { StaticQuery, graphql } from "gatsby";
 import { extent } from "d3-array";
 import { scaleLinear } from "d3-scale";
-import withCaption from "hocs/withCaption";
-import { Graph, LinePlot, StyledSelect } from "story_components";
-import COLORS from "utils/styles";
+import { withCaption } from "containers";
+import { Graph, LinePlot, NarrowContainer, StyledSelect } from "story_components";
 
 class PureVotingLineChart extends Component {
   state = {
@@ -37,6 +36,7 @@ class PureVotingLineChart extends Component {
       selectOptionsForStatistic,
       width
     } = this.props;
+    debugger;
     const dataForStatAndState = data
       .filter(d => d.state === stateLabel && accessor(d) !== null)
       .map(d => ({ x: d.year, y: accessor(d) }));
@@ -47,7 +47,7 @@ class PureVotingLineChart extends Component {
       .domain(extent(dataForStatAndState, d => d.y))
       .range([height - graphPadding.bottom, graphPadding.top]);
     return (
-      <div>
+      <NarrowContainer width="60%" fullWidthAt="medium">
         <StyledSelect
           value={statisticValue}
           onChange={obj =>
@@ -96,7 +96,7 @@ class PureVotingLineChart extends Component {
             curve="curveLinear"
           />
         </Graph>
-      </div>
+      </NarrowContainer>
     );
   }
 }

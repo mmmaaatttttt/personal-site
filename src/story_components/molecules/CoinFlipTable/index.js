@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { ColoredSpan, LabeledSlider, StyledTable } from "story_components";
-import withCaption from "hocs/withCaption";
+import { withCaption } from "containers";
 import COLORS from "utils/styles";
 
 class CoinFlipTable extends Component {
@@ -51,11 +51,15 @@ class CoinFlipTable extends Component {
               <td>{formatted.tails}</td>
               <td>
                 {formatted.heads} &times; {formatted.tails} ={" "}
-                <ColoredSpan color={COLORS.GREEN} bold>{formatted.pair}</ColoredSpan>
+                <ColoredSpan color={COLORS.GREEN} bold>
+                  {formatted.pair}
+                </ColoredSpan>
               </td>
               <td>
                 {formatted.tails} &times; {formatted.heads} ={" "}
-                <ColoredSpan color={COLORS.GREEN} bold>{formatted.pair}</ColoredSpan>
+                <ColoredSpan color={COLORS.GREEN} bold>
+                  {formatted.pair}
+                </ColoredSpan>
               </td>
             </tr>
           </tbody>

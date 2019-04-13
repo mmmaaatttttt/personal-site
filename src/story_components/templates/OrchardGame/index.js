@@ -9,7 +9,7 @@ import {
   ScreenOverlay,
   Spinner
 } from "story_components";
-import withCaption from "hocs/withCaption";
+import { withCaption } from "containers";
 import COLORS from "utils/styles";
 
 class OrchardGame extends Component {

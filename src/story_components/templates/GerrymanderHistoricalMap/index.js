@@ -5,7 +5,7 @@ import { extent } from "d3-array";
 import { nest } from "d3-collection";
 import { scaleLinear } from "d3-scale";
 import { lighten } from "polished";
-import withCaption from "hocs/withCaption";
+import { withCaption } from "containers";
 import COLORS from "utils/styles";
 import { calculateWastedVotes } from "utils/mathHelpers";
 import { BarGraph, ColumnLayout, SliderGroup, USMap } from "story_components";

@@ -3,68 +3,62 @@ import PropTypes from "prop-types";
 import { StaticQuery, graphql } from "gatsby";
 import { max } from "d3-array";
 import { scaleLinear } from "d3-scale";
-import withCaption from "hocs/withCaption";
-import { StackedBarGraph, StyledSelect } from "story_components";
+import { withCaption } from "containers";
+import { LabeledSlider, NarrowContainer, SelectablePieChart } from "story_components";
 import COLORS from "utils/styles";
 import { total } from "utils/mathHelpers";
 
 class PureVotingPollWorkerAge extends Component {
   state = {
-    selectedStateOption: this.props.selectOptionsForState[0]
+    currentYear: this.props.maxYear
   };
 
-  handleChange = obj => {
-    this.setState({
-      selectedStateOption: this.props.selectOptionsForState[obj.value]
-    });
+  handleSliderUpdate = val => {
+    this.setState({ currentYear: val });
   };
+
+  // need something like this for state options
+  // getStateOptions = data => {
+  //   const statesSet = new Set(
+  //     data.allVotingData20082016Csv.edges.map(({ node }) => node.state)
+  //   );
+  //   const options = Array.from(statesSet, (s, idx) => ({
+  //     label: s,
+  //     value: idx
+  //   }));
+  //   return options;
+  // };
 
   render() {
-    const {
-      label: stateLabel,
-      value: stateValue
-    } = this.state.selectedStateOption;
-    const {
-      data,
-      graphPadding,
-      height,
-      selectOptionsForState,
-      width
-    } = this.props;
-    const barData = data
-      .filter(d => d.state === stateLabel)
-      .map(d => ({ key: d.year, heights: d.ages }));
-    const yScale = scaleLinear()
-      .domain([0, max(barData, d => total(d.heights))])
-      .range([height - graphPadding.bottom, graphPadding.top]);
+    const { currentYear } = this.state;
+    const { minYear, maxYear, data, selectOptionsForState, step } = this.props;
+    const currentYearData = data.filter(d => d.year === currentYear);
+    debugger;
     return (
-      <div>
-        <StyledSelect
+      <NarrowContainer width="60%" fullWidthAt="medium">
+        <LabeledSlider
+          color={COLORS.DARK_GRAY}
+          handleValueChange={this.handleSliderUpdate}
+          max={maxYear}
+          min={minYear}
+          step={step}
+          tickCount={Math.round((maxYear - minYear) / step) + 1}
+          title={`Year: ${currentYear}`}
+          value={currentYear}
+        />
+        {/* <SelectablePieChart
+          data={}
+          selectOptions={}
+          graphOptions={}
+        /> */}
+        {/* <StyledSelect
           value={stateValue}
           onChange={this.handleChange}
           options={selectOptionsForState}
           isSearchable
           placeholder={stateLabel}
-        />
-        <StackedBarGraph
-          svgId='poll-worker-ages'
-          width={width}
-          height={height}
-          padding={graphPadding}
-          barData={barData}
-          yScale={yScale}
-          colors={[
-            COLORS.RED,
-            COLORS.BLUE,
-            COLORS.GREEN,
-            COLORS.ORANGE,
-            COLORS.PURPLE,
-            COLORS.DARK_GREEN
-          ]}
-          tickStep={100}
-          // barLabel={bar => bar.key + 1}
-        />
-      </div>
+        /> */}
+      </NarrowContainer>
     );
   }
 }
@@ -116,33 +110,47 @@ class VotingPollWorkerAge extends Component {
 
 PureVotingPollWorkerAge.propTypes = {
   data: PropTypes.array.isRequired,
-  graphPadding: PropTypes.shape({
-    top: PropTypes.number.isRequired,
-    bottom: PropTypes.number.isRequired,
-    left: PropTypes.number.isRequired,
-    right: PropTypes.number.isRequired
-  }).isRequired,
-  height: PropTypes.number.isRequired,
-  selectOptionsForState: PropTypes.arrayOf(
-    PropTypes.shape({
-      value: PropTypes.number.isRequired,
-      label: PropTypes.string.isRequired
-    })
-  ).isRequired,
-  width: PropTypes.number.isRequired
+  maxYear: PropTypes.number.isRequired,
+  minYear: PropTypes.number.isRequired,
+  selectOptionsForState: PropTypes.arrayOf(PropTypes.shape({
+    value: PropTypes.isRequired,
+    label: PropTypes.string.isRequired,
+    chartValues: PropTypes.func.isRequired
+  })).isRequired,
+  step: PropTypes.number.isRequired
+  // data: PropTypes.array.isRequired,
+  // graphPadding: PropTypes.shape({
+  //   top: PropTypes.number.isRequired,
+  //   bottom: PropTypes.number.isRequired,
+  //   left: PropTypes.number.isRequired,
+  //   right: PropTypes.number.isRequired
+  // }).isRequired,
+  // height: PropTypes.number.isRequired,
+  // selectOptionsForState: PropTypes.arrayOf(
+  //   PropTypes.shape({
+  //     value: PropTypes.number.isRequired,
+  //     label: PropTypes.string.isRequired
+  //   })
+  // ).isRequired,
+  // width: PropTypes.number.isRequired
 };
 
 PureVotingPollWorkerAge.defaultProps = {
   data: [],
-  height: 600,
-  graphPadding: {
-    top: 20,
-    bottom: 100,
-    left: 100,
-    right: 20
-  },
+  maxYear: 2016,
+  minYear: 2010,
   selectOptionsForState: [],
-  width: 900
+  step: 2
+  // data: [],
+  // height: 600,
+  // graphPadding: {
+  //   top: 20,
+  //   bottom: 100,
+  //   left: 100,
+  //   right: 20
+  // },
+  // selectOptionsForState: [],
+  // width: 900
 };
 
 const query = graphql`
@@ -152,17 +160,6 @@ const query = graphql`
         node {
           year
           state
-          num_jurisdictions
-          active_registration
-          election_participants
-          eligible_voters_estimated
-          jurisdictions_with_poll_worker_count
-          jurisdictions_with_age_info
-          registrants_in_jurisdictions_with_poll_worker_info
-          registrants_in_jurisdictions_with_poll_worker_age_info
-          participants_in_jurisdictions_with_poll_worker_info
-          participants_in_jurisdictions_with_poll_worker_age_info
-          poll_workers
           worker_age_group_1
           worker_age_group_2
           worker_age_group_3

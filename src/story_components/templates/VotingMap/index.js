@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { StaticQuery, graphql } from "gatsby";
 import { format } from "d3-format";
-import withCaption from "hocs/withCaption";
+import { withCaption } from "containers";
 import COLORS from "utils/styles";
 import {
   NarrowContainer,
@@ -15,8 +15,8 @@ class PureVotingMap extends Component {
     currentYear: this.props.maxYear
   };
 
-  handleSliderUpdate = (key, val) => {
-    this.setState({ [key]: val });
+  handleSliderUpdate = val => {
+    this.setState({ currentYear: val });
   };
 
   render() {
@@ -24,10 +24,10 @@ class PureVotingMap extends Component {
     const { minYear, maxYear, data, selectOptions, step } = this.props;
     const currentYearData = data.filter(d => d.year === currentYear);
     return (
-      <div>
+      <NarrowContainer width="60%" fullWidthAt="medium">
         <LabeledSlider
           color={COLORS.DARK_GRAY}
-          handleValueChange={this.handleSliderUpdate.bind(this, "currentYear")}
+          handleValueChange={this.handleSliderUpdate}
           max={maxYear}
           min={minYear}
           step={step}
@@ -45,7 +45,7 @@ class PureVotingMap extends Component {
               : "No data available."
           }
         />
-      </div>
+      </NarrowContainer>
     );
   }
 }

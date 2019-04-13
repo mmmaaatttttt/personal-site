@@ -23,7 +23,7 @@ class SelectableHeatMap extends Component {
 
   render() {
     const { value, label, accessor, colors } = this.state.selectedOption;
-    const { selectOptions, data } = this.props;
+    const { selectOptions, data, domain } = this.props;
     return (
       <div>
         <NarrowContainer width="50%">
@@ -41,6 +41,7 @@ class SelectableHeatMap extends Component {
           colors={colors}
           getTooltipTitle={this.getTooltipTitleWithCurrentOption}
           getTooltipBody={this.getTooltipBodyWithCurrentOption}
+          domain={domain && domain(accessor, data)}
         />
       </div>
     );

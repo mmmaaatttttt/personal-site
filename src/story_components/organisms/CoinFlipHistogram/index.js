@@ -2,7 +2,7 @@ import React, { PureComponent } from "react";
 import PropTypes from "prop-types";
 import { scaleLinear } from "d3-scale";
 import { max } from "d3-array";
-import withCaption from "hocs/withCaption";
+import { withCaption } from "containers";
 import { BarGraph, NarrowContainer, SliderGroup } from "story_components";
 import COLORS from "utils/styles";
 

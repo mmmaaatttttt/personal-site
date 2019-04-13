@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { extent, max } from "d3-array";
 import { scaleLinear } from "d3-scale";
 import visualizationData from "data/gaming-nonlinear-relationships.js";
-import withCaption from "hocs/withCaption";
+import { withCaption } from "containers";
 import { generateData } from "utils/mathHelpers";
 import {
   ColumnLayout,

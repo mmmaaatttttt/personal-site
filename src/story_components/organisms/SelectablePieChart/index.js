@@ -30,7 +30,11 @@ class SelectablePieChart extends Component {
 
 SelectablePieChart.propTypes = {
   data: PropTypes.arrayOf(PropTypes.object).isRequired,
-  selectOptions: PropTypes.arrayOf(PropTypes.object).isRequired,
+  selectOptions: PropTypes.arrayOf(PropTypes.shape({
+    value: PropTypes.isRequired,
+    label: PropTypes.string.isRequired,
+    chartValues: PropTypes.func.isRequired
+  })).isRequired,
   graphOptions: PropTypes.object.isRequired
 };
 

@@ -8,7 +8,7 @@ import {
   StyledSelect
 } from "story_components";
 import strategies, { data } from "data/orchard-game";
-import withCaption from "hocs/withCaption";
+import { withCaption } from "containers";
 import { camelCaseToTitle } from "utils/stringHelpers";
 import COLORS from "utils/styles";
 

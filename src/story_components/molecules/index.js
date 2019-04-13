@@ -18,8 +18,6 @@ export { default as ResponsiveIFrame } from './ResponsiveIFrame';
 export { default as ScreenOverlay } from './ScreenOverlay';
 export { default as Sidebar } from './Sidebar';
 export { default as SliderTicks } from './SliderTicks';
-export { default as StackedBarGraph } from './StackedBarGraph';
 export { default as ToggleSwitch } from './ToggleSwitch';
 export { default as Tooltip } from './Tooltip';
-export { default as USMap } from './USMap';
 

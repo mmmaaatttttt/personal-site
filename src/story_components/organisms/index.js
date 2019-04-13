@@ -14,4 +14,5 @@ export { default as SelectablePieChart } from './SelectablePieChart';
 export { default as SelectableScatterplot } from './SelectableScatterplot';
 export { default as SliderGroup } from './SliderGroup';
 export { default as Spinner } from './Spinner';
+export { default as USMap } from './USMap';
 

@@ -6,7 +6,7 @@ import {
   HorizontalBar,
   NarrowContainer
 } from "story_components";
-import withCaption from "hocs/withCaption";
+import { withCaption } from "containers";
 import COLORS from "utils/styles";
 import { camelCaseToTitle } from "utils/stringHelpers";
 import strategies from "data/orchard-game";

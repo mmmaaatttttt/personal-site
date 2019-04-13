@@ -10,10 +10,9 @@ import {
   LabeledSlider,
   NarrowContainer,
   Polygon,
-  RadioButtonGroup,
-  Tooltip
+  RadioButtonGroup
 } from "story_components";
-import { withCaption } from "containers";
+import { withCaption, TooltipProvider } from "containers";
 import COLORS from "utils/styles";
 import { total } from "utils/mathHelpers";
 import { generateFreqMap } from "utils/arrayHelpers";
@@ -30,10 +29,6 @@ class RentDivision extends Component {
       started: false,
       finalCorners: null,
       meshLevels: initialMeshLevels,
-      tooltipVisible: false,
-      tooltipX: 0,
-      tooltipY: 0,
-      tooltipBody: "",
       points: generateAllPoints(initialMeshLevels, corners, initialR, names)
     };
   }
@@ -51,24 +46,6 @@ class RentDivision extends Component {
     return point.prices.map(
       (price, idx) => `${roomColors[idx]}: $${price.toFixed(2)}`
     );
-  };
-
-  /** Shows the tooltip in desired current position, with relevant data.
-   * @param {Object} point - Current point that activated the tooltip
-   * @param {Object} e - event object
-   */
-  handleTooltipShow = (point, e) => {
-    this.setState({
-      tooltipVisible: true,
-      tooltipX: e.pageX,
-      tooltipY: e.pageY,
-      tooltipBody: this.getTooltipBody(point)
-    });
-  };
-
-  /** Hides the tooltip. */
-  handleTooltipHide = () => {
-    this.setState({ tooltipVisible: false });
   };
 
   /** Gets the fill name of a roommate.
@@ -249,7 +226,7 @@ class RentDivision extends Component {
   /**
    * Converts the nested array of point data into an array of LabeledCircle components.
    */
-  generateLabeledCircles = () => {
+  generateLabeledCircles = (tooltipShow, tooltipHide) => {
     const { points, activePtLoc, finalCorners, started } = this.state;
     const [activeY, activeX] = activePtLoc;
     const startedButNotFinished = started && finalCorners === null;
@@ -257,8 +234,8 @@ class RentDivision extends Component {
       let componentRow = pointRow.map((p, x) => (
         <LabeledCircle
           {...p}
-          handleLeave={this.handleTooltipHide}
-          handleUpdate={this.handleTooltipShow.bind(this, p)}
+          handleLeave={tooltipHide}
+          handleUpdate={tooltipShow("Room Prices", this.getTooltipBody(p))}
           key={`${p.x}|${p.y}`}
           label={p.label}
           isActive={x === activeX && y === activeY && startedButNotFinished}
@@ -402,17 +379,26 @@ class RentDivision extends Component {
       const totalPledged = total(pointData, p => p.price);
       const rentRemaining = rent - totalPledged;
       return (
-        <FlexContainer column main="center" cross="flex-start" textAlign="center">
+        <FlexContainer
+          column
+          main="center"
+          cross="flex-start"
+          textAlign="center"
+        >
           <h3>You're within ${rentRemaining.toFixed(0)} of a fair division!</h3>
           <FlexContainer main="space-around" width="100%" shouldWrap>
             {pointData.map(d => (
-                <ColoredSpan key={d.color} color={COLORS[d.color.toUpperCase()]}>
-                  {d.name} is paying ${d.price.toFixed(2)}
-                </ColoredSpan>
+              <ColoredSpan key={d.color} color={COLORS[d.color.toUpperCase()]}>
+                {d.name} is paying ${d.price.toFixed(2)}
+              </ColoredSpan>
             ))}
           </FlexContainer>
-          <p>They can each chip in an additional ${(rentRemaining / 3).toFixed(2)} to make up the remaining cost. <br/>
-          If that doesn't seem fair, you can refine the mesh and try again.</p>
+          <p>
+            They can each chip in an additional $
+            {(rentRemaining / 3).toFixed(2)} to make up the remaining cost.{" "}
+            <br />
+            If that doesn't seem fair, you can refine the mesh and try again.
+          </p>
           <Button onClick={this.handleReset}>Try again</Button>
         </FlexContainer>
       );
@@ -451,21 +437,22 @@ class RentDivision extends Component {
 
   render() {
     const { width, height } = this.props;
-    const { tooltipVisible, tooltipX, tooltipY, tooltipBody } = this.state;
     return (
       <div>
         {this.getTopArea()}
         <NarrowContainer width="55%" fullWidthAt="small">
-          <ClippedSVG width={width} height={height} marginTop="-1.8rem" id="rent">
-            {this.generateTriangles()}
-            {this.generateLabeledCircles()}
-          </ClippedSVG>
-          <Tooltip
-            visible={tooltipVisible}
-            x={tooltipX}
-            y={tooltipY}
-            body={tooltipBody}
-            title="Room Prices"
+          <TooltipProvider
+            render={(tooltipShow, tooltipHide) => (
+              <ClippedSVG
+                width={width}
+                height={height}
+                marginTop="-1.8rem"
+                id="rent"
+              >
+                {this.generateTriangles()}
+                {this.generateLabeledCircles(tooltipShow, tooltipHide)}
+              </ClippedSVG>
+            )}
           />
         </NarrowContainer>
       </div>

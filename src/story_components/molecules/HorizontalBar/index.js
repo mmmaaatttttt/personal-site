@@ -4,7 +4,7 @@ import styled from "styled-components";
 import NodeGroup from "react-move/NodeGroup";
 import { rhythm } from "utils/typography";
 import COLORS from "utils/styles";
-import { Tooltip } from "story_components";
+import { TooltipProvider } from "containers";
 
 const BarContainer = styled.div`
   width: 100%;
@@ -22,74 +22,56 @@ const BarTitle = styled.h4`
 `;
 
 class HorizontalBar extends Component {
-  state = {
-    tooltipVisible: false,
-    tooltipX: 0,
-    tooltipY: 0
-  };
-
-  handleTooltipShow = e => {
-    this.setState({
-      tooltipVisible: true,
-      tooltipX: e.pageX,
-      tooltipY: e.pageY
-    });
-  };
-
-  handleTooltipHide = e => {
-    this.setState({
-      tooltipVisible: false
-    });
-  };
-
   getWidth = d => {
     const { data } = this.props;
     const total =
       data.map(d => d.size).reduce((total, num) => total + num, 0) || 1;
-    const width = d.size / total * 100;
+    const width = (d.size / total) * 100;
     return { width: [width], timing: { duration: 300 } };
+  };
+
+  renderBarContainer = (tooltipShow, tooltipHide) => segments => {
+    const { data } = this.props;
+    const body = data.map(d => d.tooltipText);
+    return (
+      <BarContainer
+        onMouseMove={tooltipShow("", body)}
+        onMouseLeave={tooltipHide}
+        onTouchMove={tooltipShow("", body)}
+        onTouchEnd={tooltipHide}
+      >
+        {segments.map(({ key, data, state }) => {
+          const { width } = state;
+          const { color: backgroundColor } = data;
+          return (
+            <div style={{ width: `${width}%`, backgroundColor }} key={key} />
+          );
+        })}
+      </BarContainer>
+    );
   };
 
   render() {
     const { data, title } = this.props;
-    const { tooltipVisible, tooltipX, tooltipY } = this.state;
     const titleHTML = title ? <BarTitle>{title}</BarTitle> : null;
     return (
       <div>
         {titleHTML}
-        <NodeGroup
-          data={data}
-          keyAccessor={(d, i) => i}
-          start={() => ({ width: 0 })}
-          enter={this.getWidth}
-          update={this.getWidth}
-        >
-          {segments => (
-            <BarContainer
-              onMouseMove={this.handleTooltipShow}
-              onMouseLeave={this.handleTooltipHide}
-              onTouchMove={this.handleTooltipShow}
-              onTouchEnd={this.handleTooltipHide}
-            >
-              {segments.map(({ key, data, state }) => {
-                const { width } = state;
-                const { color: backgroundColor } = data;
-                return (
-                  <div
-                    style={{ width: `${width}%`, backgroundColor }}
-                    key={key}
-                  />
-                );
-              })}
-              <Tooltip
-                body={data.map(d => d.tooltipText)}
-                visible={tooltipVisible}
-                x={tooltipX}
-                y={tooltipY}
-              />
-            </BarContainer>
-          )}
-        </NodeGroup>
+        <TooltipProvider
+          render={(tooltipShow, tooltipHide) => {
+            return (
+              <NodeGroup
+                data={data}
+                keyAccessor={(_, i) => i}
+                start={() => ({ width: 0 })}
+                enter={this.getWidth}
+                update={this.getWidth}
+              >
+                {this.renderBarContainer(tooltipShow, tooltipHide)}
+              </NodeGroup>
+            );
+          }}
+        />
       </div>
     );
   }
