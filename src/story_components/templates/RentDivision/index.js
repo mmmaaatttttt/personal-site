@@ -13,15 +13,17 @@ import {
   RadioButtonGroup,
   Tooltip
 } from "story_components";
-import withCaption from "hocs/withCaption";
+import { withCaption } from "containers";
 import COLORS from "utils/styles";
-import { interpolate, total } from "utils/mathHelpers";
+import { total } from "utils/mathHelpers";
 import { generateFreqMap } from "utils/arrayHelpers";
+import { generateAllPoints } from "./helpers";
 
 class RentDivision extends Component {
   constructor(props) {
     super(props);
     const initialMeshLevels = 4;
+    const { corners, initialR, names } = props;
     this.state = {
       activePtLoc: [0, 0],
       currentColorIdx: null,
@@ -32,142 +34,9 @@ class RentDivision extends Component {
       tooltipX: 0,
       tooltipY: 0,
       tooltipBody: "",
-      points: this.generateAllPoints(initialMeshLevels)
+      points: generateAllPoints(initialMeshLevels, corners, initialR, names)
     };
   }
-
-  /**
-   * Generates data on every row of points
-   * in the triangulation. For example, given the following diagram:
-   *
-   *         1
-   *       /   \
-   *      2 --- 3
-   *    /   \ /   \
-   *   4 --- 5 --- 6
-   *
-   * it should generate an array of the form
-   * [
-   *   [ { 1 data } ],
-   *   [ { 2 data }, { 3 data } ],
-   *   [ { 4 data }, { 5 data }, { 6 data } ]
-   * ]
-   *
-   * Note that this function doesn't add labels. This is done after the data
-   * has been generated.
-   *
-   * @param {Number} meshLevels - size of the mesh
-   */
-  generateAllPoints = meshLevels => {
-    const { corners, initialR } = this.props;
-    const rowCount = 2 ** (meshLevels - 1) + 1;
-    let pointsWithoutLabels = Array.from({ length: rowCount }, (_, rowIdx) => {
-      if (rowIdx === 0) {
-        return [
-          { ...corners[0], color: COLORS.BLACK, r: initialR / meshLevels }
-        ];
-      }
-      let fraction = rowIdx / (rowCount - 1);
-      let [top, left, right] = corners;
-      let firstPoint = this.generatePoint(left, top, fraction, meshLevels);
-      let lastPoint = this.generatePoint(right, top, fraction, meshLevels);
-      if (rowIdx === 1) {
-        return [firstPoint, lastPoint];
-      }
-      let points = [firstPoint];
-      for (var i = 1; i < rowIdx; i++) {
-        let rowFraction = i / rowIdx;
-        let newPoint = this.generatePoint(
-          lastPoint,
-          firstPoint,
-          rowFraction,
-          meshLevels
-        );
-        points.push(newPoint);
-      }
-      points.push(lastPoint);
-      return points;
-    });
-    return this.generateLabels(pointsWithoutLabels);
-  };
-
-  /**
-   * Given an array of arrays of points objects without labels,
-   * this adds labels. Labels are specified uniquely subject to the initial condition
-   * that the top corner is "A", and the two points in the next row are "B" and "C".
-   *
-   * @param {Array} points - points object data without labels
-   */
-  generateLabels = points => {
-    const { names } = this.props;
-    points[0][0].label = names[0][0];
-    points[1][0].label = names[1][0];
-    points[1][1].label = names[2][0];
-    for (let rowIdx = 2; rowIdx < points.length; rowIdx++) {
-      for (let cellIdx = 1; cellIdx < rowIdx; cellIdx++) {
-        // generate labels for interior points in the row
-        let leftParent = points[rowIdx - 1][cellIdx - 1];
-        let rightParent = points[rowIdx - 1][cellIdx];
-        points[rowIdx][cellIdx].label = this.deduceLabel(
-          leftParent,
-          rightParent
-        );
-      }
-      // generate labels for first and last points in the row
-      points[rowIdx][0].label = this.deduceLabel(
-        points[rowIdx - 1][0],
-        points[rowIdx][1]
-      );
-      points[rowIdx][rowIdx].label = this.deduceLabel(
-        points[rowIdx - 1][rowIdx - 1],
-        points[rowIdx][rowIdx - 1]
-      );
-    }
-    return points;
-  };
-
-  /**
-   * Given two point objects pt1 and pt2, and an interpolation value frac1 between
-   * 0 and 1, this creates a new initial point.
-   *
-   * Used in the constructor.
-   *
-   * @param {Object} pt1 - First point
-   * @param {Object} pt2 - Second point
-   * @param {Number} frac - Number between 0 and 1
-   * @param {Number} meshLevels - meshLevels value
-   */
-  generatePoint = (pt1, pt2, frac, meshLevels) => {
-    const { initialR } = this.props;
-    return {
-      x: interpolate(pt1.x, pt2.x, frac),
-      y: interpolate(pt1.y, pt2.y, frac),
-      color: COLORS.BLACK,
-      prices: pt1.prices.map((price, i) =>
-        interpolate(price, pt2.prices[i], frac)
-      ),
-      r: initialR / meshLevels
-    };
-  };
-
-  /**
-   * Determines the label of a point given two labeled neighbors
-   * In our example, this uniquely determines the label of a point, since every trinagle should
-   * have distinct labels.
-   * For example, if neighbor1.label is "A" and neighbor2.label is "B",
-   * the only label remaining is "C".
-   *
-   * @param {Object} neighbor1 - the first neighbor object
-   * @param {Object} neighbor2 - the second neighbor object
-   */
-  deduceLabel = (neighbor1, neighbor2) => {
-    const label1 = neighbor1.label;
-    const label2 = neighbor2.label;
-    const { names } = this.props;
-    return names
-      .map(name => name[0])
-      .find(ltr => ltr !== label1 && ltr !== label2);
-  };
 
   /** Get coordinates of the three corners of the main triangle. */
   get corners() {
@@ -223,9 +92,10 @@ class RentDivision extends Component {
    * @param {Number} newSize - new mesh size
    */
   handleMeshSizeChange = newSize => {
+    const { corners, initialR, names } = this.props;
     this.setState({
       meshLevels: newSize,
-      points: this.generateAllPoints(newSize)
+      points: generateAllPoints(newSize, corners, initialR, names)
     });
   };
 
@@ -233,12 +103,13 @@ class RentDivision extends Component {
    * Resets the demo after finding a successful triangle.
    */
   handleReset = () => {
+    const { corners, initialR, names } = this.props;
     this.setState(prevState => ({
       activePtLoc: [0, 0],
       currentColorIdx: null,
       started: false,
       finalCorners: null,
-      points: this.generateAllPoints(prevState.meshLevels)
+      points: generateAllPoints(prevState.meshLevels, corners, initialR, names)
     }));
   };
 
