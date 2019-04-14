@@ -7,6 +7,7 @@ featured_image_caption: "Humans looking to the cosmos for answers, before they a
 ---
 
 import { WarmingDots } from "story_components";
+import visualizationData from "data/warming-dots.js";
 
 Sometimes, when the problems of the world seem overwhelming, it's worth remembering how small we really are. Physicist [Carl Sagan](https://en.wikipedia.org/wiki/Carl_Sagan) summed it up nicely when commenting on a 1990 image of the Earth taken by the Voyager 1 space probe, titled _Pale Blue Dot_:
 
@@ -51,7 +52,7 @@ Closely tied to the idea of a doubling time is a constant called the **growth ra
 Here's an example of an exponential growth curve for a hypothetical population. You can adjust the growth rate and see how that affects the shape of the curve: more specifically, how quickly it shoots up.
 
 <WarmingDots
-  idx={0}
+  visData={visualizationData[0]}
   caption="Figure 1: An exponential model of population growth."
 />
 
@@ -72,7 +73,7 @@ As a practical matter, determining the carrying capacity of any environment is a
 The logistic model of population incorporates two parameters: a growth rate for the population, and an environmental carrying capacity that effectively caps the population. Here's what the model looks like: note that the presence of the carrying capacity gives the logistic function its signature S-shape.
 
 <WarmingDots
-  idx={1}
+  visData={visualizationData[1]}
   caption="Figure 2: A logistic model of population growth."
 />
 
@@ -130,7 +131,7 @@ In order to graph this model, we need several parameters. Some are the same as i
 Whew. That's a lot. But with all of this setup, we're finally ready to explore our third model. Here it is.
 
 <WarmingDots
-  idx={2}
+  visData={visualizationData[2]}
   caption="Figure 3: Modeling Population along with the environment."
 />
 
@@ -155,7 +156,7 @@ In order to do so, we need to introduce two more parameters. The first one measu
 What sorts of new trajectories can you create with these additional parameters?
 
 <WarmingDots
-  idx={3}
+  visData={visualizationData[3]}
   caption="Figure 4: Modeling environment and population with two resources."
 />
 
@@ -174,7 +175,7 @@ For their final variation on the model, the authors included an environmental fr
 Now, with all nine parameters at your disposal, what sorts of population graphs can you come up with?
 
 <WarmingDots
-  idx={4}
+  visData={visualizationData[4]}
   caption="Figure 5: Including an environmental fragility parameter into the model."
 />
 

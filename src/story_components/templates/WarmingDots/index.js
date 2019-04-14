@@ -2,77 +2,23 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { extent, max } from "d3-array";
 import { scaleLinear } from "d3-scale";
-import visualizationData from "data/warming-dots.js";
-import { withCaption } from "containers";
+import { flatten } from "lodash";
+import { withCaption, SliderProvider } from "containers";
 import { generateData } from "utils/mathHelpers";
-import {
-  ColumnLayout,
-  FlexContainer,
-  Graph,
-  LinePlot,
-  NarrowContainer,
-  SliderGroup
-} from "story_components";
+import visualizationData from "data/warming-dots.js";
+import { FlexContainer, Graph, LinePlot } from "story_components";
 
 class WarmingDots extends Component {
-  state = {
-    values: visualizationData[this.props.idx].initialData.map(
-      d => d.initialValue
-    )
-  };
-
-  handleValueChange = (idx, newVal) => {
-    const newValues = [...this.state.values];
-    newValues[idx] = newVal;
-    this.setState({ values: newValues });
-  };
-
   getYDomain = graphData => {
-    const { largestY, smallestY } = visualizationData[this.props.idx];
+    const { largestY, smallestY } = this.props.visData;
     let yMax = max([].concat(...graphData), d => Math.abs(d.y));
     yMax = Math.min(Math.max(Math.ceil(yMax), smallestY), largestY);
     return [0, yMax];
   };
 
-  tickStep = scale => {
-    const [tickMin, tickMax] = scale.domain();
-    const step = tickMax > 500 ? (tickMax - tickMin) / 1e3 : 1;
-    return step;
-  };
-
-  transformData = (data, diffEq) => {
-    const { min, max, step, idx } = this.props;
-    const { colors, integrationConstants } = visualizationData[idx];
-    const diffEqValues = data
-      .filter(d => d.equationParameter)
-      .map(d => d.value);
-    const graphCount = colors.length;
-    return generateData(
-      graphCount,
-      min,
-      max,
-      step,
-      integrationConstants,
-      diffEqValues,
-      diffEq
-    );
-  };
-
-  render() {
-    const { svgPadding, graphPadding, idx } = this.props;
-    const {
-      initialData,
-      width,
-      height,
-      diffEqs,
-      svgIds,
-      xLabel,
-      yLabel,
-      colors
-    } = visualizationData[idx];
-    const { values } = this.state;
-    const sliderCount = initialData.length;
-
+  renderLinePlotsAndScales = values => {
+    const { graphPadding, visData } = this.props;
+    const { initialData, diffEqs, colors, width, height } = visData;
     // data is all data from original source file
     // plus most recent values from inside of state
     const data = initialData.map((d, i) => {
@@ -96,64 +42,104 @@ class WarmingDots extends Component {
         yScale={yScale}
       />
     ));
+    return { xScale, yScale, linePlots };
+  };
 
-    const sliderGroups = colors.map(color => {
-      const sliderData = data.filter(d => d.color === color).map(d => ({
-        ...d,
-        tickCount: 2,
-        fadeIcons: false,
-        handleValueChange: val => this.handleValueChange(d.key, val)
-      }));
-      return <SliderGroup key={color} data={sliderData} />;
-    });
+  tickStep = scale => {
+    const [tickMin, tickMax] = scale.domain();
+    const step = tickMax > 500 ? (tickMax - tickMin) / 1e3 : 1;
+    return step;
+  };
 
-    const children = [
-      <FlexContainer column key="sliders">
-        {sliderGroups}
-      </FlexContainer>,
-      <FlexContainer cross="center" key="graph">
-        <Graph
-          width={width}
-          height={height}
-          svgPadding={svgPadding}
-          graphPadding={graphPadding}
-          svgId={svgIds[0]}
-          xLabel={xLabel}
-          xLabelPosition={"bottom-center"}
-          yLabel={yLabel}
-          xScale={xScale}
-          yScale={yScale}
-          tickStep={this.tickStep}
-          key="Graph"
-        >
-          {linePlots}
-        </Graph>
-      </FlexContainer>
-    ];
+  transformData = (data, diffEq) => {
+    const { min, max, step, visData } = this.props;
+    const { colors, integrationConstants } = visData;
+    const diffEqValues = data
+      .filter(d => d.equationParameter)
+      .map(d => d.value);
+    const graphCount = colors.length;
+    return generateData(
+      graphCount,
+      min,
+      max,
+      step,
+      integrationConstants,
+      diffEqValues,
+      diffEq
+    );
+  };
 
-    return sliderCount < 3 ? (
-      <NarrowContainer width="70%" fullWidthAt="small">
-        {children}
-      </NarrowContainer>
-    ) : (
-      <ColumnLayout break="small">{children}</ColumnLayout>
+  render() {
+    const { svgPadding, graphPadding, visData } = this.props;
+    const {
+      initialData,
+      width,
+      height,
+      svgIds,
+      xLabel,
+      yLabel,
+      colors
+    } = visData;
+    const sliderData = flatten(
+      colors.map(color => initialData.filter(d => d.color === color))
+    );
+    return (
+      <SliderProvider
+        initialData={sliderData}
+        render={sliderVals => {
+          const { xScale, yScale, linePlots } = this.renderLinePlotsAndScales(
+            sliderVals
+          );
+          return (
+            <FlexContainer cross="center" key="graph">
+              <Graph
+                width={width}
+                height={height}
+                svgPadding={svgPadding}
+                graphPadding={graphPadding}
+                svgId={svgIds[0]}
+                xLabel={xLabel}
+                xLabelPosition={"bottom-center"}
+                yLabel={yLabel}
+                xScale={xScale}
+                yScale={yScale}
+                tickStep={this.tickStep}
+                key="Graph"
+              >
+                {linePlots}
+              </Graph>
+            </FlexContainer>
+          );
+        }}
+      />
     );
   }
 }
 
 WarmingDots.propTypes = {
   graphPadding: PropTypes.number.isRequired,
-  idx: PropTypes.number.isRequired,
   max: PropTypes.number.isRequired,
   min: PropTypes.number.isRequired,
   step: PropTypes.number.isRequired,
   svgPadding: PropTypes.oneOfType([PropTypes.number, PropTypes.object])
-    .isRequired
+    .isRequired,
+  visData: PropTypes.shape({
+    initialData: PropTypes.array.isRequired,
+    width: PropTypes.number.isRequired,
+    height: PropTypes.number.isRequired,
+    smallestY: PropTypes.number.isRequired,
+    largestY: PropTypes.number.isRequired,
+    diffEqs: PropTypes.arrayOf(PropTypes.func).isRequired,
+    svgIds: PropTypes.arrayOf(PropTypes.string).isRequired,
+    xLabel: PropTypes.string.isRequired,
+    yLabel: PropTypes.string.isRequired,
+    colors: PropTypes.arrayOf(PropTypes.string).isRequired,
+    integrationConstants: PropTypes.arrayOf(PropTypes.number).isRequired
+  })
 };
 
 WarmingDots.defaultProps = {
   graphPadding: 30,
-  idx: 0,
   max: 10,
   min: 0,
   step: 0.005,
@@ -162,7 +148,8 @@ WarmingDots.defaultProps = {
     left: 0,
     bottom: 0,
     right: 30
-  }
+  },
+  visData: visualizationData[0]
 };
 
 export default withCaption(WarmingDots);
