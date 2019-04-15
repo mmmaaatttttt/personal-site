@@ -1,31 +1,18 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import styled from "styled-components";
-import {
-  HeatChart,
-  SliderGroup,
-  NarrowContainer,
-  StyledSelect
-} from "story_components";
+import { HeatChart, StyledSelect } from "story_components";
 import strategies, { data } from "data/orchard-game";
-import { withCaption } from "containers";
+import { withCaption, SliderProvider } from "containers";
+import { sliderDataType } from "utils/types";
 import { camelCaseToTitle } from "utils/stringHelpers";
 import COLORS from "utils/styles";
 
-const StyledSelectWrapper = styled.div`
-  margin: 0.25rem 0 -1rem 0;
-`;
-
 class OrchardGameHeatData extends Component {
   state = {
-    colorCount: this.props.initialColorCount,
-    selectedOption: this.props.selectOptions[0],
-    wildCardCount: this.props.initialWildCardCount
+    selectedOption: this.props.selectOptions[0]
   };
 
   handleSelectChange = selectedOption => this.setState({ selectedOption });
-
-  handleSliderChange = (key, val) => this.setState({ [key]: val });
 
   getTooltipBody = d => {
     const { label, accessor, value } = this.state.selectedOption;
@@ -40,42 +27,10 @@ class OrchardGameHeatData extends Component {
   };
 
   render() {
-    const { colorCount, wildCardCount } = this.state;
-    const { selectOptions, sliderMax } = this.props;
+    const { selectOptions, sliderMax, sliderData } = this.props;
     const { value, label, accessor } = this.state.selectedOption;
-    const heatData = data
-      .filter(d => d.colors === colorCount && d.wildCardCount === wildCardCount)
-      .reduce((matrix, obj) => {
-        let x = obj.ravenCount - 1;
-        let y = obj.fruits - 1;
-        if (!matrix[x]) matrix[x] = [];
-        matrix[x][y] = obj;
-        return matrix;
-      }, []);
-    const sliderData = [
-      {
-        min: 1,
-        max: sliderMax,
-        step: 1,
-        value: colorCount,
-        title: `Number of Fruit Colors: ${colorCount}`,
-        handleValueChange: this.handleSliderChange.bind(this, "colorCount"),
-        color: COLORS.DARK_GRAY,
-        tickCount: sliderMax
-      },
-      {
-        min: 1,
-        max: sliderMax,
-        step: 1,
-        value: wildCardCount,
-        title: `Number of Fruits You Can Remove on the Wild Card: ${wildCardCount}`,
-        handleValueChange: this.handleSliderChange.bind(this, "wildCardCount"),
-        color: COLORS.DARK_GRAY,
-        tickCount: sliderMax
-      }
-    ];
-    let colorDomain = [0, 0.2, 0.4, 0.6, 0.8, 1];
-    let colorRange = [
+    const colorDomain = [0, 0.2, 0.4, 0.6, 0.8, 1];
+    const colorRange = [
       COLORS.BLACK,
       COLORS.RED,
       COLORS.ORANGE,
@@ -88,33 +43,49 @@ class OrchardGameHeatData extends Component {
       colorRange = [COLORS.BLUE, COLORS.DARK_BLUE];
     }
     return (
-      <NarrowContainer width="50%" fullWidthAt="small">
-        <SliderGroup data={sliderData} />
-        <StyledSelectWrapper>
-          <StyledSelect
-            name="orchard-heat-options"
-            value={value}
-            onChange={this.handleSelectChange}
-            options={selectOptions}
-            isSearchable={false}
-            placeholder={label}
-          />
-        </StyledSelectWrapper>
-        <HeatChart
-          data={heatData}
-          accessor={accessor}
-          getTooltipBody={this.getTooltipBody}
-          colorDomain={colorDomain}
-          colorRange={colorRange}
-        />
-      </NarrowContainer>
+      <SliderProvider
+        initialData={sliderData}
+        width="50%"
+        render={sliderVals => {
+          const [colorCount, wildCardCount] = sliderVals;
+          const heatData = data
+            .filter(
+              d => d.colors === colorCount && d.wildCardCount === wildCardCount
+            )
+            .reduce((matrix, obj) => {
+              let x = obj.ravenCount - 1;
+              let y = obj.fruits - 1;
+              if (!matrix[x]) matrix[x] = [];
+              matrix[x][y] = obj;
+              return matrix;
+            }, []);
+          return (
+            <React.Fragment>
+              <StyledSelect
+                name="orchard-heat-options"
+                value={value}
+                onChange={this.handleSelectChange}
+                options={selectOptions}
+                isSearchable={false}
+                placeholder={label}
+                margin="0.25rem 0 -1rem 0;"
+              />
+              <HeatChart
+                data={heatData}
+                accessor={accessor}
+                getTooltipBody={this.getTooltipBody}
+                colorDomain={colorDomain}
+                colorRange={colorRange}
+              />
+            </React.Fragment>
+          );
+        }}
+      />
     );
   }
 }
 
 OrchardGameHeatData.propTypes = {
-  initialWildCardCount: PropTypes.number.isRequired,
-  initialColorCount: PropTypes.number.isRequired,
   selectOptions: PropTypes.arrayOf(
     PropTypes.shape({
       value: PropTypes.string.isRequired,
@@ -122,12 +93,13 @@ OrchardGameHeatData.propTypes = {
       accessor: PropTypes.func.isRequired
     })
   ).isRequired,
+  sliderData: sliderDataType,
   sliderMax: PropTypes.number.isRequired
 };
 
+const SLIDER_MAX = new Set(data.map(d => d.colors)).size;
+
 OrchardGameHeatData.defaultProps = {
-  initialWildCardCount: 1,
-  initialColorCount: 4,
   selectOptions: strategies
     .map(strategy => ({
       value: strategy.name,
@@ -142,7 +114,27 @@ OrchardGameHeatData.defaultProps = {
         return Math.max(...probs) - Math.min(...probs);
       }
     }),
-  sliderMax: new Set(data.map(d => d.colors)).size
+  sliderMax: SLIDER_MAX,
+  sliderData: [
+    {
+      min: 1,
+      max: SLIDER_MAX,
+      step: 1,
+      initialValue: 4,
+      title: val => `Number of Fruit Colors: ${val}`,
+      color: COLORS.DARK_GRAY,
+      tickCount: SLIDER_MAX
+    },
+    {
+      min: 1,
+      max: SLIDER_MAX,
+      step: 1,
+      initialValue: 1,
+      title: val => `Number of Fruits You Can Remove on the Wild Card: ${val}`,
+      color: COLORS.DARK_GRAY,
+      tickCount: SLIDER_MAX
+    }
+  ]
 };
 
 export default withCaption(OrchardGameHeatData);
