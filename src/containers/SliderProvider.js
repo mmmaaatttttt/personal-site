@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { ColumnLayout, NarrowContainer, SliderGroup } from "story_components";
+import { sliderDataType } from "utils/types";
 
 class SliderProvider extends Component {
   constructor(props) {
@@ -48,20 +49,7 @@ class SliderProvider extends Component {
 
 SliderProvider.propTypes = {
   column: PropTypes.bool.isRequired,
-  initialData: PropTypes.arrayOf(
-    PropTypes.shape({
-      min: PropTypes.number.isRequired,
-      max: PropTypes.number.isRequired,
-      initialValue: PropTypes.number.isRequired,
-      title: PropTypes.oneOf(PropTypes.string, PropTypes.func).isRequired,
-      color: PropTypes.string,
-      key: PropTypes.any,
-      tickCount: PropTypes.number,
-      minIcon: PropTypes.string,
-      maxIcon: PropTypes.string,
-      fadeIcons: PropTypes.bool
-    }).isRequired
-  ),
+  initialData: sliderDataType,
   render: PropTypes.func.isRequired,
   width: PropTypes.string.isRequired
 };

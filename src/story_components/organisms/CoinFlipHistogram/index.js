@@ -5,6 +5,7 @@ import { max } from "d3-array";
 import { withCaption, SliderProvider } from "containers";
 import { BarGraph } from "story_components";
 import COLORS from "utils/styles";
+import { sliderDataType } from "utils/types";
 
 class CoinFlipHistogram extends PureComponent {
   binomialDensityValues(n, p) {
@@ -60,7 +61,7 @@ class CoinFlipHistogram extends PureComponent {
 CoinFlipHistogram.propTypes = {
   height: PropTypes.number.isRequired,
   padding: PropTypes.object.isRequired,
-  sliderData: PropTypes.array.isRequired,
+  sliderData: sliderDataType,
   width: PropTypes.number.isRequired
 };
 
