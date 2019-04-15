@@ -8,23 +8,28 @@ const LabeledSliderWrapper = styled.div`
 `;
 
 const SliderGroup = ({ data, column }) => {
-  const sliders = data.map((d, i) => (
-    <LabeledSliderWrapper key={d.hasOwnProperty("key") ? d.key : i}>
-      <LabeledSlider
-        min={d.min}
-        max={d.max}
-        step={d.step}
-        value={d.value}
-        handleValueChange={d.handleValueChange}
-        title={d.title}
-        color={d.color}
-        tickCount={d.tickCount}
-        minIcon={d.minIcon}
-        maxIcon={d.maxIcon}
-        fadeIcons={d.fadeIcons}
-      />
-    </LabeledSliderWrapper>
-  ));
+  const sliders = data.map((d, i) => {
+    // title may be hard coded, or be a function accepting the current slider value.
+    // The latter is helpful when you want the title to display the current value.
+    const title = typeof d.title === "string" ? d.title : d.title(d.value);
+    return (
+      <LabeledSliderWrapper key={d.hasOwnProperty("key") ? d.key : i}>
+        <LabeledSlider
+          min={d.min}
+          max={d.max}
+          step={d.step}
+          value={d.value}
+          handleValueChange={d.handleValueChange}
+          title={title}
+          color={d.color}
+          tickCount={d.tickCount}
+          minIcon={d.minIcon}
+          maxIcon={d.maxIcon}
+          fadeIcons={d.fadeIcons}
+        />
+      </LabeledSliderWrapper>
+    );
+  });
   return (
     <FlexContainer column={column} cross="center" flex={data.length}>
       {sliders}
@@ -38,7 +43,7 @@ SliderGroup.propTypes = {
       min: PropTypes.number.isRequired,
       max: PropTypes.number.isRequired,
       value: PropTypes.number.isRequired,
-      title: PropTypes.string.isRequired,
+      title: PropTypes.oneOfType([PropTypes.string, PropTypes.func]).isRequired,
       color: PropTypes.string,
       key: PropTypes.any,
       handleValueChange: PropTypes.func.isRequired,

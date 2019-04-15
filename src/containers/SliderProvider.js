@@ -53,7 +53,7 @@ SliderProvider.propTypes = {
       min: PropTypes.number.isRequired,
       max: PropTypes.number.isRequired,
       initialValue: PropTypes.number.isRequired,
-      title: PropTypes.string.isRequired,
+      title: PropTypes.oneOf(PropTypes.string, PropTypes.func).isRequired,
       color: PropTypes.string,
       key: PropTypes.any,
       tickCount: PropTypes.number,
