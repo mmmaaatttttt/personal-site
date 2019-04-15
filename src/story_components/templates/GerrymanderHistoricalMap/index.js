@@ -219,17 +219,8 @@ PureHistoricalMap.propTypes = {
   sliderData: sliderDataType
 };
 
-// const MIN_YEAR = 1996;
-// const MAX_YEAR = 2016;
-// const MIN_ELECTORS = 2;
-// const MAX_ELECTORS = 10;
-
 PureHistoricalMap.defaultProps = {
   data: [],
-  // maxElectors: MAX_ELECTORS,
-  // maxYear: MAX_YEAR,
-  // minElectors: MIN_ELECTORS,
-  // minYear: MIN_YEAR,
   sliderData: [
     {
       title: val => `Year: ${val}`,
