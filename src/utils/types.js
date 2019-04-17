@@ -17,4 +17,17 @@ const sliderDataType = PropTypes.arrayOf(
   })
 );
 
-export { sliderDataType };
+const selectType = PropTypes.arrayOf(
+  PropTypes.arrayOf(
+    PropTypes.shape({
+      value: PropTypes.isRequired,
+      label: PropTypes.string.isRequired,
+      accessor: PropTypes.func,
+      format: PropTypes.string,
+      colors: PropTypes.arrayOf(PropTypes.string),
+      otherOptions: PropTypes.object
+    })
+  )
+).isRequired;
+
+export { sliderDataType, selectType };
