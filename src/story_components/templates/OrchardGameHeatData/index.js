@@ -1,21 +1,15 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import { HeatChart, StyledSelect } from "story_components";
+import { HeatChart } from "story_components";
 import strategies, { data } from "data/orchard-game";
-import { withCaption, SliderProvider } from "containers";
-import { sliderDataType } from "utils/types";
+import { withCaption, SliderProvider, SelectProvider } from "containers";
+import { sliderDataType, selectType } from "utils/types";
 import { camelCaseToTitle } from "utils/stringHelpers";
 import COLORS from "utils/styles";
 
 class OrchardGameHeatData extends Component {
-  state = {
-    selectedOption: this.props.selectOptions[0]
-  };
-
-  handleSelectChange = selectedOption => this.setState({ selectedOption });
-
-  getTooltipBody = d => {
-    const { label, accessor, value } = this.state.selectedOption;
+  getTooltipBody = option => d => {
+    const { label, accessor, value } = option;
     const percentage = (accessor(d) * 100).toFixed(3);
     return [
       `Fruits per color: ${d.fruits}`,
@@ -27,72 +21,63 @@ class OrchardGameHeatData extends Component {
   };
 
   render() {
-    const { selectOptions, sliderMax, sliderData } = this.props;
-    const { value, label, accessor } = this.state.selectedOption;
-    const colorDomain = [0, 0.2, 0.4, 0.6, 0.8, 1];
-    const colorRange = [
-      COLORS.BLACK,
-      COLORS.RED,
-      COLORS.ORANGE,
-      COLORS.YELLOW,
-      COLORS.GREEN,
-      COLORS.DARK_GREEN
-    ];
-    if (value === "diff") {
-      colorDomain = [0.05, 0.25];
-      colorRange = [COLORS.BLUE, COLORS.DARK_BLUE];
-    }
+    const { selectOptions, sliderData } = this.props;
     return (
       <SliderProvider
         initialData={sliderData}
         width="50%"
-        render={sliderVals => {
-          const [colorCount, wildCardCount] = sliderVals;
-          const heatData = data
-            .filter(
-              d => d.colors === colorCount && d.wildCardCount === wildCardCount
-            )
-            .reduce((matrix, obj) => {
-              let x = obj.ravenCount - 1;
-              let y = obj.fruits - 1;
-              if (!matrix[x]) matrix[x] = [];
-              matrix[x][y] = obj;
-              return matrix;
-            }, []);
-          return (
-            <React.Fragment>
-              <StyledSelect
-                name="orchard-heat-options"
-                value={value}
-                onChange={this.handleSelectChange}
-                options={selectOptions}
-                isSearchable={false}
-                placeholder={label}
-                margin="0.25rem 0 -1rem 0;"
-              />
-              <HeatChart
-                data={heatData}
-                accessor={accessor}
-                getTooltipBody={this.getTooltipBody}
-                colorDomain={colorDomain}
-                colorRange={colorRange}
-              />
-            </React.Fragment>
-          );
-        }}
+        render={sliderVals => (
+          <SelectProvider
+            options={selectOptions}
+            width="100%"
+            margin="0.25rem 0 -1rem"
+            render={selectVals => {
+              const [colorCount, wildCardCount] = sliderVals;
+              const { value, accessor } = selectVals[0];
+              let colorDomain = [0, 0.2, 0.4, 0.6, 0.8, 1];
+              let colorRange = [
+                COLORS.BLACK,
+                COLORS.RED,
+                COLORS.ORANGE,
+                COLORS.YELLOW,
+                COLORS.GREEN,
+                COLORS.DARK_GREEN
+              ];
+              if (value === "diff") {
+                colorDomain = [0.05, 0.25];
+                colorRange = [COLORS.BLUE, COLORS.DARK_BLUE];
+              }
+              const heatData = data
+                .filter(
+                  d =>
+                    d.colors === colorCount && d.wildCardCount === wildCardCount
+                )
+                .reduce((matrix, obj) => {
+                  let x = obj.ravenCount - 1;
+                  let y = obj.fruits - 1;
+                  if (!matrix[x]) matrix[x] = [];
+                  matrix[x][y] = obj;
+                  return matrix;
+                }, []);
+              return (
+                <HeatChart
+                  data={heatData}
+                  accessor={accessor}
+                  getTooltipBody={this.getTooltipBody(selectVals[0])}
+                  colorDomain={colorDomain}
+                  colorRange={colorRange}
+                />
+              );
+            }}
+          />
+        )}
       />
     );
   }
 }
 
 OrchardGameHeatData.propTypes = {
-  selectOptions: PropTypes.arrayOf(
-    PropTypes.shape({
-      value: PropTypes.string.isRequired,
-      label: PropTypes.string.isRequired,
-      accessor: PropTypes.func.isRequired
-    })
-  ).isRequired,
+  selectOptions: selectType,
   sliderData: sliderDataType,
   sliderMax: PropTypes.number.isRequired
 };
@@ -100,20 +85,22 @@ OrchardGameHeatData.propTypes = {
 const SLIDER_MAX = new Set(data.map(d => d.colors)).size;
 
 OrchardGameHeatData.defaultProps = {
-  selectOptions: strategies
-    .map(strategy => ({
-      value: strategy.name,
-      label: `${camelCaseToTitle(strategy.name)} Strategy`,
-      accessor: d => d.probs[strategy.name]
-    }))
-    .concat({
-      value: "diff",
-      label: "Largest difference between strategies",
-      accessor: d => {
-        const probs = Object.values(d.probs);
-        return Math.max(...probs) - Math.min(...probs);
-      }
-    }),
+  selectOptions: [
+    strategies
+      .map(strategy => ({
+        value: strategy.name,
+        label: `${camelCaseToTitle(strategy.name)} Strategy`,
+        accessor: d => d.probs[strategy.name]
+      }))
+      .concat({
+        value: "diff",
+        label: "Largest difference between strategies",
+        accessor: d => {
+          const probs = Object.values(d.probs);
+          return Math.max(...probs) - Math.min(...probs);
+        }
+      })
+  ],
   sliderMax: SLIDER_MAX,
   sliderData: [
     {
