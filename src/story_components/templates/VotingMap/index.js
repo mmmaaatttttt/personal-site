@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { StaticQuery, graphql } from "gatsby";
 import { format } from "d3-format";
-import { withCaption } from "providers";
+import { withCaption, SliderProvider, SelectProvider } from "providers";
 import COLORS from "utils/styles";
 import {
   NarrowContainer,
@@ -23,6 +23,7 @@ class PureVotingMap extends Component {
     const { currentYear } = this.state;
     const { minYear, maxYear, data, selectOptions, step } = this.props;
     const currentYearData = data.filter(d => d.year === currentYear);
+    console.log(currentYearData)
     return (
       <NarrowContainer width="60%" fullWidthAt="medium">
         <LabeledSlider
@@ -39,10 +40,11 @@ class PureVotingMap extends Component {
           selectOptions={selectOptions}
           data={currentYearData}
           getTooltipTitle={d => d.name}
-          getTooltipBody={(d, { label, format: fm, accessor }) =>
-            accessor(d) !== null
+          getTooltipBody={(d, { label, format: fm, accessor }) => {
+            return d.values && accessor(d) !== null
               ? `${label}: ${format(fm)(accessor(d))}`
               : "No data available."
+          }
           }
         />
       </NarrowContainer>

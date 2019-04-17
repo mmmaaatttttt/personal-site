@@ -36,7 +36,6 @@ class PureVotingLineChart extends Component {
       selectOptionsForStatistic,
       width
     } = this.props;
-    debugger;
     const dataForStatAndState = data
       .filter(d => d.state === stateLabel && accessor(d) !== null)
       .map(d => ({ x: d.year, y: accessor(d) }));

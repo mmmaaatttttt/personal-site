@@ -33,7 +33,6 @@ class PureVotingPollWorkerAge extends Component {
     const { currentYear } = this.state;
     const { minYear, maxYear, data, selectOptionsForState, step } = this.props;
     const currentYearData = data.filter(d => d.year === currentYear);
-    debugger;
     return (
       <NarrowContainer width="60%" fullWidthAt="medium">
         <LabeledSlider
