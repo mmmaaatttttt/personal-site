@@ -12,7 +12,7 @@ import {
   Polygon,
   RadioButtonGroup
 } from "story_components";
-import { withCaption, TooltipProvider } from "containers";
+import { withCaption, TooltipProvider } from "providers";
 import COLORS from "utils/styles";
 import { total } from "utils/mathHelpers";
 import { generateFreqMap } from "utils/arrayHelpers";

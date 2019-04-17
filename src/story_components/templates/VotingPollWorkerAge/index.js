@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { StaticQuery, graphql } from "gatsby";
 import { max } from "d3-array";
 import { scaleLinear } from "d3-scale";
-import { withCaption } from "containers";
+import { withCaption } from "providers";
 import { LabeledSlider, NarrowContainer, SelectablePieChart } from "story_components";
 import COLORS from "utils/styles";
 import { total } from "utils/mathHelpers";

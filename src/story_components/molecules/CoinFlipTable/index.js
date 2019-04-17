@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { ColoredSpan, LabeledSlider, StyledTable } from "story_components";
-import { withCaption } from "containers";
+import { withCaption } from "providers";
 import COLORS from "utils/styles";
 
 class CoinFlipTable extends Component {

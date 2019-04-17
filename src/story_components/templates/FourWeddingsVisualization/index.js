@@ -12,7 +12,7 @@ import {
   SelectablePieChart,
   SelectableScatterplot
 } from "story_components";
-import { withCaption } from "containers";
+import { withCaption } from "providers";
 
 const PureFourWeddingsVis = ({ data, caption, visType }) => {
   const components = {

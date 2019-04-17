@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { StaticQuery, graphql } from "gatsby";
 import { extent } from "d3-array";
 import { scaleLinear } from "d3-scale";
-import { withCaption } from "containers";
+import { withCaption } from "providers";
 import { Graph, LinePlot, NarrowContainer, StyledSelect } from "story_components";
 
 class PureVotingLineChart extends Component {

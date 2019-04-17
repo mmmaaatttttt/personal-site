@@ -4,7 +4,7 @@ import styled from "styled-components";
 import NodeGroup from "react-move/NodeGroup";
 import { rhythm } from "utils/typography";
 import COLORS from "utils/styles";
-import { TooltipProvider } from "containers";
+import { TooltipProvider } from "providers";
 
 const BarContainer = styled.div`
   width: 100%;

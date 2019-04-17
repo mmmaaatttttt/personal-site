@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { scaleLinear } from "d3-scale";
-import { withCaption } from "containers";
+import { withCaption } from "providers";
 import COLORS from "utils/styles";
 import updateSpeeds from "data/income-inequality.js";
 import {

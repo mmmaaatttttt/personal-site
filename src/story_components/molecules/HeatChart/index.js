@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import NodeGroup from "react-move/NodeGroup";
 import { scaleLinear } from "d3-scale";
 import { Axis, AxisLabel, ClippedSVG } from "story_components";
-import { TooltipProvider } from "containers";
+import { TooltipProvider } from "providers";
 import COLORS from "utils/styles";
 
 class HeatChart extends Component {

@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { StaticQuery, graphql } from "gatsby";
 import { format } from "d3-format";
-import { withCaption } from "containers";
+import { withCaption } from "providers";
 import COLORS from "utils/styles";
 import {
   NarrowContainer,

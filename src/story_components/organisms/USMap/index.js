@@ -9,7 +9,7 @@ import { feature } from "topojson";
 import { isEqual } from "lodash";
 import us from "data/json/us-topo.json";
 import { ClippedSVG } from "story_components";
-import { TooltipProvider } from "containers";
+import { TooltipProvider } from "providers";
 import COLORS from "utils/styles";
 
 class USMap extends Component {

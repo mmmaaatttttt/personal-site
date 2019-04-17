@@ -5,7 +5,7 @@ import { extent } from "d3-array";
 import { nest } from "d3-collection";
 import { scaleLinear } from "d3-scale";
 import { lighten } from "polished";
-import { withCaption, SliderProvider } from "containers";
+import { withCaption, SliderProvider } from "providers";
 import COLORS from "utils/styles";
 import { calculateWastedVotes } from "utils/mathHelpers";
 import { sliderDataType } from "utils/types";

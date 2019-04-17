@@ -4,7 +4,7 @@ import Animate from "react-move/Animate";
 import { scaleLinear } from "d3-scale";
 import { max } from "d3-array";
 import { beta } from "jStat";
-import { withCaption } from "containers";
+import { withCaption } from "providers";
 import {
   Button,
   FlexContainer,
