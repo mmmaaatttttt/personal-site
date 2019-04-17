@@ -23,7 +23,6 @@ class PureVotingMap extends Component {
     const { currentYear } = this.state;
     const { minYear, maxYear, data, selectOptions, step } = this.props;
     const currentYearData = data.filter(d => d.year === currentYear);
-    console.log(currentYearData)
     return (
       <NarrowContainer width="60%" fullWidthAt="medium">
         <LabeledSlider

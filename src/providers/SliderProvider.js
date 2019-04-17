@@ -23,7 +23,7 @@ class SliderProvider extends Component {
   };
 
   render() {
-    const { initialData, column, render, width } = this.props;
+    const { column, fullWidthAt, initialData, render, width } = this.props;
     const { sliderValues } = this.state;
     const dataWithHandlers = initialData.map((d, i) => ({
       ...d,
@@ -38,7 +38,7 @@ class SliderProvider extends Component {
       </React.Fragment>
     );
     return numSliders < 4 ? (
-      <NarrowContainer width={width} fullWidthAt="small">
+      <NarrowContainer width={width} fullWidthAt={fullWidthAt}>
         {mainContent}
       </NarrowContainer>
     ) : (
@@ -50,6 +50,7 @@ class SliderProvider extends Component {
 SliderProvider.propTypes = {
   column: PropTypes.bool.isRequired,
   initialData: sliderDataType,
+  fullWidthAt: PropTypes.string.isRequired,
   render: PropTypes.func.isRequired,
   width: PropTypes.string.isRequired
 };
@@ -57,6 +58,7 @@ SliderProvider.propTypes = {
 SliderProvider.defaultProps = {
   column: true,
   initialData: [],
+  fullWidthAt: "small",
   render: function(...args) {
     console.log("Please implement a render!");
     console.log("Here are the render args: ", args);
