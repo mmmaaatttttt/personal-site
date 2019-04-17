@@ -2,32 +2,20 @@
 - add "related stories" to end of each story
 - pagination for stories
 - search for stories
-
 - fewer decimal places for orchard-game.js
-- tweet thread on upgrade
-  - gatsby --> 2.0 (layouts)
-  - marksy + remark --> mdx
-  - testing broken --> remove require.context, use create-index
-    - babel-plugin-require-context-hook didn't help
-    - need for gatsby-image
-  - not mocking StaticQuery correctly, getting super unhelpful error
-  - gatsby-mdx bug
-  - annoying bullshit with different versions of graphql
-  - _.upperFirst is not defined (peer dep version of _ v 3.5.0 for gatsby-transformer-csv, instead of ~4)
-  - css broken on initial page load: gatsby-plugin-styled-components
-
 
 LOW PRIORITY
 - get more heat map data (mayyybeeeee)
 - add meta tags for /stories endpoint
 - refactor harassment components, which are super gross
-- refactor tooltip functionality to HOC
 - do an audit of setState functions to ensure functions are used where next state depends on previous state
 - add id numbers to nodes in economy simulation
 - add more tests
 - sidebars don't always show up
 - fix hot reloading issue for blog links
 - line breaks for katex equations on mobile
+- refactor withCaption to CaptionProvider
+- refactor fourweddings interactives (use providers, don't have one megacomponent)
 
 LOWEST PRIORITY
 - look into netlify: https://www.netlify.com/
@@ -37,16 +25,40 @@ LOWEST PRIORITY
   - have share button
   - have progress bar
 - better way to import data into components
+- HorizontalBar in petrie post -- second one has a line of white (doesn't fill entire bar vertically)
 
-- voter suppression
+- voting explorer
+  - space between slider and select
+  - width of slider vs width of select
+  - heat map coloring based on all years, rather than just current??
+  - transition effect for line graph
+  - dots at years
+  - add tests for Graph component
+  - show "No Data Available" in SVG if there's no data (line graph, stacked bar charts)
+  - make all selectable components searchable
+  - have more control over color scale on maps (e.g. for percentages)
+  - have line charts go from 2008-2016 even if data misses some years on either side
 
-  - by county:
+  DATA:
+    - what's up with alabama 2014 (participants per 100 eligible)
+      - seems like an error? cf https://www.sos.alabama.gov/sites/default/files/voter-pdfs/turnout.pdf -- participants vs registrants
+    - what's up with ny 2010 (poll workers per 1000 participants)
+    - for stacked bar charts, put in reverse order (2008-2016, not the opposite)
+    - for stacked bar charts, remove 2008
+    - check turnout numbers against https://www.eac.gov/assets/1/6/2016_EAVS_Comprehensive_Report.pdf
+      - https://www.census.gov/data/datasets/2016/dec/rdo/2012-2016-CVAP.html???
+      - participants / estimated eligible voters
+      - use google spreadsheets as first source of truth
 
-    - population / number of polling stations / number of poll workers
+    - reference this: https://www.snopes.com/fact-check/us-more-registered-voters-than-adults/
 
-    - does voting history have an effect? (e.g. more democratic --> fewer stations?)
+    - histograms for turnout and saturation over time
+    - scratch the bars, just include pie charts for ages
+    - scatterplot at the end?
+    - data on partisanship?
+    - explorable table
+    - histogram for turnout
 
-    - data on number of thrown out ballots?
 
 - treatise on systems thinking
   - climate
