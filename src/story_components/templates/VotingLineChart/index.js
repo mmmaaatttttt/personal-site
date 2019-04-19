@@ -4,98 +4,68 @@ import { StaticQuery, graphql } from "gatsby";
 import { extent } from "d3-array";
 import { scaleLinear } from "d3-scale";
 import { withCaption } from "providers";
-import { Graph, LinePlot, NarrowContainer, StyledSelect } from "story_components";
+import { Graph, LinePlot } from "story_components";
+import { SelectProvider } from "providers";
+import { selectType } from "utils/types";
 
 class PureVotingLineChart extends Component {
-  state = {
-    selectedStateOption: this.props.selectOptionsForState[0],
-    selectedStatisticOption: this.props.selectOptionsForStatistic[0]
-  };
-
-  handleChange(stateKey, propsKey, idx) {
-    this.setState({ [stateKey]: this.props[propsKey][idx] });
-  }
-
   render() {
-    const {
-      label: stateLabel,
-      value: stateValue
-    } = this.state.selectedStateOption;
-    const {
-      accessor,
-      color,
-      format,
-      label: statisticLabel,
-      value: statisticValue
-    } = this.state.selectedStatisticOption[0];
     const {
       data,
       graphPadding,
       height,
       selectOptionsForState,
       selectOptionsForStatistic,
+      svgId,
       width
     } = this.props;
-    const dataForStatAndState = data
-      .filter(d => d.state === stateLabel && accessor(d) !== null)
-      .map(d => ({ x: d.year, y: accessor(d) }));
-    const xScale = scaleLinear()
-      .domain(extent(dataForStatAndState, d => d.x))
-      .range([graphPadding.left, width - graphPadding.right]);
-    const yScale = scaleLinear()
-      .domain(extent(dataForStatAndState, d => d.y))
-      .range([height - graphPadding.bottom, graphPadding.top]);
     return (
-      <NarrowContainer width="60%" fullWidthAt="medium">
-        <StyledSelect
-          value={statisticValue}
-          onChange={obj =>
-            this.handleChange(
-              "selectedStatisticOption",
-              "selectOptionsForStatistic",
-              obj.value
-            )
-          }
-          options={selectOptionsForStatistic[0]}
-          isSearchable
-          placeholder={statisticLabel}
-        />
-        <StyledSelect
-          value={stateValue}
-          onChange={obj =>
-            this.handleChange(
-              "selectedStateOption",
-              "selectOptionsForState",
-              obj.value
-            )
-          }
-          options={selectOptionsForState}
-          isSearchable
-          placeholder={stateLabel}
-        />
-        <Graph
-          width={width}
-          height={height}
-          svgPadding={0}
-          graphPadding={graphPadding}
-          svgId="state-line-graph"
-          xLabel="Year"
-          xScale={xScale}
-          yScale={yScale}
-          yLabel={statisticLabel}
-          yLabelOffset={40}
-          tickFormatX=".0f"
-          tickFormatY={format}
-        >
-          <LinePlot
-            graphData={dataForStatAndState}
-            stroke={color}
-            xScale={xScale}
-            yScale={yScale}
-            curve="curveLinear"
-          />
-        </Graph>
-      </NarrowContainer>
+      <SelectProvider
+        fullWidthAt="medium"
+        options={[selectOptionsForStatistic, selectOptionsForState]}
+        render={([statisticOption, stateOption]) => {
+          const { label: stateLabel } = stateOption;
+          const {
+            accessor,
+            color,
+            format,
+            label: statisticLabel
+          } = statisticOption;
+          const dataForStatAndState = data
+            .filter(d => d.state === stateLabel && accessor(d) !== null)
+            .map(d => ({ x: d.year, y: accessor(d) }));
+          const xScale = scaleLinear()
+            .domain(extent(dataForStatAndState, d => d.x))
+            .range([graphPadding.left, width - graphPadding.right]);
+          const yScale = scaleLinear()
+            .domain(extent(dataForStatAndState, d => d.y))
+            .range([height - graphPadding.bottom, graphPadding.top]);
+          return (
+            <Graph
+              width={width}
+              height={height}
+              svgPadding={0}
+              graphPadding={graphPadding}
+              svgId={svgId}
+              xLabel="Year"
+              xScale={xScale}
+              yScale={yScale}
+              yLabel={statisticLabel}
+              yLabelOffset={40}
+              tickFormatX=".0f"
+              tickFormatY={format}
+            >
+              <LinePlot
+                graphData={dataForStatAndState}
+                stroke={color}
+                xScale={xScale}
+                yScale={yScale}
+                curve="curveLinear"
+              />
+            </Graph>
+          );
+        }}
+      />
     );
   }
 }
@@ -147,21 +117,9 @@ PureVotingLineChart.propTypes = {
     right: PropTypes.number.isRequired
   }).isRequired,
   height: PropTypes.number.isRequired,
-  selectOptionsForState: PropTypes.arrayOf(
-    PropTypes.shape({
-      value: PropTypes.number.isRequired,
-      label: PropTypes.string.isRequired
-    })
-  ).isRequired,
-  selectOptionsForStatistic: PropTypes.arrayOf(
-    PropTypes.shape({
-      value: PropTypes.number.isRequired,
-      label: PropTypes.string.isRequired,
-      accessor: PropTypes.func.isRequired,
-      format: PropTypes.string.isRequired,
-      color: PropTypes.string.isRequired
-    })
-  ).isRequired,
+  selectOptionsForState: selectType,
+  selectOptionsForStatistic: selectType,
+  svgId: PropTypes.string.isRequired,
   width: PropTypes.number.isRequired
 };
 
@@ -176,6 +134,7 @@ PureVotingLineChart.defaultProps = {
   },
   selectOptionsForState: [],
   selectOptionsForStatistic: [],
+  svgId: "state-line-graph",
   width: 900
 };
 
