@@ -28,9 +28,6 @@ LOWEST PRIORITY
 - HorizontalBar in petrie post -- second one has a line of white (doesn't fill entire bar vertically)
 
 - voting explorer
-  - space between slider and select
-  - width of slider vs width of select
-  - heat map coloring based on all years, rather than just current??
   - transition effect for line graph
   - dots at years
   - add tests for Graph component

@@ -2,55 +2,68 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { StaticQuery, graphql } from "gatsby";
 import { format } from "d3-format";
+import { extent } from "d3-array";
 import { withCaption, SliderProvider, SelectProvider } from "providers";
 import COLORS from "utils/styles";
-import {
-  NarrowContainer,
-  LabeledSlider,
-  SelectableHeatMap
-} from "story_components";
-
+import { USMap } from "story_components";
+import { selectType, sliderDataType } from "utils/types";
 class PureVotingMap extends Component {
-  state = {
-    currentYear: this.props.maxYear
-  };
+  getTooltipBody(option, year) {
+    const { label, format: fm, accessor } = option;
+    return properties => {
+      if (properties.values) {
+        const dataObj = this.getObjFromYear(properties, year);
+        const val = accessor(dataObj);
+        if (val !== null) return `${label}: ${format(fm)(val)}`
+      }
+      return "No data available";
+    }
+  }
 
-  handleSliderUpdate = val => {
-    this.setState({ currentYear: val });
-  };
+  getTooltipTitle(d) {
+    return d.name;
+  }
+
+  getObjFromYear(dataByYear, year) {
+    return dataByYear.values.find(obj => obj.year === year) || {}
+  }
 
   render() {
-    const { currentYear } = this.state;
-    const { minYear, maxYear, data, selectOptions, step } = this.props;
-    const currentYearData = data.filter(d => d.year === currentYear);
+    const { data, initialSliderData, selectOptions } = this.props;
     return (
-      <NarrowContainer width="60%" fullWidthAt="medium">
-        <LabeledSlider
-          color={COLORS.DARK_GRAY}
-          handleValueChange={this.handleSliderUpdate}
-          max={maxYear}
-          min={minYear}
-          step={step}
-          tickCount={Math.round((maxYear - minYear) / step) + 1}
-          title={`Year: ${currentYear}`}
-          value={currentYear}
-        />
-        <SelectableHeatMap
-          selectOptions={selectOptions}
-          data={currentYearData}
-          getTooltipTitle={d => d.name}
-          getTooltipBody={(d, { label, format: fm, accessor }) => {
-            return d.values && accessor(d) !== null
-              ? `${label}: ${format(fm)(accessor(d))}`
-              : "No data available."
-          }
-          }
-        />
-      </NarrowContainer>
+      <SliderProvider
+        fullWidthAt="medium"
+        initialData={initialSliderData}
+        width="70%"
+        render={sliderVals => (
+          <SelectProvider
+            width="100%"
+            options={selectOptions}
+            render={currentOptions => {
+              // const currentYearData = data.filter(d => d.year === currentYear);
+              const currentYear = sliderVals[0];
+              const { colors, accessor } = currentOptions[0];
+              const domain = extent(data, accessor);
+              const fillAccessor = stateArr => {
+                return accessor(this.getObjFromYear(stateArr, currentYear));
+              }
+              return (
+                <USMap
+                  colors={colors}
+                  data={data}
+                  domain={domain}
+                  fillAccessor={fillAccessor}
+                  getTooltipTitle={this.getTooltipTitle}
+                  getTooltipBody={this.getTooltipBody(currentOptions[0], currentYear)}
+                />
+              );
+            }}
+          />
+        )}
+      />
     );
   }
 }
-
 class VotingMap extends Component {
   cleanQuery = data => {
     return data.allVotingData20082016Csv.edges.map(({ node }) => {
@@ -61,7 +74,6 @@ class VotingMap extends Component {
       return nodeWithNumberValues;
     });
   };
-
   render() {
     return (
       <StaticQuery
@@ -76,25 +88,27 @@ class VotingMap extends Component {
 
 PureVotingMap.propTypes = {
   data: PropTypes.array.isRequired,
-  maxYear: PropTypes.number.isRequired,
-  minYear: PropTypes.number.isRequired,
-  step: PropTypes.number.isRequired,
-  selectOptions: PropTypes.arrayOf(
-    PropTypes.shape({
-      value: PropTypes.isRequired,
-      label: PropTypes.string.isRequired,
-      accessor: PropTypes.func.isRequired,
-      format: PropTypes.string.isRequired,
-      colors: PropTypes.arrayOf(PropTypes.string).isRequired
-    })
-  ).isRequired
+  initialSliderData: sliderDataType,
+  selectOptions: selectType
 };
+
+const MIN_YEAR = 2008;
+const MAX_YEAR = 2016;
+const STEP = 2;
 
 PureVotingMap.defaultProps = {
   data: [],
-  maxYear: 2016,
-  minYear: 2008,
-  step: 2,
+  initialSliderData: [
+    {
+      min: MIN_YEAR,
+      max: MAX_YEAR,
+      step: STEP,
+      initialValue: MAX_YEAR,
+      color: COLORS.DARK_GRAY,
+      tickCount: Math.round((MAX_YEAR - MIN_YEAR) / STEP) + 1,
+      title: year => `Year: ${year}`
+    }
+  ],
   selectOptions: []
 };
 

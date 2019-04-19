@@ -27,7 +27,7 @@ class PureVotingLineChart extends Component {
       format,
       label: statisticLabel,
       value: statisticValue
-    } = this.state.selectedStatisticOption;
+    } = this.state.selectedStatisticOption[0];
     const {
       data,
       graphPadding,
@@ -56,7 +56,7 @@ class PureVotingLineChart extends Component {
               obj.value
             )
           }
-          options={selectOptionsForStatistic}
+          options={selectOptionsForStatistic[0]}
           isSearchable
           placeholder={statisticLabel}
         />
