@@ -34,13 +34,11 @@ class PureVotingMap extends Component {
       <SliderProvider
         fullWidthAt="medium"
         initialData={initialSliderData}
-        width="70%"
         render={sliderVals => (
           <SelectProvider
             width="100%"
             options={selectOptions}
             render={currentOptions => {
-              // const currentYearData = data.filter(d => d.year === currentYear);
               const currentYear = sliderVals[0];
               const { colors, accessor } = currentOptions[0];
               const domain = extent(data, accessor);
