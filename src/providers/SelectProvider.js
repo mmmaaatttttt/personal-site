@@ -49,6 +49,7 @@ class SelectProvider extends Component {
 }
 
 SelectProvider.propTypes = {
+  fullWidthAt: PropTypes.string.isRequired,
   margin: PropTypes.string.isRequired,
   options: selectType,
   render: PropTypes.func.isRequired,
@@ -56,6 +57,7 @@ SelectProvider.propTypes = {
 };
 
 SelectProvider.defaultProps = {
+  fullWidthAt: "small",
   margin: "0.75rem 0 0 0",
   options: [],
   render: function(...args) {
