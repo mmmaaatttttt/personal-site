@@ -29,15 +29,16 @@ class SelectProvider extends Component {
       <NarrowContainer width={width} fullWidthAt="small">
         <React.Fragment>
           {options.map((optionsArr, idx) => {
+            const option = currentOptions[idx];
             return (
               <StyledSelect
-                {...currentOptions[idx]}
+                {...option}
                 isSearchable
                 margin={margin}
-                placeholder={currentOptions[idx].label}
+                placeholder={option.label}
                 onChange={this.handleOptionFns[idx]}
                 options={optionsArr}
-                key={currentOptions[idx].value}
+                key={`${option.value}|${option.label}`}
               />
             );
           })}
