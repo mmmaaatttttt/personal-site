@@ -7,21 +7,21 @@ const lineOptionsForVoters = [
     label: "Active Registered Voters",
     accessor: d => d.active_registration || null,
     format: ".3s",
-    color: COLORS.ORANGE
+    colors: [COLORS.ORANGE]
   },
   {
     value: 1,
     label: "Election Participants",
     accessor: d => d.election_participants || null,
     format: ".3s",
-    color: COLORS.GREEN
+    colors: [COLORS.GREEN]
   },
   {
     value: 2,
     label: "Eligible Voters",
     accessor: d => d.eligible_voters_estimated || null,
     format: ".3s",
-    color: COLORS.DARK_BLUE
+    colors: [COLORS.DARK_BLUE]
   },
   {
     value: 3,
@@ -29,7 +29,7 @@ const lineOptionsForVoters = [
     accessor: ({ active_registration: ar, eligible_voters_estimated: ev }) =>
       ar && ev ? ar / ev : null,
     format: ".2%",
-    color: COLORS.PURPLE
+    colors: [COLORS.PURPLE]
   },
   {
     value: 4,
@@ -37,7 +37,7 @@ const lineOptionsForVoters = [
     accessor: ({ election_participants: ep, eligible_voters_estimated: ev }) =>
       ep && ev ? ep / ev : null,
     format: ".2%",
-    color: COLORS.MAROON
+    colors: [COLORS.MAROON]
   }
 ];
 
@@ -47,7 +47,7 @@ const mapOptionsForVoters = [
     label: opt.label,
     accessor: opt.accessor,
     format: opt.format === ".3s" ? ",.0f" : opt.format,
-    colors: [lighten(0.4, opt.color), opt.color]
+    colors: [lighten(0.4, opt.colors[0]), opt.colors[0]]
   }))
 ];
 
@@ -60,21 +60,21 @@ const lineOptionsForWorkers = [
       jurisdictions_with_poll_worker_count: j
     }) => j / n,
     format: ".2%",
-    color: COLORS.MAROON
+    colors: [COLORS.MAROON]
   },
   {
     value: 1,
     label: "Poll Workers",
     accessor: d => d.poll_workers || null,
     format: ",.0f",
-    color: COLORS.ORANGE
+    colors: [COLORS.ORANGE]
   },
   {
     value: 2,
     label: "Polling Places",
     accessor: d => d.polling_places || null,
     format: ",.0f",
-    color: COLORS.RED
+    colors: [COLORS.RED]
   },
   {
     value: 3,
@@ -82,7 +82,7 @@ const lineOptionsForWorkers = [
     accessor: ({ poll_workers: pw, polling_places: pp }) =>
       pw && pp ? pw / pp : null,
     format: ".2f",
-    color: COLORS.GREEN
+    colors: [COLORS.GREEN]
   },
   {
     value: 4,
@@ -92,7 +92,7 @@ const lineOptionsForWorkers = [
       participants_in_jurisdictions_with_poll_worker_info: pj
     }) => (pw && pj ? (pw / pj) * 1000 : null),
     format: ".2f",
-    color: COLORS.DARK_BLUE
+    colors: [COLORS.DARK_BLUE]
   },
   {
     value: 5,
@@ -102,7 +102,7 @@ const lineOptionsForWorkers = [
       participants_in_jurisdictions_with_polling_place_info: pj
     }) => (pp && pj ? (pp / pj) * 1000 : null),
     format: ".2f",
-    color: COLORS.DARK_GREEN
+    colors: [COLORS.DARK_GREEN]
   },
   {
     value: 6,
@@ -120,7 +120,7 @@ const lineOptionsForWorkers = [
       return numCounts > 0 ? totalDifficulty / numCounts : null;
     },
     format: ".2f",
-    color: COLORS.PURPLE
+    colors: [COLORS.PURPLE]
   }
 ];
 
@@ -130,7 +130,7 @@ const mapOptionsForWorkers = [
     label: opt.label,
     accessor: opt.accessor,
     format: opt.format,
-    colors: [lighten(0.4, opt.color), opt.color]
+    colors: [lighten(0.4, opt.colors[0]), opt.colors[0]]
   }))
 ];
 

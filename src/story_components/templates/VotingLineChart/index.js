@@ -3,10 +3,13 @@ import PropTypes from "prop-types";
 import { StaticQuery, graphql } from "gatsby";
 import { extent } from "d3-array";
 import { scaleLinear } from "d3-scale";
+import NodeGroup from "react-move/NodeGroup";
+import Animate from "react-move/Animate";
 import { withCaption } from "providers";
 import { Graph, LinePlot } from "story_components";
 import { SelectProvider } from "providers";
 import { selectType } from "utils/types";
+import COLORS from "utils/styles";
 
 class PureVotingLineChart extends Component {
   render() {
@@ -14,55 +17,71 @@ class PureVotingLineChart extends Component {
       data,
       graphPadding,
       height,
-      selectOptionsForState,
-      selectOptionsForStatistic,
+      selectOptions,
       svgId,
       width
     } = this.props;
+    const years = Array.from(new Set(data.map(d => d.year))).sort(
+      (a, b) => a - b
+    );
     return (
       <SelectProvider
         fullWidthAt="medium"
-        options={[selectOptionsForStatistic, selectOptionsForState]}
+        options={selectOptions}
         render={([statisticOption, stateOption]) => {
           const { label: stateLabel } = stateOption;
           const {
             accessor,
-            color,
+            colors,
             format,
             label: statisticLabel
           } = statisticOption;
           const dataForStatAndState = data
             .filter(d => d.state === stateLabel && accessor(d) !== null)
             .map(d => ({ x: d.year, y: accessor(d) }));
-          const xScale = scaleLinear()
-            .domain(extent(dataForStatAndState, d => d.x))
-            .range([graphPadding.left, width - graphPadding.right]);
-          const yScale = scaleLinear()
-            .domain(extent(dataForStatAndState, d => d.y))
-            .range([height - graphPadding.bottom, graphPadding.top]);
+          const color = colors[0]
           return (
-            <Graph
-              width={width}
-              height={height}
-              svgPadding={0}
-              graphPadding={graphPadding}
-              svgId={svgId}
-              xLabel="Year"
-              xScale={xScale}
-              yScale={yScale}
-              yLabel={statisticLabel}
-              yLabelOffset={40}
-              tickFormatX=".0f"
-              tickFormatY={format}
+            <Animate
+              start={{
+                color: COLORS.BLACK,
+                yearData: years.map(year => ({ x: year, y: 0 }))
+              }}
+              enter={{ yearData: [dataForStatAndState], color }}
+              update={{ yearData: [dataForStatAndState], color }}
             >
-              <LinePlot
-                graphData={dataForStatAndState}
-                stroke={color}
-                xScale={xScale}
-                yScale={yScale}
-                curve="curveLinear"
-              />
-            </Graph>
+              {({ yearData, color }) => {
+                const xScale = scaleLinear()
+                  .domain(extent(dataForStatAndState, d => d.x))
+                  .range([graphPadding.left, width - graphPadding.right]);
+                const yScale = scaleLinear()
+                  .domain(extent(dataForStatAndState, d => d.y))
+                  .range([height - graphPadding.bottom, graphPadding.top]);
+                return (
+                  <Graph
+                    width={width}
+                    height={height}
+                    svgPadding={0}
+                    graphPadding={graphPadding}
+                    svgId={svgId}
+                    xLabel="Year"
+                    xScale={xScale}
+                    yScale={yScale}
+                    yLabel={statisticLabel}
+                    yLabelOffset={40}
+                    tickFormatX=".0f"
+                    tickFormatY={format}
+                  >
+                    <LinePlot
+                      graphData={yearData}
+                      stroke={color}
+                      xScale={xScale}
+                      yScale={yScale}
+                      curve="curveLinear"
+                    />
+                  </Graph>
+                );
+              }}
+            </Animate>
           );
         }}
       />
@@ -96,13 +115,19 @@ class VotingLineChart extends Component {
     return (
       <StaticQuery
         query={query}
-        render={data => (
-          <PureVotingLineChart
-            data={this.cleanQuery(data)}
-            selectOptionsForState={this.getStateOptions(data)}
-            {...this.props}
-          />
-        )}
+        render={data => {
+          const { selectOptionsForStatistic, ...otherProps } = this.props;
+          return (
+            <PureVotingLineChart
+              data={this.cleanQuery(data)}
+              selectOptions={[
+                selectOptionsForStatistic,
+                this.getStateOptions(data)
+              ]}
+              {...otherProps}
+            />
+          );
+        }}
       />
     );
   }
@@ -117,8 +142,7 @@ PureVotingLineChart.propTypes = {
     right: PropTypes.number.isRequired
   }).isRequired,
   height: PropTypes.number.isRequired,
-  selectOptionsForState: selectType,
-  selectOptionsForStatistic: selectType,
+  selectOptions: selectType,
   svgId: PropTypes.string.isRequired,
   width: PropTypes.number.isRequired
 };
@@ -132,8 +156,7 @@ PureVotingLineChart.defaultProps = {
     left: 100,
     right: 20
   },
-  selectOptionsForState: [],
-  selectOptionsForStatistic: [],
+  selectOptions: [],
   svgId: "state-line-graph",
   width: 900
 };
