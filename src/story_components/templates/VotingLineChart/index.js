@@ -3,7 +3,6 @@ import PropTypes from "prop-types";
 import { StaticQuery, graphql } from "gatsby";
 import { extent } from "d3-array";
 import { scaleLinear } from "d3-scale";
-import NodeGroup from "react-move/NodeGroup";
 import Animate from "react-move/Animate";
 import { withCaption } from "providers";
 import { Graph, LinePlot } from "story_components";
@@ -38,8 +37,16 @@ class PureVotingLineChart extends Component {
           } = statisticOption;
           const dataForStatAndState = data
             .filter(d => d.state === stateLabel && accessor(d) !== null)
-            .map(d => ({ x: d.year, y: accessor(d) }));
-          const color = colors[0]
+            .map(d => ({ x: d.year, y: accessor(d) }))
+            .filter(d => d.y);
+          const color = colors[0];
+          if (dataForStatAndState.length === 0) return (
+            <React.Fragment>
+              <p/>
+              <h4>{statisticLabel} data not available in {stateLabel}.</h4>
+              <p>Please explore a different option.</p>
+            </React.Fragment>
+          )
           return (
             <Animate
               start={{
@@ -51,10 +58,10 @@ class PureVotingLineChart extends Component {
             >
               {({ yearData, color }) => {
                 const xScale = scaleLinear()
-                  .domain(extent(dataForStatAndState, d => d.x))
+                  .domain(extent(years))
                   .range([graphPadding.left, width - graphPadding.right]);
                 const yScale = scaleLinear()
-                  .domain(extent(dataForStatAndState, d => d.y))
+                  .domain(extent(yearData, d => d.y))
                   .range([height - graphPadding.bottom, graphPadding.top]);
                 return (
                   <Graph
@@ -78,6 +85,9 @@ class PureVotingLineChart extends Component {
                       yScale={yScale}
                       curve="curveLinear"
                     />
+                    {yearData.map(d => (
+                      <circle cx={xScale(d.x)} cy={yScale(d.y)} r={10} fill={color} key={d.x} />
+                    ))}
                   </Graph>
                 );
               }}
