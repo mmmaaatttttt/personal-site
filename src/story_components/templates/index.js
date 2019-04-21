@@ -14,5 +14,6 @@ export { default as SampleGerrymander } from './SampleGerrymander';
 export { default as VotingLineChart } from './VotingLineChart';
 export { default as VotingMap } from './VotingMap';
 export { default as VotingPollWorkerAge } from './VotingPollWorkerAge';
+export { default as VotingTable } from './VotingTable';
 export { default as WarmingDots } from './WarmingDots';
 

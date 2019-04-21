@@ -9,7 +9,8 @@ featured_image_caption: "Playing a (hopefully fair) board game. Image credit: Br
 import {
   VotingLineChart,
   VotingMap,
-  VotingPollWorkerAge
+  VotingPollWorkerAge,
+  VotingTable
 } from "story_components";
 import * as d from "data/strength-in-numbers.js";
 
@@ -108,15 +109,17 @@ graph of nearly every state's election participant figures show a distinctive
 zigzag shape, sloping up during presidential election years and down for the
 midterms. 
 
-- In terms of turnout, three of the top five states are neighbors (Minnesota,
-Wisconsin, and Iowa). The bottom five performers according to this metric are
-more geographically distributed: the worst offenders are Hawaii, Utah, West
-Virginia, Texas, and Mississippi.
+- In terms of average turnout across years, three of the top five states are
+neighbors (Minnesota, Wisconsin, and Iowa). The bottom five performers according
+to this metric are more geographically distributed: the worst offenders are
+Mississippi, Texas, West Virginia, Utah, and Hawaii.
 
-  Here's a table summarizing the findings. You can check out the top or bottom performers for either registration saturation or voter turnout:
+  Here's a table summarizing the findings. You can check out the top or bottom
+  performers for either registration saturation or voter turnout. Note that
+  North Dakota has no data on registered voters dating back to 2008, which is
+  why their saturation number is 0%.
 
-  INSERT VIS HERE!
-    - adjust what you're looking at
+<VotingTable caption="Table 1: Average registration and turnout percentages by state." />
 
 - Among recent elections, states have had a difficult time surpassing the turnout they witnessed in 2008. In fact, 34 states recorded their highest turnout during that election, as opposed to only 13 during the 2016 election.
 
@@ -180,6 +183,7 @@ Just like before, we can also dig into trends across years for a single state:
 <VotingLineChart
   caption="Figure 4: Line representation of poll worker data by year for a fixed state."
   selectOptionsForStatistic={d.lineOptionsForWorkers}
+  svgId="state-line-graph-2"
 />
 
 What do you notice by exploring these graphs? Here are some things I noticed:
