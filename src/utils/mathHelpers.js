@@ -54,7 +54,9 @@ function euclideanDistance(...pts) {
 }
 
 function total(nums, accessor = num => num) {
-  return nums.reduce((sum, cur) => sum + accessor(cur), 0);
+  let sum = 0;
+  for (let num of nums) sum += accessor(num);
+  return sum;
 }
 
 function average(nums, accessor = num => num) {
