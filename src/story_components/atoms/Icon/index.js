@@ -10,19 +10,39 @@ const StyledIcon = styled.i`
         cursor: not-allowed;
       }
     `};
+  ${props =>
+    props.hover &&
+    css`
+      &:hover {
+        cursor: pointer;
+      }
+    `}
 `;
 
-const Icon = ({ name, color, opacity, disabled, size, type }) => (
+const Icon = ({
+  name,
+  color,
+  hover,
+  onClick,
+  opacity,
+  disabled,
+  size,
+  type
+}) => (
   <StyledIcon
     className={`fa${type[0]} fa-${name} fa-${size}x`}
+    onClick={onClick}
     style={{ color, opacity }}
     disabled={disabled}
+    hover={hover}
   />
 );
 
 Icon.propTypes = {
   name: PropTypes.string.isRequired,
   color: PropTypes.string.isRequired,
+  hover: PropTypes.bool.isRequired,
+  onClick: PropTypes.func,
   opacity: PropTypes.number.isRequired,
   size: PropTypes.oneOf([1, 2, 3, 4, 5]).isRequired,
   disabled: PropTypes.bool.isRequired,
@@ -32,6 +52,7 @@ Icon.propTypes = {
 Icon.defaultProps = {
   color: "#000",
   disabled: false,
+  hover: false,
   name: "check",
   opacity: 1,
   size: 1,
