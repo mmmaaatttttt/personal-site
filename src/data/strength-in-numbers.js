@@ -134,7 +134,18 @@ const mapOptionsForWorkers = [
   }))
 ];
 
+const dataCleanerForFirstBarGraph = data => {
+  return data.allVotingData20082016Csv.edges.map(({node}) => ({
+    year: +node.year,
+    abbreviation: node.abbreviation,
+    election_participants: +node.election_participants,
+    active_registration: +node.active_registration,
+    eligible_voters_estimated: +node.eligible_voters_estimated
+  }));
+}
+
 export {
+  dataCleanerForFirstBarGraph,
   lineOptionsForVoters,
   lineOptionsForWorkers,
   mapOptionsForVoters,
