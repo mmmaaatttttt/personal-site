@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { HeatChart } from "story_components";
 import strategies, { data } from "data/orchard-game";
 import { withCaption, SliderProvider, SelectProvider } from "providers";
-import { sliderDataType, selectType } from "utils/types";
+import { sliderType, selectType } from "utils/types";
 import { camelCaseToTitle } from "utils/stringHelpers";
 import COLORS from "utils/styles";
 
@@ -78,7 +78,7 @@ class OrchardGameHeatData extends Component {
 
 OrchardGameHeatData.propTypes = {
   selectOptions: selectType,
-  sliderData: sliderDataType,
+  sliderData: sliderType,
   sliderMax: PropTypes.number.isRequired
 };
 

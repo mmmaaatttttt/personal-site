@@ -6,7 +6,7 @@ import { format } from "d3-format";
 import { Icon, StyledTable } from "story_components";
 import { SliderProvider, withCaption } from "providers";
 import { average } from "utils/mathHelpers";
-import { sliderDataType } from "utils/types";
+import { sliderType } from "utils/types";
 import COLORS from "utils/styles";
 
 class PureVotingTable extends Component {
@@ -170,7 +170,7 @@ PureVotingTable.propTypes = {
       averageTurnout: PropTypes.number.isRequired
     })
   ).isRequired,
-  initialSliderData: sliderDataType
+  initialSliderData: sliderType
 };
 
 PureVotingTable.defaultProps = {

@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { ColumnLayout, NarrowContainer, SliderGroup } from "story_components";
-import { sliderDataType } from "utils/types";
+import { sliderType } from "utils/types";
 
 class SliderProvider extends Component {
   constructor(props) {
@@ -49,7 +49,7 @@ class SliderProvider extends Component {
 
 SliderProvider.propTypes = {
   column: PropTypes.bool.isRequired,
-  initialData: sliderDataType,
+  initialData: sliderType,
   fullWidthAt: PropTypes.string.isRequired,
   render: PropTypes.func.isRequired,
   width: PropTypes.string.isRequired

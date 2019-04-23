@@ -6,7 +6,7 @@ import { extent } from "d3-array";
 import { withCaption, SliderProvider, SelectProvider } from "providers";
 import COLORS from "utils/styles";
 import { USMap } from "story_components";
-import { selectType, sliderDataType } from "utils/types";
+import { selectType, sliderType } from "utils/types";
 class PureVotingMap extends Component {
   getTooltipBody(option, year) {
     const { label, format: fm, accessor } = option;
@@ -86,7 +86,7 @@ class VotingMap extends Component {
 
 PureVotingMap.propTypes = {
   data: PropTypes.array.isRequired,
-  initialSliderData: sliderDataType,
+  initialSliderData: sliderType,
   selectOptions: selectType
 };
 

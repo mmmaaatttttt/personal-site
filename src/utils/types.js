@@ -1,6 +1,6 @@
 import PropTypes from "prop-types";
 
-const sliderDataType = PropTypes.arrayOf(
+const sliderType = PropTypes.arrayOf(
   PropTypes.shape({
     min: PropTypes.number.isRequired,
     max: PropTypes.number.isRequired,
@@ -30,4 +30,4 @@ const selectType = PropTypes.arrayOf(
   )
 ).isRequired;
 
-export { sliderDataType, selectType };
+export { sliderType, selectType };

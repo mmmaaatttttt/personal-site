@@ -8,7 +8,7 @@ import { lighten } from "polished";
 import { withCaption, SliderProvider } from "providers";
 import COLORS from "utils/styles";
 import { calculateWastedVotes } from "utils/mathHelpers";
-import { sliderDataType } from "utils/types";
+import { sliderType } from "utils/types";
 import { BarGraph, ColumnLayout, USMap } from "story_components";
 
 class PureHistoricalMap extends Component {
@@ -216,7 +216,7 @@ PureHistoricalMap.propTypes = {
   maxYear: PropTypes.number.isRequired,
   minElectors: PropTypes.number.isRequired,
   minYear: PropTypes.number.isRequired,
-  sliderData: sliderDataType
+  sliderData: sliderType
 };
 
 PureHistoricalMap.defaultProps = {
