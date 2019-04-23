@@ -4,21 +4,24 @@ import media, { sizes } from "utils/media";
 
 const NarrowContainer = styled.div`
   width: ${props => props.width};
-  margin: 0 auto;
+  margin: ${props => props.margin};
 
   ${props => media[props.fullWidthAt]`
     width: 100%;
+    margin: 0 auto
   `};
 `;
 
 NarrowContainer.propTypes = {
-  width: PropTypes.string.isRequired,
-  fullWidthAt: PropTypes.oneOf(Object.keys(sizes))
+  fullWidthAt: PropTypes.oneOf(Object.keys(sizes)),
+  margin: PropTypes.string.isRequired,
+  width: PropTypes.string.isRequired
 };
 
 NarrowContainer.defaultProps = {
-  width: "80%",
-  fullWidthAt: "extraSmall"
+  fullWidthAt: "extraSmall",
+  margin: "0 auto",
+  width: "80%"
 };
 
 export default NarrowContainer;

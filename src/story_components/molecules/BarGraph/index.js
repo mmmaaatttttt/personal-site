@@ -44,17 +44,18 @@ class BarGraph extends Component {
       tickStep,
       width,
       yScale,
-      yTickFormat
+      yTickFormat,
+      yTickLabelPosition
     } = this.props;
 
     // normalize padding to always be an object
-    if (typeof padding === 'number') {
+    if (typeof padding === "number") {
       padding = {
         top: padding,
         left: padding,
         right: padding,
         bottom: padding
-      }
+      };
     }
     const xScale = histogram
       ? scaleLinear()
@@ -78,18 +79,6 @@ class BarGraph extends Component {
         >
           {bars => (
             <g>
-              <Axis
-                direction="y"
-                fontSize="0.6rem"
-                labelPosition={{x: "4", dy: "12"}}
-                scale={yScale}
-                xShift={padding.left}
-                yShift={0}
-                textAnchor="start"
-                tickFormat={yTickFormat}
-                tickSize={-width + padding.left + padding.right}
-                tickStep={tickStep}
-              />
               {bars.map(bar => {
                 const { x, fill, width, barHeight } = bar.state;
                 const text = barLabel ? (
@@ -116,6 +105,22 @@ class BarGraph extends Component {
                   </g>
                 );
               })}
+              <Axis
+                direction="y"
+                fontSize="0.6rem"
+                labelPosition={
+                  yTickLabelPosition === "bottom"
+                    ? { x: "4", dy: "12" }
+                    : { x: "-5" }
+                }
+                scale={yScale}
+                xShift={padding.left}
+                yShift={0}
+                textAnchor={yTickLabelPosition === "bottom" ? "start" : "end"}
+                tickFormat={yTickFormat}
+                tickSize={-width + padding.left + padding.right}
+                tickStep={tickStep}
+              />
               {histogram ? (
                 <Axis
                   direction="x"
@@ -123,7 +128,7 @@ class BarGraph extends Component {
                   scale={xScale}
                   tickStep={thresholds[1] - thresholds[0]}
                   tickFormat={tickFormat}
-                  labelPosition={{y: "0.35em", x: "9", dy: "0"}}
+                  labelPosition={{ y: "0.35em", x: "9", dy: "0" }}
                   textAnchor="start"
                   yShift={height - padding.bottom}
                 />
@@ -141,12 +146,13 @@ BarGraph.propTypes = {
     PropTypes.shape({
       key: PropTypes.isRequired,
       height: PropTypes.number.isRequired,
+      color: PropTypes.string, // used to vary color by bar
       x0: PropTypes.number, // required for a histogram
       x1: PropTypes.number // required for a histogram
     })
   ).isRequired,
   barLabel: PropTypes.func,
-  color: PropTypes.string.isRequired,
+  color: PropTypes.string.isRequired, // can use one color here if all bars should be the same
   height: PropTypes.number.isRequired,
   histogram: PropTypes.bool,
   labelFontSize: PropTypes.string,
@@ -161,6 +167,7 @@ BarGraph.propTypes = {
   ]).isRequired,
   thresholds: PropTypes.arrayOf(PropTypes.number),
   tickFormat: PropTypes.string,
+  yTickLabelPosition: PropTypes.oneOf(["bottom", "left"]),
   yTickFormat: PropTypes.string,
   tickStep: PropTypes.number.isRequired,
   timing: PropTypes.object.isRequired,
@@ -171,7 +178,8 @@ BarGraph.propTypes = {
 
 BarGraph.defaultProps = {
   color: COLORS.MAROON,
-  timing: { duration: 100 }
+  timing: { duration: 100 },
+  yTickLabelPosition: "bottom"
 };
 
 export default BarGraph;
