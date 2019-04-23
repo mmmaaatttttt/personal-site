@@ -1,0 +1,150 @@
+import React, { Component } from "react";
+import PropTypes from "prop-types";
+import { StaticQuery, graphql } from "gatsby";
+import { scaleLinear } from "d3-scale";
+import { max } from "d3-array";
+import { BarGraph, NarrowContainer } from "story_components";
+import { SliderProvider, SelectProvider, withCaption } from "providers";
+import { sliderType, selectType } from "utils/types";
+import COLORS from "utils/styles";
+import { lineOptionsForVoters } from "data/strength-in-numbers";
+
+class PureVotingBarChart extends Component {
+  render() {
+    const { sliderData, selectData, data } = this.props;
+    return (
+      <SliderProvider
+        initialData={sliderData}
+        fullWidthAt="medium"
+        render={([curYear]) => (
+          <SelectProvider
+            width="100%"
+            options={selectData}
+            render={([currentOption]) => {
+              const { accessor, colors } = currentOption;
+              const width = 900;
+              const height = 400;
+              const padding = { top: 0, right: 0, bottom: 6, left: 40}
+              const allYearData = data.map(d => ({
+                year: d.year,
+                key: d.abbreviation,
+                height: accessor(d)
+              }));
+              const yScale = scaleLinear()
+                .domain([0, 1.1 * max(allYearData, d => d.height)])
+                .range([height - padding.bottom, padding.top]);
+              const barData = allYearData
+                .filter(d => d.year === curYear && d.height)
+                .sort((d1, d2) => d1.height - d2.height);
+              return (
+                <NarrowContainer width="130%" fullWidthAt="medium" margin="0 0 0 -15%">
+                  <BarGraph
+                    barData={barData}
+                    barLabel={d => d.key}
+                    color={colors[0]}
+                    height={height}
+                    padding={padding}
+                    tickStep={0.1}
+                    svgId={"bar-graph"}
+                    width={width}
+                    yScale={yScale}
+                    yTickLabelPosition="left"
+                    yTickFormat={".0%"}
+                  />
+                </NarrowContainer>
+              );
+            }}
+          />
+        )}
+      />
+    );
+  }
+}
+
+class VotingBarChart extends Component {
+  render() {
+    const { dataCleaner } = this.props;
+    return (
+      <StaticQuery
+        query={query}
+        render={data => {
+          return <PureVotingBarChart data={dataCleaner(data)} />;
+        }}
+      />
+    );
+  }
+}
+
+const query = graphql`
+  query {
+    allVotingData20082016Csv {
+      edges {
+        node {
+          year
+          state
+          abbreviation
+          num_jurisdictions
+          active_registration
+          election_participants
+          eligible_voters_estimated
+          jurisdictions_with_polling_place_info
+          jurisdictions_with_poll_worker_count
+          jurisdictions_with_age_info
+          jurisdictions_with_difficulty_info
+          registrants_in_jurisdictions_with_polling_place_info
+          registrants_in_jurisdictions_with_poll_worker_info
+          registrants_in_jurisdictions_with_poll_worker_age_info
+          registrants_in_jurisdictions_with_difficulty_info
+          participants_in_jurisdictions_with_polling_place_info
+          participants_in_jurisdictions_with_poll_worker_info
+          participants_in_jurisdictions_with_poll_worker_age_info
+          participants_in_jurisdictions_with_difficulty_info
+          polling_places
+          poll_workers
+          worker_age_group_1
+          worker_age_group_2
+          worker_age_group_3
+          worker_age_group_4
+          worker_age_group_5
+          worker_age_group_6
+          difficulty_very_difficult
+          difficulty_somewhat_difficult
+          difficulty_somewhat_easy
+          difficulty_neither_difficult_nor_easy
+          difficulty_not_enough_information_to_answer
+          difficulty_very_easy
+          dem_percent
+          rep_percent
+        }
+      }
+    }
+  }
+`;
+
+PureVotingBarChart.propTypes = {
+  sliderData: sliderType,
+  selectData: selectType,
+  data: PropTypes.arrayOf(PropTypes.object).isRequired
+};
+
+const MIN_YEAR = 2008;
+const MAX_YEAR = 2016;
+const STEP = 2;
+
+PureVotingBarChart.defaultProps = {
+  sliderData: [
+    {
+      min: MIN_YEAR,
+      max: MAX_YEAR,
+      step: STEP,
+      initialValue: MIN_YEAR,
+      color: COLORS.DARK_GRAY,
+      tickCount: Math.round((MAX_YEAR - MIN_YEAR) / STEP) + 1,
+      title: year => `Year: ${year}`
+    }
+  ],
+  selectData: [lineOptionsForVoters.slice(-2)],
+  data: []
+};
+
+export default withCaption(VotingBarChart);
