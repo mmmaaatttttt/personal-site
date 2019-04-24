@@ -10,7 +10,7 @@ class SelectablePieChart extends Component {
   handleChange = selectedOption => this.setState({ selectedOption });
 
   render() {
-    const { value, label, chartValues } = this.state.selectedOption;
+    const { value, label, accessor } = this.state.selectedOption;
     const { selectOptions, data, graphOptions } = this.props;
     return (
       <NarrowContainer width="50%">
@@ -22,7 +22,7 @@ class SelectablePieChart extends Component {
           options={selectOptions}
           isSearchable={false}
         />
-        <PieChart values={chartValues(data)} padding={20} {...graphOptions} />
+        <PieChart values={accessor(data)} padding={20} {...graphOptions} />
       </NarrowContainer>
     );
   }
@@ -33,7 +33,7 @@ SelectablePieChart.propTypes = {
   selectOptions: PropTypes.arrayOf(PropTypes.shape({
     value: PropTypes.isRequired,
     label: PropTypes.string.isRequired,
-    chartValues: PropTypes.func.isRequired
+    accessor: PropTypes.func.isRequired
   })).isRequired,
   graphOptions: PropTypes.object.isRequired
 };

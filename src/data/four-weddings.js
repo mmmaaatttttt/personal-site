@@ -77,27 +77,27 @@ const selectOptionsPieChart = [
   {
     value: "budget",
     label: "Rankings by Budget",
-    chartValues: data => __pieHelper(data, "budgetRanking")
+    accessor: data => __pieHelper(data, "budgetRanking")
   },
   {
     value: "budgetPerGuest",
     label: "Rankings by Budget Per Guest",
-    chartValues: data => __pieHelper(data, "budgetPerGuestRanking")
+    accessor: data => __pieHelper(data, "budgetPerGuestRanking")
   },
   {
     value: "expGiven",
     label: "Rankings by Overall Experience Points Given",
-    chartValues: data => __pieHelper(data, "expGivenRanking")
+    accessor: data => __pieHelper(data, "expGivenRanking")
   },
   {
     value: "expReceived",
     label: "Rankings by Overall Experience Points Received",
-    chartValues: data => __pieHelper(data, "expReceivedRanking")
+    accessor: data => __pieHelper(data, "expReceivedRanking")
   },
   {
     value: "expDiff",
     label: "Rankings by Exp Gap (Received - Given)",
-    chartValues: data => __pieHelper(data, "expDiffRanking")
+    accessor: data => __pieHelper(data, "expDiffRanking")
   }
 ];
 
