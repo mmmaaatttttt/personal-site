@@ -1,63 +1,60 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { StaticQuery, graphql } from "gatsby";
-import { max } from "d3-array";
-import { scaleLinear } from "d3-scale";
-import { withCaption } from "providers";
-import { LabeledSlider, NarrowContainer, SelectablePieChart } from "story_components";
+import { scaleOrdinal } from "d3-scale";
+import { withCaption, SelectProvider, SliderProvider } from "providers";
+import { Legend, NarrowContainer, PieChart } from "story_components";
 import COLORS from "utils/styles";
-import { total } from "utils/mathHelpers";
+import { selectType, sliderType } from "utils/types";
 
 class PureVotingPollWorkerAge extends Component {
-  state = {
-    currentYear: this.props.maxYear
-  };
-
-  handleSliderUpdate = val => {
-    this.setState({ currentYear: val });
-  };
-
-  // need something like this for state options
-  // getStateOptions = data => {
-  //   const statesSet = new Set(
-  //     data.allVotingData20082016Csv.edges.map(({ node }) => node.state)
-  //   );
-  //   const options = Array.from(statesSet, (s, idx) => ({
-  //     label: s,
-  //     value: idx
-  //   }));
-  //   return options;
-  // };
-
   render() {
-    const { currentYear } = this.state;
-    const { minYear, maxYear, data, selectOptionsForState, step } = this.props;
-    const currentYearData = data.filter(d => d.year === currentYear);
+    const {
+      data,
+      selectOptions,
+      sliderData,
+      keyLabels,
+      colorScale
+    } = this.props;
     return (
-      <NarrowContainer width="60%" fullWidthAt="medium">
-        <LabeledSlider
-          color={COLORS.DARK_GRAY}
-          handleValueChange={this.handleSliderUpdate}
-          max={maxYear}
-          min={minYear}
-          step={step}
-          tickCount={Math.round((maxYear - minYear) / step) + 1}
-          title={`Year: ${currentYear}`}
-          value={currentYear}
-        />
-        {/* <SelectablePieChart
-          data={}
-          selectOptions={}
-          graphOptions={}
-        /> */}
-        {/* <StyledSelect
-          value={stateValue}
-          onChange={this.handleChange}
-          options={selectOptionsForState}
-          isSearchable
-          placeholder={stateLabel}
-        /> */}
-      </NarrowContainer>
+      <SliderProvider
+        initialData={sliderData}
+        fullWidthAt="medium"
+        width="60%"
+        render={([curYear]) => (
+          <SelectProvider
+            width="100%"
+            options={selectOptions}
+            initialIndex={2}
+            margin="0.75rem 0"
+            render={([currentOption]) => {
+              const { ages, year, state } = data.find(
+                d => d.year === curYear && d.state === currentOption.label
+              );
+              return ages.some(age => age > 0) ? (
+                <React.Fragment>
+                  <Legend
+                    title="Poll worker ages (years)"
+                    labels={colorScale
+                      .range()
+                      .map((color, i) => ({ color, text: keyLabels[i] }))}
+                  />
+                  <NarrowContainer width="70%" fullWidthAt="medium">
+                    <PieChart colorScale={colorScale} values={ages} textFill={COLORS.BLACK} />
+                  </NarrowContainer>
+                </React.Fragment>
+              ) : (
+                <React.Fragment>
+                  <h4>
+                    No data available for {state} in {year}.
+                  </h4>
+                  <p>Please make another selection.</p>
+                </React.Fragment>
+              );
+            }}
+          />
+        )}
+      />
     );
   }
 }
@@ -99,7 +96,7 @@ class VotingPollWorkerAge extends Component {
         render={data => (
           <PureVotingPollWorkerAge
             data={this.cleanQuery(data)}
-            selectOptionsForState={this.getStateOptions(data)}
+            selectOptions={[this.getStateOptions(data)]}
           />
         )}
       />
@@ -108,48 +105,40 @@ class VotingPollWorkerAge extends Component {
 }
 
 PureVotingPollWorkerAge.propTypes = {
-  data: PropTypes.array.isRequired,
-  maxYear: PropTypes.number.isRequired,
-  minYear: PropTypes.number.isRequired,
-  selectOptionsForState: PropTypes.arrayOf(PropTypes.shape({
-    value: PropTypes.isRequired,
-    label: PropTypes.string.isRequired,
-    chartValues: PropTypes.func.isRequired
-  })).isRequired,
-  step: PropTypes.number.isRequired
-  // data: PropTypes.array.isRequired,
-  // graphPadding: PropTypes.shape({
-  //   top: PropTypes.number.isRequired,
-  //   bottom: PropTypes.number.isRequired,
-  //   left: PropTypes.number.isRequired,
-  //   right: PropTypes.number.isRequired
-  // }).isRequired,
-  // height: PropTypes.number.isRequired,
-  // selectOptionsForState: PropTypes.arrayOf(
-  //   PropTypes.shape({
-  //     value: PropTypes.number.isRequired,
-  //     label: PropTypes.string.isRequired
-  //   })
-  // ).isRequired,
-  // width: PropTypes.number.isRequired
+  colorScale: PropTypes.func.isRequired,
+  data: PropTypes.arrayOf(PropTypes.object).isRequired,
+  keyLabels: PropTypes.arrayOf(PropTypes.string).isRequired,
+  sliderData: sliderType,
+  selectOptions: selectType
 };
 
+const MIN_YEAR = 2010;
+const MAX_YEAR = 2016;
+const STEP = 2;
+
 PureVotingPollWorkerAge.defaultProps = {
+  colorScale: scaleOrdinal().range([
+    COLORS.RED,
+    COLORS.ORANGE,
+    COLORS.YELLOW,
+    COLORS.GREEN,
+    COLORS.BLUE,
+    COLORS.PURPLE
+  ]),
   data: [],
-  maxYear: 2016,
-  minYear: 2010,
-  selectOptionsForState: [],
-  step: 2
-  // data: [],
-  // height: 600,
-  // graphPadding: {
-  //   top: 20,
-  //   bottom: 100,
-  //   left: 100,
-  //   right: 20
-  // },
-  // selectOptionsForState: [],
-  // width: 900
+  keyLabels: ["<18", "18-25", "26-40", "41-60", "61-70", ">70"],
+  sliderData: [
+    {
+      min: MIN_YEAR,
+      max: MAX_YEAR,
+      step: STEP,
+      initialValue: MIN_YEAR,
+      color: COLORS.DARK_GRAY,
+      tickCount: Math.round((MAX_YEAR - MIN_YEAR) / STEP) + 1,
+      title: year => `Year: ${year}`
+    }
+  ],
+  selectOptions: []
 };
 
 const query = graphql`
@@ -159,6 +148,9 @@ const query = graphql`
         node {
           year
           state
+          num_jurisdictions
+          jurisdictions_with_age_info
+          poll_workers
           worker_age_group_1
           worker_age_group_2
           worker_age_group_3
