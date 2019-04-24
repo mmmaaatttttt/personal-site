@@ -7,7 +7,7 @@ class SelectProvider extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      currentOptions: props.options.map(d => d[0])
+      currentOptions: props.options.map(d => d[props.initialIndex])
     };
     this.handleOptionFns = props.options.map((_, i) =>
       this.handleOptionChange.bind(this, i)
@@ -51,6 +51,7 @@ class SelectProvider extends Component {
 
 SelectProvider.propTypes = {
   fullWidthAt: PropTypes.string.isRequired,
+  initialIndex: PropTypes.number.isRequired,
   margin: PropTypes.string.isRequired,
   options: selectType,
   render: PropTypes.func.isRequired,
@@ -59,6 +60,7 @@ SelectProvider.propTypes = {
 
 SelectProvider.defaultProps = {
   fullWidthAt: "small",
+  initialIndex: 0,
   margin: "0.75rem 0 0 0",
   options: [],
   render: function(...args) {
