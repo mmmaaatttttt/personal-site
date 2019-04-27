@@ -1,4 +1,5 @@
 import { lighten } from "polished";
+import { total } from "utils/mathHelpers";
 import COLORS from "utils/styles";
 
 const lineOptionsForVoters = [
@@ -135,19 +136,108 @@ const mapOptionsForWorkers = [
 ];
 
 const dataCleanerForFirstBarGraph = data => {
-  return data.allVotingData20082016Csv.edges.map(({node}) => ({
+  return data.allVotingData20082016Csv.edges.map(({ node }) => ({
     year: +node.year,
     abbreviation: node.abbreviation,
     election_participants: +node.election_participants,
     active_registration: +node.active_registration,
     eligible_voters_estimated: +node.eligible_voters_estimated
   }));
+};
+
+const dataCleanerForSecondBarGraph = data => {
+  return data.allVotingData20082016Csv.edges.map(({ node }) => ({
+    year: +node.year,
+    abbreviation: node.abbreviation,
+    election_participants: +node.election_participants,
+    active_registration: +node.active_registration,
+    eligible_voters_estimated: +node.eligible_voters_estimated,
+    poll_workers: +node.poll_workers,
+    polling_places: +node.polling_places,
+    participants_in_jurisdictions_with_poll_worker_info: +node.participants_in_jurisdictions_with_poll_worker_info,
+    participants_in_jurisdictions_with_polling_place_info: +node.participants_in_jurisdictions_with_polling_place_info,
+    difficulty_very_difficult: +node.difficulty_very_difficult,
+    difficulty_somewhat_difficult: +node.difficulty_somewhat_difficult,
+    difficulty_neither_difficult_nor_easy: +node.difficulty_neither_difficult_nor_easy,
+    difficulty_somewhat_easy: +node.difficulty_somewhat_easy,
+    difficulty_very_easy: +node.difficulty_very_easy,
+    ages: [
+      +node.worker_age_group_1,
+      +node.worker_age_group_2,
+      +node.worker_age_group_3,
+      +node.worker_age_group_4,
+      +node.worker_age_group_5,
+      +node.worker_age_group_6
+    ],
+    dem_percent: +node.dem_percent,
+    rep_percent: +node.rep_percent
+  }));
+};
+
+const selectDataForSecondBarGraph = [
+  {
+    label: "Most Democratic States",
+    accessor: d => d.dem_percent,
+    format: ".0f"
+  },
+  {
+    label: "Most Republican States",
+    accessor: d => d.rep_percent,
+    format: ".0f"
+  },
+  ...lineOptionsForVoters
+    .slice(-2)
+    .map(d => ({ ...d, format: d.format.replace("2", "0") })),
+  ...lineOptionsForWorkers
+    .slice(-4)
+    .map(d => ({ ...d, format: d.format.replace("2", "0") })),
+  {
+    label: "Percentage of Reported Poll workers under 18",
+    accessor: _ageGroupHelper(0),
+    format: ".0f"
+  },
+  {
+    label: "Percentage of Reported Poll workers between 18 and 25",
+    accessor: _ageGroupHelper(1),
+    format: ".0f"
+  },
+  {
+    label: "Percentage of Reported Poll workers between 26 and 40",
+    accessor: _ageGroupHelper(2),
+    format: ".0f"
+  },
+  {
+    label: "Percentage of Reported Poll workers between 41 and 60",
+    accessor: _ageGroupHelper(3),
+    format: ".0f"
+  },
+  {
+    label: "Percentage of Reported Poll workers between 61 and 70",
+    accessor: _ageGroupHelper(4),
+    format: ".0f"
+  },
+  {
+    label: "Percentage of Reported Poll workers over 70",
+    accessor: _ageGroupHelper(5),
+    format: ".0f"
+  },
+  {
+    label: "Percentage of voters who don't identify with either party",
+    accessor: d => 100 - d.dem_percent - d.rep_percent,
+    format: ".2f"
+  }
+].map((obj, idx) => ({ ...obj, value: idx }));
+
+function _ageGroupHelper(idx) {
+  return d => d.ages[idx] / total(d.ages);
 }
 
 export {
   dataCleanerForFirstBarGraph,
+  dataCleanerForSecondBarGraph,
   lineOptionsForVoters,
   lineOptionsForWorkers,
   mapOptionsForVoters,
-  mapOptionsForWorkers
+  mapOptionsForWorkers,
+  selectDataForSecondBarGraph
 };

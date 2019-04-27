@@ -2,12 +2,11 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { StaticQuery, graphql } from "gatsby";
 import { scaleLinear } from "d3-scale";
-import { max } from "d3-array";
+import { extent, max } from "d3-array";
 import { BarGraph, NarrowContainer } from "story_components";
 import { SliderProvider, SelectProvider, withCaption } from "providers";
 import { sliderType, selectType } from "utils/types";
 import COLORS from "utils/styles";
-import { lineOptionsForVoters } from "data/strength-in-numbers";
 
 class PureVotingBarChart extends Component {
   render() {
@@ -21,14 +20,22 @@ class PureVotingBarChart extends Component {
             width="100%"
             options={selectData}
             render={([currentOption]) => {
-              const { accessor, colors } = currentOption;
+              const { colorAccessor, colorRange, colorDomain } = this.props;
+              const { accessor, colors, format } = currentOption;
               const width = 900;
               const height = 400;
-              const padding = { top: 0, right: 0, bottom: 6, left: 40}
+              const padding = { top: 0, right: 0, bottom: 6, left: 40 };
+              let colorScale = null;
+              if (colorRange) {
+                colorScale = scaleLinear()
+                  .domain(colorDomain || extent(data, colorAccessor))
+                  .range(colorRange);
+              }
               const allYearData = data.map(d => ({
-                year: d.year,
+                color: colorScale ? colorScale(colorAccessor(d)) : colors[0], // wtf not working.
+                height: accessor(d),
                 key: d.abbreviation,
-                height: accessor(d)
+                year: d.year
               }));
               const yScale = scaleLinear()
                 .domain([0, 1.1 * max(allYearData, d => d.height)])
@@ -37,19 +44,22 @@ class PureVotingBarChart extends Component {
                 .filter(d => d.year === curYear && d.height)
                 .sort((d1, d2) => d1.height - d2.height);
               return (
-                <NarrowContainer width="130%" fullWidthAt="medium" margin="0 0 0 -15%">
+                <NarrowContainer
+                  width="130%"
+                  fullWidthAt="medium"
+                  margin="0 0 0 -15%"
+                >
                   <BarGraph
                     barData={barData}
                     barLabel={d => d.key}
-                    color={colors[0]}
                     height={height}
                     padding={padding}
-                    tickStep={0.1}
+                    // tickStep={0.1}
                     svgId={"bar-graph"}
                     width={width}
                     yScale={yScale}
                     yTickLabelPosition="left"
-                    yTickFormat={".0%"}
+                    yTickFormat={format}
                   />
                 </NarrowContainer>
               );
@@ -63,12 +73,26 @@ class PureVotingBarChart extends Component {
 
 class VotingBarChart extends Component {
   render() {
-    const { dataCleaner } = this.props;
+    const {
+      dataCleaner,
+      selectData,
+      colorRange,
+      colorAccessor,
+      colorDomain
+    } = this.props;
     return (
       <StaticQuery
         query={query}
         render={data => {
-          return <PureVotingBarChart data={dataCleaner(data)} />;
+          return (
+            <PureVotingBarChart
+              data={dataCleaner(data)}
+              selectData={selectData}
+              colorAccessor={colorAccessor}
+              colorRange={colorRange}
+              colorDomain={colorDomain}
+            />
+          );
         }}
       />
     );
@@ -122,9 +146,12 @@ const query = graphql`
 `;
 
 PureVotingBarChart.propTypes = {
-  sliderData: sliderType,
+  colorAccessor: PropTypes.func,
+  colorRange: PropTypes.arrayOf(PropTypes.string),
+  colorRange: PropTypes.arrayOf(PropTypes.number),
+  data: PropTypes.arrayOf(PropTypes.object).isRequired,
   selectData: selectType,
-  data: PropTypes.arrayOf(PropTypes.object).isRequired
+  sliderData: sliderType
 };
 
 const MIN_YEAR = 2008;
@@ -132,6 +159,8 @@ const MAX_YEAR = 2016;
 const STEP = 2;
 
 PureVotingBarChart.defaultProps = {
+  data: [],
+  selectData: [],
   sliderData: [
     {
       min: MIN_YEAR,
@@ -142,9 +171,7 @@ PureVotingBarChart.defaultProps = {
       tickCount: Math.round((MAX_YEAR - MIN_YEAR) / STEP) + 1,
       title: year => `Year: ${year}`
     }
-  ],
-  selectData: [lineOptionsForVoters.slice(-2)],
-  data: []
+  ]
 };
 
 export default withCaption(VotingBarChart);
