@@ -18,13 +18,14 @@ class PureVotingBarChart extends Component {
         render={([curYear]) => (
           <SelectProvider
             width="100%"
+            margin="0.75rem 0"
             options={selectData}
             render={([currentOption]) => {
               const { colorAccessor, colorRange, colorDomain } = this.props;
-              const { accessor, colors, format } = currentOption;
+              const { accessor, colors, format, label } = currentOption;
               const width = 900;
               const height = 400;
-              const padding = { top: 0, right: 0, bottom: 6, left: 40 };
+              const padding = { top: 10, right: 0, bottom: 6, left: 40 };
               let colorScale = null;
               if (colorRange) {
                 colorScale = scaleLinear()
@@ -32,7 +33,7 @@ class PureVotingBarChart extends Component {
                   .range(colorRange);
               }
               const allYearData = data.map(d => ({
-                color: colorScale ? colorScale(colorAccessor(d)) : colors[0], // wtf not working.
+                color: colorScale ? colorScale(colorAccessor(d)) : colors[0],
                 height: accessor(d),
                 key: d.abbreviation,
                 year: d.year
@@ -43,7 +44,7 @@ class PureVotingBarChart extends Component {
               const barData = allYearData
                 .filter(d => d.year === curYear && d.height)
                 .sort((d1, d2) => d1.height - d2.height);
-              return (
+              return barData.length > 0 && barData.some(d => d.height > 0) ? (
                 <NarrowContainer
                   width="130%"
                   fullWidthAt="medium"
@@ -54,7 +55,6 @@ class PureVotingBarChart extends Component {
                     barLabel={d => d.key}
                     height={height}
                     padding={padding}
-                    // tickStep={0.1}
                     svgId={"bar-graph"}
                     width={width}
                     yScale={yScale}
@@ -62,6 +62,13 @@ class PureVotingBarChart extends Component {
                     yTickFormat={format}
                   />
                 </NarrowContainer>
+              ) : (
+                <React.Fragment>
+                  <h4>
+                    {label} has no data for {curYear}.
+                  </h4>
+                  <p>Please make another selection.</p>
+                </React.Fragment>
               );
             }}
           />
@@ -148,7 +155,7 @@ const query = graphql`
 PureVotingBarChart.propTypes = {
   colorAccessor: PropTypes.func,
   colorRange: PropTypes.arrayOf(PropTypes.string),
-  colorRange: PropTypes.arrayOf(PropTypes.number),
+  colorDomain: PropTypes.arrayOf(PropTypes.number),
   data: PropTypes.arrayOf(PropTypes.object).isRequired,
   selectData: selectType,
   sliderData: sliderType
