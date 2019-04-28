@@ -29,7 +29,7 @@ const lineOptionsForVoters = [
     label: "Registration Saturation",
     accessor: ({ active_registration: ar, eligible_voters_estimated: ev }) =>
       ar && ev ? ar / ev : null,
-    format: ".2%",
+    format: ".0%",
     colors: [COLORS.PURPLE]
   },
   {
@@ -37,7 +37,7 @@ const lineOptionsForVoters = [
     label: "Election Turnout",
     accessor: ({ election_participants: ep, eligible_voters_estimated: ev }) =>
       ep && ev ? ep / ev : null,
-    format: ".2%",
+    format: ".0%",
     colors: [COLORS.MAROON]
   }
 ];
@@ -120,7 +120,7 @@ const lineOptionsForWorkers = [
       let totalDifficulty = 1 * d1 + 2 * d2 + 3 * d3 + 4 * d4 + 5 * d5;
       return numCounts > 0 ? totalDifficulty / numCounts : null;
     },
-    format: ".2f",
+    format: ".1f",
     colors: [COLORS.PURPLE]
   }
 ];
@@ -194,37 +194,37 @@ const selectDataForSecondBarGraph = [
   {
     label: "Percentage of Reported Poll workers under 18",
     accessor: _ageGroupHelper(0),
-    format: ".0f"
+    format: ".0%"
   },
   {
     label: "Percentage of Reported Poll workers between 18 and 25",
     accessor: _ageGroupHelper(1),
-    format: ".0f"
+    format: ".0%"
   },
   {
     label: "Percentage of Reported Poll workers between 26 and 40",
     accessor: _ageGroupHelper(2),
-    format: ".0f"
+    format: ".0%"
   },
   {
     label: "Percentage of Reported Poll workers between 41 and 60",
     accessor: _ageGroupHelper(3),
-    format: ".0f"
+    format: ".0%"
   },
   {
     label: "Percentage of Reported Poll workers between 61 and 70",
     accessor: _ageGroupHelper(4),
-    format: ".0f"
+    format: ".0%"
   },
   {
     label: "Percentage of Reported Poll workers over 70",
     accessor: _ageGroupHelper(5),
-    format: ".0f"
+    format: ".0%"
   },
   {
     label: "Percentage of voters who don't identify with either party",
-    accessor: d => 100 - d.dem_percent - d.rep_percent,
-    format: ".2f"
+    accessor: d => 1 - (d.dem_percent + d.rep_percent) / 100,
+    format: ".0%"
   }
 ].map((obj, idx) => ({ ...obj, value: idx }));
 
