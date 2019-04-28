@@ -1,9 +1,9 @@
 ---
 title: "Strength in Numbers"
-date: "2019-03-21"
-featured_image: "../../images/featured_images/fairest_of_them_all.jpg"
-caption: "A mathematical exploration of fairness."
-featured_image_caption: "Playing a (hopefully fair) board game. Image credit: Brendan Humphreys from Pexels."
+date: "2019-04-28"
+featured_image: "../../images/featured_images/strength_in_numbers.jpg"
+caption: "Exploring American voting trends in the 21st century."
+featured_image_caption: "Image credit: SnapwireSnaps from Pixabay."
 ---
 
 import {
@@ -16,22 +16,24 @@ import {
 import * as d from "data/strength-in-numbers.js";
 import COLORS from "utils/styles";
 
-Over the past few years, I've read two books that have really left a lasting
-impression. One of them is called [The Merchant of Doubt: How a Handful of Scientists Obscured the Truth on Issues from Tobacco Smoke to Global Warming](https://www.amazon.com/Merchants-Doubt-Handful-Scientists-Obscured/dp/1608193942).
-The subtitle says it all; it's an absolutely depressing true story about how a
+Over the past few years, I've read two books that have kept me up at night.
+
+One of them is called [The Merchant of Doubt: How a Handful of Scientists Obscured the Truth on Issues from Tobacco Smoke to Global Warming](https://www.amazon.com/Merchants-Doubt-Handful-Scientists-Obscured/dp/1608193942).
+The subtitle says it all; it's a stunningly depressing true story about how a
 small group of scientists waged a campaign against science itself, with
 remarkable success.
 
 The other is called [Give Us the Ballot: The Modern Struggle for Voting Rights in America](https://www.amazon.com/Give-Us-Ballot-Struggle-America/dp/1250094720).
-Once again, it's all right there in the title. This one's the absolutely
-depressing true story about how a small group of racists waged a campaign against voting rights for historically disenfranchised groups, again with remarkable success.
+This one's a stunningly depressing true story about how a small group of racists
+waged a campaign against voting rights for historically disenfranchised groups,
+again with remarkable success.
 
 While these topics may sound like they fall under umbrellas of science, history,
-or civics, there's plenty of related mathematical conversations to be had as
-well. In terms of climate change, I wrote a story [last year](https://mattlane.us/stories/warming-dots/) on general mathematical models
-of how natural resource depletion can affect populations. In this story, I'd
-like to turn a mathematical lens on the topic of voting, and slap a coat of
-paint on what would otherwise be a bunch of tabular data.
+or civics, there's plenty of relevant mathematical conversations here, too. 
+In terms of climate change, I wrote a story [last year](https://mattlane.us/stories/warming-dots/)
+on general mathematical models of natural resource depletion and its effects on
+populations. In this story, I'd like to turn a mathematical lens on the topic of
+voting, and slap a coat of paint on a bunch of tabular data.
 
 ---
 
@@ -39,7 +41,7 @@ paint on what would otherwise be a bunch of tabular data.
 
 Let's explore results from the past decade of United States elections. Every two
 years, we elect our representatives in Congress, along with potentially a
-senator or a president. Well after the election is complete, the U.S. Assistance
+senator or a president. Months after the election is complete, the U.S. Assistance
 Commission (EAC) releases survey data on the election. This data includes information
 on things like registration, voter participation, and the number of precincts
 and poll workers. (More information can be found on their [website](https://www.eac.gov/research-and-data/datasets-codebooks-and-surveys/).)
@@ -47,9 +49,11 @@ and poll workers. (More information can be found on their [website](https://www.
 Along with the data, the EAC provides a report summarizing its findings. But
 with a decade of past results to compare against, I was curious about
 visualizing their findings across time. How have election patterns changed since
-2008, if at all? To start answering this question, I pulled out the information I was curious about, and consolidated it by year. If you're interested, you can find the raw data [here](https://github.com/mmmaaatttttt/personal-site/blob/master/src/data/csv/voting_data_2008_2016.csv).
+2008, if at all? To start answering this question, I pulled out the information
+I was curious about, and consolidated it by year. 
 
-On their own, unfortunately, numbers aren't the greatest storytellers. Let's try to frame all of these values into a more cohesive narrative.
+On their own, unfortunately, numbers aren't the greatest storytellers. Let's try
+to frame all of these values into a more cohesive narrative.
 
 (Note that results for the 2018 election aren't available yet. I'll add that
 data in once it's released.)
@@ -64,10 +68,7 @@ states compare across every election since 2008. There are five different
 statistics to choose from:
 
 1. **Active Registered Voters.** How many active registered voters did the state
-   report for that year? (Mostly this is taken from EAC reporting, though the New
-   York data in 2016 is from
-   [this](https://www.elections.ny.gov/NYSBOE/enrollment/county/county_nov16.pdf)
-   source.)
+   report for that year?
 
 2. **Election Participants.** How many ballots were received? Note that in some
    jurisdictions can include rejected provisional ballots. Think of it as a slight
@@ -86,6 +87,11 @@ statistics to choose from:
 
 5. **Election Turnout.** What percentage of eligible voters actually
    participated in the election?
+
+Nearly all of the data for these statistics comes from EAC reporting, though there
+are some inconsistencies requiring alternative sources. In particular, the 2016 New York data
+is from [here](https://www.elections.ny.gov/NYSBOE/enrollment/county/county_nov16.pdf),
+and the 2014 Alabama data is from [here](https://www.sos.alabama.gov/sites/default/files/voter-pdfs/turnout.pdf).
 
 Here's how the country has looked through the lens of each of these statistics
 since 2008:
@@ -112,9 +118,9 @@ A few observations:
   midterms.
 
 - In terms of average turnout across years, three of the top five states are
-  neighbors (Minnesota, Wisconsin, and Iowa). The bottom five performers according
-  to this metric are more geographically distributed: the worst offenders are
-  Mississippi, Texas, West Virginia, Utah, and Hawaii.
+  neighbors (Minnesota, Wisconsin, and Iowa). The bottom five performers are
+  more geographically distributed: the worst offenders are Mississippi, Texas,
+  West Virginia, Utah, and Hawaii.
 
   Here's a table summarizing the findings. You can check out the top or bottom
   performers for either registration saturation or voter turnout. Note that
@@ -123,9 +129,13 @@ A few observations:
 
 <VotingTable caption="Table 1: Average registration and turnout percentages by state." />
 
-- Among recent elections, states have had a difficult time surpassing the turnout they witnessed in 2008. In fact, 34 states recorded their highest turnout during that election, as opposed to only 13 during the 2016 election.
+- Among recent elections, states have had a difficult time surpassing their 2008
+turnout. In fact, 34 states recorded their highest turnout during that election,
+as opposed to only 13 during the 2016 election.
 
-For more on the percentages, here are histograms highlighting the distrubtion of registration saturation and turnout by year. Note, once again, the impact of a presidential election:
+For more on the percentages, here are histograms highlighting the distrubtion of
+registration saturation and turnout by year. Note, once again, the impact of a
+presidential election:
 
 <VotingBarChart
   caption="Figure 3: Bar graph of registration and turnout by state."
@@ -133,16 +143,22 @@ For more on the percentages, here are histograms highlighting the distrubtion of
   selectData={[d.lineOptionsForVoters.slice(-2)]}
 />
 
+(The careful reader may have noticed that some states on both sides of the
+political spectrum have higher registration numbers than estimated eligible
+voters. Nothing nefarious is going on here; it's typically boils down to
+inconsistences in methodology for coming up with these numbers. For more on this,
+see [Snopes](https://www.snopes.com/fact-check/us-more-registered-voters-than-adults/).
+[Tl;dr](https://en.wikipedia.org/wiki/Wikipedia:Too_long;_didn%27t_read): counting is hard.)
+
 ---
 
 ### The Workers
 
-What I like about the EAC data is that it doesn't just track how many people
-participated in the election by voting. It also tracks how many people
-participated by _working_ on election day. While the data isn't as readily
-available, many report how many poll workers a jurisdiction had, and some even
-go so far as to report information on the ages of poll workers, or the
-difficulty in finding poll workers.
+What I like about the EAC data is that it doesn't just track election
+participants. It also tracks election _workers_. While the data isn't as readily
+available, many jurisdictions report how many poll workers they had, and some
+even go so far as to report information on the ages of poll workers, or how
+difficult it was to find them.
 
 Let's start with the fundamentals. Here are our map and line charts revisited,
 but with the focus on poll workers instead of voters. The statistics you can
@@ -154,23 +170,23 @@ explore are:
    workers or the difficulty in finding poll workers.
 
 2. **Poll Workers.** How many poll workers worked on election day? Since not
-   every jurisdiction in a state reports these numbers, the counts you see should
-   be considered a lower bound on the number of poll workers.
+   every jurisdiction reports these numbers, the counts you see are a lower
+   bound on the number of workers.
 
 3. **Polling Places.** How many polling places were there on election day? Since
-   not every jurisdiction in a state reports these numbers, the counts you see
-   should be considered a lower bound on the number of polling places.
+   not every jurisdiction reports these numbers, the counts you see are a lower
+   bound on the number of polling places.
 
 4. **Poll Workers per Polling Place.** On average, how many poll workers were
    there for each polling place?
 
 5. **Poll Workers per 1,000 Election Participants.** How many poll workers were
-   there as a fraction of the population? Here we consider only election
-   participants from jurisdictions that reported poll worker information.
+   there as a fraction of the population? (Here we consider only election
+   participants from jurisdictions that reported poll worker information.)
 
 6. **Polling Places per 1,000 Election Participants.** How many polling places
-   were there as a fraction of the population? Here we consider only election
-   participants from jurisdictions that reported polling place information.
+   were there as a fraction of the population? (Here we consider only election
+   participants from jurisdictions that reported polling place information.)
 
 7. **Average Difficulty of Finding Poll Workers?** All jurisdictions are asked
    to rate the difficulty of finding poll workers for a given election on a scale
@@ -206,13 +222,12 @@ What do you notice by exploring these graphs? Here are some things I noticed:
   vote by mail system in place. This has the effect of skewing the poll worker
   per polling place ratio quite high.
 
-- The number of polling places per 1000 participants sometimes says more about
-  the mechanics of that state's voting system than anything else. The three states
-  with the lowest ratio (Oregon, Washington, Colorado) on average across all
-  elections are also the three with the most robust vote by mail programs. On the
-  other hand, of the four states with the highest ratio (Utah, West Virginia,
-  Mississippi, Pennsylvania), only Utah and West Virginia offer some form of early
-  voting.
+- The number of polling places per 1,000 participants sometimes says more about
+  the mechanics of that state's voting system than anything else. The three
+  states with the lowest ratio (Oregon, Washington, Colorado) are also the three
+  with the most robust vote by mail programs. On the other hand, of the four
+  states with the highest ratio (Utah, West Virginia, Mississippi,
+  Pennsylvania), only Utah and West Virginia offer some form of early voting.
 
 - With fewer parcipants in off-years, the per capita statistics (poll workers
   and polling places per 1,000 participants) tend to see a boost during the
@@ -239,12 +254,26 @@ than 20% of reported workers for the 2012 election were minors.
 
 ### It's Party Time
 
-One other dimension that we haven't considered yet is the political leanings of election participants.
+One other dimension that we haven't considered yet is the political leanings of
+the population. Are there any trends among states that lean Republican or
+Democratic?
 
--- why looking at election results can be problematic (personality driven, not every congressional district has option from both parties)
--- here's data on political party affiliation
--- visualization to show influence of party affiliation --- scatterplot? histogram??
--- histogram: bar color = affiliation, slide for year, bins adjust. maybe this is best
+To answer this question, we need data on the political affiliations of state
+electorates. Election results themselves provide some of this information, but
+this data can be somewhat problematic. For example, for Congressional races some
+districts are so heavily Republican or Democratic that candidates run unopposed,
+making it impossible to suss out party affiliation from the final vote tallies.
+
+In order to get a more complete picture, I pulled data from Gallup surveys on
+party affiliation by state for each election year. These surveys record the
+percentage of respondants that identify as Republican or lean Repbulican, as
+well as the percentage that identify as Democrat or lean Democrat.
+
+Below is another bar chart. Each bar corresponds to a state (including
+Washington, D.C.). The more blue the bar, the more the state leans Democratic;
+the more red the bar, the more Republican. You can adjust the election year as
+well as select one of several statistics to see how party affiliation does (or
+doesn't) play a role.
 
 <VotingBarChart
   caption="Figure 7: Exploring the influence of party affiliation on other statistics."
@@ -255,10 +284,53 @@ One other dimension that we haven't considered yet is the political leanings of 
   colorAccessor={d => d.rep_percent - d.dem_percent}
 />
 
+Here are some observations:
+
+- As has been [well documented](https://www.quorum.us/data-driven-insights/under-obama-democrats-suffer-largest-loss-in-power-since-eisenhower/291/),
+Democratic party affiliation suffered huge setbacks between 2008 and 2016.
+Democrats lost over a dozen governorships and hundreds of state legislature
+seats between 2008 and 2016, as well as losing majorities in the House and a
+supermajority in the Senate. These losses are reflected in the party affiliation
+graphs for Democrats and Republicans between 2008 and 2016.
+
+- Midterm elections have substantially lower turnouts than presidential
+elections. Within a given election, it looks like turnout tends to be higher in
+states that are more likely to be tossup states. In other words, states that are
+solid blue or solid red tend to have lower turnouts.
+
+- While young people overall are much less likely to work at the polls, blue
+states are more likely to have young poll workers than red states.
+
+What other things do you notice?
 
 ---
 
 ### Conclusion
+
+Looking at election data over time can provide us with a pulse check on the
+health of our grand experiment. The EAC data provides a great way to highlight
+common election statistics like turnout. It's also useful able to shine a light
+on the health of our elections by measuring how well they are staffed, and how
+many polling places we provide to our citizens. Unfortunately, these latter
+metrics appear to be headed in the wrong direction: poll workers are getting
+harder to find, on average, and reporting on poll workers has decreased.
+
+It's a sad fact that while many states are taking concrete steps towards making
+voting easy and more accessible, other states are adopting proposals so
+regressive they could been written by Jim Crow legislators more than a
+century ago. In Florida, for example, legislators are trying to roll back
+efforts to restore voting rights for felons by enacting a
+[modern day poll tax](https://www.nytimes.com/2019/03/22/opinion/voting-rights-florida.html).
+In Tennessee, efforts are underway to criminalize common errors in 
+[voter registration drives](https://www.vox.com/policy-and-politics/2019/4/25/18516777/tennessee-senate-voter-registration-drives-legislation-fines).
+These efforts, though upsetting, are not that suprising when understood in the larger
+context of the fight for voting rights detailed so well in _Give Us the Ballot._
+
+We're fortunate that organizations continue to collect data on both the
+results and the general health of our elections. I've taken a stab at slicing
+the data in some ways I found interesting, but I don't have a monopoly on
+staring at numbers. If you're interested in digging deeper, you can find the raw
+data [here](https://github.com/mmmaaatttttt/personal-site/blob/master/src/data/csv/voting_data_2008_2016.csv).
 
 Sources:
 
@@ -266,4 +338,4 @@ Sources:
 - [Voter Turnout Data](http://www.electproject.org/home/voter-turnout/voter-turnout-data), by the United States Elections Project
 - [The Merchants of Doubt](https://www.amazon.com/Merchants-Doubt-Handful-Scientists-Obscured/dp/1608193942), by Naomi Oreskes and Erik Conway.
 - [Give Us the Ballot](https://www.amazon.com/Give-Us-Ballot-Struggle-America/dp/1250094720), by Ari Berman.
-- Gallup surveys on political affiliation by state: [2016](https://news.gallup.com/poll/203117/gop-maintains-edge-state-party-affiliation-2016.aspx), [2014](https://news.gallup.com/poll/181475/massachusetts-maryland-democratic-states.aspx), [2012](https://news.gallup.com/poll/160175/blue-states-outnumber-red-states.aspx), [2010](https://news.gallup.com/poll/146234/number-solidly-democratic-states-cut-half.aspx), [2008](https://news.gallup.com/poll/114016/state-states-political-party-affiliation.aspx)
+- Gallup surveys on political affiliation by state: [2016](https://news.gallup.com/poll/203117/gop-maintains-edge-state-party-affiliation-2016.aspx), [2014](https://news.gallup.com/poll/181475/massachusetts-maryland-democratic-states.aspx), [2012](https://news.gallup.com/poll/160175/blue-states-outnumber-red-states.aspx), [2010](https://news.gallup.com/poll/146234/number-solidly-democratic-states-cut-half.aspx), [2008](https://news.gallup.com/poll/114016/state-states-political-party-affiliation.aspx).
