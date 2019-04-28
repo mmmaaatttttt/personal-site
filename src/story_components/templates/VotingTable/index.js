@@ -22,10 +22,10 @@ class PureVotingTable extends Component {
 
   renderSortIcon(key) {
     const { sortKey, ascending } = this.state;
-    let color = COLORS.LIGHT_GRAY;
+    let color = COLORS.DARK_GRAY;
     let name = "sort-up";
     if (sortKey === key) {
-      color = COLORS.GREEN;
+      color = COLORS.DARK_GREEN;
       if (!ascending) {
         name = "sort-down";
       }
