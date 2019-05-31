@@ -169,7 +169,7 @@ BarGraph.propTypes = {
   tickFormat: PropTypes.string,
   yTickLabelPosition: PropTypes.oneOf(["bottom", "left"]),
   yTickFormat: PropTypes.string,
-  tickStep: PropTypes.number.isRequired,
+  tickStep: PropTypes.number,
   timing: PropTypes.object.isRequired,
   svgId: PropTypes.string.isRequired,
   width: PropTypes.number.isRequired,
