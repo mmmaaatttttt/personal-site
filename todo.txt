@@ -3,6 +3,7 @@
 - pagination for stories
 - search for stories
 - fewer decimal places for orchard-game.js
+- story title page: make nav color customizable
 
 LOW PRIORITY
 - get more heat map data (mayyybeeeee)

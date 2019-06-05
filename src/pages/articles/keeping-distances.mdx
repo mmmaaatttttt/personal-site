@@ -1,0 +1,210 @@
+---
+title: "Keeping Distances"
+date: "2019-07-01"
+featured_image: "../../images/featured_images/keeping_distances.jpg"
+caption: "distance caption"
+featured_image_caption: "distance image caption"
+---
+
+When was the last time you went more than a day without thinking about distance?
+It might seem like a strange question. But notions of distance, whether literal
+or metaphorical, appear frequently in my own life.
+
+Here are some distance-related thoughts that creep into my mind on an almost daily basis:
+
+  - Where should I go for lunch today? What's *nearby* and delicious?
+
+  - What are my goals for today? How *close* am I to meeting them?
+
+  - Is the world still on fire today? What can I do to help bring society *closer* to
+  the more empathetic, thoughtful, and sustainable ideal in my head?
+
+With distance comes a notion of proximity: when things are close, and when
+things are far away. Sometimes this proximity is objective and easy to measure.
+Other times, it is more abstract. Regardless of the way the terms are used,
+though, nearly everyone has an intuition for what distance means.
+
+Mathematician [Morris Kline](https://en.wikipedia.org/wiki/Morris_Kline) once
+wrote that "Mathematicians create by acts of insights and intuition." So it is
+for the intuitive notion of distance. In what follows, I'd like to explore
+different examples of distances in mathematics. We'll start with the most
+well-known formulation, and from there will move on to more exotic examples.
+We'll see what ties all of these distances together, and what makes each one of
+them unique.
+
+Let's get close to some distances!
+
+---
+
+### Taxicab Calculations
+
+In geometry class, every student learns that the shortest distance between two
+points is a straight line. And if you know the coordinates of those points, with
+the help of the Pythagorean theorem you can even calculate this minimal
+distance. If you connect the points with a horizontal and a vertical line
+segment, these segments will form two sides of a right triangle. The hypotenuse
+of this triangle represents that shortest distance.
+
+DEMONSTRATION
+  Drag points, see side lengths and hypotenuse change
+
+When looking at a map, this shortest distance is often described by saying it's
+the distance "as the crow flies." Unfortunately, dear reader, if you're anything
+like me, you are not a crow. For everyone tethered to the ground, this shortest
+distance is typically unattainable. More often, you're constrained by the roads
+in the town or city you live in.
+
+Enter the **manhattan distance**, also known as the **taxicab geometry.** This
+is a way of measuring distance that assumes you're constrained to grid. Such a
+notion may seem strange in a math classroom, but in the real world we measure
+distances in this way all the time (just ask Google Maps). We often talk about
+distances between city locations in terms of blocks: how many over, and how many
+up or down. This is just the manhattan distance.
+
+In this taxicab geometry, there are no diagonals. From every point on the grid,
+you can move in one of four directions: up, down, left, or right. Such a
+restriction still leads to a perfectly good notion of distance. However, it
+comes with some slightly surprising properties.
+
+For one, unlike the notion of distance you learn about in high school geometry,
+when it comes to connecting two points in the taxicab geometry, there is *no
+unique shortest path* in general. For example, if you're trying to connect two
+opposite corners of a square, you have two paths to choose from: clockwise or
+counter-clockwise.
+
+Here's a demonstration that let's you explore how many different paths will
+connect two points when using the manhattan distance.
+
+DEMONSTRATION
+  Drag points, slider to highlight different numbers of paths
+
+For another fun bit of trivia, let's explore what circles look like in this
+geometry. You can define a circle to simply be the set of points that are a
+fixed distance from some central point. As you may recall, this fixed distance
+is called the **radius** of the circle.
+
+With the manhattan distance on a grid, circles always consist of a finite number
+of points. For instance, a circle of radius 1 centered at any point will consist
+of the four points on either side of the center.
+
+Here's how a circle looks in the taxicab geometry as you increase the radius:
+
+DEMONSTRATION
+  Drag slider, increase radius
+
+As you can see, circles in this geometry are just rotated squares! Moreover, the
+circumference of any circle in this geometry is just the radius multiplied by 8.
+As a consequence, the ratio of a circle's circumference to twice its radius,
+which in traditional geometry has the value &pi; &approx; 3.14159..., has a distinctly less
+mysterious flavor here. As far as the manhattan distance is concerned, &pi; is
+simply equal to 4.
+
+---
+
+### Hamming it Up
+
+Whenever I write a story, I make typos. Fortunately, my computer can help alert
+me to these mistakes, and if I'm paying attention, they're easy to correct.
+
+But how does the computer know when I've made a mistake? As it turns out, the
+idea boils down to distance.
+
+Intuitively, this makes sense. If I type matehmatics when I mean to type
+mathematics, we can agree that the misspelled word is *close* to the correctly
+spelled word. But in order to make this intuition rigorous, we need a more
+precise understanding of what "close" means in this context.
+
+Let's take a look at three notions of distance when we're talking about words
+instead of points.
+
+##### Hamming Distance
+
+The [Hamming distance](https://en.wikipedia.org/wiki/Hamming_distance) is a
+measurement you can use on words of the same length. It counts up the number of
+positions at which the corresponding letters in the word are different.
+
+For example, "ghost" and "roast" have a hamming distance of 3, because the first
+three characters in the two words are different, while the last two are the
+same.
+
+Note the order of letters here is important! the "o" in "ghost" doesn't
+count as a match with the "o" in "roast", because "o" is the third letter in
+ghost but the second letter in roast.
+
+Since the words you're comparing must have the same length, the Hamming distance
+isn't practical as a spell-checking tool. More common applications for this
+distance include error detecting / correcting. See the references at the end for
+more details. 
+
+##### Levenshtein Distance
+
+If we want to compare words of different lengths, we need a different way to
+measure distance. The [Levenshtein distance](https://en.wikipedia.org/wiki/Levenshtein_distance)
+accomplishes this goal by generalizing, in some sense, the Hamming distance.
+
+The Levenshtein distance calculates the distance between words as being the
+number of single-character edits needed to transform one word to the other. An
+edit is defined as the addition of a letter, the removal of a letter, or the
+exchange of a letter at a given position for a different letter.
+
+For example, the Levenshtein distance between "friend" and "foe" is 4: change
+the "r" to an "o" and then delete the "i", "n", and "d." 
+
+When the two strings are of equal length, the Hamming distance is an upper bound
+for the Levenshtein distance, but sometimes the Levenshtein will be shorter. For
+example, "tree" and "reed" have a Hamming distance of 4, but a Levenshtein
+distance of only 2, since you can delete the "t" from the start of "tree" and
+then add a "d" to the end.
+
+##### Damerau-Levenshtein Distance
+
+Let's return to my original typo: matehmatics instead of mathematics. In this
+case, the Hamming distance is well-defined, and like the Levenshtein distance it
+equals 2.
+
+In a 1964 paper titled "A technique for computer detection and correction of
+spelling errors," Fred Damerau added a slight modification to the Levenshtein
+distance. In what's now known as the [Damerau-Levenshtein distance](https://en.wikipedia.org/wiki/Damerau%E2%80%93Levenshtein_distance), swapping of
+two adjacent characters counts as a single edit, rather than two. According to
+this distance, matehmatics is only one edit away from mathematics.
+
+Damerau motivated this change by observing that more than 80% of typos were
+caused by one of the four edit types that the Damerau-Levenshtein distance
+tracks: a missing letter, an extra letter, an incorrect letter, or two adjacent
+letters out of order.
+
+Here's a demonstration for you to play around with these three notions of word
+distance. What would a circle look like in this geometry?
+
+DEMONSTRATION
+  Type a word in two inputs, see the various distance values
+
+---
+
+### Fourier Farness
+
+
+
+---
+
+### What's in a Distance?
+
+- note that some extensions of Levenshtein fail to be true distances in the mathematical sense. 
+https://en.wikipedia.org/wiki/Damerau%E2%80%93Levenshtein_distance
+
+
+---
+
+### p-adics (rename)
+
+---
+
+### Conclusion
+
+Sources:
+
+- [What algorithm gives suggestions in a spell checker?](https://stackoverflow.com/questions/2294915/what-algorithm-gives-suggestions-in-a-spell-checker)
+
+- [Hamming Distance and Error Correcting Codes](http://www.oxfordmathcenter.com/drupal7/node/525)
+
+- [A technique for computer detection and correction of spelling errors](https://dl.acm.org/citation.cfm?doid=363958.363994)
