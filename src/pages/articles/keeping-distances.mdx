@@ -181,9 +181,39 @@ DEMONSTRATION
 
 ---
 
-### Fourier Farness
+### Function Farness
 
+When it comes to math, we often think about distances between points. But points
+aren't the only mathematical objects that can be compared for closeness.
 
+We can also define a notion of distance on functions. In fact, we can define
+infinitely many such notions!
+
+What might it mean for two functions to be close together or far apart? If you
+think about it for a minute or two, you can probably come up with some ideas.
+Here we'll explore two ideas.
+
+One way to measure distance is to look at the **area** between the two
+functions. If the area is large, then the functions must be far apart in some
+sense. Conversely, if the area is 0, then under some reasonable
+assumptions<sup>*</sup> on the functions, they must be equal.
+
+Another way to measure distance is to look at the **largest difference** between
+the function values for a given input. For instance, if one function evaluates
+to 100 while another one evaluates to 50 at the same input, the difference at
+this input would be 50, and so the distance between the functions would be at
+least 50. Once again, under some reasonable assumptions on the functions, if
+this distance is 0, the functions are the same.
+
+Here's a demonstration where you can adjust some simple functions and see both
+of these distances change.
+
+DEMONSTRATION
+  Type a word in two inputs, see the various distance values
+
+A question for you to ponder: if the largest difference distance is small, what
+(if anything) can you say about the area distance? If the area distance is
+small, what (if anything) can you say about the largest difference distance?
 
 ---
 
@@ -200,6 +230,11 @@ https://en.wikipedia.org/wiki/Damerau%E2%80%93Levenshtein_distance
 ---
 
 ### Conclusion
+
+* For the mathematicians in the room, I'm intentionally omitting technical
+details. If it makes you feel better, you can assume that all of the functions I
+discuss in this section are continuous real-valued functions, defined on a
+closed and bounded interval.
 
 Sources:
 
