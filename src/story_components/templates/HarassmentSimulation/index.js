@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { select } from "d3-selection";
 import { darken } from "polished";
-import { withCaption } from "providers";
 import COLORS from "utils/styles";
 import { capitalize } from "utils/stringHelpers";
 import {
@@ -14,6 +13,7 @@ import {
   ButtonGroup,
   HorizontalBar
 } from "story_components";
+import { withCaption } from "providers";
 
 class HarassmentSimulation extends Component {
   state = {

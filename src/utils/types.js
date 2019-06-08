@@ -4,7 +4,7 @@ const sliderType = PropTypes.arrayOf(
   PropTypes.shape({
     min: PropTypes.number.isRequired,
     max: PropTypes.number.isRequired,
-    step: PropTypes.number.isRequired,
+    step: PropTypes.number,
     initialValue: PropTypes.number.isRequired,
     title: PropTypes.oneOfType([PropTypes.string, PropTypes.func]).isRequired,
     color: PropTypes.string,

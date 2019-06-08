@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { scaleLinear } from "d3-scale";
-import { withCaption } from "providers";
 import COLORS from "utils/styles";
 import updateSpeeds from "data/income-inequality.js";
 import {
@@ -12,6 +11,7 @@ import {
   SliderGroup,
   ButtonGroup
 } from "story_components";
+import { withCaption } from "providers";
 
 class EconomySimulation extends Component {
   state = {

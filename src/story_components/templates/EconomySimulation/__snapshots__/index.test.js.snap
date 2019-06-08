@@ -3,6 +3,7 @@
 exports[`smoke and snapshot tests renders first demonstration successfully 1`] = `
 <styled.div
   fullWidthAt="extraSmall"
+  margin="0 auto"
   width="50%"
 >
   <SliderGroup
@@ -71,6 +72,7 @@ exports[`smoke and snapshot tests renders first demonstration successfully 1`] =
 exports[`smoke and snapshot tests renders first demonstration successfully 2`] = `
 <styled.div
   fullWidthAt="extraSmall"
+  margin="0 auto"
   width="50%"
 >
   <SliderGroup
@@ -139,6 +141,7 @@ exports[`smoke and snapshot tests renders first demonstration successfully 2`] =
 exports[`smoke and snapshot tests renders second demonstration successfully 1`] = `
 <styled.div
   fullWidthAt="extraSmall"
+  margin="0 auto"
   width="50%"
 >
   <SliderGroup

@@ -2,83 +2,31 @@
 
 exports[`smoke and snapshot tests renders first demonstration successfully 1`] = `
 <div>
-  <SliderGroup
+  <SliderProvider
     column={true}
-    data={
+    fullWidthAt="small"
+    initialData={
       Array [
         Object {
           "color": "#555555",
-          "handleValueChange": [Function],
+          "initialValue": 2016,
           "max": 2016,
           "min": 1996,
           "step": 2,
-          "title": "Year: 2016",
-          "value": 2016,
+          "title": [Function],
         },
         Object {
           "color": "#555555",
-          "handleValueChange": [Function],
+          "initialValue": 2,
           "max": 10,
           "min": 2,
           "step": 1,
-          "title": "Minimum Number of Electors: 2",
-          "value": 2,
+          "title": [Function],
         },
       ]
     }
+    render={[Function]}
+    width="100%"
   />
-  <styled.div
-    break="small"
-  >
-    <USMap
-      addGeometryProperties={[Function]}
-      colors={
-        Array [
-          "#2227FF",
-          "#FFFFFF",
-          "#FF3C23",
-        ]
-      }
-      data={Array []}
-      domain={
-        Array [
-          -0.5,
-          0,
-          0.5,
-        ]
-      }
-      fillAccessor={[Function]}
-      getTooltipBody={[Function]}
-      getTooltipTitle={[Function]}
-      keyAccessor={[Function]}
-      scale={1950}
-      topoKey="states"
-      translate={
-        Array [
-          800,
-          460,
-        ]
-      }
-    />
-    <div>
-      <BarGraph
-        barData={Array []}
-        barLabel={[Function]}
-        color="#A05E52"
-        height={900}
-        labelFontSize="1.3rem"
-        padding={20}
-        svgId="eg-chart"
-        tickStep={2}
-        timing={
-          Object {
-            "duration": 100,
-          }
-        }
-        width={1600}
-        yScale={[Function]}
-      />
-    </div>
-  </styled.div>
 </div>
 `;

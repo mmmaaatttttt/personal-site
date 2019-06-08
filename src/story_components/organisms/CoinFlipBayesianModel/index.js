@@ -4,7 +4,6 @@ import Animate from "react-move/Animate";
 import { scaleLinear } from "d3-scale";
 import { max } from "d3-array";
 import { beta } from "jStat";
-import { withCaption } from "providers";
 import {
   Button,
   FlexContainer,
@@ -13,6 +12,7 @@ import {
   NarrowContainer,
   ToggleSwitch
 } from "story_components";
+import { withCaption } from "providers";
 import COLORS from "utils/styles";
 
 class CoinFlipBayesianModel extends PureComponent {

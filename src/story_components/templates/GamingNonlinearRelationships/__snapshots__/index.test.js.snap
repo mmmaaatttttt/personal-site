@@ -118,9 +118,11 @@ exports[`smoke and snapshot tests renders first demonstration successfully 1`] =
       xLabelPosition="center-right"
       xScale={[Function]}
       yLabel="Feelings"
+      yLabelOffset={0}
       yScale={[Function]}
     >
       <LinePlot
+        curve="curveNatural"
         graphData={
           Array [
             Object {
@@ -4136,6 +4138,7 @@ exports[`smoke and snapshot tests renders first demonstration successfully 1`] =
         yScale={[Function]}
       />
       <LinePlot
+        curve="curveNatural"
         graphData={
           Array [
             Object {
@@ -8165,9 +8168,11 @@ exports[`smoke and snapshot tests renders first demonstration successfully 1`] =
       xLabelPosition="center-right"
       xScale={[Function]}
       yLabel="Feelings"
+      yLabelOffset={0}
       yScale={[Function]}
     >
       <LinePlot
+        curve="curveNatural"
         graphData={
           Array [
             Object {
@@ -12183,6 +12188,7 @@ exports[`smoke and snapshot tests renders first demonstration successfully 1`] =
         yScale={[Function]}
       />
       <LinePlot
+        curve="curveNatural"
         graphData={
           Array [
             Object {
@@ -16376,9 +16382,11 @@ exports[`smoke and snapshot tests renders second demonstraction successfully 1`]
       xLabelPosition="center-right"
       xScale={[Function]}
       yLabel="Feelings"
+      yLabelOffset={0}
       yScale={[Function]}
     >
       <LinePlot
+        curve="curveNatural"
         graphData={
           Array [
             Object {
@@ -24390,6 +24398,7 @@ exports[`smoke and snapshot tests renders second demonstraction successfully 1`]
         yScale={[Function]}
       />
       <LinePlot
+        curve="curveNatural"
         graphData={
           Array [
             Object {
@@ -32415,9 +32424,11 @@ exports[`smoke and snapshot tests renders second demonstraction successfully 1`]
       xLabelPosition="center-right"
       xScale={[Function]}
       yLabel="Feelings"
+      yLabelOffset={0}
       yScale={[Function]}
     >
       <LinePlot
+        curve="curveNatural"
         graphData={
           Array [
             Object {
@@ -40429,6 +40440,7 @@ exports[`smoke and snapshot tests renders second demonstraction successfully 1`]
         yScale={[Function]}
       />
       <LinePlot
+        curve="curveNatural"
         graphData={
           Array [
             Object {
@@ -48562,9 +48574,11 @@ exports[`state changes to differential equation solutions updates correctly in f
       xLabelPosition="center-right"
       xScale={[Function]}
       yLabel="Feelings"
+      yLabelOffset={0}
       yScale={[Function]}
     >
       <LinePlot
+        curve="curveNatural"
         graphData={
           Array [
             Object {
@@ -52580,6 +52594,7 @@ exports[`state changes to differential equation solutions updates correctly in f
         yScale={[Function]}
       />
       <LinePlot
+        curve="curveNatural"
         graphData={
           Array [
             Object {
@@ -56609,9 +56624,11 @@ exports[`state changes to differential equation solutions updates correctly in f
       xLabelPosition="center-right"
       xScale={[Function]}
       yLabel="Feelings"
+      yLabelOffset={0}
       yScale={[Function]}
     >
       <LinePlot
+        curve="curveNatural"
         graphData={
           Array [
             Object {
@@ -60627,6 +60644,7 @@ exports[`state changes to differential equation solutions updates correctly in f
         yScale={[Function]}
       />
       <LinePlot
+        curve="curveNatural"
         graphData={
           Array [
             Object {
@@ -64820,9 +64838,11 @@ exports[`state changes to differential equation solutions updates correctly in s
       xLabelPosition="center-right"
       xScale={[Function]}
       yLabel="Feelings"
+      yLabelOffset={0}
       yScale={[Function]}
     >
       <LinePlot
+        curve="curveNatural"
         graphData={
           Array [
             Object {
@@ -64890,6 +64910,7 @@ exports[`state changes to differential equation solutions updates correctly in s
         yScale={[Function]}
       />
       <LinePlot
+        curve="curveNatural"
         graphData={
           Array [
             Object {
@@ -64971,9 +64992,11 @@ exports[`state changes to differential equation solutions updates correctly in s
       xLabelPosition="center-right"
       xScale={[Function]}
       yLabel="Feelings"
+      yLabelOffset={0}
       yScale={[Function]}
     >
       <LinePlot
+        curve="curveNatural"
         graphData={
           Array [
             Object {
@@ -65041,6 +65064,7 @@ exports[`state changes to differential equation solutions updates correctly in s
         yScale={[Function]}
       />
       <LinePlot
+        curve="curveNatural"
         graphData={
           Array [
             Object {

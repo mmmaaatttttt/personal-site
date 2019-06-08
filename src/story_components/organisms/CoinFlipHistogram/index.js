@@ -2,8 +2,8 @@ import React, { PureComponent } from "react";
 import PropTypes from "prop-types";
 import { scaleLinear } from "d3-scale";
 import { max } from "d3-array";
-import { withCaption, SliderProvider } from "providers";
 import { BarGraph } from "story_components";
+import { withCaption, SliderProvider } from "providers";
 import COLORS from "utils/styles";
 import { sliderType } from "utils/types";
 

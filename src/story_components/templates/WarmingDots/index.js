@@ -3,10 +3,10 @@ import PropTypes from "prop-types";
 import { extent, max } from "d3-array";
 import { scaleLinear } from "d3-scale";
 import { flatten } from "lodash";
-import { withCaption, SliderProvider } from "providers";
 import { generateData } from "utils/mathHelpers";
 import visualizationData from "data/warming-dots.js";
 import { FlexContainer, Graph, LinePlot } from "story_components";
+import { withCaption, SliderProvider } from "providers";
 
 class WarmingDots extends Component {
   getYDomain = graphData => {

@@ -5,11 +5,11 @@ import { extent } from "d3-array";
 import { nest } from "d3-collection";
 import { scaleLinear } from "d3-scale";
 import { lighten } from "polished";
-import { withCaption, SliderProvider } from "providers";
 import COLORS from "utils/styles";
 import { calculateWastedVotes } from "utils/mathHelpers";
 import { sliderType } from "utils/types";
 import { BarGraph, ColumnLayout, USMap } from "story_components";
+import { withCaption, SliderProvider } from "providers";
 
 class PureHistoricalMap extends Component {
   state = {
@@ -185,12 +185,9 @@ class GerrymanderHistoricalMap extends Component {
         query={query}
         render={data => {
           const cleanedData = this.cleanQuery(data);
-          const yearExtent = extent(cleanedData, d => d.year);
           return (
             <PureHistoricalMap
               data={cleanedData}
-              minYear={yearExtent[0]}
-              maxYear={yearExtent[1]}
               {...this.props}
             />
           );
@@ -200,22 +197,8 @@ class GerrymanderHistoricalMap extends Component {
   }
 }
 
-GerrymanderHistoricalMap.propTypes = {
-  minElectors: PropTypes.number.isRequired,
-  maxElectors: PropTypes.number.isRequired
-};
-
-GerrymanderHistoricalMap.defaultProps = {
-  minElectors: 2,
-  maxElectors: 10
-};
-
 PureHistoricalMap.propTypes = {
   data: PropTypes.array.isRequired,
-  maxElectors: PropTypes.number.isRequired,
-  maxYear: PropTypes.number.isRequired,
-  minElectors: PropTypes.number.isRequired,
-  minYear: PropTypes.number.isRequired,
   sliderData: sliderType
 };
 
