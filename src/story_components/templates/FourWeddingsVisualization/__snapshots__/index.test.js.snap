@@ -849,27 +849,27 @@ exports[`smoke and snapshot tests matches snapshots 3`] = `
   selectOptions={
     Array [
       Object {
-        "chartValues": [Function],
+        "accessor": [Function],
         "label": "Rankings by Budget",
         "value": "budget",
       },
       Object {
-        "chartValues": [Function],
+        "accessor": [Function],
         "label": "Rankings by Budget Per Guest",
         "value": "budgetPerGuest",
       },
       Object {
-        "chartValues": [Function],
+        "accessor": [Function],
         "label": "Rankings by Overall Experience Points Given",
         "value": "expGiven",
       },
       Object {
-        "chartValues": [Function],
+        "accessor": [Function],
         "label": "Rankings by Overall Experience Points Received",
         "value": "expReceived",
       },
       Object {
-        "chartValues": [Function],
+        "accessor": [Function],
         "label": "Rankings by Exp Gap (Received - Given)",
         "value": "expDiff",
       },

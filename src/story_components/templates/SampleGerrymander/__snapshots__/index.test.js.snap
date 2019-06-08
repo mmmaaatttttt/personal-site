@@ -102,6 +102,7 @@ exports[`smoke and snapshot tests renders first demonstration successfully 1`] =
       ]
     }
     getTooltipBody={[Function]}
+    getTooltipTitle={[Function]}
     tooltip={false}
   >
     <InteractiveGrid
@@ -255,6 +256,7 @@ exports[`smoke and snapshot tests renders first demonstration successfully 1`] =
       <Icon
         color="#FF3C23"
         disabled={false}
+        hover={false}
         name="times-circle"
         opacity={1}
         size={2}
@@ -280,6 +282,7 @@ exports[`smoke and snapshot tests renders first demonstration successfully 1`] =
       <Icon
         color="#FF3C23"
         disabled={false}
+        hover={false}
         name="times-circle"
         opacity={1}
         size={2}
@@ -305,6 +308,7 @@ exports[`smoke and snapshot tests renders first demonstration successfully 1`] =
       <Icon
         color="#FF3C23"
         disabled={false}
+        hover={false}
         name="times-circle"
         opacity={1}
         size={2}
@@ -330,6 +334,7 @@ exports[`smoke and snapshot tests renders first demonstration successfully 1`] =
       <Icon
         color="#FF3C23"
         disabled={false}
+        hover={false}
         name="times-circle"
         opacity={1}
         size={2}
@@ -355,6 +360,7 @@ exports[`smoke and snapshot tests renders first demonstration successfully 1`] =
       <Icon
         color="#FF3C23"
         disabled={false}
+        hover={false}
         name="times-circle"
         opacity={1}
         size={2}
@@ -380,6 +386,7 @@ exports[`smoke and snapshot tests renders first demonstration successfully 1`] =
       <Icon
         color="#FF3C23"
         disabled={false}
+        hover={false}
         name="times-circle"
         opacity={1}
         size={2}

@@ -14,7 +14,9 @@ exports[`matches snapshot 1`] = `
   width: ",
           [Function],
           ";
-  margin: 0 auto;
+  margin: ",
+          [Function],
+          ";
 
   ",
           [Function],
@@ -24,12 +26,14 @@ exports[`matches snapshot 1`] = `
       },
       "defaultProps": Object {
         "fullWidthAt": "extraSmall",
+        "margin": "0 auto",
         "width": "80%",
       },
       "displayName": "styled.div",
       "foldedComponentIds": Array [],
       "propTypes": Object {
         "fullWidthAt": [Function],
+        "margin": [Function],
         "width": [Function],
       },
       "render": [Function],
@@ -42,6 +46,7 @@ exports[`matches snapshot 1`] = `
   }
   forwardedRef={null}
   fullWidthAt="small"
+  margin="0 auto"
   width="75%"
 >
   <div>

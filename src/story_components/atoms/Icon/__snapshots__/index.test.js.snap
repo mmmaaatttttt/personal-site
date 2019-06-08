@@ -4,6 +4,7 @@ exports[`matches snapshot 1`] = `
 <styled.i
   className="fas fa-arrows fa-2x"
   disabled={true}
+  hover={false}
   style={
     Object {
       "color": "orange",

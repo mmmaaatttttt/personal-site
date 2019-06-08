@@ -8,14 +8,18 @@ exports[`matches snapshot 1`] = `
       "attrs": Array [],
       "componentStyle": ComponentStyle {
         "componentId": "sc-bdVaJa",
-        "isStatic": true,
+        "isStatic": false,
         "rules": Array [
           "
   flex: 1;
+  margin: ",
+          [Function],
+          "  
 ",
         ],
       },
       "defaultProps": Object {
+        "margin": "0.75rem 0 0 0",
         "styles": Object {
           "placeholder": [Function],
           "valueContainer": [Function],
@@ -23,6 +27,9 @@ exports[`matches snapshot 1`] = `
       },
       "displayName": "Styled(StateManager)",
       "foldedComponentIds": Array [],
+      "propTypes": Object {
+        "margin": [Function],
+      },
       "render": [Function],
       "styledComponentId": "sc-bdVaJa",
       "target": [Function],
@@ -33,6 +40,7 @@ exports[`matches snapshot 1`] = `
     }
   }
   forwardedRef={null}
+  margin="0.75rem 0 0 0"
   styles={
     Object {
       "placeholder": [Function],

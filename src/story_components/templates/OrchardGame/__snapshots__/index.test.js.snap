@@ -3,6 +3,7 @@
 exports[`smoke and snapshot tests renders first demonstration successfully 1`] = `
 <styled.div
   fullWidthAt="small"
+  margin="0 auto"
   width="70%"
 >
   <styled.div>
@@ -49,6 +50,7 @@ exports[`smoke and snapshot tests renders first demonstration successfully 1`] =
     >
       <styled.div
         fullWidthAt="extraSmall"
+        margin="0 auto"
         width="60%"
       >
         <Spinner
