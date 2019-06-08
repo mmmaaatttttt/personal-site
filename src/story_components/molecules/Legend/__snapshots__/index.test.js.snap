@@ -1,0 +1,61 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`matches snapshot with props passed in 1`] = `
+<styled.div
+  column={true}
+  cross="center"
+  flex={1}
+  main="center"
+  margin="0"
+  shouldWrap={false}
+  textAlign="left"
+  width="auto"
+>
+  <styled.h4>
+    Default Title
+  </styled.h4>
+  <styled.div
+    column={false}
+    cross="stretch"
+    flex={1}
+    main="space-between"
+    margin="0"
+    shouldWrap={true}
+    textAlign="left"
+    width="100%"
+  >
+    <div
+      key="#5ECFFF"
+    >
+      <Icon
+        color="#5ECFFF"
+        disabled={false}
+        hover={false}
+        name="square"
+        opacity={1}
+        size={1}
+        type="solid"
+      />
+      <styled.span>
+        Blue label
+      </styled.span>
+    </div>
+    <div
+      key="#FF3C23"
+    >
+      <Icon
+        color="#FF3C23"
+        disabled={false}
+        hover={false}
+        name="square"
+        opacity={1}
+        size={1}
+        type="solid"
+      />
+      <styled.span>
+        Red label
+      </styled.span>
+    </div>
+  </styled.div>
+</styled.div>
+`;
