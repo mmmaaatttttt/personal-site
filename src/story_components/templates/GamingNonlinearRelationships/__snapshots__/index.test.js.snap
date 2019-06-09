@@ -106,6 +106,8 @@ exports[`smoke and snapshot tests renders first demonstration successfully 1`] =
   <styled.div>
     <Graph
       graphPadding={30}
+      gridlinesHorizontal={true}
+      gridlinesVertical={false}
       height={600}
       key="0"
       svgId="vis1"
@@ -114,9 +116,10 @@ exports[`smoke and snapshot tests renders first demonstration successfully 1`] =
       tickFormatY=""
       tickStep={[Function]}
       width={800}
+      xAxisPosition="center"
       xLabel="Time"
-      xLabelPosition="center-right"
       xScale={[Function]}
+      yAxisPosition="left"
       yLabel="Feelings"
       yLabelOffset={0}
       yScale={[Function]}
@@ -8156,6 +8159,8 @@ exports[`smoke and snapshot tests renders first demonstration successfully 1`] =
     </Graph>
     <Graph
       graphPadding={30}
+      gridlinesHorizontal={true}
+      gridlinesVertical={false}
       height={600}
       key="1"
       svgId="vis2"
@@ -8164,9 +8169,10 @@ exports[`smoke and snapshot tests renders first demonstration successfully 1`] =
       tickFormatY=""
       tickStep={[Function]}
       width={800}
+      xAxisPosition="center"
       xLabel="Time"
-      xLabelPosition="center-right"
       xScale={[Function]}
+      yAxisPosition="left"
       yLabel="Feelings"
       yLabelOffset={0}
       yScale={[Function]}
@@ -16370,6 +16376,8 @@ exports[`smoke and snapshot tests renders second demonstraction successfully 1`]
   <styled.div>
     <Graph
       graphPadding={30}
+      gridlinesHorizontal={true}
+      gridlinesVertical={false}
       height={600}
       key="0"
       svgId="vis3"
@@ -16378,9 +16386,10 @@ exports[`smoke and snapshot tests renders second demonstraction successfully 1`]
       tickFormatY=""
       tickStep={[Function]}
       width={800}
+      xAxisPosition="center"
       xLabel="Time"
-      xLabelPosition="center-right"
       xScale={[Function]}
+      yAxisPosition="left"
       yLabel="Feelings"
       yLabelOffset={0}
       yScale={[Function]}
@@ -32412,6 +32421,8 @@ exports[`smoke and snapshot tests renders second demonstraction successfully 1`]
     </Graph>
     <Graph
       graphPadding={30}
+      gridlinesHorizontal={true}
+      gridlinesVertical={false}
       height={600}
       key="1"
       svgId="vis4"
@@ -32420,9 +32431,10 @@ exports[`smoke and snapshot tests renders second demonstraction successfully 1`]
       tickFormatY=""
       tickStep={[Function]}
       width={800}
+      xAxisPosition="center"
       xLabel="Time"
-      xLabelPosition="center-right"
       xScale={[Function]}
+      yAxisPosition="left"
       yLabel="Feelings"
       yLabelOffset={0}
       yScale={[Function]}
@@ -48562,6 +48574,8 @@ exports[`state changes to differential equation solutions updates correctly in f
   <styled.div>
     <Graph
       graphPadding={30}
+      gridlinesHorizontal={true}
+      gridlinesVertical={false}
       height={600}
       key="0"
       svgId="vis1"
@@ -48570,9 +48584,10 @@ exports[`state changes to differential equation solutions updates correctly in f
       tickFormatY=""
       tickStep={[Function]}
       width={800}
+      xAxisPosition="center"
       xLabel="Time"
-      xLabelPosition="center-right"
       xScale={[Function]}
+      yAxisPosition="left"
       yLabel="Feelings"
       yLabelOffset={0}
       yScale={[Function]}
@@ -56612,6 +56627,8 @@ exports[`state changes to differential equation solutions updates correctly in f
     </Graph>
     <Graph
       graphPadding={30}
+      gridlinesHorizontal={true}
+      gridlinesVertical={false}
       height={600}
       key="1"
       svgId="vis2"
@@ -56620,9 +56637,10 @@ exports[`state changes to differential equation solutions updates correctly in f
       tickFormatY=""
       tickStep={[Function]}
       width={800}
+      xAxisPosition="center"
       xLabel="Time"
-      xLabelPosition="center-right"
       xScale={[Function]}
+      yAxisPosition="left"
       yLabel="Feelings"
       yLabelOffset={0}
       yScale={[Function]}
@@ -64826,6 +64844,8 @@ exports[`state changes to differential equation solutions updates correctly in s
   <styled.div>
     <Graph
       graphPadding={30}
+      gridlinesHorizontal={true}
+      gridlinesVertical={false}
       height={600}
       key="0"
       svgId="vis3"
@@ -64834,9 +64854,10 @@ exports[`state changes to differential equation solutions updates correctly in s
       tickFormatY=""
       tickStep={[Function]}
       width={800}
+      xAxisPosition="center"
       xLabel="Time"
-      xLabelPosition="center-right"
       xScale={[Function]}
+      yAxisPosition="left"
       yLabel="Feelings"
       yLabelOffset={0}
       yScale={[Function]}
@@ -64980,6 +65001,8 @@ exports[`state changes to differential equation solutions updates correctly in s
     </Graph>
     <Graph
       graphPadding={30}
+      gridlinesHorizontal={true}
+      gridlinesVertical={false}
       height={600}
       key="1"
       svgId="vis4"
@@ -64988,9 +65011,10 @@ exports[`state changes to differential equation solutions updates correctly in s
       tickFormatY=""
       tickStep={[Function]}
       width={800}
+      xAxisPosition="center"
       xLabel="Time"
-      xLabelPosition="center-right"
       xScale={[Function]}
+      yAxisPosition="left"
       yLabel="Feelings"
       yLabelOffset={0}
       yScale={[Function]}

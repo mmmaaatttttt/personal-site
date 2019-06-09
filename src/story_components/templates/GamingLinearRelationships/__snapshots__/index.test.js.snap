@@ -81,6 +81,8 @@ exports[`smoke and snapshot tests renders first demonstration successfully 1`] =
   </styled.div>
   <Graph
     graphPadding={30}
+    gridlinesHorizontal={true}
+    gridlinesVertical={false}
     height={500}
     svgId="vis1"
     svgPadding={30}
@@ -88,9 +90,10 @@ exports[`smoke and snapshot tests renders first demonstration successfully 1`] =
     tickFormatY=""
     tickStep={[Function]}
     width={800}
+    xAxisPosition="center"
     xLabel="Time"
-    xLabelPosition="center-right"
     xScale={[Function]}
+    yAxisPosition="left"
     yLabel="Feelings"
     yLabelOffset={0}
     yScale={[Function]}
@@ -1828,6 +1831,8 @@ exports[`smoke and snapshot tests renders second demonstraction successfully 1`]
   </styled.div>
   <Graph
     graphPadding={30}
+    gridlinesHorizontal={true}
+    gridlinesVertical={false}
     height={600}
     svgId="vis2"
     svgPadding={30}
@@ -1835,9 +1840,10 @@ exports[`smoke and snapshot tests renders second demonstraction successfully 1`]
     tickFormatY=""
     tickStep={[Function]}
     width={800}
+    xAxisPosition="center"
     xLabel="Time"
-    xLabelPosition="center-right"
     xScale={[Function]}
+    yAxisPosition="left"
     yLabel="Feelings"
     yLabelOffset={0}
     yScale={[Function]}
@@ -3599,6 +3605,8 @@ exports[`smoke and snapshot tests renders third demonstraction successfully 1`] 
   </styled.div>
   <Graph
     graphPadding={30}
+    gridlinesHorizontal={true}
+    gridlinesVertical={false}
     height={650}
     svgId="vis3"
     svgPadding={30}
@@ -3606,9 +3614,10 @@ exports[`smoke and snapshot tests renders third demonstraction successfully 1`] 
     tickFormatY=""
     tickStep={[Function]}
     width={800}
+    xAxisPosition="center"
     xLabel="Time"
-    xLabelPosition="center-right"
     xScale={[Function]}
+    yAxisPosition="left"
     yLabel="Feelings"
     yLabelOffset={0}
     yScale={[Function]}
