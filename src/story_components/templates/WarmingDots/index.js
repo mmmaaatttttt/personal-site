@@ -99,7 +99,6 @@ class WarmingDots extends Component {
                 graphPadding={graphPadding}
                 svgId={svgIds[0]}
                 xLabel={xLabel}
-                xLabelPosition={"bottom-center"}
                 yLabel={yLabel}
                 xScale={xScale}
                 yScale={yScale}
