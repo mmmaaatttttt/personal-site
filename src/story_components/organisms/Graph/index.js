@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { scaleLinear } from "d3-scale";
 import { Axis, AxisLabel, ClippedSVG, NarrowContainer } from "story_components";
+import { svgProps, svgDefaultProps } from "utils/types";
 
 const Graph = ({
   children,
@@ -149,8 +149,7 @@ const labelOptions = (width, height, padding, hGrid, vGrid, yOff) => {
 };
 
 Graph.propTypes = {
-  width: PropTypes.number.isRequired,
-  height: PropTypes.number.isRequired,
+  ...svgProps,
   graphPadding: PropTypes.oneOfType([
     PropTypes.number,
     PropTypes.shape({
@@ -177,37 +176,25 @@ Graph.propTypes = {
   tickStep: PropTypes.func,
   xLabel: PropTypes.string.isRequired,
   xAxisPosition: PropTypes.oneOf(["bottom", "center"]),
-  xScale: PropTypes.func.isRequired,
   yAxisPosition: PropTypes.oneOf(["left", "center"]),
   yLabel: PropTypes.string.isRequired,
   yLabelOffset: PropTypes.number.isRequired,
-  yScale: PropTypes.func.isRequired
 };
 
-const DEFAULT_HEIGHT = 600;
-const DEFAULT_WIDTH = 600;
-
 Graph.defaultProps = {
+  ...svgDefaultProps,
   graphPadding: 0,
   gridlinesHorizontal: true,
   gridlinesVertical: true,
-  height: DEFAULT_HEIGHT,
   svgId: "svg",
   svgPadding: 0,
   tickFormatX: "",
   tickFormatY: "",
-  width: DEFAULT_WIDTH,
   xLabel: "",
   xAxisPosition: "bottom",
-  xScale: scaleLinear()
-    .domain([-10, 10])
-    .range([0, DEFAULT_WIDTH]),
   yAxisPosition: "left",
   yLabel: "",
   yLabelOffset: 0,
-  yScale: scaleLinear()
-    .domain([-10, 10])
-    .range([DEFAULT_HEIGHT, 0])
 };
 
 export default Graph;
