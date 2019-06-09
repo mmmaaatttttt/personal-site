@@ -1,15 +1,13 @@
 import React from "react";
 import PropTypes from "prop-types";
-import styled from "styled-components";
-import { Axis, AxisLabel, ClippedSVG } from "story_components";
-
-const FullWidth = styled.div`
-  width: 100%;
-`;
+import { scaleLinear } from "d3-scale";
+import { Axis, AxisLabel, ClippedSVG, NarrowContainer } from "story_components";
 
 const Graph = ({
   children,
   graphPadding,
+  gridlinesHorizontal,
+  gridlinesVertical,
   height,
   svgId,
   svgPadding,
@@ -17,9 +15,10 @@ const Graph = ({
   tickFormatY,
   tickStep,
   width,
-  xLabelPosition,
+  xAxisPosition,
   xLabel,
   xScale,
+  yAxisPosition,
   yLabel,
   yLabelOffset,
   yScale
@@ -32,46 +31,29 @@ const Graph = ({
       bottom: graphPadding
     };
   }
-  const labelOptions = {
-    x: {
-      "center-right": {
-        yShift: height / 2,
-        tickSize: -height + graphPadding.top + graphPadding.bottom,
-        tickShift: (-height + graphPadding.top + graphPadding.bottom) / 2,
-        label: {
-          x: width,
-          y: height / 2,
-          anchor: "end",
-          dx: -(graphPadding.left + graphPadding.right) / 2,
-          dy: (graphPadding.top + graphPadding.bottom) / 2
-        }
-      },
-      "bottom-center": {
-        yShift: height - graphPadding.bottom,
-        tickShift: 0,
-        label: {
-          x: width / 2,
-          y: height - graphPadding.bottom,
-          dx: 0,
-          dy: graphPadding.bottom * 0.7,
-          anchor: "middle"
-        }
-      }
-    }
-  };
-  const xOptions = labelOptions.x[xLabelPosition];
+  const { x, y } = labelOptions(
+    width,
+    height,
+    graphPadding,
+    gridlinesHorizontal,
+    gridlinesVertical,
+    yLabelOffset
+  );
+  const xOptions = x[xAxisPosition];
+  const yOptions = y[yAxisPosition];
   return (
-    <FullWidth>
+    <NarrowContainer width="100%">
       <ClippedSVG id={svgId} width={width} height={height} padding={svgPadding}>
         <Axis
           direction="y"
           labelPosition={{ x: "-3", dy: "0.32em" }}
           scale={yScale}
           textAnchor="end"
-          tickSize={-width + graphPadding.left + graphPadding.right}
+          tickSize={yOptions.tickSize}
+          tickShift={yOptions.tickShift}
           tickStep={tickStep && tickStep(yScale)}
           tickFormat={tickFormatY}
-          xShift={graphPadding.left}
+          xShift={yOptions.xShift}
         />
         <Axis
           direction="x"
@@ -79,34 +61,91 @@ const Graph = ({
           rotateLabels
           scale={xScale}
           textAnchor="start"
-          tickSize={-height + graphPadding.top + graphPadding.bottom}
+          tickSize={xOptions.tickSize}
           tickShift={xOptions.tickShift}
           tickStep={tickStep && tickStep(xScale)}
           tickFormat={tickFormatX}
           yShift={xOptions.yShift}
         />
         <line
-          x1={graphPadding.left}
-          x2={graphPadding.left}
+          x1={yOptions.xShift}
+          x2={yOptions.xShift}
           y1={graphPadding.top}
           y2={height - graphPadding.bottom}
           stroke="#000"
           strokeWidth="1"
         />
         {children}
-        <AxisLabel {...xOptions.label}>{xLabel}</AxisLabel>
-        <AxisLabel
-          x={10}
-          y={height / 2}
-          transform={`rotate(-90 10,${height / 2})`}
-          dy={10}
-          dx={yLabelOffset}
-        >
-          {yLabel}
-        </AxisLabel>
+        {xLabel && <AxisLabel {...xOptions.label}>{xLabel}</AxisLabel>}
+        {yLabel && (
+          <AxisLabel
+            {...yOptions.label}
+            transform={`rotate(-90 10,${height / 2})`}
+          >
+            {yLabel}
+          </AxisLabel>
+        )}
       </ClippedSVG>
-    </FullWidth>
+    </NarrowContainer>
   );
+};
+
+const labelOptions = (width, height, padding, hGrid, vGrid, yOff) => {
+  const { top, bottom, left, right } = padding;
+  const xTickSize = vGrid ? -height + top + bottom : 0;
+  const yTickSize = hGrid ? -width + left + right : 0;
+  return {
+    x: {
+      bottom: {
+        yShift: height - bottom,
+        tickSize: xTickSize,
+        tickShift: 0,
+        label: {
+          x: width / 2,
+          y: height - bottom,
+          dx: 0,
+          dy: bottom * 0.7,
+          anchor: "middle"
+        }
+      },
+      center: {
+        yShift: height / 2,
+        tickSize: xTickSize,
+        tickShift: (height - top - bottom) / 2,
+        label: {
+          x: width,
+          y: height / 2,
+          anchor: "end",
+          dx: -(left + right) / 2,
+          dy: (top + bottom) / 2
+        }
+      }
+    },
+    y: {
+      left: {
+        xShift: left,
+        tickSize: yTickSize,
+        tickShift: 0,
+        label: {
+          x: 10,
+          y: height / 2,
+          dx: yOff,
+          dy: 10
+        }
+      },
+      center: {
+        xShift: width / 2,
+        tickSize: yTickSize,
+        tickShift: (-width + left + right) / 2,
+        label: {
+          x: width / 2,
+          y: 10,
+          dx: 10,
+          dy: 10
+        }
+      }
+    }
+  };
 };
 
 Graph.propTypes = {
@@ -121,6 +160,8 @@ Graph.propTypes = {
       right: PropTypes.number
     })
   ]).isRequired,
+  gridlinesHorizontal: PropTypes.bool.isRequired,
+  gridlinesVertical: PropTypes.bool.isRequired,
   svgPadding: PropTypes.oneOfType([
     PropTypes.number,
     PropTypes.shape({
@@ -131,26 +172,42 @@ Graph.propTypes = {
     })
   ]).isRequired,
   svgId: PropTypes.string.isRequired,
+  tickFormatX: PropTypes.string.isRequired,
+  tickFormatY: PropTypes.string.isRequired,
+  tickStep: PropTypes.func,
   xLabel: PropTypes.string.isRequired,
-  xLabelPosition: PropTypes.oneOf(["bottom-center", "center-right"]),
+  xAxisPosition: PropTypes.oneOf(["bottom", "center"]),
+  xScale: PropTypes.func.isRequired,
+  yAxisPosition: PropTypes.oneOf(["left", "center"]),
   yLabel: PropTypes.string.isRequired,
   yLabelOffset: PropTypes.number.isRequired,
-  xScale: PropTypes.func.isRequired,
-  yScale: PropTypes.func.isRequired,
-  tickStep: PropTypes.func,
-  tickFormatX: PropTypes.string.isRequired,
-  tickFormatY: PropTypes.string.isRequired
+  yScale: PropTypes.func.isRequired
 };
 
+const DEFAULT_HEIGHT = 600;
+const DEFAULT_WIDTH = 600;
+
 Graph.defaultProps = {
-  svgPadding: 0,
   graphPadding: 0,
+  gridlinesHorizontal: true,
+  gridlinesVertical: true,
+  height: DEFAULT_HEIGHT,
+  svgId: "svg",
+  svgPadding: 0,
   tickFormatX: "",
   tickFormatY: "",
+  width: DEFAULT_WIDTH,
   xLabel: "",
-  xLabelPosition: "bottom-center",
+  xAxisPosition: "bottom",
+  xScale: scaleLinear()
+    .domain([-10, 10])
+    .range([0, DEFAULT_WIDTH]),
+  yAxisPosition: "left",
   yLabel: "",
-  yLabelOffset: 0
+  yLabelOffset: 0,
+  yScale: scaleLinear()
+    .domain([-10, 10])
+    .range([DEFAULT_HEIGHT, 0])
 };
 
 export default Graph;

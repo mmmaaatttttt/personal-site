@@ -121,17 +121,18 @@ class GamingLinearRelationships extends Component {
       <ColumnLayout break="small">
         <FlexContainer column>{sliderGroups}</FlexContainer>
         <Graph
-          width={width}
-          height={height}
-          svgPadding={svgPadding}
           graphPadding={graphPadding}
+          gridlinesVertical={false}
+          height={height}
           svgId={svgIds[0]}
+          svgPadding={svgPadding}
+          tickStep={this.tickStep}
+          width={width}
           xLabel={xLabel}
-          xLabelPosition={"center-right"}
+          xAxisPosition="center"
           yLabel={yLabel}
           xScale={xScale}
           yScale={yScale}
-          tickStep={this.tickStep}
         >
           {linePlots}
         </Graph>

@@ -120,17 +120,18 @@ class GamingNonlinearRelationships extends Component {
       return (
         <Graph
           key={i}
-          width={width}
-          height={height}
-          svgPadding={svgPadding}
           graphPadding={graphPadding}
+          gridlinesVertical={false}
+          height={height}
           svgId={svgIds[i]}
-          xLabel={xLabel}
-          yLabel={yLabel}
-          xScale={xScale}
-          xLabelPosition={"center-right"}
-          yScale={yScale}
+          svgPadding={svgPadding}
           tickStep={this.tickStep}
+          width={width}
+          xAxisPosition="center"
+          xLabel={xLabel}
+          xScale={xScale}
+          yLabel={yLabel}
+          yScale={yScale}
         >
           {linePlots}
         </Graph>
