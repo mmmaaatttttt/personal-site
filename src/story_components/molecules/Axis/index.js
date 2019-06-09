@@ -62,15 +62,17 @@ class Axis extends Component {
     }
     if (tickStep) {
       let domain = scale.domain();
-      axis.tickValues(
-        range(domain[0], domain[1] + tickStep, tickStep)
-      );
+      axis.tickValues(range(domain[0], domain[1] + tickStep, tickStep));
     }
+
+    let transform = `translate(0,${tickShift})`;
+    if (direction === "y") transform = `translate(${tickShift}, 0)`;
+
     select(this.axis.current)
-      .attr("transform", `translate(${xShift},${yShift})`)
+      .attr("transform", `translate(${xShift - 0.5},${yShift - 0.5})`)
       .call(axis)
       .selectAll(".tick line")
-      .attr("transform", `translate(0,${tickShift})`);
+      .attr("transform", transform);
 
     if (tickFormat) {
       const labels = select(this.axis.current).selectAll(".tick text");
@@ -89,11 +91,7 @@ class Axis extends Component {
   render() {
     const { tickColor, fontSize } = this.props;
     return (
-      <StyledAxis
-        fontSize={fontSize}
-        ref={this.axis}
-        tickColor={tickColor}
-      />
+      <StyledAxis fontSize={fontSize} ref={this.axis} tickColor={tickColor} />
     );
   }
 }
