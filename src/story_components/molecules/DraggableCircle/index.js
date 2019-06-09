@@ -9,7 +9,8 @@ const NoScrollCircle = styled.circle`
 
   &:hover {
     fill: ${props => props.stroke};
-    stroke-width: ${props => props.r * 1.5}
+    stroke-width: ${props => props.r * 1.5};
+    cursor: pointer;
   }
 `;
 
