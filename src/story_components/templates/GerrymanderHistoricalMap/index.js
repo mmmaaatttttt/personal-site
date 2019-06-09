@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { StaticQuery, graphql } from "gatsby";
-import { extent } from "d3-array";
 import { nest } from "d3-collection";
 import { scaleLinear } from "d3-scale";
 import { lighten } from "polished";
