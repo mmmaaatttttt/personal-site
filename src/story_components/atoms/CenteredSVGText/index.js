@@ -5,6 +5,7 @@ const CenteredSVGText = styled.text`
   text-anchor: middle;
   alignment-baseline: ${props => props.baseline};
   font-size: ${props => props.fontSize};
+  user-select: none;
 `;
 
 CenteredSVGText.propTypes = {
