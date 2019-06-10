@@ -50,7 +50,8 @@ class DraggableCircle extends Component {
   handleDrag = e => {
     if (this.state.dragging) {
       let coords = this.getMousePosition(e);
-      this.props.onDrag(coords);
+      const { id, onDrag } = this.props;
+      onDrag(id, coords);
     }
   };
 
@@ -87,18 +88,20 @@ class DraggableCircle extends Component {
 DraggableCircle.propTypes = {
   cx: PropTypes.number.isRequired,
   cy: PropTypes.number.isRequired,
-  r: PropTypes.number.isRequired,
   fill: PropTypes.string.isRequired,
-  stroke: PropTypes.string.isRequired,
-  strokeWidth: PropTypes.number.isRequired,
+  id: PropTypes.any.isRequired,
   onDragStart: PropTypes.func,
   onDrag: PropTypes.func,
-  onDragEnd: PropTypes.func
+  onDragEnd: PropTypes.func,
+  r: PropTypes.number.isRequired,
+  stroke: PropTypes.string.isRequired,
+  strokeWidth: PropTypes.number.isRequired,
 };
 
 DraggableCircle.defaultProps = {
   cx: 0,
   cy: 0,
+  id: "draggable_circle",
   r: 8,
   fill: COLORS.BLACK,
   stroke: COLORS.BLACK,

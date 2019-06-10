@@ -12,7 +12,8 @@ class InteractivePolygon extends Component {
         cy={point.y}
         fill={fill}
         key={i}
-        onDrag={coords => this.props.handleDrag(i, coords)}
+        id={i}
+        onDrag={this.props.handleDrag}
         r={circleRadius}
         stroke={stroke}
         strokeWidth={strokeWidth}
@@ -59,7 +60,7 @@ InteractivePolygon.propTypes = {
 
 InteractivePolygon.defaultProps = {
   circleRadius: 8,
-  handleDrag: coords => console.log(coords),
+  handleDrag: (i, coords) => console.log(i, coords),
   fill: COLORS.BLACK,
   points: [],
   stroke: COLORS.BLACK,
