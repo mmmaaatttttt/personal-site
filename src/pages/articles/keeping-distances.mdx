@@ -6,17 +6,19 @@ caption: "distance caption"
 featured_image_caption: "distance image caption"
 ---
 
+import { DistanceExplorer } from "story_components";
+
 When was the last time you went more than a day without thinking about distance?
 It might seem like a strange question. But notions of distance, whether literal
 or metaphorical, appear frequently in my own life.
 
 Here are some distance-related thoughts that creep into my mind on an almost daily basis:
 
-  - Where should I go for lunch today? What's *nearby* and delicious?
+- Where should I go for lunch today? What's _nearby_ and delicious?
 
-  - What are my goals for today? How *close* am I to meeting them?
+- What are my goals for today? How _close_ am I to meeting them?
 
-  - Is the world still on fire today? What can I do to help bring society *closer* to
+- Is the world still on fire today? What can I do to help bring society _closer_ to
   the more empathetic, thoughtful, and sustainable ideal in my head?
 
 With distance comes a notion of proximity: when things are close, and when
@@ -45,8 +47,9 @@ distance. If you connect the points with a horizontal and a vertical line
 segment, these segments will form two sides of a right triangle. The hypotenuse
 of this triangle represents that shortest distance.
 
-DEMONSTRATION
-  Drag points, see side lengths and hypotenuse change
+<DistanceExplorer 
+  caption="Figure 1: Adjust the positions of the two points to see the shortest distance between them (orange)."
+/>
 
 When looking at a map, this shortest distance is often described by saying it's
 the distance "as the crow flies." Unfortunately, dear reader, if you're anything
@@ -67,8 +70,8 @@ restriction still leads to a perfectly good notion of distance. However, it
 comes with some slightly surprising properties.
 
 For one, unlike the notion of distance you learn about in high school geometry,
-when it comes to connecting two points in the taxicab geometry, there is *no
-unique shortest path* in general. For example, if you're trying to connect two
+when it comes to connecting two points in the taxicab geometry, there is _no
+unique shortest path_ in general. For example, if you're trying to connect two
 opposite corners of a square, you have two paths to choose from: clockwise or
 counter-clockwise.
 
@@ -76,7 +79,7 @@ Here's a demonstration that let's you explore how many different paths will
 connect two points when using the manhattan distance.
 
 DEMONSTRATION
-  Drag points, slider to highlight different numbers of paths
+Drag points, slider to highlight different numbers of paths
 
 For another fun bit of trivia, let's explore what circles look like in this
 geometry. You can define a circle to simply be the set of points that are a
@@ -90,7 +93,7 @@ of the four points on either side of the center.
 Here's how a circle looks in the taxicab geometry as you increase the radius:
 
 DEMONSTRATION
-  Drag slider, increase radius
+Drag slider, increase radius
 
 As you can see, circles in this geometry are just rotated squares! Moreover, the
 circumference of any circle in this geometry is just the radius multiplied by 8.
@@ -110,7 +113,7 @@ But how does the computer know when I've made a mistake? As it turns out, the
 idea boils down to distance.
 
 Intuitively, this makes sense. If I type matehmatics when I mean to type
-mathematics, we can agree that the misspelled word is *close* to the correctly
+mathematics, we can agree that the misspelled word is _close_ to the correctly
 spelled word. But in order to make this intuition rigorous, we need a more
 precise understanding of what "close" means in this context.
 
@@ -134,7 +137,7 @@ ghost but the second letter in roast.
 Since the words you're comparing must have the same length, the Hamming distance
 isn't practical as a spell-checking tool. More common applications for this
 distance include error detecting / correcting. See the references at the end for
-more details. 
+more details.
 
 ##### Levenshtein Distance
 
@@ -148,7 +151,7 @@ edit is defined as the addition of a letter, the removal of a letter, or the
 exchange of a letter at a given position for a different letter.
 
 For example, the Levenshtein distance between "friend" and "foe" is 4: change
-the "r" to an "o" and then delete the "i", "n", and "d." 
+the "r" to an "o" and then delete the "i", "n", and "d."
 
 When the two strings are of equal length, the Hamming distance is an upper bound
 for the Levenshtein distance, but sometimes the Levenshtein will be shorter. For
@@ -177,7 +180,7 @@ Here's a demonstration for you to play around with these three notions of word
 distance. What would a circle look like in this geometry?
 
 DEMONSTRATION
-  Type a word in two inputs, see the various distance values
+Type a word in two inputs, see the various distance values
 
 ---
 
@@ -196,7 +199,7 @@ Here we'll explore two ideas.
 One way to measure distance is to look at the **area** between the two
 functions. If the area is large, then the functions must be far apart in some
 sense. Conversely, if the area is 0, then under some reasonable
-assumptions<sup>*</sup> on the functions, they must be equal.
+assumptions<sup>\*</sup> on the functions, they must be equal.
 
 Another way to measure distance is to look at the **largest difference** between
 the function values for a given input. For instance, if one function evaluates
@@ -209,7 +212,7 @@ Here's a demonstration where you can adjust some simple functions and see both
 of these distances change.
 
 DEMONSTRATION
-  Type a word in two inputs, see the various distance values
+draggable functions
 
 A question for you to ponder: if the largest difference distance is small, what
 (if anything) can you say about the area distance? If the area distance is
@@ -219,22 +222,113 @@ small, what (if anything) can you say about the largest difference distance?
 
 ### What's in a Distance?
 
-- note that some extensions of Levenshtein fail to be true distances in the mathematical sense. 
-https://en.wikipedia.org/wiki/Damerau%E2%80%93Levenshtein_distance
+So far, we've seen several examples of distances in different context. However,
+we haven't yet defined precisely _how_ all of our examples fit in to the same
+notion of distance.
 
+With these examples at the forefront of our minds, I'd now like to tie them
+together with a mathematical definition of a distance function.
+
+Suppose you have a set of objects. These objects could be points, words,
+functions, or any other collection of things that you'd like to be able to
+describe in terms of proximity. A **distance function** for this set is function
+that takes any two objects, returns a number, and has the following properties:
+
+1. The number the distance function returns can't ever be negative. For example,
+   it doesn't make sense to talk about the distance between two cities to have a
+   negative value.
+
+2. If the distance between two objects is zero, those two objects are the same.
+   For example, regardless of the distance function you choose, the only word with
+   a distance of zero from "mathematics" is the word "mathematics" itself.
+
+3. The order in which you pass objects to the distance function doesn't matter.
+   For example, the distance between San Francisco and Chicago is the same as the
+   distance between Chicago and San Francisco.
+
+4. Adding destinations can never _decrease_ the total length of a trip. In other
+   words, the distance between A and C will never be more than the total distance
+   from A to B and then from B to C, no matter what B you choose. This requirement
+   is known as the **triangle inequality**, because in a triangle, the sum of any
+   two sides will always exceed the length of the third side.
+
+If you're interested, I'll leave it to you to prove that all of the examples
+we've seen so far qualify as bonafide mathematical distances. (In general, the
+triangle inequality is the hardest property to verify.)
 
 ---
 
 ### p-adics (rename)
 
+Now that we have a more formalized definition of distance, we can extend our set
+of examples beyond where our intuition might naturally take us.
+
+We'll begin with the first distance function you ever saw: the absolute value
+function. This function measures the distance between two numbers. For example,
+2 and 5 are a distance of 3 from each other, so
+
+| 2 - 5 | = | 5 - 2 | = 3.
+
+You can verify for yourself that the absolute value function satisfies all of
+the properties of a distance function.
+
+But there's another way we could define a distance, one that has to do with the
+_prime factors_ of whole numbers. The distance is weird looking, but bear with me.
+
+To start, recall that a prime number is a whole number larger than 1, whose only
+prime factors are 1 and itself. The first few primes are 2, 3, 5, 7, and 11. 4
+isn't prime because 4 = 2 &times; 2. 6 isn't prime because 6 = 2 &times; 3.
+
+Let's choose a prime number, say 3. Our new distance function will take any two
+whole numbers, calculate their difference, and determine the maximum power of
+three that will divide that difference. The distance is then defined as the
+reciprocal of three to that power. (In order to have a true distance, we define
+it to equal zero if the difference equals zero.)
+
+It's a mouthful, right? Let's look at an example. Imagine that we're trying to
+find the distance between the numbers 11 and 2. The difference is 9, which is
+divisible by 3 two times. With our new notion of distance, then, we'd say that
+the distance between 11 and 2 is 3<sup>-2</sup> = 1/9.
+
+Here's a demonstration that will allow you to play around with these ideas in
+more detail. You can select a prime and then calculate the distance between two
+numbers, when the distance is determined by that prime.
+
+DEMONSTRATION
+p-adic explorer (integers)
+
+Why in the world would you want to do this? I'm afraid a historical motivation
+would take us too far afield, so if nothing else, just take it as a mathematical
+curiosity. It's worth pointing out that this idea extends naturally to rational
+numbers, since we can factor out some largest power of a prime from any
+difference of rational numbers.
+
+DEMONSTRATION
+p-adic explorer (rationals)
+
+Here's a higher level few of these different distance metrics for varying primes _p_.
+
+DEMONSTRATION
+Heat map? other topological structure? TBD.
+
+Surprisingly, this is more than just an intellectual exercise. something something.
+
+p-adic def
+visualize distance differences
+
+circles - every point inside is a center
+triangles? - every triangle is isosceles
+exhaustive list of distance metrics - https://en.wikipedia.org/wiki/Ostrowski%27s_theorem
+a different visualization?
+
 ---
 
 ### Conclusion
 
-* For the mathematicians in the room, I'm intentionally omitting technical
-details. If it makes you feel better, you can assume that all of the functions I
-discuss in this section are continuous real-valued functions, defined on a
-closed and bounded interval.
+- For the mathematicians in the room, I'm intentionally omitting technical
+  details. If it makes you feel better, you can assume that all of the functions I
+  discuss in this section are continuous real-valued functions, defined on a
+  closed and bounded interval.
 
 Sources:
 
@@ -243,3 +337,5 @@ Sources:
 - [Hamming Distance and Error Correcting Codes](http://www.oxfordmathcenter.com/drupal7/node/525)
 
 - [A technique for computer detection and correction of spelling errors](https://dl.acm.org/citation.cfm?doid=363958.363994)
+
+- [p-adic Numbers, p-adic Analysis, and Zeta-Functions](http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.461.4588&rep=rep1&type=pdf), by Neal Koblitz
