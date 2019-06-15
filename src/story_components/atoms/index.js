@@ -12,6 +12,7 @@ export { default as Icon } from './Icon';
 export { default as Latex } from './Latex';
 export { default as LinePlot } from './LinePlot';
 export { default as NarrowContainer } from './NarrowContainer';
+export { default as NoScrollCircle } from './NoScrollCircle';
 export { default as Polygon } from './Polygon';
 export { default as RelativeContainer } from './RelativeContainer';
 export { default as SVGBorder } from './SVGBorder';

@@ -1,18 +1,7 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import styled from "styled-components";
+import { NoScrollCircle } from "story_components";
 import COLORS from "utils/styles";
-
-const NoScrollCircle = styled.circle`
-  touch-action: none;
-  transition: stroke-width 300ms;
-
-  &:hover {
-    fill: ${props => props.stroke};
-    stroke-width: ${props => props.r * 1.5};
-    cursor: pointer;
-  }
-`;
 
 class DraggableCircle extends Component {
   constructor(props) {
@@ -30,8 +19,8 @@ class DraggableCircle extends Component {
     let clientX, clientY;
     try {
       // try touch event first
-      clientX = e.touches[0];
-      clientY = e.touches[1];
+      clientX = e.touches[0].clientX;
+      clientY = e.touches[0].clientY;
     } catch (err) {
       // no go, assume mouse event
       clientX = e.clientX;
@@ -101,7 +90,7 @@ DraggableCircle.propTypes = {
 DraggableCircle.defaultProps = {
   cx: 0,
   cy: 0,
-  id: "draggable_circle",
+  id: 0,
   r: 8,
   fill: COLORS.BLACK,
   stroke: COLORS.BLACK,
