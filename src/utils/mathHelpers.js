@@ -35,6 +35,22 @@ function choices(arr, num) {
 }
 
 /**
+ * Returns the value of n choose k: n! / (k! * (n-k)!)
+ * @param {Number} n 
+ * @param {Number} k 
+ */
+function combinations(n, k) {
+  if (k > n / 2) return combinations(n, n - k);
+
+  let prod = 1;
+  for (let i = 1; i <= k; i++) {
+    prod *= (n + 1 - i) / i;
+  }
+
+  return prod;
+}
+
+/**
  * Interpolates values between inputs x0 and x1.
  * For example, when t = 1/2, calculates the average of x0 and x1.
  *
@@ -96,6 +112,7 @@ export {
   average,
   calculateWastedVotes,
   choices,
+  combinations,
   euclideanDistance,
   generateData,
   interpolate,

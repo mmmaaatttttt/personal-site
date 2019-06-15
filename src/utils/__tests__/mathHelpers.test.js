@@ -1,6 +1,7 @@
 import {
   average,
   choices,
+  combinations,
   euclideanDistance,
   generateData
 } from "utils/mathHelpers";
@@ -51,6 +52,38 @@ describe("mathHelpers", () => {
     test("returns a shuffle of the array if the second argument is larger than the array length", () => {
       expect(choices(numbers, 7)).toHaveLength(6);
       expect(choices(numbers, 8).sort((a, b) => a - b)).toEqual(numbers);
+    });
+  });
+
+  describe("combinations", () => {
+    test("Calculates binomial coefficients when k < n / 2", () => {
+      expect(combinations(5, 2)).toBe(10);
+      expect(combinations(10, 3)).toBe(120);
+      expect(combinations(12, 4)).toBe(495);
+      expect(combinations(100, 6)).toBe(1192052400);
+    });
+
+    test("Calculates binomial coefficients when k > n / 2", () => {
+      expect(combinations(5, 3)).toBe(10);
+      expect(combinations(6, 4)).toBe(15);
+      expect(combinations(21, 16)).toBe(20349);
+      expect(combinations(30, 16)).toBe(145422675);
+    });
+
+    test("Calculates binomial coefficients when k === n / 2", () => {
+      expect(combinations(4, 2)).toBe(6);
+      expect(combinations(6, 3)).toBe(20);
+      expect(combinations(8, 4)).toBe(70);
+      expect(combinations(10, 5)).toBe(252);
+    });
+
+    test("Calculates correctly when k is small or large", () => {
+      expect(combinations(1, 0)).toBe(1);
+      expect(combinations(1, 1)).toBe(1);
+      expect(combinations(5, 1)).toBe(5);
+      expect(combinations(5, 4)).toBe(5);
+      expect(combinations(5, 0)).toBe(1);
+      expect(combinations(5, 5)).toBe(1);
     });
   });
 
