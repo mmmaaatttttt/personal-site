@@ -9,8 +9,15 @@ class Polygon extends Component {
   };
 
   render() {
-    const { fill, stroke, strokeWidth } = this.props;
-    return (
+    const { fill, stroke, strokeWidth, open } = this.props;
+    return open ? (
+      <polyline
+        points={this.getPointsString()}
+        fill={fill}
+        stroke={stroke}
+        strokeWidth={strokeWidth}
+      />
+    ) : (
       <polygon
         points={this.getPointsString()}
         fill={fill}
@@ -22,19 +29,21 @@ class Polygon extends Component {
 }
 
 Polygon.propTypes = {
+  fill: PropTypes.string.isRequired,
+  open: PropTypes.bool.isRequired,
   points: PropTypes.arrayOf(
     PropTypes.shape({
       x: PropTypes.number.isRequired,
       y: PropTypes.number.isRequired
     })
   ).isRequired,
-  fill: PropTypes.string.isRequired,
   stroke: PropTypes.string.isRequired,
   strokeWidth: PropTypes.number.isRequired
 };
 
 Polygon.defaultProps = {
   fill: COLORS.BLACK,
+  open: false,
   points: [
     { x: 0, y: 0 },
     { x: 100, y: 0 },
