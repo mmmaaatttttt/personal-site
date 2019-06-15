@@ -1,5 +1,6 @@
-import React, { useState, useCallback } from "react";
+import React from "react";
 import { extent } from "d3-array";
+import { scaleLinear } from "d3-scale";
 import {
   CenteredSVGText,
   DraggableCircle,
@@ -10,28 +11,27 @@ import { svgProps, svgDefaultProps } from "utils/types";
 import COLORS from "utils/styles";
 import { euclideanDistance, average } from "utils/mathHelpers";
 import { withCaption } from "providers";
+import { useDragState } from "hooks";
 
 function DistanceExplorer({ width, height, xScale, yScale }) {
-  const [points, setPoints] = useState([{ x: -2, y: -2 }, { x: 2, y: 2 }]);
-  const handleDrag = useCallback(
-    (idx, { x, y }) => {
-      const pointsCopy = [...points];
-      pointsCopy[idx] = { x: xScale.invert(x), y: yScale.invert(y) };
-      setPoints(pointsCopy);
-    },
-    [points, setPoints, xScale, yScale]
+  const [points, handleDrag] = useDragState(
+    [{ x: -2, y: -2 }, { x: 2, y: 2 }],
+    xScale,
+    yScale
   );
   const scaledPoints = points.map(({ x, y }) => ({
     x: xScale(x),
     y: yScale(y)
   }));
-  const theta = Math.atan((points[1].y - points[0].y) / (points[1].x - points[0].x));
+  const theta = Math.atan(
+    (points[1].y - points[0].y) / (points[1].x - points[0].x)
+  );
   const [minX, maxX] = extent(scaledPoints, d => d.x);
   const [minY, maxY] = extent(scaledPoints, d => d.y);
   const textX = average(scaledPoints, p => p.x);
   const textY = average(scaledPoints, p => p.y);
   return (
-    <NarrowContainer>
+    <NarrowContainer width="50%">
       <Graph
         xAxisPosition="center"
         yAxisPosition="center"
@@ -69,8 +69,8 @@ function DistanceExplorer({ width, height, xScale, yScale }) {
           x={textX}
           y={textY}
           fill={COLORS.ORANGE}
-          transform={`rotate(${-180 / Math.PI * theta}, ${textX}, ${textY})`}
-          dy={- Math.sign(theta) * 20}
+          transform={`rotate(${(-180 / Math.PI) * theta}, ${textX}, ${textY})`}
+          dy={-Math.sign(theta) * 20}
           fontWeight="bold"
         >
           {euclideanDistance(
@@ -97,7 +97,13 @@ DistanceExplorer.propTypes = {
 };
 
 DistanceExplorer.defaultProps = {
-  ...svgDefaultProps
+  ...svgDefaultProps,
+  xScale: scaleLinear()
+    .domain([-10, 10])
+    .range([0, svgDefaultProps.width]),
+  yScale: scaleLinear()
+    .domain([-10, 10])
+    .range([svgDefaultProps.height, 0])
 };
 
 export default withCaption(React.memo(DistanceExplorer));
