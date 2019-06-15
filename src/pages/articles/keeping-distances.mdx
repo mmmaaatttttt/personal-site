@@ -6,7 +6,11 @@ caption: "distance caption"
 featured_image_caption: "distance image caption"
 ---
 
-import { DistanceExplorer, ManhattanPaths } from "story_components";
+import {
+  DistanceExplorer,
+  ManhattanCircle,
+  ManhattanPaths
+} from "story_components";
 
 When was the last time you went more than a day without thinking about distance?
 It might seem like a strange question. But notions of distance, whether literal
@@ -47,9 +51,7 @@ distance. If you connect the points with a horizontal and a vertical line
 segment, these segments will form two sides of a right triangle. The hypotenuse
 of this triangle represents that shortest distance.
 
-<DistanceExplorer 
-  caption="Figure 1: Adjust the positions of the two points to see the shortest distance between them (orange)."
-/>
+<DistanceExplorer caption="Figure 1: Adjust the positions of the two points to see the shortest distance between them (orange)." />
 
 When looking at a map, this shortest distance is often described by saying it's
 the distance "as the crow flies." Unfortunately, dear reader, if you're anything
@@ -76,9 +78,11 @@ opposite corners of a square, you have two paths to choose from: clockwise or
 counter-clockwise.
 
 Here's a demonstration that let's you explore how many different paths will
-connect two points when using the manhattan distance.
+connect two points when using the manhattan distance. (As a bonus, can you
+figure out how many possible paths there are of minimal distance between two
+points on the grid?)
 
-<ManhattanPaths />
+<ManhattanPaths caption="Figure 2: Click on a point on the grid, then adjust the slider to see all possible shortest paths to that point." />
 
 For another fun bit of trivia, let's explore what circles look like in this
 geometry. You can define a circle to simply be the set of points that are a
@@ -91,8 +95,7 @@ of the four points on either side of the center.
 
 Here's how a circle looks in the taxicab geometry as you increase the radius:
 
-DEMONSTRATION
-Drag slider, increase radius
+<ManhattanCircle caption="Figure 3: Move the slider to adjust the size of a circle in the taxicab geometry. The red dot is at the center of the circle." />
 
 As you can see, circles in this geometry are just rotated squares! Moreover, the
 circumference of any circle in this geometry is just the radius multiplied by 8.
