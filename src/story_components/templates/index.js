@@ -6,6 +6,7 @@ export { default as GamingLinearRelationships } from './GamingLinearRelationship
 export { default as GamingNonlinearRelationships } from './GamingNonlinearRelationships';
 export { default as GerrymanderHistoricalMap } from './GerrymanderHistoricalMap';
 export { default as HarassmentSimulation } from './HarassmentSimulation';
+export { default as ManhattanPaths } from './ManhattanPaths';
 export { default as OrchardGame } from './OrchardGame';
 export { default as OrchardGameHeatData } from './OrchardGameHeatData';
 export { default as OrchardGameSimulation } from './OrchardGameSimulation';
