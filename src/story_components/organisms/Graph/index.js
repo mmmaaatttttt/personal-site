@@ -1,5 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
+import { scaleLinear } from "d3-scale";
 import { Axis, AxisLabel, ClippedSVG, NarrowContainer } from "story_components";
 import { svgProps, svgDefaultProps } from "utils/types";
 
@@ -178,7 +179,7 @@ Graph.propTypes = {
   xAxisPosition: PropTypes.oneOf(["bottom", "center"]),
   yAxisPosition: PropTypes.oneOf(["left", "center"]),
   yLabel: PropTypes.string.isRequired,
-  yLabelOffset: PropTypes.number.isRequired,
+  yLabelOffset: PropTypes.number.isRequired
 };
 
 Graph.defaultProps = {
@@ -190,11 +191,17 @@ Graph.defaultProps = {
   svgPadding: 0,
   tickFormatX: "",
   tickFormatY: "",
-  xLabel: "",
   xAxisPosition: "bottom",
   yAxisPosition: "left",
+  xLabel: "",
+  xScale: scaleLinear()
+    .domain([-10, 10])
+    .range([0, svgDefaultProps.width]),
   yLabel: "",
   yLabelOffset: 0,
+  yScale: scaleLinear()
+    .domain([-10, 10])
+    .range([svgDefaultProps.height, 0])
 };
 
 export default Graph;

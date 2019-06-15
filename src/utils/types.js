@@ -1,5 +1,4 @@
 import PropTypes from "prop-types";
-import { scaleLinear } from "d3-scale";
 
 const sliderType = PropTypes.arrayOf(
   PropTypes.shape({
@@ -40,13 +39,7 @@ const svgProps = {
 
 const svgDefaultProps = {
   width: 600,
-  height: 600,
-  xScale: scaleLinear()
-    .domain([-10, 10])
-    .range([0, 600]),
-  yScale: scaleLinear()
-    .domain([-10, 10])
-    .range([600, 0])
+  height: 600
 }
 
 export { sliderType, selectType, svgProps, svgDefaultProps };
