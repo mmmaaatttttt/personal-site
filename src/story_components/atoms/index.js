@@ -17,6 +17,7 @@ export { default as Polygon } from './Polygon';
 export { default as RelativeContainer } from './RelativeContainer';
 export { default as SVGBorder } from './SVGBorder';
 export { default as Strikethrough } from './Strikethrough';
+export { default as StyledInput } from './StyledInput';
 export { default as StyledSelect } from './StyledSelect';
 export { default as StyledSlider } from './StyledSlider';
 export { default as StyledTable } from './StyledTable';
