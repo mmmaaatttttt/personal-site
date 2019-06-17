@@ -39,7 +39,7 @@ function ManhattanCircle({ height, width }) {
             >
               <circle cx={xScale(0)} cy={yScale(0)} fill={COLORS.RED} r={8} />
               {points.map(pt => (
-                <circle cx={xScale(pt.x)} cy={yScale(pt.y)} r={4} />
+                <circle cx={xScale(pt.x)} cy={yScale(pt.y)} r={4} key={`${pt.x}|${pt.y}`} />
               ))}
             </Graph>
           );
