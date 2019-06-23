@@ -10,7 +10,7 @@ import {
 } from "story_components";
 import { withCaption } from "providers";
 import { useDragState } from "hooks";
-import { scaledAndFixedPoints, lInfNormEndpoints, l1Norm } from "./helpers";
+import { clamped, lInfNormEndpoints, l1Norm } from "./helpers";
 import { svgProps, svgDefaultProps } from "utils/types";
 import COLORS from "utils/styles";
 
@@ -37,18 +37,28 @@ function FunctionDistanceExplorer({
     yScale
   );
   const [l1NormActive, handleNormToggle] = useState(false);
-  const graph1Pts = scaledAndFixedPoints(points.slice(0, 3), xScale, yScale);
-  const graph2Pts = scaledAndFixedPoints(points.slice(3), xScale, yScale);
+  const clamped1Pts = clamped(points.slice(0, 3), xScale, yScale);
+  const clamped2Pts = clamped(points.slice(3), xScale, yScale);
+  const graph1Pts = clamped1Pts.map(pt => ({
+    x: xScale(pt.x),
+    y: yScale(pt.y)
+  }));
+  const graph2Pts = clamped2Pts.map(pt => ({
+    x: xScale(pt.x),
+    y: yScale(pt.y)
+  }));
   const lInfPts = lInfNormEndpoints(graph1Pts, graph2Pts);
-  const lInfDistance = Math.abs(yScale.invert(lInfPts.y1) - yScale.invert(lInfPts.y2)).toFixed(2);
-  const area = l1Norm(points.slice(0, 3), points.slice(3)).toFixed(2);
+  const lInfDistance = Math.abs(
+    yScale.invert(lInfPts.y1) - yScale.invert(lInfPts.y2)
+  ).toFixed(2);
+  const area = l1Norm(clamped1Pts, clamped2Pts).toFixed(2);
   return (
     <NarrowContainer width="50%">
       <ToggleSwitch
-        leftText={`Largest Difference: ${lInfDistance}`}
+        leftText={`Largest Diff: ${lInfDistance}`}
         rightText={`Area: ${area}`}
-        leftColor={COLORS.RED}
-        rightColor={COLORS.BLUE}
+        leftColor={COLORS.PURPLE}
+        rightColor={COLORS.GRAY}
         handleSwitchChange={() => handleNormToggle(!l1NormActive)}
       />
       <Graph
@@ -63,12 +73,17 @@ function FunctionDistanceExplorer({
           <Polygon
             points={[...graph1Pts, ...[...graph2Pts].reverse()]}
             open
-            fill={COLORS.BLUE}
+            fill={COLORS.GRAY}
             stroke="none"
           />
         )}
         {!l1NormActive && (
-          <line {...lInfPts} stroke={COLORS.RED} strokeWidth={4} strokeDasharray="8 4" />
+          <line
+            {...lInfPts}
+            stroke={COLORS.PURPLE}
+            strokeWidth={4}
+            strokeDasharray="8 4"
+          />
         )}
         <Polygon points={graph1Pts} open fill="none" stroke={COLORS.ORANGE} />
         <Polygon points={graph2Pts} open fill="none" stroke={COLORS.GREEN} />

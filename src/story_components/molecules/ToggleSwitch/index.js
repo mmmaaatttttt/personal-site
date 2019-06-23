@@ -66,6 +66,11 @@ const StyledToggleSwitchWrapper = styled.div`
   justify-content: center;
 `;
 
+const StyledSpan = styled.span`
+  flex: 1;
+  text-align: ${props => props.direction};
+`
+
 class ToggleSwitch extends Component {
   state = {
     checked: false
@@ -83,7 +88,7 @@ class ToggleSwitch extends Component {
     const { leftText, rightText, leftColor, rightColor } = this.props;
     return (
       <StyledToggleSwitchWrapper>
-        <span>{leftText}</span>
+        <StyledSpan direction="right">{leftText}</StyledSpan>
         <StyledToggleSwitchInput />
         <StyledToggleSwitchLabel
           checked={checked}
@@ -91,7 +96,7 @@ class ToggleSwitch extends Component {
           leftColor={leftColor}
           rightColor={rightColor}
         />
-        <span>{rightText}</span>
+        <StyledSpan direction="left">{rightText}</StyledSpan>
       </StyledToggleSwitchWrapper>
     );
   }

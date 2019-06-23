@@ -1,16 +1,15 @@
 import { clamp, maxBy } from "lodash";
 
-// takes an array of points, scales them, and ensures that the
-// endpoints have fixed x coordinates based on the xScale.
-function scaledAndFixedPoints(points, xScale, yScale) {
+function clamped(points, xScale, yScale) {
+  const xDomain = xScale.domain();
+  const yDomain = yScale.domain();
   return points.map((pt, i) => {
-    const [xScaledMin, xScaledMax] = xScale.range();
-    const scaledPt = { x: xScale(pt.x), y: yScale(pt.y) };
-    if (i === 0) scaledPt.x = xScaledMin;
-    if (i === points.length - 1) scaledPt.x = xScaledMax;
+    const ptCopy = { ...pt };
+    if (i === 0) ptCopy.x = xDomain[0];
+    if (i === points.length - 1) ptCopy.x = xDomain[1];
     return {
-      x: clamp(scaledPt.x, ...xScale.range()),
-      y: clamp(scaledPt.y, ...[...yScale.range()].reverse())
+      x: clamp(ptCopy.x, ...xDomain),
+      y: clamp(ptCopy.y, ...yDomain)
     };
   });
 }
@@ -54,12 +53,23 @@ function l1Norm(pts1, pts2) {
   // assume the inner point of pts1 is to the left of the inner point of pts2
   // if not, swap
   if (pts1[1].x > pts2[1].x) [pts1, pts2] = [pts2, pts1];
+  const pts1Copy = [...pts1];
+  const pts2Copy = [...pts2];
+  pts1Copy.splice(2, 0, {
+    x: pts2[1].x,
+    y: _yOnLine(pts1[1], pts1[2], pts2[1].x)
+  });
+  pts2Copy.splice(1, 0, {
+    x: pts1[1].x,
+    y: _yOnLine(pts2[0], pts2[1], pts1[1].x)
+  });
+
+  const section1Area = _areaHelper(pts1Copy.slice(0, 2), pts2Copy.slice(0, 2));
+  const section2Area = _areaHelper(pts1Copy.slice(1, 3), pts2Copy.slice(1, 3));
+  const section3Area = _areaHelper(pts1Copy.slice(2), pts2Copy.slice(2)); // last one is too small???
 
   // area can be broken into two halves
-  return (
-    _areaHelper(pts1.slice(0, 2), pts2.slice(0, 2)) +
-    _areaHelper(pts1.slice(1), pts2.slice(1))
-  );
+  return section1Area + section2Area + section3Area;
 }
 
 // given the endpoints of a line segment
@@ -78,7 +88,6 @@ function _yOnLine(pt1, pt2, x) {
 // given four points (2 in pts1, 2 in pts2),
 // calculate the area in between the lines
 function _areaHelper(pts1, pts2) {
-  console.log("POINTS", pts1, pts2);
   const leftDiff = pts1[0].y - pts2[0].y;
   const rightDiff = pts1[1].y - pts2[1].y;
   const crossingExists =
@@ -103,7 +112,7 @@ function _areaHelper(pts1, pts2) {
   const area2 = Math.abs(
     _areaUnderLine(intersect, pts1[1]) - _areaUnderLine(intersect, pts2[1])
   );
-  return area1 + area2;
+  return (area1 + area2) || 0;
 
   // pts2: x_0, x_1, y_0, y_1
   // line y - y_0 = m (x - x_0)
@@ -123,4 +132,4 @@ function _areaUnderLine(pt1, pt2) {
   return (xDist * (maxHeight + minHeight)) / 2;
 }
 
-export { scaledAndFixedPoints, lInfNormEndpoints, l1Norm };
+export { clamped, lInfNormEndpoints, l1Norm };
