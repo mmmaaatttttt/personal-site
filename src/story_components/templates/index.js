@@ -1,7 +1,9 @@
 // @create-index
 
+export { default as DistanceExplorer } from './DistanceExplorer';
 export { default as EconomySimulation } from './EconomySimulation';
 export { default as FourWeddingsVisualization } from './FourWeddingsVisualization';
+export { default as FunctionDistanceExplorer } from './FunctionDistanceExplorer';
 export { default as GamingLinearRelationships } from './GamingLinearRelationships';
 export { default as GamingNonlinearRelationships } from './GamingNonlinearRelationships';
 export { default as GerrymanderHistoricalMap } from './GerrymanderHistoricalMap';
