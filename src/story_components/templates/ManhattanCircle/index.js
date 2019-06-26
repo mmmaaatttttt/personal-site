@@ -8,7 +8,7 @@ import COLORS from "utils/styles";
 
 function ManhattanCircle({ height, width }) {
   return (
-    <NarrowContainer>
+    <NarrowContainer width="50%">
       <SliderProvider
         initialData={[
           {
