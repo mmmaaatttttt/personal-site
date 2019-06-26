@@ -13,6 +13,7 @@ export { default as ManhattanPaths } from './ManhattanPaths';
 export { default as OrchardGame } from './OrchardGame';
 export { default as OrchardGameHeatData } from './OrchardGameHeatData';
 export { default as OrchardGameSimulation } from './OrchardGameSimulation';
+export { default as PAdicCalculator } from './PAdicCalculator';
 export { default as RentDivision } from './RentDivision';
 export { default as SampleGerrymander } from './SampleGerrymander';
 export { default as StringDistanceExplorer } from './StringDistanceExplorer';

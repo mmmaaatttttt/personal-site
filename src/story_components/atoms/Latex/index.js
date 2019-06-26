@@ -9,6 +9,10 @@ const StyledParagraph = styled.p`
     font-family: inherit !important;
   }
 
+  .katex .delimsizing.mult {
+    font-family: KaTeX_Size1 !important;
+  }
+
   .delimcenter {
     top: 0.1em !important;
     font-size: 2rem;
@@ -25,6 +29,14 @@ class Latex extends Component {
     katex.render(this.props.str, this.pTag.current, {
       displayMode: this.props.displayMode
     });
+  }
+
+  componentDidUpdate(prevProps) {
+    if (prevProps.str !== this.props.str) {
+      katex.render(this.props.str, this.pTag.current, {
+        displayMode: this.props.displayMode
+      });
+    }
   }
 
   render() {

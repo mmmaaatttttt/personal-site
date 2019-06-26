@@ -11,6 +11,7 @@ import {
   FunctionDistanceExplorer,
   ManhattanCircle,
   ManhattanPaths,
+  PAdicCalculator,
   StringDistanceExplorer
 } from "story_components";
 
@@ -214,7 +215,7 @@ this distance is 0, the functions are the same.
 Here's a demonstration where you can adjust some simple functions and see both
 of these distances change.
 
-<FunctionDistanceExplorer />
+<FunctionDistanceExplorer caption="Figure 4: You can adjust a few points on the orange and green function to explore how our notions of distance change." />
 
 A question for you to ponder: if the largest difference distance is small, what
 (if anything) can you say about the area distance? If the area distance is
@@ -296,17 +297,11 @@ Here's a demonstration that will allow you to play around with these ideas in
 more detail. You can select a prime and then calculate the distance between two
 numbers, when the distance is determined by that prime.
 
-DEMONSTRATION
-p-adic explorer (integers)
+<PAdicCalculator caption="Figure 5: Calculating the p-adic difference between numbers for various primes p."/>
 
 Why in the world would you want to do this? I'm afraid a historical motivation
 would take us too far afield, so if nothing else, just take it as a mathematical
-curiosity. It's worth pointing out that this idea extends naturally to rational
-numbers, since we can factor out some largest power of a prime from any
-difference of rational numbers.
-
-DEMONSTRATION
-p-adic explorer (rationals)
+curiosity.
 
 Here's a higher level few of these different distance metrics for varying primes _p_.
 

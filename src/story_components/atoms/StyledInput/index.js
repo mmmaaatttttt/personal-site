@@ -5,12 +5,13 @@ import COLORS from "utils/styles";
 const StyledInput = styled.input`
   margin: ${rhythm(0.5)};
   padding: ${rhythm(0.2)};
-  border: ${rhythm(0.05)} solid ${COLORS.GRAY};
-  border-radius: 10px;
+  border: 1px solid ${COLORS.INPUT_GRAY};
+  border-radius: 4px;
 
   &:focus {
     outline: none;
-    border-color: ${COLORS.BLUE};
+    border-color: #2684ff;
+    box-shadow: 0 0 0 1px #2684ff;
   }
 `;
 
