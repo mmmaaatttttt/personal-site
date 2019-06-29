@@ -4,7 +4,7 @@ import { SelectProvider, withCaption } from "providers";
 import { FlexContainer, Latex, StyledInput } from "story_components";
 import { displayIntegerDifference } from "./helpers";
 
-function PAdicCalculator({ primes, integersOnly }) {
+function PAdicCalculator({ primes }) {
   const [num1, setFirstNumber] = useState(1);
   const [num2, setSecondNumber] = useState(1);
   return (

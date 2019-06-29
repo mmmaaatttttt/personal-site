@@ -171,6 +171,7 @@ class SampleGerrymander extends Component {
           axes={false}
           tooltip={false}
           colorRange={colors}
+          width={450}
         >
           <InteractiveGrid
             strokeWidth={6}

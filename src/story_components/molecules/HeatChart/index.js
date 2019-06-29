@@ -5,17 +5,18 @@ import { scaleLinear } from "d3-scale";
 import { Axis, AxisLabel, ClippedSVG } from "story_components";
 import { TooltipProvider } from "providers";
 import COLORS from "utils/styles";
+import { svgDefaultProps } from "utils/types";
 
 class HeatChart extends Component {
   getDimensions = () => {
-    const { data } = this.props;
-    const width = data.length * 50;
-    const height = data[0].length * 50;
+    const { data, width, paddingScale } = this.props;
+    const squareWidth = width / data.length;
+    const height = data[0].length * squareWidth;
     return {
       width,
       height,
-      paddingX: width * 0.075,
-      paddingY: height * 0.075
+      paddingX: width * paddingScale,
+      paddingY: height * paddingScale
     };
   };
 
@@ -99,7 +100,14 @@ class HeatChart extends Component {
   };
 
   renderSVG = (tooltipShow = null, tooltipHide = null) => {
-    const { colorDomain, colorRange, data, children, axes, accessor } = this.props;
+    const {
+      colorDomain,
+      colorRange,
+      data,
+      children,
+      axes,
+      accessor
+    } = this.props;
     const { width, height, paddingX, paddingY } = this.getDimensions();
     const { xScale, yScale } = this.getScales();
     const colorScale = scaleLinear()
@@ -107,7 +115,7 @@ class HeatChart extends Component {
       .range(colorRange);
     const rectData = data.reduce(
       (rectArr, row, x) =>
-        rectArr.concat(
+        rectArr.filter(d => d !== null).concat(
           row.map((d, y) => ({
             ...d,
             x: xScale(x) + 1,
@@ -158,25 +166,29 @@ class HeatChart extends Component {
 }
 
 HeatChart.propTypes = {
-  data: PropTypes.array.isRequired,
   accessor: PropTypes.func.isRequired,
+  axes: PropTypes.bool.isRequired,
   colorDomain: PropTypes.arrayOf(PropTypes.number).isRequired,
   colorRange: PropTypes.arrayOf(PropTypes.string).isRequired,
-  axes: PropTypes.bool.isRequired,
-  tooltip: PropTypes.bool.isRequired,
+  data: PropTypes.array.isRequired,
   getTooltipBody: PropTypes.func.isRequired,
-  getTooltipTitle: PropTypes.func.isRequired
+  getTooltipTitle: PropTypes.func.isRequired,
+  paddingScale: PropTypes.number.isRequired,
+  tooltip: PropTypes.bool.isRequired,
+  width: PropTypes.number.isRequired
 };
 
 HeatChart.defaultProps = {
-  data: [[[]]],
   accessor: d => d,
+  axes: true,
   colorDomain: [0, 1],
   colorRange: [COLORS.RED, COLORS.GREEN],
-  axes: true,
-  tooltip: true,
+  data: [[[]]],
   getTooltipBody: d => JSON.stringify(d, null, 4),
-  getTooltipTitle: d => ""
+  getTooltipTitle: () => "",
+  paddingScale: 0.075,
+  tooltip: true,
+  width: 600
 };
 
 export default HeatChart;

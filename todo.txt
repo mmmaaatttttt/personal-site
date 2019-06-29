@@ -6,6 +6,20 @@
 - story title page: make nav color customizable
 - add ci
 
+Distance component
+  - less janky drag and drop
+    - https://medium.com/@crazypixel/mastering-drag-drop-with-reactjs-part-01-39bed3d40a03
+    - make sure this doesn't mess up isoperimetric explorer visualization
+  - add reset button
+
+Padic calculator
+  - make sure inputs are aligned, not too wide
+
+
+- figure out padic visualization
+  - make it
+- finish writing last section
+
 LOW PRIORITY
 - get more heat map data (mayyybeeeee)
 - add meta tags for /stories endpoint
