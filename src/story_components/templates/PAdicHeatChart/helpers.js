@@ -1,3 +1,5 @@
+import React from "react";
+
 /**
  * Calculates the p-adic norm of a given number whole number num.
  * @param {Number} num
@@ -19,11 +21,20 @@ function generateGrid(size, prime) {
     Array.from({ length: size }, (_, xIdx) => {
       if (yIdx < xIdx) return null;
       const xNum = xIdx + 1;
-      const yNum = size - yIdx;
-      return pAdicNorm(yNum - xNum, prime);
+      const yNum = yIdx + 1;
+      return pAdicNorm(xNum - yNum, prime);
     })
   );
   return grid;
 }
 
-export { generateGrid };
+function generateTooltipContent(d, prime) {
+  const { x, y, data } = d.original;
+  return (
+    <React.Fragment>
+      | {x + 1} - {y + 1} |<sub>{prime}</sub> = {data}
+    </React.Fragment>
+  );
+}
+
+export { generateGrid, generateTooltipContent };

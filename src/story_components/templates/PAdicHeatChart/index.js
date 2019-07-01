@@ -1,8 +1,9 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { SelectProvider, withCaption } from "providers";
-import { FlexContainer, HeatChart } from "story_components";
-import { generateGrid } from "./helpers";
+import { HeatChart } from "story_components";
+import { generateGrid, generateTooltipContent } from "./helpers";
+import COLORS from "utils/styles";
 
 function PAdicHeatChart({ primes, gridSize }) {
   return (
@@ -11,9 +12,17 @@ function PAdicHeatChart({ primes, gridSize }) {
       render={([{ value: prime }]) => {
         const gridData = generateGrid(gridSize, prime);
         return (
-          // <div>hi</div>
-          // wtf why does this break
-          <HeatChart data={gridData} />
+          <HeatChart
+            axes={false}
+            colorRange={[COLORS.BLUE, COLORS.BLACK]}
+            data={gridData}
+            delayMultiplier={1}
+            getTooltipTitle={d => generateTooltipContent(d, prime)}
+            getTooltipBody={() => ""}
+            paddingScale={0.085}
+            xAxisLabel="Second Number"
+            yAxisLabel="First Number"
+          />
         );
       }}
     />
