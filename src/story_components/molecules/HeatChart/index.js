@@ -5,7 +5,6 @@ import { scaleLinear } from "d3-scale";
 import { Axis, AxisLabel, ClippedSVG } from "story_components";
 import { TooltipProvider } from "providers";
 import COLORS from "utils/styles";
-import { svgDefaultProps } from "utils/types";
 
 class HeatChart extends Component {
   getDimensions = () => {
@@ -36,6 +35,7 @@ class HeatChart extends Component {
   renderAxes = () => {
     const { width, height, paddingX, paddingY } = this.getDimensions();
     const { xScale, yScale } = this.getScales();
+    const { xAxisLabel, yAxisLabel } = this.props;
     return (
       <g>
         <Axis
@@ -56,15 +56,15 @@ class HeatChart extends Component {
           xShift={paddingX}
         />
         <AxisLabel x={width / 2} y={height}>
-          Raven Count
+          {xAxisLabel}
         </AxisLabel>
         <AxisLabel
-          x={10}
+          x={0}
           y={height / 2}
           transform={`rotate(-90 10,${height / 2})`}
           dy={10}
         >
-          Fruits per Color
+          {yAxisLabel}
         </AxisLabel>
       </g>
     );
@@ -104,6 +104,7 @@ class HeatChart extends Component {
       colorDomain,
       colorRange,
       data,
+      delayMultiplier,
       children,
       axes,
       accessor
@@ -115,13 +116,23 @@ class HeatChart extends Component {
       .range(colorRange);
     const rectData = data.reduce(
       (rectArr, row, x) =>
-        rectArr.filter(d => d !== null).concat(
-          row.map((d, y) => ({
-            ...d,
-            x: xScale(x) + 1,
-            y: yScale(y + 1) + 1,
-            fill: colorScale(accessor(d))
-          }))
+        rectArr.concat(
+          row
+            .map((d, y) => {
+              if (d === null) return null;
+              const rectObj = {
+                x: xScale(x) + 1,
+                y: yScale(y + 1) + 1,
+                original: {
+                  x,
+                  y,
+                  data: d
+                }
+              };
+              rectObj.fill = colorScale(accessor(rectObj.original.data));
+              return rectObj;
+            })
+            .filter(d => d !== null)
         ),
       []
     );
@@ -134,7 +145,7 @@ class HeatChart extends Component {
           update={({ fill }, i) => {
             return {
               fill: [fill],
-              timing: { duration: 500, delay: i * 10 }
+              timing: { duration: 500, delay: i * delayMultiplier }
             };
           }}
         >
@@ -171,11 +182,14 @@ HeatChart.propTypes = {
   colorDomain: PropTypes.arrayOf(PropTypes.number).isRequired,
   colorRange: PropTypes.arrayOf(PropTypes.string).isRequired,
   data: PropTypes.array.isRequired,
+  delayMultiplier: PropTypes.number.isRequired,
   getTooltipBody: PropTypes.func.isRequired,
   getTooltipTitle: PropTypes.func.isRequired,
   paddingScale: PropTypes.number.isRequired,
   tooltip: PropTypes.bool.isRequired,
-  width: PropTypes.number.isRequired
+  width: PropTypes.number.isRequired,
+  xAxisLabel: PropTypes.string.isRequired,
+  yAxisLabel: PropTypes.string.isRequired
 };
 
 HeatChart.defaultProps = {
@@ -184,11 +198,14 @@ HeatChart.defaultProps = {
   colorDomain: [0, 1],
   colorRange: [COLORS.RED, COLORS.GREEN],
   data: [[[]]],
+  delayMultiplier: 10,
   getTooltipBody: d => JSON.stringify(d, null, 4),
   getTooltipTitle: () => "",
   paddingScale: 0.075,
   tooltip: true,
-  width: 600
+  width: 600,
+  xAxisLabel: "X Axis",
+  yAxisLabel: "Y Axis"
 };
 
 export default HeatChart;
