@@ -10,10 +10,11 @@ import COLORS from "utils/styles";
 class OrchardGameHeatData extends Component {
   getTooltipBody = option => d => {
     const { label, accessor, value } = option;
-    const percentage = (accessor(d) * 100).toFixed(3);
+    const percentage = (accessor(d.original.data) * 100).toFixed(3);
+    const { fruits, ravenCount } = d.original.data;
     return [
-      `Fruits per color: ${d.fruits}`,
-      `Raven count: ${d.ravenCount}`,
+      `Fruits per color: ${fruits}`,
+      `Raven count: ${ravenCount}`,
       value === "diff"
         ? `${label}: ${percentage} points`
         : `Win probability with ${label.toLowerCase()}: ${percentage}%`
@@ -47,6 +48,8 @@ class OrchardGameHeatData extends Component {
                 colorDomain = [0.05, 0.25];
                 colorRange = [COLORS.BLUE, COLORS.DARK_BLUE];
               }
+              console.log("DATA", data);
+              console.log("OPTIONS", selectOptions);
               const heatData = data
                 .filter(
                   d =>
@@ -66,6 +69,8 @@ class OrchardGameHeatData extends Component {
                   getTooltipBody={this.getTooltipBody(selectVals[0])}
                   colorDomain={colorDomain}
                   colorRange={colorRange}
+                  xAxisLabel="Raven Count"
+                  yAxisLabel="Fruits per Color"
                 />
               );
             }}
