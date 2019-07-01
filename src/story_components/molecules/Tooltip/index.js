@@ -34,7 +34,7 @@ const StyledTooltip = styled.div.attrs(({ visible, x, y, offsetWidth }) => ({
 
   h4 {
     text-align: center;
-    margin-bottom: ${rhythm(0.4)};
+    margin-bottom: ${props => props.body ? rhythm(0.4) : 0};
   }
 
   ul {
@@ -71,18 +71,22 @@ class Tooltip extends Component {
   render() {
     const { visible, x, y, title, body } = this.props;
     const { offsetWidth, offsetHeight } = this.state;
-    const titleHTML = title ? <h4>{title}</h4> : null;
-    const bodyHTML = Array.isArray(body) ? (
-      <ul>
-        {body.map((text, i) => (
-          <li key={i}>
-            <small>{text}</small>
-          </li>
-        ))}
-      </ul>
-    ) : (
-      <small>{body}</small>
-    );
+    let titleJSX = null;
+    let bodyJSX = null;
+    if (title) titleJSX = <h4>{title}</h4>;
+    if (body) {
+      bodyJSX = Array.isArray(body) ? (
+        <ul>
+          {body.map((text, i) => (
+            <li key={i}>
+              <small>{text}</small>
+            </li>
+          ))}
+        </ul>
+      ) : (
+        <small>{body}</small>
+      );
+    }
     return (
       <StyledTooltip
         visible={visible}
@@ -91,8 +95,8 @@ class Tooltip extends Component {
         offsetWidth={offsetWidth}
         ref={this.tooltipDiv}
       >
-        {titleHTML}
-        {bodyHTML}
+        {titleJSX}
+        {bodyJSX}
       </StyledTooltip>
     );
   }
@@ -102,7 +106,7 @@ Tooltip.propTypes = {
   visible: PropTypes.bool.isRequired,
   x: PropTypes.number.isRequired,
   y: PropTypes.number.isRequired,
-  title: PropTypes.string.isRequired,
+  title: PropTypes.oneOfType([PropTypes.string, PropTypes.object]).isRequired,
   body: PropTypes.oneOfType([
     PropTypes.string,
     PropTypes.arrayOf(PropTypes.string)
