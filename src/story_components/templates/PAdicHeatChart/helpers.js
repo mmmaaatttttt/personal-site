@@ -32,7 +32,7 @@ function generateTooltipContent(d, prime) {
   const { x, y, data } = d.original;
   return (
     <React.Fragment>
-      | {x + 1} - {y + 1} |<sub>{prime}</sub> = {data}
+      | {x + 1} - {y + 1} |<sub>{prime}</sub> = {data.toFixed(3)}
     </React.Fragment>
   );
 }
