@@ -14,36 +14,34 @@ import {
   PAdicCalculator,
   PAdicFractalDistance,
   PAdicHeatChart,
+  Sidebar,
   StringDistanceExplorer
 } from "story_components";
 
 When was the last time you went more than a day without thinking about distance?
 It might seem like a strange question. But notions of distance, whether literal
-or metaphorical, appear frequently in my own life.
+or metaphorical, appear frequently in our daily lives.
 
-Here are some distance-related thoughts that creep into my mind on an almost daily basis:
+Here are some distance-related thoughts that regularly creep into my mind:
 
 - Where should I go for lunch today? What's _nearby_ and delicious?
 
 - What are my goals for today? How _close_ am I to meeting them?
 
 - Is the world still on fire today? What can I do to help bring society _closer_ to
-  the more empathetic, thoughtful, and sustainable ideal in my head?
+  a more empathetic, thoughtful, and sustainable ideal?
 
-With distance comes a notion of proximity: when things are close, and when
-things are far away. Sometimes this proximity is objective and easy to measure.
-Other times, it is more abstract. Regardless of the way the terms are used,
-though, nearly everyone has an intuition for what distance means.
+With distance comes a notion of proximity: when things are close, and when they
+are far away. Sometimes this proximity is objective and easy to measure. Other
+times, it is more abstract. Regardless, nearly everyone has an intuition for
+what distance means.
 
 Mathematician [Morris Kline](https://en.wikipedia.org/wiki/Morris_Kline) once
 wrote that "Mathematicians create by acts of insights and intuition." So it is
-for the intuitive notion of distance. In what follows, I'd like to explore
-different examples of distances in mathematics. We'll start with the most
-well-known formulation, and from there will move on to more exotic examples.
-We'll see what ties all of these distances together, and what makes each one of
-them unique.
-
-Let's get close to some distances!
+for distance. In what follows, I'd like to explore different examples of
+distances in mathematics. We'll start with the most well-known formulation, and
+from there will move on to more exotic examples. We'll see what ties all of
+these distances together, and what makes each one of them unique.
 
 ---
 
@@ -52,17 +50,19 @@ Let's get close to some distances!
 In geometry class, every student learns that the shortest distance between two
 points is a straight line. And if you know the coordinates of those points, with
 the help of the Pythagorean theorem you can even calculate this minimal
-distance. If you connect the points with a horizontal and a vertical line
-segment, these segments will form two sides of a right triangle. The hypotenuse
-of this triangle represents that shortest distance.
+distance.
+
+Connect the points with a horizontal and a vertical line segment; these segments
+will form two sides of a right triangle. The hypotenuse of this triangle
+represents the shortest distance.
 
 <DistanceExplorer caption="Figure 1: Adjust the positions of the two points to see the shortest distance between them (orange)." />
 
 When looking at a map, this shortest distance is often described by saying it's
-the distance "as the crow flies." Unfortunately, dear reader, if you're anything
-like me, you are not a crow. For everyone tethered to the ground, this shortest
-distance is typically unattainable. More often, you're constrained by the roads
-in the town or city you live in.
+the distance "as the crow flies." Unfortunately, if you're anything like me, you
+are not a crow. For those of us tethered to the ground, this shortest distance
+is typically unattainable. More often, you're constrained by the roads in the
+town or city you live in.
 
 Enter the **manhattan distance**, also known as the **taxicab geometry.** This
 is a way of measuring distance that assumes you're constrained to grid. Such a
@@ -71,18 +71,16 @@ distances in this way all the time (just ask Google Maps). We often talk about
 distances between city locations in terms of blocks: how many over, and how many
 up or down. This is just the manhattan distance.
 
-In this taxicab geometry, there are no diagonals. From every point on the grid,
-you can move in one of four directions: up, down, left, or right. Such a
-restriction still leads to a perfectly good notion of distance. However, it
-comes with some slightly surprising properties.
+In this geometry, there are no diagonals. From every point on the grid, you can
+move in one of four directions: up, down, left, or right. Such a restriction
+still leads to a perfectly good notion of distance. However, it comes with some
+slightly surprising properties.
 
 For one, unlike the notion of distance you learn about in high school geometry,
-when it comes to connecting two points in the taxicab geometry, there is _no
-unique shortest path_ in general. For example, if you're trying to connect two
-opposite corners of a square, you have two paths to choose from: clockwise or
-counter-clockwise.
+when it comes to connecting two points in the taxicab geometry, there is
+typically _no unique shortest path_.
 
-Here's a demonstration that let's you explore how many different paths will
+Here's a demonstration that lets you explore how many different paths will
 connect two points when using the manhattan distance. (As a bonus, can you
 figure out how many possible paths there are of minimal distance between two
 points on the grid?)
@@ -102,32 +100,32 @@ Here's how a circle looks in the taxicab geometry as you increase the radius:
 
 <ManhattanCircle caption="Figure 3: Move the slider to adjust the size of a circle in the taxicab geometry. The red dot is at the center of the circle." />
 
-As you can see, circles in this geometry are just rotated squares! Moreover, the
-circumference of any circle in this geometry is just the radius multiplied by 8.
-As a consequence, the ratio of a circle's circumference to twice its radius,
-which in traditional geometry has the value &pi; &approx; 3.14159..., has a distinctly less
-mysterious flavor here. As far as the manhattan distance is concerned, &pi; is
-simply equal to 4.
+As you can see, circles in this geometry become closer and closer to rotated
+squares! Moreover, the circumference of any circle in this geometry is just the
+radius *r* multiplied by 8 (since in each quadrant, you need to move up by *r*
+units and over by *r* units). As a consequence, the ratio of a circle's
+circumference to twice its radius, which in traditional geometry has the value
+&pi; &approx; 3.14159..., has a distinctly less mysterious flavor here. As far
+as the manhattan distance is concerned, &pi; is simply equal to 4.
 
 ---
 
 ### Hamming it Up
 
-Whenever I write a story, I make typos. Fortunately, my computer can help alert
-me to these mistakes, and if I'm paying attention, they're easy to correct.
+Whenever I write a story, I make typos. Fortunately, my computer has a spell
+checker, and can easily help me correct my mistakes.
 
-But how does the computer know when I've made a mistake? As it turns out, the
-idea boils down to distance.
+But how does the computer know when I've made a mistake in the first place? As
+it turns out, the idea boils down to distance.
 
-Intuitively, this makes sense. If I type matehmatics when I mean to type
-mathematics, we can agree that the misspelled word is _close_ to the correctly
+Intuitively, this makes sense. If I type **matehmatics** when I mean to type
+**mathematics**, we can agree that the misspelled word is _close_ to the correctly
 spelled word. But in order to make this intuition rigorous, we need a more
 precise understanding of what "close" means in this context.
 
-Let's take a look at three notions of distance when we're talking about words
-instead of points.
+Let's take a look at three notions of distance between words instead of points.
 
-##### Hamming Distance
+#### Hamming Distance
 
 The [Hamming distance](https://en.wikipedia.org/wiki/Hamming_distance) is a
 measurement you can use on words of the same length. It counts up the number of
@@ -142,11 +140,10 @@ count as a match with the "o" in "roast", because "o" is the third letter in
 ghost but the second letter in roast.
 
 Since the words you're comparing must have the same length, the Hamming distance
-isn't practical as a spell-checking tool. More common applications for this
-distance include error detecting / correcting. See the references at the end for
-more details.
+isn't practical as a spell-checking tool. See the references at the end
+for more common applications of this distance function.
 
-##### Levenshtein Distance
+#### Levenshtein Distance
 
 If we want to compare words of different lengths, we need a different way to
 measure distance. The [Levenshtein distance](https://en.wikipedia.org/wiki/Levenshtein_distance)
@@ -166,7 +163,7 @@ example, "tree" and "reed" have a Hamming distance of 4, but a Levenshtein
 distance of only 2, since you can delete the "t" from the start of "tree" and
 then add a "d" to the end.
 
-##### Damerau-Levenshtein Distance
+#### Damerau-Levenshtein Distance
 
 Let's return to my original typo: matehmatics instead of mathematics. In this
 case, the Hamming distance is well-defined, and like the Levenshtein distance it
@@ -184,7 +181,8 @@ tracks: a missing letter, an extra letter, an incorrect letter, or two adjacent
 letters out of order.
 
 Here's a demonstration for you to play around with these three notions of word
-distance. What would a circle look like in this geometry?
+distance. (Bonus question: what would a circle look like in the geometries
+determined by these distances?)
 
 <StringDistanceExplorer caption="Figure 4: Type words into the boxes to compare three different distance measures." />
 
@@ -200,18 +198,25 @@ infinitely many such notions!
 
 What might it mean for two functions to be close together or far apart? If you
 think about it for a minute or two, you can probably come up with some ideas.
-Here we'll explore two ideas.
+Here we'll explore two of them.
 
-One way to measure distance is to look at the **area** between the two
-functions. If the area is large, then the functions must be far apart in some
-sense. Conversely, if the area is 0, then under some reasonable
-assumptions<sup>\*</sup> on the functions, they must be equal.
+One way might be to look at the **area** between the two functions. If the area
+is large, then the functions must, in some sense, be far apart. Conversely, if
+the area is 0, then under some reasonable assumptions on the functions, they
+must be equal.
+
+<Sidebar>
+  For the mathematicians in the room, I'm intentionally omitting technical
+  details. If it makes you feel better, you can assume that all of the functions I
+  discuss in this section are continuous real-valued functions, defined on a
+  closed and bounded interval.
+</Sidebar>
 
 Another way to measure distance is to look at the **largest difference** between
 the function values for a given input. For instance, if one function evaluates
-to 100 while another one evaluates to 50 at the same input, the difference at
-this input would be 50, and so the distance between the functions would be at
-least 50. Once again, under some reasonable assumptions on the functions, if
+to 100 while another one evaluates to 25 at the same input, the difference at
+this input would be 75, and so the distance between the functions would be at
+least 75. Once again, under some reasonable assumptions on the functions, if
 this distance is 0, the functions are the same.
 
 Here's a demonstration where you can adjust some simple functions and see both
@@ -227,9 +232,8 @@ small, what (if anything) can you say about the largest difference distance?
 
 ### What's in a Distance?
 
-So far, we've seen several examples of distances in different context. However,
-we haven't yet defined precisely _how_ all of our examples fit in to the same
-notion of distance.
+We've now seen several examples of distances. However, we haven't yet defined
+precisely _how_ all of our examples fit into the same definition.
 
 With these examples at the forefront of our minds, I'd now like to tie them
 together with a mathematical definition of a distance function.
@@ -239,8 +243,8 @@ functions, or any other collection of things that you'd like to be able to
 describe in terms of proximity. A **distance function** for this set is function
 that takes any two objects, returns a number, and has the following properties:
 
-1. The number the distance function returns can't ever be negative. For example,
-   it doesn't make sense to talk about the distance between two cities to have a
+1. The distance function never returns negative numbers. For example,
+   it doesn't make sense to talk about the distance between two cities as having a
    negative value.
 
 2. If the distance between two objects is zero, those two objects are the same.
@@ -248,7 +252,7 @@ that takes any two objects, returns a number, and has the following properties:
    a distance of zero from "mathematics" is the word "mathematics" itself.
 
 3. The order in which you pass objects to the distance function doesn't matter.
-   For example, the distance between San Francisco and Chicago is the same as the
+   For example, the distance between San Francisco and Chicago must be the same as the
    distance between Chicago and San Francisco.
 
 4. Adding destinations can never _decrease_ the total length of a trip. In other
@@ -257,22 +261,25 @@ that takes any two objects, returns a number, and has the following properties:
    is known as the **triangle inequality**, because in a triangle, the sum of any
    two sides will always exceed the length of the third side.
 
+   Intuitively, this should make sense: if you need to fly from San Francisco to
+   Chicago, then barring flight delays, you're never going to get a *shorter*
+   trip by having a layover somewhere instead of taking a direct flight.
+
 If you're interested, I'll leave it to you to prove that all of the examples
 we've seen so far qualify as bonafide mathematical distances. (In general, the
 triangle inequality is the hardest property to verify.)
 
 ---
 
-### p-adics (rename)
+### Prime Time
 
 Now that we have a more formalized definition of distance, we can extend our set
 of examples beyond where our intuition might naturally take us.
 
-We'll begin with the first distance function you ever saw: the absolute value
-function. This function measures the distance between two numbers. For example,
-2 and 5 are a distance of 3 from each other, so
-
-| 2 - 5 | = | 5 - 2 | = 3.
+We'll begin with the first (and often only) distance function people typically
+see: the absolute value function. This function measures the distance between
+two numbers. For example, 2 and 5 are a distance of 3 from each other; put
+another way, | 2 - 5 | = | 5 - 2 | = 3.
 
 You can verify for yourself that the absolute value function satisfies all of
 the properties of a distance function.
@@ -285,50 +292,111 @@ prime factors are 1 and itself. The first few primes are 2, 3, 5, 7, and 11. 4
 isn't prime because 4 = 2 &times; 2. 6 isn't prime because 6 = 2 &times; 3.
 
 Let's choose a prime number, say 3. Our new distance function will take any two
-whole numbers, calculate their difference, and determine the maximum power of
-three that will divide that difference. The distance is then defined as the
-reciprocal of three to that power. (In order to have a true distance, we define
-it to equal zero if the difference equals zero.)
+whole numbers, calculate their difference, and determine the maximum power of 3
+that divides this difference. The distance is then defined as the reciprocal of
+three to this maximal power. (In order to have a true distance, we define it to
+equal zero if the difference equals zero.)
 
 It's a mouthful, right? Let's look at an example. Imagine that we're trying to
 find the distance between the numbers 11 and 2. The difference is 9, which is
 divisible by 3 two times. With our new notion of distance, then, we'd say that
-the distance between 11 and 2 is 3<sup>-2</sup> = 1/9.
+the distance between 11 and 2 is 3<sup>-2</sup> = 1/9, or around 0.111.
+
+For a given prime _p_, this distance is called the **p-adic distance**.
 
 Here's a demonstration that will allow you to play around with these ideas in
-more detail. You can select a prime and then calculate the distance between two
-numbers, when the distance is determined by that prime.
+more detail. You can select a prime and then calculate the *p*-adic distance
+between any two whole numbers.
 
 <PAdicCalculator caption="Figure 5: Calculating the p-adic difference between numbers for various primes p."/>
 
 Why in the world would you want to do this? I'm afraid a historical motivation
 would take us too far afield, so if nothing else, just take it as a mathematical
-curiosity.
+curiosity for now.
 
-Here's a higher level few of these different distance metrics for varying primes _p_.
+Instead of calculating these distances one pair at a time, here's a heat map
+with *p*-adic distance for every pair of numbers between 1 and 25. As you can see,
+distances are equal along diagonals that move up and to the right. This is
+because adding the same value to two numbers has no effect on their *p*-adic
+distance: 10 - 2 has a 2-adic distance of 0.125, just as (10 + 5) - (2 + 5) = 15 - 7 does.
 
 <PAdicHeatChart caption="Figure 6: A heat chart of p-adic distances for pairs of numbers between 1 and 25. The darker the square, the closer the distance to 1. The lighter the square, the closer the distance to 0. Hover over a square to see the numbers and their distance."/>
 
-Surprisingly, this is more than just an intellectual exercise. something something.
+While the chart above can show us several distance calculations at a glance, it
+also has a flaw. By putting numbers along the top and right in increasing order
+from 1 to 25, it implicitly relies on the standard notion of distance we've been
+taught all of our lives. In other words, 25 is far away from 1 because the
+standard distance (as measured by absolute value) is 24, even though the 2-adic
+distance between 1 and 25 is much smaller.
 
-p-adic def
-visualize distance differences
+Here's another way to visualize numbers based on their *p*-adic distance, adapted
+from [Visualizing the p-adic Integers](https://www.jstor.org/stable/2323809) and [The p-adic integers: General introduction and visual representation](http://math.uni.lu/eml/projects/reports/P-adics.pdf). In this representation, numbers form a fractal-like structure. The numbers clump together quickly, so this demonstration only supports seeing a handful of them for the primes 3, 5, and 7:
 
-<PAdicFractalDistance caption="Figure 7: Foo" />
+<PAdicFractalDistance caption="Figure 7: Another representation of nearby numbers. Choose a prime, and then use the slider to see all numbers less than that prime (black), less then the square of that prime (black and blue), or less than the cube of that prime (black, blue, and orange). Points within a cluster are 'close' in the p-adic sense." />
 
-circles - every point inside is a center
-triangles? - every triangle is isosceles
-exhaustive list of distance metrics - https://en.wikipedia.org/wiki/Ostrowski%27s_theorem
-a different visualization?
+---
+
+### Classifying Closeness
+
+These *p*-adic distances give us an infinite family of distance functions in
+addition to the more well-known absolute value function. But they also might
+seem like little more than a curiosity. Here are some results that I hope will
+convince you otherwise.
+
+First, it's possible to extend the *p*-adic distance to differences between
+rational numbers, not just integers. And when considered in this larger universe
+of numbers, *p*-adic distance functions represent emerge more naturally.
+In fact, according to [Ostrowski's Theorem](https://en.wikipedia.org/wiki/Ostrowski%27s_theorem),
+any distance function on pairs of rational numbers must be equivalent to one of the following:
+
+1. The **trivial distance** function (i.e. one that sets the distance between any two numbers equal to 0 if the numbers are the same, and 1 if they are different),
+2. The **absolute value** function,
+3. The **p-adic distance** function for some prime _p_.
+
+In other words, even though *p*-adic distances fall outside of our everyday
+experience, mathematically they are of fundamental importance. 
+
+Second, since there are infinitely prime numbers, in some sense it is the
+absolute value function that's the outlier, not the notion of *p*-adic distance.
+In fact, there's active research at the intersection of physics and *p*-adic
+distance functions (see the resources at the end if you're curious). 
+
+Third, there are some fun and counter-intuitive results in geometry that emerge
+when working with *p*-adic distance. Here are two to break your brain a little.
+(These examples are taken from pages 5-6 in Neal Koblitz's
+[p-adic Numbers, p-adic Analysis, and Zeta-Functions](http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.461.4588&rep=rep1&type=pdf).)
+
+1. Suppose you pick any three points with rational coordinates. As long as these
+points don't fall along the same line, they'll determine the corners of a
+triangle. If you calculate the distance between points using a *p*-adic distance
+function instead of the usual notion of distance, the triangle will *always*
+have two sides of equal length. In other words, every triangle is an isosceles
+triangle!
+
+2. You can define a circle of radius _r_ in the same way that you do with
+well-known Euclidian geometry. Here's where things get weird: if you calculate
+distance using a *p*-adic distance function, *every* point inside the circle is
+a center of the circle!
+
+  Put another way, just like there's no unique shortest path between two
+  points when using the manhattan distance, there's no unique center of a circle
+  when using a *p*-adic distance.
 
 ---
 
 ### Conclusion
 
-- For the mathematicians in the room, I'm intentionally omitting technical
-  details. If it makes you feel better, you can assume that all of the functions I
-  discuss in this section are continuous real-valued functions, defined on a
-  closed and bounded interval.
+Distance may not seem like a very interesting topic. After all, it's something
+we encounter every time we pull up Google Maps. But even in our everyday lives,
+how we calculate distance depends on context. Are we trying to navigate through
+crowded city streets, or find the shortest travel distance for an international
+vacation?
+
+By formalizing our intuition into a definition, we can begin to explore a rich
+universe of geometries based on different ways to measure distance. Some of
+these are close to our experience, while others are quite foreign. But despite
+their differences, they all share the same definition, and the potential for
+rich and interesting mathematics.
 
 Sources:
 
@@ -340,8 +408,12 @@ Sources:
 
 - [p-adic Numbers, p-adic Analysis, and Zeta-Functions](http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.461.4588&rep=rep1&type=pdf), by Neal Koblitz
 
+- [Visualizing the p-adic Integers](https://www.jstor.org/stable/2323809), by Albert A. Cuoco.
 
-https://www.jstor.org/stable/2323809?read-now=1&seq=10#page_scan_tab_contents
-http://math.uni.lu/eml/projects/reports/P-adics.pdf
-https://www.google.com/search?q=number+theory+as+the+ultimate+physical+theory&oq=Number+theory+as+the+ultimate+physical+theory&aqs=chrome.0.0.366j0j1&sourceid=chrome&ie=UTF-8
+- [The p-adic integers: General introduction and visual representation](http://math.uni.lu/eml/projects/reports/P-adics.pdf), by Brian Courthoute, Pablo Guzman, and Antoine Ronk.
 
+- [Ostrowski's Theorem](https://en.wikipedia.org/wiki/Ostrowski%27s_theorem).
+
+- [On p-adic mathematical physics](https://link.springer.com/article/10.1134%2FS2070046609010014), by B. Dragovich, A. Yu. Khrennikov, S. V. Kozyrev, and I. V. Volovich.
+
+- [Number theory as the ultimate physical theory](https://link.springer.com/article/10.1134/S2070046610010061), by Igor V. Volovich.
