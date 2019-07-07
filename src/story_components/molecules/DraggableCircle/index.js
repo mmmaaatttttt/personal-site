@@ -50,14 +50,12 @@ class DraggableCircle extends Component {
 
   render() {
     const { cx, cy, r, fill, stroke, strokeWidth } = this.props;
-    const { hovering } = this.state;
     return (
       <NoScrollCircle
         cx={cx}
         cy={cy}
         fill={fill}
         r={r}
-        hovering={hovering}
         stroke={stroke}
         strokeWidth={strokeWidth}
         onMouseDown={this.handleDragStart}
