@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import PropTypes from "prop-types";
+import { SVGContext } from "contexts";
 
 const StyledSVG = styled.svg`
   display: block;
@@ -17,23 +18,25 @@ const ClippedSVG = ({ id, width, height, marginTop, padding, children }) => {
     };
   }
   return (
-    <StyledSVG
-      xmlns="http://www.w3.org/2000/svg"
-      viewBox={`0 0 ${width} ${height}`}
-      marginTop={marginTop}
-    >
-      <defs>
-        <clipPath id={`clip-path-${id}`}>
-          <rect
-            x={padding.left}
-            y={padding.top}
-            height={height - padding.top - padding.bottom}
-            width={width - padding.left - padding.right}
-          />
-        </clipPath>
-      </defs>
-      <g clipPath={`url(#clip-path-${id})`}>{children}</g>
-    </StyledSVG>
+    <SVGContext.Provider value={{ width, height, padding }}>
+      <StyledSVG
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox={`0 0 ${width} ${height}`}
+        marginTop={marginTop}
+      >
+        <defs>
+          <clipPath id={`clip-path-${id}`}>
+            <rect
+              x={padding.left}
+              y={padding.top}
+              height={height - padding.top - padding.bottom}
+              width={width - padding.left - padding.right}
+            />
+          </clipPath>
+        </defs>
+        <g clipPath={`url(#clip-path-${id})`}>{children}</g>
+      </StyledSVG>
+    </SVGContext.Provider>
   );
 };
 
