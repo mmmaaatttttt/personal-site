@@ -90,6 +90,7 @@ function FunctionDistanceExplorer({
         {graph1Pts.map((pt, i) => {
           return (
             <DraggableCircle
+              axis={i === 1 ? "both" : "y"}
               cx={pt.x}
               cy={pt.y}
               id={i}
@@ -103,6 +104,7 @@ function FunctionDistanceExplorer({
         {graph2Pts.map((pt, i) => {
           return (
             <DraggableCircle
+              axis={i === 1 ? "both" : "y"}
               cx={pt.x}
               cy={pt.y}
               id={i + 3}

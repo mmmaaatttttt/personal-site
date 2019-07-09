@@ -3,15 +3,10 @@ import { clamp, maxBy } from "lodash";
 function clamped(points, xScale, yScale) {
   const xDomain = xScale.domain();
   const yDomain = yScale.domain();
-  return points.map((pt, i) => {
-    const ptCopy = { ...pt };
-    if (i === 0) ptCopy.x = xDomain[0];
-    if (i === points.length - 1) ptCopy.x = xDomain[1];
-    return {
-      x: clamp(ptCopy.x, ...xDomain),
-      y: clamp(ptCopy.y, ...yDomain)
-    };
-  });
+  return points.map(pt => ({
+    x: clamp(pt.x, ...xDomain),
+    y: clamp(pt.y, ...yDomain)
+  }));
 }
 
 // takes the draggable points and finds the endpoints
@@ -66,9 +61,8 @@ function l1Norm(pts1, pts2) {
 
   const section1Area = _areaHelper(pts1Copy.slice(0, 2), pts2Copy.slice(0, 2));
   const section2Area = _areaHelper(pts1Copy.slice(1, 3), pts2Copy.slice(1, 3));
-  const section3Area = _areaHelper(pts1Copy.slice(2), pts2Copy.slice(2)); // last one is too small???
+  const section3Area = _areaHelper(pts1Copy.slice(2), pts2Copy.slice(2));
 
-  // area can be broken into two halves
   return section1Area + section2Area + section3Area;
 }
 
@@ -112,16 +106,7 @@ function _areaHelper(pts1, pts2) {
   const area2 = Math.abs(
     _areaUnderLine(intersect, pts1[1]) - _areaUnderLine(intersect, pts2[1])
   );
-  return (area1 + area2) || 0;
-
-  // pts2: x_0, x_1, y_0, y_1
-  // line y - y_0 = m (x - x_0)
-
-  // pts1: X_0, X_1, Y_0, Y_1
-  // line y - Y_0 = M (x - X_0)
-  // y = M(x - X_0) = m(x - x_0)
-  // (M - m) x = M * X_0 - m * x_0
-  // x = M*X_0 - m* x_0 / (M - m)
+  return area1 + area2 || 0;
 }
 
 // calculate the area under a line segment in the first quadrant

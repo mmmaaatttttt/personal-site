@@ -5,9 +5,12 @@ import { NoScrollCircle } from "story_components";
 import COLORS from "utils/styles";
 import { SVGContext } from "contexts";
 
-function handleDrag(id, onDrag) {
+function handleDrag(id, onDrag, cx, cy, axis) {
   return function(_, { x, y }) {
-    onDrag(id, { x, y });
+    const position = { x, y };
+    if (axis === "y") position.x = cx;
+    if (axis === "x") position.y = cy;
+    onDrag(id, position);
   };
 }
 
@@ -23,6 +26,7 @@ function getBounds(svgBounds, circleR) {
 }
 
 function DraggableCircle({
+  axis,
   cx,
   cy,
   r,
@@ -37,11 +41,12 @@ function DraggableCircle({
   const svgBounds = useContext(SVGContext);
   return (
     <Draggable
-      onStart={onDragStart}
-      onDrag={handleDrag(id, onDrag)}
-      onStop={onDragEnd}
-      defaultPosition={{ x: cx, y: cy }}
+      axis={axis}
       bounds={getBounds(svgBounds, r)}
+      defaultPosition={{ x: cx, y: cy }}
+      onStart={onDragStart}
+      onDrag={handleDrag(id, onDrag, cx, cy, axis)}
+      onStop={onDragEnd}
     >
       <NoScrollCircle
         bounds="parent"
@@ -57,6 +62,7 @@ function DraggableCircle({
 }
 
 DraggableCircle.propTypes = {
+  axis: PropTypes.oneOf(["both", "x", "y", "none"]).isRequired,
   cx: PropTypes.number.isRequired,
   cy: PropTypes.number.isRequired,
   fill: PropTypes.string.isRequired,
@@ -70,6 +76,7 @@ DraggableCircle.propTypes = {
 };
 
 DraggableCircle.defaultProps = {
+  axis: "both",
   cx: 0,
   cy: 0,
   fill: COLORS.BLACK,
