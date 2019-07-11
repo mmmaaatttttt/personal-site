@@ -6,8 +6,8 @@ import COLORS from "utils/styles";
 import { SVGContext } from "contexts";
 
 function handleDrag(id, onDrag, cx, cy, axis) {
-  return function(_, { x, y }) {
-    const position = { x, y };
+  return function(e, data) {
+    const position = { x: data.x, y: data.y };
     if (axis === "y") position.x = cx;
     if (axis === "x") position.y = cy;
     onDrag(id, position);
@@ -47,6 +47,7 @@ function DraggableCircle({
       onStart={onDragStart}
       onDrag={handleDrag(id, onDrag, cx, cy, axis)}
       onStop={onDragEnd}
+      scale={svgBounds.dimensions.width / svgBounds.width}
     >
       <NoScrollCircle
         bounds="parent"
