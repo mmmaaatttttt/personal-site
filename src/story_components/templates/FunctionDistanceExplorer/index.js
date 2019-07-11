@@ -62,12 +62,13 @@ function FunctionDistanceExplorer({
         handleSwitchChange={() => handleNormToggle(!l1NormActive)}
       />
       <Graph
+        graphPadding={graphPadding}
+        height={height}
+        svgId="function-distance-explorer"
+        tickStep={() => 1}
+        width={width}
         xScale={xScale}
         yScale={yScale}
-        graphPadding={graphPadding}
-        width={width}
-        height={height}
-        tickStep={() => 1}
       >
         {l1NormActive && (
           <Polygon

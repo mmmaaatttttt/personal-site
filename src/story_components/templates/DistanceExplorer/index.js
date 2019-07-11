@@ -37,6 +37,7 @@ function DistanceExplorer({ width, height, xScale, yScale }) {
         yAxisPosition="center"
         width={width}
         height={height}
+        svgId="distance-explorer"
         xScale={xScale}
         yScale={yScale}
         tickStep={() => 1}

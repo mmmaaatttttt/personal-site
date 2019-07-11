@@ -51,12 +51,13 @@ function ManhattanPaths({
         value={sliderVal}
       />
       <Graph
-        width={width}
+        graphPadding={graphPadding}
         height={height}
+        svgId="manhattan-paths"
+        tickStep={() => 1}
+        width={width}
         xScale={xScale}
         yScale={yScale}
-        graphPadding={graphPadding}
-        tickStep={() => 1}
       >
         {gridPoints.map(pt => {
           const isActive = pt.x === activePoint.x && pt.y === activePoint.y;

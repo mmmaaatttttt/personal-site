@@ -30,11 +30,12 @@ function ManhattanCircle({ height, width }) {
         const points = generateCirclePoints(r);
         return (
           <Graph
-            xAxisPosition="center"
-            yAxisPosition="center"
-            width={width}
             height={height}
+            width={width}
+            svgId="manhattan-circle"
+            xAxisPosition="center"
             xScale={xScale}
+            yAxisPosition="center"
             yScale={yScale}
           >
             <circle cx={xScale(0)} cy={yScale(0)} fill={COLORS.RED} r={8} />

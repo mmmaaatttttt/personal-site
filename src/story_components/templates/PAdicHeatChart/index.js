@@ -20,6 +20,7 @@ function PAdicHeatChart({ primes, gridSize }) {
             delayMultiplier={1}
             getTooltipTitle={d => generateTooltipContent(d, prime)}
             getTooltipBody={() => ""}
+            id={"p-adic-heat-chart"}
             paddingScale={0.01}
             xAxisLabel="Second Number"
             yAxisLabel="First Number"

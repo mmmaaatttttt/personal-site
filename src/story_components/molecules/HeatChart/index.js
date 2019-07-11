@@ -101,13 +101,14 @@ class HeatChart extends Component {
 
   renderSVG = (tooltipShow = null, tooltipHide = null) => {
     const {
+      accessor,
+      axes,
+      children,
       colorDomain,
       colorRange,
       data,
       delayMultiplier,
-      children,
-      axes,
-      accessor
+      id
     } = this.props;
     const { width, height, paddingX, paddingY } = this.getDimensions();
     const { xScale, yScale } = this.getScales();
@@ -137,7 +138,7 @@ class HeatChart extends Component {
       []
     );
     return (
-      <ClippedSVG width={width} height={height}>
+      <ClippedSVG width={width} height={height} id={id}>
         <NodeGroup
           data={rectData}
           keyAccessor={d => `${d.x}:${d.y}`}
@@ -185,6 +186,7 @@ HeatChart.propTypes = {
   delayMultiplier: PropTypes.number.isRequired,
   getTooltipBody: PropTypes.func.isRequired,
   getTooltipTitle: PropTypes.func.isRequired,
+  id: PropTypes.string.isRequired,
   paddingScale: PropTypes.number.isRequired,
   tooltip: PropTypes.bool.isRequired,
   width: PropTypes.number.isRequired,
@@ -201,6 +203,7 @@ HeatChart.defaultProps = {
   delayMultiplier: 10,
   getTooltipBody: d => JSON.stringify(d, null, 4),
   getTooltipTitle: () => "",
+  id: "svg",
   paddingScale: 0.075,
   tooltip: true,
   width: 600,
