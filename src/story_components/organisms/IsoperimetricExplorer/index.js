@@ -7,7 +7,8 @@ import {
   StyledTable,
   SVGBorder
 } from "story_components";
-import { average, mod, euclideanDistance } from "utils/mathHelpers";
+import { average, mod } from "utils/mathHelpers";
+import { crossingExists } from "./helpers";
 import COLORS from "utils/styles";
 
 class IsoperimetricExplorer extends Component {
@@ -19,46 +20,6 @@ class IsoperimetricExplorer extends Component {
   componentDidMount() {
     this.generatePointsFromCount(this.props.initialSides);
   }
-
-  crossingExists = (newPoint, idx) => {
-    let { circleRadius } = this.props;
-    let { points } = this.state;
-    let seg1 = {
-      start: points[mod(idx - 1, points.length)],
-      end: newPoint
-    };
-    let seg2 = {
-      start: newPoint,
-      end: points[mod(idx + 1, points.length)]
-    };
-
-    for (let i = 0; i < points.length; i++) {
-      // two ways for there to be a problem:
-      // 1. the newPoint intersects a non-adjacent line segment on the polygon
-      // 2. an adjacent segment to newPoint intersects a point on the polygon
-
-      if (i === idx) continue;
-      let curPt = points[i];
-      let nextIdx = mod(i + 1, points.length);
-      let prevIdx = mod(i - 1, points.length);
-      let nextPt = points[nextIdx];
-
-      if (nextIdx !== idx) {
-        let distanceFromNewPointToCurSeg = this.distanceBetween(curPt, nextPt, newPoint);
-        if (distanceFromNewPointToCurSeg < circleRadius) return true;
-
-        let distanceFromSeg1ToCurPt = this.distanceBetween(seg1.start, seg1.end, curPt);
-        if (distanceFromSeg1ToCurPt < circleRadius) return true;
-      }
-
-      if (idx !== prevIdx) {
-        let distanceFromSeg2ToCurPt = this.distanceBetween(seg2.start, seg2.end, curPt);
-        if (distanceFromSeg2ToCurPt < circleRadius) return true;
-      }
-    }
-
-    return false;
-  };
 
   generatePointsFromCount = newCount => {
     let points = Array.from({ length: newCount }, (_, i) => {
@@ -106,10 +67,12 @@ class IsoperimetricExplorer extends Component {
   handleDrag = (idx, coords) => {
     let points = [...this.state.points];
     let newPoint = { ...coords };
-    if (!this.crossingExists(newPoint, idx)) {
-      points[idx] = newPoint;
-      this.setState({ points });
-    }
+    points[idx] = newPoint;
+
+    // cancel drag if intersection exists
+    if (crossingExists(points, idx)) return false;
+  
+    this.setState({ points });
   };
 
   handleValueChange = newVal => {
@@ -140,38 +103,6 @@ class IsoperimetricExplorer extends Component {
       polygonArea: normalizedPolygonArea.toFixed(2),
       ratio: (polygonArea / circleArea).toFixed(2)
     };
-  };
-
-  distanceBetween = (lineStart, lineEnd, point) => {
-    // a fun calculus problem
-    // to calculate the distance between a segment
-    // and a point not on that segment
-    let x0 = lineStart.x;
-    let x1 = lineEnd.x;
-    let y0 = lineStart.y;
-    let y1 = lineEnd.y;
-    let p = point.x;
-    let q = point.y;
-
-    // the segment is parametrized by
-    // (x0 + t(x0 - x1), y0 + t(y0 - y1)), 0 <= t <=1
-    // using calculus, here's the value of t which minimizes distance to (p, q)
-    let numerator = (x1 - x0) * (p - x0) + (y1 - y0) * (q - y0);
-    let denominator = (x1 - x0) ** 2 + (y1 - y0) ** 2;
-    let t0 = numerator / denominator;
-
-    // distance from the point to the line at t0 is minimal,
-    // unless t0 is outside of [0, 1].
-    if (t0 < 0 || t0 > 1) {
-      let d0 = euclideanDistance(x0 - p, y0 - q);
-      let d1 = euclideanDistance(x1 - p, y1 - q);
-      return Math.min(d0, d1);
-    }
-
-    let minD =
-      Math.abs((x0 - p) * (y1 - y0) - (y0 - q) * (x1 - x0)) /
-      denominator ** (1 / 2);
-    return minD;
   };
 
   setBaseArea = () => {

@@ -5,7 +5,7 @@ const NoScrollCircle = styled.circle`
   transition: stroke-width 300ms;
 
   &:hover,
-  &:active {
+  &.active {
     fill: ${props => props.stroke};
     stroke-width: ${props => props.r * 1.5};
     cursor: pointer;

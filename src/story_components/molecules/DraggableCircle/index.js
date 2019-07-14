@@ -1,16 +1,30 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import PropTypes from "prop-types";
 import Draggable from "react-draggable";
 import { NoScrollCircle } from "story_components";
 import COLORS from "utils/styles";
 import { SVGContext } from "contexts";
 
-function handleDrag(id, onDrag, cx, cy, axis) {
+function handleDragStart(onDragStart, setActive) {
   return function(e, data) {
+    setActive(true);
+    onDragStart(e, data);
+  };
+}
+
+function handleDrag(id, onDrag, cx, cy, axis) {
+  return function(_, data) {
     const position = { x: data.x, y: data.y };
     if (axis === "y") position.x = cx;
     if (axis === "x") position.y = cy;
-    onDrag(id, position);
+    return onDrag(id, position);
+  };
+}
+
+function handleDragEnd(onDragEnd, setActive) {
+  return function(e, data) {
+    setActive(false);
+    onDragEnd(e, data);
   };
 }
 
@@ -39,18 +53,21 @@ function DraggableCircle({
   onDragEnd
 }) {
   const svgBounds = useContext(SVGContext);
+  const [isActive, setActive] = useState(false);
   return (
     <Draggable
       axis={axis}
       bounds={getBounds(svgBounds, r)}
       defaultPosition={{ x: cx, y: cy }}
-      onStart={onDragStart}
+      position={{ x: cx, y: cy }}
+      onStart={handleDragStart(onDragStart, setActive)}
       onDrag={handleDrag(id, onDrag, cx, cy, axis)}
-      onStop={onDragEnd}
+      onStop={handleDragEnd(onDragEnd, setActive)}
       scale={svgBounds.dimensions.width / svgBounds.width}
     >
       <NoScrollCircle
         bounds="parent"
+        className={isActive ? "active" : ""}
         cx={0}
         cy={0}
         fill={fill}
