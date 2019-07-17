@@ -8,7 +8,7 @@ const NarrowContainer = styled.div`
 
   ${props => media[props.fullWidthAt]`
     width: 100%;
-    margin: 0 auto
+    margin: 0 auto;
   `};
 `;
 
