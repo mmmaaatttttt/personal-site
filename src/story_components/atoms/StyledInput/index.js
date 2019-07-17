@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import { rhythm } from "utils/typography";
+import media from "utils/media";
 import COLORS from "utils/styles";
 
 const StyledInput = styled.input`
@@ -7,6 +8,10 @@ const StyledInput = styled.input`
   padding: ${rhythm(0.2)};
   border: 1px solid ${COLORS.INPUT_GRAY};
   border-radius: 4px;
+
+  ${media.medium`
+    margin: ${rhythm(0.2)};
+  `}
 
   &:focus {
     outline: none;
