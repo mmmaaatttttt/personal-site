@@ -13,21 +13,25 @@ function PAdicCalculator({ primes }) {
       render={([{ value }]) => {
         return (
           <FlexContainer column>
-            <FlexContainer cross="center">
-              <label>Number 1</label>
-              <StyledInput
-                type="number"
-                step="1"
-                value={num1}
-                onChange={e => setFirstNumber(e.target.value)}
-              />
-              <label>Number 2</label>
-              <StyledInput
-                type="number"
-                step="1"
-                value={num2}
-                onChange={e => setSecondNumber(e.target.value)}
-              />
+            <FlexContainer cross="center" main="center" shouldWrap>
+              <div>
+                <label>Number 1:</label>
+                <StyledInput
+                  type="number"
+                  step="1"
+                  value={num1}
+                  onChange={e => setFirstNumber(e.target.value)}
+                />
+              </div>
+              <div>
+                <label>Number 2:</label>
+                <StyledInput
+                  type="number"
+                  step="1"
+                  value={num2}
+                  onChange={e => setSecondNumber(e.target.value)}
+                />
+              </div>
             </FlexContainer>
             <Latex
               displayMode

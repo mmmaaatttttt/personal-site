@@ -28,7 +28,7 @@ function StringDistanceExplorer() {
   } catch (e) {}
   return (
     <NarrowContainer width="80%">
-      <FlexContainer main="space-around" textAlign="center">
+      <FlexContainer main="space-around" textAlign="center" shouldWrap>
         <div>
           <label htmlFor="first-input">First Word:</label>
           <StyledInput
