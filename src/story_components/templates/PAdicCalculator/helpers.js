@@ -1,5 +1,15 @@
 import COLORS from "utils/styles";
 
+// helper to ensure numbers stay within bounds on input
+function clampInput(min, max, stateSetter) {
+  return function(e) {
+    const val = Math.round(+e.target.value);
+    if (min <= val && val <= max) {
+      stateSetter(val);
+    }
+  };
+}
+
 // finds the largest power of p that divides n
 function _findLargestPower(n, p) {
   let absN = Math.abs(n);
@@ -23,7 +33,7 @@ function displayIntegerDifference(num1, num2, prime) {
     \\Big \\rvert_${coloredPrime}
     =
     \\Big \\lvert
-      ${Math.abs(difference)}
+      ${difference}
     \\Big \\rvert_${coloredPrime}
     =
     ${difference === 0 ? "0" : ""}
@@ -36,16 +46,16 @@ function displayIntegerDifference(num1, num2, prime) {
     \\times
     ${difference / prime ** exp}
     \\Big \\rvert_${coloredPrime}
-    =
+    \\\\ =
     \\frac{1}{${coloredPrime}^${coloredExp}}
     =
     \\frac{1}{${prime ** exp}}
     =
-    ${(1 / prime ** exp).toFixed(2)}
+    ${1 / prime ** exp}
     `
         : ""
     }
   `;
 }
 
-export { displayIntegerDifference };
+export { clampInput, displayIntegerDifference };

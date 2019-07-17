@@ -2,11 +2,11 @@ import React, { useState } from "react";
 import PropTypes from "prop-types";
 import { SelectProvider, withCaption } from "providers";
 import { FlexContainer, Latex, StyledInput } from "story_components";
-import { displayIntegerDifference } from "./helpers";
+import { clampInput, displayIntegerDifference } from "./helpers";
 
-function PAdicCalculator({ primes }) {
-  const [num1, setFirstNumber] = useState(1);
-  const [num2, setSecondNumber] = useState(1);
+function PAdicCalculator({ primes, min, max }) {
+  const [num1, setFirstNumber] = useState(0);
+  const [num2, setSecondNumber] = useState(0);
   return (
     <SelectProvider
       options={[primes.map(p => ({ value: p, label: `Selected prime: ${p}` }))]}
@@ -17,19 +17,21 @@ function PAdicCalculator({ primes }) {
               <div>
                 <label>Number 1:</label>
                 <StyledInput
-                  type="number"
+                  onChange={clampInput(min, max, setFirstNumber)}
                   step="1"
-                  value={num1}
-                  onChange={e => setFirstNumber(e.target.value)}
+                  min={min}
+                  max={max}
+                  type="number"
                 />
               </div>
               <div>
                 <label>Number 2:</label>
                 <StyledInput
-                  type="number"
+                  onChange={clampInput(min, max, setSecondNumber)}
                   step="1"
-                  value={num2}
-                  onChange={e => setSecondNumber(e.target.value)}
+                  min={min}
+                  max={max}
+                  type="number"
                 />
               </div>
             </FlexContainer>
@@ -45,10 +47,14 @@ function PAdicCalculator({ primes }) {
 }
 
 PAdicCalculator.propTypes = {
+  max: PropTypes.number.isRequired,
+  min: PropTypes.number.isRequired,
   primes: PropTypes.arrayOf(PropTypes.number).isRequired
 };
 
 PAdicCalculator.defaultProps = {
+  max: 1e6,
+  min: -1e6,
   primes: [2, 3, 5, 7, 11, 13, 17, 19, 23]
 };
 
