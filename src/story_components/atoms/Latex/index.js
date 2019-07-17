@@ -17,6 +17,10 @@ const StyledParagraph = styled.p`
     top: 0.1em !important;
     font-size: 2rem;
   }
+
+  .newline {
+    margin-top: 1rem;
+  }
 `;
 
 class Latex extends Component {
