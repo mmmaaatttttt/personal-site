@@ -8,6 +8,7 @@ import COLORS from "utils/styles";
 function PAdicHeatChart({ primes, gridSize }) {
   return (
     <SelectProvider
+      fullWidthAt="extraSmall"
       options={[primes.map(p => ({ value: p, label: `Selected prime: ${p}` }))]}
       width="50%"
       render={([{ value: prime }]) => {

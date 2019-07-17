@@ -38,9 +38,11 @@ function PAdicFractalDistance({ levelColors, primes, xScale, yScale }) {
         }
       ]}
       width="50%"
+      fullWidthAt="extraSmall"
       render={([level]) => {
         return (
           <SelectProvider
+            margin="0.75rem 0"
             options={[
               primes.map(p => ({ value: p, label: `Selected prime: ${p}` }))
             ]}
