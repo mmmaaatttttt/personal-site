@@ -48,8 +48,6 @@ class OrchardGameHeatData extends Component {
                 colorDomain = [0.05, 0.25];
                 colorRange = [COLORS.BLUE, COLORS.DARK_BLUE];
               }
-              console.log("DATA", data);
-              console.log("OPTIONS", selectOptions);
               const heatData = data
                 .filter(
                   d =>
