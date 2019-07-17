@@ -23,10 +23,10 @@ class SelectProvider extends Component {
   };
 
   render() {
-    const { margin, options, render, width } = this.props;
+    const { fullWidthAt, margin, options, render, width } = this.props;
     const { currentOptions } = this.state;
     return (
-      <NarrowContainer width={width} fullWidthAt="small">
+      <NarrowContainer width={width} fullWidthAt={fullWidthAt}>
         <React.Fragment>
           {options.map((optionsArr, idx) => {
             const option = currentOptions[idx];
