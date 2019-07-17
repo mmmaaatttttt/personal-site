@@ -3,22 +3,8 @@
 - pagination for stories
 - search for stories
 - fewer decimal places for orchard-game.js
-- story title page: make nav color customizable
+  - and put in JSON file so that it can be loaded via StaticQuery
 - add ci
-
-Distance component
-  - less janky drag and drop
-    - https://medium.com/@crazypixel/mastering-drag-drop-with-reactjs-part-01-39bed3d40a03
-    - make sure this doesn't mess up isoperimetric explorer visualization
-  - add reset button
-
-Padic calculator
-  - make sure inputs are aligned, not too wide
-
-
-- figure out padic visualization
-  - make it
-- finish writing last section
 
 LOW PRIORITY
 - get more heat map data (mayyybeeeee)
@@ -32,15 +18,14 @@ LOW PRIORITY
 - line breaks for katex equations on mobile
 - refactor withCaption to CaptionProvider
 - refactor fourweddings interactives (use providers, don't have one megacomponent)
+- use svg context in more places than DraggableCircle
 
 LOWEST PRIORITY
 - look into netlify: https://www.netlify.com/
 - add playgrounds section
-- figure out how to disable katex warning - need access to webpack config (https://stackoverflow.com/questions/43414103/how-to-use-noparse-in-create-react-app)
 - make nav update on story to follow scroll
   - have share button
   - have progress bar
-- better way to import data into components
 - HorizontalBar in petrie post -- second one has a line of white (doesn't fill entire bar vertically)
 
 - treatise on systems thinking
@@ -52,7 +37,6 @@ LOWEST PRIORITY
   - nutrition
   - forests!
   - math education itself suffers from a lack of systems thinking (not enough integration with ethics, writing, computer science)
-
 
  TREATISE ON data
   - fitbit
