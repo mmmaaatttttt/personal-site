@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { StaticQuery, graphql } from 'gatsby';
+import { StaticQuery, graphql } from "gatsby";
 import styled from "styled-components";
 import { Helmet } from "react-helmet";
 import Navbar from "./Navbar";
@@ -34,7 +34,7 @@ class MainLayout extends Component {
   }
 
   render() {
-    const { children, location } = this.props;
+    const { children, location, outline } = this.props;
     const display = this.state.show ? "flex" : "none";
     return (
       <StaticQuery
@@ -52,14 +52,21 @@ class MainLayout extends Component {
                 <meta name="twitter:image" content={`${siteUrl}${matt}`} />
                 <meta name="og:title" content={title} />
                 <meta name="og:description" content={description} />
-                <meta name="og:url" content={`${siteUrl}${location.pathname}`} />
+                <meta
+                  name="og:url"
+                  content={`${siteUrl}${location.pathname}`}
+                />
                 <meta name="og:image" content={`${siteUrl}${matt}`} />
               </Helmet>
-              <Navbar title={title} hide={/\/stories\/.+/.test(location.pathname)} />
+              <Navbar
+                title={title}
+                hide={/\/stories\/.+/.test(location.pathname)}
+                outline={outline}
+              />
               <StyledContentArea>{children}</StyledContentArea>
               <Footer />
             </StyledPageWrapper>
-          )
+          );
         }}
       />
     );

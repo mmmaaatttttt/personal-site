@@ -138,14 +138,15 @@ class BlogPost extends Component {
       featured_image,
       caption,
       date,
-      featured_image_caption
+      featured_image_caption,
+      outline,
+      title: postTitle
     } = post.frontmatter;
-    const postTitle = post.frontmatter.title;
     const fullTitle = `${postTitle} - ${title}`;
     const githubUrl = `https://github.com/mmmaaatttttt/personal-site/blob/master/src/pages${slug.slice(0, -1)}.md`;
     const { fluid } = featured_image.childImageSharp;
     return (
-      <MainLayout location={location}>
+      <MainLayout location={location} outline={outline}>
         <StyledPostWrapper>
           <Helmet>
             <title>{fullTitle}</title>
@@ -217,6 +218,7 @@ export const query = graphql`
             }
           }
         }
+        outline
         caption
         featured_image_caption
       }

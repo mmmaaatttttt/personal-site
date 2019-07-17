@@ -34,6 +34,12 @@ const StyledNav = styled.nav`
         color: #fff;
       }
     `}
+    ${props =>
+      props.outline &&
+      css`
+        text-shadow: -0.1px -0.1px 1px #000, 0.1px -0.1px 1px #000,
+          -0.1px 0.1px 1px #000, 0.1px 0.1px 1px #000;
+      `}
 
   ${media.extraSmall`
     flex-direction: row;
@@ -63,8 +69,8 @@ const StyledLinkContainer = styled.div`
   `};
 `;
 
-const Navbar = ({ children, title, hide }) => (
-  <StyledNav hide={hide}>
+const Navbar = ({ children, outline, title, hide }) => (
+  <StyledNav hide={hide} outline={outline}>
     <Link to="/">
       <StyledHeader>{title}</StyledHeader>
     </Link>
