@@ -34,7 +34,7 @@ const flexAlignments = [
 FlexContainer.propTypes = {
   column: PropTypes.bool.isRequired,
   cross: PropTypes.oneOf(flexAlignments).isRequired,
-  flex: PropTypes.number.isRequired,
+  flex: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
   main: PropTypes.oneOf(flexAlignments).isRequired,
   margin: PropTypes.string.isRequired,
   textAlign: PropTypes.string.isRequired,
