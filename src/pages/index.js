@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import MainLayout from "../layouts/MainLayout";
+import MainLayout from "layouts/MainLayout";
 import { fadeIn } from "utils/styles";
 import { rhythm } from "utils/typography";
 

@@ -4,15 +4,18 @@ import PropTypes from "prop-types";
 import COLORS from "utils/styles";
 
 const StyledSelect = styled(Select)`
-  flex: 1;
-  margin: ${props => props.margin}  
+  flex: ${props => props.flex};
+  margin: ${props => props.margin};
 `;
 
 StyledSelect.propTypes = {
-  margin: PropTypes.string.isRequired
+  flex: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
+  margin: PropTypes.string.isRequired,
+  styles: PropTypes.object.isRequired
 }
 
 StyledSelect.defaultProps = {
+  flex: 1,
   styles: {
     placeholder: () => ({
       color: COLORS.BLACK

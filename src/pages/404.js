@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { graphql } from 'gatsby';
 import Link from "gatsby-link";
 import Img from "gatsby-image";
-import MainLayout from "../layouts/MainLayout";
+import MainLayout from "layouts/MainLayout";
 import { rhythm } from "utils/typography";
 import media from "utils/media";
 

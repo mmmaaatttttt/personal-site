@@ -1,144 +1,79 @@
-import React from "react";
-import { graphql } from 'gatsby';
+import React, { useState, useMemo } from "react";
 import styled from "styled-components";
-import Link from "gatsby-link";
-import Img from "gatsby-image";
-import MainLayout from "../layouts/MainLayout";
+import { graphql } from "gatsby";
+import MainLayout from "layouts/MainLayout";
+import StoryCard from "layouts/StoryCard";
 import { rhythm } from "utils/typography";
-import COLORS from "utils/styles";
 import media from "utils/media";
+import { StyledSelect } from "story_components";
 
 const StyledStoriesWrapper = styled.div`
   margin: ${rhythm(0.5)};
-`;
-
-const StyledTitle = styled.h4`
-  margin-bottom: ${rhythm(1 / 4)};
-`;
-
-const StyledDate = styled.h6`
-  color: ${COLORS.GRAY};
-
-  ${media.small`
-    margin-bottom: ${rhythm(1 / 4)};
-  `};
-`;
-
-const StyledLink = styled(Link)`
-  text-decoration: none;
-  color: inherit;
   display: flex;
-
-  ${media.extraSmall`
-    flex-direction: column;
-  `};
-`;
-
-const StyledExcerptArea = styled.div`
   flex-direction: column;
   width: 60%;
-  margin: 0 ${rhythm(0.5)};
-
-  p {
-    margin: 0;
-    line-height: ${rhythm(0.9)};
-    font-size: 80%;
-  }
+  justify-content: flex-start;
 
   ${media.small`
     width: 100%;
-    * {
-      font-size: 70%;
-    }
-  `};
-
-  ${media.extraSmall`
-    margin: ${rhythm(0.5)} 0 0;
-
-    * {
-      font-size: 100%;
-    }
-  `};
+  `}
 `;
 
-const StyledImageWrapper = styled.div`
-  width: ${rhythm(6)};
+function _extractYear(nodeObj) {
+  return +nodeObj.node.frontmatter.date.slice(-4);
+}
 
-  img {
-    border-radius: 8px;
-    margin-bottom: 0;
-    display: block;
-  }
+function getSortedYearOptions(nodes) {
+  const years = nodes.map(_extractYear);
+  const yearOptions = Array.from(new Set(years), year => ({
+    value: year,
+    label: year
+  }));
+  return [{ value: "all", label: "All years" }, ...yearOptions];
+}
 
-  ${media.extraSmall`
-    width: 100%;
-  `};
-`;
+function filterByYear(nodeObj, yearOption) {
+  if (yearOption.value === "all") return true;
+  if (_extractYear(nodeObj) === yearOption.value) return true;
+  return false;
+}
 
-const StyledStory = styled.div`
-  border-bottom: 1px solid ${COLORS.GRAY};
-  padding: ${rhythm(0.75)} 0;
-  animation-delay: ${props => props.delay}s;
-
-  &:first-child {
-    padding-top: 0;
-  }
-
-  &:last-child {
-    border: none;
-  }
-
-  ${media.extraSmall`
-    margin: 0 ${rhythm(0.5)};
-    padding-bottom: ${rhythm(0.5)};
-  `};
-`;
-
-const Story = ({
-  caption,
-  date,
-  delay,
-  direction,
-  fluid,
-  slug,
-  title,
-  timeToRead
-}) => (
-  <StyledStory className={`animated bounceIn${direction}`} delay={delay}>
-    <StyledLink to={slug}>
-      <StyledImageWrapper>
-        <Img fluid={fluid} alt={`Card for ${title}`}/>
-      </StyledImageWrapper>
-      <StyledExcerptArea>
-        <StyledTitle>{title}</StyledTitle>
-        <StyledDate>
-          {date} - {timeToRead} minute read
-        </StyledDate>
-        <p>{caption}</p>
-      </StyledExcerptArea>
-    </StyledLink>
-  </StyledStory>
-);
-
-const Stories = ({ data, location }) => (
-  <MainLayout location={location}>
-    <StyledStoriesWrapper>
-      {data.allMdx.edges.map(({ node }, index) => (
-        <Story
-          key={node.fields.slug}
-          title={node.frontmatter.title}
-          date={node.frontmatter.date}
-          fluid={node.frontmatter.featured_image.childImageSharp.fluid}
-          caption={node.frontmatter.caption}
-          slug={node.fields.slug}
-          timeToRead={node.timeToRead}
-          direction={index % 2 === 0 ? "Left" : "Right"}
-          delay={index / 4}
+const Stories = ({ data, location }) => {
+  const yearOptions = useMemo(() => getSortedYearOptions(data.allMdx.edges), [
+    data
+  ]);
+  const [yearOption, setYearOption] = useState(yearOptions[0]);
+  return (
+    <MainLayout location={location}>
+      <StyledStoriesWrapper>
+        <StyledSelect
+          flex="none"
+          margin="0 0 1rem"
+          options={yearOptions}
+          value={yearOption}
+          onChange={newOption => setYearOption(newOption)}
         />
-      ))}
-    </StyledStoriesWrapper>
-  </MainLayout>
-);
+        <div>
+          {data.allMdx.edges
+            .filter(nodeObj => filterByYear(nodeObj, yearOption))
+            .map(({ node }, index) => (
+              <StoryCard
+                key={node.fields.slug}
+                title={node.frontmatter.title}
+                date={node.frontmatter.date}
+                fluid={node.frontmatter.featured_image.childImageSharp.fluid}
+                caption={node.frontmatter.caption}
+                slug={node.fields.slug}
+                timeToRead={node.timeToRead}
+                direction={index % 2 === 0 ? "Left" : "Right"}
+                delay={index / 4}
+              />
+            ))}
+        </div>
+      </StyledStoriesWrapper>
+    </MainLayout>
+  );
+};
 
 export default Stories;
 
