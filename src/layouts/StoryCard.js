@@ -72,7 +72,7 @@ const StyledImageWrapper = styled.div`
 
 const StyledStory = styled.div`
   border-bottom: 1px solid ${COLORS.GRAY};
-  padding: ${rhythm(0.75)} 0;
+  padding: ${rhythm(0.75)} 0 0;
   animation-delay: ${props => props.delay}s;
 
   &:first-child {
@@ -89,6 +89,21 @@ const StyledStory = styled.div`
   `};
 `;
 
+const TagBadge = styled.span`
+  background-color: ${COLORS.GRAY};
+  color: ${COLORS.WHITE};
+  font-size: ${rhythm(0.35)};
+  font-style: italic;
+  cursor: not-allowed;
+  margin: ${rhythm(0.1)};
+  padding: ${rhythm(0.05)} ${rhythm(0.3)};
+  border-radius: ${rhythm(0.3)};
+`;
+
+const TagContainer = styled.div`
+  text-align: right;
+`;
+
 function StoryCard({
   caption,
   date,
@@ -96,6 +111,7 @@ function StoryCard({
   direction,
   fluid,
   slug,
+  tags,
   title,
   timeToRead
 }) {
@@ -116,6 +132,11 @@ function StoryCard({
           <p>{caption}</p>
         </StyledExcerptArea>
       </StyledLink>
+      <TagContainer>
+        {tags.map(tag => (
+          <TagBadge key={tag}>{tag}</TagBadge>
+        ))}
+      </TagContainer>
     </StyledStory>
   );
 }
@@ -127,6 +148,7 @@ StoryCard.propTypes = {
   direction: PropTypes.oneOf(["Left", "Right", null]).isRequired,
   fluid: PropTypes.object.isRequired,
   slug: PropTypes.string.isRequired,
+  tags: PropTypes.arrayOf(PropTypes.string).isRequired,
   title: PropTypes.string.isRequired,
   timeToRead: PropTypes.number.isRequired
 };
@@ -138,6 +160,7 @@ StoryCard.defaultProps = {
   direction: null,
   fluid: {},
   slug: "/stories/default-slug",
+  tags: [],
   title: "Default title",
   timeToRead: 0
 };

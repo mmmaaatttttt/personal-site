@@ -58,15 +58,16 @@ const Stories = ({ data, location }) => {
             .filter(nodeObj => filterByYear(nodeObj, yearOption))
             .map(({ node }, index) => (
               <StoryCard
-                key={node.fields.slug}
-                title={node.frontmatter.title}
-                date={node.frontmatter.date}
-                fluid={node.frontmatter.featured_image.childImageSharp.fluid}
                 caption={node.frontmatter.caption}
-                slug={node.fields.slug}
-                timeToRead={node.timeToRead}
-                direction={index % 2 === 0 ? "Left" : "Right"}
+                date={node.frontmatter.date}
                 delay={index / 4}
+                direction={index % 2 === 0 ? "Left" : "Right"}
+                fluid={node.frontmatter.featured_image.childImageSharp.fluid}
+                key={node.fields.slug}
+                slug={node.fields.slug}
+                tags={node.frontmatter.tags ? node.frontmatter.tags.sort() : []}
+                title={node.frontmatter.title}
+                timeToRead={node.timeToRead}
               />
             ))}
         </div>
@@ -79,10 +80,16 @@ export default Stories;
 
 export const query = graphql`
   query StoriesQuery {
-    allMdx(sort: { fields: [frontmatter___date], order: DESC }) {
+    allMdx(
+      sort: {
+        fields: [frontmatter___date, frontmatter___tags]
+        order: [DESC, ASC]
+      }
+    ) {
       edges {
         node {
           frontmatter {
+            tags
             title
             date(formatString: "MMMM YYYY")
             featured_image {
