@@ -1,7 +1,4 @@
-- ordering by year
-- add "related stories" to end of each story
 - pagination for stories
-- search for stories
 - fewer decimal places for orchard-game.js
   - and put in JSON file so that it can be loaded via StaticQuery
 - add ci

@@ -6,7 +6,8 @@ import { Helmet } from "react-helmet";
 import MDXRenderer from "gatsby-mdx/mdx-renderer";
 import { MDXProvider } from "@mdx-js/tag";
 import Img from "gatsby-image";
-import MainLayout from "../layouts/MainLayout";
+import MainLayout from "layouts/MainLayout";
+import RelatedStories from "layouts/RelatedStories";
 import { FlexContainer } from "story_components";
 import { sizes, fadeIn } from "utils/styles";
 import { rhythm } from "utils/typography";
@@ -45,17 +46,17 @@ const StyledTextWrapper = styled.div`
 
   figure.w-60 > a {
     width: 60%;
-    margin: 0 auto
+    margin: 0 auto;
   }
 
   figure.w-70 > a {
     width: 70%;
-    margin: 0 auto
+    margin: 0 auto;
   }
 
   figure.w-80 > a {
     width: 80%;
-    margin: 0 auto
+    margin: 0 auto;
   }
 
   ${media.extraSmall`
@@ -140,10 +141,13 @@ class BlogPost extends Component {
       date,
       featured_image_caption,
       outline,
+      tags,
       title: postTitle
     } = post.frontmatter;
     const fullTitle = `${postTitle} - ${title}`;
-    const githubUrl = `https://github.com/mmmaaatttttt/personal-site/blob/master/src/pages${slug.slice(0, -1)}.md`;
+    const githubBase =
+      "https://github.com/mmmaaatttttt/personal-site/blob/master/src/pages";
+    const githubUrl = `${githubBase}${slug.slice(0, -1)}.md`;
     const { fluid } = featured_image.childImageSharp;
     return (
       <MainLayout location={location} outline={outline}>
@@ -160,10 +164,7 @@ class BlogPost extends Component {
             <meta property="og:url" content={`${siteUrl}${slug}`} />
           </Helmet>
           <StyledMainImageWrapper>
-            <Img
-              fluid={fluid}
-              alt={`Main image for ${postTitle}`}
-            />
+            <Img fluid={fluid} alt={`Main image for ${postTitle}`} />
             <StyledTitleWrapper>
               <h1>{postTitle}</h1>
               <h2>{date}</h2>
@@ -189,6 +190,7 @@ class BlogPost extends Component {
                 }}
               />
             </FlexContainer>
+            <RelatedStories currentTags={tags} id={slug}/>
           </StyledTextWrapper>
         </StyledPostWrapper>
       </MainLayout>
@@ -221,6 +223,7 @@ export const query = graphql`
         outline
         caption
         featured_image_caption
+        tags
       }
     }
   }

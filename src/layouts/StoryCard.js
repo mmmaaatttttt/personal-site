@@ -145,7 +145,7 @@ StoryCard.propTypes = {
   caption: PropTypes.string.isRequired,
   date: PropTypes.string.isRequired,
   delay: PropTypes.number.isRequired,
-  direction: PropTypes.oneOf(["Left", "Right", null]).isRequired,
+  direction: PropTypes.oneOf(["Left", "Right", null]),
   fluid: PropTypes.object.isRequired,
   slug: PropTypes.string.isRequired,
   tags: PropTypes.arrayOf(PropTypes.string).isRequired,
