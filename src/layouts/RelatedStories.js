@@ -8,7 +8,7 @@ import StoryCard from "./StoryCard";
 
 const StyledHeading = styled.h3`
   margin: 0;
-`
+`;
 
 function RelatedStories({ currentTags, id, maxRelated }) {
   const {
@@ -64,12 +64,12 @@ function RelatedStories({ currentTags, id, maxRelated }) {
       />
     ));
 
-  return (
+  return sortedStories.length ? (
     <div>
       <StyledHeading>Here are some other stories you may like:</StyledHeading>
       {sortedStories}
     </div>
-  );
+  ) : null;
 }
 
 RelatedStories.propTypes = {
