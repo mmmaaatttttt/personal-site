@@ -1,7 +1,8 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { HeatChart } from "story_components";
-import strategies, { data } from "data/orchard-game";
+import strategies from "data/orchard-game";
+import data from "data/json/orchard-game.json";
 import { withCaption, SliderProvider, SelectProvider } from "providers";
 import { sliderType, selectType } from "utils/types";
 import { camelCaseToTitle } from "utils/stringHelpers";
