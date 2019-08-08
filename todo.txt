@@ -1,4 +1,5 @@
 - pagination for stories
+- better loading screen on initial page load
 - add ci
 
 LOW PRIORITY
