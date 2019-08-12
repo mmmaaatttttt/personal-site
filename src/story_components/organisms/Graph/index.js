@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import { scaleLinear } from "d3-scale";
 import { Axis, AxisLabel, ClippedSVG, NarrowContainer } from "story_components";
 import { svgProps, svgDefaultProps, paddingType } from "utils/types";
+import { paddingObj } from "utils/styles";
 
 const Graph = ({
   children,
@@ -24,14 +25,7 @@ const Graph = ({
   yLabelOffset,
   yScale
 }) => {
-  if (typeof graphPadding === "number") {
-    graphPadding = {
-      top: graphPadding,
-      left: graphPadding,
-      right: graphPadding,
-      bottom: graphPadding
-    };
-  }
+  graphPadding = paddingObj(graphPadding);
   const { x, y } = labelOptions(
     width,
     height,

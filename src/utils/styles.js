@@ -51,6 +51,18 @@ const fadeColors = (color1, color2) => keyframes`
   }
 `;
 
-export { fadeColors, fadeIn, hexToRgba, sizes };
+function paddingObj(padVal) {
+  if (typeof padVal === "number") {
+    return {
+      top: padVal,
+      bottom: padVal,
+      left: padVal,
+      right: padVal
+    };
+  }
+  return padVal;
+}
+
+export { fadeColors, fadeIn, hexToRgba, paddingObj, sizes };
 
 export default COLORS;

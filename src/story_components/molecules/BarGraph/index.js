@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import NodeGroup from "react-move/NodeGroup";
 import { scaleBand, scaleLinear } from "d3-scale";
 import { Axis, CenteredSVGText, ClippedSVG } from "story_components";
-import COLORS from "utils/styles";
+import COLORS, { paddingObj } from "utils/styles";
 import { paddingType } from "utils/types";
 
 class BarGraph extends Component {
@@ -50,14 +50,7 @@ class BarGraph extends Component {
     } = this.props;
 
     // normalize padding to always be an object
-    if (typeof padding === "number") {
-      padding = {
-        top: padding,
-        left: padding,
-        right: padding,
-        bottom: padding
-      };
-    }
+    padding = paddingObj(padding);
     const xScale = histogram
       ? scaleLinear()
           .domain([thresholds[0], thresholds[thresholds.length - 1]])
