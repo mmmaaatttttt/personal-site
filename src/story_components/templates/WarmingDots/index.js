@@ -7,6 +7,7 @@ import { generateData } from "utils/mathHelpers";
 import visualizationData from "data/warming-dots.js";
 import { FlexContainer, Graph, LinePlot } from "story_components";
 import { withCaption, SliderProvider } from "providers";
+import { paddingType } from "utils/types";
 
 class WarmingDots extends Component {
   getYDomain = graphData => {
@@ -120,8 +121,7 @@ WarmingDots.propTypes = {
   max: PropTypes.number.isRequired,
   min: PropTypes.number.isRequired,
   step: PropTypes.number.isRequired,
-  svgPadding: PropTypes.oneOfType([PropTypes.number, PropTypes.object])
-    .isRequired,
+  svgPadding: paddingType,
   visData: PropTypes.shape({
     initialData: PropTypes.array.isRequired,
     width: PropTypes.number.isRequired,

@@ -7,7 +7,7 @@ import Animate from "react-move/Animate";
 import { withCaption } from "providers";
 import { Graph, LinePlot } from "story_components";
 import { SelectProvider } from "providers";
-import { selectType } from "utils/types";
+import { selectType, paddingType } from "utils/types";
 import COLORS from "utils/styles";
 
 class PureVotingLineChart extends Component {
@@ -145,12 +145,7 @@ class VotingLineChart extends Component {
 
 PureVotingLineChart.propTypes = {
   data: PropTypes.array.isRequired,
-  graphPadding: PropTypes.shape({
-    top: PropTypes.number.isRequired,
-    bottom: PropTypes.number.isRequired,
-    left: PropTypes.number.isRequired,
-    right: PropTypes.number.isRequired
-  }).isRequired,
+  graphPadding: paddingType,
   height: PropTypes.number.isRequired,
   selectOptions: selectType,
   svgId: PropTypes.string.isRequired,

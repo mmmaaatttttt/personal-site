@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import { scaleLinear } from "d3-scale";
 import { Axis, AxisLabel, ClippedSVG, NarrowContainer } from "story_components";
-import { svgProps, svgDefaultProps } from "utils/types";
+import { svgProps, svgDefaultProps, paddingType } from "utils/types";
 
 const Graph = ({
   children,
@@ -151,26 +151,10 @@ const labelOptions = (width, height, padding, hGrid, vGrid, yOff) => {
 
 Graph.propTypes = {
   ...svgProps,
-  graphPadding: PropTypes.oneOfType([
-    PropTypes.number,
-    PropTypes.shape({
-      top: PropTypes.number,
-      bottom: PropTypes.number,
-      left: PropTypes.number,
-      right: PropTypes.number
-    })
-  ]).isRequired,
+  graphPadding: paddingType,
   gridlinesHorizontal: PropTypes.bool.isRequired,
   gridlinesVertical: PropTypes.bool.isRequired,
-  svgPadding: PropTypes.oneOfType([
-    PropTypes.number,
-    PropTypes.shape({
-      top: PropTypes.number,
-      bottom: PropTypes.number,
-      left: PropTypes.number,
-      right: PropTypes.number
-    })
-  ]).isRequired,
+  svgPadding: paddingType,
   svgId: PropTypes.string.isRequired,
   tickFormatX: PropTypes.string.isRequired,
   tickFormatY: PropTypes.string.isRequired,

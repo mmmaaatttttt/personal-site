@@ -4,6 +4,7 @@ import NodeGroup from "react-move/NodeGroup";
 import { scaleBand, scaleLinear } from "d3-scale";
 import { Axis, CenteredSVGText, ClippedSVG } from "story_components";
 import COLORS from "utils/styles";
+import { paddingType } from "utils/types";
 
 class BarGraph extends Component {
   handleStart = (scale, d, i) => {
@@ -62,7 +63,7 @@ class BarGraph extends Component {
           .domain([thresholds[0], thresholds[thresholds.length - 1]])
           .rangeRound([padding.left, width - padding.right])
       : scaleBand()
-          .domain(barData.map((d, i) => i))
+          .domain(barData.map((_, i) => i))
           .rangeRound([padding.left, width - padding.right])
           .padding(0.1);
     let fontSize = labelFontSize;
@@ -156,15 +157,7 @@ BarGraph.propTypes = {
   height: PropTypes.number.isRequired,
   histogram: PropTypes.bool,
   labelFontSize: PropTypes.string,
-  padding: PropTypes.oneOfType([
-    PropTypes.number,
-    PropTypes.shape({
-      top: PropTypes.number,
-      bottom: PropTypes.number,
-      left: PropTypes.number,
-      right: PropTypes.number
-    })
-  ]).isRequired,
+  padding: paddingType,
   thresholds: PropTypes.arrayOf(PropTypes.number),
   tickFormat: PropTypes.string,
   yTickLabelPosition: PropTypes.oneOf(["bottom", "left"]),

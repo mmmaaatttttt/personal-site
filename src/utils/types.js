@@ -1,5 +1,15 @@
 import PropTypes from "prop-types";
 
+const paddingType = PropTypes.oneOfType([
+  PropTypes.number,
+  PropTypes.shape({
+    top: PropTypes.number,
+    bottom: PropTypes.number,
+    left: PropTypes.number,
+    right: PropTypes.number
+  })
+]).isRequired;
+
 const sliderType = PropTypes.arrayOf(
   PropTypes.shape({
     min: PropTypes.number.isRequired,
@@ -35,11 +45,11 @@ const svgProps = {
   height: PropTypes.number.isRequired,
   xScale: PropTypes.func.isRequired,
   yScale: PropTypes.func.isRequired
-}
+};
 
 const svgDefaultProps = {
   width: 600,
   height: 600
-}
+};
 
-export { sliderType, selectType, svgProps, svgDefaultProps };
+export { paddingType, sliderType, selectType, svgProps, svgDefaultProps };

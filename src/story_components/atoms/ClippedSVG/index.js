@@ -3,6 +3,7 @@ import styled from "styled-components";
 import Measure from "react-measure";
 import PropTypes from "prop-types";
 import { SVGContext } from "contexts";
+import { paddingType } from "utils/types";
 
 const StyledSVG = styled.svg`
   margin-top: ${props => props.marginTop};
@@ -63,15 +64,7 @@ ClippedSVG.propTypes = {
   height: PropTypes.number.isRequired,
   marginTop: PropTypes.oneOfType([PropTypes.number, PropTypes.string])
     .isRequired,
-  padding: PropTypes.oneOfType([
-    PropTypes.number,
-    PropTypes.shape({
-      top: PropTypes.number,
-      bottom: PropTypes.number,
-      left: PropTypes.number,
-      right: PropTypes.number
-    })
-  ]).isRequired
+  padding: paddingType
 };
 
 ClippedSVG.defaultProps = {
