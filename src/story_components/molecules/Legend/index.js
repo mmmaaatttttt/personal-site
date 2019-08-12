@@ -12,18 +12,22 @@ const StyledLabelSpan = styled.span`
   margin-left: 0.25rem;
 `
 
+const StyledLabelWrapper = styled.div`
+  padding: 0 0.5rem;
+`
+
 class Legend extends Component {
   render() {
     const { title, labels } = this.props;
     return (
       <FlexContainer column cross="center" main="center">
         <StyledHeader>{title}</StyledHeader>
-        <FlexContainer main="space-between" width="100%" shouldWrap>
+        <FlexContainer main="center" width="100%" shouldWrap>
           {labels.map(({ color, text }) => (
-            <div key={color}>
+            <StyledLabelWrapper key={color}>
               <Icon color={color} name="square" />
               <StyledLabelSpan>{text}</StyledLabelSpan>
-            </div>
+            </StyledLabelWrapper>
           ))}
         </FlexContainer>
       </FlexContainer>
