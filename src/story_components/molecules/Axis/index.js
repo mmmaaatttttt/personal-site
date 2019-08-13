@@ -14,6 +14,7 @@ const StyledAxis = styled.g`
   & .tick line {
     stroke: ${props => props.tickColor};
     stroke-dasharray: 10, 5;
+    pointer-events: none;
   }
 `;
 
