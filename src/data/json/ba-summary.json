@@ -1,0 +1,62 @@
+[
+  {
+    "id": 1,
+    "title": "Ron Paul's Baby",
+    "date": "3/15/2016",
+    "wordCounts": { "Chris": 6394, "Caller": 3142 }
+  },
+  {
+    "id": 51,
+    "title": "Made Out with My Teacher",
+    "date": "3/7/2017",
+    "wordCounts": { "Chris": 4086, "Caller": 5686 }
+  },
+  {
+    "id": 65,
+    "title": "Deaf",
+    "date": "6/13/2017",
+    "wordCounts": { "Chris": 4053, "Caller": 5695 }
+  },
+  {
+    "id": 69,
+    "title": "Love is Everywhere",
+    "date": "7/11/2017",
+    "wordCounts": { "Chris": 2986, "Caller": 7158 }
+  },
+  {
+    "id": 72,
+    "title": "Aussie Best Friend",
+    "date": "8/1/2017",
+    "wordCounts": { "Chris": 5353, "Caller": 5139 }
+  },
+  {
+    "id": 94,
+    "title": "The Puppet Master",
+    "date": "1/9/2018",
+    "wordCounts": { "Chris": 5159, "Caller": 5035 }
+  },
+  {
+    "id": 119,
+    "title": "39 Year Old Grandma",
+    "date": "7/2/2018",
+    "wordCounts": { "Chris": 3578, "Caller": 5120 }
+  },
+  {
+    "id": 121,
+    "title": "Prison Bound",
+    "date": "7/16/2018",
+    "wordCounts": { "Chris": 2935, "Caller": 6626 }
+  },
+  {
+    "id": 132,
+    "title": "I Survived a Mass Shooting",
+    "date": "10/1/2018",
+    "wordCounts": { "Chris": 4090, "Caller": 4382 }
+  },
+  {
+    "id": 138,
+    "title": "House Burned Down",
+    "date": "11/12/2018",
+    "wordCounts": { "Chris": 3602, "Caller": 4772 }
+  }
+]
