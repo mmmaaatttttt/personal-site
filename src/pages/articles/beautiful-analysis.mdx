@@ -11,6 +11,9 @@ tags:
   - natural language processing
 ---
 
+import baSummary from "data/json/ba-summary.json";
+import { PodcastWordCounts } from "story_components";
+
 _[Beautiful Stories From Anonymous People](https://www.earwolf.com/show/beautiful-anonymous/)_
 (a.k.a. _Beautiful / Anonymous_) is a podcast with a simple premise: "One phone
 call. One hour. No names. No holds barred." Created by comedian
@@ -64,7 +67,54 @@ about him? Let's find out!
 
 ---
 
-### Beautiful basics
+### Beautiful Basics
+
+As mentioned above, one _Beautiful / Anonymous_ episode features a deaf caller.
+This experience inspired Chris Gethard to look into providing episode
+transcripts of the show, for fans who might not be able to listen to them. In
+2019, he released transcripts for 10 episodes curated as part of a [beginner's
+guide](https://medium.com/@chrisgeth/a-beginners-guide-to-beautiful-anonymous-dffa5a520f52)
+to the podcast.
+
+Unfortunately for Gethard, in so doing he opened a Pandora's box of potential
+for quantitative analysis. I went through all of those transcripts and crunched
+the numbers, trying to answer questions like:
+
+1. How much talking does Gethard do during the call compared to the caller?
+1. How does the _sentiment_ of a typical call change? In general are they 
+  positive, negative, or neutral?
+1. Given a random line from a transcript, what are some clues that the line
+  came from Gethard as opposed to someone calling in?
+1. To what extent can we train a computer to talk like Chris Gethard?
+
+In what follows, I'd like to offer some answers to all of these questions. Some
+caveats and clarifications:
+
+1. Gethard opens and closes every episode with a few minutes of talking directly
+to the listener. He also reads ads a couple of times during each episode. I've
+removed all the intro, outro, and ad text from this analysis. The only text I've
+considered here is the text that comes from conversation with the caller.
+2. Because I only have ten episodes to analyze, rather than the entire library
+(which, as of this writing, numbers over 170 episodes), some of the results
+you'll see here are biased by the small sample size. More on this below.
+
+With that said, let's check out the results!
+
+---
+
+### In the Gab
+
+One basic question we can explore is how much each person speaks during a call.
+We don't have timestamps available on the transcripts, so instead we'll use word
+count as a proxy.
+
+Here's how the number of words spoken by Gethard compares to the number of words
+spoken by the caller, for each of the ten episode transcripts: 
+
+<PodcastWordCounts
+  data={baSummary}
+  caption="Figure 1: Word counts per episode for Gethard and the caller. Tap or mouse over a bar for more details on the episode." 
+/>
 
 - basic stats (num lines, word count)
 
@@ -73,6 +123,10 @@ about him? Let's find out!
 ### Sentimental
 
 - sentiment
+
+---
+
+### Sorry Sally
 
 ---
 
@@ -85,10 +139,11 @@ about him? Let's find out!
 
 ### RoboGeth
 
-
 - Chris vs robot
-
 
 Sources:
 
--
+- [A Beginner's Guide to Beautiful Anonymous](https://medium.com/@chrisgeth/a-beginners-guide-to-beautiful-anonymous-dffa5a520f52), by Chris Gethard.
+
+
+profanity check: https://victorzhou.com/blog/better-profanity-detection-with-scikit-learn/
