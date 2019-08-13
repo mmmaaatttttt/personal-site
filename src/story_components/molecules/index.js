@@ -13,6 +13,7 @@ export { default as InteractiveGrid } from './InteractiveGrid';
 export { default as InteractivePolygon } from './InteractivePolygon';
 export { default as LabeledCircle } from './LabeledCircle';
 export { default as Legend } from './Legend';
+export { default as MultiBarGraph } from './MultiBarGraph';
 export { default as PieChart } from './PieChart';
 export { default as RadioButtonGroup } from './RadioButtonGroup';
 export { default as ResponsiveIFrame } from './ResponsiveIFrame';
