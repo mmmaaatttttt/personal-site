@@ -32,6 +32,18 @@ function MultiBarGraph({
     <TooltipProvider
       render={(tooltipShow, tooltipHide) => (
         <ClippedSVG id={id} width={width} height={height}>
+          <Axis
+            direction="y"
+            fontSize="0.6rem"
+            labelPosition={{ x: "-5" }}
+            scale={yScale}
+            xShift={padding.left}
+            yShift={0}
+            textAnchor={"end"}
+            tickFormat={",.0f"}
+            tickSize={-width + padding.left + padding.right}
+          />
+          <Axis direction="x" scale={xScale} yShift={height - padding.bottom} />
           {barData.map((extents, i) => (
             <g key={`${extents}-${i}`}>
               {extents.map(([minVal, maxVal], barIdx) => {
@@ -53,18 +65,6 @@ function MultiBarGraph({
               })}
             </g>
           ))}
-          <Axis
-            direction="y"
-            fontSize="0.6rem"
-            labelPosition={{ x: "-5" }}
-            scale={yScale}
-            xShift={padding.left}
-            yShift={0}
-            textAnchor={"end"}
-            tickFormat={",.0f"}
-            tickSize={-width + padding.left + padding.right}
-          />
-          <Axis direction="x" scale={xScale} yShift={height - padding.bottom} />
           <AxisLabel
             x={labelX}
             y={labelY}
