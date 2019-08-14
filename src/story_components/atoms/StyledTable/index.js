@@ -7,16 +7,19 @@ const StyledTable = styled.table`
   th,
   td {
     text-align: center;
-    padding: 0.5rem 0;
+    padding: ${props => props.padding};
   }
 `;
 
 StyledTable.propTypes = {
-  margin: PropTypes.string.isRequired
+  fontSize: PropTypes.string.isRequired,
+  margin: PropTypes.string.isRequired,
+  padding: PropTypes.string.isRequired
 };
 
 StyledTable.defaultProps = {
-  margin: "0 0 1.44rem 0"
+  margin: "0 0 1.44rem 0",
+  padding: "0.5rem 0"
 }
 
 export default StyledTable;

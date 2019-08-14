@@ -19,6 +19,7 @@ export { default as PAdicHeatChart } from './PAdicHeatChart';
 export { default as PodcastWordCounts } from './PodcastWordCounts';
 export { default as RentDivision } from './RentDivision';
 export { default as SampleGerrymander } from './SampleGerrymander';
+export { default as SentimentScoreTable } from './SentimentScoreTable';
 export { default as StringDistanceExplorer } from './StringDistanceExplorer';
 export { default as VotingBarChart } from './VotingBarChart';
 export { default as VotingLineChart } from './VotingLineChart';
