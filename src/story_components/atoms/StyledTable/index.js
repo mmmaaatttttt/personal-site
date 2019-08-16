@@ -12,7 +12,6 @@ const StyledTable = styled.table`
 `;
 
 StyledTable.propTypes = {
-  fontSize: PropTypes.string.isRequired,
   margin: PropTypes.string.isRequired,
   padding: PropTypes.string.isRequired
 };
