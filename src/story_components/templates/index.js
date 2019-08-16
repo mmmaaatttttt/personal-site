@@ -16,7 +16,6 @@ export { default as OrchardGameSimulation } from './OrchardGameSimulation';
 export { default as PAdicCalculator } from './PAdicCalculator';
 export { default as PAdicFractalDistance } from './PAdicFractalDistance';
 export { default as PAdicHeatChart } from './PAdicHeatChart';
-export { default as PodcastWordCounts } from './PodcastWordCounts';
 export { default as RentDivision } from './RentDivision';
 export { default as SampleGerrymander } from './SampleGerrymander';
 export { default as SentimentScoreTable } from './SentimentScoreTable';

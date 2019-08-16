@@ -3,6 +3,7 @@
 export { default as AspectRatioWrapper } from './AspectRatioWrapper';
 export { default as AxisLabel } from './AxisLabel';
 export { default as Button } from './Button';
+export { default as CaptionWrapper } from './CaptionWrapper';
 export { default as CenteredSVGText } from './CenteredSVGText';
 export { default as ClippedSVG } from './ClippedSVG';
 export { default as ColoredSpan } from './ColoredSpan';

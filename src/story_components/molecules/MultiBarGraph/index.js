@@ -1,22 +1,34 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { min, max } from "d3-array";
+import { stack } from "d3";
 import { scaleBand, scaleLinear } from "d3-scale";
-import { Axis, AxisLabel, ClippedSVG } from "story_components";
+import {
+  Axis,
+  AxisLabel,
+  ClippedSVG,
+  Legend,
+  NarrowContainer
+} from "story_components";
 import { paddingType } from "utils/types";
 import { paddingObj } from "utils/styles";
 import { TooltipProvider } from "providers";
 
 function MultiBarGraph({
-  barData,
   colors,
+  containerWidth,
+  data,
   height,
   id,
+  legendTitle,
   padding,
-  tooltipData,
+  getTooltipData,
   width
 }) {
   padding = paddingObj(padding);
+  const labels = Object.keys(data[0].counts);
+  const barData = stack().keys(labels)(data.map(d => d.counts));
+  const tooltipData = data.map(getTooltipData);
   const yMin = min(barData[0], d => d[0]);
   const yMax = max(barData[barData.length - 1], d => d[d.length - 1]);
   const xScale = scaleBand()
@@ -31,81 +43,104 @@ function MultiBarGraph({
   return (
     <TooltipProvider
       render={(tooltipShow, tooltipHide) => (
-        <ClippedSVG id={id} width={width} height={height}>
-          <Axis
-            direction="y"
-            fontSize="0.6rem"
-            labelPosition={{ x: "-5" }}
-            scale={yScale}
-            xShift={padding.left}
-            yShift={0}
-            textAnchor={"end"}
-            tickFormat={",.0f"}
-            tickSize={-width + padding.left + padding.right}
+        <NarrowContainer width={containerWidth}>
+          <Legend
+            title={legendTitle}
+            labels={["Chris", "Caller"].map((label, i) => ({
+              text: label,
+              color: colors[i]
+            }))}
           />
-          <Axis direction="x" scale={xScale} yShift={height - padding.bottom} />
-          {barData.map((extents, i) => (
-            <g key={`${extents}-${i}`}>
-              {extents.map(([minVal, maxVal], barIdx) => {
-                const { title, body } = tooltipData[barIdx];
-                return (
-                  <rect
-                    key={`${minVal}-${maxVal}-${barIdx}`}
-                    fill={colors[i]}
-                    x={xScale(barIdx)}
-                    y={yScale(maxVal)}
-                    height={yScale(minVal) - yScale(maxVal)}
-                    width={xScale.step() - 5}
-                    onMouseMove={tooltipShow && tooltipShow(title, body)}
-                    onMouseLeave={tooltipHide}
-                    onTouchMove={tooltipShow && tooltipShow(title, body)}
-                    onTouchEnd={tooltipHide}
-                  />
-                );
-              })}
-            </g>
-          ))}
-          <AxisLabel
-            x={labelX}
-            y={labelY}
-            transform={`rotate(-90 ${labelX} ${labelY})`}
-          >
-            Words Spoken
-          </AxisLabel>
-        </ClippedSVG>
+          <ClippedSVG id={id} width={width} height={height}>
+            <Axis
+              direction="y"
+              fontSize="0.6rem"
+              labelPosition={{ x: "-5" }}
+              scale={yScale}
+              xShift={padding.left}
+              yShift={0}
+              textAnchor={"end"}
+              tickFormat={",.0f"}
+              tickSize={-width + padding.left + padding.right}
+            />
+            <Axis
+              direction="x"
+              scale={xScale}
+              yShift={height - padding.bottom}
+            />
+            {barData.map((extents, i) => (
+              <g key={`${extents}-${i}`}>
+                {extents.map(([minVal, maxVal], barIdx) => {
+                  const { title, body } = tooltipData[barIdx];
+                  return (
+                    <rect
+                      key={`${minVal}-${maxVal}-${barIdx}`}
+                      fill={colors[i]}
+                      x={xScale(barIdx)}
+                      y={yScale(maxVal)}
+                      height={yScale(minVal) - yScale(maxVal)}
+                      width={xScale.step() - 5}
+                      onMouseMove={tooltipShow && tooltipShow(title, body)}
+                      onMouseLeave={tooltipHide}
+                      onTouchMove={tooltipShow && tooltipShow(title, body)}
+                      onTouchEnd={tooltipHide}
+                    />
+                  );
+                })}
+              </g>
+            ))}
+            <AxisLabel
+              x={labelX}
+              y={labelY}
+              transform={`rotate(-90 ${labelX} ${labelY})`}
+            >
+              Words Spoken
+            </AxisLabel>
+          </ClippedSVG>
+        </NarrowContainer>
       )}
     />
   );
 }
 
 MultiBarGraph.propTypes = {
-  barData: PropTypes.arrayOf(
-    PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.number)).isRequired
-  ).isRequired,
+  containerWidth: PropTypes.string.isRequired,
+  data: PropTypes.arrayOf(
+    PropTypes.shape({
+      meta: PropTypes.object.isRequired,
+      counts: PropTypes.object.isRequired
+    })
+  ),
   colors: PropTypes.arrayOf(PropTypes.string.isRequired),
   height: PropTypes.number.isRequired,
   id: PropTypes.string.isRequired,
+  legendTitle: PropTypes.string.isRequired,
   padding: paddingType,
-  tooltipData: PropTypes.arrayOf(
-    PropTypes.shape({
-      title: PropTypes.oneOfType([PropTypes.string, PropTypes.object])
-        .isRequired,
-      body: PropTypes.oneOfType([
-        PropTypes.string,
-        PropTypes.arrayOf(PropTypes.string)
-      ]).isRequired
-    })
-  ).isRequired,
+  getTooltipData: PropTypes.func.isRequired,
   width: PropTypes.number.isRequired
 };
 
 MultiBarGraph.defaultProps = {
-  barData: [[1, 2], [3, 4]],
   colors: ["red", "blue"],
+  containerWidth: "60%",
+  data: [
+    {
+      meta: {
+        id: 1,
+        title: "Episode",
+        date: "8/10/2019"
+      },
+      counts: {
+        Chris: 0,
+        Caller: 0
+      }
+    }
+  ],
+  getTooltipData: () => ({ title: "Title", body: "body" }),
   height: 400,
   id: "multi-bar-graph",
+  legendTitle: "Legend",
   padding: 0,
-  tooltipData: [{ body: "", title: "" }],
   width: 600
 };
 

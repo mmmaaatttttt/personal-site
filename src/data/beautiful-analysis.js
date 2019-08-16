@@ -5,19 +5,19 @@ const comma = format(",.0f");
 
 // format data as an array of objects with title / body keys
 // for use with a tooltip.
-function generateTooltipData({ id, title, wordCounts }) {
+function generateTooltipData({ meta: { id, title }, counts }) {
   let totalWC = 0;
-  for (let speaker in wordCounts) {
-    totalWC += wordCounts[speaker];
+  for (let speaker in counts) {
+    totalWC += counts[speaker];
   }
   return {
     title,
     body: [
       `Episode: ${id}`,
-      ...Object.keys(wordCounts).map(
+      ...Object.keys(counts).map(
         speaker =>
-          `${speaker}: ${comma(wordCounts[speaker])} words (${percent(
-            wordCounts[speaker] / totalWC
+          `${speaker}: ${comma(counts[speaker])} words (${percent(
+            counts[speaker] / totalWC
           )})`
       )
     ]

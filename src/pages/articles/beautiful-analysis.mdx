@@ -13,7 +13,12 @@ tags:
 
 import baSummary from "data/json/ba-summary.json";
 import baSentimentData from "data/json/ba-sentiment-examples.json";
-import { PodcastWordCounts, SentimentScoreTable } from "story_components";
+import {
+  CaptionWrapper,
+  MultiBarGraph,
+  SentimentScoreTable
+} from "story_components";
+import { generateTooltipData } from "data/beautiful-analysis.js";
 
 _[Beautiful Stories From Anonymous People](https://www.earwolf.com/show/beautiful-anonymous/)_
 (a.k.a. _Beautiful / Anonymous_) is a podcast with a simple premise: "One phone
@@ -112,10 +117,15 @@ count as a proxy.
 Here's how the number of words spoken by Gethard compares to the number of words
 spoken by the caller, for each of the ten episode transcripts:
 
-<PodcastWordCounts
-  data={baSummary}
-  caption="Figure 1: Word counts per episode for Gethard and the caller. Tap or mouse over a bar for more details on the episode."
-/>
+<CaptionWrapper caption="Figure 1: Word counts per episode for Gethard and the caller. Tap or mouse over a bar for more details on the episode.">
+  <MultiBarGraph
+    colors={[COLORS.DARK_BLUE, COLORS.ORANGE]}
+    data={baSummary}
+    getTooltipData={generateTooltipData}
+    legendTitle="Word counts per episode"
+    padding={{ top: 0, left: 70, right: 0, bottom: 10 }}
+  />
+</CaptionWrapper>
 
 My biggest takeaway from this graph is that Gethard seems to have gotten much
 more comfortable creating space for his guests. He spoke the most in the very
@@ -170,8 +180,6 @@ a useful metric for how positive or negative someone's speaking patterns might b
 Let's once again take a look at how Gethard compares to his callers. How many
 times do they each talk about things with positive, negative, or neutral
 sentiment? Here's a breakdown by sentence and by episode:
-
-
 
 - avg sentiment for each speaker
 - sentiment over time across episode
