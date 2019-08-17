@@ -13,6 +13,7 @@ import {
 import { paddingType } from "utils/types";
 import { paddingObj } from "utils/styles";
 import { TooltipProvider } from "providers";
+import { NodeGroup } from "react-move";
 
 function MultiBarGraph({
   colors,
@@ -23,14 +24,16 @@ function MultiBarGraph({
   legendTitle,
   padding,
   getTooltipData,
-  width
+  width,
+  yAxisLabel,
+  yMax
 }) {
   padding = paddingObj(padding);
   const labels = Object.keys(data[0].counts);
   const barData = stack().keys(labels)(data.map(d => d.counts));
   const tooltipData = data.map(getTooltipData);
   const yMin = min(barData[0], d => d[0]);
-  const yMax = max(barData[barData.length - 1], d => d[d.length - 1]);
+  yMax = yMax || max(barData[barData.length - 1], d => d[d.length - 1]);
   const xScale = scaleBand()
     .domain(barData[0].map((_, i) => i))
     .rangeRound([padding.left, width - padding.right])
@@ -46,55 +49,75 @@ function MultiBarGraph({
         <NarrowContainer width={containerWidth}>
           <Legend
             title={legendTitle}
-            labels={["Chris", "Caller"].map((label, i) => ({
+            labels={labels.map((label, i) => ({
               text: label,
               color: colors[i]
             }))}
           />
           <ClippedSVG id={id} width={width} height={height}>
-            <Axis
-              direction="y"
-              fontSize="0.6rem"
-              labelPosition={{ x: "-5" }}
-              scale={yScale}
-              xShift={padding.left}
-              yShift={0}
-              textAnchor={"end"}
-              tickFormat={",.0f"}
-              tickSize={-width + padding.left + padding.right}
-            />
-            <Axis
-              direction="x"
-              scale={xScale}
-              yShift={height - padding.bottom}
-            />
-            {barData.map((extents, i) => (
-              <g key={`${extents}-${i}`}>
-                {extents.map(([minVal, maxVal], barIdx) => {
-                  const { title, body } = tooltipData[barIdx];
-                  return (
-                    <rect
-                      key={`${minVal}-${maxVal}-${barIdx}`}
-                      fill={colors[i]}
-                      x={xScale(barIdx)}
-                      y={yScale(maxVal)}
-                      height={yScale(minVal) - yScale(maxVal)}
-                      width={xScale.step() - 5}
-                      onMouseMove={tooltipShow && tooltipShow(title, body)}
-                      onMouseLeave={tooltipHide}
-                      onTouchMove={tooltipShow && tooltipShow(title, body)}
-                      onTouchEnd={tooltipHide}
-                    />
-                  );
-                })}
-              </g>
-            ))}
+            <NodeGroup
+              data={barData}
+              keyAccessor={(_, i) => i}
+              start={extents => ({ extents })}
+              enter={extents => ({ extents: [extents] })}
+              update={extents => ({ extents: [extents] })}
+            >
+              {bars => (
+                <React.Fragment>
+                  <Axis
+                    direction="y"
+                    fontSize="0.6rem"
+                    labelPosition={{ x: "-5" }}
+                    scale={yScale}
+                    xShift={padding.left}
+                    yShift={0}
+                    textAnchor={"end"}
+                    tickFormat={",.0f"}
+                    tickSize={-width + padding.left + padding.right}
+                  />
+                  <Axis
+                    direction="x"
+                    scale={xScale}
+                    yShift={height - padding.bottom}
+                  />
+                  {bars.map((bar, i) => {
+                    console.log("BAR", bar);
+                    const { extents } = bar.state;
+                    return (
+                      <g key={`${extents}-${i}`}>
+                        {extents.map(([minVal, maxVal], barIdx) => {
+                          const { title, body } = tooltipData[barIdx];
+                          return (
+                            <rect
+                              key={`${minVal}-${maxVal}-${barIdx}`}
+                              fill={colors[i]}
+                              x={xScale(barIdx)}
+                              y={yScale(maxVal)}
+                              height={yScale(minVal) - yScale(maxVal)}
+                              width={xScale.step() - 5}
+                              onMouseMove={
+                                tooltipShow && tooltipShow(title, body)
+                              }
+                              onMouseLeave={tooltipHide}
+                              onTouchMove={
+                                tooltipShow && tooltipShow(title, body)
+                              }
+                              onTouchEnd={tooltipHide}
+                            />
+                          );
+                        })}
+                      </g>
+                    );
+                  })}
+                </React.Fragment>
+              )}
+            </NodeGroup>
             <AxisLabel
               x={labelX}
               y={labelY}
               transform={`rotate(-90 ${labelX} ${labelY})`}
             >
-              Words Spoken
+              {yAxisLabel}
             </AxisLabel>
           </ClippedSVG>
         </NarrowContainer>
@@ -117,7 +140,9 @@ MultiBarGraph.propTypes = {
   legendTitle: PropTypes.string.isRequired,
   padding: paddingType,
   getTooltipData: PropTypes.func.isRequired,
-  width: PropTypes.number.isRequired
+  width: PropTypes.number.isRequired,
+  yAxisLabel: PropTypes.string.isRequired,
+  yMax: PropTypes.number
 };
 
 MultiBarGraph.defaultProps = {
@@ -141,7 +166,8 @@ MultiBarGraph.defaultProps = {
   id: "multi-bar-graph",
   legendTitle: "Legend",
   padding: 0,
-  width: 600
+  width: 600,
+  yAxisLabel: "Y Axis Label"
 };
 
 export default MultiBarGraph;
