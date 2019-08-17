@@ -13,7 +13,11 @@ function SentimentScoreTable({ options, sentences, sentimentRanges }) {
       render={([{ value }]) => {
         const [min, max] = sentimentRanges[value];
         return (
-          <NarrowContainer width="125%" margin="0 0 0 -12.5%" fullWidthAt="small">
+          <NarrowContainer
+            width="125%"
+            margin="0 0 0 -12.5%"
+            fullWidthAt="small"
+          >
             <StyledTable padding="0.25rem">
               <thead>
                 <tr>
@@ -54,30 +58,7 @@ SentimentScoreTable.propTypes = {
 };
 
 SentimentScoreTable.defaultProps = {
-  options: [
-    [
-      {
-        value: 0,
-        label: "Extremely Negative"
-      },
-      {
-        value: 1,
-        label: "Negative"
-      },
-      {
-        value: 2,
-        label: "Neutral"
-      },
-      {
-        value: 3,
-        label: "Positive"
-      },
-      {
-        value: 4,
-        label: "Extremely Positive"
-      }
-    ]
-  ],
+  options: [[{ value: 0, label: "label" }]],
   sentences: [],
   sentimentRanges: [
     [-1, -0.5],
