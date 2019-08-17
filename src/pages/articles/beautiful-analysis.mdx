@@ -13,12 +13,14 @@ tags:
 
 import baSummary from "data/json/ba-summary.json";
 import baSentimentData from "data/json/ba-sentiment-examples.json";
+import baSentimentCounts from "data/json/ba-sentiment-counts.json";
 import {
   CaptionWrapper,
   MultiBarGraph,
+  SelectableMultiBarGraph,
   SentimentScoreTable
 } from "story_components";
-import { generateTooltipData } from "data/beautiful-analysis.js";
+import { defaultSentimentOptions, generateTooltipData } from "data/beautiful-analysis.js";
 
 _[Beautiful Stories From Anonymous People](https://www.earwolf.com/show/beautiful-anonymous/)_
 (a.k.a. _Beautiful / Anonymous_) is a podcast with a simple premise: "One phone
@@ -124,6 +126,7 @@ spoken by the caller, for each of the ten episode transcripts:
     getTooltipData={generateTooltipData}
     legendTitle="Word counts per episode"
     padding={{ top: 0, left: 70, right: 0, bottom: 10 }}
+    yAxisLabel="Word count"
   />
 </CaptionWrapper>
 
@@ -171,6 +174,7 @@ with their associated sentiment score:
 <SentimentScoreTable
   sentences={baSentimentData}
   caption="Figure 2: Sentiment scores for different things Chris Gethard has said."
+  options={defaultSentimentOptions}
 />
 
 VADER's not perfect. In particular, the example sentences marked as "neutral"
@@ -181,7 +185,25 @@ Let's once again take a look at how Gethard compares to his callers. How many
 times do they each talk about things with positive, negative, or neutral
 sentiment? Here's a breakdown by sentence and by episode:
 
-- avg sentiment for each speaker
+<CaptionWrapper caption="Figure 3: Sentiment counts per episode for Gethard and the caller. Use the dropdown to view different ranges of sentiment.">
+  <SelectableMultiBarGraph
+    colors={[COLORS.DARK_BLUE, COLORS.ORANGE]}
+    containerWidth="86%"
+    data={baSentimentCounts}
+    getTooltipData={generateTooltipData}
+    legendTitle="Sentiment counts per episode"
+    options={defaultSentimentOptions}
+    padding={{ top: 10, left: 70, right: 0, bottom: 10 }}
+    yAxisLabel="Sentiment count"
+  />
+</CaptionWrapper>
+
+As you can see, positive sentiment greatly outweighs negative sentiment across
+episodes. And for his part, Gethard plays the extremes pretty evenly: he speaks
+a majority of sentences with extreme negative sentiment in six out of ten
+episodes, and the majority of sentences with extreme positive sentiment in six
+out of ten episodes.
+
 - sentiment over time across episode
 
 ---

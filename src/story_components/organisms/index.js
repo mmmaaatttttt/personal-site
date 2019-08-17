@@ -10,6 +10,7 @@ export { default as LabeledSlider } from './LabeledSlider';
 export { default as Scatterplot } from './Scatterplot';
 export { default as SelectableHeatMap } from './SelectableHeatMap';
 export { default as SelectableHistogram } from './SelectableHistogram';
+export { default as SelectableMultiBarGraph } from './SelectableMultiBarGraph';
 export { default as SelectablePieChart } from './SelectablePieChart';
 export { default as SelectableScatterplot } from './SelectableScatterplot';
 export { default as SliderGroup } from './SliderGroup';
