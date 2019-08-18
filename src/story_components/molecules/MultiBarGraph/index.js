@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import { min, max } from "d3-array";
 import { stack } from "d3";
 import { scaleBand, scaleLinear } from "d3-scale";
+import { NodeGroup } from "react-move";
 import {
   Axis,
   AxisLabel,
@@ -13,7 +14,6 @@ import {
 import { paddingType } from "utils/types";
 import { paddingObj } from "utils/styles";
 import { TooltipProvider } from "providers";
-import { NodeGroup } from "react-move";
 
 function MultiBarGraph({
   colors,
@@ -81,7 +81,6 @@ function MultiBarGraph({
                     yShift={height - padding.bottom}
                   />
                   {bars.map((bar, i) => {
-                    console.log("BAR", bar);
                     const { extents } = bar.state;
                     return (
                       <g key={`${extents}-${i}`}>
