@@ -4,9 +4,17 @@ import { line, curveNatural, curveLinear } from "d3-shape";
 import { scaleLinear } from "d3-scale";
 import COLORS from "utils/styles";
 
-const curves = { curveNatural, curveLinear }
+const curves = { curveNatural, curveLinear };
 
-const LinePlot = ({ graphData, xScale, yScale, stroke, strokeWidth, curve }) => {
+const LinePlot = ({
+  curve,
+  graphData,
+  opacity,
+  stroke,
+  strokeWidth,
+  xScale,
+  yScale,
+}) => {
   const linePath = line()
     .x(d => xScale(d.x))
     .y(d => yScale(d.y))
@@ -27,6 +35,7 @@ const LinePlot = ({ graphData, xScale, yScale, stroke, strokeWidth, curve }) => 
       strokeWidth={strokeWidth}
       stroke={stroke}
       fill="none"
+      opacity={opacity}
     />
   );
 };
@@ -39,19 +48,21 @@ LinePlot.propTypes = {
       y: PropTypes.number.isRequired
     })
   ).isRequired,
+  opacity: PropTypes.string.isRequired,
+  stroke: PropTypes.string.isRequired,
+  strokeWidth: PropTypes.number.isRequired,
   xScale: PropTypes.func.isRequired,
-  yScale: PropTypes.func.isRequired,
-  strokeWidth: PropTypes.string.isRequired,
-  stroke: PropTypes.string.isRequired
+  yScale: PropTypes.func.isRequired
 };
 
 LinePlot.defaultProps = {
   curve: "curveNatural",
   graphData: [{ x: 0, y: 0 }, { x: 100, y: 100 }],
+  opacity: "1",
+  strokeWidth: 5,
+  stroke: COLORS.ORANGE,
   xScale: scaleLinear(),
-  yScale: scaleLinear(),
-  strokeWidth: "5",
-  stroke: COLORS.ORANGE
+  yScale: scaleLinear()
 };
 
 export default LinePlot;
