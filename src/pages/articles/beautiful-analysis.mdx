@@ -15,6 +15,7 @@ import baSummary from "data/json/ba-summary.json";
 import baSentimentData from "data/json/ba-sentiment-examples.json";
 import baSentimentCounts from "data/json/ba-sentiment-counts.json";
 import baAllSentiment from "data/json/ba-all-sentiment.json";
+import baProfanity from "data/json/ba-profanity.json";
 import {
   CaptionWrapper,
   MultiBarGraph,
@@ -231,11 +232,41 @@ one I used is called
 I was able to categorize every sentence in every conversation as either having
 profanity or not. Here are the results, again broken down by speaker:
 
+<CaptionWrapper caption="Figure 5: Profanity counts per episode for Gethard and the caller. Tap or mouse over a bar for more details on the episode.">
+  <MultiBarGraph
+    colors={[COLORS.DARK_BLUE, COLORS.ORANGE]}
+    data={baProfanity}
+    getTooltipData={generateTooltipData}
+    legendTitle="Profanity counts per episode"
+    padding={{ top: 0, left: 70, right: 0, bottom: 10 }}
+    yAxisLabel="Profanity count"
+  />
+</CaptionWrapper>
 
+Sorry, Sally. It looks like your son takes the crown when it comes to profane
+language. In 9 out of 10 transcripts, he had the majority of sentences marked as
+profane. The only caller with a dirtier mouth was the Australian caller featured
+in the "Aussie Best Friend" episode.
+
+Gethard may take comfort in the fact that the profanity checker is easily
+offended, so sentences like "I'm not trying to be a jerk," or "That sucks" both
+get marked as profane. While this may indicate that the absolute counts in the
+graph above are too high, the ratio between Gethard and his guests is probably
+about right, since the profanity checker has a low bar regardless of who is
+speaking.
 
 ---
 
 ### Whose Line is it Anyway?
+
+Given this body of text, we can also ask whether are some distinguishing
+characteristics of people on the show.
+
+One way to do this is to simply identify short phrases that appear relatively
+frequently in the transcripts.
+
+- move to collocations
+- move to ratios between Chris : speaker
 
 - common phrases
 - Chris predictors

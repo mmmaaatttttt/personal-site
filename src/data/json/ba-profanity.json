@@ -1,0 +1,82 @@
+[
+  {
+    "meta": {
+      "id": 1,
+      "title": "Ron Paul's Baby",
+      "date": "3/15/2016"
+    },
+    "counts": { "Chris": 15, "Caller": 5 }
+  },
+  {
+    "meta": {
+      "id": 51,
+      "title": "Made Out with My Teacher",
+      "date": "3/7/2017"
+    },
+    "counts": { "Chris": 21, "Caller": 4 }
+  },
+  {
+    "meta": {
+      "id": 65,
+      "title": "Deaf",
+      "date": "6/13/2017"
+    },
+    "counts": { "Chris": 11, "Caller": 11 }
+  },
+  {
+    "meta": {
+      "id": 69,
+      "title": "Love is Everywhere",
+      "date": "7/11/2017"
+    },
+    "counts": { "Chris": 4, "Caller": 2 }
+  },
+  {
+    "meta": {
+      "id": 72,
+      "title": "Aussie Best Friend",
+      "date": "8/1/2017"
+    },
+    "counts": { "Chris": 7, "Caller": 16 }
+  },
+  {
+    "meta": {
+      "id": 94,
+      "title": "The Puppet Master",
+      "date": "1/9/2018"
+    },
+    "counts": { "Chris": 12, "Caller": 2 }
+  },
+  {
+    "meta": {
+      "id": 119,
+      "title": "39 Year Old Grandma",
+      "date": "7/2/2018"
+    },
+    "counts": { "Chris": 13, "Caller": 1 }
+  },
+  {
+    "meta": {
+      "id": 121,
+      "title": "Prison Bound",
+      "date": "7/16/2018"
+    },
+    "counts": { "Chris": 2, "Caller": 0 }
+  },
+  {
+    "meta": {
+      "id": 132,
+      "title": "I Survived a Mass Shooting",
+      "date": "10/1/2018"
+    },
+    "counts": { "Chris": 7, "Caller": 2 }
+  },
+  {
+    "meta": {
+      "id": 138,
+      "title": "House Burned Down",
+      "date": "11/12/2018"
+    },
+    "counts": { "Chris": 15, "Caller": 7 }
+  }
+]
