@@ -1,4 +1,5 @@
 import { format } from "d3";
+import COLORS from "utils/styles";
 
 const percent = format(".1%");
 const comma = format(",.0f");
@@ -49,4 +50,9 @@ const defaultSentimentOptions = [
   ]
 ];
 
-export { defaultSentimentOptions, generateTooltipData };
+const colorMap = {
+  Chris: COLORS.DARK_BLUE,
+  Caller: COLORS.ORANGE
+};
+
+export { colorMap, defaultSentimentOptions, generateTooltipData };

@@ -14,9 +14,11 @@ tags:
 import baSummary from "data/json/ba-summary.json";
 import baSentimentData from "data/json/ba-sentiment-examples.json";
 import baSentimentCounts from "data/json/ba-sentiment-counts.json";
+import baAllSentiment from "data/json/ba-all-sentiment.json";
 import {
   CaptionWrapper,
   MultiBarGraph,
+  PodcastAllSentiments,
   SelectableMultiBarGraph,
   SentimentScoreTable
 } from "story_components";
@@ -204,13 +206,32 @@ a majority of sentences with extreme negative sentiment in six out of ten
 episodes, and the majority of sentences with extreme positive sentiment in six
 out of ten episodes.
 
-- sentiment over time across episode
+We can take this even further by plotting the sentiment of every line in an
+episode's transcript. Here's what it looks like:
+
+<PodcastAllSentiments caption="Figure 4: Sentiment of every line in an episode.
+The larger the circle, the more words in the line." data={baAllSentiment} />
+
+As you can see, most circles lie in the upper half, i.e. they have positive
+sentiment. (We can also look for pockets where one person dominates the
+conversation!)
 
 ---
 
 ### Sorry Sally
 
-- cursing for each speaker
+It's become somewhat of a tradition for people to apologize to Chris Gethard's
+mom, Sally, whenever they curse on the show. So before we move on from
+sentiment, here's a related question we can try to answer: who owes Sally
+Gethard a bigger apology, Chris or his callers?
+
+There are a number of ways to try to detect profanity in a piece of text: the
+one I used is called
+[profanity-check](https://github.com/vzhou842/profanity-check). Using this tool,
+I was able to categorize every sentence in every conversation as either having
+profanity or not. Here are the results, again broken down by speaker:
+
+
 
 ---
 
@@ -229,10 +250,10 @@ Sources:
 
 - [A Beginner's Guide to Beautiful Anonymous](https://medium.com/@chrisgeth/a-beginners-guide-to-beautiful-anonymous-dffa5a520f52), by Chris Gethard.
 
-- [Vader Sentiment](https://github.com/cjhutto/vaderSentiment) on GitHub.
+- [Building a Better Profanity Detection Library with scikit-learn](https://victorzhou.com/blog/better-profanity-detection-with-scikit-learn/), by Victor Zhou.
 
 - [Sentiment analysis with NLTK /VADER — Comments on Lee Hsien Loong’s Facebook post](https://medium.com/@sharonwoo/sentiment-analysis-with-nltk-422e0f794b8), by Sharon Woo.
 
 - [Simplifying Sentiment Analysis using VADER in Python (on Social Media Text)](https://medium.com/analytics-vidhya/simplifying-social-media-sentiment-analysis-using-vader-in-python-f9e6ec6fc52f), by Parul Pandey.
 
-profanity check: https://victorzhou.com/blog/better-profanity-detection-with-scikit-learn/
+- [Vader Sentiment](https://github.com/cjhutto/vaderSentiment) on GitHub.
