@@ -1,0 +1,178 @@
+{
+  "common_phrases": [
+    {
+      "phrase_count": 2,
+      "speakers": {
+        "Chris": [
+          ["going to", 160],
+          ["want to", 144],
+          ["and I", 126],
+          ["I think", 107],
+          ["of the", 106],
+          ["to be", 103],
+          ["in the", 98],
+          ["I dont", 96],
+          ["this is", 93],
+          ["a lot", 93],
+          ["have to", 92],
+          ["on the", 80],
+          ["do you", 75],
+          ["lot of", 75],
+          ["that you", 74],
+          ["and then", 71],
+          ["I was", 65],
+          ["I have", 64],
+          ["in a", 64],
+          ["sounds like", 63]
+        ],
+        "Caller": [
+          ["I was", 291],
+          ["and I", 270],
+          ["it was", 199],
+          ["going to", 197],
+          ["a lot", 177],
+          ["I don't", 175],
+          ["I think", 174],
+          ["kind of", 159],
+          ["to be", 136],
+          ["lot of", 131],
+          ["and then", 127],
+          ["of the", 123],
+          ["in the", 121],
+          ["you know", 106],
+          ["don't know", 102],
+          ["that I", 96],
+          ["but I", 95],
+          ["so I", 91],
+          ["have to", 90],
+          ["I mean", 88]
+        ]
+      }
+    },
+    {
+      "phrase_count": 3,
+      "speakers": {
+        "Chris": [
+          ["a lot of", 75],
+          ["it sounds like", 42],
+          ["I don't know", 40],
+          ["you want to", 37],
+          ["I'm going to", 37],
+          ["don't want to", 37],
+          ["I want to", 36],
+          ["one of the", 31],
+          ["I feel like", 29],
+          ["I don't want", 28],
+          ["going to be", 26],
+          ["a little bit", 25],
+          ["I have to", 21],
+          ["I got to", 21],
+          ["you're going to", 21],
+          ["can I ask", 21],
+          ["to be a", 20],
+          ["lot of people", 20],
+          ["not going to", 19],
+          ["I would imagine", 19]
+        ],
+        "Caller": [
+          ["a lot of", 129],
+          ["I don't know", 96],
+          ["going to be", 43],
+          ["I was like", 36],
+          ["I'm going to", 35],
+          ["and I was", 34],
+          ["I feel like", 31],
+          ["lot of people", 30],
+          ["and I think", 30],
+          ["when I was", 30],
+          ["and it was", 26],
+          ["was going to", 26],
+          ["don't want to", 25],
+          ["I think that", 25],
+          ["not going to", 24],
+          ["a little bit", 23],
+          ["there's a lot", 23],
+          ["it was a", 22],
+          ["and then I", 21],
+          ["I think I", 21]
+        ]
+      }
+    },
+    {
+      "phrase_count": 4,
+      "speakers": {
+        "Chris": [
+          ["I don't want to", 24],
+          ["a lot of people", 20],
+          ["I don't know if", 15],
+          ["sounds to me like", 13],
+          ["I'm not going to", 13],
+          ["you don't have to", 11],
+          ["you don't want to", 11],
+          ["what do I got", 10],
+          ["I just want to", 10]
+        ],
+        "Caller": [
+          ["a lot of people", 30],
+          ["there's a lot of", 21],
+          ["I don't want to", 18],
+          ["I was going to", 13],
+          ["I don't know if", 11],
+          ["I don't know I", 11]
+        ]
+      }
+    }
+  ],
+  "collocation_lists": [
+    {
+      "speaker": "Chris",
+      "collocations": [
+        "sounds like",
+        "feel like",
+        "little bit",
+        "don't know",
+        "don't want",
+        "bank tech",
+        "new york",
+        "high school",
+        "minutes left",
+        "would imagine",
+        "bromance test",
+        "yeah yeah",
+        "that's cool",
+        "sign language",
+        "york city",
+        "year old",
+        "I've never",
+        "make sure",
+        "Ron Paul",
+        "uncanny valley"
+      ]
+    },
+    {
+      "speaker": "Caller",
+      "collocations": [
+        "don't know",
+        "yeah yeah",
+        "little bit",
+        "feel like",
+        "mmhmm affirmative",
+        "high school",
+        "don't want",
+        "I'll tell",
+        "mental health",
+        "every day",
+        "I've got",
+        "you've got",
+        "even though",
+        "last night",
+        "social media",
+        "wood stove",
+        "uncanny valley",
+        "what's going",
+        "junior year",
+        "electric blanket"
+      ]
+    }
+  ]
+}

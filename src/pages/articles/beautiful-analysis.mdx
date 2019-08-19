@@ -16,14 +16,23 @@ import baSentimentData from "data/json/ba-sentiment-examples.json";
 import baSentimentCounts from "data/json/ba-sentiment-counts.json";
 import baAllSentiment from "data/json/ba-all-sentiment.json";
 import baProfanity from "data/json/ba-profanity.json";
+import baCommonPhrases from "data/json/ba-common-phrases.json";
 import {
   CaptionWrapper,
+  ColoredSpan,
   MultiBarGraph,
+  NarrowContainer,
   PodcastAllSentiments,
   SelectableMultiBarGraph,
-  SentimentScoreTable
+  SentimentScoreTable,
+  StyledTable
 } from "story_components";
-import { defaultSentimentOptions, generateTooltipData } from "data/beautiful-analysis.js";
+import { SliderProvider } from "providers";
+import {
+  defaultSentimentOptions,
+  generateTooltipData
+} from "data/beautiful-analysis.js";
+import { colorMap } from "data/beautiful-analysis.js";
 
 _[Beautiful Stories From Anonymous People](https://www.earwolf.com/show/beautiful-anonymous/)_
 (a.k.a. _Beautiful / Anonymous_) is a podcast with a simple premise: "One phone
@@ -210,8 +219,11 @@ out of ten episodes.
 We can take this even further by plotting the sentiment of every line in an
 episode's transcript. Here's what it looks like:
 
-<PodcastAllSentiments caption="Figure 4: Sentiment of every line in an episode.
-The larger the circle, the more words in the line." data={baAllSentiment} />
+<PodcastAllSentiments
+  caption="Figure 4: Sentiment of every line in an episode.
+The larger the circle, the more words in the line."
+  data={baAllSentiment}
+/>
 
 As you can see, most circles lie in the upper half, i.e. they have positive
 sentiment. (We can also look for pockets where one person dominates the
@@ -263,13 +275,93 @@ Given this body of text, we can also ask whether are some distinguishing
 characteristics of people on the show.
 
 One way to do this is to simply identify short phrases that appear relatively
-frequently in the transcripts.
+frequently in the transcripts. Here are the most common two-, three-, and
+four-word phrases spoken by Gethard and the callers as a group:
 
-- move to collocations
+<CaptionWrapper caption="Figure 6: wut.">
+  <SliderProvider 
+    initialData={[
+      {
+        min: baCommonPhrases.common_phrases[0].phrase_count,
+        max: baCommonPhrases.common_phrases[2].phrase_count,
+        initialValue: baCommonPhrases.common_phrases[0].phrase_count,
+        step: 1,
+        tickCount: 3,
+        title: val => `${val}-word phrases`
+      }
+    ]}
+    render={([phraseCount]) => {
+      const { speakers } = baCommonPhrases.common_phrases[phraseCount - 2];
+      const numRows = Math.max(speakers["Chris"].length, speakers["Caller"].length);
+      const rows = Array.from({ length: numRows }, (_, i) => (
+        [speakers["Chris"][i], speakers["Caller"][i]]
+      ));
+      return (
+        <StyledTable padding="0.1rem 0">
+          <thead>
+            <tr>
+              {Object.keys(speakers).map(speaker => (
+                <th key={speaker}>
+                  <ColoredSpan bold color={colorMap[speaker]}>{speaker}</ColoredSpan>
+                </th>
+              ))}
+            </tr>
+          </thead>
+          <tbody>
+            {rows.map((row, i) => (
+              <tr key={`${phraseCount}-${i}`}>
+                {Object.keys(speakers).map((speaker, idx) => (
+                  <td key={speaker}>
+                    <ColoredSpan color={colorMap[speaker]}>
+                      { rows[i][idx] ? `${rows[i][idx][0]} (said ${rows[i][idx][1]} times)` : "--"}
+                    </ColoredSpan>
+                  </td>
+                ))}
+              </tr>
+            ))}
+          </tbody>
+        </StyledTable>
+      )
+    }}
+  />
+</CaptionWrapper>
+
+
+here are some collocations
+
+<CaptionWrapper caption="Figure 7: wut.">
+  <NarrowContainer width="70%" fullWidthAt="small">
+    <StyledTable padding="0.1rem 0">
+      <thead>
+        <tr>
+          {baCommonPhrases.collocation_lists.map(({ speaker }) => (
+            <th key={speaker}>
+              <ColoredSpan bold color={colorMap[speaker]}>{speaker}</ColoredSpan>
+            </th>
+          ))}
+        </tr>
+      </thead>
+      <tbody>
+        {baCommonPhrases.collocation_lists[0].collocations.map((phrase, idx) => (
+          <tr key={idx}>
+            <td>
+              <ColoredSpan color={colorMap["Chris"]}>
+                {phrase}
+              </ColoredSpan>
+            </td>
+            <td>
+              <ColoredSpan color={colorMap["Caller"]}>
+                {baCommonPhrases.collocation_lists[1].collocations[idx]}
+              </ColoredSpan>
+            </td>
+          </tr>
+        ))}
+      </tbody>
+    </StyledTable>
+  </NarrowContainer>
+</CaptionWrapper>
+
 - move to ratios between Chris : speaker
-
-- common phrases
-- Chris predictors
 
 ---
 
