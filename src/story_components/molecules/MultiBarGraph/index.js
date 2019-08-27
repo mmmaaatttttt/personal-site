@@ -1,5 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
+import { zip } from "lodash";
 import { min, max } from "d3-array";
 import { stack } from "d3";
 import { scaleBand, scaleLinear } from "d3-scale";
@@ -9,7 +10,8 @@ import {
   AxisLabel,
   ClippedSVG,
   Legend,
-  NarrowContainer
+  NarrowContainer,
+  TranslucentRect
 } from "story_components";
 import { paddingType } from "utils/types";
 import { paddingObj } from "utils/styles";
@@ -30,12 +32,13 @@ function MultiBarGraph({
 }) {
   padding = paddingObj(padding);
   const labels = Object.keys(data[0].counts);
-  const barData = stack().keys(labels)(data.map(d => d.counts));
+  const stackData = stack().keys(labels)(data.map(d => d.counts));
+  const barData = zip(...stackData);
   const tooltipData = data.map(getTooltipData);
-  const yMin = min(barData[0], d => d[0]);
-  yMax = yMax || max(barData[barData.length - 1], d => d[d.length - 1]);
+  const yMin = min(stackData[0], d => d[0]);
+  yMax = yMax || max(stackData[stackData.length - 1], d => d[d.length - 1]);
   const xScale = scaleBand()
-    .domain(barData[0].map((_, i) => i))
+    .domain(stackData[0].map((_, i) => i))
     .rangeRound([padding.left, width - padding.right])
     .padding(0.1);
   const yScale = scaleLinear()
@@ -83,14 +86,14 @@ function MultiBarGraph({
                   {bars.map((bar, i) => {
                     const { extents } = bar.state;
                     return (
-                      <g key={`${extents}-${i}`}>
+                      <TranslucentRect as="g" key={`${extents}-${i}`}>
                         {extents.map(([minVal, maxVal], barIdx) => {
-                          const { title, body } = tooltipData[barIdx];
+                          const { title, body } = tooltipData[i];
                           return (
                             <rect
-                              key={`${minVal}-${maxVal}-${barIdx}`}
-                              fill={colors[i]}
-                              x={xScale(barIdx)}
+                              key={`${minVal}-${maxVal}-${i}`}
+                              fill={colors[barIdx]}
+                              x={xScale(i)}
                               y={yScale(maxVal)}
                               height={yScale(minVal) - yScale(maxVal)}
                               width={xScale.step() - 5}
@@ -105,7 +108,7 @@ function MultiBarGraph({
                             />
                           );
                         })}
-                      </g>
+                      </TranslucentRect>
                     );
                   })}
                 </React.Fragment>
