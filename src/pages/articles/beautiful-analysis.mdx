@@ -12,17 +12,21 @@ tags:
 ---
 
 import baSummary from "data/json/ba-summary.json";
+import baFeatures from "data/json/ba-features.json";
 import baSentimentData from "data/json/ba-sentiment-examples.json";
 import baSentimentCounts from "data/json/ba-sentiment-counts.json";
 import baAllSentiment from "data/json/ba-all-sentiment.json";
 import baProfanity from "data/json/ba-profanity.json";
 import baCommonPhrases from "data/json/ba-common-phrases.json";
+import baQuizData from "data/json/ba-quiz.json";
 import {
   CaptionWrapper,
   ColoredSpan,
+  HorizontalBarGraph,
   MultiBarGraph,
   NarrowContainer,
   PodcastAllSentiments,
+  Quiz,
   SelectableMultiBarGraph,
   SentimentScoreTable,
   StyledTable
@@ -271,15 +275,19 @@ speaking.
 
 ### Whose Line is it Anyway?
 
-Given this body of text, we can also ask whether are some distinguishing
-characteristics of people on the show.
+Let's move on to our next question: can we find any distinguishing
+characteristics of the way Gethard speaks, compared to his callers?
 
-One way to do this is to simply identify short phrases that appear relatively
-frequently in the transcripts. Here are the most common two-, three-, and
-four-word phrases spoken by Gethard and the callers as a group:
+One way to answer this question is to identify short phrases that appear
+relatively frequently in the transcripts. Here are the most common two-, three-,
+and four-word phrases spoken by Gethard and the callers as a group:
 
-<CaptionWrapper caption="Figure 6: wut.">
-  <SliderProvider 
+<CaptionWrapper
+  caption="Figure 6: Common phrases for Gethard and his callers.
+Phrases are restricted to the twenty most frequent, and each phrase must have
+appeared an average of at least once per episode."
+>
+  <SliderProvider
     initialData={[
       {
         min: baCommonPhrases.common_phrases[0].phrase_count,
@@ -292,17 +300,23 @@ four-word phrases spoken by Gethard and the callers as a group:
     ]}
     render={([phraseCount]) => {
       const { speakers } = baCommonPhrases.common_phrases[phraseCount - 2];
-      const numRows = Math.max(speakers["Chris"].length, speakers["Caller"].length);
-      const rows = Array.from({ length: numRows }, (_, i) => (
-        [speakers["Chris"][i], speakers["Caller"][i]]
-      ));
+      const numRows = Math.max(
+        speakers["Chris"].length,
+        speakers["Caller"].length
+      );
+      const rows = Array.from({ length: numRows }, (_, i) => [
+        speakers["Chris"][i],
+        speakers["Caller"][i]
+      ]);
       return (
-        <StyledTable padding="0.1rem 0">
+        <StyledTable padding="0.1rem">
           <thead>
             <tr>
               {Object.keys(speakers).map(speaker => (
                 <th key={speaker}>
-                  <ColoredSpan bold color={colorMap[speaker]}>{speaker}</ColoredSpan>
+                  <ColoredSpan bold color={colorMap[speaker]}>
+                    {speaker}
+                  </ColoredSpan>
                 </th>
               ))}
             </tr>
@@ -313,7 +327,9 @@ four-word phrases spoken by Gethard and the callers as a group:
                 {Object.keys(speakers).map((speaker, idx) => (
                   <td key={speaker}>
                     <ColoredSpan color={colorMap[speaker]}>
-                      { rows[i][idx] ? `${rows[i][idx][0]} (said ${rows[i][idx][1]} times)` : "--"}
+                      {rows[i][idx]
+                        ? `${rows[i][idx][0]} (said ${rows[i][idx][1]} times)`
+                        : "--"}
                     </ColoredSpan>
                   </td>
                 ))}
@@ -321,59 +337,164 @@ four-word phrases spoken by Gethard and the callers as a group:
             ))}
           </tbody>
         </StyledTable>
-      )
+      );
     }}
   />
 </CaptionWrapper>
 
+One difference you may notice is how often common phrases include the word "I."
+The data suggests that Gethard is good at centering the conversation on the
+caller and their experiences. Callers say "I" in **eight** of their top twenty
+most common two-word phrases, but Gethard only says "I" in **five** of his.
 
-here are some collocations
+The phrases in the table above are common to Gethard and his callers, but
+they're also just plain common. Knowing that Gethard says "and I" 126 times
+across these ten episode transcripts doesn't really tell us that much about what
+makes Gethard sound like Gethard.
 
-<CaptionWrapper caption="Figure 7: wut.">
+---
+
+Another way we can study speech patterns in these transcripts is through
+**collocations**, a linguistic term for sequences of words that occur
+disproportionately often.
+
+Here are the two-word collocations for Chris Gethard and his callers:
+
+<CaptionWrapper caption="Figure 7: Collocations for Gethard and his callers.">
   <NarrowContainer width="70%" fullWidthAt="small">
-    <StyledTable padding="0.1rem 0">
+    <StyledTable padding="0.1rem">
       <thead>
         <tr>
           {baCommonPhrases.collocation_lists.map(({ speaker }) => (
             <th key={speaker}>
-              <ColoredSpan bold color={colorMap[speaker]}>{speaker}</ColoredSpan>
+              <ColoredSpan bold color={colorMap[speaker]}>
+                {speaker}
+              </ColoredSpan>
             </th>
           ))}
         </tr>
       </thead>
       <tbody>
-        {baCommonPhrases.collocation_lists[0].collocations.map((phrase, idx) => (
-          <tr key={idx}>
-            <td>
-              <ColoredSpan color={colorMap["Chris"]}>
-                {phrase}
-              </ColoredSpan>
-            </td>
-            <td>
-              <ColoredSpan color={colorMap["Caller"]}>
-                {baCommonPhrases.collocation_lists[1].collocations[idx]}
-              </ColoredSpan>
-            </td>
-          </tr>
-        ))}
+        {baCommonPhrases.collocation_lists[0].collocations.map(
+          (phrase, idx) => (
+            <tr key={idx}>
+              <td>
+                <ColoredSpan color={colorMap["Chris"]}>{phrase}</ColoredSpan>
+              </td>
+              <td>
+                <ColoredSpan color={colorMap["Caller"]}>
+                  {baCommonPhrases.collocation_lists[1].collocations[idx]}
+                </ColoredSpan>
+              </td>
+            </tr>
+          )
+        )}
       </tbody>
     </StyledTable>
   </NarrowContainer>
 </CaptionWrapper>
 
-- move to ratios between Chris : speaker
+A few observations:
+
+1. Chris Gethard talks about New York City a lot.
+1. People talk about high school even more than Gethard talks about New York
+   City. The phrase appears at least once in nine out of the ten episodes!
+1. Because of the small sample size (only ten episodes of transcripts), it's
+   possible for a phrase to show up here even if it's only discussed in a single
+   episode. Among Gethard's collocations, "Bank Tech," "bromance test," "sign
+   language," "Ron Paul," and "uncanny valley" only appear in a single episode each.
+1. Because none of the callers are robots, none of them actually say "mmhmm
+   affirmative." This is a case of metadata in the transcripts messing with the
+   analysis. Since sounds like "mmhmm" can be ambiguous, the transcripts include a
+   parenthetical describing what the sound means. In other words, the collcation
+   "mmhmm affirmative" corresponds to something like "Mm-hmm (affirmative)" in the
+   transcripts.
+
+Collocations do a better job at telling us about some unique topics that come up
+on _Beautiful / Anonymous_. But, except maybe for the way Gethard seems to talk
+about New York a lot, they don't really answer the original question of how we
+can distinguish between what Gethard says and what his callers say. For this, we
+need a slightly different approach.
+
+---
+
+### Transcript Training
+
+Collocations tell us whether a sequences of words appears more often than is
+typical. But we're not interested in comparing word frequency to an absolute
+average; we're interested in comparing Gethard's word frequency to the average
+frequency of his callers. This is a slightly different problem, since, for
+instance, his callers may themselves bring up topics more often than is typical
+(high school, for example).
+
+So how can we do this? One way is to try to find _tells_ that will accurately
+predict when Chris is talking as opposed to one of his callers.
+
+This is a common task within the field of _machine learning_. Without taking us
+too far afield, here's the idea: basically, you tell a computer about certain
+features of a text that you think may help predict the speaker. For example,
+Chris Gethard may be more likely to talk about New York and New Jersey than his
+callers.
+
+You can give the computer dozens or hundreds of these features to consider, as
+well as a test set of data to look at (basically a random subset of all of the
+transcripts). The computer will then _learn_ how to best optimize and balance
+these features so that, given a new line, it has a high probability of being
+able to correctly guess who said it (we can save the details of machine learning
+for another time).
+
+Of course, in our case, there's not really any guesswork involved: every line in
+every transcript is clearly ascribed to either Gethard or the caller. But we can
+still use this technique to extract features of the text that are more or less
+likely to point to Gethard as the speaker.
+
+I threw the kitchen sink at my computer in terms of features I thought might
+have some predictive power. In the end, my kitchen sink approach yielded a
+result that could accurately predict whether or not Gethard was the speaker of a
+random line with about 70% accuracy. Here are the top twenty most informative
+features for one of my training sessions (note that these features will change
+if you teach the computer again, since the test set is a random subset of all of
+the lines):
+
+<CaptionWrapper caption="Figure 8: wut.">
+  <HorizontalBarGraph
+    data={baFeatures.map(d => ({
+      ...d,
+      fill: colorMap[d.width > 0 ? "Chris" : "Caller"]
+    }))}
+  />
+</CaptionWrapper>
 
 ---
 
 ### RoboGeth
 
-- Chris vs robot
+While we're in the land of machine learning,
+
+<Quiz
+  answerColors={[COLORS.DARK_BLUE, COLORS.PURPLE]}
+  caption="Figure 9: byeee"
+  questionData={baQuizData}
+  title="Who said it: Chris Gethard or a Machine?"
+/>
+
+But don't worry Gethard: the robots aren't coming for your job anytime soon. I
+intentionally selected the cream of the algorithm-generated crop. There was
+plenty of text that was pretty clearly nonsense. Here's a small sample:
+
+Bogus examples
+
+---
+
+### Conclusion
 
 Sources:
 
 - [A Beginner's Guide to Beautiful Anonymous](https://medium.com/@chrisgeth/a-beginners-guide-to-beautiful-anonymous-dffa5a520f52), by Chris Gethard.
 
 - [Building a Better Profanity Detection Library with scikit-learn](https://victorzhou.com/blog/better-profanity-detection-with-scikit-learn/), by Victor Zhou.
+
+- [Natural Language Processing with Python – Analyzing Text with the Natural Language Toolkit](http://www.nltk.org/book/), by Steven Bird, Ewan Klein, and Edward Loper.
 
 - [Sentiment analysis with NLTK /VADER — Comments on Lee Hsien Loong’s Facebook post](https://medium.com/@sharonwoo/sentiment-analysis-with-nltk-422e0f794b8), by Sharon Woo.
 
