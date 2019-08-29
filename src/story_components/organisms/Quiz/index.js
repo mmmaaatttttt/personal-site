@@ -1,13 +1,11 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import PropTypes from "prop-types";
-import Animate from "react-move/Animate";
 import { withCaption } from "providers";
 import {
   Alert,
   Button,
-  FlexContainer,
-  Icon,
+  Carousel,
   NarrowContainer
 } from "story_components";
 import { choices } from "utils/mathHelpers";
@@ -120,15 +118,10 @@ function QuizQuestion({
 }
 
 function QuizEnd({ answers, questions, reset }) {
-  const [idx, setIdx] = useState(0);
   const numCorrect = answers.reduce(
     (total, answer, idx) => total + +(questions[idx].answer === answer),
     0
   );
-  const question = questions[idx];
-  const answer = answers[idx];
-  const leftDisabled = idx === 0;
-  const rightDisabled = idx === questions.length - 1;
   return (
     <NarrowContainer width="100%" center>
       <h2>
@@ -136,59 +129,22 @@ function QuizEnd({ answers, questions, reset }) {
       </h2>
       <h3>Accuracy: {((numCorrect * 100) / answers.length).toFixed(2)}%</h3>
       <p>Answer details:</p>
-      <Animate
-        show
-        start={{ marginLeft: 0 }}
-        update={() => {
-          console.log("in update");
-          return { marginLeft: [idx * 105] };
-        }}
-      >
-        {({ marginLeft }) => (
-          <FlexContainer cross="center">
-            <Icon
-              name="chevron-left"
-              disabled={leftDisabled}
-              hover={!leftDisabled}
-              onClick={() => !leftDisabled && setIdx(idx - 1)}
-              opacity={leftDisabled ? 0.4 : 1}
-              padding="0 0.25rem 0 0"
-              size={2}
-            />
-            <FlexContainer style={{ overflow: "hidden" }}>
-              {questions.map((q, i) => (
-                <Alert
-                  key={i}
-                  center
-                  color={q.answer === answers[i] ? COLORS.GREEN : COLORS.RED}
-                  style={{
-                    flex: "0 0 auto",
-                    marginRight: "5%",
-                    marginLeft: i === 0 ? `${-marginLeft}%` : 0
-                  }}
-                >
-                  <StyledAlertP>
-                    <b>{q.prompt}</b>
-                  </StyledAlertP>
-                  <StyledAlertP>
-                    You chose: <b>{answers[i]}</b>. Correct answer:{" "}
-                    <b>{q.answer}</b>.
-                  </StyledAlertP>
-                </Alert>
-              ))}
-            </FlexContainer>
-            <Icon
-              name="chevron-right"
-              disabled={rightDisabled}
-              hover={!rightDisabled}
-              onClick={() => !rightDisabled && setIdx(idx + 1)}
-              opacity={rightDisabled ? 0.4 : 1}
-              padding="0 0 0 0.25rem"
-              size={2}
-            />
-          </FlexContainer>
-        )}
-      </Animate>
+      <Carousel>
+        {questions.map((q, i) => (
+          <Alert
+            key={i}
+            center
+            color={q.answer === answers[i] ? COLORS.GREEN : COLORS.RED}
+          >
+            <StyledAlertP>
+              <b>{q.prompt}</b>
+            </StyledAlertP>
+            <StyledAlertP>
+              You chose: <b>{answers[i]}</b>. Correct answer: <b>{q.answer}</b>.
+            </StyledAlertP>
+          </Alert>
+        ))}
+      </Carousel>
       <NarrowContainer width="50%" fullWidthAt="small">
         <Button large color={COLORS.ORANGE} onClick={reset}>
           Try Again!
@@ -213,7 +169,7 @@ Quiz.propTypes = {
 
 Quiz.defaultProps = {
   answerColors: [COLORS.ORANGE, COLORS.GREEN, COLORS.BLUE],
-  maxQuestions: 4,
+  maxQuestions: 10,
   questionData: [
     {
       prompt: "What is the meaning of life, the universe, and everything?",

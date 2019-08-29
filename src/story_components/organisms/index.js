@@ -1,5 +1,6 @@
 // @create-index
 
+export { default as Carousel } from './Carousel';
 export { default as CoinFlipBayesianModel } from './CoinFlipBayesianModel';
 export { default as CoinFlipHistogram } from './CoinFlipHistogram';
 export { default as EconomyNodeGroup } from './EconomyNodeGroup';
