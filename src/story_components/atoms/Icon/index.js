@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import styled, { css } from "styled-components";
 
 const StyledIcon = styled.i`
+  padding: ${props => props.padding};
   ${props =>
     props.disabled &&
     css`
@@ -20,12 +21,13 @@ const StyledIcon = styled.i`
 `;
 
 const Icon = ({
-  name,
   color,
+  disabled,
   hover,
+  name,
   onClick,
   opacity,
-  disabled,
+  padding,
   size,
   type
 }) => (
@@ -35,17 +37,19 @@ const Icon = ({
     style={{ color, opacity }}
     disabled={disabled}
     hover={hover}
+    padding={padding}
   />
 );
 
 Icon.propTypes = {
-  name: PropTypes.string.isRequired,
   color: PropTypes.string.isRequired,
+  disabled: PropTypes.bool.isRequired,
   hover: PropTypes.bool.isRequired,
+  name: PropTypes.string.isRequired,
   onClick: PropTypes.func,
   opacity: PropTypes.number.isRequired,
+  padding: PropTypes.string.isRequired,
   size: PropTypes.oneOf([1, 2, 3, 4, 5]).isRequired,
-  disabled: PropTypes.bool.isRequired,
   type: PropTypes.oneOf(["solid", "regular", "light", "brands"]).isRequired
 };
 
@@ -55,6 +59,7 @@ Icon.defaultProps = {
   hover: false,
   name: "check",
   opacity: 1,
+  padding: "0",
   size: 1,
   type: "solid"
 };
