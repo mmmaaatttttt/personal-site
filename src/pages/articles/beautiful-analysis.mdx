@@ -2,8 +2,8 @@
 title: "Beautiful / Analysis"
 date: "2019-09-30"
 featured_image: "../../images/featured_images/beautiful_analysis.jpg"
-caption: "Caption"
-featured_image_caption: "Image Caption"
+caption: "What does math have to say about a guy who has nothing to say about math?"
+featured_image_caption: "Comedian Chris Gethard, host of Beautiful / Anonymous. Image credit: NJ.com"
 tags:
   - podcasts
   - statistics
@@ -456,7 +456,8 @@ features for one of my training sessions (note that these features will change
 if you teach the computer again, since the test set is a random subset of all of
 the lines):
 
-<CaptionWrapper caption="Figure 8: wut.">
+<CaptionWrapper caption="Figure 8: Twenty most informative features for
+distinguishing between Gethard and his callers.">
   <HorizontalBarGraph
     data={baFeatures.map(d => ({
       ...d,
@@ -465,28 +466,83 @@ the lines):
   />
 </CaptionWrapper>
 
+The numbers in the above chart indicate the strength of each predictor. For
+example, a line where the first word is "wow" is 12.9 times more likely to have
+come from Gethard, while a line containing the word "definitely" is 14.1 times
+more likely to have come from one of his callers.
+
+The data here is consistent with what we've already seen. Some observations:
+
+1. Lines that center the conversation on the other person are more likely to
+come from Gethard. Notice that when the most common word in a line is "your" or
+when the first word is "you're", the speaker is much more likely to be Gethard;
+on the other hand, his guests are much more likely to have the first or most
+common word in a line by "my."
+2. Similar to 1., notice that lines with "what's" in them are much more likely
+to be spoken by Gethard - perhaps his focus on callers implies that he tends to
+ask more questions than the callers do.
+3. Wow - Chris Gethard loves saying "wow."
+
 ---
 
 ### RoboGeth
 
-While we're in the land of machine learning,
+One last thing before we wrap up. We've used computers to search for predictors
+of Gethard's speech patterns, but can we go further? Can we train a machine to
+talk like Chris Gethard?
+
+Well, I tried. I took all of Gethard's lines from the ten conversations, and
+trained a [text-generating neural
+network](https://github.com/minimaxir/textgenrnn) on them. Want to see how I did? Let's play a game.
 
 <Quiz
   answerColors={[COLORS.DARK_BLUE, COLORS.PURPLE]}
-  caption="Figure 9: byeee"
+  caption="Figure 9: Chris vs. Computer: who said it?"
   questionData={baQuizData}
   title="Who said it: Chris Gethard or a Machine?"
 />
 
-But don't worry Gethard: the robots aren't coming for your job anytime soon. I
-intentionally selected the cream of the algorithm-generated crop. There was
-plenty of text that was pretty clearly nonsense. Here's a small sample:
+How did you do? If you didn't get 100%, don't worry. The robots aren't coming
+for Gethard's job anytime soon.
 
-Bogus examples
+I intentionally selected the cream of the algorithm-generated crop. There was
+plenty of text that was more clearly nonsense. Here's an example:
+
+> It sounds like you're going to look into it. I didn't want to have to ask. I
+had to know your dad gets an except and then also an environment while there in
+1996 and when you say it too more about that. You must be a good point. I think
+that's a tragic baby. I listen for her new life minutes left. 
+
+And another one:
+
+>Oh, wow. Now, I feel like me. I don't want to make it about me in a way that he
+never counting the deaf community to me on the started point of things out loud
+about it, and then you are a strength to the guy everywhere.
+
+And finally:
+
+>You and your husband are like, "Why is your kids?"?
 
 ---
 
 ### Conclusion
+
+Having crunched the numbers, the verdict is in. Mathematics has a pretty
+positive view of Gethard, even if the feelings aren't reciprocated. 
+
+He walks the walk by refraining from talking the talk. He gives space to his
+callers, frames the conversation around them, and maintains and overall positive
+sentiment. This is borne out in his conversational tells (his penchant for
+asking questions, favoring "your" over "my", etc). Gethard frequently talks
+about his show as giving a platform for everyday people, and the data backs up
+this claim.
+
+If you haven't listened to the show, I'd encourage you to give it a go. At its
+best, it captures what it means to be human at this point in history. Each
+episode is its own master class in listening and empathy.
+
+Though, as I think his mother would agree, Gethard could cut down on the
+profanity a bit.
 
 Sources:
 
@@ -496,7 +552,7 @@ Sources:
 
 - [Natural Language Processing with Python – Analyzing Text with the Natural Language Toolkit](http://www.nltk.org/book/), by Steven Bird, Ewan Klein, and Edward Loper.
 
-- [Sentiment analysis with NLTK /VADER — Comments on Lee Hsien Loong’s Facebook post](https://medium.com/@sharonwoo/sentiment-analysis-with-nltk-422e0f794b8), by Sharon Woo.
+- [Sentiment analysis with NLTK / VADER — Comments on Lee Hsien Loong’s Facebook post](https://medium.com/@sharonwoo/sentiment-analysis-with-nltk-422e0f794b8), by Sharon Woo.
 
 - [Simplifying Sentiment Analysis using VADER in Python (on Social Media Text)](https://medium.com/analytics-vidhya/simplifying-social-media-sentiment-analysis-using-vader-in-python-f9e6ec6fc52f), by Parul Pandey.
 
