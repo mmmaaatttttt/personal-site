@@ -7,6 +7,7 @@ export { default as Graph } from './Graph';
 export { default as HarassmentNodeGroup } from './HarassmentNodeGroup';
 export { default as IsoperimetricExplorer } from './IsoperimetricExplorer';
 export { default as LabeledSlider } from './LabeledSlider';
+export { default as Quiz } from './Quiz';
 export { default as Scatterplot } from './Scatterplot';
 export { default as SelectableHeatMap } from './SelectableHeatMap';
 export { default as SelectableHistogram } from './SelectableHistogram';
