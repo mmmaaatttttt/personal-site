@@ -1,5 +1,6 @@
 // @create-index
 
+export { default as Alert } from './Alert';
 export { default as AspectRatioWrapper } from './AspectRatioWrapper';
 export { default as AxisLabel } from './AxisLabel';
 export { default as Button } from './Button';
@@ -22,4 +23,5 @@ export { default as StyledInput } from './StyledInput';
 export { default as StyledSelect } from './StyledSelect';
 export { default as StyledSlider } from './StyledSlider';
 export { default as StyledTable } from './StyledTable';
+export { default as TranslucentRect } from './TranslucentRect';
 
