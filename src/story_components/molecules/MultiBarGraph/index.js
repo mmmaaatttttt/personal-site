@@ -49,7 +49,7 @@ function MultiBarGraph({
   return (
     <TooltipProvider
       render={(tooltipShow, tooltipHide) => (
-        <NarrowContainer width={containerWidth}>
+        <NarrowContainer width={containerWidth} fullWidthAt="small">
           <Legend
             title={legendTitle}
             labels={labels.map((label, i) => ({

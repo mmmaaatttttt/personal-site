@@ -24,7 +24,7 @@ function HorizontalBarGraph({
     .rangeRound([padding.top, height - padding.bottom]);
 
   return (
-    <NarrowContainer width={containerWidth}>
+    <NarrowContainer width={containerWidth} fullWidthAt="small">
       <ClippedSVG id={id} width={width} height={height}>
         {data.map((d, i) => (
           <g key={d.caption}>
