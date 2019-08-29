@@ -9,6 +9,7 @@ export { default as EfficiencyGapTable } from './EfficiencyGapTable';
 export { default as FruitContainer } from './FruitContainer';
 export { default as HeatChart } from './HeatChart';
 export { default as HorizontalBar } from './HorizontalBar';
+export { default as HorizontalBarGraph } from './HorizontalBarGraph';
 export { default as InteractiveGrid } from './InteractiveGrid';
 export { default as InteractivePolygon } from './InteractivePolygon';
 export { default as LabeledCircle } from './LabeledCircle';
