@@ -65,7 +65,7 @@ function PodcastAllSentiments({ data, height, padding, width, svgId }) {
                   x: [x],
                   y: [y],
                   r: [r],
-                  timing: { duration: 500, delay: 10 * i }
+                  timing: { duration: 500, delay: 4 * i }
                 })}
                 update={({ x, y, r }, i) => ({
                   x: [x],
