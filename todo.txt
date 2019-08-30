@@ -1,6 +1,8 @@
 - pagination for stories
 - better loading screen on initial page load
 - add ci
+- favor svgType over svgProps
+- remove index files for imports (vscode makes this way easier now)
 
 LOW PRIORITY
 - get more heat map data (mayyybeeeee)
@@ -15,6 +17,7 @@ LOW PRIORITY
 - refactor withCaption to CaptionProvider
 - refactor fourweddings interactives (use providers, don't have one megacomponent)
 - use svg context in more places than DraggableCircle
+
 
 LOWEST PRIORITY
 - look into netlify: https://www.netlify.com/

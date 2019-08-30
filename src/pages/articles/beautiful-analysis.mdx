@@ -46,12 +46,12 @@ episode features Gethard and an anonymous caller, who phones in to the show for
 a one-hour conversation. The caller can hang up at any time, but Gethard must
 stay on the line for the full hour.
 
-What began as an experimental idea for a podcast has evolved into a show that
-gifts listeners with moments of real human connection. Sometimes these moments
-are funny, as one might expect from a podcast hosted by a comedian, but more
-often than not they hit different notes. Conversations span a wide variety of
-topics: anxiety about the future, the death of a loved one, relationship
-struggles and triumphs, and, sometimes, the regularity of one's bowel movements.
+What began as an experimental idea has evolved into a rich show that captures
+moments of real human connection. Sometimes these moments are funny, as one
+might expect from a podcast hosted by a comedian. More often, though, they
+hit different notes. Conversations span a wide variety of topics: anxiety about
+the future, the death of a loved one, relationship struggles and triumphs, and,
+sometimes, the regularity of one's bowel movements.
 
 In a society that often feels increasingly disconnected, these weekly calls are
 a helpful reminder of our shared humanity.
@@ -81,9 +81,9 @@ writes (again, emphasis added):
 > their art form into a math problem to solve. **Art can never be math.**
 
 To be honest, I can't blame him. Unfortunately, most people have had at least
-one traumatic mathematical experience. But if you're like Chris Gethard -- if
+one traumatic math experience during their school years. But if you're like Chris Gethard &mdash; if
 math makes you feel varying degrees of anxiety, repulsion, existential dread,
-and / or rage -- I'd like to invite you to turn the tables with me, and examine
+and / or rage &mdash; I'd like to invite you to turn the tables with me, and examine
 some of Gethard's work through a mathematical lens.
 
 Gethard may not have a high opinion of math, but what does math have to say
@@ -94,19 +94,19 @@ about him? Let's find out!
 ### Beautiful Basics
 
 As mentioned above, one _Beautiful / Anonymous_ episode features a deaf caller.
-This experience inspired Chris Gethard to look into providing episode
-transcripts of the show, for fans who might not be able to listen to them. In
-2019, he released transcripts for 10 episodes curated as part of a [beginner's
+This experience inspired Gethard to provide transcripts of the show for fans
+who might not be able to listen to them. In 2019, he released transcripts for 10
+episodes curated as part of a [beginner's
 guide](https://medium.com/@chrisgeth/a-beginners-guide-to-beautiful-anonymous-dffa5a520f52)
 to the podcast.
 
-Unfortunately for Gethard, in so doing he opened a Pandora's box of potential
-for quantitative analysis. I went through all of those transcripts and crunched
-the numbers, trying to answer questions like:
+Unfortunately for Gethard, in so doing he opened a Pandora's box of material for
+analysis. I went through all of those transcripts and crunched the numbers,
+trying to answer questions like:
 
-1. How much talking does Gethard do during the call compared to the caller?
-1. How does the _sentiment_ of a typical call change? In general are they
-   positive, negative, or neutral?
+1. How much talking does Gethard do compared to his callers?
+1. How does the _sentiment_ of a typical call change? In general are the conversations
+   positive, negative, or neutral in their content?
 1. Given a random line from a transcript, what are some clues that the line
    came from Gethard as opposed to someone calling in?
 1. To what extent can we train a computer to talk like Chris Gethard?
@@ -115,7 +115,7 @@ In what follows, I'd like to offer some answers to all of these questions. Some
 caveats and clarifications:
 
 1. Gethard opens and closes every episode with a few minutes of talking directly
-   to the listener. He also reads ads a couple of times during each episode. I've
+   to the listener. He also reads ads for a few minutes. I've
    removed all the intro, outro, and ad text from this analysis. The only text I've
    considered here is the text that comes from conversation with the caller.
 2. Because I only have ten episodes to analyze, rather than the entire library
@@ -126,11 +126,11 @@ With that said, let's check out the results!
 
 ---
 
-### In the Gab
+### Conversation Domination
 
 One basic question we can explore is how much each person speaks during a call.
-We don't have timestamps available on the transcripts, so instead we'll use word
-count as a proxy.
+We don't have timestamps available on the transcripts, so instead we'll use *word
+count* as a proxy.
 
 Here's how the number of words spoken by Gethard compares to the number of words
 spoken by the caller, for each of the ten episode transcripts:
@@ -150,10 +150,10 @@ My biggest takeaway from this graph is that Gethard seems to have gotten much
 more comfortable creating space for his guests. He spoke the most in the very
 first episode: 6,394 words, more than 67% of the total.
 
-Overall, though, his guests tend to say more than he does: Gethard only has a
-majority of the total words in **three** of these ten episodes, and across the ten
+Overall, though, his guests tend to say more than he does. Gethard only speaks a
+majority of the words in **three** of these ten episodes, and across the ten
 transcribed episodes his share of the words stands at around 44%. If we exclude
-his particularly chatty first episode, that percentage drops to 42%.
+his particularly chatty first episode, his share drops to 42%.
 
 ---
 
@@ -168,7 +168,7 @@ automate the analysis. Some statements are straightforward: we can probably
 agree that "I love you" should count as having positive sentiment, and "I hate
 you" should have negative sentiment.
 
-Next, consider the sentence "Sometimes I love you, but sometimes I hate you." Is
+But what about a sentence like "Sometimes I love you, and sometimes I hate you." Is
 this positive? Negative? Neutral? And how do you teach a computer how to assess
 the sentiment so that we don't have to manually do for every transcript?
 
@@ -181,7 +181,7 @@ applicable to sentiment analysis in other domains."
 
 VADER can take a text and analyze it sentence-by-sentence for positive,
 negative, and neutral sentiment. It spits out a few different stats, but the one
-we'll be gives each sentence a score between -1 and 1. The closer to 1, the more
+we'll use gives each sentence a score between -1 and 1. The closer to 1, the more
 positive the sentiment; the closer to -1, the more negative the sentiment.
 
 To make things concrete, here are some examples of Gethard statements, along
@@ -193,9 +193,9 @@ with their associated sentiment score:
   options={defaultSentimentOptions}
 />
 
-VADER's not perfect. In particular, the example sentences marked as "neutral"
-don't seem to be all that neutral. But in the aggregate this can provide us with
-a useful metric for how positive or negative someone's speaking patterns might be.
+VADER's not perfect. In particular, some of the "neutral" examples don't seem
+all that neutral. But in the aggregate this can provide us with a useful metric
+for how positive or negative someone's speaking patterns might be.
 
 Let's once again take a look at how Gethard compares to his callers. How many
 times do they each talk about things with positive, negative, or neutral
@@ -216,12 +216,12 @@ sentiment? Here's a breakdown by sentence and by episode:
 
 As you can see, positive sentiment greatly outweighs negative sentiment across
 episodes. And for his part, Gethard plays the extremes pretty evenly: he speaks
-a majority of sentences with extreme negative sentiment in six out of ten
-episodes, and the majority of sentences with extreme positive sentiment in six
+a majority of sentences with extreme *negative* sentiment in six out of ten
+episodes, and the majority of sentences with extreme *positive* sentiment in six
 out of ten episodes.
 
 We can take this even further by plotting the sentiment of every line in an
-episode's transcript. Here's what it looks like:
+episode's transcript. Here's how the episodes look:
 
 <PodcastAllSentiments
   caption="Figure 4: Sentiment of every line in an episode.
@@ -230,17 +230,17 @@ The larger the circle, the more words in the line."
 />
 
 As you can see, most circles lie in the upper half, i.e. they have positive
-sentiment. (We can also look for pockets where one person dominates the
-conversation!)
+sentiment. So if you're looking for a show that's positive on the whole, this
+one fits the bill.
 
 ---
 
 ### Sorry Sally
 
-It's become somewhat of a tradition for people to apologize to Chris Gethard's
-mom, Sally, whenever they curse on the show. So before we move on from
-sentiment, here's a related question we can try to answer: who owes Sally
-Gethard a bigger apology, Chris or his callers?
+It's become somewhat of a tradition on the show for people to apologize to Chris
+Gethard's mom, Sally, whenever they curse. So before we move on from sentiment,
+here's a related question: who owes Sally a bigger apology, Chris or his
+callers?
 
 There are a number of ways to try to detect profanity in a piece of text: the
 one I used is called
@@ -266,17 +266,16 @@ in the "Aussie Best Friend" episode.
 
 Gethard may take comfort in the fact that the profanity checker is easily
 offended, so sentences like "I'm not trying to be a jerk," or "That sucks" both
-get marked as profane. While this may indicate that the absolute counts in the
-graph above are too high, the ratio between Gethard and his guests is probably
-about right, since the profanity checker has a low bar regardless of who is
-speaking.
+get marked as profane. While this may indicate that the above counts are too
+high, the ratio between Gethard and his guests is probably about right, since
+the profanity checker has a low bar regardless of who is speaking.
 
 ---
 
 ### Whose Line is it Anyway?
 
 Let's move on to our next question: can we find any distinguishing
-characteristics of the way Gethard speaks, compared to his callers?
+characteristics of the way Gethard speaks compared to his callers?
 
 One way to answer this question is to identify short phrases that appear
 relatively frequently in the transcripts. Here are the most common two-, three-,
@@ -399,7 +398,7 @@ A few observations:
 1. Chris Gethard talks about New York City a lot.
 1. People talk about high school even more than Gethard talks about New York
    City. The phrase appears at least once in nine out of the ten episodes!
-1. Because of the small sample size (only ten episodes of transcripts), it's
+1. Because of the small sample size, it's
    possible for a phrase to show up here even if it's only discussed in a single
    episode. Among Gethard's collocations, "Bank Tech," "bromance test," "sign
    language," "Ron Paul," and "uncanny valley" only appear in a single episode each.
@@ -427,8 +426,8 @@ frequency of his callers. This is a slightly different problem, since, for
 instance, his callers may themselves bring up topics more often than is typical
 (high school, for example).
 
-So how can we do this? One way is to try to find _tells_ that will accurately
-predict when Chris is talking as opposed to one of his callers.
+So how can we do this? One way is to try to find _linguistic tells_ that will
+accurately predict when Chris is talking as opposed to one of his callers.
 
 This is a common task within the field of _machine learning_. Without taking us
 too far afield, here's the idea: basically, you tell a computer about certain
@@ -440,21 +439,13 @@ You can give the computer dozens or hundreds of these features to consider, as
 well as a test set of data to look at (basically a random subset of all of the
 transcripts). The computer will then _learn_ how to best optimize and balance
 these features so that, given a new line, it has a high probability of being
-able to correctly guess who said it (we can save the details of machine learning
-for another time).
-
-Of course, in our case, there's not really any guesswork involved: every line in
-every transcript is clearly ascribed to either Gethard or the caller. But we can
-still use this technique to extract features of the text that are more or less
-likely to point to Gethard as the speaker.
+able to correctly guess who said it.
 
 I threw the kitchen sink at my computer in terms of features I thought might
-have some predictive power. In the end, my kitchen sink approach yielded a
-result that could accurately predict whether or not Gethard was the speaker of a
-random line with about 70% accuracy. Here are the top twenty most informative
-features for one of my training sessions (note that these features will change
-if you teach the computer again, since the test set is a random subset of all of
-the lines):
+have some predictive power. In the end, this yielded an algorithm that could
+accurately predict whether or not Gethard was the speaker of a random line with
+about 70% accuracy. Here are the top twenty most informative features for one of
+my training sessions:
 
 <CaptionWrapper caption="Figure 8: Twenty most informative features for
 distinguishing between Gethard and his callers.">
@@ -479,9 +470,9 @@ when the first word is "you're", the speaker is much more likely to be Gethard;
 on the other hand, his guests are much more likely to have the first or most
 common word in a line by "my."
 2. Similar to 1., notice that lines with "what's" in them are much more likely
-to be spoken by Gethard - perhaps his focus on callers implies that he tends to
-ask more questions than the callers do.
-3. Wow - Chris Gethard loves saying "wow."
+to be spoken by Gethard. Perhaps his focus on callers implies that he tends to
+ask more questions than they do.
+3. Wow, Chris Gethard loves saying "wow!"
 
 ---
 
@@ -491,15 +482,17 @@ One last thing before we wrap up. We've used computers to search for predictors
 of Gethard's speech patterns, but can we go further? Can we train a machine to
 talk like Chris Gethard?
 
-Well, I tried. I took all of Gethard's lines from the ten conversations, and
-trained a [text-generating neural
-network](https://github.com/minimaxir/textgenrnn) on them. Want to see how I did? Let's play a game.
+I tried, and you can be the judge.
+
+I took all of Gethard's lines from the ten conversations, and trained a
+[text-generating neural network](https://github.com/minimaxir/textgenrnn) on
+them. Want to see how I did? Let's play a game.
 
 <Quiz
   answerColors={[COLORS.DARK_BLUE, COLORS.PURPLE]}
-  caption="Figure 9: Chris vs. Computer: who said it?"
+  caption="Figure 9: Chris vs. Computer: who said it? This 10 question quiz pulls from 24 examples, so you can play it a few times to see different sentences."
   questionData={baQuizData}
-  title="Who said it: Chris Gethard or a Machine?"
+  title="Who said it: Chris Gethard or an Algorithm?"
 />
 
 How did you do? If you didn't get 100%, don't worry. The robots aren't coming
@@ -531,15 +524,15 @@ Having crunched the numbers, the verdict is in. Mathematics has a pretty
 positive view of Gethard, even if the feelings aren't reciprocated. 
 
 He walks the walk by refraining from talking the talk. He gives space to his
-callers, frames the conversation around them, and maintains and overall positive
+callers, frames the conversation around them, and maintains an overall positive
 sentiment. This is borne out in his conversational tells (his penchant for
-asking questions, favoring "your" over "my", etc). Gethard frequently talks
-about his show as giving a platform for everyday people, and the data backs up
-this claim.
+asking questions, favoring "your" over "my", etc). 
 
-If you haven't listened to the show, I'd encourage you to give it a go. At its
-best, it captures what it means to be human at this point in history. Each
-episode is its own master class in listening and empathy.
+Gethard frequently talks about his show as giving a platform for everyday
+people, and the data backs up this claim.If you haven't listened to the show,
+I'd encourage you to give it a go. At its best, it captures what it means to be
+human at this point in history. Each episode is its own master class in
+listening and empathy.
 
 Though, as I think his mother would agree, Gethard could cut down on the
 profanity a bit.
