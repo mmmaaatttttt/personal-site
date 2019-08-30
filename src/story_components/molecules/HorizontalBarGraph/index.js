@@ -51,7 +51,7 @@ function HorizontalBarGraph({
               y={yScale(i) + yScale.step() * 0.1}
               fill={COLORS.WHITE}
               dominantBaseline="middle"
-              dy={yScale.step() * 0.55}
+              dy={yScale.step() * 0.54}
               dx={-1 * Math.sign(d.width) * 5}
               textAnchor={d.width < 0 ? "start" : "end"}
             >
