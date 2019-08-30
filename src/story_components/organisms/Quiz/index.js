@@ -21,6 +21,7 @@ const StyledQuizArea = styled.div`
   flex-direction: column;
   min-height: 50vh;
   overflow: hidden;
+  text-align: center;
 `;
 
 const StyledAlertP = styled.p`
