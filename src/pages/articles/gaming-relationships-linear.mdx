@@ -11,13 +11,22 @@ tags:
   - functions
 ---
 
-import { ResponsiveIFrame, GamingLinearRelationships, Sidebar, Latex } from "story_components";
+import {
+  ResponsiveIFrame,
+  GamingRelationships,
+  Sidebar,
+  Latex
+} from "story_components";
+import { linearVisData } from "data/gaming-linear-relationships.js";
 
 In my book, _[Power Up: Unlocking the Hidden Mathematics in Video Games](https://www.amazon.com/Power-Up-Unlocking-Hidden-Mathematics-Video/dp/0691161518/),_ I write about mathematical models of relationships inspired by games like _The Sims_ and _Skyrim_. I find the models really fun to explore, but there's only so much you can do on the printed page. Here I'd like to provide an overview of what I discuss in the book, along with some more interactive explorations of the models that come up.
 
 The idea of modeling relationships mathematically certainly didn't originate with games. Relationship dynamics have been part of academic research for some time. They've entered popular culture through other mediums, too. One of my favorite examples is this clip from [Flight of the Conchords](https://en.wikipedia.org/wiki/Flight_of_the_Conchords), in which one of the characters, Murray, uses axes to describe his model of friendship.
 
-<ResponsiveIFrame src="https://www.youtube.com/embed/Vg-zC1xXK3E" heightOverWidth={42/56} />
+<ResponsiveIFrame
+  src="https://www.youtube.com/embed/Vg-zC1xXK3E"
+  heightOverWidth={42 / 56}
+/>
 
 As you can see, Murray's model of friendship is one that consists of a few different states, such as friends, work mates, and enemies. During the course of the episode, he updates his friendship graph in response to the actions of the show's main characters, Brett and Jemaine.
 
@@ -33,13 +42,23 @@ Things get more interesting when you start to think about one person's feelings 
 
 Think about this conceptually for a bit. Suppose that person A's feelings change in opposition to person B: when person B's feelings grow too string, person A begins to push away. But when person B begins to retreat, person A shows more interest. On the other hand, suppose that person B's feelings change in parallel with person A: when person A's feelings are strong, so are person B's, and when they're not, neither is person B's. In this case, if person B has feelings for person A, person A will react by pushing person B away. This, in turn, will cause person B to drift away, which will cause person A to to feel more strongly. This will cause person B to feel more strongly too, which will push person A away again, and the cycle repeats.
 
-<GamingLinearRelationships idx={0} caption="Figure 1: Visualizing A and B's feelings based on four inputs."/>
+<GamingRelationships
+  visData={linearVisData[0]}
+  caption="Figure 1: Visualizing A and B's feelings based on four inputs."
+/>
 
 For those of you who prefer equations to visualizations, here's what we're visualizing. If _A(t)_ denotes person A's feelings at time _t_, and _B(t)_ denotes person B's feelings at time _t_, then these graphs are determined by:
 
-<Sidebar>Fun fact: if you've studied differential equations, you can solve these equations in terms of trigonometric or exponential functions that you learned about in high school.</Sidebar>
+<Sidebar>
+  Fun fact: if you've studied differential equations, you can solve these
+  equations in terms of trigonometric or exponential functions that you learned
+  about in high school.
+</Sidebar>
 
-<Latex displayMode={true} str={`\\begin{aligned} A^{\\prime} (t) &= a \\times B(t), \\\\ B^{\\prime} (t) &= b \\times A(t), \\end{aligned}`}/>
+<Latex
+  displayMode={true}
+  str={`\\begin{aligned} A^{\\prime} (t) &= a \\times B(t), \\\\ B^{\\prime} (t) &= b \\times A(t), \\end{aligned}`}
+/>
 
 where _a_ measures the strength of A's response to B's feelings, and similarly for _b_. If you're not familiar with this notation, don't sweat it: _A′(t)_ is the calculus-y way of talking about the _speed_ with which A's feelings change. The higher it's value, the more quickly A's feelings are changing.
 
@@ -62,13 +81,22 @@ This requires a few more parameters, since we can now adjust three parameters fo
 
 Here's a modified visualization for you to play around with:
 
-<GamingLinearRelationships idx={1} caption="Figure 2: Visualizing A and B's feelings based on six inputs."/>
+<GamingRelationships
+  visData={linearVisData[1]}
+  caption="Figure 2: Visualizing A and B's feelings based on six inputs."
+/>
 
 As you might have guessed, more sliders means more parameters in our model. In the language of calculus, our model now looks like this:
 
-<Sidebar direction="right">These equations can also be solved in terms of functions you may have encountered in a high school math class!</Sidebar>
+<Sidebar direction="right">
+  These equations can also be solved in terms of functions you may have
+  encountered in a high school math class!
+</Sidebar>
 
-<Latex displayMode={true} str={`\\begin{aligned} A^{\\prime} (t) &= a \\times B(t) + c \\times A(t), \\\\ B^{\\prime} (t) &= b \\times A(t) + d \\times B(t), \\end{aligned}`}/>
+<Latex
+  displayMode={true}
+  str={`\\begin{aligned} A^{\\prime} (t) &= a \\times B(t) + c \\times A(t), \\\\ B^{\\prime} (t) &= b \\times A(t) + d \\times B(t), \\end{aligned}`}
+/>
 
 Once again, if your calculus is a little rusty and you can feel your eyes glazing over, fret not! All this is saying is that the rate at which each person's feelings change depends not only on their partner's current feelings, but their own feelings as well. The sliders let us control the values of _a_, _b_, _c_, and _d_ (as well as each partner's _initial_ feelings), so that you can explore a wider range of possible relationships.
 
@@ -97,11 +125,17 @@ This brings us to our final final visualization, which will let you play around 
 
 Here's one example of a relationship that stabilizes. What other ones can you find?
 
-<GamingLinearRelationships idx={2} caption="Figure 3: Visualizing A and B's feelings based on eight inputs."/>
+<GamingRelationships
+  visData={linearVisData[2]}
+  caption="Figure 3: Visualizing A and B's feelings based on eight inputs."
+/>
 
 Once again, here are the equations, if you're into that sort of thing:
 
-<Latex displayMode={true} str={`\\begin{aligned} A^{\\prime} (t) &= a \\times B(t) + c \\times A(t) + e \\times B_{appeal}, \\\\ B^{\\prime} (t) &= b \\times A(t) + d \\times B(t) + f \\times A_{appeal}, \\end{aligned}`}/>
+<Latex
+  displayMode={true}
+  str={`\\begin{aligned} A^{\\prime} (t) &= a \\times B(t) + c \\times A(t) + e \\times B_{appeal}, \\\\ B^{\\prime} (t) &= b \\times A(t) + d \\times B(t) + f \\times A_{appeal}, \\end{aligned}`}
+/>
 
 The sliders let us control the values of the eight parameters in the above equations.
 
@@ -120,8 +154,8 @@ We can get some even stranger looking relationship models. But to do so, we'll n
 
 Sources:
 
-* [Power Up: Unlocking the Hidden Mathematics in Video Games](https://www.amazon.com/Power-Up-Unlocking-Hidden-Mathematics-Video/dp/0691161518/), by me!
-* [Love Affairs and Differential Equations](http://ai.stanford.edu/~rajatr/articles/SS_love_dEq.pdf), by Steven Strogatz
-* [Nonlinear Dynamics And Chaos](https://www.amazon.com/Nonlinear-Dynamics-Chaos-Applications-Nonlinearity/dp/0738204536), by Steven Strogatz
-* [Introduction to Matrix Differential Equations](https://en.wikipedia.org/wiki/Matrix_differential_equation)
-* [Love Dynamics: The Case of Linear Couples](http://www.sciencedirect.com/science/article/pii/S0096300397100819), by Sergio Rinaldi
+- [Power Up: Unlocking the Hidden Mathematics in Video Games](https://www.amazon.com/Power-Up-Unlocking-Hidden-Mathematics-Video/dp/0691161518/), by me!
+- [Love Affairs and Differential Equations](http://ai.stanford.edu/~rajatr/articles/SS_love_dEq.pdf), by Steven Strogatz
+- [Nonlinear Dynamics And Chaos](https://www.amazon.com/Nonlinear-Dynamics-Chaos-Applications-Nonlinearity/dp/0738204536), by Steven Strogatz
+- [Introduction to Matrix Differential Equations](https://en.wikipedia.org/wiki/Matrix_differential_equation)
+- [Love Dynamics: The Case of Linear Couples](http://www.sciencedirect.com/science/article/pii/S0096300397100819), by Sergio Rinaldi

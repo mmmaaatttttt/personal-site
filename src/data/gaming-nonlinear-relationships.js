@@ -102,7 +102,7 @@ const diffEq3 = (b, a, c, d, f, e) => (x, y) => [
   e * y[3] + f * y[2] * (1 - Math.abs(y[2]))
 ];
 
-const visualizationData = [
+const nonlinearVisData = [
   {
     initialData: graph1Data.map((d, i) => {
       const newVals = [4, 3, 1, -2, -5, -2];
@@ -133,6 +133,4 @@ const visualizationData = [
   }
 ];
 
-export { diffEq2, diffEq3 };
-
-export default visualizationData;
+export { diffEq2, diffEq3, nonlinearVisData };

@@ -12,7 +12,8 @@ tags:
   - functions
 ---
 
-import { GamingNonlinearRelationships, Sidebar, Latex } from "story_components";
+import { GamingRelationships, Sidebar, Latex } from "story_components";
+import { nonlinearVisData } from "data/gaming-nonlinear-relationships.js";
 
 _(Note: this is a follow-up to my [previous story](/stories/gaming-relationships-linear). If you haven't read that one, you should! This story assumes you've checked out the earlier one._)
 
@@ -30,7 +31,10 @@ Before talking more about what makes a set of (differential) equations nonlinear
 
 Let's revisit our second model from the previous story. The equations we were modeling were these:
 
-<Latex displayMode={true} str={`\\begin{aligned} A\\prime (t) &= a \\times B(t) + c \\times A(t), \\\\ B\\prime (t) &= b \\times A(t) + d \\times B(t), \\end{aligned}`}/>
+<Latex
+  displayMode={true}
+  str={`\\begin{aligned} A\\prime (t) &= a \\times B(t) + c \\times A(t), \\\\ B\\prime (t) &= b \\times A(t) + d \\times B(t), \\end{aligned}`}
+/>
 
 These were the models that gave us four archetypes for people in relationships: _eager beavers_, _narcissistic nerds_, _cautious lovers_, and _hermits_.
 
@@ -42,13 +46,20 @@ What seems more likely is that your response to your partner's feelings may depe
 
 Let's take a look at a model that takes a more nuanced approach to how each person responds to the feelings of their partner. Below are a couple of graphs. The first one is the same one from the previous story, whose equations are given above. The second one is a modified version in which each person's response to their partner will flip if the partner's feelings become too intense. (For more on this model, check out _Dynamical Models of Love_, a paper by J. C. Sprott. There's a link at the end of this story.)
 
-<GamingNonlinearRelationships idx={0} caption="Figure 1: On the left, our linear model from before; on the right, a new and nonlinear model."/>
+<GamingRelationships
+  visData={nonlinearVisData[0]}
+  step={0.02}
+  caption="Figure 1: On the left, our linear model from before; on the right, a new and nonlinear model."
+/>
 
 As you explore these models, it's pretty clear that the latter one allows for a larger family of relationships. For example, the second model allows for relationships that stabilize but still have some variation.
 
 So how is the second model different? Well, here are the equations used:
 
-<Latex displayMode={true} str={`\\begin{aligned} A^{\\prime} (t) &= a \\times B(t) ( 1 - \\left|B(t)\\right| ) + c \\times A(t), \\\\ B^{\\prime} (t) &= b \\times A(t) ( 1 - \\left|A(t)\\right| ) + d \\times B(t), \\end{aligned}`}/>
+<Latex
+  displayMode={true}
+  str={`\\begin{aligned} A^{\\prime} (t) &= a \\times B(t) ( 1 - \\left|B(t)\\right| ) + c \\times A(t), \\\\ B^{\\prime} (t) &= b \\times A(t) ( 1 - \\left|A(t)\\right| ) + d \\times B(t), \\end{aligned}`}
+/>
 
 We'll talk more about the notation in just a bit. These equations certainly look a little complicated. But what does it mean for them to be _nonlinear_?
 
@@ -60,7 +71,13 @@ All of the equations in our last story, including the ones for the first model a
 
 In particular, these equations don't involve any more complex expressions involving _A(t)_ and _B(t)_, such as _A(t)_ &times; _B(t)_, _A(t)_ &times; _A(t)_, or more complex expressions, such as _A(t)_ &times; (1 - |_A(t)_|).
 
-<Sidebar>If you've gotten far enough in my book, you'll see that I talk about this nonlinear example at length. Unfortunately, I let a pretty egregious error slip through: the figures are correct, but the functions aren't! In the book I replaced the absolute value function by a different function accidentally. One thousand apologies!</Sidebar>
+<Sidebar>
+  If you've gotten far enough in my book, you'll see that I talk about this
+  nonlinear example at length. Unfortunately, I let a pretty egregious error
+  slip through: the figures are correct, but the functions aren't! In the book I
+  replaced the absolute value function by a different function accidentally. One
+  thousand apologies!
+</Sidebar>
 
 (In case you need a refresher, the notation |_x_| denotes the absolute value of _x_, which measures the magnitude of _x_ and ignores its sign. So, for example, |5| = 5, but |-5| = 5 too.)
 
@@ -82,7 +99,10 @@ Sensitivity to initial conditions means that if we make small changes to the inp
 
 It should be noted that sensitivity to initial conditions doesn't automatically make a system chaotic. But every chaotic system must have this property. And while linear systems like the ones we've seen so far can never be chaotic, nonlinear systems frequently are.
 
-<Sidebar direction="right">Technically, linear systems of differential equations can be chaotic, but only if they are infinitely dimensional. But that's a rabbit hole for another day.</Sidebar>
+<Sidebar direction="right">
+  Technically, linear systems of differential equations can be chaotic, but only
+  if they are infinitely dimensional. But that's a rabbit hole for another day.
+</Sidebar>
 
 ---
 
@@ -96,13 +116,21 @@ In this scenario, we can think of Person B's feelings in two parts: feelings tow
 
 To see chaos in action, try adjusting one of the parameters just a little bit. For example, if you adjust A's feelings upwards just a couple of ticks, these relationships go absolutely bonkers. If you adjust A's initial feelings down a couple of ticks, things are relatively stable, but there's no rhyme or reason to how the peaks and valleys in each graph change based on this slight adjustment to initial conditions. (Note that I've extended the x-axis out so that the timeline is twice as long as in the other visualizations, so that we can see even more chaotic behavior.)
 
-<GamingNonlinearRelationships idx={1} caption="Figure 2: Chaotic relationship dynamics between three people." max={40}/>
+<GamingRelationships
+  visData={nonlinearVisData[1]}
+  step={0.02}
+  caption="Figure 2: Chaotic relationship dynamics between three people."
+  max={40}
+/>
 
 This is sensitivity to initial conditions in action. What this means is that even if you were able to accurately measure each of the parameters in the model, the slightest measurement error would destroy the predictive power of the model. While this seems like a bug, maybe it's actually a feature: after all, it doesn't seem reasonable that a mathematical model could predict _any_ future relationship state between a group of people.
 
 In case you're curious, here are the equations used by the model:
 
-<Latex displayMode={true} str={`\\begin{aligned} A^{\\prime} (t) &= a \\times B_{A}(t) ( 1 - \\left|B_{A}(t)\\right| ) + d \\times A(t), \\\\ B_{A}^{\\prime} (t) &= b \\times (A(t) - C(t)) ( 1 - \\left|A(t) - C(t)\\right| ) + e \\times B_{A}(t), \\\\ C^{\\prime} (t) &= c \\times B_{C}(t) ( 1 - \\left|B_{C}(t)\\right| ) + f \\times C(t), \\\\ B_{C}^{\\prime} (t) &= b \\times (C(t) - A(t)) ( 1 - \\left|C(t) - A(t)\\right| ) + e \\times B_{C}(t), \\\\ \\end{aligned}`}/>
+<Latex
+  displayMode={true}
+  str={`\\begin{aligned} A^{\\prime} (t) &= a \\times B_{A}(t) ( 1 - \\left|B_{A}(t)\\right| ) + d \\times A(t), \\\\ B_{A}^{\\prime} (t) &= b \\times (A(t) - C(t)) ( 1 - \\left|A(t) - C(t)\\right| ) + e \\times B_{A}(t), \\\\ C^{\\prime} (t) &= c \\times B_{C}(t) ( 1 - \\left|B_{C}(t)\\right| ) + f \\times C(t), \\\\ B_{C}^{\\prime} (t) &= b \\times (C(t) - A(t)) ( 1 - \\left|C(t) - A(t)\\right| ) + e \\times B_{C}(t), \\\\ \\end{aligned}`}
+/>
 
 As you can see, compared to the first model in our previous story, things have gotten quite complicated. But the upside is that we have a much more robust model, which is able to capture a wider range of relationship behavior. And indeed, this is often a trade-off when it comes to mathematical modeling: more complexity can often yield richer behavior, but complexity also makes the models more difficult to understand and can make the results of the model less widely applicable.
 
@@ -110,5 +138,5 @@ While we could continue to add complexity to our model, let's stop here. I hope 
 
 Sources:
 
-* [Power Up: Unlocking the Hidden Mathematics in Video Games](https://www.amazon.com/Power-Up-Unlocking-Hidden-Mathematics-Video/dp/0691161518/), by me!
-* [Dynamical Models of Love](http://sprott.physics.wisc.edu/pubs/paper277.pdf), by J. C. Sprott
+- [Power Up: Unlocking the Hidden Mathematics in Video Games](https://www.amazon.com/Power-Up-Unlocking-Hidden-Mathematics-Video/dp/0691161518/), by me!
+- [Dynamical Models of Love](http://sprott.physics.wisc.edu/pubs/paper277.pdf), by J. C. Sprott

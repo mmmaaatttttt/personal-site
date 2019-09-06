@@ -111,7 +111,7 @@ const diffEq3 = (a, b, c, d, e, f, g, h) => (x, y) => [
   e * y[0] + f * y[1] + h * c
 ];
 
-const visualizationData = [
+const linearVisData = [
   {
     initialData: graph1Data,
     width: 800,
@@ -157,7 +157,6 @@ export {
   diffEq2,
   diffEq3,
   PERSON_A_COLOR,
-  PERSON_B_COLOR
+  PERSON_B_COLOR,
+  linearVisData
 };
-
-export default visualizationData;
