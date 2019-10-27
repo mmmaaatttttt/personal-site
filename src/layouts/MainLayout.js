@@ -64,7 +64,7 @@ class MainLayout extends Component {
                 outline={outline}
               />
               <StyledContentArea>{children}</StyledContentArea>
-              <Footer />
+              <Footer showMailingListForm={location.pathname !== "/"} />
             </StyledPageWrapper>
           );
         }}
