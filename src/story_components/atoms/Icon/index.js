@@ -29,10 +29,11 @@ const Icon = ({
   opacity,
   padding,
   size,
+  spin,
   type
 }) => (
   <StyledIcon
-    className={`fa${type[0]} fa-${name} fa-${size}x`}
+    className={`fa${type[0]} fa-${name} fa-${size}x ${spin && `fa-spin`}`}
     onClick={onClick}
     style={{ color, opacity }}
     disabled={disabled}
@@ -50,6 +51,7 @@ Icon.propTypes = {
   opacity: PropTypes.number.isRequired,
   padding: PropTypes.string.isRequired,
   size: PropTypes.oneOf([1, 2, 3, 4, 5]).isRequired,
+  spin: PropTypes.bool.isRequired,
   type: PropTypes.oneOf(["solid", "regular", "light", "brands"]).isRequired
 };
 
@@ -61,6 +63,7 @@ Icon.defaultProps = {
   opacity: 1,
   padding: "0",
   size: 1,
+  spin: false,
   type: "solid"
 };
 
