@@ -26,7 +26,12 @@ const StyledMailWrapper = styled.div`
 const StyledMailForm = styled.form`
   display: flex;
   justify-content: space-between;
-  margin-bottom: 0.4rem;
+  margin: 0 auto 0.4rem;
+  width: 60%;
+
+  ${media.small`
+    width: 100%;
+  `}
 
   ${media.extraSmall`
     flex-direction: column;
@@ -49,13 +54,12 @@ const messageColors = {
   sending: COLORS.BLACK
 };
 
-function handleSubmit(e, subscribe, name, email) {
+function handleSubmit(e, subscribe, email) {
   e.preventDefault();
-  subscribe({ EMAIL: email, NAME: name });
+  subscribe({ EMAIL: email });
 }
 
 function MailingList() {
-  const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const url =
     "https://gmail.us4.list-manage.com/subscribe/post?u=086ea8b0ab81118b377fd87e3&amp;id=02d12fcfdd";
@@ -66,7 +70,7 @@ function MailingList() {
         if (status === "success")
           return (
             <StyledMailWrapper>
-              <p style={{ color: messageColors[status] }}>{message}</p>
+              <p style={{ color: messageColors[status], marginBottom: "1rem" }}>{message}</p>
             </StyledMailWrapper>
           );
         return (
@@ -77,16 +81,8 @@ function MailingList() {
               new content. <em>No spam, I promise!</em>
             </p>
             <StyledMailForm
-              onSubmit={e => handleSubmit(e, subscribe, name, email)}
+              onSubmit={e => handleSubmit(e, subscribe, email)}
             >
-              <StyledMailFormInput
-                type="text"
-                name="name"
-                value={name}
-                onChange={e => setName(e.target.value)}
-                id="mailchimp-name"
-                placeholder="Your name"
-              />
               <StyledMailFormInput
                 type="email"
                 name="email"
