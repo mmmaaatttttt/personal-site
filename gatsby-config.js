@@ -1,9 +1,10 @@
-const mdxFeed = require("gatsby-mdx/feed");
+const mdxFeed = require("gatsby-plugin-mdx/feed");
 
 module.exports = {
   siteMetadata: {
     title: "Matt Lane",
-    description: "Inside the mind of Matt Lane. Teacher, math doctor, lover of ice cream. Stories on the intersection of math, equity, games, and whatever else piques my interest.",
+    description:
+      "Inside the mind of Matt Lane. Teacher, math doctor, lover of ice cream. Stories on the intersection of math, equity, games, and whatever else piques my interest.",
     siteUrl: process.env.GATSBY_BASE_URL
   },
   plugins: [
@@ -11,7 +12,7 @@ module.exports = {
       resolve: `gatsby-source-filesystem`,
       options: {
         name: `pages`,
-        path: `${__dirname}/src/pages/articles/`
+        path: `${__dirname}/src/pages/stories/`
       }
     },
     {
@@ -47,7 +48,7 @@ module.exports = {
       options: mdxFeed
     },
     {
-      resolve: `gatsby-mdx`,
+      resolve: `gatsby-plugin-mdx`,
       options: {
         gatsbyRemarkPlugins: [
           {

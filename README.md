@@ -27,7 +27,7 @@ To add a post, add a new markdown file in `src/pages/stories`. Each markdown fil
 
 All visualizations in stories are built using React.js. To add a visualization, you can write the root React component directly in the markdown file, using JSX syntax. All components used for visualizations in stories should live inside of `src/story_components`.
 
-The site uses [gatsby-mdx](https://github.com/christopherBiscardi/gatsby-mdx/) for processing React components within the markdown. You can import components directly within `.mdx` files.
+The site uses [MDX](https://www.gatsbyjs.org/docs/glossary/mdx/) for processing React components within the markdown. You can import components directly within `.mdx` files.
 
 ### Deploying
 
