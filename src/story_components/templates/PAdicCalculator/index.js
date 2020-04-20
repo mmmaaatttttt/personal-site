@@ -15,22 +15,24 @@ function PAdicCalculator({ primes, min, max }) {
           <FlexContainer column>
             <FlexContainer cross="center" main="center" shouldWrap>
               <div>
-                <label>Number 1:</label>
+                <label htmlFor="num1">Number 1:</label>
                 <StyledInput
                   onChange={clampInput(min, max, setFirstNumber)}
                   step="1"
                   min={min}
                   max={max}
+                  id="num1"
                   type="number"
                 />
               </div>
               <div>
-                <label>Number 2:</label>
+                <label htmlFor="num2">Number 2:</label>
                 <StyledInput
                   onChange={clampInput(min, max, setSecondNumber)}
                   step="1"
                   min={min}
                   max={max}
+                  id="num2"
                   type="number"
                 />
               </div>

@@ -150,6 +150,7 @@ class InteractiveGrid extends Component {
         onMouseEnter={this.handleMouseEnter.bind(this, d.rowIdx, d.colIdx)}
         onMouseMove={this.handleMouseMove.bind(this, d.rowIdx, d.colIdx)}
         onMouseOut={this.handleMouseOut}
+        onBlur={this.handleMouseOut}
         isHovered={
           activeSegmentStatus === null &&
           hovered &&

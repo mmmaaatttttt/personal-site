@@ -1,7 +1,3 @@
-- warn gatsby-plugin-feed was initialized in gatsby-config.js without a title in a feed.
-This means that the plugin will use the default feed title, which may not match your use case.
-This behavior will be removed in the next major release of gatsby-plugin-feed.
-For more info, check out: https://gatsby.dev/adding-rss-feed
 - warn ESLintError: 
 /Users/matthewlane/Dev/personal-site/src/story_components/molecules/InteractiveGrid/index.js
   143:7  warning  onMouseOut must be accompanied by onBlur for accessibility  jsx-a11y/mouse-events-have-key-events
@@ -15,7 +11,6 @@ For more info, check out: https://gatsby.dev/adding-rss-feed
 - test audit
 - hook for slider
 - other hooks?
-- timeToRead
 - remove redux
 
 
