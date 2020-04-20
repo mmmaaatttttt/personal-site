@@ -15,16 +15,10 @@ import { withCaption } from "providers";
 class GamingRelationships extends Component {
   constructor(props) {
     super(props);
-    console.log("VISDATA", props.visData);
     this.state = {
       values: this.props.visData.initialData.map(d => d.initialValue)
     };
   }
-  // state = {
-  //   values: this.props.visData.initialData.map(
-  //     d => d.initialValue
-  //   )
-  // };
 
   handleValueChange = (idx, newVal) => {
     const newValues = [...this.state.values];
