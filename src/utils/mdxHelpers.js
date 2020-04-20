@@ -12,11 +12,11 @@ import React from "react";
  */
 const isFigure = props => {
   const isImgWithNoStyles =
-    props.children.props && props.children.props.name === "figure";
+    props.children.props && props.children.props.mdxType === "figure";
   const isImgWithStyles =
     props.children.length === 2 &&
     props.children[0].props &&
-    props.children[0].props.name === "figure" &&
+    props.children[0].props.mdxType === "figure" &&
     props.children[1].match(/^{.*}$/);
   return isImgWithNoStyles || isImgWithStyles;
 };
@@ -50,7 +50,7 @@ const renderer = {
       return (
         <figure
           {...childProps.props}
-          className={`${childProps.props.className} ${extractClasses(
+          className={`${childProps.className} ${extractClasses(
             props.children[1]
           )}`}
         >

@@ -44,25 +44,25 @@ const StyledTextWrapper = styled.div`
     margin-right: auto;
   }
 
-  figure.w-60 > a {
+  figure.w-60 > span {
     width: 60%;
     margin: 0 auto;
   }
 
-  figure.w-70 > a {
+  figure.w-70 > span {
     width: 70%;
     margin: 0 auto;
   }
 
-  figure.w-80 > a {
+  figure.w-80 > span {
     width: 80%;
     margin: 0 auto;
   }
 
   ${media.extraSmall`
-    figure.w-60 > a,
-    figure.w-70 > a,
-    figure.w-80 > a {
+    figure.w-60 > span,
+    figure.w-70 > span,
+    figure.w-80 > span {
       width: 100%;
     }
   `}
