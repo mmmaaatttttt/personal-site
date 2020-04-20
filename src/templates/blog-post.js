@@ -4,6 +4,7 @@ import { graphql } from "gatsby";
 import { Share } from "react-twitter-widgets";
 import { Helmet } from "react-helmet";
 import { MDXProvider } from "@mdx-js/react";
+import { MDXRenderer } from "gatsby-plugin-mdx"
 import Img from "gatsby-image";
 import MainLayout from "layouts/MainLayout";
 import RelatedStories from "layouts/RelatedStories";
@@ -128,7 +129,7 @@ const StyledTitleWrapper = styled.div`
   `};
 `;
 
-function BlogPost({ location, data, children }) {
+function BlogPost({ location, data }) {
   const slug = location.pathname;
   const { title, siteUrl } = data.site.siteMetadata;
   const {
@@ -142,7 +143,7 @@ function BlogPost({ location, data, children }) {
   } = data.mdx.frontmatter;
   const fullTitle = `${postTitle} - ${title}`;
   const githubBase =
-    "https://github.com/mmmaaatttttt/personal-site/blob/master/src/pages/stories";
+    "https://github.com/mmmaaatttttt/personal-site/blob/master/src/pages";
   const githubUrl = `${githubBase}${slug.slice(0, -1)}.mdx`;
   const { fluid } = featured_image.childImageSharp;
   return (
@@ -169,7 +170,7 @@ function BlogPost({ location, data, children }) {
         <StyledImageCaption>{featured_image_caption}</StyledImageCaption>
         <StyledTextWrapper>
           <MDXProvider components={renderer}>
-            {children}
+            <MDXRenderer>{data.mdx.body}</MDXRenderer>
           </MDXProvider>
           <FlexContainer main="space-between">
             <small>
@@ -194,7 +195,7 @@ function BlogPost({ location, data, children }) {
 }
 
 export const query = graphql`
-  query BlogPostQuery($slug: String!) {
+  query BlogPostQuery($slug: String) {
     site {
       siteMetadata {
         title
@@ -202,6 +203,7 @@ export const query = graphql`
       }
     }
     mdx(fields: { slug: { eq: $slug } }) {
+      body
       frontmatter {
         title
         date(formatString: "MMMM YYYY")

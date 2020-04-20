@@ -17,7 +17,7 @@ This is a static site built with [Gatsby.js](https://www.gatsbyjs.org/). If you 
 
 ### Writing Stories
 
-To add a post, add a new markdown file in `src/pages/stories`. Each markdown file should begin with some YAML frontmatter with the following data:
+To add a post, add a new markdown file in `src/pages/posts`. Each markdown file should begin with some YAML frontmatter with the following data:
 
 * `title`
 * `date`
