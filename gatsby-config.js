@@ -1,5 +1,3 @@
-const mdxFeed = require("gatsby-plugin-mdx/feed");
-
 module.exports = {
   siteMetadata: {
     title: "Matt Lane",
@@ -43,10 +41,7 @@ module.exports = {
         anonymize: true
       }
     },
-    {
-      resolve: `gatsby-plugin-feed`,
-      options: mdxFeed
-    },
+    `gatsby-remark-images`,
     {
       resolve: `gatsby-plugin-mdx`,
       options: {
@@ -57,6 +52,58 @@ module.exports = {
               maxWidth: 1080,
               showCaptions: true
             }
+          }
+        ]
+      }
+    },
+    {
+      resolve: `gatsby-plugin-feed-mdx`,
+      options: {
+        query: `
+          {
+            site {
+              siteMetadata {
+                title
+                description
+                siteUrl
+                site_url: siteUrl
+              }
+            }
+          }
+        `,
+        feeds: [
+          {
+            serialize: ({ query: { site, allMdx } }) =>
+              allMdx.edges.map(edge =>
+                Object.assign({}, edge.node.frontmatter, {
+                  description: edge.node.excerpt,
+                  date: edge.node.frontmatter.date,
+                  url: site.siteMetadata.siteUrl + edge.node.fields.slug,
+                  guid: site.siteMetadata.siteUrl + edge.node.fields.slug
+                })
+              ),
+            query: `
+              {
+                allMdx(
+                  sort: { order: DESC, fields: [frontmatter___date] },
+                ) {
+                  edges {
+                    node {
+                      excerpt
+                      html
+                      fields { slug }
+                      frontmatter {
+                        title
+                        date
+                      }
+                    }
+                  }
+                }
+              }
+            `,
+            output: "/rss.xml",
+            title: "Matt Lane's RSS Feed",
+            match: "^/stories/"
           }
         ]
       }
