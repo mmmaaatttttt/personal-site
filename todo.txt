@@ -1,11 +1,8 @@
-- make sure blog pages actually render mdx
-- audit tooling, see if any config can be removed
 - swap enzyme for react testing library
 - test audit
 - hook for slider
 - other hooks?
 - remove redux
-- fix slider styling (circle isn't centered!)
 - fix rent interactive in http://localhost:8000/stories/fairest-of-them-all/ (button blocked by something)
 
 

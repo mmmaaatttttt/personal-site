@@ -42,7 +42,6 @@ const StyledSlider = styled(Slider)`
 
   .rc-slider-handle {
     position: absolute;
-    margin-left: -${totalHeight(1 / 2)}px;
     margin-top: -${props => props.padding}px;
     width: ${totalHeight(1)}px;
     height: ${totalHeight(1)}px;
@@ -69,8 +68,6 @@ const StyledSlider = styled(Slider)`
   }
 
   .rc-slider-handle:focus {
-    border-width: 0;
-    border-color: ${darkerMain};
     outline: none;
   }
 `;
