@@ -8,8 +8,6 @@ module.exports = {
       "<rootDir>/test/__mocks__/fileMock.js",
   },
   setupFilesAfterEnv: ["<rootDir>/test/setup-test-env.js"],
-  setupTestFrameworkScriptFile: "<rootDir>/test/jest-setup.js",
-  snapshotSerializers: ["enzyme-to-json/serializer"],
   testPathIgnorePatterns: ["/node_modules/", "<rootDir>/.cache/"],
   transform: {
     "^.+\\.jsx?$": "<rootDir>/test/transformer.js"
