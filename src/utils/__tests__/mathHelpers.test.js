@@ -13,20 +13,20 @@ import {
 
 describe("mathHelpers", () => {
   describe("average", () => {
-    test("computes the average of an array of numbers", () => {
+    it("computes the average of an array of numbers", () => {
       expect(average([1])).toBeCloseTo(1);
       expect(average([1, 2, 3])).toBeCloseTo(2);
       expect(average([4, 1, 2, 7])).toBeCloseTo(3.5);
     });
 
-    test("accepts an accessor as a second argument", () => {
+    it("accepts an accessor as a second argument", () => {
       expect(average(["hello", "goodbye"], s => s.length)).toBeCloseTo(6);
       expect(
         average([{ val: 3 }, { val: 8 }, { val: 0 }], o => o.val)
       ).toBeCloseTo(3.67);
     });
 
-    test("returns 0 for an empty array", () => {
+    it("returns 0 for an empty array", () => {
       expect(average([])).toBe(0);
     });
   });
@@ -38,46 +38,46 @@ describe("mathHelpers", () => {
       numbers = [1, 2, 3, 4, 5, 6];
     });
 
-    test("returns a random subselection of the original array", () => {
+    it("returns a random subselection of the original array", () => {
       let subset = choices(numbers, 3);
       expect(subset).toHaveLength(3);
       expect(numbers).toEqual(expect.arrayContaining(subset));
       expect(choices(numbers, 0)).toEqual([]);
     });
 
-    test("returns a new array", () => {
+    it("returns a new array", () => {
       expect(numbers).not.toBe(choices(numbers, 6));
     });
 
-    test("returns a shuffle of the array if the second argument is larger than the array length", () => {
+    it("returns a shuffle of the array if the second argument is larger than the array length", () => {
       expect(choices(numbers, 7)).toHaveLength(6);
       expect(choices(numbers, 8).sort((a, b) => a - b)).toEqual(numbers);
     });
   });
 
   describe("combinations", () => {
-    test("Calculates binomial coefficients when k < n / 2", () => {
+    it("Calculates binomial coefficients when k < n / 2", () => {
       expect(combinations(5, 2)).toBe(10);
       expect(combinations(10, 3)).toBe(120);
       expect(combinations(12, 4)).toBe(495);
       expect(combinations(100, 6)).toBe(1192052400);
     });
 
-    test("Calculates binomial coefficients when k > n / 2", () => {
+    it("Calculates binomial coefficients when k > n / 2", () => {
       expect(combinations(5, 3)).toBe(10);
       expect(combinations(6, 4)).toBe(15);
       expect(combinations(21, 16)).toBe(20349);
       expect(combinations(30, 16)).toBe(145422675);
     });
 
-    test("Calculates binomial coefficients when k === n / 2", () => {
+    it("Calculates binomial coefficients when k === n / 2", () => {
       expect(combinations(4, 2)).toBe(6);
       expect(combinations(6, 3)).toBe(20);
       expect(combinations(8, 4)).toBe(70);
       expect(combinations(10, 5)).toBe(252);
     });
 
-    test("Calculates correctly when k is small or large", () => {
+    it("Calculates correctly when k is small or large", () => {
       expect(combinations(1, 0)).toBe(1);
       expect(combinations(1, 1)).toBe(1);
       expect(combinations(5, 1)).toBe(5);
@@ -88,7 +88,7 @@ describe("mathHelpers", () => {
   });
 
   describe("euclideanDistance", () => {
-    test("returns the distance from a set of coordinates to the origin", () => {
+    it("returns the distance from a set of coordinates to the origin", () => {
       expect(euclideanDistance()).toEqual(0);
       expect(euclideanDistance(1)).toEqual(1);
       expect(euclideanDistance(1, 2)).toBeCloseTo(2.24);
@@ -98,7 +98,7 @@ describe("mathHelpers", () => {
   });
 
   describe("generateData", () => {
-    test("returns expected initial values for first diffEq", () => {
+    it("returns expected initial values for first diffEq", () => {
       const data = generateData(2, 0, 2, 0.1, [3, -3], [-1, 1], diffEq1);
       const results = [
         [
@@ -157,7 +157,7 @@ describe("mathHelpers", () => {
     });
   });
 
-  test("returns expected initial values for second diffEq", () => {
+  it("returns expected initial values for second diffEq", () => {
     const data = generateData(2, 0, 2, 0.1, [3, -3], [-1, -0.3, 1, 0], diffEq2);
     const results = [
       [
@@ -215,7 +215,7 @@ describe("mathHelpers", () => {
     });
   });
 
-  test("returns expected initial values for third diffEq", () => {
+  it("returns expected initial values for third diffEq", () => {
     const data = generateData(
       2,
       0,
@@ -281,7 +281,7 @@ describe("mathHelpers", () => {
     });
   });
 
-  test("returns expected initial values for fourth diffEq", () => {
+  it("returns expected initial values for fourth diffEq", () => {
     const data = generateData(2, 0, 2, 0.1, [4, -2], [3, 1, -5, -2], diffEq4);
     const results = [
       [
@@ -339,7 +339,7 @@ describe("mathHelpers", () => {
     });
   });
 
-  test("returns expected initial values for fifth diffEq", () => {
+  it("returns expected initial values for fifth diffEq", () => {
     const data = generateData(
       4,
       0,
