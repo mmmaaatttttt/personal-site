@@ -1,45 +1,11 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`matches snapshot 1`] = `
-<StyledComponent
-  anchor="start"
-  forwardedComponent={
-    Object {
-      "$$typeof": Symbol(react.forward_ref),
-      "attrs": Array [],
-      "componentStyle": ComponentStyle {
-        "componentId": "sc-bdVaJa",
-        "isStatic": false,
-        "rules": Array [
-          "
-  text-anchor: ",
-          [Function],
-          ";
-  font-style: italic;
-  font-size: 125%;
-  font-weight: bold;
-  stroke: #fff;
-",
-        ],
-      },
-      "defaultProps": Object {
-        "anchor": "middle",
-      },
-      "displayName": "styled.text",
-      "foldedComponentIds": Array [],
-      "propTypes": Object {
-        "anchor": [Function],
-      },
-      "render": [Function],
-      "styledComponentId": "sc-bdVaJa",
-      "target": "text",
-      "toString": [Function],
-      "warnTooManyClasses": [Function],
-      "withComponent": [Function],
-    }
-  }
-  forwardedRef={null}
->
-  x axis
-</StyledComponent>
+exports[`matches snapshot with props and children 1`] = `
+<DocumentFragment>
+  <text
+    class="sc-bdVaJa iCJtsk"
+  >
+    x axis
+  </text>
+</DocumentFragment>
 `;

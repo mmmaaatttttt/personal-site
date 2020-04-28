@@ -1,14 +1,13 @@
 import React from "react";
-import { shallow } from "enzyme";
-import toJson from "enzyme-to-json";
-import FlexContainer from ".";
+import { render } from "@testing-library/react";
+import FlexContainer from "./";
 
-it("renders successfully", () => {
-  shallow(<FlexContainer />);
+it("renders without crashing", () => {
+  render(<FlexContainer />);
 });
 
-it("matches snapshot", () => {
-  const wrapper = shallow(
+it("matches snapshot with props and children", () => {
+  const { asFragment } = render(
     <FlexContainer
       column
       wrap
@@ -23,5 +22,5 @@ it("matches snapshot", () => {
       <div>Here's a third</div>
     </FlexContainer>
   );
-  expect(toJson(wrapper)).toMatchSnapshot();
+  expect(asFragment()).toMatchSnapshot();
 });

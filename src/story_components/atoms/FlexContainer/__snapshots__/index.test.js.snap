@@ -1,97 +1,20 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`matches snapshot 1`] = `
-<StyledComponent
-  column={true}
-  cross="center"
-  flex={1}
-  forwardedComponent={
-    Object {
-      "$$typeof": Symbol(react.forward_ref),
-      "attrs": Array [],
-      "componentStyle": ComponentStyle {
-        "componentId": "sc-bdVaJa",
-        "isStatic": false,
-        "rules": Array [
-          "
-  display: flex;
-  flex: ",
-          [Function],
-          ";
-  flex-wrap: ",
-          [Function],
-          ";
-    ",
-          [Function],
-          "
-    ",
-          [Function],
-          ": ",
-          [Function],
-          ";
-  ",
-          [Function],
-          ": ",
-          [Function],
-          ";
-  margin: ",
-          [Function],
-          ";
-  width: ",
-          [Function],
-          ";
-  text-align: ",
-          [Function],
-          ";
-",
-        ],
-      },
-      "defaultProps": Object {
-        "column": false,
-        "cross": "stretch",
-        "flex": 1,
-        "main": "stretch",
-        "margin": "0",
-        "shouldWrap": false,
-        "textAlign": "left",
-        "width": "auto",
-      },
-      "displayName": "styled.div",
-      "foldedComponentIds": Array [],
-      "propTypes": Object {
-        "column": [Function],
-        "cross": [Function],
-        "flex": [Function],
-        "main": [Function],
-        "margin": [Function],
-        "shouldWrap": [Function],
-        "textAlign": [Function],
-        "width": [Function],
-      },
-      "render": [Function],
-      "styledComponentId": "sc-bdVaJa",
-      "target": "div",
-      "toString": [Function],
-      "warnTooManyClasses": [Function],
-      "withComponent": [Function],
-    }
-  }
-  forwardedRef={null}
-  main="center"
-  margin="1rem"
-  shouldWrap={false}
-  textAlign="right"
-  width="90%"
-  wrap={true}
->
-  <div>
-    Here's a child
+exports[`matches snapshot with props and children 1`] = `
+<DocumentFragment>
+  <div
+    class="sc-bdVaJa gfBVwD"
+    width="90%"
+  >
+    <div>
+      Here's a child
+    </div>
+    <div>
+      Here's another
+    </div>
+    <div>
+      Here's a third
+    </div>
   </div>
-  <div>
-    Here's another
-  </div>
-  <div>
-    Here's a third
-  </div>
-</StyledComponent>
+</DocumentFragment>
 `;

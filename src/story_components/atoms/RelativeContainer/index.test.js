@@ -1,17 +1,16 @@
 import React from "react";
-import { shallow } from "enzyme";
-import toJson from "enzyme-to-json";
-import RelativeContainer from ".";
+import { render } from "@testing-library/react";
+import RelativeContainer from "./";
 
-it("renders successfully", () => {
-  shallow(<RelativeContainer />);
+it("renders without crashing", () => {
+  render(<RelativeContainer />);
 });
 
-it("matches snapshot", () => {
-  const wrapper = shallow(
+it("matches snapshot with props and children", () => {
+  const { asFragment } = render(
     <RelativeContainer>
       <div>hello</div>
     </RelativeContainer>
   );
-  expect(toJson(wrapper)).toMatchSnapshot();
+  expect(asFragment()).toMatchSnapshot();
 });

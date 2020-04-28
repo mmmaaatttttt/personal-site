@@ -1,51 +1,13 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`matches snapshot with props and children 1`] = `
-<StyledComponent
-  forwardedComponent={
-    Object {
-      "$$typeof": Symbol(react.forward_ref),
-      "attrs": Array [],
-      "componentStyle": ComponentStyle {
-        "componentId": "sc-bdVaJa",
-        "isStatic": false,
-        "rules": Array [
-          "
-  position: relative;
-  width: 100%;
-  height: 0;
-  padding: ",
-          [Function],
-          "% ",
-          "1.8rem",
-          " 0;
-  margin: 0 auto ",
-          "1.8rem",
-          ";
-",
-        ],
-      },
-      "defaultProps": Object {
-        "heightOverWidth": 0.5625,
-      },
-      "displayName": "styled.div",
-      "foldedComponentIds": Array [],
-      "propTypes": Object {
-        "heightOverWidth": [Function],
-      },
-      "render": [Function],
-      "styledComponentId": "sc-bdVaJa",
-      "target": "div",
-      "toString": [Function],
-      "warnTooManyClasses": [Function],
-      "withComponent": [Function],
-    }
-  }
-  forwardedRef={null}
-  heightOverWidth={0.75}
->
-  <p>
-    Hello World
-  </p>
-</StyledComponent>
+<DocumentFragment>
+  <div
+    class="sc-bdVaJa fxsijT"
+  >
+    <p>
+      Hello World
+    </p>
+  </div>
+</DocumentFragment>
 `;

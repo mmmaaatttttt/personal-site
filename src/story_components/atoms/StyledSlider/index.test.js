@@ -1,15 +1,14 @@
 import React from "react";
-import { shallow } from "enzyme";
-import toJson from "enzyme-to-json";
-import StyledSlider from ".";
+import { render } from "@testing-library/react";
+import StyledSlider from "./";
 
-it("renders successfully", () => {
-  shallow(<StyledSlider />);
+it("renders without crashing", () => {
+  render(<StyledSlider />);
 });
 
-it("matches snapshot with props", () => {
-  const wrapper = shallow(
+it("matches snapshot with props and children", () => {
+  const { asFragment } = render(
     <StyledSlider activeColor="black" inactiveColor="white" />
   );
-  expect(toJson(wrapper)).toMatchSnapshot();
+  expect(asFragment()).toMatchSnapshot();
 });

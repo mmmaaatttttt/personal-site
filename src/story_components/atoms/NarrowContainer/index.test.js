@@ -1,18 +1,17 @@
 import React from "react";
-import { shallow } from "enzyme";
-import toJson from "enzyme-to-json";
-import NarrowContainer from ".";
+import { render } from "@testing-library/react";
+import NarrowContainer from "./";
 
-it("renders successfully", () => {
-  shallow(<NarrowContainer />);
+it("renders without crashing", () => {
+  render(<NarrowContainer />);
 });
 
-it("matches snapshot", () => {
-  const wrapper = shallow(
+it("matches snapshot with props and children", () => {
+  const { asFragment } = render(
     <NarrowContainer width="75%" fullWidthAt="small">
       <div>hello</div>
       <div>goodbye</div>
     </NarrowContainer>
   );
-  expect(toJson(wrapper)).toMatchSnapshot();
+  expect(asFragment()).toMatchSnapshot();
 });

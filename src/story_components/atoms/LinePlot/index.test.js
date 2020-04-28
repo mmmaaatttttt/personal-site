@@ -1,15 +1,14 @@
 import React from "react";
-import { shallow } from "enzyme";
-import toJson from "enzyme-to-json";
+import { render } from "@testing-library/react";
 import { scaleLinear } from "d3-scale";
-import LinePlot from ".";
+import LinePlot from "./";
 
-it("renders successfully", () => {
-  shallow(<LinePlot />);
+it("renders without crashing", () => {
+  render(<LinePlot />);
 });
 
-it("matches snapshot", () => {
-  const wrapper = shallow(
+it("matches snapshot with props and children", () => {
+  const { asFragment } = render(
     <LinePlot
       graphData={[
         { x: 10, y: 10 },
@@ -17,15 +16,11 @@ it("matches snapshot", () => {
         { x: 30, y: 40 },
         { x: 50, y: 20 }
       ]}
-      xScale={scaleLinear()
-        .domain([10, 50])
-        .range([0, 200])}
-      yScale={scaleLinear()
-        .domain([20, 40])
-        .range([0, 600])}
+      xScale={scaleLinear().domain([10, 50]).range([0, 200])}
+      yScale={scaleLinear().domain([20, 40]).range([0, 600])}
       stroke="blue"
       strokeWidth="10"
     />
   );
-  expect(toJson(wrapper)).toMatchSnapshot();
+  expect(asFragment()).toMatchSnapshot();
 });

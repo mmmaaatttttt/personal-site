@@ -1,16 +1,12 @@
 import React from "react";
 import { render } from "@testing-library/react";
-import Button from "./";
+import NoScrollCircle from "./";
 
 it("renders without crashing", () => {
-  render(<Button />);
+  render(<NoScrollCircle />);
 });
 
 it("matches snapshot with props", () => {
-  const { asFragment } = render(
-    <Button color="blue" large disabled>
-      I'm a button
-    </Button>
-  );
+  const { asFragment } = render(<NoScrollCircle stroke="blue" />);
   expect(asFragment()).toMatchSnapshot();
 });

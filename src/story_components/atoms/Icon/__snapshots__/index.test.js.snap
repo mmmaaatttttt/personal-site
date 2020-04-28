@@ -1,15 +1,11 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`matches snapshot 1`] = `
-<styled.i
-  className="fas fa-arrows fa-2x"
-  disabled={true}
-  hover={false}
-  style={
-    Object {
-      "color": "orange",
-      "opacity": 0.5,
-    }
-  }
-/>
+exports[`matches snapshot with props and children 1`] = `
+<DocumentFragment>
+  <i
+    class="sc-bdVaJa dyHinS fas fa-arrows fa-2x false"
+    disabled=""
+    style="color: orange; opacity: 0.5;"
+  />
+</DocumentFragment>
 `;

@@ -1,13 +1,12 @@
 import React from "react";
-import { shallow } from "enzyme";
-import toJson from "enzyme-to-json";
-import AxisLabel from ".";
+import { render } from "@testing-library/react";
+import AxisLabel from "./";
 
-it("renders successfully", () => {
-  shallow(<AxisLabel />)
+it("renders without crashing", () => {
+  render(<AxisLabel />);
 });
 
-it("matches snapshot", () => {
-  const wrapper = shallow(<AxisLabel anchor="start" >x axis</AxisLabel>)
-  expect(toJson(wrapper)).toMatchSnapshot();
+it("matches snapshot with props and children", () => {
+  const { asFragment } = render(<AxisLabel anchor="start">x axis</AxisLabel>);
+  expect(asFragment()).toMatchSnapshot();
 });

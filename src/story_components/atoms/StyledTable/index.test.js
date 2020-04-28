@@ -1,14 +1,13 @@
 import React from "react";
-import { shallow } from "enzyme";
-import toJson from "enzyme-to-json";
-import StyledTable from ".";
+import { render } from "@testing-library/react";
+import StyledTable from "./";
 
-it("renders successfully", () => {
-  shallow(<StyledTable />);
+it("renders without crashing", () => {
+  render(<StyledTable />);
 });
 
-it("matches snapshot with props", () => {
-  const wrapper = shallow(
+it("matches snapshot with props and children", () => {
+  const { asFragment } = render(
     <StyledTable margin="1rem">
       <thead>
         <tr>
@@ -22,5 +21,5 @@ it("matches snapshot with props", () => {
       </thead>
     </StyledTable>
   );
-  expect(toJson(wrapper)).toMatchSnapshot();
+  expect(asFragment()).toMatchSnapshot();
 });

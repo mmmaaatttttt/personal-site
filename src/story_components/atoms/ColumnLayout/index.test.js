@@ -1,28 +1,27 @@
 import React from "react";
-import { shallow } from "enzyme";
-import toJson from "enzyme-to-json";
-import ColumnLayout from ".";
+import { render } from "@testing-library/react";
+import ColumnLayout from "./";
 
-it("renders successfully", () => {
-  shallow(<ColumnLayout />);
+it("renders without crashing", () => {
+  render(<ColumnLayout />);
 });
 
 it("matches snapshot", () => {
-  const wrapper = shallow(
+  const { asFragment } = render(
     <ColumnLayout break="large">
       <div>Here's a child</div>
       <div>Here's another</div>
     </ColumnLayout>
   );
-  expect(toJson(wrapper)).toMatchSnapshot();
+  expect(asFragment()).toMatchSnapshot();
 });
 
 it("lets you make columns of different widths", () => {
-  const wrapper = shallow(
+  const { asFragment } = render(
     <ColumnLayout break="small" sizes={[3, 2]}>
       <div>Here's a child</div>
       <div>Here's another</div>
     </ColumnLayout>
   );
-  expect(toJson(wrapper)).toMatchSnapshot();
+  expect(asFragment()).toMatchSnapshot();
 });

@@ -2,16 +2,8 @@
 
 exports[`matches snapshot with props and children 1`] = `
 <DocumentFragment>
-  <div
-    class="sc-bdVaJa eisVDW"
-    width="75%"
-  >
-    <div>
-      hello
-    </div>
-    <div>
-      goodbye
-    </div>
-  </div>
+  <input
+    class="sc-bdVaJa kHQyPA"
+  />
 </DocumentFragment>
 `;

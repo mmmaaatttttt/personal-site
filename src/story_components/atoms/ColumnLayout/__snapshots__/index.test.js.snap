@@ -1,101 +1,32 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`lets you make columns of different widths 1`] = `
-<StyledComponent
-  break="small"
-  forwardedComponent={
-    Object {
-      "$$typeof": Symbol(react.forward_ref),
-      "attrs": Array [],
-      "componentStyle": ComponentStyle {
-        "componentId": "sc-bdVaJa",
-        "isStatic": false,
-        "rules": Array [
-          "
-  display: flex;
-
-  ",
-          [Function],
-          " ",
-          [Function],
-          ";
-",
-        ],
-      },
-      "displayName": "styled.div",
-      "foldedComponentIds": Array [],
-      "propTypes": Object {
-        "break": [Function],
-        "sizes": [Function],
-      },
-      "render": [Function],
-      "styledComponentId": "sc-bdVaJa",
-      "target": "div",
-      "toString": [Function],
-      "warnTooManyClasses": [Function],
-      "withComponent": [Function],
-    }
-  }
-  forwardedRef={null}
-  sizes={
-    Array [
-      3,
-      2,
-    ]
-  }
->
-  <div>
-    Here's a child
+<DocumentFragment>
+  <div
+    class="sc-bdVaJa hWapkf"
+    sizes="3,2"
+  >
+    <div>
+      Here's a child
+    </div>
+    <div>
+      Here's another
+    </div>
   </div>
-  <div>
-    Here's another
-  </div>
-</StyledComponent>
+</DocumentFragment>
 `;
 
 exports[`matches snapshot 1`] = `
-<StyledComponent
-  break="large"
-  forwardedComponent={
-    Object {
-      "$$typeof": Symbol(react.forward_ref),
-      "attrs": Array [],
-      "componentStyle": ComponentStyle {
-        "componentId": "sc-bdVaJa",
-        "isStatic": false,
-        "rules": Array [
-          "
-  display: flex;
-
-  ",
-          [Function],
-          " ",
-          [Function],
-          ";
-",
-        ],
-      },
-      "displayName": "styled.div",
-      "foldedComponentIds": Array [],
-      "propTypes": Object {
-        "break": [Function],
-        "sizes": [Function],
-      },
-      "render": [Function],
-      "styledComponentId": "sc-bdVaJa",
-      "target": "div",
-      "toString": [Function],
-      "warnTooManyClasses": [Function],
-      "withComponent": [Function],
-    }
-  }
-  forwardedRef={null}
->
-  <div>
-    Here's a child
+<DocumentFragment>
+  <div
+    class="sc-bdVaJa hgMGHa"
+  >
+    <div>
+      Here's a child
+    </div>
+    <div>
+      Here's another
+    </div>
   </div>
-  <div>
-    Here's another
-  </div>
-</StyledComponent>
+</DocumentFragment>
 `;

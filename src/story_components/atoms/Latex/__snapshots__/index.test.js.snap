@@ -1,3 +1,572 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`matches snapshot 1`] = `undefined`;
+exports[`matches snapshot with props and children 1`] = `
+<DocumentFragment>
+  <p
+    class="sc-bdVaJa fUMWLz"
+  >
+    <span
+      class="katex-display"
+    >
+      <span
+        class="katex"
+      >
+        <span
+          class="katex-mathml"
+        >
+          <math>
+            <semantics>
+              <mtable
+                columnalign="right left"
+                columnspacing="0em"
+                rowspacing="0.24999999999999992em"
+              >
+                <mtr>
+                  <mtd>
+                    <mstyle
+                      displaystyle="true"
+                      scriptlevel="0"
+                    >
+                      <mrow>
+                        <msup>
+                          <mi>
+                            A
+                          </mi>
+                          <mo
+                            mathvariant="normal"
+                          >
+                            ′
+                          </mo>
+                        </msup>
+                        <mo
+                          stretchy="false"
+                        >
+                          (
+                        </mo>
+                        <mi>
+                          t
+                        </mi>
+                        <mo
+                          stretchy="false"
+                        >
+                          )
+                        </mo>
+                      </mrow>
+                    </mstyle>
+                  </mtd>
+                  <mtd>
+                    <mstyle
+                      displaystyle="true"
+                      scriptlevel="0"
+                    >
+                      <mrow>
+                        <mrow />
+                        <mo>
+                          =
+                        </mo>
+                        <mi>
+                          a
+                        </mi>
+                        <mo>
+                          ×
+                        </mo>
+                        <mi>
+                          B
+                        </mi>
+                        <mo
+                          stretchy="false"
+                        >
+                          (
+                        </mo>
+                        <mi>
+                          t
+                        </mi>
+                        <mo
+                          stretchy="false"
+                        >
+                          )
+                        </mo>
+                        <mo
+                          separator="true"
+                        >
+                          ,
+                        </mo>
+                      </mrow>
+                    </mstyle>
+                  </mtd>
+                </mtr>
+                <mtr>
+                  <mtd>
+                    <mstyle
+                      displaystyle="true"
+                      scriptlevel="0"
+                    >
+                      <mrow>
+                        <msup>
+                          <mi>
+                            B
+                          </mi>
+                          <mo
+                            mathvariant="normal"
+                          >
+                            ′
+                          </mo>
+                        </msup>
+                        <mo
+                          stretchy="false"
+                        >
+                          (
+                        </mo>
+                        <mi>
+                          t
+                        </mi>
+                        <mo
+                          stretchy="false"
+                        >
+                          )
+                        </mo>
+                      </mrow>
+                    </mstyle>
+                  </mtd>
+                  <mtd>
+                    <mstyle
+                      displaystyle="true"
+                      scriptlevel="0"
+                    >
+                      <mrow>
+                        <mrow />
+                        <mo>
+                          =
+                        </mo>
+                        <mi>
+                          b
+                        </mi>
+                        <mo>
+                          ×
+                        </mo>
+                        <mi>
+                          A
+                        </mi>
+                        <mo
+                          stretchy="false"
+                        >
+                          (
+                        </mo>
+                        <mi>
+                          t
+                        </mi>
+                        <mo
+                          stretchy="false"
+                        >
+                          )
+                        </mo>
+                        <mo
+                          separator="true"
+                        >
+                          ,
+                        </mo>
+                      </mrow>
+                    </mstyle>
+                  </mtd>
+                </mtr>
+              </mtable>
+              <annotation
+                encoding="application/x-tex"
+              >
+                \\begin{aligned} A^{\\prime} (t) &= a \\times B(t), \\\\ B^{\\prime} (t) &= b \\times A(t), \\end{aligned}
+              </annotation>
+            </semantics>
+          </math>
+        </span>
+        <span
+          aria-hidden="true"
+          class="katex-html"
+        >
+          <span
+            class="base"
+          >
+            <span
+              class="strut"
+              style="height: 3.0000000000000004em; vertical-align: -1.2500000000000002em;"
+            />
+            <span
+              class="mord"
+            >
+              <span
+                class="mtable"
+              >
+                <span
+                  class="col-align-r"
+                >
+                  <span
+                    class="vlist-t vlist-t2"
+                  >
+                    <span
+                      class="vlist-r"
+                    >
+                      <span
+                        class="vlist"
+                        style="height: 1.7500000000000002em;"
+                      >
+                        <span
+                          class=""
+                          style="top: -3.91em;"
+                        >
+                          <span
+                            class="pstrut"
+                            style="height: 3em;"
+                          />
+                          <span
+                            class="mord"
+                          >
+                            <span
+                              class="mord"
+                            >
+                              <span
+                                class="mord mathdefault"
+                              >
+                                A
+                              </span>
+                              <span
+                                class="msupsub"
+                              >
+                                <span
+                                  class="vlist-t"
+                                >
+                                  <span
+                                    class="vlist-r"
+                                  >
+                                    <span
+                                      class="vlist"
+                                      style="height: 0.801892em;"
+                                    >
+                                      <span
+                                        class=""
+                                        style="top: -3.113em; margin-right: 0.05em;"
+                                      >
+                                        <span
+                                          class="pstrut"
+                                          style="height: 2.7em;"
+                                        />
+                                        <span
+                                          class="sizing reset-size6 size3 mtight"
+                                        >
+                                          <span
+                                            class="mord mtight"
+                                          >
+                                            <span
+                                              class="mord mtight"
+                                            >
+                                              ′
+                                            </span>
+                                          </span>
+                                        </span>
+                                      </span>
+                                    </span>
+                                  </span>
+                                </span>
+                              </span>
+                            </span>
+                            <span
+                              class="mopen"
+                            >
+                              (
+                            </span>
+                            <span
+                              class="mord mathdefault"
+                            >
+                              t
+                            </span>
+                            <span
+                              class="mclose"
+                            >
+                              )
+                            </span>
+                          </span>
+                        </span>
+                        <span
+                          class=""
+                          style="top: -2.41em;"
+                        >
+                          <span
+                            class="pstrut"
+                            style="height: 3em;"
+                          />
+                          <span
+                            class="mord"
+                          >
+                            <span
+                              class="mord"
+                            >
+                              <span
+                                class="mord mathdefault"
+                                style="margin-right: 0.05017em;"
+                              >
+                                B
+                              </span>
+                              <span
+                                class="msupsub"
+                              >
+                                <span
+                                  class="vlist-t"
+                                >
+                                  <span
+                                    class="vlist-r"
+                                  >
+                                    <span
+                                      class="vlist"
+                                      style="height: 0.801892em;"
+                                    >
+                                      <span
+                                        class=""
+                                        style="top: -3.113em; margin-right: 0.05em;"
+                                      >
+                                        <span
+                                          class="pstrut"
+                                          style="height: 2.7em;"
+                                        />
+                                        <span
+                                          class="sizing reset-size6 size3 mtight"
+                                        >
+                                          <span
+                                            class="mord mtight"
+                                          >
+                                            <span
+                                              class="mord mtight"
+                                            >
+                                              ′
+                                            </span>
+                                          </span>
+                                        </span>
+                                      </span>
+                                    </span>
+                                  </span>
+                                </span>
+                              </span>
+                            </span>
+                            <span
+                              class="mopen"
+                            >
+                              (
+                            </span>
+                            <span
+                              class="mord mathdefault"
+                            >
+                              t
+                            </span>
+                            <span
+                              class="mclose"
+                            >
+                              )
+                            </span>
+                          </span>
+                        </span>
+                      </span>
+                      <span
+                        class="vlist-s"
+                      >
+                        ​
+                      </span>
+                    </span>
+                    <span
+                      class="vlist-r"
+                    >
+                      <span
+                        class="vlist"
+                        style="height: 1.2500000000000002em;"
+                      >
+                        <span
+                          class=""
+                        />
+                      </span>
+                    </span>
+                  </span>
+                </span>
+                <span
+                  class="col-align-l"
+                >
+                  <span
+                    class="vlist-t vlist-t2"
+                  >
+                    <span
+                      class="vlist-r"
+                    >
+                      <span
+                        class="vlist"
+                        style="height: 1.7500000000000002em;"
+                      >
+                        <span
+                          class=""
+                          style="top: -3.91em;"
+                        >
+                          <span
+                            class="pstrut"
+                            style="height: 3em;"
+                          />
+                          <span
+                            class="mord"
+                          >
+                            <span
+                              class="mord"
+                            />
+                            <span
+                              class="mspace"
+                              style="margin-right: 0.2777777777777778em;"
+                            />
+                            <span
+                              class="mrel"
+                            >
+                              =
+                            </span>
+                            <span
+                              class="mspace"
+                              style="margin-right: 0.2777777777777778em;"
+                            />
+                            <span
+                              class="mord mathdefault"
+                            >
+                              a
+                            </span>
+                            <span
+                              class="mspace"
+                              style="margin-right: 0.2222222222222222em;"
+                            />
+                            <span
+                              class="mbin"
+                            >
+                              ×
+                            </span>
+                            <span
+                              class="mspace"
+                              style="margin-right: 0.2222222222222222em;"
+                            />
+                            <span
+                              class="mord mathdefault"
+                              style="margin-right: 0.05017em;"
+                            >
+                              B
+                            </span>
+                            <span
+                              class="mopen"
+                            >
+                              (
+                            </span>
+                            <span
+                              class="mord mathdefault"
+                            >
+                              t
+                            </span>
+                            <span
+                              class="mclose"
+                            >
+                              )
+                            </span>
+                            <span
+                              class="mpunct"
+                            >
+                              ,
+                            </span>
+                          </span>
+                        </span>
+                        <span
+                          class=""
+                          style="top: -2.41em;"
+                        >
+                          <span
+                            class="pstrut"
+                            style="height: 3em;"
+                          />
+                          <span
+                            class="mord"
+                          >
+                            <span
+                              class="mord"
+                            />
+                            <span
+                              class="mspace"
+                              style="margin-right: 0.2777777777777778em;"
+                            />
+                            <span
+                              class="mrel"
+                            >
+                              =
+                            </span>
+                            <span
+                              class="mspace"
+                              style="margin-right: 0.2777777777777778em;"
+                            />
+                            <span
+                              class="mord mathdefault"
+                            >
+                              b
+                            </span>
+                            <span
+                              class="mspace"
+                              style="margin-right: 0.2222222222222222em;"
+                            />
+                            <span
+                              class="mbin"
+                            >
+                              ×
+                            </span>
+                            <span
+                              class="mspace"
+                              style="margin-right: 0.2222222222222222em;"
+                            />
+                            <span
+                              class="mord mathdefault"
+                            >
+                              A
+                            </span>
+                            <span
+                              class="mopen"
+                            >
+                              (
+                            </span>
+                            <span
+                              class="mord mathdefault"
+                            >
+                              t
+                            </span>
+                            <span
+                              class="mclose"
+                            >
+                              )
+                            </span>
+                            <span
+                              class="mpunct"
+                            >
+                              ,
+                            </span>
+                          </span>
+                        </span>
+                      </span>
+                      <span
+                        class="vlist-s"
+                      >
+                        ​
+                      </span>
+                    </span>
+                    <span
+                      class="vlist-r"
+                    >
+                      <span
+                        class="vlist"
+                        style="height: 1.2500000000000002em;"
+                      >
+                        <span
+                          class=""
+                        />
+                      </span>
+                    </span>
+                  </span>
+                </span>
+              </span>
+            </span>
+          </span>
+        </span>
+      </span>
+    </span>
+  </p>
+</DocumentFragment>
+`;

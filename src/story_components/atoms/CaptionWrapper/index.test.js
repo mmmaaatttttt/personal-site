@@ -1,16 +1,16 @@
 import React from "react";
 import { render } from "@testing-library/react";
-import ColoredSpan from "./";
+import CaptionWrapper from "./";
 
 it("renders without crashing", () => {
-  render(<ColoredSpan />);
+  render(<CaptionWrapper />);
 });
 
 it("matches snapshot with props and children", () => {
   const { asFragment } = render(
-    <ColoredSpan bold color="blue">
-      i'm blue, da bo dee da bo dah'
-    </ColoredSpan>
+    <CaptionWrapper caption="I'm a caption!">
+      <p>I'm a p tag with a caption!</p>
+    </CaptionWrapper>
   );
   expect(asFragment()).toMatchSnapshot();
 });

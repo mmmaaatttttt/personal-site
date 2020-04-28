@@ -1,64 +1,28 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`matches snapshot with props 1`] = `
-<StyledComponent
-  forwardedComponent={
-    Object {
-      "$$typeof": Symbol(react.forward_ref),
-      "attrs": Array [],
-      "componentStyle": ComponentStyle {
-        "componentId": "sc-bdVaJa",
-        "isStatic": false,
-        "rules": Array [
-          "
-  margin: ",
-          [Function],
-          ";
-
-  th,
-  td {
-    text-align: center;
-    padding: 0.5rem 0;
-  }
-",
-        ],
-      },
-      "defaultProps": Object {
-        "margin": "0 0 1.44rem 0",
-      },
-      "displayName": "styled.table",
-      "foldedComponentIds": Array [],
-      "propTypes": Object {
-        "margin": [Function],
-      },
-      "render": [Function],
-      "styledComponentId": "sc-bdVaJa",
-      "target": "table",
-      "toString": [Function],
-      "warnTooManyClasses": [Function],
-      "withComponent": [Function],
-    }
-  }
-  forwardedRef={null}
-  margin="1rem"
->
-  <thead>
-    <tr>
-      <th>
-        1
-      </th>
-      <th>
-        2
-      </th>
-    </tr>
-    <tr>
-      <td>
-        3
-      </td>
-      <td>
-        4
-      </td>
-    </tr>
-  </thead>
-</StyledComponent>
+exports[`matches snapshot with props and children 1`] = `
+<DocumentFragment>
+  <table
+    class="sc-bdVaJa fPJzlp"
+  >
+    <thead>
+      <tr>
+        <th>
+          1
+        </th>
+        <th>
+          2
+        </th>
+      </tr>
+      <tr>
+        <td>
+          3
+        </td>
+        <td>
+          4
+        </td>
+      </tr>
+    </thead>
+  </table>
+</DocumentFragment>
 `;

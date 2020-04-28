@@ -2,10 +2,9 @@
 
 exports[`matches snapshot 1`] = `
 <DocumentFragment>
-  <span
-    class="sc-bdVaJa FqUCL"
-  >
-    Strikethrough
-  </span>
+  <div
+    class="sc-bdVaJa DtitT"
+    color="#52A081"
+  />
 </DocumentFragment>
 `;

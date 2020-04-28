@@ -1,15 +1,12 @@
 import React from "react";
-import { shallow } from "enzyme";
-import toJson from "enzyme-to-json";
-import Strikethrough from ".";
+import { render } from "@testing-library/react";
+import Strikethrough from "./";
 
-it("renders successfully", () => {
-  shallow(<Strikethrough />);
+it("renders without crashing", () => {
+  render(<Strikethrough />);
 });
 
 it("matches snapshot", () => {
-  const wrapper = shallow(
-    <Strikethrough>striking out</Strikethrough>
-  );
-  expect(toJson(wrapper)).toMatchSnapshot();
+  const { asFragment } = render(<Strikethrough>Strikethrough</Strikethrough>);
+  expect(asFragment()).toMatchSnapshot();
 });

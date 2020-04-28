@@ -3,15 +3,16 @@
 exports[`matches snapshot with props and children 1`] = `
 <DocumentFragment>
   <div
-    class="sc-bdVaJa eisVDW"
-    width="75%"
+    class="sc-bdVaJa dQSUxY"
   >
-    <div>
-      hello
-    </div>
-    <div>
-      goodbye
-    </div>
+    <p>
+      I'm a p tag with a caption!
+    </p>
+    <p
+      class="sc-bwzfXH kBfqmQ"
+    >
+      I'm a caption!
+    </p>
   </div>
 </DocumentFragment>
 `;

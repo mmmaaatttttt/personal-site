@@ -1,48 +1,12 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`matches snapshot 1`] = `
-<StyledComponent
-  baseline="central"
-  fontSize="90%"
-  forwardedComponent={
-    Object {
-      "$$typeof": Symbol(react.forward_ref),
-      "attrs": Array [],
-      "componentStyle": ComponentStyle {
-        "componentId": "sc-bdVaJa",
-        "isStatic": false,
-        "rules": Array [
-          "
-  text-anchor: middle;
-  alignment-baseline: ",
-          [Function],
-          ";
-  font-size: ",
-          [Function],
-          ";
-",
-        ],
-      },
-      "defaultProps": Object {
-        "baseline": "middle",
-        "fontSize": "100%",
-      },
-      "displayName": "styled.text",
-      "foldedComponentIds": Array [],
-      "propTypes": Object {
-        "baseline": [Function],
-        "fontSize": [Function],
-      },
-      "render": [Function],
-      "styledComponentId": "sc-bdVaJa",
-      "target": "text",
-      "toString": [Function],
-      "warnTooManyClasses": [Function],
-      "withComponent": [Function],
-    }
-  }
-  forwardedRef={null}
->
-  in the center
-</StyledComponent>
+exports[`matches snapshot with props and children 1`] = `
+<DocumentFragment>
+  <text
+    class="sc-bdVaJa dmbySa"
+    font-size="90%"
+  >
+    in the center
+  </text>
+</DocumentFragment>
 `;

@@ -2,12 +2,9 @@
 
 exports[`matches snapshot with props 1`] = `
 <DocumentFragment>
-  <button
-    class="sc-bdVaJa eDcWMz"
-    color="blue"
-    disabled=""
-  >
-    I'm a button
-  </button>
+  <circle
+    class="sc-bdVaJa iGYVAK"
+    stroke="blue"
+  />
 </DocumentFragment>
 `;

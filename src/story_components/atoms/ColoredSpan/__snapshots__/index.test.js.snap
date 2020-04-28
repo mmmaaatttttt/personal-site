@@ -1,47 +1,12 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`matches snapshot 1`] = `
-<StyledComponent
-  bold={true}
-  color="blue"
-  forwardedComponent={
-    Object {
-      "$$typeof": Symbol(react.forward_ref),
-      "attrs": Array [],
-      "componentStyle": ComponentStyle {
-        "componentId": "sc-bdVaJa",
-        "isStatic": false,
-        "rules": Array [
-          "
-  color: ",
-          [Function],
-          ";
-  font-weight: ",
-          [Function],
-          ";
-",
-        ],
-      },
-      "defaultProps": Object {
-        "bold": false,
-        "color": "black",
-      },
-      "displayName": "styled.span",
-      "foldedComponentIds": Array [],
-      "propTypes": Object {
-        "bold": [Function],
-        "color": [Function],
-      },
-      "render": [Function],
-      "styledComponentId": "sc-bdVaJa",
-      "target": "span",
-      "toString": [Function],
-      "warnTooManyClasses": [Function],
-      "withComponent": [Function],
-    }
-  }
-  forwardedRef={null}
->
-  i'm blue, da bo dee da bo dah
-</StyledComponent>
+exports[`matches snapshot with props and children 1`] = `
+<DocumentFragment>
+  <span
+    class="sc-bdVaJa hHEOVV"
+    color="blue"
+  >
+    i'm blue, da bo dee da bo dah'
+  </span>
+</DocumentFragment>
 `;

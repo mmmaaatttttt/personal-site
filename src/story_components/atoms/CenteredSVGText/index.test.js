@@ -1,17 +1,16 @@
 import React from "react";
-import { shallow } from "enzyme";
-import toJson from "enzyme-to-json";
-import CenteredSVGText from ".";
+import { render } from "@testing-library/react";
+import CenteredSVGText from "./";
 
-it("renders successfully", () => {
-  shallow(<CenteredSVGText />);
+it("renders without crashing", () => {
+  render(<CenteredSVGText />);
 });
 
-it("matches snapshot", () => {
-  const wrapper = shallow(
+it("matches snapshot with props and children", () => {
+  const { asFragment } = render(
     <CenteredSVGText fontSize="90%" baseline="central">
       in the center
     </CenteredSVGText>
   );
-  expect(toJson(wrapper)).toMatchSnapshot();
+  expect(asFragment()).toMatchSnapshot();
 });

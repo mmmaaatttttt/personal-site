@@ -1,15 +1,14 @@
 import React from "react";
-import { shallow } from "enzyme";
-import toJson from "enzyme-to-json";
-import SVGBorder from ".";
+import { render } from "@testing-library/react";
+import SVGBorder from "./";
 
-it("renders successfully", () => {
-  shallow(<SVGBorder />);
+it("renders without crashing", () => {
+  render(<SVGBorder />);
 });
 
-it("matches snapshot with props", () => {
-  const wrapper = shallow(
+it("matches snapshot with props and children", () => {
+  const { asFragment } = render(
     <SVGBorder width={200} height={200} borderWidth={6} borderStroke="purple" />
   );
-  expect(toJson(wrapper)).toMatchSnapshot();
+  expect(asFragment()).toMatchSnapshot();
 });
