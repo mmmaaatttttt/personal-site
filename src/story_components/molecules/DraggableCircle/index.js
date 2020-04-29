@@ -40,17 +40,17 @@ function getBounds(svgBounds, circleR) {
 }
 
 function DraggableCircle({
-  axis,
-  cx,
-  cy,
-  r,
-  fill,
-  stroke,
-  strokeWidth,
-  id,
-  onDrag,
-  onDragStart,
-  onDragEnd
+  axis="both",
+  cx=0,
+  cy=0,
+  fill=COLORS.BLACK,
+  id=0,
+  onDragStart=() => {},
+  onDrag=() => {},
+  onDragEnd=() => {},
+  r=8,
+  stroke=COLORS.BLACK,
+  strokeWidth=0,
 }) {
   const svgBounds = useContext(SVGContext);
   const [isActive, setActive] = useState(false);
@@ -91,20 +91,6 @@ DraggableCircle.propTypes = {
   r: PropTypes.number.isRequired,
   stroke: PropTypes.string.isRequired,
   strokeWidth: PropTypes.number.isRequired
-};
-
-DraggableCircle.defaultProps = {
-  axis: "both",
-  cx: 0,
-  cy: 0,
-  fill: COLORS.BLACK,
-  id: 0,
-  onDragStart: () => {},
-  onDrag: () => {},
-  onDragEnd: () => {},
-  r: 8,
-  stroke: COLORS.BLACK,
-  strokeWidth: 0
 };
 
 export default React.memo(DraggableCircle);
