@@ -1,0 +1,23 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`matches snapshot with props and children 1`] = `
+<DocumentFragment>
+  <div
+    class="sc-iwsKbI QHnwj"
+    width="auto"
+  >
+    <button
+      class="sc-bxivhb pHtqT"
+      color="blue"
+    >
+      button 1
+    </button>
+    <button
+      class="sc-bxivhb fWaTli"
+      color="red"
+    >
+      another one
+    </button>
+  </div>
+</DocumentFragment>
+`;

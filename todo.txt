@@ -4,6 +4,7 @@
 - other hooks?
 - remove redux
 - fix rent interactive in http://localhost:8000/stories/fairest-of-them-all/ (button blocked by something)
+- try component reorg 
 
 
 - pagination for stories

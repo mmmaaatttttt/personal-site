@@ -1,61 +1,47 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`matches snapshot with props passed in 1`] = `
-<styled.div
-  column={true}
-  cross="center"
-  flex={1}
-  main="center"
-  margin="0"
-  shouldWrap={false}
-  textAlign="left"
-  width="auto"
->
-  <styled.h4>
-    Default Title
-  </styled.h4>
-  <styled.div
-    column={false}
-    cross="stretch"
-    flex={1}
-    main="space-between"
-    margin="0"
-    shouldWrap={true}
-    textAlign="left"
-    width="100%"
+exports[`matches snapshot for a fair coin 1`] = `
+<DocumentFragment>
+  <div
+    class="sc-iwsKbI jBwqOv"
+    width="auto"
   >
-    <div
-      key="#5ECFFF"
+    <h4
+      class="sc-dVhcbM ebonWU"
     >
-      <Icon
-        color="#5ECFFF"
-        disabled={false}
-        hover={false}
-        name="square"
-        opacity={1}
-        size={1}
-        type="solid"
-      />
-      <styled.span>
-        Blue label
-      </styled.span>
-    </div>
+      Default Title
+    </h4>
     <div
-      key="#FF3C23"
+      class="sc-iwsKbI hNOgLE"
+      width="100%"
     >
-      <Icon
-        color="#FF3C23"
-        disabled={false}
-        hover={false}
-        name="square"
-        opacity={1}
-        size={1}
-        type="solid"
-      />
-      <styled.span>
-        Red label
-      </styled.span>
+      <div
+        class="sc-fAjcbJ eeegtu"
+      >
+        <i
+          class="sc-gZMcBi jlsrdS fas fa-square fa-1x false"
+          style="color: rgb(94, 207, 255); opacity: 1;"
+        />
+        <span
+          class="sc-eqIVtm esFEGY"
+        >
+          Blue label
+        </span>
+      </div>
+      <div
+        class="sc-fAjcbJ eeegtu"
+      >
+        <i
+          class="sc-gZMcBi jlsrdS fas fa-square fa-1x false"
+          style="color: rgb(255, 60, 35); opacity: 1;"
+        />
+        <span
+          class="sc-eqIVtm esFEGY"
+        >
+          Red label
+        </span>
+      </div>
     </div>
-  </styled.div>
-</styled.div>
+  </div>
+</DocumentFragment>
 `;

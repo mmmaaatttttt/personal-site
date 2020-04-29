@@ -1,24 +1,30 @@
 import React from "react";
-import { shallow } from "enzyme";
-import toJson from "enzyme-to-json";
-import { EfficiencyGapTable } from ".";
+import { render } from "@testing-library/react";
+import EfficiencyGapTable from "./";
 
-describe("smoke and snapshot tests", () => {
-  it("renders successfully", () => {
-    shallow(<EfficiencyGapTable />);
-  });
+it("renders without crashing", () => {
+  render(<EfficiencyGapTable />);
+});
 
-  it("renders with no district counts", () => {
-    const wrapper = shallow(<EfficiencyGapTable />);
-    expect(toJson(wrapper)).toMatchSnapshot();
-  });
+it("matches snapshot with no district counts", () => {
+  const { asFragment } = render(<EfficiencyGapTable />);
+  expect(asFragment()).toMatchSnapshot();
+});
 
-  it("renders with district counts", () => {
-    const wrapper = shallow(
-      <EfficiencyGapTable
-        districtCounts={[[[5, 4], [5, 4], [5, 4], [5, 4], [2, 7], [5, 4]]]}
-      />
-    );
-    expect(toJson(wrapper)).toMatchSnapshot();
-  });
+it("renders with district counts", () => {
+  const { asFragment } = render(
+    <EfficiencyGapTable
+      districtCounts={[
+        [
+          [5, 4],
+          [5, 4],
+          [5, 4],
+          [5, 4],
+          [2, 7],
+          [5, 4]
+        ]
+      ]}
+    />
+  );
+  expect(asFragment()).toMatchSnapshot();
 });
