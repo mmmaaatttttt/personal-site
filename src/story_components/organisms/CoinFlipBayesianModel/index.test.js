@@ -1,56 +1,74 @@
 import React from "react";
-import { shallow } from "enzyme";
-import toJson from "enzyme-to-json";
-import { CoinFlipBayesianModel } from ".";
+import { render, fireEvent, waitFor } from "@testing-library/react";
+import COLORS from "utils/styles";
+import CoinFlipBayesianModel from "./";
 
 describe("smoke and snapshot tests", () => {
-  it("renders successfully", () => {
-    shallow(<CoinFlipBayesianModel />);
+  it("renders without crashing", () => {
+    render(<CoinFlipBayesianModel />);
   });
 
-  it("renders first demonstration successfully", () => {
-    const wrapper = shallow(<CoinFlipBayesianModel />);
-    expect(toJson(wrapper)).toMatchSnapshot();
+  it("matches snapshot for a fair coin", () => {
+    const { asFragment } = render(<CoinFlipBayesianModel />);
+    expect(asFragment()).toMatchSnapshot();
   });
 });
 
-describe("state changes", () => {
-  let wrapper;
-
-  beforeEach(() => {
-    wrapper = shallow(<CoinFlipBayesianModel />);
-  });
-
+describe("interaction tests", () => {
   it("handles switch change", () => {
-    wrapper.instance().toggleDistribution();
-    expect(wrapper.state().uniform).toBe(false);
-    expect(toJson(wrapper)).toMatchSnapshot();
+    const { getByText } = render(<CoinFlipBayesianModel />);
+
+    const bottomSVGText = getByText("Coin flip distribution");
+    const span = getByText("Fair coin more likely");
+    const toggleSwitch = span.previousSibling;
+    const path = bottomSVGText.previousSibling;
+
+    expect(path.getAttribute("stroke")).toEqual(COLORS.RED);
+    fireEvent.click(toggleSwitch);
+    waitFor(
+      () => {
+        expect(path.getAttribute("stroke")).toEqual(COLORS.BLUE);
+      },
+      { timeout: 400 }
+    );
   });
 
   it("handles heads increase", () => {
-    expect(wrapper.state().heads).toBe(0);
-    wrapper
-      .find("Button")
-      .at(0)
-      .simulate("click");
-    expect(wrapper.state().heads).toBe(1);
+    const { queryByText } = render(<CoinFlipBayesianModel />);
+
+    const headsBtn = queryByText("Heads: 0");
+    fireEvent.click(headsBtn);
+
+    expect(queryByText("Heads: 0")).not.toBeInTheDocument();
+    expect(queryByText("Heads: 1")).toBeInTheDocument();
   });
 
   it("handles tails increase", () => {
-    expect(wrapper.state().tails).toBe(0);
-    wrapper
-      .find("Button")
-      .at(1)
-      .simulate("click");
-    expect(wrapper.state().tails).toBe(1);
+    const { queryByText } = render(<CoinFlipBayesianModel />);
+
+    const tailsBtn = queryByText("Tails: 0");
+    fireEvent.click(tailsBtn);
+
+    expect(queryByText("Tails: 0")).not.toBeInTheDocument();
+    expect(queryByText("Tails: 1")).toBeInTheDocument();
   });
 
   it("handles reset", () => {
-    wrapper.setState({ heads: 10, tails: 8 });
-    wrapper
-      .find("Button")
-      .at(2)
-      .simulate("click");
-    expect(wrapper.state()).toMatchObject({ heads: 0, tails: 0 });
+    const { queryByText } = render(<CoinFlipBayesianModel />);
+
+    const tailsBtn = queryByText("Tails: 0");
+    const headsBtn = queryByText("Heads: 0");
+    const resetBtn = queryByText("Reset Counts");
+    fireEvent.click(tailsBtn);
+    fireEvent.click(headsBtn);
+    fireEvent.click(headsBtn);
+    expect(queryByText("Tails: 1")).toBeInTheDocument();
+    expect(queryByText("Heads: 2")).toBeInTheDocument();
+    
+    fireEvent.click(resetBtn);
+    expect(queryByText("Tails: 1")).not.toBeInTheDocument();
+    expect(queryByText("Tails: 0")).toBeInTheDocument();
+    expect(queryByText("Heads: 2")).not.toBeInTheDocument();
+    expect(queryByText("Heads: 0")).toBeInTheDocument();
   });
 });
