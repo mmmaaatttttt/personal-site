@@ -1,15 +1,14 @@
 import React from "react";
-import { shallow } from "enzyme";
-import toJson from "enzyme-to-json";
+import { render } from "@testing-library/react";
 import { OrchardGameHeatData } from ".";
 
 describe("smoke and snapshot tests", () => {
   it("renders successfully", () => {
-    shallow(<OrchardGameHeatData />);
+    render(<OrchardGameHeatData />);
   });
 
   it("renders first demonstration successfully", () => {
-    const wrapper = shallow(<OrchardGameHeatData />);
-    expect(toJson(wrapper)).toMatchSnapshot();
+    const { asFragment } = render(<OrchardGameHeatData />);
+    expect(asFragment()).toMatchSnapshot();
   });
 });

@@ -1,416 +1,1246 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`smoke and snapshot tests renders first demonstration successfully 1`] = `
-<styled.div
-  break="small"
-  sizes={
-    Array [
-      3,
-      2,
-    ]
-  }
->
-  <HeatChart
-    accessor={[Function]}
-    axes={false}
-    colorDomain={
-      Array [
-        0,
-        1,
-      ]
-    }
-    colorRange={
-      Array [
-        "#2227FF",
-        "#FF3C23",
-      ]
-    }
-    data={
-      Array [
-        Array [
-          0,
-          1,
-          0,
-          1,
-          0,
-          1,
-        ],
-        Array [
-          0,
-          1,
-          0,
-          1,
-          0,
-          1,
-        ],
-        Array [
-          0,
-          1,
-          0,
-          1,
-          0,
-          1,
-        ],
-        Array [
-          0,
-          1,
-          0,
-          1,
-          0,
-          1,
-        ],
-        Array [
-          0,
-          1,
-          0,
-          1,
-          0,
-          1,
-        ],
-        Array [
-          0,
-          1,
-          0,
-          1,
-          0,
-          1,
-        ],
-        Array [
-          0,
-          1,
-          0,
-          1,
-          0,
-          1,
-        ],
-        Array [
-          0,
-          1,
-          0,
-          1,
-          0,
-          1,
-        ],
-        Array [
-          0,
-          1,
-          0,
-          1,
-          0,
-          1,
-        ],
-      ]
-    }
-    getTooltipBody={[Function]}
-    getTooltipTitle={[Function]}
-    tooltip={false}
+<DocumentFragment>
+  <div
+    class="sc-dnqmqq fVlRGO"
+    sizes="3,2"
   >
-    <InteractiveGrid
-      colCount={9}
-      handleSegmentUpdate={[Function]}
-      height={600}
-      paddingX={45}
-      paddingY={45}
-      rowCount={6}
-      segments={
-        Array [
-          Array [
-            false,
-            false,
-            false,
-            false,
-            false,
-            false,
-            false,
-            false,
-          ],
-          Array [
-            false,
-            false,
-            false,
-            false,
-            false,
-            false,
-            false,
-            false,
-            false,
-          ],
-          Array [
-            false,
-            false,
-            false,
-            false,
-            false,
-            false,
-            false,
-            false,
-          ],
-          Array [
-            false,
-            false,
-            false,
-            false,
-            false,
-            false,
-            false,
-            false,
-            false,
-          ],
-          Array [
-            false,
-            false,
-            false,
-            false,
-            false,
-            false,
-            false,
-            false,
-          ],
-          Array [
-            false,
-            false,
-            false,
-            false,
-            false,
-            false,
-            false,
-            false,
-            false,
-          ],
-          Array [
-            false,
-            false,
-            false,
-            false,
-            false,
-            false,
-            false,
-            false,
-          ],
-          Array [
-            false,
-            false,
-            false,
-            false,
-            false,
-            false,
-            false,
-            false,
-            false,
-          ],
-          Array [
-            false,
-            false,
-            false,
-            false,
-            false,
-            false,
-            false,
-            false,
-          ],
-          Array [
-            false,
-            false,
-            false,
-            false,
-            false,
-            false,
-            false,
-            false,
-            false,
-          ],
-          Array [
-            false,
-            false,
-            false,
-            false,
-            false,
-            false,
-            false,
-            false,
-          ],
-        ]
-      }
-      strokeWidth={6}
-      width={600}
-    />
-  </HeatChart>
-  <styled.div>
-    <div
-      key="0"
-    >
-      <h4
-        style={
-          Object {
-            "color": "#000000",
-          }
-        }
-      >
-        D
-        1
-        : 
-        54
-         
-        (27 blue, 27 red)
-      </h4>
-      <Icon
-        color="#FF3C23"
-        disabled={false}
-        hover={false}
-        name="times-circle"
-        opacity={1}
-        size={2}
-        type="solid"
-      />
-    </div>
-    <div
-      key="1"
-    >
-      <h4
-        style={
-          Object {
-            "color": "#000000",
-          }
-        }
-      >
-        D
-        2
-        : 
-        --
-         
-      </h4>
-      <Icon
-        color="#FF3C23"
-        disabled={false}
-        hover={false}
-        name="times-circle"
-        opacity={1}
-        size={2}
-        type="solid"
-      />
-    </div>
-    <div
-      key="2"
-    >
-      <h4
-        style={
-          Object {
-            "color": "#000000",
-          }
-        }
-      >
-        D
-        3
-        : 
-        --
-         
-      </h4>
-      <Icon
-        color="#FF3C23"
-        disabled={false}
-        hover={false}
-        name="times-circle"
-        opacity={1}
-        size={2}
-        type="solid"
-      />
-    </div>
-    <div
-      key="3"
-    >
-      <h4
-        style={
-          Object {
-            "color": "#000000",
-          }
-        }
-      >
-        D
-        4
-        : 
-        --
-         
-      </h4>
-      <Icon
-        color="#FF3C23"
-        disabled={false}
-        hover={false}
-        name="times-circle"
-        opacity={1}
-        size={2}
-        type="solid"
-      />
-    </div>
-    <div
-      key="4"
-    >
-      <h4
-        style={
-          Object {
-            "color": "#000000",
-          }
-        }
-      >
-        D
-        5
-        : 
-        --
-         
-      </h4>
-      <Icon
-        color="#FF3C23"
-        disabled={false}
-        hover={false}
-        name="times-circle"
-        opacity={1}
-        size={2}
-        type="solid"
-      />
-    </div>
-    <div
-      key="5"
-    >
-      <h4
-        style={
-          Object {
-            "color": "#000000",
-          }
-        }
-      >
-        D
-        6
-        : 
-        --
-         
-      </h4>
-      <Icon
-        color="#FF3C23"
-        disabled={false}
-        hover={false}
-        name="times-circle"
-        opacity={1}
-        size={2}
-        type="solid"
-      />
-    </div>
     <div>
-      <Button
-        color="#52A081"
-        disabled={true}
-        large={false}
-        onClick={[Function]}
-      >
-        Saved
-      </Button>
-      <Button
-        color="#FF3C23"
-        disabled={false}
-        large={false}
-        onClick={[Function]}
-      >
-        Reset
-      </Button>
+      <div>
+        <svg
+          class="sc-gzVnrw jUuqtv"
+          viewBox="0 0 450 300"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <defs>
+            <clippath
+              id="clip-path-svg"
+            >
+              <rect
+                height="300"
+                width="450"
+                x="0"
+                y="0"
+              />
+            </clippath>
+          </defs>
+          <g
+            clip-path="url(#clip-path-svg)"
+          >
+            <g>
+              <rect
+                fill="rgb(34, 39, 255)"
+                height="40.5"
+                width="40.5"
+                x="34.75"
+                y="236"
+              />
+              <rect
+                fill="rgb(255, 60, 35)"
+                height="40.5"
+                width="40.5"
+                x="34.75"
+                y="193.50000000000003"
+              />
+              <rect
+                fill="rgb(34, 39, 255)"
+                height="40.5"
+                width="40.5"
+                x="34.75"
+                y="151"
+              />
+              <rect
+                fill="rgb(255, 60, 35)"
+                height="40.5"
+                width="40.5"
+                x="34.75"
+                y="108.50000000000001"
+              />
+              <rect
+                fill="rgb(34, 39, 255)"
+                height="40.5"
+                width="40.5"
+                x="34.75"
+                y="66"
+              />
+              <rect
+                fill="rgb(255, 60, 35)"
+                height="40.5"
+                width="40.5"
+                x="34.75"
+                y="23.5"
+              />
+              <rect
+                fill="rgb(34, 39, 255)"
+                height="40.5"
+                width="40.5"
+                x="77.25"
+                y="236"
+              />
+              <rect
+                fill="rgb(255, 60, 35)"
+                height="40.5"
+                width="40.5"
+                x="77.25"
+                y="193.50000000000003"
+              />
+              <rect
+                fill="rgb(34, 39, 255)"
+                height="40.5"
+                width="40.5"
+                x="77.25"
+                y="151"
+              />
+              <rect
+                fill="rgb(255, 60, 35)"
+                height="40.5"
+                width="40.5"
+                x="77.25"
+                y="108.50000000000001"
+              />
+              <rect
+                fill="rgb(34, 39, 255)"
+                height="40.5"
+                width="40.5"
+                x="77.25"
+                y="66"
+              />
+              <rect
+                fill="rgb(255, 60, 35)"
+                height="40.5"
+                width="40.5"
+                x="77.25"
+                y="23.5"
+              />
+              <rect
+                fill="rgb(34, 39, 255)"
+                height="40.5"
+                width="40.5"
+                x="119.75"
+                y="236"
+              />
+              <rect
+                fill="rgb(255, 60, 35)"
+                height="40.5"
+                width="40.5"
+                x="119.75"
+                y="193.50000000000003"
+              />
+              <rect
+                fill="rgb(34, 39, 255)"
+                height="40.5"
+                width="40.5"
+                x="119.75"
+                y="151"
+              />
+              <rect
+                fill="rgb(255, 60, 35)"
+                height="40.5"
+                width="40.5"
+                x="119.75"
+                y="108.50000000000001"
+              />
+              <rect
+                fill="rgb(34, 39, 255)"
+                height="40.5"
+                width="40.5"
+                x="119.75"
+                y="66"
+              />
+              <rect
+                fill="rgb(255, 60, 35)"
+                height="40.5"
+                width="40.5"
+                x="119.75"
+                y="23.5"
+              />
+              <rect
+                fill="rgb(34, 39, 255)"
+                height="40.5"
+                width="40.5"
+                x="162.25"
+                y="236"
+              />
+              <rect
+                fill="rgb(255, 60, 35)"
+                height="40.5"
+                width="40.5"
+                x="162.25"
+                y="193.50000000000003"
+              />
+              <rect
+                fill="rgb(34, 39, 255)"
+                height="40.5"
+                width="40.5"
+                x="162.25"
+                y="151"
+              />
+              <rect
+                fill="rgb(255, 60, 35)"
+                height="40.5"
+                width="40.5"
+                x="162.25"
+                y="108.50000000000001"
+              />
+              <rect
+                fill="rgb(34, 39, 255)"
+                height="40.5"
+                width="40.5"
+                x="162.25"
+                y="66"
+              />
+              <rect
+                fill="rgb(255, 60, 35)"
+                height="40.5"
+                width="40.5"
+                x="162.25"
+                y="23.5"
+              />
+              <rect
+                fill="rgb(34, 39, 255)"
+                height="40.5"
+                width="40.5"
+                x="204.75"
+                y="236"
+              />
+              <rect
+                fill="rgb(255, 60, 35)"
+                height="40.5"
+                width="40.5"
+                x="204.75"
+                y="193.50000000000003"
+              />
+              <rect
+                fill="rgb(34, 39, 255)"
+                height="40.5"
+                width="40.5"
+                x="204.75"
+                y="151"
+              />
+              <rect
+                fill="rgb(255, 60, 35)"
+                height="40.5"
+                width="40.5"
+                x="204.75"
+                y="108.50000000000001"
+              />
+              <rect
+                fill="rgb(34, 39, 255)"
+                height="40.5"
+                width="40.5"
+                x="204.75"
+                y="66"
+              />
+              <rect
+                fill="rgb(255, 60, 35)"
+                height="40.5"
+                width="40.5"
+                x="204.75"
+                y="23.5"
+              />
+              <rect
+                fill="rgb(34, 39, 255)"
+                height="40.5"
+                width="40.5"
+                x="247.25"
+                y="236"
+              />
+              <rect
+                fill="rgb(255, 60, 35)"
+                height="40.5"
+                width="40.5"
+                x="247.25"
+                y="193.50000000000003"
+              />
+              <rect
+                fill="rgb(34, 39, 255)"
+                height="40.5"
+                width="40.5"
+                x="247.25"
+                y="151"
+              />
+              <rect
+                fill="rgb(255, 60, 35)"
+                height="40.5"
+                width="40.5"
+                x="247.25"
+                y="108.50000000000001"
+              />
+              <rect
+                fill="rgb(34, 39, 255)"
+                height="40.5"
+                width="40.5"
+                x="247.25"
+                y="66"
+              />
+              <rect
+                fill="rgb(255, 60, 35)"
+                height="40.5"
+                width="40.5"
+                x="247.25"
+                y="23.5"
+              />
+              <rect
+                fill="rgb(34, 39, 255)"
+                height="40.5"
+                width="40.5"
+                x="289.75"
+                y="236"
+              />
+              <rect
+                fill="rgb(255, 60, 35)"
+                height="40.5"
+                width="40.5"
+                x="289.75"
+                y="193.50000000000003"
+              />
+              <rect
+                fill="rgb(34, 39, 255)"
+                height="40.5"
+                width="40.5"
+                x="289.75"
+                y="151"
+              />
+              <rect
+                fill="rgb(255, 60, 35)"
+                height="40.5"
+                width="40.5"
+                x="289.75"
+                y="108.50000000000001"
+              />
+              <rect
+                fill="rgb(34, 39, 255)"
+                height="40.5"
+                width="40.5"
+                x="289.75"
+                y="66"
+              />
+              <rect
+                fill="rgb(255, 60, 35)"
+                height="40.5"
+                width="40.5"
+                x="289.75"
+                y="23.5"
+              />
+              <rect
+                fill="rgb(34, 39, 255)"
+                height="40.5"
+                width="40.5"
+                x="332.25"
+                y="236"
+              />
+              <rect
+                fill="rgb(255, 60, 35)"
+                height="40.5"
+                width="40.5"
+                x="332.25"
+                y="193.50000000000003"
+              />
+              <rect
+                fill="rgb(34, 39, 255)"
+                height="40.5"
+                width="40.5"
+                x="332.25"
+                y="151"
+              />
+              <rect
+                fill="rgb(255, 60, 35)"
+                height="40.5"
+                width="40.5"
+                x="332.25"
+                y="108.50000000000001"
+              />
+              <rect
+                fill="rgb(34, 39, 255)"
+                height="40.5"
+                width="40.5"
+                x="332.25"
+                y="66"
+              />
+              <rect
+                fill="rgb(255, 60, 35)"
+                height="40.5"
+                width="40.5"
+                x="332.25"
+                y="23.5"
+              />
+              <rect
+                fill="rgb(34, 39, 255)"
+                height="40.5"
+                width="40.5"
+                x="374.75"
+                y="236"
+              />
+              <rect
+                fill="rgb(255, 60, 35)"
+                height="40.5"
+                width="40.5"
+                x="374.75"
+                y="193.50000000000003"
+              />
+              <rect
+                fill="rgb(34, 39, 255)"
+                height="40.5"
+                width="40.5"
+                x="374.75"
+                y="151"
+              />
+              <rect
+                fill="rgb(255, 60, 35)"
+                height="40.5"
+                width="40.5"
+                x="374.75"
+                y="108.50000000000001"
+              />
+              <rect
+                fill="rgb(34, 39, 255)"
+                height="40.5"
+                width="40.5"
+                x="374.75"
+                y="66"
+              />
+              <rect
+                fill="rgb(255, 60, 35)"
+                height="40.5"
+                width="40.5"
+                x="374.75"
+                y="23.5"
+              />
+            </g>
+            <g
+              stroke="white"
+              stroke-width="6"
+            >
+              <line
+                x1="33.75"
+                x2="416.25"
+                y1="235"
+                y2="235"
+              />
+              <line
+                x1="33.75"
+                x2="416.25"
+                y1="192.50000000000003"
+                y2="192.50000000000003"
+              />
+              <line
+                x1="33.75"
+                x2="416.25"
+                y1="150"
+                y2="150"
+              />
+              <line
+                x1="33.75"
+                x2="416.25"
+                y1="107.50000000000001"
+                y2="107.50000000000001"
+              />
+              <line
+                x1="33.75"
+                x2="416.25"
+                y1="65"
+                y2="65"
+              />
+              <line
+                x1="76.25"
+                x2="76.25"
+                y1="22.5"
+                y2="277.5"
+              />
+              <line
+                x1="118.75"
+                x2="118.75"
+                y1="22.5"
+                y2="277.5"
+              />
+              <line
+                x1="161.25"
+                x2="161.25"
+                y1="22.5"
+                y2="277.5"
+              />
+              <line
+                x1="203.75"
+                x2="203.75"
+                y1="22.5"
+                y2="277.5"
+              />
+              <line
+                x1="246.25"
+                x2="246.25"
+                y1="22.5"
+                y2="277.5"
+              />
+              <line
+                x1="288.75"
+                x2="288.75"
+                y1="22.5"
+                y2="277.5"
+              />
+              <line
+                x1="331.25"
+                x2="331.25"
+                y1="22.5"
+                y2="277.5"
+              />
+              <line
+                x1="373.75"
+                x2="373.75"
+                y1="22.5"
+                y2="277.5"
+              />
+              <line
+                class="sc-hMqMXs gjbEQB"
+                x1="76.25"
+                x2="76.25"
+                y1="280.5"
+                y2="232"
+              />
+              <line
+                class="sc-hMqMXs gjbEQB"
+                x1="118.75"
+                x2="118.75"
+                y1="280.5"
+                y2="232"
+              />
+              <line
+                class="sc-hMqMXs gjbEQB"
+                x1="161.25"
+                x2="161.25"
+                y1="280.5"
+                y2="232"
+              />
+              <line
+                class="sc-hMqMXs gjbEQB"
+                x1="203.75"
+                x2="203.75"
+                y1="280.5"
+                y2="232"
+              />
+              <line
+                class="sc-hMqMXs gjbEQB"
+                x1="246.25"
+                x2="246.25"
+                y1="280.5"
+                y2="232"
+              />
+              <line
+                class="sc-hMqMXs gjbEQB"
+                x1="288.75"
+                x2="288.75"
+                y1="280.5"
+                y2="232"
+              />
+              <line
+                class="sc-hMqMXs gjbEQB"
+                x1="331.25"
+                x2="331.25"
+                y1="280.5"
+                y2="232"
+              />
+              <line
+                class="sc-hMqMXs gjbEQB"
+                x1="373.75"
+                x2="373.75"
+                y1="280.5"
+                y2="232"
+              />
+              <line
+                class="sc-hMqMXs gjbEQB"
+                x1="30.75"
+                x2="79.25"
+                y1="235"
+                y2="235"
+              />
+              <line
+                class="sc-hMqMXs gjbEQB"
+                x1="73.25"
+                x2="121.75"
+                y1="235"
+                y2="235"
+              />
+              <line
+                class="sc-hMqMXs gjbEQB"
+                x1="115.75"
+                x2="164.25"
+                y1="235"
+                y2="235"
+              />
+              <line
+                class="sc-hMqMXs gjbEQB"
+                x1="158.25"
+                x2="206.75"
+                y1="235"
+                y2="235"
+              />
+              <line
+                class="sc-hMqMXs gjbEQB"
+                x1="200.75"
+                x2="249.25"
+                y1="235"
+                y2="235"
+              />
+              <line
+                class="sc-hMqMXs gjbEQB"
+                x1="243.25"
+                x2="291.75"
+                y1="235"
+                y2="235"
+              />
+              <line
+                class="sc-hMqMXs gjbEQB"
+                x1="285.75"
+                x2="334.25"
+                y1="235"
+                y2="235"
+              />
+              <line
+                class="sc-hMqMXs gjbEQB"
+                x1="328.25"
+                x2="376.75"
+                y1="235"
+                y2="235"
+              />
+              <line
+                class="sc-hMqMXs gjbEQB"
+                x1="370.75"
+                x2="419.25"
+                y1="235"
+                y2="235"
+              />
+              <line
+                class="sc-hMqMXs gjbEQB"
+                x1="76.25"
+                x2="76.25"
+                y1="238"
+                y2="189.50000000000003"
+              />
+              <line
+                class="sc-hMqMXs gjbEQB"
+                x1="118.75"
+                x2="118.75"
+                y1="238"
+                y2="189.50000000000003"
+              />
+              <line
+                class="sc-hMqMXs gjbEQB"
+                x1="161.25"
+                x2="161.25"
+                y1="238"
+                y2="189.50000000000003"
+              />
+              <line
+                class="sc-hMqMXs gjbEQB"
+                x1="203.75"
+                x2="203.75"
+                y1="238"
+                y2="189.50000000000003"
+              />
+              <line
+                class="sc-hMqMXs gjbEQB"
+                x1="246.25"
+                x2="246.25"
+                y1="238"
+                y2="189.50000000000003"
+              />
+              <line
+                class="sc-hMqMXs gjbEQB"
+                x1="288.75"
+                x2="288.75"
+                y1="238"
+                y2="189.50000000000003"
+              />
+              <line
+                class="sc-hMqMXs gjbEQB"
+                x1="331.25"
+                x2="331.25"
+                y1="238"
+                y2="189.50000000000003"
+              />
+              <line
+                class="sc-hMqMXs gjbEQB"
+                x1="373.75"
+                x2="373.75"
+                y1="238"
+                y2="189.50000000000003"
+              />
+              <line
+                class="sc-hMqMXs gjbEQB"
+                x1="30.75"
+                x2="79.25"
+                y1="192.50000000000003"
+                y2="192.50000000000003"
+              />
+              <line
+                class="sc-hMqMXs gjbEQB"
+                x1="73.25"
+                x2="121.75"
+                y1="192.50000000000003"
+                y2="192.50000000000003"
+              />
+              <line
+                class="sc-hMqMXs gjbEQB"
+                x1="115.75"
+                x2="164.25"
+                y1="192.50000000000003"
+                y2="192.50000000000003"
+              />
+              <line
+                class="sc-hMqMXs gjbEQB"
+                x1="158.25"
+                x2="206.75"
+                y1="192.50000000000003"
+                y2="192.50000000000003"
+              />
+              <line
+                class="sc-hMqMXs gjbEQB"
+                x1="200.75"
+                x2="249.25"
+                y1="192.50000000000003"
+                y2="192.50000000000003"
+              />
+              <line
+                class="sc-hMqMXs gjbEQB"
+                x1="243.25"
+                x2="291.75"
+                y1="192.50000000000003"
+                y2="192.50000000000003"
+              />
+              <line
+                class="sc-hMqMXs gjbEQB"
+                x1="285.75"
+                x2="334.25"
+                y1="192.50000000000003"
+                y2="192.50000000000003"
+              />
+              <line
+                class="sc-hMqMXs gjbEQB"
+                x1="328.25"
+                x2="376.75"
+                y1="192.50000000000003"
+                y2="192.50000000000003"
+              />
+              <line
+                class="sc-hMqMXs gjbEQB"
+                x1="370.75"
+                x2="419.25"
+                y1="192.50000000000003"
+                y2="192.50000000000003"
+              />
+              <line
+                class="sc-hMqMXs gjbEQB"
+                x1="76.25"
+                x2="76.25"
+                y1="195.50000000000003"
+                y2="147"
+              />
+              <line
+                class="sc-hMqMXs gjbEQB"
+                x1="118.75"
+                x2="118.75"
+                y1="195.50000000000003"
+                y2="147"
+              />
+              <line
+                class="sc-hMqMXs gjbEQB"
+                x1="161.25"
+                x2="161.25"
+                y1="195.50000000000003"
+                y2="147"
+              />
+              <line
+                class="sc-hMqMXs gjbEQB"
+                x1="203.75"
+                x2="203.75"
+                y1="195.50000000000003"
+                y2="147"
+              />
+              <line
+                class="sc-hMqMXs gjbEQB"
+                x1="246.25"
+                x2="246.25"
+                y1="195.50000000000003"
+                y2="147"
+              />
+              <line
+                class="sc-hMqMXs gjbEQB"
+                x1="288.75"
+                x2="288.75"
+                y1="195.50000000000003"
+                y2="147"
+              />
+              <line
+                class="sc-hMqMXs gjbEQB"
+                x1="331.25"
+                x2="331.25"
+                y1="195.50000000000003"
+                y2="147"
+              />
+              <line
+                class="sc-hMqMXs gjbEQB"
+                x1="373.75"
+                x2="373.75"
+                y1="195.50000000000003"
+                y2="147"
+              />
+              <line
+                class="sc-hMqMXs gjbEQB"
+                x1="30.75"
+                x2="79.25"
+                y1="150"
+                y2="150"
+              />
+              <line
+                class="sc-hMqMXs gjbEQB"
+                x1="73.25"
+                x2="121.75"
+                y1="150"
+                y2="150"
+              />
+              <line
+                class="sc-hMqMXs gjbEQB"
+                x1="115.75"
+                x2="164.25"
+                y1="150"
+                y2="150"
+              />
+              <line
+                class="sc-hMqMXs gjbEQB"
+                x1="158.25"
+                x2="206.75"
+                y1="150"
+                y2="150"
+              />
+              <line
+                class="sc-hMqMXs gjbEQB"
+                x1="200.75"
+                x2="249.25"
+                y1="150"
+                y2="150"
+              />
+              <line
+                class="sc-hMqMXs gjbEQB"
+                x1="243.25"
+                x2="291.75"
+                y1="150"
+                y2="150"
+              />
+              <line
+                class="sc-hMqMXs gjbEQB"
+                x1="285.75"
+                x2="334.25"
+                y1="150"
+                y2="150"
+              />
+              <line
+                class="sc-hMqMXs gjbEQB"
+                x1="328.25"
+                x2="376.75"
+                y1="150"
+                y2="150"
+              />
+              <line
+                class="sc-hMqMXs gjbEQB"
+                x1="370.75"
+                x2="419.25"
+                y1="150"
+                y2="150"
+              />
+              <line
+                class="sc-hMqMXs gjbEQB"
+                x1="76.25"
+                x2="76.25"
+                y1="153"
+                y2="104.50000000000001"
+              />
+              <line
+                class="sc-hMqMXs gjbEQB"
+                x1="118.75"
+                x2="118.75"
+                y1="153"
+                y2="104.50000000000001"
+              />
+              <line
+                class="sc-hMqMXs gjbEQB"
+                x1="161.25"
+                x2="161.25"
+                y1="153"
+                y2="104.50000000000001"
+              />
+              <line
+                class="sc-hMqMXs gjbEQB"
+                x1="203.75"
+                x2="203.75"
+                y1="153"
+                y2="104.50000000000001"
+              />
+              <line
+                class="sc-hMqMXs gjbEQB"
+                x1="246.25"
+                x2="246.25"
+                y1="153"
+                y2="104.50000000000001"
+              />
+              <line
+                class="sc-hMqMXs gjbEQB"
+                x1="288.75"
+                x2="288.75"
+                y1="153"
+                y2="104.50000000000001"
+              />
+              <line
+                class="sc-hMqMXs gjbEQB"
+                x1="331.25"
+                x2="331.25"
+                y1="153"
+                y2="104.50000000000001"
+              />
+              <line
+                class="sc-hMqMXs gjbEQB"
+                x1="373.75"
+                x2="373.75"
+                y1="153"
+                y2="104.50000000000001"
+              />
+              <line
+                class="sc-hMqMXs gjbEQB"
+                x1="30.75"
+                x2="79.25"
+                y1="107.50000000000001"
+                y2="107.50000000000001"
+              />
+              <line
+                class="sc-hMqMXs gjbEQB"
+                x1="73.25"
+                x2="121.75"
+                y1="107.50000000000001"
+                y2="107.50000000000001"
+              />
+              <line
+                class="sc-hMqMXs gjbEQB"
+                x1="115.75"
+                x2="164.25"
+                y1="107.50000000000001"
+                y2="107.50000000000001"
+              />
+              <line
+                class="sc-hMqMXs gjbEQB"
+                x1="158.25"
+                x2="206.75"
+                y1="107.50000000000001"
+                y2="107.50000000000001"
+              />
+              <line
+                class="sc-hMqMXs gjbEQB"
+                x1="200.75"
+                x2="249.25"
+                y1="107.50000000000001"
+                y2="107.50000000000001"
+              />
+              <line
+                class="sc-hMqMXs gjbEQB"
+                x1="243.25"
+                x2="291.75"
+                y1="107.50000000000001"
+                y2="107.50000000000001"
+              />
+              <line
+                class="sc-hMqMXs gjbEQB"
+                x1="285.75"
+                x2="334.25"
+                y1="107.50000000000001"
+                y2="107.50000000000001"
+              />
+              <line
+                class="sc-hMqMXs gjbEQB"
+                x1="328.25"
+                x2="376.75"
+                y1="107.50000000000001"
+                y2="107.50000000000001"
+              />
+              <line
+                class="sc-hMqMXs gjbEQB"
+                x1="370.75"
+                x2="419.25"
+                y1="107.50000000000001"
+                y2="107.50000000000001"
+              />
+              <line
+                class="sc-hMqMXs gjbEQB"
+                x1="76.25"
+                x2="76.25"
+                y1="110.50000000000001"
+                y2="62"
+              />
+              <line
+                class="sc-hMqMXs gjbEQB"
+                x1="118.75"
+                x2="118.75"
+                y1="110.50000000000001"
+                y2="62"
+              />
+              <line
+                class="sc-hMqMXs gjbEQB"
+                x1="161.25"
+                x2="161.25"
+                y1="110.50000000000001"
+                y2="62"
+              />
+              <line
+                class="sc-hMqMXs gjbEQB"
+                x1="203.75"
+                x2="203.75"
+                y1="110.50000000000001"
+                y2="62"
+              />
+              <line
+                class="sc-hMqMXs gjbEQB"
+                x1="246.25"
+                x2="246.25"
+                y1="110.50000000000001"
+                y2="62"
+              />
+              <line
+                class="sc-hMqMXs gjbEQB"
+                x1="288.75"
+                x2="288.75"
+                y1="110.50000000000001"
+                y2="62"
+              />
+              <line
+                class="sc-hMqMXs gjbEQB"
+                x1="331.25"
+                x2="331.25"
+                y1="110.50000000000001"
+                y2="62"
+              />
+              <line
+                class="sc-hMqMXs gjbEQB"
+                x1="373.75"
+                x2="373.75"
+                y1="110.50000000000001"
+                y2="62"
+              />
+              <line
+                class="sc-hMqMXs gjbEQB"
+                x1="30.75"
+                x2="79.25"
+                y1="65"
+                y2="65"
+              />
+              <line
+                class="sc-hMqMXs gjbEQB"
+                x1="73.25"
+                x2="121.75"
+                y1="65"
+                y2="65"
+              />
+              <line
+                class="sc-hMqMXs gjbEQB"
+                x1="115.75"
+                x2="164.25"
+                y1="65"
+                y2="65"
+              />
+              <line
+                class="sc-hMqMXs gjbEQB"
+                x1="158.25"
+                x2="206.75"
+                y1="65"
+                y2="65"
+              />
+              <line
+                class="sc-hMqMXs gjbEQB"
+                x1="200.75"
+                x2="249.25"
+                y1="65"
+                y2="65"
+              />
+              <line
+                class="sc-hMqMXs gjbEQB"
+                x1="243.25"
+                x2="291.75"
+                y1="65"
+                y2="65"
+              />
+              <line
+                class="sc-hMqMXs gjbEQB"
+                x1="285.75"
+                x2="334.25"
+                y1="65"
+                y2="65"
+              />
+              <line
+                class="sc-hMqMXs gjbEQB"
+                x1="328.25"
+                x2="376.75"
+                y1="65"
+                y2="65"
+              />
+              <line
+                class="sc-hMqMXs gjbEQB"
+                x1="370.75"
+                x2="419.25"
+                y1="65"
+                y2="65"
+              />
+              <line
+                class="sc-hMqMXs gjbEQB"
+                x1="76.25"
+                x2="76.25"
+                y1="68"
+                y2="19.5"
+              />
+              <line
+                class="sc-hMqMXs gjbEQB"
+                x1="118.75"
+                x2="118.75"
+                y1="68"
+                y2="19.5"
+              />
+              <line
+                class="sc-hMqMXs gjbEQB"
+                x1="161.25"
+                x2="161.25"
+                y1="68"
+                y2="19.5"
+              />
+              <line
+                class="sc-hMqMXs gjbEQB"
+                x1="203.75"
+                x2="203.75"
+                y1="68"
+                y2="19.5"
+              />
+              <line
+                class="sc-hMqMXs gjbEQB"
+                x1="246.25"
+                x2="246.25"
+                y1="68"
+                y2="19.5"
+              />
+              <line
+                class="sc-hMqMXs gjbEQB"
+                x1="288.75"
+                x2="288.75"
+                y1="68"
+                y2="19.5"
+              />
+              <line
+                class="sc-hMqMXs gjbEQB"
+                x1="331.25"
+                x2="331.25"
+                y1="68"
+                y2="19.5"
+              />
+              <line
+                class="sc-hMqMXs gjbEQB"
+                x1="373.75"
+                x2="373.75"
+                y1="68"
+                y2="19.5"
+              />
+              <rect
+                fill="none"
+                height="255"
+                rx="10"
+                ry="10"
+                stroke="#555555"
+                width="382.5"
+                x="33.75"
+                y="22.5"
+              />
+            </g>
+          </g>
+        </svg>
+      </div>
     </div>
-  </styled.div>
-</styled.div>
+    <div
+      class="sc-fAjcbJ loCYZs"
+    >
+      <div>
+        <h4
+          style="color: rgb(0, 0, 0);"
+        >
+          D1: 54 (27 blue, 27 red)
+        </h4>
+        <i
+          class="sc-gZMcBi jlsrdS fas fa-times-circle fa-2x false"
+          style="color: rgb(255, 60, 35); opacity: 1;"
+        />
+      </div>
+      <div>
+        <h4
+          style="color: rgb(0, 0, 0);"
+        >
+          D2: -- 
+        </h4>
+        <i
+          class="sc-gZMcBi jlsrdS fas fa-times-circle fa-2x false"
+          style="color: rgb(255, 60, 35); opacity: 1;"
+        />
+      </div>
+      <div>
+        <h4
+          style="color: rgb(0, 0, 0);"
+        >
+          D3: -- 
+        </h4>
+        <i
+          class="sc-gZMcBi jlsrdS fas fa-times-circle fa-2x false"
+          style="color: rgb(255, 60, 35); opacity: 1;"
+        />
+      </div>
+      <div>
+        <h4
+          style="color: rgb(0, 0, 0);"
+        >
+          D4: -- 
+        </h4>
+        <i
+          class="sc-gZMcBi jlsrdS fas fa-times-circle fa-2x false"
+          style="color: rgb(255, 60, 35); opacity: 1;"
+        />
+      </div>
+      <div>
+        <h4
+          style="color: rgb(0, 0, 0);"
+        >
+          D5: -- 
+        </h4>
+        <i
+          class="sc-gZMcBi jlsrdS fas fa-times-circle fa-2x false"
+          style="color: rgb(255, 60, 35); opacity: 1;"
+        />
+      </div>
+      <div>
+        <h4
+          style="color: rgb(0, 0, 0);"
+        >
+          D6: -- 
+        </h4>
+        <i
+          class="sc-gZMcBi jlsrdS fas fa-times-circle fa-2x false"
+          style="color: rgb(255, 60, 35); opacity: 1;"
+        />
+      </div>
+      <div>
+        <button
+          class="sc-bxivhb cBGulX"
+          color="#52A081"
+          disabled=""
+        >
+          Saved
+        </button>
+        <button
+          class="sc-bxivhb gABOAA"
+          color="#FF3C23"
+        >
+          Reset
+        </button>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
 `;

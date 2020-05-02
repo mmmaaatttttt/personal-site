@@ -1,55 +1,1338 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`smoke and snapshot tests renders first demonstration successfully 1`] = `
-<div>
-  <styled.div
-    fullWidthAt="small"
-    margin="0 auto"
-    width="70%"
-  >
-    <LabeledSlider
-      color="#FF8F34"
-      fadeIcons={false}
-      handleValueChange={[Function]}
-      max={5}
-      maxIcon="expand-arrows-alt"
-      min={2}
-      minIcon="compress-arrows-alt"
-      sliderHeight={6}
-      sliderPadding={10}
-      step={1}
-      tickCount={4}
-      title="Mesh Size"
-      value={4}
-    />
-    <styled.div
-      column={false}
-      cross="stretch"
-      flex={1}
-      main="center"
-      margin="0"
-      shouldWrap={false}
-      textAlign="left"
-      width="auto"
+<DocumentFragment>
+  <div>
+    <div
+      class="sc-VigVT jNCpwj"
+      width="70%"
     >
-      <Button
-        color="white"
-        disabled={false}
-        large={false}
-        onClick={[Function]}
+      <div
+        class="sc-bRBYWo gtDXeL"
       >
-        Start Demonstration
-      </Button>
-    </styled.div>
-  </styled.div>
-  <styled.div
-    fullWidthAt="small"
-    margin="0 auto"
-    width="55%"
-  >
-    <TooltipProvider
-      render={[Function]}
-    />
-  </styled.div>
-</div>
+        <p
+          class="sc-Rmtcm bImzes"
+        >
+          Mesh Size
+        </p>
+        <section>
+          <p
+            class="sc-hzDkRC kxpnkL"
+          >
+            <i
+              class="sc-gZMcBi dPNFn fas fa-compress-arrows-alt fa-1x false"
+              disabled=""
+              style="color: rgb(255, 143, 52); opacity: 1;"
+            />
+          </p>
+          <div
+            class="rc-slider sc-chPdSV lnsUGb"
+          >
+            <div
+              class="rc-slider-rail"
+            />
+            <div
+              class="rc-slider-track"
+              style="left: 0%; width: 66.66666666666666%;"
+            />
+            <div
+              class="rc-slider-step"
+            />
+            <div
+              aria-disabled="false"
+              aria-valuemax="5"
+              aria-valuemin="2"
+              aria-valuenow="4"
+              class="rc-slider-handle"
+              role="slider"
+              style="left: 66.66666666666666%; transform: translateX(-50%);"
+              tabindex="0"
+            />
+            <div
+              class="rc-slider-mark"
+            />
+            <div
+              class="sc-iwsKbI gQUqIM"
+              width="auto"
+            >
+              <div
+                class="sc-jAaTju bQHaix"
+                color="#ffc79a"
+                offset="10"
+                width="6"
+              />
+              <div
+                class="sc-jAaTju bQHaix"
+                color="#ffc79a"
+                offset="10"
+                width="6"
+              />
+              <div
+                class="sc-jAaTju bQHaix"
+                color="#ffc79a"
+                offset="10"
+                width="6"
+              />
+              <div
+                class="sc-jAaTju kbZoje"
+                color="#e9e9e9"
+                offset="10"
+                width="6"
+              />
+            </div>
+          </div>
+          <p
+            class="sc-hzDkRC kxpnkL"
+          >
+            <i
+              class="sc-gZMcBi dPNFn fas fa-expand-arrows-alt fa-1x false"
+              disabled=""
+              style="color: rgb(255, 143, 52); opacity: 1;"
+            />
+          </p>
+        </section>
+      </div>
+      <div
+        class="sc-iwsKbI QHnwj"
+        width="auto"
+      >
+        <button
+          class="sc-bxivhb llgjdL"
+          color="white"
+        >
+          Start Demonstration
+        </button>
+      </div>
+    </div>
+    <div
+      class="sc-VigVT jSlEXj"
+      width="55%"
+    >
+      <div>
+        <svg
+          class="sc-gzVnrw fSTcqv"
+          viewBox="0 0 600 600"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <defs>
+            <clippath
+              id="clip-path-rent"
+            >
+              <rect
+                height="600"
+                width="600"
+                x="0"
+                y="0"
+              />
+            </clippath>
+          </defs>
+          <g
+            clip-path="url(#clip-path-rent)"
+          >
+            <polygon
+              fill="#EEEEEE"
+              points="300,70 267.5240473580835,126.24999999999999 332.4759526419164,126.25000000000001"
+              stroke="#000000"
+              stroke-width="3"
+            />
+            <polygon
+              fill="#EEEEEE"
+              points="267.5240473580835,126.24999999999999 235.0480947161671,182.49999999999997 300,182.5"
+              stroke="#000000"
+              stroke-width="3"
+            />
+            <polygon
+              fill="#EEEEEE"
+              points="267.5240473580835,126.24999999999999 332.4759526419164,126.25000000000001 300,182.5"
+              stroke="#000000"
+              stroke-width="3"
+            />
+            <polygon
+              fill="#EEEEEE"
+              points="332.4759526419164,126.25000000000001 300,182.5 364.95190528383284,182.50000000000003"
+              stroke="#000000"
+              stroke-width="3"
+            />
+            <polygon
+              fill="#EEEEEE"
+              points="235.0480947161671,182.49999999999997 202.57214207425062,238.74999999999994 267.5240473580835,238.75"
+              stroke="#000000"
+              stroke-width="3"
+            />
+            <polygon
+              fill="#EEEEEE"
+              points="235.0480947161671,182.49999999999997 300,182.5 267.5240473580835,238.75"
+              stroke="#000000"
+              stroke-width="3"
+            />
+            <polygon
+              fill="#EEEEEE"
+              points="300,182.5 267.5240473580835,238.75 332.47595264191636,238.75"
+              stroke="#000000"
+              stroke-width="3"
+            />
+            <polygon
+              fill="#EEEEEE"
+              points="300,182.5 364.95190528383284,182.50000000000003 332.47595264191636,238.75"
+              stroke="#000000"
+              stroke-width="3"
+            />
+            <polygon
+              fill="#EEEEEE"
+              points="364.95190528383284,182.50000000000003 332.47595264191636,238.75 397.4278579257493,238.75000000000006"
+              stroke="#000000"
+              stroke-width="3"
+            />
+            <polygon
+              fill="#EEEEEE"
+              points="202.57214207425062,238.74999999999994 170.09618943233417,294.99999999999994 235.04809471616704,294.99999999999994"
+              stroke="#000000"
+              stroke-width="3"
+            />
+            <polygon
+              fill="#EEEEEE"
+              points="202.57214207425062,238.74999999999994 267.5240473580835,238.75 235.04809471616704,294.99999999999994"
+              stroke="#000000"
+              stroke-width="3"
+            />
+            <polygon
+              fill="#EEEEEE"
+              points="267.5240473580835,238.75 235.04809471616704,294.99999999999994 299.99999999999994,295"
+              stroke="#000000"
+              stroke-width="3"
+            />
+            <polygon
+              fill="#EEEEEE"
+              points="267.5240473580835,238.75 332.47595264191636,238.75 299.99999999999994,295"
+              stroke="#000000"
+              stroke-width="3"
+            />
+            <polygon
+              fill="#EEEEEE"
+              points="332.47595264191636,238.75 299.99999999999994,295 364.95190528383284,295.00000000000006"
+              stroke="#000000"
+              stroke-width="3"
+            />
+            <polygon
+              fill="#EEEEEE"
+              points="332.47595264191636,238.75 397.4278579257493,238.75000000000006 364.95190528383284,295.00000000000006"
+              stroke="#000000"
+              stroke-width="3"
+            />
+            <polygon
+              fill="#EEEEEE"
+              points="397.4278579257493,238.75000000000006 364.95190528383284,295.00000000000006 429.90381056766574,295.00000000000006"
+              stroke="#000000"
+              stroke-width="3"
+            />
+            <polygon
+              fill="#EEEEEE"
+              points="170.09618943233417,294.99999999999994 137.62023679041772,351.24999999999994 202.57214207425062,351.24999999999994"
+              stroke="#000000"
+              stroke-width="3"
+            />
+            <polygon
+              fill="#EEEEEE"
+              points="170.09618943233417,294.99999999999994 235.04809471616704,294.99999999999994 202.57214207425062,351.24999999999994"
+              stroke="#000000"
+              stroke-width="3"
+            />
+            <polygon
+              fill="#EEEEEE"
+              points="235.04809471616704,294.99999999999994 202.57214207425062,351.24999999999994 267.5240473580835,351.25"
+              stroke="#000000"
+              stroke-width="3"
+            />
+            <polygon
+              fill="#EEEEEE"
+              points="235.04809471616704,294.99999999999994 299.99999999999994,295 267.5240473580835,351.25"
+              stroke="#000000"
+              stroke-width="3"
+            />
+            <polygon
+              fill="#EEEEEE"
+              points="299.99999999999994,295 267.5240473580835,351.25 332.47595264191636,351.25"
+              stroke="#000000"
+              stroke-width="3"
+            />
+            <polygon
+              fill="#EEEEEE"
+              points="299.99999999999994,295 364.95190528383284,295.00000000000006 332.47595264191636,351.25"
+              stroke="#000000"
+              stroke-width="3"
+            />
+            <polygon
+              fill="#EEEEEE"
+              points="364.95190528383284,295.00000000000006 332.47595264191636,351.25 397.42785792574927,351.25"
+              stroke="#000000"
+              stroke-width="3"
+            />
+            <polygon
+              fill="#EEEEEE"
+              points="364.95190528383284,295.00000000000006 429.90381056766574,295.00000000000006 397.42785792574927,351.25"
+              stroke="#000000"
+              stroke-width="3"
+            />
+            <polygon
+              fill="#EEEEEE"
+              points="429.90381056766574,295.00000000000006 397.42785792574927,351.25 462.37976320958217,351.25000000000006"
+              stroke="#000000"
+              stroke-width="3"
+            />
+            <polygon
+              fill="#EEEEEE"
+              points="137.62023679041772,351.24999999999994 105.14428414850126,407.4999999999999 170.09618943233414,407.49999999999994"
+              stroke="#000000"
+              stroke-width="3"
+            />
+            <polygon
+              fill="#EEEEEE"
+              points="137.62023679041772,351.24999999999994 202.57214207425062,351.24999999999994 170.09618943233414,407.49999999999994"
+              stroke="#000000"
+              stroke-width="3"
+            />
+            <polygon
+              fill="#EEEEEE"
+              points="202.57214207425062,351.24999999999994 170.09618943233414,407.49999999999994 235.04809471616704,407.5"
+              stroke="#000000"
+              stroke-width="3"
+            />
+            <polygon
+              fill="#EEEEEE"
+              points="202.57214207425062,351.24999999999994 267.5240473580835,351.25 235.04809471616704,407.5"
+              stroke="#000000"
+              stroke-width="3"
+            />
+            <polygon
+              fill="#EEEEEE"
+              points="267.5240473580835,351.25 235.04809471616704,407.5 299.99999999999994,407.5"
+              stroke="#000000"
+              stroke-width="3"
+            />
+            <polygon
+              fill="#EEEEEE"
+              points="267.5240473580835,351.25 332.47595264191636,351.25 299.99999999999994,407.5"
+              stroke="#000000"
+              stroke-width="3"
+            />
+            <polygon
+              fill="#EEEEEE"
+              points="332.47595264191636,351.25 299.99999999999994,407.5 364.95190528383284,407.50000000000006"
+              stroke="#000000"
+              stroke-width="3"
+            />
+            <polygon
+              fill="#EEEEEE"
+              points="332.47595264191636,351.25 397.42785792574927,351.25 364.95190528383284,407.50000000000006"
+              stroke="#000000"
+              stroke-width="3"
+            />
+            <polygon
+              fill="#EEEEEE"
+              points="397.42785792574927,351.25 364.95190528383284,407.50000000000006 429.90381056766574,407.50000000000006"
+              stroke="#000000"
+              stroke-width="3"
+            />
+            <polygon
+              fill="#EEEEEE"
+              points="397.42785792574927,351.25 462.37976320958217,351.25000000000006 429.90381056766574,407.50000000000006"
+              stroke="#000000"
+              stroke-width="3"
+            />
+            <polygon
+              fill="#EEEEEE"
+              points="462.37976320958217,351.25000000000006 429.90381056766574,407.50000000000006 494.85571585149864,407.5000000000001"
+              stroke="#000000"
+              stroke-width="3"
+            />
+            <polygon
+              fill="#EEEEEE"
+              points="105.14428414850126,407.4999999999999 72.66833150658479,463.7499999999999 137.62023679041766,463.74999999999994"
+              stroke="#000000"
+              stroke-width="3"
+            />
+            <polygon
+              fill="#EEEEEE"
+              points="105.14428414850126,407.4999999999999 170.09618943233414,407.49999999999994 137.62023679041766,463.74999999999994"
+              stroke="#000000"
+              stroke-width="3"
+            />
+            <polygon
+              fill="#EEEEEE"
+              points="170.09618943233414,407.49999999999994 137.62023679041766,463.74999999999994 202.57214207425056,463.75"
+              stroke="#000000"
+              stroke-width="3"
+            />
+            <polygon
+              fill="#EEEEEE"
+              points="170.09618943233414,407.49999999999994 235.04809471616704,407.5 202.57214207425056,463.75"
+              stroke="#000000"
+              stroke-width="3"
+            />
+            <polygon
+              fill="#EEEEEE"
+              points="235.04809471616704,407.5 202.57214207425056,463.75 267.52404735808346,463.75"
+              stroke="#000000"
+              stroke-width="3"
+            />
+            <polygon
+              fill="#EEEEEE"
+              points="235.04809471616704,407.5 299.99999999999994,407.5 267.52404735808346,463.75"
+              stroke="#000000"
+              stroke-width="3"
+            />
+            <polygon
+              fill="#EEEEEE"
+              points="299.99999999999994,407.5 267.52404735808346,463.75 332.4759526419163,463.75"
+              stroke="#000000"
+              stroke-width="3"
+            />
+            <polygon
+              fill="#EEEEEE"
+              points="299.99999999999994,407.5 364.95190528383284,407.50000000000006 332.4759526419163,463.75"
+              stroke="#000000"
+              stroke-width="3"
+            />
+            <polygon
+              fill="#EEEEEE"
+              points="364.95190528383284,407.50000000000006 332.4759526419163,463.75 397.42785792574927,463.7500000000001"
+              stroke="#000000"
+              stroke-width="3"
+            />
+            <polygon
+              fill="#EEEEEE"
+              points="364.95190528383284,407.50000000000006 429.90381056766574,407.50000000000006 397.42785792574927,463.7500000000001"
+              stroke="#000000"
+              stroke-width="3"
+            />
+            <polygon
+              fill="#EEEEEE"
+              points="429.90381056766574,407.50000000000006 397.42785792574927,463.7500000000001 462.3797632095821,463.75000000000006"
+              stroke="#000000"
+              stroke-width="3"
+            />
+            <polygon
+              fill="#EEEEEE"
+              points="429.90381056766574,407.50000000000006 494.85571585149864,407.5000000000001 462.3797632095821,463.75000000000006"
+              stroke="#000000"
+              stroke-width="3"
+            />
+            <polygon
+              fill="#EEEEEE"
+              points="494.85571585149864,407.5000000000001 462.3797632095821,463.75000000000006 527.331668493415,463.7500000000001"
+              stroke="#000000"
+              stroke-width="3"
+            />
+            <polygon
+              fill="#EEEEEE"
+              points="72.66833150658479,463.7499999999999 40.19237886466834,519.9999999999999 105.14428414850124,519.9999999999999"
+              stroke="#000000"
+              stroke-width="3"
+            />
+            <polygon
+              fill="#EEEEEE"
+              points="72.66833150658479,463.7499999999999 137.62023679041766,463.74999999999994 105.14428414850124,519.9999999999999"
+              stroke="#000000"
+              stroke-width="3"
+            />
+            <polygon
+              fill="#EEEEEE"
+              points="137.62023679041766,463.74999999999994 105.14428414850124,519.9999999999999 170.09618943233414,519.9999999999999"
+              stroke="#000000"
+              stroke-width="3"
+            />
+            <polygon
+              fill="#EEEEEE"
+              points="137.62023679041766,463.74999999999994 202.57214207425056,463.75 170.09618943233414,519.9999999999999"
+              stroke="#000000"
+              stroke-width="3"
+            />
+            <polygon
+              fill="#EEEEEE"
+              points="202.57214207425056,463.75 170.09618943233414,519.9999999999999 235.04809471616704,520"
+              stroke="#000000"
+              stroke-width="3"
+            />
+            <polygon
+              fill="#EEEEEE"
+              points="202.57214207425056,463.75 267.52404735808346,463.75 235.04809471616704,520"
+              stroke="#000000"
+              stroke-width="3"
+            />
+            <polygon
+              fill="#EEEEEE"
+              points="267.52404735808346,463.75 235.04809471616704,520 299.9999999999999,520"
+              stroke="#000000"
+              stroke-width="3"
+            />
+            <polygon
+              fill="#EEEEEE"
+              points="267.52404735808346,463.75 332.4759526419163,463.75 299.9999999999999,520"
+              stroke="#000000"
+              stroke-width="3"
+            />
+            <polygon
+              fill="#EEEEEE"
+              points="332.4759526419163,463.75 299.9999999999999,520 364.9519052838328,520"
+              stroke="#000000"
+              stroke-width="3"
+            />
+            <polygon
+              fill="#EEEEEE"
+              points="332.4759526419163,463.75 397.42785792574927,463.7500000000001 364.9519052838328,520"
+              stroke="#000000"
+              stroke-width="3"
+            />
+            <polygon
+              fill="#EEEEEE"
+              points="397.42785792574927,463.7500000000001 364.9519052838328,520 429.90381056766574,520.0000000000001"
+              stroke="#000000"
+              stroke-width="3"
+            />
+            <polygon
+              fill="#EEEEEE"
+              points="397.42785792574927,463.7500000000001 462.3797632095821,463.75000000000006 429.90381056766574,520.0000000000001"
+              stroke="#000000"
+              stroke-width="3"
+            />
+            <polygon
+              fill="#EEEEEE"
+              points="462.3797632095821,463.75000000000006 429.90381056766574,520.0000000000001 494.8557158514986,520.0000000000001"
+              stroke="#000000"
+              stroke-width="3"
+            />
+            <polygon
+              fill="#EEEEEE"
+              points="462.3797632095821,463.75000000000006 527.331668493415,463.7500000000001 494.8557158514986,520.0000000000001"
+              stroke="#000000"
+              stroke-width="3"
+            />
+            <polygon
+              fill="#EEEEEE"
+              points="527.331668493415,463.7500000000001 494.8557158514986,520.0000000000001 559.8076211353315,520.0000000000001"
+              stroke="#000000"
+              stroke-width="3"
+            />
+            <g>
+              <circle
+                class="sc-kEYyzF dQoLKx"
+                cx="300"
+                cy="70"
+                fill="#000000"
+                r="7.5"
+                stroke="#000000"
+              />
+              <text
+                class="sc-bZQynM dUuugL"
+                font-size="11.25px"
+                x="300"
+                y="70"
+              >
+                A
+              </text>
+            </g>
+            <g>
+              <circle
+                class="sc-kEYyzF dQoLKx"
+                cx="267.5240473580835"
+                cy="126.24999999999999"
+                fill="#000000"
+                r="7.5"
+                stroke="#000000"
+              />
+              <text
+                class="sc-bZQynM dUuugL"
+                font-size="11.25px"
+                x="267.5240473580835"
+                y="126.24999999999999"
+              >
+                B
+              </text>
+            </g>
+            <g>
+              <circle
+                class="sc-kEYyzF dQoLKx"
+                cx="332.4759526419164"
+                cy="126.25000000000001"
+                fill="#000000"
+                r="7.5"
+                stroke="#000000"
+              />
+              <text
+                class="sc-bZQynM dUuugL"
+                font-size="11.25px"
+                x="332.4759526419164"
+                y="126.25000000000001"
+              >
+                C
+              </text>
+            </g>
+            <g>
+              <circle
+                class="sc-kEYyzF dQoLKx"
+                cx="235.0480947161671"
+                cy="182.49999999999997"
+                fill="#000000"
+                r="7.5"
+                stroke="#000000"
+              />
+              <text
+                class="sc-bZQynM dUuugL"
+                font-size="11.25px"
+                x="235.0480947161671"
+                y="182.49999999999997"
+              >
+                C
+              </text>
+            </g>
+            <g>
+              <circle
+                class="sc-kEYyzF dQoLKx"
+                cx="300"
+                cy="182.5"
+                fill="#000000"
+                r="7.5"
+                stroke="#000000"
+              />
+              <text
+                class="sc-bZQynM dUuugL"
+                font-size="11.25px"
+                x="300"
+                y="182.5"
+              >
+                A
+              </text>
+            </g>
+            <g>
+              <circle
+                class="sc-kEYyzF dQoLKx"
+                cx="364.95190528383284"
+                cy="182.50000000000003"
+                fill="#000000"
+                r="7.5"
+                stroke="#000000"
+              />
+              <text
+                class="sc-bZQynM dUuugL"
+                font-size="11.25px"
+                x="364.95190528383284"
+                y="182.50000000000003"
+              >
+                B
+              </text>
+            </g>
+            <g>
+              <circle
+                class="sc-kEYyzF dQoLKx"
+                cx="202.57214207425062"
+                cy="238.74999999999994"
+                fill="#000000"
+                r="7.5"
+                stroke="#000000"
+              />
+              <text
+                class="sc-bZQynM dUuugL"
+                font-size="11.25px"
+                x="202.57214207425062"
+                y="238.74999999999994"
+              >
+                A
+              </text>
+            </g>
+            <g>
+              <circle
+                class="sc-kEYyzF dQoLKx"
+                cx="267.5240473580835"
+                cy="238.75"
+                fill="#000000"
+                r="7.5"
+                stroke="#000000"
+              />
+              <text
+                class="sc-bZQynM dUuugL"
+                font-size="11.25px"
+                x="267.5240473580835"
+                y="238.75"
+              >
+                B
+              </text>
+            </g>
+            <g>
+              <circle
+                class="sc-kEYyzF dQoLKx"
+                cx="332.47595264191636"
+                cy="238.75"
+                fill="#000000"
+                r="7.5"
+                stroke="#000000"
+              />
+              <text
+                class="sc-bZQynM dUuugL"
+                font-size="11.25px"
+                x="332.47595264191636"
+                y="238.75"
+              >
+                C
+              </text>
+            </g>
+            <g>
+              <circle
+                class="sc-kEYyzF dQoLKx"
+                cx="397.4278579257493"
+                cy="238.75000000000006"
+                fill="#000000"
+                r="7.5"
+                stroke="#000000"
+              />
+              <text
+                class="sc-bZQynM dUuugL"
+                font-size="11.25px"
+                x="397.4278579257493"
+                y="238.75000000000006"
+              >
+                A
+              </text>
+            </g>
+            <g>
+              <circle
+                class="sc-kEYyzF dQoLKx"
+                cx="170.09618943233417"
+                cy="294.99999999999994"
+                fill="#000000"
+                r="7.5"
+                stroke="#000000"
+              />
+              <text
+                class="sc-bZQynM dUuugL"
+                font-size="11.25px"
+                x="170.09618943233417"
+                y="294.99999999999994"
+              >
+                B
+              </text>
+            </g>
+            <g>
+              <circle
+                class="sc-kEYyzF dQoLKx"
+                cx="235.04809471616704"
+                cy="294.99999999999994"
+                fill="#000000"
+                r="7.5"
+                stroke="#000000"
+              />
+              <text
+                class="sc-bZQynM dUuugL"
+                font-size="11.25px"
+                x="235.04809471616704"
+                y="294.99999999999994"
+              >
+                C
+              </text>
+            </g>
+            <g>
+              <circle
+                class="sc-kEYyzF dQoLKx"
+                cx="299.99999999999994"
+                cy="295"
+                fill="#000000"
+                r="7.5"
+                stroke="#000000"
+              />
+              <text
+                class="sc-bZQynM dUuugL"
+                font-size="11.25px"
+                x="299.99999999999994"
+                y="295"
+              >
+                A
+              </text>
+            </g>
+            <g>
+              <circle
+                class="sc-kEYyzF dQoLKx"
+                cx="364.95190528383284"
+                cy="295.00000000000006"
+                fill="#000000"
+                r="7.5"
+                stroke="#000000"
+              />
+              <text
+                class="sc-bZQynM dUuugL"
+                font-size="11.25px"
+                x="364.95190528383284"
+                y="295.00000000000006"
+              >
+                B
+              </text>
+            </g>
+            <g>
+              <circle
+                class="sc-kEYyzF dQoLKx"
+                cx="429.90381056766574"
+                cy="295.00000000000006"
+                fill="#000000"
+                r="7.5"
+                stroke="#000000"
+              />
+              <text
+                class="sc-bZQynM dUuugL"
+                font-size="11.25px"
+                x="429.90381056766574"
+                y="295.00000000000006"
+              >
+                C
+              </text>
+            </g>
+            <g>
+              <circle
+                class="sc-kEYyzF dQoLKx"
+                cx="137.62023679041772"
+                cy="351.24999999999994"
+                fill="#000000"
+                r="7.5"
+                stroke="#000000"
+              />
+              <text
+                class="sc-bZQynM dUuugL"
+                font-size="11.25px"
+                x="137.62023679041772"
+                y="351.24999999999994"
+              >
+                C
+              </text>
+            </g>
+            <g>
+              <circle
+                class="sc-kEYyzF dQoLKx"
+                cx="202.57214207425062"
+                cy="351.24999999999994"
+                fill="#000000"
+                r="7.5"
+                stroke="#000000"
+              />
+              <text
+                class="sc-bZQynM dUuugL"
+                font-size="11.25px"
+                x="202.57214207425062"
+                y="351.24999999999994"
+              >
+                A
+              </text>
+            </g>
+            <g>
+              <circle
+                class="sc-kEYyzF dQoLKx"
+                cx="267.5240473580835"
+                cy="351.25"
+                fill="#000000"
+                r="7.5"
+                stroke="#000000"
+              />
+              <text
+                class="sc-bZQynM dUuugL"
+                font-size="11.25px"
+                x="267.5240473580835"
+                y="351.25"
+              >
+                B
+              </text>
+            </g>
+            <g>
+              <circle
+                class="sc-kEYyzF dQoLKx"
+                cx="332.47595264191636"
+                cy="351.25"
+                fill="#000000"
+                r="7.5"
+                stroke="#000000"
+              />
+              <text
+                class="sc-bZQynM dUuugL"
+                font-size="11.25px"
+                x="332.47595264191636"
+                y="351.25"
+              >
+                C
+              </text>
+            </g>
+            <g>
+              <circle
+                class="sc-kEYyzF dQoLKx"
+                cx="397.42785792574927"
+                cy="351.25"
+                fill="#000000"
+                r="7.5"
+                stroke="#000000"
+              />
+              <text
+                class="sc-bZQynM dUuugL"
+                font-size="11.25px"
+                x="397.42785792574927"
+                y="351.25"
+              >
+                A
+              </text>
+            </g>
+            <g>
+              <circle
+                class="sc-kEYyzF dQoLKx"
+                cx="462.37976320958217"
+                cy="351.25000000000006"
+                fill="#000000"
+                r="7.5"
+                stroke="#000000"
+              />
+              <text
+                class="sc-bZQynM dUuugL"
+                font-size="11.25px"
+                x="462.37976320958217"
+                y="351.25000000000006"
+              >
+                B
+              </text>
+            </g>
+            <g>
+              <circle
+                class="sc-kEYyzF dQoLKx"
+                cx="105.14428414850126"
+                cy="407.4999999999999"
+                fill="#000000"
+                r="7.5"
+                stroke="#000000"
+              />
+              <text
+                class="sc-bZQynM dUuugL"
+                font-size="11.25px"
+                x="105.14428414850126"
+                y="407.4999999999999"
+              >
+                A
+              </text>
+            </g>
+            <g>
+              <circle
+                class="sc-kEYyzF dQoLKx"
+                cx="170.09618943233414"
+                cy="407.49999999999994"
+                fill="#000000"
+                r="7.5"
+                stroke="#000000"
+              />
+              <text
+                class="sc-bZQynM dUuugL"
+                font-size="11.25px"
+                x="170.09618943233414"
+                y="407.49999999999994"
+              >
+                B
+              </text>
+            </g>
+            <g>
+              <circle
+                class="sc-kEYyzF dQoLKx"
+                cx="235.04809471616704"
+                cy="407.5"
+                fill="#000000"
+                r="7.5"
+                stroke="#000000"
+              />
+              <text
+                class="sc-bZQynM dUuugL"
+                font-size="11.25px"
+                x="235.04809471616704"
+                y="407.5"
+              >
+                C
+              </text>
+            </g>
+            <g>
+              <circle
+                class="sc-kEYyzF dQoLKx"
+                cx="299.99999999999994"
+                cy="407.5"
+                fill="#000000"
+                r="7.5"
+                stroke="#000000"
+              />
+              <text
+                class="sc-bZQynM dUuugL"
+                font-size="11.25px"
+                x="299.99999999999994"
+                y="407.5"
+              >
+                A
+              </text>
+            </g>
+            <g>
+              <circle
+                class="sc-kEYyzF dQoLKx"
+                cx="364.95190528383284"
+                cy="407.50000000000006"
+                fill="#000000"
+                r="7.5"
+                stroke="#000000"
+              />
+              <text
+                class="sc-bZQynM dUuugL"
+                font-size="11.25px"
+                x="364.95190528383284"
+                y="407.50000000000006"
+              >
+                B
+              </text>
+            </g>
+            <g>
+              <circle
+                class="sc-kEYyzF dQoLKx"
+                cx="429.90381056766574"
+                cy="407.50000000000006"
+                fill="#000000"
+                r="7.5"
+                stroke="#000000"
+              />
+              <text
+                class="sc-bZQynM dUuugL"
+                font-size="11.25px"
+                x="429.90381056766574"
+                y="407.50000000000006"
+              >
+                C
+              </text>
+            </g>
+            <g>
+              <circle
+                class="sc-kEYyzF dQoLKx"
+                cx="494.85571585149864"
+                cy="407.5000000000001"
+                fill="#000000"
+                r="7.5"
+                stroke="#000000"
+              />
+              <text
+                class="sc-bZQynM dUuugL"
+                font-size="11.25px"
+                x="494.85571585149864"
+                y="407.5000000000001"
+              >
+                A
+              </text>
+            </g>
+            <g>
+              <circle
+                class="sc-kEYyzF dQoLKx"
+                cx="72.66833150658479"
+                cy="463.7499999999999"
+                fill="#000000"
+                r="7.5"
+                stroke="#000000"
+              />
+              <text
+                class="sc-bZQynM dUuugL"
+                font-size="11.25px"
+                x="72.66833150658479"
+                y="463.7499999999999"
+              >
+                B
+              </text>
+            </g>
+            <g>
+              <circle
+                class="sc-kEYyzF dQoLKx"
+                cx="137.62023679041766"
+                cy="463.74999999999994"
+                fill="#000000"
+                r="7.5"
+                stroke="#000000"
+              />
+              <text
+                class="sc-bZQynM dUuugL"
+                font-size="11.25px"
+                x="137.62023679041766"
+                y="463.74999999999994"
+              >
+                C
+              </text>
+            </g>
+            <g>
+              <circle
+                class="sc-kEYyzF dQoLKx"
+                cx="202.57214207425056"
+                cy="463.75"
+                fill="#000000"
+                r="7.5"
+                stroke="#000000"
+              />
+              <text
+                class="sc-bZQynM dUuugL"
+                font-size="11.25px"
+                x="202.57214207425056"
+                y="463.75"
+              >
+                A
+              </text>
+            </g>
+            <g>
+              <circle
+                class="sc-kEYyzF dQoLKx"
+                cx="267.52404735808346"
+                cy="463.75"
+                fill="#000000"
+                r="7.5"
+                stroke="#000000"
+              />
+              <text
+                class="sc-bZQynM dUuugL"
+                font-size="11.25px"
+                x="267.52404735808346"
+                y="463.75"
+              >
+                B
+              </text>
+            </g>
+            <g>
+              <circle
+                class="sc-kEYyzF dQoLKx"
+                cx="332.4759526419163"
+                cy="463.75"
+                fill="#000000"
+                r="7.5"
+                stroke="#000000"
+              />
+              <text
+                class="sc-bZQynM dUuugL"
+                font-size="11.25px"
+                x="332.4759526419163"
+                y="463.75"
+              >
+                C
+              </text>
+            </g>
+            <g>
+              <circle
+                class="sc-kEYyzF dQoLKx"
+                cx="397.42785792574927"
+                cy="463.7500000000001"
+                fill="#000000"
+                r="7.5"
+                stroke="#000000"
+              />
+              <text
+                class="sc-bZQynM dUuugL"
+                font-size="11.25px"
+                x="397.42785792574927"
+                y="463.7500000000001"
+              >
+                A
+              </text>
+            </g>
+            <g>
+              <circle
+                class="sc-kEYyzF dQoLKx"
+                cx="462.3797632095821"
+                cy="463.75000000000006"
+                fill="#000000"
+                r="7.5"
+                stroke="#000000"
+              />
+              <text
+                class="sc-bZQynM dUuugL"
+                font-size="11.25px"
+                x="462.3797632095821"
+                y="463.75000000000006"
+              >
+                B
+              </text>
+            </g>
+            <g>
+              <circle
+                class="sc-kEYyzF dQoLKx"
+                cx="527.331668493415"
+                cy="463.7500000000001"
+                fill="#000000"
+                r="7.5"
+                stroke="#000000"
+              />
+              <text
+                class="sc-bZQynM dUuugL"
+                font-size="11.25px"
+                x="527.331668493415"
+                y="463.7500000000001"
+              >
+                C
+              </text>
+            </g>
+            <g>
+              <circle
+                class="sc-kEYyzF dQoLKx"
+                cx="40.19237886466834"
+                cy="519.9999999999999"
+                fill="#000000"
+                r="7.5"
+                stroke="#000000"
+              />
+              <text
+                class="sc-bZQynM dUuugL"
+                font-size="11.25px"
+                x="40.19237886466834"
+                y="519.9999999999999"
+              >
+                C
+              </text>
+            </g>
+            <g>
+              <circle
+                class="sc-kEYyzF dQoLKx"
+                cx="105.14428414850124"
+                cy="519.9999999999999"
+                fill="#000000"
+                r="7.5"
+                stroke="#000000"
+              />
+              <text
+                class="sc-bZQynM dUuugL"
+                font-size="11.25px"
+                x="105.14428414850124"
+                y="519.9999999999999"
+              >
+                A
+              </text>
+            </g>
+            <g>
+              <circle
+                class="sc-kEYyzF dQoLKx"
+                cx="170.09618943233414"
+                cy="519.9999999999999"
+                fill="#000000"
+                r="7.5"
+                stroke="#000000"
+              />
+              <text
+                class="sc-bZQynM dUuugL"
+                font-size="11.25px"
+                x="170.09618943233414"
+                y="519.9999999999999"
+              >
+                B
+              </text>
+            </g>
+            <g>
+              <circle
+                class="sc-kEYyzF dQoLKx"
+                cx="235.04809471616704"
+                cy="520"
+                fill="#000000"
+                r="7.5"
+                stroke="#000000"
+              />
+              <text
+                class="sc-bZQynM dUuugL"
+                font-size="11.25px"
+                x="235.04809471616704"
+                y="520"
+              >
+                C
+              </text>
+            </g>
+            <g>
+              <circle
+                class="sc-kEYyzF dQoLKx"
+                cx="299.9999999999999"
+                cy="520"
+                fill="#000000"
+                r="7.5"
+                stroke="#000000"
+              />
+              <text
+                class="sc-bZQynM dUuugL"
+                font-size="11.25px"
+                x="299.9999999999999"
+                y="520"
+              >
+                A
+              </text>
+            </g>
+            <g>
+              <circle
+                class="sc-kEYyzF dQoLKx"
+                cx="364.9519052838328"
+                cy="520"
+                fill="#000000"
+                r="7.5"
+                stroke="#000000"
+              />
+              <text
+                class="sc-bZQynM dUuugL"
+                font-size="11.25px"
+                x="364.9519052838328"
+                y="520"
+              >
+                B
+              </text>
+            </g>
+            <g>
+              <circle
+                class="sc-kEYyzF dQoLKx"
+                cx="429.90381056766574"
+                cy="520.0000000000001"
+                fill="#000000"
+                r="7.5"
+                stroke="#000000"
+              />
+              <text
+                class="sc-bZQynM dUuugL"
+                font-size="11.25px"
+                x="429.90381056766574"
+                y="520.0000000000001"
+              >
+                C
+              </text>
+            </g>
+            <g>
+              <circle
+                class="sc-kEYyzF dQoLKx"
+                cx="494.8557158514986"
+                cy="520.0000000000001"
+                fill="#000000"
+                r="7.5"
+                stroke="#000000"
+              />
+              <text
+                class="sc-bZQynM dUuugL"
+                font-size="11.25px"
+                x="494.8557158514986"
+                y="520.0000000000001"
+              >
+                A
+              </text>
+            </g>
+            <g>
+              <circle
+                class="sc-kEYyzF dQoLKx"
+                cx="559.8076211353315"
+                cy="520.0000000000001"
+                fill="#000000"
+                r="7.5"
+                stroke="#000000"
+              />
+              <text
+                class="sc-bZQynM dUuugL"
+                font-size="11.25px"
+                x="559.8076211353315"
+                y="520.0000000000001"
+              >
+                B
+              </text>
+            </g>
+          </g>
+        </svg>
+      </div>
+      <div
+        class="sc-gipzik fSaFp"
+        style="display: none; left: 0px; top: -20px; width: 0px;"
+        x="0"
+        y="-20"
+      />
+    </div>
+  </div>
+</DocumentFragment>
 `;

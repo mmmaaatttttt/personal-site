@@ -1,208 +1,430 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`smoke and snapshot tests renders first demonstration successfully 1`] = `
-<styled.div
-  fullWidthAt="extraSmall"
-  margin="0 auto"
-  width="50%"
->
-  <SliderGroup
-    column={true}
-    data={
-      Array [
-        Object {
-          "color": "#A05E52",
-          "handleValueChange": [Function],
-          "max": 30,
-          "maxIcon": "users",
-          "min": 2,
-          "minIcon": "user",
-          "step": 1,
-          "title": "Population Size",
-          "value": 2,
-        },
-      ]
-    }
-  />
-  <ButtonGroup
-    data={
-      Array [
-        Object {
-          "buttonText": "Start",
-          "color": "#A05E52",
-          "handleClick": [Function],
-        },
-      ]
-    }
-  />
+<DocumentFragment>
   <div
-    style={
-      Object {
-        "display": "block",
-      }
-    }
+    class="sc-VigVT hSnLDN"
+    width="50%"
   >
-    <ClippedSVG
-      height={600}
-      id="simulation-0"
-      marginTop={0}
-      padding={0}
-      width={600}
+    <div
+      class="sc-iwsKbI kvOfHz"
+      width="auto"
     >
-      <EconomyNodeGroup
-        handleCollision={[Function]}
-        height={600}
-        initialV={10}
-        paused={false}
-        playing={false}
-        speeds={
-          Array [
-            10,
-            10,
-          ]
-        }
-        velocityMultiplier={1}
-        width={600}
-      />
-    </ClippedSVG>
+      <div
+        class="sc-dVhcbM ecVKIK"
+      >
+        <div
+          class="sc-bRBYWo gtDXeL"
+        >
+          <p
+            class="sc-Rmtcm bImzes"
+          >
+            Population Size
+          </p>
+          <section>
+            <p
+              class="sc-hzDkRC kxpnkL"
+            >
+              <i
+                class="sc-gZMcBi dPNFn fas fa-user fa-1x false"
+                disabled=""
+                style="color: rgb(160, 94, 82); opacity: 1;"
+              />
+            </p>
+            <div
+              class="rc-slider sc-chPdSV gcsTPk"
+            >
+              <div
+                class="rc-slider-rail"
+              />
+              <div
+                class="rc-slider-track"
+                style="left: 0%; width: 0%;"
+              />
+              <div
+                class="rc-slider-step"
+              />
+              <div
+                aria-disabled="false"
+                aria-valuemax="30"
+                aria-valuemin="2"
+                aria-valuenow="2"
+                class="rc-slider-handle"
+                role="slider"
+                style="left: 0%; transform: translateX(-50%);"
+                tabindex="0"
+              />
+              <div
+                class="rc-slider-mark"
+              />
+              <div
+                class="sc-iwsKbI gQUqIM"
+                width="auto"
+              >
+                <div
+                  class="sc-jAaTju gdaaGZ"
+                  color="#c79991"
+                  offset="10"
+                  width="6"
+                />
+                <div
+                  class="sc-jAaTju kbZoje"
+                  color="#e9e9e9"
+                  offset="10"
+                  width="6"
+                />
+              </div>
+            </div>
+            <p
+              class="sc-hzDkRC kxpnkL"
+            >
+              <i
+                class="sc-gZMcBi dPNFn fas fa-users fa-1x false"
+                disabled=""
+                style="color: rgb(160, 94, 82); opacity: 1;"
+              />
+            </p>
+          </section>
+        </div>
+      </div>
+    </div>
+    <div
+      class="sc-iwsKbI QHnwj"
+      width="auto"
+    >
+      <button
+        class="sc-bxivhb cEXLum"
+        color="#A05E52"
+      >
+        Start
+      </button>
+    </div>
+    <div
+      style="display: block;"
+    >
+      <div>
+        <svg
+          class="sc-gzVnrw jUuqtv"
+          viewBox="0 0 600 600"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <defs>
+            <clippath
+              id="clip-path-simulation-0"
+            >
+              <rect
+                height="600"
+                width="600"
+                x="0"
+                y="0"
+              />
+            </clippath>
+          </defs>
+          <g
+            clip-path="url(#clip-path-simulation-0)"
+          >
+            <g>
+              <rect
+                fill="none"
+                height="600"
+                stroke="#BBBBBB"
+                stroke-width="3"
+                width="600"
+                x="0"
+                y="0"
+              />
+              <g />
+            </g>
+          </g>
+        </svg>
+      </div>
+    </div>
   </div>
-</styled.div>
+</DocumentFragment>
 `;
 
 exports[`smoke and snapshot tests renders first demonstration successfully 2`] = `
-<styled.div
-  fullWidthAt="extraSmall"
-  margin="0 auto"
-  width="50%"
->
-  <SliderGroup
-    column={true}
-    data={
-      Array [
-        Object {
-          "color": "#A05E52",
-          "handleValueChange": [Function],
-          "max": 30,
-          "maxIcon": "users",
-          "min": 2,
-          "minIcon": "user",
-          "step": 1,
-          "title": "Population Size",
-          "value": 2,
-        },
-      ]
-    }
-  />
-  <ButtonGroup
-    data={
-      Array [
-        Object {
-          "buttonText": "Start",
-          "color": "#A05E52",
-          "handleClick": [Function],
-        },
-      ]
-    }
-  />
+<DocumentFragment>
   <div
-    style={
-      Object {
-        "display": "block",
-      }
-    }
+    class="sc-VigVT hSnLDN"
+    width="50%"
   >
-    <ClippedSVG
-      height={600}
-      id="simulation-2"
-      marginTop={0}
-      padding={0}
-      width={600}
+    <div
+      class="sc-iwsKbI kvOfHz"
+      width="auto"
     >
-      <EconomyNodeGroup
-        handleCollision={[Function]}
-        height={600}
-        initialV={10}
-        paused={false}
-        playing={false}
-        speeds={
-          Array [
-            10,
-            10,
-          ]
-        }
-        velocityMultiplier={1}
-        width={600}
-      />
-    </ClippedSVG>
+      <div
+        class="sc-dVhcbM ecVKIK"
+      >
+        <div
+          class="sc-bRBYWo gtDXeL"
+        >
+          <p
+            class="sc-Rmtcm bImzes"
+          >
+            Population Size
+          </p>
+          <section>
+            <p
+              class="sc-hzDkRC kxpnkL"
+            >
+              <i
+                class="sc-gZMcBi dPNFn fas fa-user fa-1x false"
+                disabled=""
+                style="color: rgb(160, 94, 82); opacity: 1;"
+              />
+            </p>
+            <div
+              class="rc-slider sc-chPdSV gcsTPk"
+            >
+              <div
+                class="rc-slider-rail"
+              />
+              <div
+                class="rc-slider-track"
+                style="left: 0%; width: 0%;"
+              />
+              <div
+                class="rc-slider-step"
+              />
+              <div
+                aria-disabled="false"
+                aria-valuemax="30"
+                aria-valuemin="2"
+                aria-valuenow="2"
+                class="rc-slider-handle"
+                role="slider"
+                style="left: 0%; transform: translateX(-50%);"
+                tabindex="0"
+              />
+              <div
+                class="rc-slider-mark"
+              />
+              <div
+                class="sc-iwsKbI gQUqIM"
+                width="auto"
+              >
+                <div
+                  class="sc-jAaTju gdaaGZ"
+                  color="#c79991"
+                  offset="10"
+                  width="6"
+                />
+                <div
+                  class="sc-jAaTju kbZoje"
+                  color="#e9e9e9"
+                  offset="10"
+                  width="6"
+                />
+              </div>
+            </div>
+            <p
+              class="sc-hzDkRC kxpnkL"
+            >
+              <i
+                class="sc-gZMcBi dPNFn fas fa-users fa-1x false"
+                disabled=""
+                style="color: rgb(160, 94, 82); opacity: 1;"
+              />
+            </p>
+          </section>
+        </div>
+      </div>
+    </div>
+    <div
+      class="sc-iwsKbI QHnwj"
+      width="auto"
+    >
+      <button
+        class="sc-bxivhb cEXLum"
+        color="#A05E52"
+      >
+        Start
+      </button>
+    </div>
+    <div
+      style="display: block;"
+    >
+      <div>
+        <svg
+          class="sc-gzVnrw jUuqtv"
+          viewBox="0 0 600 600"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <defs>
+            <clippath
+              id="clip-path-simulation-2"
+            >
+              <rect
+                height="600"
+                width="600"
+                x="0"
+                y="0"
+              />
+            </clippath>
+          </defs>
+          <g
+            clip-path="url(#clip-path-simulation-2)"
+          >
+            <g>
+              <rect
+                fill="none"
+                height="600"
+                stroke="#BBBBBB"
+                stroke-width="3"
+                width="600"
+                x="0"
+                y="0"
+              />
+              <g />
+            </g>
+          </g>
+        </svg>
+      </div>
+    </div>
   </div>
-</styled.div>
+</DocumentFragment>
 `;
 
 exports[`smoke and snapshot tests renders second demonstration successfully 1`] = `
-<styled.div
-  fullWidthAt="extraSmall"
-  margin="0 auto"
-  width="50%"
->
-  <SliderGroup
-    column={true}
-    data={
-      Array [
-        Object {
-          "color": "#A05E52",
-          "handleValueChange": [Function],
-          "max": 30,
-          "maxIcon": "users",
-          "min": 2,
-          "minIcon": "user",
-          "step": 1,
-          "title": "Population Size",
-          "value": 2,
-        },
-      ]
-    }
-  />
-  <ButtonGroup
-    data={
-      Array [
-        Object {
-          "buttonText": "Start",
-          "color": "#A05E52",
-          "handleClick": [Function],
-        },
-      ]
-    }
-  />
+<DocumentFragment>
   <div
-    style={
-      Object {
-        "display": "block",
-      }
-    }
+    class="sc-VigVT hSnLDN"
+    width="50%"
   >
-    <ClippedSVG
-      height={600}
-      id="simulation-1"
-      marginTop={0}
-      padding={0}
-      width={600}
+    <div
+      class="sc-iwsKbI kvOfHz"
+      width="auto"
     >
-      <EconomyNodeGroup
-        handleCollision={[Function]}
-        height={600}
-        initialV={10}
-        paused={false}
-        playing={false}
-        speeds={
-          Array [
-            10,
-            10,
-          ]
-        }
-        velocityMultiplier={1}
-        width={600}
-      />
-    </ClippedSVG>
+      <div
+        class="sc-dVhcbM ecVKIK"
+      >
+        <div
+          class="sc-bRBYWo gtDXeL"
+        >
+          <p
+            class="sc-Rmtcm bImzes"
+          >
+            Population Size
+          </p>
+          <section>
+            <p
+              class="sc-hzDkRC kxpnkL"
+            >
+              <i
+                class="sc-gZMcBi dPNFn fas fa-user fa-1x false"
+                disabled=""
+                style="color: rgb(160, 94, 82); opacity: 1;"
+              />
+            </p>
+            <div
+              class="rc-slider sc-chPdSV gcsTPk"
+            >
+              <div
+                class="rc-slider-rail"
+              />
+              <div
+                class="rc-slider-track"
+                style="left: 0%; width: 0%;"
+              />
+              <div
+                class="rc-slider-step"
+              />
+              <div
+                aria-disabled="false"
+                aria-valuemax="30"
+                aria-valuemin="2"
+                aria-valuenow="2"
+                class="rc-slider-handle"
+                role="slider"
+                style="left: 0%; transform: translateX(-50%);"
+                tabindex="0"
+              />
+              <div
+                class="rc-slider-mark"
+              />
+              <div
+                class="sc-iwsKbI gQUqIM"
+                width="auto"
+              >
+                <div
+                  class="sc-jAaTju gdaaGZ"
+                  color="#c79991"
+                  offset="10"
+                  width="6"
+                />
+                <div
+                  class="sc-jAaTju kbZoje"
+                  color="#e9e9e9"
+                  offset="10"
+                  width="6"
+                />
+              </div>
+            </div>
+            <p
+              class="sc-hzDkRC kxpnkL"
+            >
+              <i
+                class="sc-gZMcBi dPNFn fas fa-users fa-1x false"
+                disabled=""
+                style="color: rgb(160, 94, 82); opacity: 1;"
+              />
+            </p>
+          </section>
+        </div>
+      </div>
+    </div>
+    <div
+      class="sc-iwsKbI QHnwj"
+      width="auto"
+    >
+      <button
+        class="sc-bxivhb cEXLum"
+        color="#A05E52"
+      >
+        Start
+      </button>
+    </div>
+    <div
+      style="display: block;"
+    >
+      <div>
+        <svg
+          class="sc-gzVnrw jUuqtv"
+          viewBox="0 0 600 600"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <defs>
+            <clippath
+              id="clip-path-simulation-1"
+            >
+              <rect
+                height="600"
+                width="600"
+                x="0"
+                y="0"
+              />
+            </clippath>
+          </defs>
+          <g
+            clip-path="url(#clip-path-simulation-1)"
+          >
+            <g>
+              <rect
+                fill="none"
+                height="600"
+                stroke="#BBBBBB"
+                stroke-width="3"
+                width="600"
+                x="0"
+                y="0"
+              />
+              <g />
+            </g>
+          </g>
+        </svg>
+      </div>
+    </div>
   </div>
-</styled.div>
+</DocumentFragment>
 `;

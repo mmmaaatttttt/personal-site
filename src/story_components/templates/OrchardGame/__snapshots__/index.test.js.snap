@@ -1,132 +1,222 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`smoke and snapshot tests renders first demonstration successfully 1`] = `
-<styled.div
-  fullWidthAt="small"
-  margin="0 auto"
-  width="70%"
->
-  <styled.div>
-    <ScreenOverlay
-      backgroundColor="#BBBBBB"
+<DocumentFragment>
+  <div
+    class="sc-VigVT jNCpwj"
+    width="70%"
+  >
+    <div
+      class="sc-fjdhpX fCEyoV"
     >
-      <h1>
-        Orchard Game
-      </h1>
-      <p>
-        Games won: 
-        0
-      </p>
-      <p>
-        Games played: 
-        0
-      </p>
-      <Button
-        color="#52A081"
-        disabled={false}
-        large={true}
-        onClick={[Function]}
+      <div
+        class="sc-jWBwVP ljQxpZ"
       >
-        Play
-      </Button>
-      <Button
-        color="white"
-        disabled={false}
-        large={true}
-        onClick={[Function]}
-      >
-        Clear Game Data
-      </Button>
-    </ScreenOverlay>
-    <styled.div
-      column={true}
-      cross="stretch"
-      flex={1}
-      main="stretch"
-      margin="0"
-      shouldWrap={false}
-      textAlign="left"
-      width="auto"
-    >
-      <styled.div
-        fullWidthAt="extraSmall"
-        margin="0 auto"
-        width="60%"
-      >
-        <Spinner
-          colors={
-            Array [
-              "#FF3C23",
-              "#00802b",
-              "#2227FF",
-              "#FFEC28",
-              "#000000",
-              "#FFFFFF",
-            ]
-          }
-          handleSpinEnd={[Function]}
-          height={300}
-          message="&nbsp;"
-          width={300}
-        />
-      </styled.div>
-      <styled.div
-        column={false}
-        cross="stretch"
-        flex={1}
-        main="stretch"
-        margin="0"
-        shouldWrap={false}
-        textAlign="left"
+        <div
+          class="sc-brqgnP jskNy"
+        >
+          <h1>
+            Orchard Game
+          </h1>
+          <p>
+            Games won: 0
+          </p>
+          <p>
+            Games played: 0
+          </p>
+          <button
+            class="sc-bxivhb iyfQDN"
+            color="#52A081"
+          >
+            Play
+          </button>
+          <button
+            class="sc-bxivhb kyikDx"
+            color="white"
+          >
+            Clear Game Data
+          </button>
+        </div>
+      </div>
+      <div
+        class="sc-iwsKbI OMHhq"
         width="auto"
       >
-        <FruitContainer
-          clickable={false}
-          color="#FF3C23"
-          count={4}
-          faded={false}
-          key="#FF3C23"
-          title="Fruit"
-          updateCounts={[Function]}
-        />
-        <FruitContainer
-          clickable={false}
-          color="#00802b"
-          count={4}
-          faded={false}
-          key="#00802b"
-          title="Fruit"
-          updateCounts={[Function]}
-        />
-        <FruitContainer
-          clickable={false}
-          color="#2227FF"
-          count={4}
-          faded={false}
-          key="#2227FF"
-          title="Fruit"
-          updateCounts={[Function]}
-        />
-        <FruitContainer
-          clickable={false}
-          color="#FFEC28"
-          count={4}
-          faded={false}
-          key="#FFEC28"
-          title="Fruit"
-          updateCounts={[Function]}
-        />
-        <FruitContainer
-          clickable={false}
-          color="#000000"
-          count={5}
-          faded={false}
-          key="#000000"
-          title="Raven"
-          updateCounts={[Function]}
-        />
-      </styled.div>
-    </styled.div>
-  </styled.div>
-</styled.div>
+        <div
+          class="sc-VigVT ixkUcj"
+          width="60%"
+        >
+          <div>
+            <div>
+              <div>
+                <svg
+                  class="sc-gzVnrw jUuqtv"
+                  viewBox="0 0 300 300"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <defs>
+                    <clippath
+                      id="clip-path-pie"
+                    >
+                      <rect
+                        height="300"
+                        width="300"
+                        x="0"
+                        y="0"
+                      />
+                    </clippath>
+                  </defs>
+                  <g
+                    clip-path="url(#clip-path-pie)"
+                  >
+                    <g
+                      transform="translate(150, 150)"
+                    >
+                      <path
+                        d="M8.572527594031473e-15,-140L0,0Z"
+                        fill="#FF3C23"
+                        stroke="#000000"
+                        stroke-width="3px"
+                      />
+                      <path
+                        d="M121.2435565298214,-70L0,0Z"
+                        fill="#00802b"
+                        stroke="#000000"
+                        stroke-width="3px"
+                      />
+                      <path
+                        d="M121.24355652982142,69.99999999999997L0,0Z"
+                        fill="#2227FF"
+                        stroke="#000000"
+                        stroke-width="3px"
+                      />
+                      <path
+                        d="M8.572527594031473e-15,140L0,0Z"
+                        fill="#FFEC28"
+                        stroke="#000000"
+                        stroke-width="3px"
+                      />
+                      <path
+                        d="M-121.24355652982139,70.00000000000004L0,0Z"
+                        fill="#000000"
+                        stroke="#000000"
+                        stroke-width="3px"
+                      />
+                      <path
+                        d="M-121.24355652982146,-69.99999999999991L0,0Z"
+                        fill="#FFFFFF"
+                        stroke="#000000"
+                        stroke-width="3px"
+                      />
+                    </g>
+                    <g
+                      fill="#555555"
+                      stroke="#555555"
+                      stroke-width="6"
+                      transform="rotate(0 150 150)"
+                    >
+                      <circle
+                        cx="150"
+                        cy="150"
+                        r="5"
+                      />
+                      <line
+                        x1="150"
+                        x2="150"
+                        y1="150"
+                        y2="45"
+                      />
+                      <polygon
+                        points="
+        150,30 
+        156,45 
+        144,45
+      "
+                      />
+                    </g>
+                  </g>
+                </svg>
+              </div>
+            </div>
+            <p
+              class="sc-eqIVtm iEUbvd"
+            >
+              &nbsp;
+            </p>
+          </div>
+        </div>
+        <div
+          class="sc-iwsKbI bcNaGp"
+          width="auto"
+        >
+          <div
+            class="sc-ckVGcZ ewGBcJ"
+            color="#FF3C23"
+          >
+            <div>
+              <p>
+                Fruit
+              </p>
+              <h1>
+                4
+              </h1>
+            </div>
+          </div>
+          <div
+            class="sc-ckVGcZ evJBpN"
+            color="#00802b"
+          >
+            <div>
+              <p>
+                Fruit
+              </p>
+              <h1>
+                4
+              </h1>
+            </div>
+          </div>
+          <div
+            class="sc-ckVGcZ NFnfY"
+            color="#2227FF"
+          >
+            <div>
+              <p>
+                Fruit
+              </p>
+              <h1>
+                4
+              </h1>
+            </div>
+          </div>
+          <div
+            class="sc-ckVGcZ giXllK"
+            color="#FFEC28"
+          >
+            <div>
+              <p>
+                Fruit
+              </p>
+              <h1>
+                4
+              </h1>
+            </div>
+          </div>
+          <div
+            class="sc-ckVGcZ iwruPX"
+            color="#000000"
+          >
+            <div>
+              <p>
+                Raven
+              </p>
+              <h1>
+                5
+              </h1>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
 `;

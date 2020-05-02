@@ -1,35 +1,34 @@
 import React from "react";
-import { shallow } from "enzyme";
-import toJson from "enzyme-to-json";
+import { render } from "@testing-library/react";
 import { WarmingDots } from ".";
 
 describe("smoke and snapshot tests", () => {
   it("renders successfully", () => {
-    shallow(<WarmingDots />);
+    render(<WarmingDots />);
   });
 
   it("renders first demonstration successfully", () => {
-    const wrapper = shallow(<WarmingDots idx={0} />);
-    expect(toJson(wrapper)).toMatchSnapshot();
+    const { asFragment } = render(<WarmingDots idx={0} />);
+    expect(asFragment()).toMatchSnapshot();
   });
 
   it("renders second demonstration successfully", () => {
-    const wrapper = shallow(<WarmingDots idx={1} />);
-    expect(toJson(wrapper)).toMatchSnapshot();
+    const { asFragment } = render(<WarmingDots idx={1} />);
+    expect(asFragment()).toMatchSnapshot();
   });
 
   it("renders third demonstration successfully", () => {
-    const wrapper = shallow(<WarmingDots idx={2} />);
-    expect(toJson(wrapper)).toMatchSnapshot();
+    const { asFragment } = render(<WarmingDots idx={2} />);
+    expect(asFragment()).toMatchSnapshot();
   });
 
   it("renders fourth demonstration successfully", () => {
-    const wrapper = shallow(<WarmingDots idx={3} />);
-    expect(toJson(wrapper)).toMatchSnapshot();
+    const { asFragment } = render(<WarmingDots idx={3} />);
+    expect(asFragment()).toMatchSnapshot();
   });
 
   it("renders fifth demonstration successfully", () => {
-    const wrapper = shallow(<WarmingDots idx={4} />);
-    expect(toJson(wrapper)).toMatchSnapshot();
+    const { asFragment } = render(<WarmingDots idx={4} />);
+    expect(asFragment()).toMatchSnapshot();
   });
 });

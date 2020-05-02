@@ -1,15 +1,14 @@
 import React from "react";
-import { shallow } from "enzyme";
-import toJson from "enzyme-to-json";
+import { render } from "@testing-library/react";
 import { RentDivision } from ".";
 
 describe("smoke and snapshot tests", () => {
   it("renders successfully", () => {
-    shallow(<RentDivision />);
+    render(<RentDivision />);
   });
 
   it("renders first demonstration successfully", () => {
-    const wrapper = shallow(<RentDivision />);
-    expect(toJson(wrapper)).toMatchSnapshot();
+    const { asFragment } = render(<RentDivision />);
+    expect(asFragment()).toMatchSnapshot();
   });
 });

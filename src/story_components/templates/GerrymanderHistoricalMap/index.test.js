@@ -1,15 +1,14 @@
 import React from "react";
-import { shallow } from "enzyme";
-import toJson from "enzyme-to-json";
+import { render } from "@testing-library/react";
 import { PureHistoricalMap } from ".";
 
 describe("smoke and snapshot tests", () => {
   it("renders successfully", () => {
-    shallow(<PureHistoricalMap />);
+    render(<PureHistoricalMap />);
   });
 
   it("renders first demonstration successfully", () => {
-    const wrapper = shallow(<PureHistoricalMap />);
-    expect(toJson(wrapper)).toMatchSnapshot();
+    const { asFragment } = render(<PureHistoricalMap />);
+    expect(asFragment()).toMatchSnapshot();
   });
 });

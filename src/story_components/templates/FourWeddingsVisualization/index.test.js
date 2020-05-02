@@ -1,10 +1,8 @@
 import React from "react";
-import { shallow } from "enzyme";
-import toJson from "enzyme-to-json";
+import { render } from "@testing-library/react";
 import { PureFourWeddingsVis } from ".";
 
 describe("smoke and snapshot tests", () => {
-
   const data = [
     {
       season: 1,
@@ -227,14 +225,16 @@ describe("smoke and snapshot tests", () => {
 
   it("renders each visualization successfully", () => {
     visTypes.forEach(type => {
-      shallow(<PureFourWeddingsVis data={data} caption="foo" visType={type} />);
+      render(<PureFourWeddingsVis data={data} caption="foo" visType={type} />);
     });
   });
 
   it("matches snapshots", () => {
     visTypes.forEach(type => {
-      const wrapper = shallow(<PureFourWeddingsVis data={data} caption="foo" visType={type} />);
-      expect(toJson(wrapper)).toMatchSnapshot();
+      const { asFragment } = render(
+        <PureFourWeddingsVis data={data} caption="foo" visType={type} />
+      );
+      expect(asFragment()).toMatchSnapshot();
     });
-  })
+  });
 });
