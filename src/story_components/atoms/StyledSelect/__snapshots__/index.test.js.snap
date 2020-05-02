@@ -3,21 +3,21 @@
 exports[`matches snapshot 1`] = `
 <DocumentFragment>
   <div
-    class="css-1pcexqc-container sc-bdVaJa ivHGRL"
+    class="sc-bdVaJa ivHGRL css-2b097c-container"
   >
     <div
-      class="css-bg1rzq-control"
+      class=" css-yk16xz-control"
     >
       <div
-        class="css-wln48t"
+        class=" css-w0ua1m-ValueContainer"
       >
         <div
-          class="css-5cm1aq"
+          class=" css-tlb9ge-Placeholder"
         >
           Select...
         </div>
         <div
-          class="css-1g6gooi"
+          class="css-b8ldur-Input"
         >
           <div
             class=""
@@ -42,18 +42,18 @@ exports[`matches snapshot 1`] = `
         </div>
       </div>
       <div
-        class="css-1wy0on6"
+        class=" css-1hb7zxy-IndicatorsContainer"
       >
         <span
-          class="css-bgvzuu-indicatorSeparator"
+          class=" css-1okebmr-indicatorSeparator"
         />
         <div
           aria-hidden="true"
-          class="css-16pqwjk-indicatorContainer"
+          class=" css-tlfecz-indicatorContainer"
         >
           <svg
             aria-hidden="true"
-            class="css-19bqh2r"
+            class="css-6q0nyr-Svg"
             focusable="false"
             height="20"
             viewBox="0 0 20 20"

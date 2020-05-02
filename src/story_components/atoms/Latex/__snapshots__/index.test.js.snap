@@ -14,7 +14,9 @@ exports[`matches snapshot with props and children 1`] = `
         <span
           class="katex-mathml"
         >
-          <math>
+          <math
+            xmlns="http://www.w3.org/1998/Math/MathML"
+          >
             <semantics>
               <mtable
                 columnalign="right left"
@@ -33,7 +35,9 @@ exports[`matches snapshot with props and children 1`] = `
                             A
                           </mi>
                           <mo
+                            lspace="0em"
                             mathvariant="normal"
+                            rspace="0em"
                           >
                             ′
                           </mo>
@@ -107,7 +111,9 @@ exports[`matches snapshot with props and children 1`] = `
                             B
                           </mi>
                           <mo
+                            lspace="0em"
                             mathvariant="normal"
+                            rspace="0em"
                           >
                             ′
                           </mo>
