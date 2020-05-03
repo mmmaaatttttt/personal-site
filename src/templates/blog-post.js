@@ -1,10 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import { graphql } from "gatsby";
 import { Share } from "react-twitter-widgets";
 import { Helmet } from "react-helmet";
 import { MDXProvider } from "@mdx-js/react";
-import { MDXRenderer } from "gatsby-plugin-mdx"
+import { MDXRenderer } from "gatsby-plugin-mdx";
 import Img from "gatsby-image";
 import MainLayout from "layouts/MainLayout";
 import RelatedStories from "layouts/RelatedStories";
@@ -13,6 +13,7 @@ import { sizes, fadeIn } from "utils/styles";
 import { rhythm } from "utils/typography";
 import media from "utils/media";
 import renderer from "utils/mdxHelpers";
+import { BlogPostContext } from "contexts";
 
 const StyledPostWrapper = styled.div`
   width: 100%;
@@ -130,6 +131,7 @@ const StyledTitleWrapper = styled.div`
 `;
 
 function BlogPost({ location, data }) {
+  const [postState, setPostState] = useState(null);
   const slug = location.pathname;
   const { title, siteUrl } = data.site.siteMetadata;
   const {
@@ -139,7 +141,7 @@ function BlogPost({ location, data }) {
     featured_image_caption,
     outline,
     tags,
-    title: postTitle,
+    title: postTitle
   } = data.mdx.frontmatter;
   const fullTitle = `${postTitle} - ${title}`;
   const githubBase =
@@ -147,50 +149,52 @@ function BlogPost({ location, data }) {
   const githubUrl = `${githubBase}${slug.slice(0, -1)}.mdx`;
   const { fluid } = featured_image.childImageSharp;
   return (
-    <MainLayout location={location} outline={outline}>
-      <StyledPostWrapper>
-        <Helmet>
-          <title>{fullTitle}</title>
-          <meta name="twitter:card" content="summary_large_image" />
-          <meta name="twitter:title" content={fullTitle} />
-          <meta name="twitter:description" content={caption} />
-          <meta name="twitter:image" content={`${siteUrl}${fluid.src}`} />
-          <meta property="og:title" content={fullTitle} />
-          <meta property="og:description" content={caption} />
-          <meta property="og:image" content={`${siteUrl}${fluid.src}`} />
-          <meta property="og:url" content={`${siteUrl}${slug}`} />
-        </Helmet>
-        <StyledMainImageWrapper>
-          <Img fluid={fluid} alt={`Main image for ${postTitle}`} />
-          <StyledTitleWrapper>
-            <h1>{postTitle}</h1>
-            <h2>{date}</h2>
-          </StyledTitleWrapper>
-        </StyledMainImageWrapper>
-        <StyledImageCaption>{featured_image_caption}</StyledImageCaption>
-        <StyledTextWrapper>
-          <MDXProvider components={renderer}>
-            <MDXRenderer>{data.mdx.body}</MDXRenderer>
-          </MDXProvider>
-          <FlexContainer main="space-between">
-            <small>
-              <a href={githubUrl} target="_blank" rel="noopener noreferrer">
-                <em>Edit this story on GitHub</em>
-              </a>
-            </small>
-            <Share
-              url={`${siteUrl}${slug}`}
-              options={{
-                size: "large",
-                via: "mmmaaatttttt",
-                text: postTitle,
-              }}
-            />
-          </FlexContainer>
-          <RelatedStories currentTags={tags} id={slug} />
-        </StyledTextWrapper>
-      </StyledPostWrapper>
-    </MainLayout>
+    <BlogPostContext.Provider value={{ postState, setPostState }}>
+      <MainLayout location={location} outline={outline}>
+        <StyledPostWrapper>
+          <Helmet>
+            <title>{fullTitle}</title>
+            <meta name="twitter:card" content="summary_large_image" />
+            <meta name="twitter:title" content={fullTitle} />
+            <meta name="twitter:description" content={caption} />
+            <meta name="twitter:image" content={`${siteUrl}${fluid.src}`} />
+            <meta property="og:title" content={fullTitle} />
+            <meta property="og:description" content={caption} />
+            <meta property="og:image" content={`${siteUrl}${fluid.src}`} />
+            <meta property="og:url" content={`${siteUrl}${slug}`} />
+          </Helmet>
+          <StyledMainImageWrapper>
+            <Img fluid={fluid} alt={`Main image for ${postTitle}`} />
+            <StyledTitleWrapper>
+              <h1>{postTitle}</h1>
+              <h2>{date}</h2>
+            </StyledTitleWrapper>
+          </StyledMainImageWrapper>
+          <StyledImageCaption>{featured_image_caption}</StyledImageCaption>
+          <StyledTextWrapper>
+            <MDXProvider components={renderer}>
+              <MDXRenderer>{data.mdx.body}</MDXRenderer>
+            </MDXProvider>
+            <FlexContainer main="space-between">
+              <small>
+                <a href={githubUrl} target="_blank" rel="noopener noreferrer">
+                  <em>Edit this story on GitHub</em>
+                </a>
+              </small>
+              <Share
+                url={`${siteUrl}${slug}`}
+                options={{
+                  size: "large",
+                  via: "mmmaaatttttt",
+                  text: postTitle
+                }}
+              />
+            </FlexContainer>
+            <RelatedStories currentTags={tags} id={slug} />
+          </StyledTextWrapper>
+        </StyledPostWrapper>
+      </MainLayout>
+    </BlogPostContext.Provider>
   );
 }
 
