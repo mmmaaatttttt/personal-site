@@ -80,17 +80,17 @@ function DraggableCircle({
 }
 
 DraggableCircle.propTypes = {
-  axis: PropTypes.oneOf(["both", "x", "y", "none"]).isRequired,
-  cx: PropTypes.number.isRequired,
-  cy: PropTypes.number.isRequired,
-  fill: PropTypes.string.isRequired,
-  id: PropTypes.any.isRequired,
-  onDragStart: PropTypes.func.isRequired,
-  onDrag: PropTypes.func.isRequired,
-  onDragEnd: PropTypes.func.isRequired,
-  r: PropTypes.number.isRequired,
-  stroke: PropTypes.string.isRequired,
-  strokeWidth: PropTypes.number.isRequired
+  axis: PropTypes.oneOf(["both", "x", "y", "none"]),
+  cx: PropTypes.number,
+  cy: PropTypes.number,
+  fill: PropTypes.string,
+  id: PropTypes.any,
+  onDragStart: PropTypes.func,
+  onDrag: PropTypes.func,
+  onDragEnd: PropTypes.func,
+  r: PropTypes.number,
+  stroke: PropTypes.string,
+  strokeWidth: PropTypes.number
 };
 
 export default React.memo(DraggableCircle);
