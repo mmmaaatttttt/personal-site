@@ -1,10 +1,11 @@
-- swap enzyme for react testing library
 - test audit
 - hook for slider
 - other hooks?
-- remove redux
 - fix rent interactive in http://localhost:8000/stories/fairest-of-them-all/ (button blocked by something)
-- try component reorg 
+- death to class components
+- try component reorg
+- fix USMap (fill is NaN)
+- story audit
 
 
 - pagination for stories

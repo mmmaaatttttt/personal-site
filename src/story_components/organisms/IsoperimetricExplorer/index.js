@@ -128,7 +128,7 @@ class IsoperimetricExplorer extends Component {
           color={COLORS.DARK_GRAY}
         />
         <ClippedSVG width={width} height={height} marginTop={"0.5rem"} id="isoperimetric-svg">
-          <SVGBorder width={width} height={height} />
+          <SVGBorder />
           <circle
             cx={circleParams.x}
             cy={circleParams.y}

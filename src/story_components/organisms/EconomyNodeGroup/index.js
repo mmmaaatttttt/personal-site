@@ -81,10 +81,9 @@ class EconomyNodeGroup extends Component {
   };
 
   render() {
-    const { width, height } = this.props;
     return (
       <g>
-        <SVGBorder width={width} height={height} />
+        <SVGBorder />
         <g ref={g => (this.g = g)} />
       </g>
     );

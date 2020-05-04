@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { useEffect, useRef } from "react";
 import styled from "styled-components";
 import katex from "katex";
 import PropTypes from "prop-types";
@@ -23,39 +23,19 @@ const StyledParagraph = styled.p`
   }
 `;
 
-class Latex extends Component {
-  constructor(props) {
-    super(props);
-    this.pTag = React.createRef(); 
-  }
+function Latex({ str = "", displayMode = false }) {
+  const pTag = useRef(null);
 
-  componentDidMount() {
-    katex.render(this.props.str, this.pTag.current, {
-      displayMode: this.props.displayMode
-    });
-  }
+  useEffect(() => {
+    katex.render(str, pTag.current, { displayMode });
+  }, [str, displayMode, pTag]);
 
-  componentDidUpdate(prevProps) {
-    if (prevProps.str !== this.props.str) {
-      katex.render(this.props.str, this.pTag.current, {
-        displayMode: this.props.displayMode
-      });
-    }
-  }
-
-  render() {
-    return <StyledParagraph ref={this.pTag} />;
-  }
+  return <StyledParagraph ref={pTag} />;
 }
 
 Latex.propTypes = {
-  displayMode: PropTypes.bool.isRequired,
-  str: PropTypes.string.isRequired
-};
-
-Latex.defaultProps = {
-  displayMode: false,
-  str: ""
+  displayMode: PropTypes.bool,
+  str: PropTypes.string
 };
 
 export default Latex;
