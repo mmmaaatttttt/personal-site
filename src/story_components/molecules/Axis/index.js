@@ -124,4 +124,4 @@ Axis.propTypes = {
   yShift: PropTypes.number
 };
 
-export default Axis;
+export default React.memo(Axis);
