@@ -1,10 +1,11 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import NodeGroup from "react-move/NodeGroup";
+import { NodeGroup } from "react-move";
 import { geoPath, geoAlbers } from "d3-geo";
 import { scaleLinear } from "d3-scale";
 import { nest } from "d3-collection";
 import { extent } from "d3-array";
+import { interpolate } from "d3-interpolate";
 import { feature } from "topojson";
 import { isEqual } from "lodash";
 import us from "data/json/us-topo.json";
@@ -20,9 +21,7 @@ class USMap extends Component {
     };
 
     const { scale, translate } = props;
-    const projection = geoAlbers()
-      .scale(scale)
-      .translate(translate);
+    const projection = geoAlbers().scale(scale).translate(translate);
     this.path = geoPath().projection(projection);
   }
 
@@ -49,9 +48,7 @@ class USMap extends Component {
         us.objects[topoKey].geometries.filter(d => d.properties.values),
         d => fillAccessor(d.properties)
       );
-    return scaleLinear()
-      .domain(domain)
-      .range(colors);
+    return scaleLinear().domain(domain).range(colors);
   };
 
   handleEnterAndUpdate = d => {
@@ -95,6 +92,7 @@ class USMap extends Component {
   render() {
     const { us } = this.state;
     let { keyAccessor, topoKey, id } = this.props;
+
     return us ? (
       <div>
         <TooltipProvider
@@ -106,6 +104,7 @@ class USMap extends Component {
                 start={() => ({ fill: "white" })}
                 enter={this.handleEnterAndUpdate}
                 update={this.handleEnterAndUpdate}
+                interpolation={interpolate}
               >
                 {this.renderPathGroup(tooltipShow, tooltipHide)}
               </NodeGroup>
@@ -133,7 +132,7 @@ USMap.propTypes = {
 };
 
 USMap.defaultProps = {
-  addGeometryProperties: function(us, data) {
+  addGeometryProperties: function (us, data) {
     const stateData = nest()
       .key(d => d.state)
       .entries(data);
