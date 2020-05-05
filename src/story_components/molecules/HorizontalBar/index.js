@@ -1,10 +1,11 @@
-import React, { Component } from "react";
+import React, { useMemo, useCallback } from "react";
 import PropTypes from "prop-types";
 import styled from "styled-components";
 import NodeGroup from "react-move/NodeGroup";
 import { rhythm } from "utils/typography";
 import COLORS from "utils/styles";
-import { TooltipProvider } from "providers";
+import { total } from "utils/mathHelpers";
+import { useTooltip } from "hooks";
 
 const BarContainer = styled.div`
   width: 100%;
@@ -21,75 +22,74 @@ const BarTitle = styled.h4`
   margin-bottom: ${rhythm(0.25)};
 `;
 
-class HorizontalBar extends Component {
-  getWidth = d => {
-    const { data } = this.props;
-    const total =
-      data.map(d => d.size).reduce((total, num) => total + num, 0) || 1;
-    const width = (d.size / total) * 100;
-    return { width: [width], timing: { duration: 300 } };
-  };
-
-  renderBarContainer = (tooltipShow, tooltipHide) => segments => {
-    const { data } = this.props;
-    const body = data.map(d => d.tooltipText);
-    return (
-      <BarContainer
-        onMouseMove={tooltipShow("", body)}
-        onMouseLeave={tooltipHide}
-        onTouchMove={tooltipShow("", body)}
-        onTouchEnd={tooltipHide}
-      >
-        {segments.map(({ key, data, state }) => {
-          const { width } = state;
-          const { color: backgroundColor } = data;
-          return (
-            <div style={{ width: `${width}%`, backgroundColor }} key={key} />
-          );
-        })}
-      </BarContainer>
-    );
-  };
-
-  render() {
-    const { data, title } = this.props;
-    const titleHTML = title ? <BarTitle>{title}</BarTitle> : null;
-    return (
-      <div>
-        {titleHTML}
-        <TooltipProvider
-          render={(tooltipShow, tooltipHide) => {
-            return (
-              <NodeGroup
-                data={data}
-                keyAccessor={(_, i) => i}
-                start={() => ({ width: 0 })}
-                enter={this.getWidth}
-                update={this.getWidth}
-              >
-                {this.renderBarContainer(tooltipShow, tooltipHide)}
-              </NodeGroup>
-            );
-          }}
-        />
-      </div>
-    );
+const defaultData = [
+  {
+    size: 1,
+    color: COLORS.RED,
+    tooltipText: "text"
   }
+];
+
+function HorizontalBar({ data = defaultData, title = "" }) {
+  const widthTransition = useCallback(
+    d => {
+      const sizeTotal = total(data, d => d.size) || 1;
+      const width = (d.size * 100) / sizeTotal;
+      return { width: [width], timing: { duration: 300 } };
+    },
+    [data]
+  );
+  const tooltipBody = useMemo(() => data.map(d => d.tooltipText), [data]);
+  const [renderTooltip, show, hide] = useTooltip();
+  const handleShow = useCallback(
+    e => {
+      show("", tooltipBody, e.pageX, e.pageY);
+    },
+    [show, tooltipBody]
+  );
+
+  return (
+    <div>
+      {title ? <BarTitle>{title}</BarTitle> : null}
+      <NodeGroup
+        data={data}
+        keyAccessor={(_, i) => i}
+        start={() => ({ width: 0 })}
+        enter={widthTransition}
+        update={widthTransition}
+      >
+        {segments => (
+          <BarContainer
+            onMouseMove={handleShow}
+            onMouseLeave={hide}
+            onTouchMove={handleShow}
+            onTouchEnd={hide}
+          >
+            {segments.map(
+              ({ key, data: { color: backgroundColor }, state: { width } }) => (
+                <div
+                  style={{ width: `${width}%`, backgroundColor }}
+                  key={key}
+                />
+              )
+            )}
+          </BarContainer>
+        )}
+      </NodeGroup>
+      {renderTooltip()}
+    </div>
+  );
 }
 
 HorizontalBar.propTypes = {
-  title: PropTypes.string.isRequired,
   data: PropTypes.arrayOf(
     PropTypes.shape({
-      size: PropTypes.number.isRequired,
-      color: PropTypes.string.isRequired,
+      size: PropTypes.number,
+      color: PropTypes.string,
       tooltipText: PropTypes.string
     })
-  ).isRequired
+  ),
+  title: PropTypes.string
 };
 
-HorizontalBar.defaultProps = {
-  title: ""
-};
-
-export default HorizontalBar;
+export default React.memo(HorizontalBar);
