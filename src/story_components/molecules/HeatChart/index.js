@@ -1,57 +1,95 @@
-import React, { Component } from "react";
+import React, { useMemo, useCallback } from "react";
 import PropTypes from "prop-types";
-import NodeGroup from "react-move/NodeGroup";
+import { NodeGroup } from "react-move";
 import { scaleLinear } from "d3-scale";
 import { Axis, AxisLabel, ClippedSVG } from "story_components";
-import { TooltipProvider } from "providers";
+import { useTooltip } from "hooks";
 import COLORS from "utils/styles";
 
-class HeatChart extends Component {
-  getDimensions = () => {
-    const { data, width, paddingScale } = this.props;
+const defaults = {
+  accessor: d => d,
+  colorDomain: [0, 1],
+  colorRange: [COLORS.RED, COLORS.GREEN],
+  data: [[[]]],
+  getTooltipBody: d => JSON.stringify(d, null, 4),
+  getTooltipTitle: () => ""
+};
+
+const xLabelPos = { y: "9", dy: "0.71em" };
+const yLabelPos = { y: "-9", dy: "0.32em" };
+
+function HeatChart({
+  accessor = defaults.accessor,
+  axes = true,
+  children,
+  colorDomain = defaults.colorDomain,
+  colorRange = defaults.colorRange,
+  data = defaults.data,
+  delayMultiplier = 10,
+  getTooltipBody = defaults.getTooltipBody,
+  getTooltipTitle = defaults.getTooltipTitle,
+  id = "svg",
+  paddingScale = 0.075,
+  tooltip = true,
+  width = 600,
+  xAxisLabel = "X Axis",
+  yAxisLabel = "Y Axis"
+}) {
+  const { height, paddingX, paddingY } = useMemo(() => {
     const squareWidth = width / data.length;
     const height = data[0].length * squareWidth;
     return {
-      width,
       height,
       paddingX: width * paddingScale,
       paddingY: height * paddingScale
     };
-  };
+  }, [width, data, paddingScale]);
+  const xScale = useCallback(
+    scaleLinear()
+      .domain([0, data.length])
+      .range([paddingX, width - paddingX]),
+    [data, paddingX, width]
+  );
+  const yScale = useCallback(
+    scaleLinear()
+      .domain([0, Array.isArray(data[0]) ? data[0].length : 0])
+      .range([height - paddingY, paddingY]),
+    [data, height, paddingY]
+  );
+  const colorScale = useCallback(
+    scaleLinear().domain(colorDomain).range(colorRange),
+    [colorDomain, colorRange]
+  );
 
-  getScales = () => {
-    const { data } = this.props;
-    const { width, height, paddingX, paddingY } = this.getDimensions();
-    return {
-      xScale: scaleLinear()
-        .domain([0, data.length])
-        .range([paddingX, width - paddingX]),
-      yScale: scaleLinear()
-        .domain([0, Array.isArray(data[0]) ? data[0].length : 0])
-        .range([height - paddingY, paddingY])
-    };
-  };
+  const [renderTooltip, showTooltip, handleHide] = useTooltip();
 
-  renderAxes = () => {
-    const { width, height, paddingX, paddingY } = this.getDimensions();
-    const { xScale, yScale } = this.getScales();
-    const { xAxisLabel, yAxisLabel } = this.props;
-    return (
+  let handleShow = useCallback(
+    d => {
+      const title = getTooltipTitle(d);
+      const body = getTooltipBody(d);
+      return e => showTooltip(title, body, e.pageX, e.pageY);
+    },
+    [getTooltipTitle, getTooltipBody, showTooltip]
+  );
+
+  let axesJSX = null;
+  if (axes) {
+    axesJSX = (
       <g>
         <Axis
           direction="x"
-          labelPosition={{ y: "9", dy: "0.71em" }}
+          labelPosition={xLabelPos}
           scale={xScale}
-          tickFormat={","}
+          tickFormat=","
           tickColor={COLORS.BLACK}
           yShift={height - paddingY}
         />
         <Axis
           direction="y"
-          labelPosition={{ x: "-9", dy: "0.32em" }}
+          labelPosition={yLabelPos}
           scale={yScale}
           textAnchor="end"
-          tickFormat={","}
+          tickFormat=","
           tickColor={COLORS.BLACK}
           xShift={paddingX}
         />
@@ -68,76 +106,37 @@ class HeatChart extends Component {
         </AxisLabel>
       </g>
     );
-  };
+  }
 
-  renderRectangles = (tooltipShow, tooltipHide) => rects => {
-    const { height, paddingX, paddingY } = this.getDimensions();
-    const { xScale, yScale } = this.getScales();
-    return (
-      <g>
-        {rects.map(({ key, data, state }) => {
-          const { fill } = state;
-          const { getTooltipBody, getTooltipTitle } = this.props;
-          const title = getTooltipTitle(data);
-          const body = getTooltipBody(data);
-          return (
-            <rect
-              key={key}
-              x={data.x}
-              y={data.y}
-              width={xScale(1) - 2 - paddingX}
-              height={height - yScale(1) - 2 - paddingY}
-              fill={fill}
-              onMouseMove={tooltipShow && tooltipShow(title, body)}
-              onMouseLeave={tooltipHide}
-              onTouchMove={tooltipShow && tooltipShow(title, body)}
-              onTouchEnd={tooltipHide}
-            />
-          );
-        })}
-      </g>
-    );
-  };
+  const rectData = useMemo(
+    () =>
+      data.reduce(
+        (rectArr, row, x) =>
+          rectArr.concat(
+            row
+              .map((d, y) => {
+                if (d === null) return null;
+                const rectObj = {
+                  x: xScale(x) + 1,
+                  y: yScale(y + 1) + 1,
+                  original: {
+                    x,
+                    y,
+                    data: d
+                  }
+                };
+                rectObj.fill = colorScale(accessor(rectObj.original.data));
+                return rectObj;
+              })
+              .filter(d => d !== null)
+          ),
+        []
+      ),
+    [xScale, yScale, colorScale, accessor, data]
+  );
 
-  renderSVG = (tooltipShow = null, tooltipHide = null) => {
-    const {
-      accessor,
-      axes,
-      children,
-      colorDomain,
-      colorRange,
-      data,
-      delayMultiplier,
-      id
-    } = this.props;
-    const { width, height, paddingX, paddingY } = this.getDimensions();
-    const { xScale, yScale } = this.getScales();
-    const colorScale = scaleLinear()
-      .domain(colorDomain)
-      .range(colorRange);
-    const rectData = data.reduce(
-      (rectArr, row, x) =>
-        rectArr.concat(
-          row
-            .map((d, y) => {
-              if (d === null) return null;
-              const rectObj = {
-                x: xScale(x) + 1,
-                y: yScale(y + 1) + 1,
-                original: {
-                  x,
-                  y,
-                  data: d
-                }
-              };
-              rectObj.fill = colorScale(accessor(rectObj.original.data));
-              return rectObj;
-            })
-            .filter(d => d !== null)
-        ),
-      []
-    );
-    return (
+  return (
+    <div>
       <ClippedSVG width={width} height={height} id={id}>
         <NodeGroup
           data={rectData}
@@ -150,65 +149,49 @@ class HeatChart extends Component {
             };
           }}
         >
-          {this.renderRectangles(tooltipShow, tooltipHide)}
+          {rects => (
+            <g>
+              {rects.map(({ key, data, state: { fill } }) => (
+                <rect
+                  key={key}
+                  x={data.x}
+                  y={data.y}
+                  width={xScale(1) - 2 - paddingX}
+                  height={height - yScale(1) - 2 - paddingY}
+                  fill={fill}
+                  onMouseMove={tooltip ? handleShow(data) : undefined}
+                  onTouchMove={tooltip ? handleShow(data) : undefined}
+                  onMouseLeave={tooltip ? handleHide : undefined}
+                  onTouchEnd={tooltip ? handleHide : undefined}
+                />
+              ))}
+            </g>
+          )}
         </NodeGroup>
         {children &&
           React.cloneElement(children, { width, height, paddingX, paddingY })}
-        {axes && this.renderAxes()}
+        {axesJSX}
       </ClippedSVG>
-    );
-  };
-
-  render() {
-    const { tooltip } = this.props;
-    return (
-      <div>
-        {tooltip ? (
-          <TooltipProvider
-            render={(tooltipShow, tooltipHide) =>
-              this.renderSVG(tooltipShow, tooltipHide)
-            }
-          />
-        ) : (
-          this.renderSVG()
-        )}
-      </div>
-    );
-  }
+      {tooltip && renderTooltip()}
+    </div>
+  );
 }
 
 HeatChart.propTypes = {
-  accessor: PropTypes.func.isRequired,
-  axes: PropTypes.bool.isRequired,
-  colorDomain: PropTypes.arrayOf(PropTypes.number).isRequired,
-  colorRange: PropTypes.arrayOf(PropTypes.string).isRequired,
-  data: PropTypes.array.isRequired,
-  delayMultiplier: PropTypes.number.isRequired,
-  getTooltipBody: PropTypes.func.isRequired,
-  getTooltipTitle: PropTypes.func.isRequired,
-  id: PropTypes.string.isRequired,
-  paddingScale: PropTypes.number.isRequired,
-  tooltip: PropTypes.bool.isRequired,
-  width: PropTypes.number.isRequired,
-  xAxisLabel: PropTypes.string.isRequired,
-  yAxisLabel: PropTypes.string.isRequired
+  accessor: PropTypes.func,
+  axes: PropTypes.bool,
+  colorDomain: PropTypes.arrayOf(PropTypes.number),
+  colorRange: PropTypes.arrayOf(PropTypes.string),
+  data: PropTypes.array,
+  delayMultiplier: PropTypes.number,
+  getTooltipBody: PropTypes.func,
+  getTooltipTitle: PropTypes.func,
+  id: PropTypes.string,
+  paddingScale: PropTypes.number,
+  tooltip: PropTypes.bool,
+  width: PropTypes.number,
+  xAxisLabel: PropTypes.string,
+  yAxisLabel: PropTypes.string
 };
 
-HeatChart.defaultProps = {
-  accessor: d => d,
-  axes: true,
-  colorDomain: [0, 1],
-  colorRange: [COLORS.RED, COLORS.GREEN],
-  data: [[[]]],
-  delayMultiplier: 10,
-  getTooltipBody: d => JSON.stringify(d, null, 4),
-  getTooltipTitle: () => "",
-  id: "svg",
-  paddingScale: 0.075,
-  tooltip: true,
-  width: 600,
-  xAxisLabel: "X Axis",
-  yAxisLabel: "Y Axis"
-};
-
-export default HeatChart;
+export default React.memo(HeatChart);
