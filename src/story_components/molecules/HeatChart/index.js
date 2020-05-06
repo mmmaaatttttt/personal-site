@@ -169,7 +169,7 @@ function HeatChart({
           )}
         </NodeGroup>
         {children &&
-          React.cloneElement(children, { width, height, paddingX, paddingY })}
+          React.cloneElement(children, { paddingX, paddingY })}
         {axesJSX}
       </ClippedSVG>
       {tooltip && renderTooltip()}
