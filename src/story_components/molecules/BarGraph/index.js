@@ -149,7 +149,7 @@ function BarGraph({
 BarGraph.propTypes = {
   barData: PropTypes.arrayOf(
     PropTypes.shape({
-      key: PropTypes,
+      key: PropTypes.any,
       height: PropTypes.number,
       color: PropTypes.string, // used to vary color by bar
       x0: PropTypes.number, // required for a histogram
