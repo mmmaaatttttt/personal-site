@@ -1,8 +1,9 @@
-import React, { Component } from "react";
+import React, { useState, useCallback } from "react";
 import PropTypes from "prop-types";
 import styled, { css } from "styled-components";
 import { Button, FlexContainer, Icon, Strikethrough } from "story_components";
-import COLORS from "../../../utils/styles";
+import COLORS from "utils/styles";
+import { noop } from "utils/fnHelpers";
 
 const StyledIconWrapper = styled.span`
   background-color: ${props => props.color};
@@ -30,115 +31,116 @@ const StyledIconWrapper = styled.span`
     `}
 `;
 
-class RadioButtonGroup extends Component {
-  state = {
-    selectedIndex: null
-  };
+const defaultConfirm = idx => console.log(idx);
+const defaultLabels = [
+  {
+    text: "test1",
+    color: COLORS.WHITE,
+    disabled: false
+  },
+  {
+    text: "test2",
+    color: COLORS.WHITE,
+    disabled: false
+  },
+  {
+    text: "test3",
+    color: COLORS.WHITE,
+    disabled: false
+  }
+];
+
+function RadioButtonGroup({
+  buttonText = "Default button text",
+  handleSelectConfirm = defaultConfirm,
+  handleRadioChange = noop,
+  labels = defaultLabels
+}) {
+  const [selectedIndex, setSelectedIndex] = useState(null);
 
   /** Maintain current radio selection in React state */
-  handleRadioChange = e => {
-    this.setState({ selectedIndex: +e.target.value }, () => {
-      this.props.handleRadioChange(this.state.selectedIndex);
-    });
-  };
+  const radioChange = useCallback(
+    e => {
+      const idx = +e.target.value;
+      setSelectedIndex(idx);
+      handleRadioChange(idx);
+    },
+    [handleRadioChange]
+  );
 
   /** Reset the selectedIndex state, call handleSelectConfirm from props  */
-  handleConfirm = () => {
-    let confirmedIndex = this.state.selectedIndex;
-    let { handleSelectConfirm } = this.props;
-    this.setState({ selectedIndex: null }, () =>
-      handleSelectConfirm(confirmedIndex)
-    );
-  };
+  const handleConfirm = useCallback(() => {
+    handleSelectConfirm(selectedIndex);
+    setSelectedIndex(null);
+  }, [selectedIndex, handleSelectConfirm]);
 
-  render() {
-    const { labels, buttonText } = this.props;
-    const { selectedIndex } = this.state;
-    const options = labels.map((obj, i) => {
-      let { text, color, disabled } = obj;
-      let textContainer = <span>{text}</span>;
-      let icon = (
-        <StyledIconWrapper color={color}>
-          {selectedIndex === i ? <Icon name="check" /> : null}
+  const options = labels.map(({ text, color, disabled }, i) => {
+    let textContainer = <span>{text}</span>;
+    let icon = (
+      <StyledIconWrapper color={color}>
+        {selectedIndex === i && <Icon name="check" />}
+      </StyledIconWrapper>
+    );
+    if (disabled) {
+      textContainer = <Strikethrough>{text}</Strikethrough>;
+      icon = (
+        <StyledIconWrapper color={COLORS.RED} disabled>
+          <Icon name="times" />
         </StyledIconWrapper>
-      );
-      if (disabled) {
-        textContainer = <Strikethrough>{text}</Strikethrough>;
-        icon = (
-          <StyledIconWrapper color={COLORS.RED} disabled>
-            <Icon name="times" />
-          </StyledIconWrapper>
-        );
-      }
-      return (
-        <FlexContainer key={text} width="90%" margin="-2% 1% 0 1%" main="center" cross="center">
-          <input
-            name="group"
-            type="radio"
-            id={i}
-            value={i}
-            checked={selectedIndex === i}
-            onChange={this.handleRadioChange}
-            hidden
-            disabled={disabled}
-          />
-          <label htmlFor={i}>{icon}</label>
-          {textContainer}
-        </FlexContainer>
-      );
-    });
-    let footer = <Button disabled>Please make a selection.</Button>;
-    if (selectedIndex !== null) {
-      let color = labels[selectedIndex].color;
-      footer = (
-        <Button onClick={this.handleConfirm} color={color}>
-          {buttonText}
-        </Button>
       );
     }
     return (
-      <div>
-        <FlexContainer main="space-around" cross="center" width="100%" shouldWrap>
-          {options}
-        </FlexContainer>
-        {footer}
-      </div>
+      <FlexContainer
+        key={text}
+        width="90%"
+        margin="-2% 1% 0 1%"
+        main="center"
+        cross="center"
+      >
+        <input
+          name="group"
+          type="radio"
+          id={i}
+          value={i}
+          checked={selectedIndex === i}
+          onChange={radioChange}
+          hidden
+          disabled={disabled}
+        />
+        <label htmlFor={i}>{icon}</label>
+        {textContainer}
+      </FlexContainer>
+    );
+  });
+  let footer = <Button disabled>Please make a selection.</Button>;
+  if (selectedIndex !== null) {
+    let color = labels[selectedIndex].color;
+    footer = (
+      <Button onClick={handleConfirm} color={color}>
+        {buttonText}
+      </Button>
     );
   }
+  return (
+    <div>
+      <FlexContainer main="space-around" cross="center" width="100%" shouldWrap>
+        {options}
+      </FlexContainer>
+      {footer}
+    </div>
+  );
 }
 
 RadioButtonGroup.propTypes = {
-  buttonText: PropTypes.string.isRequired,
-  handleSelectConfirm: PropTypes.func.isRequired,
+  buttonText: PropTypes.string,
+  handleSelectConfirm: PropTypes.func,
   labels: PropTypes.arrayOf(
     PropTypes.shape({
       text: PropTypes.string,
       color: PropTypes.string,
       disabled: PropTypes.bool
     })
-  ).isRequired
+  )
 };
 
-RadioButtonGroup.defaultProps = {
-  buttonText: "Default button text",
-  handleSelectConfirm: idx => console.log(idx),
-  labels: [
-    {
-      text: "test1",
-      color: COLORS.WHITE,
-      disabled: false
-    },
-    {
-      text: "test2",
-      color: COLORS.WHITE,
-      disabled: false
-    },
-    {
-      text: "test3",
-      color: COLORS.WHITE,
-      disabled: false
-    }
-  ]
-};
-
-export default RadioButtonGroup;
+export default React.memo(RadioButtonGroup);
