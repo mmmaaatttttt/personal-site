@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import Animate from "react-move/Animate";
 import { scaleLinear } from "d3-scale";
 import { max } from "d3-array";
+import { interpolate } from "d3-interpolate";
 import { beta } from "jStat";
 import {
   Button,
@@ -69,6 +70,7 @@ class CoinFlipBayesianModel extends PureComponent {
             color: [uniform ? COLORS.RED : COLORS.BLUE],
             timing: { duration: 400 }
           }}
+          interpolation={interpolate}
         >
           {({ heads, tails, color }) => {
             const { graphPadding, height, width, xCoords } = this.props;
