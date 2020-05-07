@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import PropTypes from "prop-types";
 import styled from "styled-components";
 import { rhythm } from "utils/typography";
@@ -34,7 +34,7 @@ const StyledTooltip = styled.div.attrs(({ visible, x, y, offsetWidth }) => ({
 
   h4 {
     text-align: center;
-    margin-bottom: ${props => props.body ? rhythm(0.4) : 0};
+    margin-bottom: ${props => (props.body ? rhythm(0.4) : 0)};
   }
 
   ul {
@@ -48,77 +48,58 @@ const StyledTooltip = styled.div.attrs(({ visible, x, y, offsetWidth }) => ({
   }
 `;
 
-class Tooltip extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      offsetWidth: 0,
-      offsetHeight: 0
-    };
-    this.tooltipDiv = React.createRef();
-  }
+function Tooltip({ body = "", title = "", visible = false, x = 0, y = 0 }) {
+  const [offset, setOffset] = useState({ width: 0, height: 0 });
+  const tooltipDiv = useRef(null);
 
-  componentDidUpdate() {
-    const { offsetWidth, offsetHeight } = this.tooltipDiv.current;
-    const { offsetWidth: stateWidth, offsetHeight: stateHeight } = this.state;
+  useEffect(() => {
+    const { offsetWidth, offsetHeight } = tooltipDiv.current;
+    const { width, height } = offset;
     const distance =
-      Math.abs(offsetWidth - stateWidth) + Math.abs(offsetHeight - stateHeight);
-    if (distance > 2) {
-      this.setState({ offsetWidth, offsetHeight });
-    }
-  }
+      Math.abs(offsetWidth - width) + Math.abs(offsetHeight - height);
+    if (distance > 2) setOffset({ width: offsetWidth, height: offsetHeight });
+  }, [offset, tooltipDiv, x, y]);
 
-  render() {
-    const { visible, x, y, title, body } = this.props;
-    const { offsetWidth, offsetHeight } = this.state;
-    let titleJSX = null;
-    let bodyJSX = null;
-    if (title) titleJSX = <h4>{title}</h4>;
-    if (body) {
-      bodyJSX = Array.isArray(body) ? (
-        <ul>
-          {body.map((text, i) => (
-            <li key={i}>
-              <small>{text}</small>
-            </li>
-          ))}
-        </ul>
-      ) : (
-        <small>{body}</small>
-      );
-    }
-    return (
-      <StyledTooltip
-        visible={visible}
-        x={x}
-        y={y - offsetHeight - 20}
-        offsetWidth={offsetWidth}
-        ref={this.tooltipDiv}
-      >
-        {titleJSX}
-        {bodyJSX}
-      </StyledTooltip>
+  const { width, height } = offset;
+  let titleJSX = null;
+  let bodyJSX = null;
+  if (title) titleJSX = <h4>{title}</h4>;
+  if (body) {
+    bodyJSX = Array.isArray(body) ? (
+      <ul>
+        {body.map((text, i) => (
+          <li key={i}>
+            <small>{text}</small>
+          </li>
+        ))}
+      </ul>
+    ) : (
+      <small>{body}</small>
     );
   }
+  return (
+    <StyledTooltip
+      visible={visible}
+      x={x}
+      y={y - height - 20}
+      offsetWidth={width}
+      ref={tooltipDiv}
+    >
+      {titleJSX}
+      {bodyJSX}
+    </StyledTooltip>
+  );
 }
 
 Tooltip.propTypes = {
-  visible: PropTypes.bool.isRequired,
-  x: PropTypes.number.isRequired,
-  y: PropTypes.number.isRequired,
-  title: PropTypes.oneOfType([PropTypes.string, PropTypes.object]).isRequired,
   body: PropTypes.oneOfType([
     PropTypes.string,
     PropTypes.arrayOf(PropTypes.string)
-  ]).isRequired
-};
-
-Tooltip.defaultProps = {
-  visible: false,
-  x: 0,
-  y: 0,
-  title: "",
-  body: ""
+  ]),
+  title: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
+  visible: PropTypes.bool,
+  x: PropTypes.number,
+  y: PropTypes.number
 };
 
 export default Tooltip;
