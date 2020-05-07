@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import PropTypes from "prop-types";
 import { scaleLinear } from "d3-scale";
 import {
@@ -13,6 +13,7 @@ import { useDragState } from "hooks";
 import { clamped, lInfNormEndpoints, l1Norm } from "./helpers";
 import { svgProps, svgDefaultProps } from "utils/types";
 import COLORS from "utils/styles";
+import { useToggle } from "hooks";
 
 function FunctionDistanceExplorer({
   width,
@@ -21,6 +22,7 @@ function FunctionDistanceExplorer({
   xScale,
   yScale
 }) {
+  const [l1NormActive, toggle] = useToggle(false);
   const [xMin, xMax] = xScale.domain();
   const xAvg = (xMax - xMin) / 2;
   const [yMin, yMax] = yScale.domain();
@@ -36,7 +38,6 @@ function FunctionDistanceExplorer({
     xScale,
     yScale
   );
-  const [l1NormActive, handleNormToggle] = useState(false);
   const clamped1Pts = clamped(points.slice(0, 3), xScale, yScale);
   const clamped2Pts = clamped(points.slice(3), xScale, yScale);
   const graph1Pts = clamped1Pts.map(pt => ({
@@ -59,7 +60,8 @@ function FunctionDistanceExplorer({
         rightText={`Area: ${area}`}
         leftColor={COLORS.PURPLE}
         rightColor={COLORS.GRAY}
-        handleSwitchChange={() => handleNormToggle(!l1NormActive)}
+        handleSwitchChange={toggle}
+        checked={l1NormActive}
       />
       <Graph
         graphPadding={graphPadding}

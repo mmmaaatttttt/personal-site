@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 import PropTypes from "prop-types";
 import styled, { css } from "styled-components";
 import COLORS from "utils/styles";
@@ -69,53 +69,38 @@ const StyledToggleSwitchWrapper = styled.div`
 const StyledSpan = styled.span`
   flex: 1;
   text-align: ${props => props.direction};
-`
+`;
 
-class ToggleSwitch extends Component {
-  state = {
-    checked: false
-  };
-
-  handleClick = () => {
-    this.setState(
-      prevState => ({ checked: !prevState.checked }),
-      () => this.props.handleSwitchChange(this.state.checked)
-    );
-  };
-
-  render() {
-    const { checked } = this.state;
-    const { leftText, rightText, leftColor, rightColor } = this.props;
-    return (
-      <StyledToggleSwitchWrapper>
-        <StyledSpan direction="right">{leftText}</StyledSpan>
-        <StyledToggleSwitchInput />
-        <StyledToggleSwitchLabel
-          checked={checked}
-          onClick={this.handleClick}
-          leftColor={leftColor}
-          rightColor={rightColor}
-        />
-        <StyledSpan direction="left">{rightText}</StyledSpan>
-      </StyledToggleSwitchWrapper>
-    );
-  }
+function ToggleSwitch({
+  checked = false,
+  leftText = "Left",
+  rightText = "Right",
+  leftColor = COLORS.DARK_GRAY,
+  rightColor = COLORS.DARK_GRAY,
+  handleSwitchChange = console.log
+}) {
+  return (
+    <StyledToggleSwitchWrapper>
+      <StyledSpan direction="right">{leftText}</StyledSpan>
+      <StyledToggleSwitchInput />
+      <StyledToggleSwitchLabel
+        checked={checked}
+        onClick={handleSwitchChange}
+        leftColor={leftColor}
+        rightColor={rightColor}
+      />
+      <StyledSpan direction="left">{rightText}</StyledSpan>
+    </StyledToggleSwitchWrapper>
+  );
 }
 
 ToggleSwitch.propTypes = {
-  leftText: PropTypes.string.isRequired,
-  rightText: PropTypes.string.isRequired,
-  leftColor: PropTypes.string.isRequired,
-  rightColor: PropTypes.string.isRequired,
-  handleSwitchChange: PropTypes.func.isRequired
+  checked: PropTypes.bool,
+  leftText: PropTypes.string,
+  rightText: PropTypes.string,
+  leftColor: PropTypes.string,
+  rightColor: PropTypes.string,
+  handleSwitchChange: PropTypes.func
 };
 
-ToggleSwitch.defaultProps = {
-  leftText: "Left",
-  rightText: "Right",
-  leftColor: COLORS.DARK_GRAY,
-  rightColor: COLORS.DARK_GRAY,
-  handleSwitchChange: checked => console.log(checked)
-};
-
-export default ToggleSwitch;
+export default React.memo(ToggleSwitch);
