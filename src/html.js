@@ -1,9 +1,16 @@
 import React from "react";
 import favicon from "./favicon.ico";
 
-function HTML() {
+function HTML({
+  htmlAttributes,
+  headComponents,
+  bodyAttributes,
+  preBodyComponents,
+  body,
+  postBodyComponents
+}) {
   return (
-    <html {...this.props.htmlAttributes} lang="en">
+    <html {...htmlAttributes} lang="en">
       <head>
         <meta charSet="utf-8" />
         <meta httpEquiv="x-ua-compatible" content="ie=edge" />
@@ -12,17 +19,17 @@ function HTML() {
           content="width=device-width, initial-scale=1, shrink-to-fit=no"
         />
         <link rel="shortcut icon" href={favicon} />
-        {this.props.headComponents}
+        {headComponents}
         {/* {css} */}
       </head>
-      <body {...this.props.bodyAttributes}>
-        {this.props.preBodyComponents}
+      <body {...bodyAttributes}>
+        {preBodyComponents}
         <div
           key="body"
           id="___gatsby"
-          dangerouslySetInnerHTML={{ __html: this.props.body }}
+          dangerouslySetInnerHTML={{ __html: body }}
         />
-        {this.props.postBodyComponents}
+        {postBodyComponents}
       </body>
     </html>
   );

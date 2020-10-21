@@ -1,4 +1,3 @@
-- test audit
 - hook for slider
 - other hooks?
 - fix rent interactive in http://localhost:8000/stories/fairest-of-them-all/ (button blocked by something)
@@ -6,7 +5,6 @@
 - try component reorg
 - fix USMap (fill is NaN)
 - story audit
-
 
 - pagination for stories
 - better loading screen on initial page load
