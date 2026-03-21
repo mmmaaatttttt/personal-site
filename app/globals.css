@@ -1,0 +1,62 @@
+@import "tailwindcss";
+
+/* ============================================================
+   Design Tokens
+   Colors match the original style palette from utils/styles.js
+   ============================================================ */
+@theme {
+  /* Brand colors */
+  --color-link: #ff5700;
+  --color-nav: #f9f9f9;
+
+  /* Data-vis palette */
+  --color-blue: #5ecfff;
+  --color-dark-blue: #2227ff;
+  --color-green: #52a081;
+  --color-dark-green: #00802b;
+  --color-orange: #ff8f34;
+  --color-purple: #e15bff;
+  --color-red: #ff3c23;
+  --color-yellow: #ffec28;
+  --color-maroon: #a05e52;
+
+  /* Neutral scale */
+  --color-dark-gray: #555555;
+  --color-gray: #bbbbbb;
+  --color-input-gray: #cccccc;
+  --color-light-gray: #eeeeee;
+
+  /* Content width */
+  --max-w-content: 768px;
+}
+
+/* ============================================================
+   Base styles
+   ============================================================ */
+:root {
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+}
+
+html {
+  font-family: var(--font-sans);
+  color: #1a1a1a;
+  background-color: #ffffff;
+}
+
+a {
+  color: var(--color-link);
+}
+
+a:hover {
+  opacity: 0.8;
+}
+
+/* Smooth fade-in for page content (replaces gatsby show/hide trick) */
+@keyframes fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.fade-in {
+  animation: fade-in 0.4s ease-out forwards;
+}

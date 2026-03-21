@@ -1,38 +1,36 @@
-# mattlane.us
+This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
-Source code for Matt Lane's mathematical personal site.
+## Getting Started
 
-### Live Site
+First, run the development server:
 
-[mattlane.us](https://mattlane.us)
-
-### Setup
-
-```sh
-npm install
-npm run develop
+```bash
+npm run dev
+# or
+yarn dev
+# or
+pnpm dev
+# or
+bun dev
 ```
 
-This is a static site built with [Gatsby.js](https://www.gatsbyjs.org/). If you have trouble setting up an installation locally, try checking out their docs.
+Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-### Writing Stories
+You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
 
-To add a post, add a new markdown file in `src/pages/stories`. Each markdown file should begin with some YAML frontmatter with the following data:
+This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
 
-* `title`
-* `date`
-* `featured_image`, which should match the filename of an image in the `src/images/featured_images` directory
-* `caption`, a short description of the story which will appear on the `/stories` index page, as well as in any shares of the story on Facebook / Twitter.
-* `featured_image_caption`, a caption for the featured image
+## Learn More
 
-All visualizations in stories are built using React.js. To add a visualization, you can write the root React component directly in the markdown file, using JSX syntax. All components used for visualizations in stories should live inside of `src/story_components`.
+To learn more about Next.js, take a look at the following resources:
 
-The site uses [gatsby-mdx](https://github.com/christopherBiscardi/gatsby-mdx/) for processing React components within the markdown. You can import components directly within `.mdx` files.
+- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
+- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
 
-### Deploying
+You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
 
-The site is deployed to S3 with some Route53 and CloudFront sprinkled on top. The setup basically mirrors [this](http://benjamincongdon.me/blog/2017/06/13/Deploying-and-Deploying-a-Static-Site-to-AWS-with-S3-and-Cloudfront) article.
+## Deploy on Vercel
 
-Because of this, the command to deploy the site `npm run deploy` is heavily dependent on this configuration. If you'd like to take this code and deploy using some other technology (e.g. GitHub Pages), you'll need to modify the `deploy` script in the `package.json`.
+The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
-Enjoy!
+Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
