@@ -44,12 +44,14 @@ export default async function ArticlePage({ params }: PageProps) {
   const { frontmatter, source } = article;
 
   // 1. Strip import/export statements and legacy attribute syntax from MDX source
-  // Standard MDX doesn't like ESM imports/exports when using compileMDX like this.
-  // We also remove the non-standard {.w-80} syntax used for image styling in the old site.
+  // 1. Strip import/export statements and legacy attribute syntax from MDX source
   const cleanSource = source
     .replace(/^import\s+.*\s+from\s+['"].*['"];?\s*$/gm, "")
     .replace(/^export\s+.*\s*$/gm, "")
-    .replace(/\{(\s*\.[a-zA-Z0-9_-]+\s*)+\}/g, ""); // Strips attributes like {.w-80} or {.my-class}
+    .replace(/\{(\s*\.[a-zA-Z0-9_-]+\s*)+\}/g, "");
+
+
+ // Strips attributes like {.w-80} or {.my-class}
 
   // 2. Data Resolution (Simplified for Phase 2)
   // We'll provide common data objects to the MDX scope.

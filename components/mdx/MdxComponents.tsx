@@ -58,6 +58,7 @@ export const story_components = {
   // Templates & Organisms (Visualizations)
   WarmingDots: (props: any) => <Placeholder name="WarmingDots" />,
   FourWeddingsVisualization: (props: any) => <Placeholder name="FourWeddingsVisualization" />,
+
   DistanceExplorer: (props: any) => <Placeholder name="DistanceExplorer" />,
   EconomySimulation: (props: any) => <Placeholder name="EconomySimulation" />,
   GamingRelationships: (props: any) => <Placeholder name="GamingRelationships" />,
@@ -82,54 +83,54 @@ export const story_components = {
   SliderProvider: (props: any) => <div className="my-8 p-4 border border-gray/20 rounded-lg">{props.children || props.render?.([0])}</div>,
 };
 
-export const MdxComponents = {
+import dynamic from "next/dynamic";
+import Image from "next/image";
+
+const WarmingDots = dynamic(() => import("@/content/articles/warming-dots/components/WarmingDots"));
+const FourWeddingsVisualization = dynamic(() => import("@/content/articles/four-weddings/components/FourWeddingsVisualization"));
+
+
+export const MdxComponents: any = {
   ...story_components,
-  h1: (props: any) => <h1 className="mb-8 mt-12 text-3xl font-bold tracking-tight sm:text-4xl" {...props} />,
-  h2: (props: any) => <h2 className="mb-6 mt-10 text-2xl font-bold tracking-tight sm:text-3xl" {...props} />,
-  h3: (props: any) => <h3 className="mb-4 mt-8 text-xl font-bold sm:text-2xl" {...props} />,
-  p: (props: any) => <p className="my-6 leading-relaxed text-dark-gray" {...props} />,
-  a: (props: any) => (
-    <Link
-      href={props.href}
-      className="font-medium text-link underline decoration-link/30 underline-offset-4 hover:decoration-link"
-      target={props.href?.startsWith("http") ? "_blank" : undefined}
-      rel={props.href?.startsWith("http") ? "noopener noreferrer" : undefined}
+  h1: (props: any) => (
+    <h1 className="mt-12 mb-6 text-3xl font-black" {...props} />
+  ),
+  h2: (props: any) => (
+    <h2 className="mt-10 mb-4 text-2xl font-bold" {...props} />
+  ),
+  h3: (props: any) => (
+    <h3 className="mt-8 mb-4 text-xl font-bold italic" {...props} />
+  ),
+  p: (props: any) => <p className="mb-6 leading-relaxed" {...props} />,
+  ul: (props: any) => <ul className="mb-6 list-disc pl-6" {...props} />,
+  ol: (props: any) => <ol className="mb-6 list-decimal pl-6" {...props} />,
+  li: (props: any) => <li className="mb-2" {...props} />,
+  blockquote: (props: any) => (
+    <blockquote
+      className="mb-8 border-l-4 border-link bg-light-gray p-6 italic text-gray-700 underline-offset-4"
       {...props}
     />
   ),
-  ul: (props: any) => <ul className="my-6 list-disc pl-6 space-y-2" {...props} />,
-  ol: (props: any) => <ol className="my-6 list-decimal pl-6 space-y-2" {...props} />,
-  li: (props: any) => <li className="text-dark-gray" {...props} />,
-  blockquote: (props: any) => (
-    <blockquote className="my-8 border-l-4 border-link/20 pl-6 italic text-gray-600 quote" {...props} />
+  a: (props: any) => (
+    <a className="text-link underline hover:text-orange transition-colors decoration-link/30" {...props} />
   ),
-  hr: () => <hr className="my-12 border-gray/20" />,
-  table: (props: any) => (
-    <div className="my-8 overflow-x-auto rounded-lg border border-gray/20">
-      <table className="w-full border-collapse text-left text-sm" {...props} />
-    </div>
+  hr: () => <hr className="my-12 border-gray-200" />,
+  img: (props: any) => (
+    <span className="my-12 block">
+       <span className="relative block w-full overflow-hidden rounded-2xl bg-gray/5 shadow-md">
+        <img
+          src={props.src?.replace(/^(\.\.\/)+images\//, "/images/")}
+          alt={props.alt || ""}
+          className="mx-auto h-auto w-auto max-h-[600px] object-contain"
+        />
+      </span>
+      {props.title && (
+        <span className="mt-4 block text-center text-sm italic text-gray-500 font-medium">
+          {props.title}
+        </span>
+      )}
+    </span>
   ),
-  thead: (props: any) => <thead className="bg-nav" {...props} />,
-  th: (props: any) => <th className="border-b border-gray/20 px-4 py-3 font-bold" {...props} />,
-  td: (props: any) => <td className="border-b border-gray/10 px-4 py-3" {...props} />,
-  img: (props: any) => {
-    const src = props.src?.replace(/^(\.\.\/)+images\//, "/images/");
-    return (
-      <figure className="my-12 flex flex-col items-center">
-        <div className="relative w-full overflow-hidden rounded-2xl bg-gray/5 shadow-md">
-           <img
-            src={src}
-            alt={props.alt || ""}
-            title={props.title}
-            className="h-auto w-full object-contain"
-          />
-        </div>
-        {(props.alt || props.title) && (
-          <figcaption className="mt-4 max-w-2xl px-4 text-center text-sm font-medium text-gray-500 italic">
-            {props.title || props.alt}
-          </figcaption>
-        )}
-      </figure>
-    );
-  },
+  WarmingDots: (props: any) => <WarmingDots {...props} />,
+  FourWeddingsVisualization: (props: any) => <FourWeddingsVisualization {...props} />,
 };
