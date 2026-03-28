@@ -19,20 +19,29 @@ export interface ArticleMeta extends ArticleFrontmatter {
 }
 
 /**
- * Get all article slugs (filenames without extension).
+ * Get all article slugs (directory names in the articles folder).
  */
 export function getArticleSlugs(): string[] {
-  return fs
-    .readdirSync(ARTICLES_DIR)
-    .filter((f) => f.endsWith(".mdx"))
-    .map((f) => f.replace(/\.mdx$/, ""));
+  try {
+    return fs
+      .readdirSync(ARTICLES_DIR, { withFileTypes: true })
+      .filter((dirent) => dirent.isDirectory())
+      .map((dirent) => dirent.name);
+  } catch (e) {
+    console.error("Error reading articles directory:", e);
+    return [];
+  }
 }
 
 /**
  * Read and parse a single MDX article file, returning frontmatter and raw MDX source.
+ * Articles are now stored in content/articles/[slug]/index.mdx
  */
 export function getArticle(slug: string) {
-  const filePath = path.join(ARTICLES_DIR, `${slug}.mdx`);
+  const filePath = path.join(ARTICLES_DIR, slug, "index.mdx");
+  if (!fs.existsSync(filePath)) {
+    throw new Error(`Article not found: ${slug}`);
+  }
   const raw = fs.readFileSync(filePath, "utf-8");
   const { data, content } = matter(raw);
 
@@ -42,6 +51,7 @@ export function getArticle(slug: string) {
     slug,
   };
 }
+
 
 /**
  * Get metadata for all articles, sorted by date descending.

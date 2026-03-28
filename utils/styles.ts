@@ -18,4 +18,27 @@ const COLORS = {
   NAV: "#f9f9f9",
 };
 
+export const hexToRgba = (hex: string, opacity: number) => {
+  const numbers = [hex.slice(1, 3), hex.slice(3, 5), hex.slice(5, 7)].map((subHex) =>
+    parseInt(subHex, 16)
+  );
+  return `rgba(${numbers[0]}, ${numbers[1]}, ${numbers[2]}, ${opacity})`;
+};
+
+export const SIZES = {
+  maxWidthContent: "768px",
+};
+
+export function paddingObj(padVal: number | { top: number; bottom: number; left: number; right: number }) {
+  if (typeof padVal === "number") {
+    return {
+      top: padVal,
+      bottom: padVal,
+      left: padVal,
+      right: padVal,
+    };
+  }
+  return padVal;
+}
+
 export default COLORS;
