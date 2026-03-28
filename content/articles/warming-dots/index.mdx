@@ -11,8 +11,6 @@ tags:
   - astronomy
 ---
 
-import { WarmingDots } from "story_components";
-import visualizationData from "data/warming-dots.js";
 
 Sometimes, when the problems of the world seem overwhelming, it's worth remembering how small we really are. Physicist [Carl Sagan](https://en.wikipedia.org/wiki/Carl_Sagan) summed it up nicely when commenting on a 1990 image of the Earth taken by the Voyager 1 space probe, titled _Pale Blue Dot_:
 
@@ -57,7 +55,7 @@ Closely tied to the idea of a doubling time is a constant called the **growth ra
 Here's an example of an exponential growth curve for a hypothetical population. You can adjust the growth rate and see how that affects the shape of the curve: more specifically, how quickly it shoots up.
 
 <WarmingDots
-  visData={visualizationData[0]}
+  index={0}
   caption="Figure 1: An exponential model of population growth."
 />
 
@@ -78,7 +76,7 @@ As a practical matter, determining the carrying capacity of any environment is a
 The logistic model of population incorporates two parameters: a growth rate for the population, and an environmental carrying capacity that effectively caps the population. Here's what the model looks like: note that the presence of the carrying capacity gives the logistic function its signature S-shape.
 
 <WarmingDots
-  visData={visualizationData[1]}
+  index={1}
   caption="Figure 2: A logistic model of population growth."
 />
 
@@ -127,16 +125,16 @@ So rather than modeling how population degrades the environment, the model will 
 In order to graph this model, we need several parameters. Some are the same as in our pure logistic model, but there are a number of new ones as well. Here they all are:
 
 1.  The natural growth rate of the population (this is the same parameter as in the logistic function).
-1.  The additional growth rate of the population produced by harvesting the resource.
-1.  The carrying capacity of the environment in its natural state, that is, when the environmental health metric is 0 (this is the same parameter as in the logistic function.)
-1.  The critical threshold of the environmental health metric, beyond which the carrying capacity of the environment is 0. (More concretely, if your environmental health metric is the deviation from the 20th century average temperature, this would be the largest deviation beyond which Earth could no longer support life.)
-1.  The recovery rate of the environment. In other words, in the absence of people, this measures how quickly the environment reverts to its natural state.
-1.  The rate of harm to the environment caused by harvesting resources. The idea here is that this is a scale factor based on the population: the higher the population, the more resources are harvested, and the more harm is done to the environment. The larger this factor, the more harm is done per person.
+2.  The additional growth rate of the population produced by harvesting the resource.
+3.  The carrying capacity of the environment in its natural state, that is, when the environmental health metric is 0 (this is the same parameter as in the logistic function.)
+4.  The critical threshold of the environmental health metric, beyond which the carrying capacity of the environment is 0. (More concretely, if your environmental health metric is the deviation from the 20th century average temperature, this would be the largest deviation beyond which Earth could no longer support life.)
+5.  The recovery rate of the environment. In other words, in the absence of people, this measures how quickly the environment reverts to its natural state.
+6.  The rate of harm to the environment caused by harvesting resources. The idea here is that this is a scale factor based on the population: the higher the population, the more resources are harvested, and the more harm is done to the environment. The larger this factor, the more harm is done per person.
 
 Whew. That's a lot. But with all of this setup, we're finally ready to explore our third model. Here it is.
 
 <WarmingDots
-  visData={visualizationData[2]}
+  index={2}
   caption="Figure 3: Modeling Population along with the environment."
 />
 
@@ -161,7 +159,7 @@ In order to do so, we need to introduce two more parameters. The first one measu
 What sorts of new trajectories can you create with these additional parameters?
 
 <WarmingDots
-  visData={visualizationData[3]}
+  index={3}
   caption="Figure 4: Modeling environment and population with two resources."
 />
 
@@ -180,7 +178,7 @@ For their final variation on the model, the authors included an environmental fr
 Now, with all nine parameters at your disposal, what sorts of population graphs can you come up with?
 
 <WarmingDots
-  visData={visualizationData[4]}
+  vizIndex="4"
   caption="Figure 5: Including an environmental fragility parameter into the model."
 />
 
