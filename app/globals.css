@@ -28,30 +28,34 @@
 
   /* Content width */
   --max-w-content: 768px;
+
+  /* Typography strictly mapped to Next.js CSS variables */
+  --font-sans: var(--font-inter);
+  --font-serif: var(--font-merriweather);
 }
 
 /* ============================================================
    Base styles
    ============================================================ */
-:root {
-  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
-}
-
 html {
-  font-family: var(--font-sans);
   color: #1a1a1a;
   background-color: #ffffff;
 }
 
-a {
+/* Ensure MDX article headers use the serif font to match original aesthetic */
+.prose :is(h1, h2, h3, h4, h5, h6) {
+  font-family: var(--font-serif);
+}
+
+.prose a {
   color: var(--color-link);
 }
 
-a:hover {
+.prose a:hover {
   opacity: 0.8;
 }
 
-/* Smooth fade-in for page content (replaces gatsby show/hide trick) */
+/* Smooth fade-in for page content */
 @keyframes fade-in {
   from { opacity: 0; }
   to { opacity: 1; }
