@@ -10,7 +10,7 @@ interface StoryCardProps {
   slug: string;
   tags: string[];
   title: string;
-  timeToRead: number;
+  timeToRead?: number;
   className?: string;
 }
 
@@ -34,8 +34,8 @@ const StoryCard: React.FC<StoryCardProps> = ({
         className
       )}
     >
-      <Link href={`/articles/${slug}`} className="flex flex-col gap-6 sm:flex-row">
-        <div className="relative h-48 w-full shrink-0 overflow-hidden rounded-lg sm:w-48">
+      <Link href={`/stories/${slug}`} className="flex flex-col gap-6 sm:flex-row">
+        <div className="relative w-full shrink-0 overflow-hidden rounded-lg sm:w-64 aspect-video">
           <Image
             src={imagePath}
             alt={`Card for ${title}`}
@@ -43,10 +43,10 @@ const StoryCard: React.FC<StoryCardProps> = ({
             className="object-cover transition-transform duration-300 group-hover:scale-105"
           />
         </div>
-        <div className="flex flex-1 flex-col">
-          <h4 className="mb-2 text-xl font-bold group-hover:text-link">{title}</h4>
-          <h6 className="mb-4 text-sm text-gray font-medium">
-            {date} — {timeToRead} minute read
+        <div className="flex flex-1 flex-col justify-center">
+          <h4 className="mb-1 font-serif text-2xl font-bold text-[#1a1a1a] group-hover:text-link transition-colors duration-200">{title}</h4>
+          <h6 className="mb-4 text-sm font-bold text-gray-400">
+            {date} {timeToRead ? `- ${timeToRead} minute read` : ""}
           </h6>
           <p className="text-sm leading-relaxed text-dark-gray">{caption}</p>
         </div>
@@ -55,7 +55,7 @@ const StoryCard: React.FC<StoryCardProps> = ({
         {tags.map((tag) => (
           <span
             key={tag}
-            className="rounded-full bg-light-gray px-3 py-1 text-[10px] font-medium italic text-gray-600"
+            className="rounded-full bg-gray-400 px-3 py-1 text-[11px] font-medium italic text-white"
           >
             {tag}
           </span>
