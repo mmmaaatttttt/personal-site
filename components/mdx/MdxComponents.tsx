@@ -86,8 +86,8 @@ export const story_components = {
 import dynamic from "next/dynamic";
 import Image from "next/image";
 
-const WarmingDots = dynamic(() => import("@/content/articles/warming-dots/components/WarmingDots"));
-const FourWeddingsVisualization = dynamic(() => import("@/content/articles/four-weddings/components/FourWeddingsVisualization"));
+const WarmingDots = dynamic(() => import("@/content/stories/warming-dots/components/WarmingDots"));
+const FourWeddingsVisualization = dynamic(() => import("@/content/stories/four-weddings/components/FourWeddingsVisualization"));
 
 
 export const MdxComponents: any = {
