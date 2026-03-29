@@ -2,7 +2,7 @@ import fs from "fs";
 import path from "path";
 import matter from "gray-matter";
 
-const ARTICLES_DIR = path.join(process.cwd(), "content", "articles");
+const ARTICLES_DIR = path.join(process.cwd(), "content", "stories");
 
 export interface ArticleFrontmatter {
   title: string;
