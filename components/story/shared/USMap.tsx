@@ -7,7 +7,7 @@ import { extent } from "d3-array";
 import { feature } from "topojson-client";
 import { motion, AnimatePresence } from "framer-motion";
 import ClippedSVG from "./ClippedSVG";
-import usTopo from "@/content/articles/four-weddings/data/us-topo.json";
+import usTopo from "./us-topo.json";
 
 interface USMapProps {
   colors: string[];

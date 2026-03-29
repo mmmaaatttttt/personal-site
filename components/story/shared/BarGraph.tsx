@@ -2,6 +2,7 @@
 
 import React, { useMemo } from "react";
 import { scaleBand, scaleLinear } from "d3-scale";
+import type { ScaleLinear, ScaleBand } from "d3-scale";
 import { motion, AnimatePresence } from "framer-motion";
 import Axis from "./Axis";
 import ClippedSVG from "./ClippedSVG";
@@ -71,8 +72,19 @@ const BarGraph: React.FC<BarGraphProps> = ({
         <g>
           <AnimatePresence>
             {barData.map((d, i) => {
-              const x = histogram ? xScale(d.x0!) + 1 : (xScale as any)(i.toString());
-              const barWidth = histogram ? xScale(d.x1!) - xScale(d.x0!) - 2 : (xScale as any).bandwidth();
+              let x: number;
+              let barWidth: number;
+
+              if (histogram) {
+                const linearScale = xScale as ScaleLinear<number, number>;
+                x = linearScale(d.x0!) + 1;
+                barWidth = linearScale(d.x1!) - linearScale(d.x0!) - 2;
+              } else {
+                const bandScale = xScale as ScaleBand<string>;
+                x = bandScale(i.toString()) || 0;
+                barWidth = bandScale.bandwidth();
+              }
+
               const y = yScale(d.height);
               const barHeight = height - y - p.bottom;
 
