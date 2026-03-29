@@ -75,37 +75,47 @@ export default async function ArticlePage({ params }: PageProps) {
     "/images/"
   );
 
+  const dateObj = new Date(frontmatter.date);
+  const formattedDate = dateObj.toLocaleDateString("en-US", {
+    month: "long",
+    year: "numeric",
+  });
+
   return (
     <MainLayout outline={true}>
-      <article className="mx-auto w-full max-w-[var(--max-w-content)] px-4 sm:px-0">
-        <header className="mb-12">
-          <div className="relative mb-8 h-64 w-full overflow-hidden rounded-2xl sm:h-[400px]">
-            <Image
-              src={featuredImage}
-              alt={frontmatter.title}
-              fill
-              className="object-cover"
-              priority
-            />
+      <article className="w-full">
+        {/* Full Bleed Hero Header */}
+        <header className="relative w-full h-[60vh] sm:h-screen flex flex-col items-center justify-center text-center px-4 overflow-hidden mb-12 sm:mb-16">
+          <Image
+            src={featuredImage}
+            alt={frontmatter.title}
+            fill
+            className="object-cover z-0"
+            priority
+          />
+          <div className="absolute inset-0 bg-black/10 z-0 pointer-events-none" />
+          
+          <div className="relative z-10 max-w-5xl mt-12 sm:mt-0">
+             <h1 
+               className="font-serif text-4xl sm:text-5xl md:text-6xl lg:text-[70px] font-bold text-white leading-tight"
+               style={{ WebkitTextStroke: "2px black", textShadow: "0 4px 12px rgba(0,0,0,0.5)" }}
+             >
+                {frontmatter.title}
+             </h1>
+             <h2 
+               className="mt-6 font-serif text-2xl sm:text-3xl font-bold text-white tracking-wide"
+               style={{ WebkitTextStroke: "1px black", textShadow: "0 2px 8px rgba(0,0,0,0.5)" }}
+             >
+                {formattedDate}
+             </h2>
           </div>
-          <div className="flex flex-wrap gap-2 mb-4">
-            {frontmatter.tags.map((tag: string) => (
-              <span
-                key={tag}
-                className="rounded-full bg-light-gray px-3 py-1 text-xs font-medium italic text-gray-600"
-              >
-                {tag}
-              </span>
-            ))}
-          </div>
-          <h1 className="mb-4 text-4xl font-black leading-tight sm:text-6xl">
-            {frontmatter.title}
-          </h1>
-          <p className="text-xl text-gray-600 italic">{frontmatter.caption}</p>
         </header>
 
-        <div className="prose prose-lg max-w-none text-dark-gray">
-          {content}
+        {/* Constrained Markdown Content */}
+        <div className="mx-auto w-full max-w-[var(--max-w-content)] px-4 sm:px-0">
+          <div className="prose prose-lg max-w-none text-[#1a1a1a] pb-20">
+            {content}
+          </div>
         </div>
       </article>
     </MainLayout>
