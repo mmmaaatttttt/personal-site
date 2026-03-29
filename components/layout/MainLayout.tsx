@@ -18,9 +18,8 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children, outline = false }) =>
     setMounted(true);
   }, []);
 
-  // Determine if it's an article page (previously /stories/...)
-  // The new structure will be /articles/...
-  const isArticlePage = pathname?.startsWith("/articles/") && pathname !== "/articles/";
+  // Determine if it's a story page
+  const isArticlePage = pathname?.startsWith("/stories/") && pathname !== "/stories/";
 
   return (
     <div
@@ -33,7 +32,7 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children, outline = false }) =>
         hide={isArticlePage}
         outline={outline}
       />
-      <main className="flex flex-1 justify-center py-6 sm:py-12">
+      <main className={`flex flex-1 justify-center ${isArticlePage ? "" : "py-6 sm:py-12"}`}>
         <div className="w-full">
           {children}
         </div>
