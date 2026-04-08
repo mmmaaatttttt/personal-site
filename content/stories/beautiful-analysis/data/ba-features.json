@@ -1,0 +1,82 @@
+[
+  {
+    "caption": "First word is \"wow\"",
+    "width": 12.9
+  },
+  {
+    "caption": "Contains \"wonder\"",
+    "width": 10.7
+  },
+  {
+    "caption": "Most common word is \"your\"",
+    "width": 10.1
+  },
+  {
+    "caption": "First word is \"what's\"",
+    "width": 9.5
+  },
+  {
+    "caption": "Contains \"must\"",
+    "width": 9.2
+  },
+  {
+    "caption": "Most common word is \"wow\"",
+    "width": 8.8
+  },
+  {
+    "caption": "Most common word is \"what's\"",
+    "width": 8.1
+  },
+  {
+    "caption": "Contains \"breaking\"",
+    "width": 8.1
+  },
+  {
+    "caption": "Contains \"incredible\"",
+    "width": 8.1
+  },
+  {
+    "caption": "First word is \"you're\"",
+    "width": 7.6
+  },
+  {
+    "caption": "Contains \"sounds\"",
+    "width": 6.9
+  },
+  {
+    "caption": "Contains \"wow\"",
+    "width": 6.5
+  },
+  {
+    "caption": "Contains \"honestly\"",
+    "width": -6.3
+  },
+  {
+    "caption": "Contains \"company\"",
+    "width": -6.5
+  },
+  {
+    "caption": "Contains \"completely\"",
+    "width": -7.2
+  },
+  {
+    "caption": "First word is \"my\"",
+    "width": -7.6
+  },
+  {
+    "caption": "Contains \"doctor\"",
+    "width": -7.9
+  },
+  {
+    "caption": "Contains \"she's\"",
+    "width": -7.9
+  },
+  {
+    "caption": "Most common word is \"my\"",
+    "width": -14.0
+  },
+  {
+    "caption": "Contains \"definitely\"",
+    "width": -14.1
+  }
+]

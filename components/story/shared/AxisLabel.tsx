@@ -10,6 +10,7 @@ const AxisLabel: React.FC<AxisLabelProps> = ({
   anchor = "middle",
   children,
   className,
+  fontSize = "1.25rem",
   ...props
 }) => {
   return (
@@ -20,7 +21,7 @@ const AxisLabel: React.FC<AxisLabelProps> = ({
         "stroke-white stroke-[0.5px]",
         className
       )}
-      style={{ fontSize: "1.25rem" }}
+      style={{ fontSize }}
       {...props}
     >
       {children}

@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useState, useMemo } from "react";
 import NarrowContainer from "./NarrowContainer";
 import ColumnLayout from "./ColumnLayout";
@@ -22,14 +24,14 @@ interface SliderProviderProps {
 }
 
 const SliderProvider: React.FC<SliderProviderProps> = ({
-  initialData,
+  initialData = [],
   column = true,
   fullWidthAt = "sm",
   render,
   width = "70%",
 }) => {
   const [sliderValues, setSliderValues] = useState<number[]>(() =>
-    initialData.map((d) => d.initialValue)
+    initialData && Array.isArray(initialData) ? initialData.map((d) => d.initialValue) : []
   );
 
   const handleValueChange = (idx: number, newVal: number) => {
@@ -42,18 +44,18 @@ const SliderProvider: React.FC<SliderProviderProps> = ({
 
   const dataWithHandlers = useMemo(
     () =>
-      initialData.map((d, i) => ({
+      initialData && Array.isArray(initialData) ? initialData.map((d, i) => ({
         ...d,
         value: sliderValues[i],
         handleValueChange: (val: number) => handleValueChange(i, val),
-      })),
+      })) : [],
     [initialData, sliderValues]
   );
 
   const mainContent = (
     <>
       <SliderGroup data={dataWithHandlers} column={column} />
-      {render(sliderValues)}
+      {typeof render === "function" ? render(sliderValues) : null}
     </>
   );
 

@@ -22,9 +22,9 @@ interface SliderGroupProps {
   column?: boolean;
 }
 
-const SliderGroup: React.FC<SliderGroupProps> = ({ data, column = true }) => {
-  const sliders = data.map((d, i) => {
-    const title = typeof d.title === "string" ? d.title : d.title(d.value);
+const SliderGroup: React.FC<SliderGroupProps> = ({ data = [], column = true }) => {
+  const sliders = data && Array.isArray(data) ? data.map((d, i) => {
+    const title = typeof d.title === "function" ? d.title(d.value) : (d.title || "");
     return (
       <div key={d.key ?? i} className="m-1 flex-1">
         <LabeledSlider
@@ -42,7 +42,7 @@ const SliderGroup: React.FC<SliderGroupProps> = ({ data, column = true }) => {
         />
       </div>
     );
-  });
+  }) : [];
 
   return (
     <FlexContainer column={column} cross="center" flex={data.length}>

@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useEffect, useRef } from "react";
 import { axisBottom, axisLeft } from "d3-axis";
 import { select } from "d3-selection";
@@ -48,8 +50,6 @@ const Axis: React.FC<AxisProps> = ({
     const axisObj = direction === "x" ? axisBottom(scale) : axisLeft(scale);
     if (tickFormat) {
       axisObj.tickFormat(format(tickFormat) as any);
-    } else {
-      axisObj.tickFormat(() => "");
     }
 
     if (tickSize !== undefined) {

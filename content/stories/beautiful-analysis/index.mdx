@@ -11,33 +11,34 @@ tags:
   - natural language processing
 ---
 
-import baSummary from "data/json/ba-summary.json";
-import baFeatures from "data/json/ba-features.json";
-import baSentimentData from "data/json/ba-sentiment-examples.json";
-import baSentimentCounts from "data/json/ba-sentiment-counts.json";
-import baAllSentiment from "data/json/ba-all-sentiment.json";
-import baProfanity from "data/json/ba-profanity.json";
-import baCommonPhrases from "data/json/ba-common-phrases.json";
-import baQuizData from "data/json/ba-quiz.json";
-import {
-  CaptionWrapper,
-  ColoredSpan,
-  HorizontalBarGraph,
-  MultiBarGraph,
-  NarrowContainer,
-  PodcastAllSentiments,
-  Quiz,
-  SelectableMultiBarGraph,
-  SentimentScoreTable,
-  StyledTable
-} from "story_components";
-import { SliderProvider } from "providers";
+import baSummary from "./data/ba-summary.json";
+import baFeatures from "./data/ba-features.json";
+import baSentimentData from "./data/ba-sentiment-examples.json";
+import baSentimentCounts from "./data/ba-sentiment-counts.json";
+import baAllSentiment from "./data/ba-all-sentiment.json";
+import baProfanity from "./data/ba-profanity.json";
+import baCommonPhrases from "./data/ba-common-phrases.json";
+import baQuizData from "./data/ba-quiz.json";
+
+import CaptionWrapper from "@/components/story/shared/Caption";
+import ColoredSpan from "@/components/story/shared/ColoredSpan";
+import HorizontalBarGraph from "@/components/story/shared/HorizontalBarGraph";
+import MultiBarGraph from "@/components/story/shared/MultiBarGraph";
+import NarrowContainer from "@/components/story/shared/NarrowContainer";
+import StyledTable from "@/components/story/shared/StyledTable";
+import SliderProvider from "@/components/story/shared/SliderProvider";
+
+import PodcastAllSentiments from "./components/PodcastAllSentiments";
+import Quiz from "./components/Quiz";
+import SelectableMultiBarGraph from "./components/SelectableMultiBarGraph";
+import SentimentScoreTable from "./components/SentimentScoreTable";
+
 import {
   defaultSentimentOptions,
-  generateTooltipData
-} from "data/beautiful-analysis.js";
-import { colorMap } from "data/beautiful-analysis.js";
-import COLORS from "utils/styles";
+  generateTooltipData,
+  colorMap
+} from "./data/beautiful-analysis";
+import COLORS from "@/utils/styles";
 
 _[Beautiful Stories From Anonymous People](https://www.earwolf.com/show/beautiful-anonymous/)_
 (a.k.a. _Beautiful / Anonymous_) is a podcast with a simple premise: "One phone
@@ -137,10 +138,8 @@ Here's how the number of words spoken by Gethard compares to the number of words
 spoken by the caller, for each of the ten episode transcripts:
 
 <CaptionWrapper caption="Figure 1: Word counts per episode for Gethard and the caller. Tap or mouse over a bar for more details on the episode.">
-  <MultiBarGraph
-    colors={[COLORS.DARK_BLUE, COLORS.ORANGE]}
-    data={baSummary}
-    getTooltipData={generateTooltipData}
+  <BaMultiBarGraph
+    dataType="summary"
     legendTitle="Word counts per episode"
     padding={{ top: 0, left: 70, right: 0, bottom: 10 }}
     yAxisLabel="Word count"
@@ -189,9 +188,7 @@ To make things concrete, here are some examples of Gethard statements, along
 with their associated sentiment score:
 
 <SentimentScoreTable
-  sentences={baSentimentData}
   caption="Figure 2: Sentiment scores for different things Chris Gethard has said."
-  options={defaultSentimentOptions}
 />
 
 VADER's not perfect. In particular, some of the "neutral" examples don't seem
@@ -204,12 +201,8 @@ sentiment? Here's a breakdown by sentence and by episode:
 
 <CaptionWrapper caption="Figure 3: Sentiment counts per episode for Gethard and the caller. Use the dropdown to view different ranges of sentiment.">
   <SelectableMultiBarGraph
-    colors={[COLORS.DARK_BLUE, COLORS.ORANGE]}
     containerWidth="86%"
-    data={baSentimentCounts}
-    getTooltipData={generateTooltipData}
     legendTitle="Sentiment counts per episode"
-    options={defaultSentimentOptions}
     padding={{ top: 10, left: 70, right: 0, bottom: 10 }}
     yAxisLabel="Sentiment count"
   />
@@ -227,7 +220,6 @@ episode's transcript. Here's how the episodes look:
 <PodcastAllSentiments
   caption="Figure 4: Sentiment of every line in an episode.
 The larger the circle, the more words in the line."
-  data={baAllSentiment}
 />
 
 As you can see, most circles lie in the upper half, i.e. they have positive
@@ -250,10 +242,8 @@ I was able to categorize every sentence in every conversation as either having
 profanity or not. Here are the results, again broken down by speaker:
 
 <CaptionWrapper caption="Figure 5: Profanity counts per episode for Gethard and the caller. Tap or mouse over a bar for more details on the episode.">
-  <MultiBarGraph
-    colors={[COLORS.DARK_BLUE, COLORS.ORANGE]}
-    data={baProfanity}
-    getTooltipData={generateTooltipData}
+  <BaMultiBarGraph
+    dataType="profanity"
     legendTitle="Profanity counts per episode"
     padding={{ top: 0, left: 70, right: 0, bottom: 10 }}
     yAxisLabel="Profanity count"
@@ -287,59 +277,7 @@ and four-word phrases spoken by Gethard and the callers as a group:
 Phrases are restricted to the twenty most frequent, and each phrase must have
 appeared an average of at least once per episode."
 >
-  <SliderProvider
-    initialData={[
-      {
-        min: baCommonPhrases.common_phrases[0].phrase_count,
-        max: baCommonPhrases.common_phrases[2].phrase_count,
-        initialValue: baCommonPhrases.common_phrases[0].phrase_count,
-        step: 1,
-        tickCount: 3,
-        title: val => `${val}-word phrases`
-      }
-    ]}
-    render={([phraseCount]) => {
-      const { speakers } = baCommonPhrases.common_phrases[phraseCount - 2];
-      const numRows = Math.max(
-        speakers["Chris"].length,
-        speakers["Caller"].length
-      );
-      const rows = Array.from({ length: numRows }, (_, i) => [
-        speakers["Chris"][i],
-        speakers["Caller"][i]
-      ]);
-      return (
-        <StyledTable padding="0.1rem">
-          <thead>
-            <tr>
-              {Object.keys(speakers).map(speaker => (
-                <th key={speaker}>
-                  <ColoredSpan bold color={colorMap[speaker]}>
-                    {speaker}
-                  </ColoredSpan>
-                </th>
-              ))}
-            </tr>
-          </thead>
-          <tbody>
-            {rows.map((row, i) => (
-              <tr key={`${phraseCount}-${i}`}>
-                {Object.keys(speakers).map((speaker, idx) => (
-                  <td key={speaker}>
-                    <ColoredSpan color={colorMap[speaker]}>
-                      {rows[i][idx]
-                        ? `${rows[i][idx][0]} (said ${rows[i][idx][1]} times)`
-                        : "--"}
-                    </ColoredSpan>
-                  </td>
-                ))}
-              </tr>
-            ))}
-          </tbody>
-        </StyledTable>
-      );
-    }}
-  />
+  <CommonPhrasesInteractive />
 </CaptionWrapper>
 
 One difference you may notice is how often common phrases include the word "I."
@@ -361,37 +299,7 @@ disproportionately often.
 Here are the two-word collocations for Chris Gethard and his callers:
 
 <CaptionWrapper caption="Figure 7: Collocations for Gethard and his callers.">
-  <NarrowContainer width="70%" fullWidthAt="small">
-    <StyledTable padding="0.1rem">
-      <thead>
-        <tr>
-          {baCommonPhrases.collocation_lists.map(({ speaker }) => (
-            <th key={speaker}>
-              <ColoredSpan bold color={colorMap[speaker]}>
-                {speaker}
-              </ColoredSpan>
-            </th>
-          ))}
-        </tr>
-      </thead>
-      <tbody>
-        {baCommonPhrases.collocation_lists[0].collocations.map(
-          (phrase, idx) => (
-            <tr key={idx}>
-              <td>
-                <ColoredSpan color={colorMap["Chris"]}>{phrase}</ColoredSpan>
-              </td>
-              <td>
-                <ColoredSpan color={colorMap["Caller"]}>
-                  {baCommonPhrases.collocation_lists[1].collocations[idx]}
-                </ColoredSpan>
-              </td>
-            </tr>
-          )
-        )}
-      </tbody>
-    </StyledTable>
-  </NarrowContainer>
+  <CollocationTable />
 </CaptionWrapper>
 
 A few observations:
@@ -450,12 +358,7 @@ my training sessions:
 
 <CaptionWrapper caption="Figure 8: Twenty most informative features for
 distinguishing between Gethard and his callers.">
-  <HorizontalBarGraph
-    data={baFeatures.map(d => ({
-      ...d,
-      fill: colorMap[d.width > 0 ? "Chris" : "Caller"]
-    }))}
-  />
+  <BaHorizontalBarGraph />
 </CaptionWrapper>
 
 The numbers in the above chart indicate the strength of each predictor. For
@@ -492,7 +395,6 @@ them. Want to see how I did? Let's play a game.
 <Quiz
   answerColors={[COLORS.DARK_BLUE, COLORS.PURPLE]}
   caption="Figure 9: Chris vs. Computer: who said it? This 10 question quiz pulls from 24 examples, so you can play it a few times to see different sentences."
-  questionData={baQuizData}
   title="Who said it: Chris Gethard or an Algorithm?"
 />
 

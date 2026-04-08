@@ -1,6 +1,11 @@
-import React from "react";
-import Link from "next/link";
-import { cn } from "@/lib/utils";
+import ColoredSpan from "@/components/story/shared/ColoredSpan";
+import NarrowContainer from "@/components/story/shared/NarrowContainer";
+import StyledTable from "@/components/story/shared/StyledTable";
+import Caption from "@/components/story/shared/Caption";
+import HorizontalBarGraph from "@/components/story/shared/HorizontalBarGraph";
+import MultiBarGraph from "@/components/story/shared/MultiBarGraph";
+import Legend from "@/components/story/shared/Legend";
+import SliderProvider from "@/components/story/shared/SliderProvider";
 
 // Placeholder for interactive components until they are fully ported in Phase 3
 const Placeholder = ({ name, children }: { name: string; children?: React.ReactNode }) => (
@@ -22,16 +27,16 @@ export const story_components = {
   AspectRatioWrapper: (props: any) => <Placeholder name="AspectRatioWrapper" {...props} />,
   AxisLabel: (props: any) => <Placeholder name="AxisLabel" {...props} />,
   Button: (props: any) => <Placeholder name="Button" {...props} />,
-  CaptionWrapper: (props: any) => <Placeholder name="CaptionWrapper" {...props} />,
+  CaptionWrapper: (props: any) => <Caption {...props} />,
   CenteredSVGText: (props: any) => <Placeholder name="CenteredSVGText" {...props} />,
   ClippedSVG: (props: any) => <Placeholder name="ClippedSVG" {...props} />,
-  ColoredSpan: (props: any) => <span className="font-medium" style={{ color: props.color }}>{props.children}</span>,
+  ColoredSpan: (props: any) => <ColoredSpan {...props} />,
   ColumnLayout: (props: any) => <Placeholder name="ColumnLayout" {...props} />,
   FlexContainer: (props: any) => <Placeholder name="FlexContainer" {...props} />,
   Icon: (props: any) => <Placeholder name="Icon" {...props} />,
   Latex: (props: any) => <span className="font-serif italic">{props.children}</span>,
   LinePlot: (props: any) => <Placeholder name="LinePlot" {...props} />,
-  NarrowContainer: (props: any) => <div className="mx-auto max-w-2xl">{props.children}</div>,
+  NarrowContainer: (props: any) => <NarrowContainer {...props} />,
   NoScrollCircle: (props: any) => <Placeholder name="NoScrollCircle" {...props} />,
   Polygon: (props: any) => <Placeholder name="Polygon" {...props} />,
   RelativeContainer: (props: any) => <div className="relative">{props.children}</div>,
@@ -40,7 +45,7 @@ export const story_components = {
   StyledInput: (props: any) => <Placeholder name="StyledInput" {...props} />,
   StyledSelect: (props: any) => <Placeholder name="StyledSelect" {...props} />,
   StyledSlider: (props: any) => <Placeholder name="StyledSlider" {...props} />,
-  StyledTable: (props: any) => <div className="overflow-x-auto my-8"><table className="w-full border-collapse" {...props} /></div>,
+  StyledTable: (props: any) => <StyledTable {...props} />,
   TranslucentRect: (props: any) => <Placeholder name="TranslucentRect" {...props} />,
   
   // Molecules
@@ -76,11 +81,34 @@ export const story_components = {
   Quiz: (props: any) => <Placeholder name="Quiz" />,
   SelectableMultiBarGraph: (props: any) => <Placeholder name="SelectableMultiBarGraph" />,
   SentimentScoreTable: (props: any) => <Placeholder name="SentimentScoreTable" />,
-  MultiBarGraph: (props: any) => <Placeholder name="MultiBarGraph" />,
-  HorizontalBarGraph: (props: any) => <Placeholder name="HorizontalBarGraph" />,
+  MultiBarGraph: (props: any) => <MultiBarGraph {...props} />,
+  HorizontalBarGraph: (props: any) => <HorizontalBarGraph {...props} />,
+  Legend: (props: any) => <Legend {...props} />,
+
+  // Missing components from templates/organisms
+  CoinFlipBayesianModel: (props: any) => <Placeholder name="CoinFlipBayesianModel" />,
+  CoinFlipHistogram: (props: any) => <Placeholder name="CoinFlipHistogram" />,
+  EconomyNodeGroup: (props: any) => <Placeholder name="EconomyNodeGroup" />,
+  HarassmentNodeGroup: (props: any) => <Placeholder name="HarassmentNodeGroup" />,
+  IsoperimetricExplorer: (props: any) => <Placeholder name="IsoperimetricExplorer" />,
+  SelectableHeatMap: (props: any) => <Placeholder name="SelectableHeatMap" />,
+  SelectableHistogram: (props: any) => <Placeholder name="SelectableHistogram" />,
+  SelectablePieChart: (props: any) => <Placeholder name="SelectablePieChart" />,
+  SelectableScatterplot: (props: any) => <Placeholder name="SelectableScatterplot" />,
+  Spinner: (props: any) => <Placeholder name="Spinner" />,
+  FunctionDistanceExplorer: (props: any) => <Placeholder name="FunctionDistanceExplorer" />,
+  OrchardGameHeatData: (props: any) => <Placeholder name="OrchardGameHeatData" />,
+  OrchardGameSimulation: (props: any) => <Placeholder name="OrchardGameSimulation" />,
+  PAdicHeatChart: (props: any) => <Placeholder name="PAdicHeatChart" />,
+  StringDistanceExplorer: (props: any) => <Placeholder name="StringDistanceExplorer" />,
+  VotingBarChart: (props: any) => <Placeholder name="VotingBarChart" />,
+  VotingLineChart: (props: any) => <Placeholder name="VotingLineChart" />,
+  VotingPollWorkerAge: (props: any) => <Placeholder name="VotingPollWorkerAge" />,
+  VotingTable: (props: any) => <Placeholder name="VotingTable" />,
+  EfficiencyGapTable: (props: any) => <Placeholder name="EfficiencyGapTable" />,
   
   // Providers (often wrap content)
-  SliderProvider: (props: any) => <div className="my-8 p-4 border border-gray/20 rounded-lg">{props.children || props.render?.([0])}</div>,
+  SliderProvider: (props: any) => <SliderProvider {...props} />,
 };
 
 import dynamic from "next/dynamic";
@@ -88,6 +116,16 @@ import Image from "next/image";
 
 const WarmingDots = dynamic(() => import("@/content/stories/warming-dots/components/WarmingDots"));
 const FourWeddingsVisualization = dynamic(() => import("@/content/stories/four-weddings/components/FourWeddingsVisualization"));
+
+// Beautiful Analysis components
+const PodcastAllSentiments = dynamic(() => import("@/content/stories/beautiful-analysis/components/PodcastAllSentiments"));
+const Quiz = dynamic(() => import("@/content/stories/beautiful-analysis/components/Quiz"));
+const SelectableMultiBarGraph = dynamic(() => import("@/content/stories/beautiful-analysis/components/SelectableMultiBarGraph"));
+const SentimentScoreTable = dynamic(() => import("@/content/stories/beautiful-analysis/components/SentimentScoreTable"));
+const BaMultiBarGraph = dynamic(() => import("@/content/stories/beautiful-analysis/components/BaMultiBarGraph"));
+const CommonPhrasesInteractive = dynamic(() => import("@/content/stories/beautiful-analysis/components/CommonPhrasesInteractive"));
+const BaHorizontalBarGraph = dynamic(() => import("@/content/stories/beautiful-analysis/components/BaHorizontalBarGraph"));
+const CollocationTable = dynamic(() => import("@/content/stories/beautiful-analysis/components/CollocationTable"));
 
 
 export const MdxComponents: any = {
@@ -133,4 +171,14 @@ export const MdxComponents: any = {
   ),
   WarmingDots: (props: any) => <WarmingDots {...props} />,
   FourWeddingsVisualization: (props: any) => <FourWeddingsVisualization {...props} />,
+  PodcastAllSentiments: (props: any) => <PodcastAllSentiments {...props} />,
+  Quiz: (props: any) => <Quiz {...props} />,
+  SelectableMultiBarGraph: (props: any) => <SelectableMultiBarGraph {...props} />,
+  SentimentScoreTable: (props: any) => <SentimentScoreTable {...props} />,
+  CoinFlipTable: (props: any) => <Placeholder name="CoinFlipTable" />,
+  // Specific to Beautiful Analysis
+  BaMultiBarGraph: (props: any) => <BaMultiBarGraph {...props} />,
+  CommonPhrasesInteractive: (props: any) => <CommonPhrasesInteractive {...props} />,
+  BaHorizontalBarGraph: (props: any) => <BaHorizontalBarGraph {...props} />,
+  CollocationTable: (props: any) => <CollocationTable {...props} />,
 };

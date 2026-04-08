@@ -1,3 +1,5 @@
+"use client";
+
 import React from "react";
 import { useResizeObserver } from "@/hooks/useResizeObserver";
 import { SVGContext } from "@/context/SVGContext";
@@ -18,6 +20,7 @@ interface ClippedSVGProps {
   padding?: number | Padding;
   children: React.ReactNode;
   className?: string;
+  clipChildren?: boolean;
 }
 
 const ClippedSVG: React.FC<ClippedSVGProps> = ({
@@ -28,6 +31,7 @@ const ClippedSVG: React.FC<ClippedSVGProps> = ({
   padding = 0,
   children,
   className,
+  clipChildren = true,
 }) => {
   const [measureRef, dimensions] = useResizeObserver();
 
@@ -55,7 +59,7 @@ const ClippedSVG: React.FC<ClippedSVGProps> = ({
               />
             </clipPath>
           </defs>
-          <g clipPath={`url(#clip-path-${id})`}>{children}</g>
+          <g clipPath={clipChildren ? `url(#clip-path-${id})` : undefined}>{children}</g>
         </svg>
       </SVGContext.Provider>
     </div>

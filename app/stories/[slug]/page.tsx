@@ -7,6 +7,21 @@ import Image from "next/image";
 import { notFound } from "next/navigation";
 import COLORS from "@/utils/styles";
 
+// Beautiful Analysis Data
+import baSummary from "@/content/stories/beautiful-analysis/data/ba-summary.json";
+import baFeatures from "@/content/stories/beautiful-analysis/data/ba-features.json";
+import baSentimentData from "@/content/stories/beautiful-analysis/data/ba-sentiment-examples.json";
+import baSentimentCounts from "@/content/stories/beautiful-analysis/data/ba-sentiment-counts.json";
+import baAllSentiment from "@/content/stories/beautiful-analysis/data/ba-all-sentiment.json";
+import baProfanity from "@/content/stories/beautiful-analysis/data/ba-profanity.json";
+import baCommonPhrases from "@/content/stories/beautiful-analysis/data/ba-common-phrases.json";
+import baQuizData from "@/content/stories/beautiful-analysis/data/ba-quiz.json";
+import {
+  defaultSentimentOptions,
+  generateTooltipData,
+  colorMap,
+} from "@/content/stories/beautiful-analysis/data/beautiful-analysis";
+
 interface PageProps {
   params: Promise<{ slug: string }>;
 }
@@ -53,13 +68,26 @@ export default async function ArticlePage({ params }: PageProps) {
 
  // Strips attributes like {.w-80} or {.my-class}
 
-  // 2. Data Resolution (Simplified for Phase 2)
-  // We'll provide common data objects to the MDX scope.
-  // In a real migration, we'd dynamically load the specific data file mentioned in the MDX.
-  const scope = {
+  // 2. Data Resolution (Story-specific)
+  const scope: any = {
     COLORS,
-    // Add other common data providers here if needed
   };
+
+  if (slug === "beautiful-analysis") {
+    Object.assign(scope, {
+      baSummary,
+      baFeatures,
+      baSentimentData,
+      baSentimentCounts,
+      baAllSentiment,
+      baProfanity,
+      baCommonPhrases,
+      baQuizData,
+      defaultSentimentOptions,
+      generateTooltipData,
+      colorMap,
+    });
+  }
 
   const { content } = await compileMDX<{ title: string }>({
     source: cleanSource,

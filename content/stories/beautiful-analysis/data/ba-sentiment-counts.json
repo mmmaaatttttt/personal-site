@@ -1,0 +1,260 @@
+[
+  {
+    "meta": { "id": 1, "title": "Ron Paul's Baby", "date": "3/15/2016" },
+    "counts": [
+      {
+        "Chris": 29,
+        "Caller": 11
+      },
+      {
+        "Chris": 102,
+        "Caller": 37
+      },
+      {
+        "Chris": 384,
+        "Caller": 222
+      },
+      {
+        "Chris": 220,
+        "Caller": 197
+      },
+      {
+        "Chris": 73,
+        "Caller": 38
+      }
+    ]
+  },
+  {
+    "meta": {
+      "id": 51,
+      "title": "Made Out with My Teacher",
+      "date": "3/7/2017"
+    },
+    "counts": [
+      {
+        "Chris": 25,
+        "Caller": 19
+      },
+      {
+        "Chris": 41,
+        "Caller": 45
+      },
+      {
+        "Chris": 135,
+        "Caller": 126
+      },
+      {
+        "Chris": 118,
+        "Caller": 111
+      },
+      {
+        "Chris": 48,
+        "Caller": 74
+      }
+    ]
+  },
+  {
+    "meta": { "id": 65, "title": "Deaf", "date": "6/13/2017" },
+    "counts": [
+      {
+        "Chris": 13,
+        "Caller": 24
+      },
+      {
+        "Chris": 32,
+        "Caller": 41
+      },
+      {
+        "Chris": 107,
+        "Caller": 133
+      },
+      {
+        "Chris": 78,
+        "Caller": 114
+      },
+      {
+        "Chris": 52,
+        "Caller": 78
+      }
+    ]
+  },
+  {
+    "meta": { "id": 69, "title": "Love is Everywhere", "date": "7/11/2017" },
+    "counts": [
+      {
+        "Chris": 17,
+        "Caller": 35
+      },
+      {
+        "Chris": 39,
+        "Caller": 93
+      },
+      {
+        "Chris": 163,
+        "Caller": 313
+      },
+      {
+        "Chris": 144,
+        "Caller": 215
+      },
+      {
+        "Chris": 44,
+        "Caller": 122
+      }
+    ]
+  },
+  {
+    "meta": { "id": 72, "title": "Aussie Best Friend", "date": "8/1/2017" },
+    "counts": [
+      {
+        "Chris": 15,
+        "Caller": 33
+      },
+      {
+        "Chris": 28,
+        "Caller": 47
+      },
+      {
+        "Chris": 139,
+        "Caller": 96
+      },
+      {
+        "Chris": 129,
+        "Caller": 97
+      },
+      {
+        "Chris": 107,
+        "Caller": 65
+      }
+    ]
+  },
+  {
+    "meta": { "id": 94, "title": "The Puppet Master", "date": "1/9/2018" },
+    "counts": [
+      {
+        "Chris": 22,
+        "Caller": 5
+      },
+      {
+        "Chris": 56,
+        "Caller": 47
+      },
+      {
+        "Chris": 181,
+        "Caller": 168
+      },
+      {
+        "Chris": 129,
+        "Caller": 148
+      },
+      {
+        "Chris": 98,
+        "Caller": 91
+      }
+    ]
+  },
+  {
+    "meta": { "id": 119, "title": "39 Year Old Grandma", "date": "7/2/2018" },
+    "counts": [
+      {
+        "Chris": 16,
+        "Caller": 15
+      },
+      {
+        "Chris": 44,
+        "Caller": 45
+      },
+      {
+        "Chris": 182,
+        "Caller": 211
+      },
+      {
+        "Chris": 99,
+        "Caller": 146
+      },
+      {
+        "Chris": 73,
+        "Caller": 108
+      }
+    ]
+  },
+  {
+    "meta": { "id": 121, "title": "Prison Bound", "date": "7/16/2018" },
+    "counts": [
+      {
+        "Chris": 17,
+        "Caller": 38
+      },
+      {
+        "Chris": 29,
+        "Caller": 85
+      },
+      {
+        "Chris": 131,
+        "Caller": 223
+      },
+      {
+        "Chris": 64,
+        "Caller": 131
+      },
+      {
+        "Chris": 61,
+        "Caller": 49
+      }
+    ]
+  },
+  {
+    "meta": {
+      "id": 132,
+      "title": "I Survived a Mass Shooting",
+      "date": "10/1/2018"
+    },
+    "counts": [
+      {
+        "Chris": 20,
+        "Caller": 13
+      },
+      {
+        "Chris": 39,
+        "Caller": 49
+      },
+      {
+        "Chris": 154,
+        "Caller": 107
+      },
+      {
+        "Chris": 93,
+        "Caller": 87
+      },
+      {
+        "Chris": 61,
+        "Caller": 60
+      }
+    ]
+  },
+  {
+    "meta": { "id": 138, "title": "House Burned Down", "date": "11/12/2018" },
+    "counts": [
+      {
+        "Chris": 21,
+        "Caller": 19
+      },
+      {
+        "Chris": 42,
+        "Caller": 57
+      },
+      {
+        "Chris": 164,
+        "Caller": 171
+      },
+      {
+        "Chris": 119,
+        "Caller": 112
+      },
+      {
+        "Chris": 68,
+        "Caller": 57
+      }
+    ]
+  }
+]
