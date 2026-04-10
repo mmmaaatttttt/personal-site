@@ -4,7 +4,7 @@ import React, { useState, useMemo, useEffect } from "react";
 import { scaleBand, scaleLinear } from "d3-scale";
 import type { ScaleLinear, ScaleBand } from "d3-scale";
 import { AnimatePresence } from "framer-motion";
-import Graph from "./Graph";
+import Graph from "../Graph";
 import BarItem from "./BarItem";
 
 interface BarData {

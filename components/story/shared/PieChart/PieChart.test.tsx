@@ -1,5 +1,6 @@
 import { describe, it, expect, vi } from 'vitest';
 import { render, screen } from '@testing-library/react';
+import '@testing-library/jest-dom/vitest';
 import { PieArcDatum } from 'd3-shape';
 
 // Mock the PieSlice component directly to bypass its internal animation hooks
@@ -24,13 +25,13 @@ vi.mock('./PieSlice', () => {
 });
 
 // Mock ClippedSVG to just render its children
-vi.mock('./ClippedSVG', () => {
+vi.mock('../ClippedSVG', () => {
   return {
     default: ({ children }: any) => <svg data-testid="clipped-svg">{children}</svg>,
   };
 });
 
-import PieChart from './PieChart';
+import PieChart from './index';
 
 describe('PieChart Component', () => {
   const mockColorScale = (i: number) => ['red', 'blue', 'green'][i];

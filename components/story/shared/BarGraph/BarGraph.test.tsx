@@ -1,6 +1,7 @@
 import { describe, it, expect, vi } from 'vitest';
 import { render, screen } from '@testing-library/react';
-import BarGraph from './BarGraph';
+import '@testing-library/jest-dom/vitest';
+import BarGraph from '.';
 import { scaleLinear } from 'd3-scale';
 
 // Mock the BarItem component directly to bypass all framer-motion complexity
@@ -20,7 +21,7 @@ vi.mock('./BarItem', () => {
 });
 
 // Mock Graph component since it handles its own SVG/Axis logic
-vi.mock('./Graph', () => {
+vi.mock('../Graph', () => {
   return {
     default: ({ children, svgId }: any) => (
       <svg data-testid="mock-graph" id={svgId}>

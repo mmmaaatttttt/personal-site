@@ -2,7 +2,7 @@
 
 import { FC, useMemo } from "react";
 import { arc, pie } from "d3-shape";
-import ClippedSVG from "./ClippedSVG";
+import ClippedSVG from "../ClippedSVG";
 import PieSlice from "./PieSlice";
 
 interface PieChartProps {
