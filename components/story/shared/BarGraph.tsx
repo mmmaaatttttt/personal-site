@@ -1,8 +1,11 @@
+"use client";
+
 import React, { useState, useMemo, useEffect } from "react";
 import { scaleBand, scaleLinear } from "d3-scale";
 import type { ScaleLinear, ScaleBand } from "d3-scale";
-import { motion, AnimatePresence } from "framer-motion";
+import { AnimatePresence } from "framer-motion";
 import Graph from "./Graph";
+import BarItem from "./BarItem";
 
 interface BarData {
   key: string | number;
@@ -109,31 +112,20 @@ const BarGraph: React.FC<BarGraphProps> = ({
               const barHeight = height - y - p.bottom;
 
               return (
-                <g key={d.key}>
-                  <motion.rect
-                    initial={{ height: 0, y: height - p.bottom }}
-                    animate={{ x, width: barWidth, y, height: barHeight, fill: d.color || color }}
-                    transition={{ duration: 0.5, delay: i * 0.05 }}
-                    stroke="rgba(0,0,0,0.1)"
-                    strokeWidth={1}
-                  />
-                  {barLabel && (
-                    <motion.text
-                      x={x + barWidth / 2}
-                      y={y}
-                      dy={-12}
-                      textAnchor="middle"
-                      dominantBaseline="middle"
-                      fontSize={fontSize}
-                      className="fill-current font-medium pointer-events-none"
-                      initial={{ opacity: 0 }}
-                      animate={{ opacity: 1 }}
-                      transition={{ delay: 0.5 + i * 0.05 }}
-                    >
-                      {barLabel(d)}
-                    </motion.text>
-                  )}
-                </g>
+                <BarItem
+                  key={d.key}
+                  data={d}
+                  index={i}
+                  x={x}
+                  y={y}
+                  width={barWidth}
+                  height={barHeight}
+                  color={color}
+                  graphHeight={height}
+                  paddingBottom={p.bottom}
+                  barLabel={barLabel}
+                  fontSize={fontSize}
+                />
               );
             })}
           </AnimatePresence>

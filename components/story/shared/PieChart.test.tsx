@@ -2,12 +2,12 @@ import { describe, it, expect, vi } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import { PieArcDatum } from 'd3-shape';
 
-// Mock the PieSlice component directly to bypass all framer-motion complexity
+// Mock the PieSlice component directly to bypass its internal animation hooks
+// allowing us to test PieChart's data mapping logic in isolation.
 vi.mock('./PieSlice', () => {
   const React = require('react');
   return {
     default: ({ datum, index, showLabels }: { datum: PieArcDatum<number>, index: number, showLabels: boolean }) => {
-      // Calculate percentage the same way for verification
       const percentage = (datum.endAngle - datum.startAngle) / (2 * Math.PI);
       const percentageText = `${Math.round(percentage * 100)}%`;
       
@@ -50,7 +50,6 @@ describe('PieChart Component', () => {
       <PieChart values={values} colorScale={mockColorScale} showLabels={true} />
     );
 
-    // Verify specifically rendered percentages
     expect(screen.getAllByText('25%')).toHaveLength(2);
     expect(screen.getAllByText('50%')).toHaveLength(1);
   });
@@ -62,7 +61,6 @@ describe('PieChart Component', () => {
     );
 
     expect(screen.getByText('99%')).toBeInTheDocument();
-    // The ~1% slice should be hidden via our percentage > 0.05 logic
     expect(screen.queryByText('1%')).not.toBeInTheDocument();
   });
 });
