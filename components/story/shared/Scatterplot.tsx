@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useMemo } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import { extent } from "d3-array";
 import { scaleLinear } from "d3-scale";
 import { motion, AnimatePresence } from "framer-motion";
@@ -37,19 +37,29 @@ const Scatterplot: React.FC<ScatterplotProps> = ({
   tickFormatX = "",
   tickFormatY = "",
 }) => {
+  const [isMounted, setIsMounted] = useState(false);
+
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
+
   const xScale = useMemo(() => {
+    if (!isMounted) return scaleLinear();
     const domain = extent(data, (d) => d.cx) as [number, number];
     return scaleLinear()
       .domain(domain)
       .range([graphPadding, width - graphPadding]);
-  }, [data, graphPadding, width]);
+  }, [data, graphPadding, width, isMounted]);
 
   const yScale = useMemo(() => {
+    if (!isMounted) return scaleLinear();
     const domain = extent(data, (d) => d.cy) as [number, number];
     return scaleLinear()
       .domain(domain)
       .range([height - graphPadding, graphPadding]);
-  }, [data, graphPadding, height]);
+  }, [data, graphPadding, height, isMounted]);
+
+  if (!isMounted) return <div className="animate-pulse bg-nav/10" style={{ height, width: "100%" }} />;
 
   return (
     <div className="w-full">

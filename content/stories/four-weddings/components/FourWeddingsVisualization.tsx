@@ -10,41 +10,57 @@ import SelectableScatterplot from "./SelectableScatterplot";
 import Caption from "@/components/story/shared/Caption";
 
 interface FourWeddingsVisualizationProps {
-  vizIndex: string | number; // Consistent with the new prop naming convention
+  vizIndex: string | number;
   vizType: "map" | "histogram" | "pie" | "scatter";
   caption?: string;
 }
 
 const FourWeddingsVisualization: React.FC<FourWeddingsVisualizationProps> = ({
-  vizIndex,
   vizType,
   caption,
 }) => {
-  const components: any = {
-    map: SelectableUSMap,
-    histogram: SelectableHistogram,
-    pie: SelectablePieChart,
-    scatter: SelectableScatterplot,
+  const renderVisualization = () => {
+    switch (vizType) {
+      case "map":
+        return (
+          <SelectableUSMap 
+            data={fourWeddingsData} 
+            selectOptions={selectOptions.map} 
+            getTooltipTitle={tooltipHelpers.map.title}
+            getTooltipBody={tooltipHelpers.map.body}
+          />
+        );
+      case "histogram":
+        return (
+          <SelectableHistogram 
+            data={fourWeddingsData} 
+            selectOptions={selectOptions.histogram} 
+          />
+        );
+      case "pie":
+        return (
+          <SelectablePieChart 
+            data={fourWeddingsData} 
+            selectOptions={selectOptions.pie} 
+            graphOptions={graphOptions.pie} 
+          />
+        );
+      case "scatter":
+        return (
+          <SelectableScatterplot 
+            data={fourWeddingsData} 
+            selectOptions={selectOptions.scatter} 
+            graphOptions={graphOptions.scatter} 
+          />
+        );
+      default:
+        return null;
+    }
   };
-
-  const Component = components[vizType];
-  if (!Component) return null;
-
-  const props: any = {
-    data: fourWeddingsData,
-    selectOptions: selectOptions[vizType],
-    graphOptions: graphOptions[vizType],
-  };
-
-  const tooltip = tooltipHelpers[vizType];
-  if (tooltip) {
-    props.getTooltipTitle = tooltip.title;
-    props.getTooltipBody = tooltip.body;
-  }
 
   return (
     <div className="my-12">
-      <Component {...props} />
+      {renderVisualization()}
       {caption && <Caption>{caption}</Caption>}
     </div>
   );

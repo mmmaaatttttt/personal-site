@@ -181,4 +181,14 @@ export const MdxComponents: any = {
   CommonPhrasesInteractive: (props: any) => <CommonPhrasesInteractive {...props} />,
   BaHorizontalBarGraph: (props: any) => <BaHorizontalBarGraph {...props} />,
   CollocationTable: (props: any) => <CollocationTable {...props} />,
+  table: (props: any) => (
+    <div className="my-8 w-full overflow-x-auto">
+      <table className="w-full border-collapse border border-gray/20 text-sm" {...props} />
+    </div>
+  ),
+  thead: (props: any) => <thead className="bg-nav/50 font-bold" {...props} />,
+  tbody: (props: any) => <tbody {...props} />,
+  tr: (props: any) => <tr className="border-b border-gray/10 hover:bg-nav/10" {...props} />,
+  th: (props: any) => <th className="p-4 text-center first:text-left font-black uppercase tracking-wider" {...props} />,
+  td: (props: any) => <td className="p-4 text-center first:text-left" {...props} />,
 };

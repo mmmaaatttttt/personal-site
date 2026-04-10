@@ -1,11 +1,8 @@
-"use client";
-
-import React, { useMemo } from "react";
+import React, { useState, useMemo, useEffect } from "react";
 import { scaleBand, scaleLinear } from "d3-scale";
 import type { ScaleLinear, ScaleBand } from "d3-scale";
 import { motion, AnimatePresence } from "framer-motion";
-import Axis from "./Axis";
-import ClippedSVG from "./ClippedSVG";
+import Graph from "./Graph";
 
 interface BarData {
   key: string | number;
@@ -26,11 +23,13 @@ interface BarGraphProps {
   svgId?: string;
   thresholds?: number[];
   tickFormat?: string;
-  yTickLabelPosition?: "bottom" | "left";
+  yTickLabelPosition?: "left" | "center";
   yTickFormat?: string;
   tickStep?: number;
+  tickStepX?: number;
+  tickStepY?: number;
   width?: number;
-  yScale: any;
+  yScale: ScaleLinear<number, number>;
 }
 
 const BarGraph: React.FC<BarGraphProps> = ({
@@ -44,13 +43,20 @@ const BarGraph: React.FC<BarGraphProps> = ({
   svgId = "bar-graph",
   thresholds,
   tickFormat = "",
-  yTickLabelPosition = "bottom",
+  yTickLabelPosition = "left",
   yTickFormat = "",
   tickStep,
+  tickStepX,
+  tickStepY,
   width = 600,
   yScale,
 }) => {
+  const [isMounted, setIsMounted] = useState(false);
   const p = typeof padding === "number" ? { top: padding, bottom: padding, left: padding, right: padding } : padding;
+
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
 
   const xScale = useMemo(() => {
     if (histogram && thresholds) {
@@ -64,12 +70,26 @@ const BarGraph: React.FC<BarGraphProps> = ({
       .padding(0.1);
   }, [histogram, thresholds, barData, p.left, p.right, width]);
 
+  if (!isMounted) return <div className="animate-pulse bg-nav/10" style={{ height, width: "100%" }} />;
+
   const fontSize = labelFontSize || (barData.length < 11 ? "100%" : `${110 - 1 * barData.length}%`);
 
   return (
     <div className="w-full h-full">
-      <ClippedSVG id={svgId} width={width} height={height}>
-        <g>
+      <Graph
+        svgId={svgId}
+        width={width}
+        height={height}
+        graphPadding={p}
+        xScale={xScale}
+        yScale={yScale}
+        tickFormatX={tickFormat}
+        tickFormatY={yTickFormat}
+        yAxisPosition={yTickLabelPosition}
+        tickStepX={tickStepX ? () => tickStepX : undefined}
+        tickStepY={tickStepY ? () => tickStepY : (tickStep ? () => tickStep : undefined)}
+      >
+        <g clipPath={`url(#clip-path-${svgId})`}>
           <AnimatePresence>
             {barData.map((d, i) => {
               let x: number;
@@ -117,33 +137,8 @@ const BarGraph: React.FC<BarGraphProps> = ({
               );
             })}
           </AnimatePresence>
-
-          <Axis
-            direction="y"
-            fontSize="0.6rem"
-            labelPosition={yTickLabelPosition === "bottom" ? { x: "4", dy: "12" } : { x: "-5" }}
-            scale={yScale}
-            xShift={p.left}
-            yShift={0}
-            textAnchor={yTickLabelPosition === "bottom" ? "start" : "end"}
-            tickFormat={yTickFormat}
-            tickSize={-width + p.left + p.right}
-            tickStep={tickStep}
-          />
-          {histogram && (
-            <Axis
-              direction="x"
-              rotateLabels
-              scale={xScale}
-              tickStep={thresholds ? thresholds[1] - thresholds[0] : undefined}
-              tickFormat={tickFormat}
-              labelPosition={{ y: "0.35em", x: "9", dy: "0" }}
-              textAnchor="start"
-              yShift={height - p.bottom}
-            />
-          )}
         </g>
-      </ClippedSVG>
+      </Graph>
     </div>
   );
 };

@@ -99,7 +99,6 @@ const USMap: React.FC<USMapProps> = ({
                   onMouseLeave={onMouseLeave}
                   onTouchStart={onMouseMove?.(title, body)}
                   onTouchEnd={onMouseLeave}
-                  whileHover={{ strokeWidth: 6, stroke: "#666", zIndex: 10 }}
                   className="cursor-pointer"
                 />
               );

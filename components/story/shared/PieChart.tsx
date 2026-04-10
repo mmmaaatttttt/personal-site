@@ -1,6 +1,4 @@
-"use client";
-
-import React, { useMemo } from "react";
+import { FC, useMemo, Fragment } from "react";
 import { arc, pie } from "d3-shape";
 import { format } from "d3-format";
 import { motion, AnimatePresence } from "framer-motion";
@@ -18,7 +16,7 @@ interface PieChartProps {
   innerRadius?: number;
 }
 
-const PieChart: React.FC<PieChartProps> = ({
+const PieChart: FC<PieChartProps> = ({
   colorScale,
   height = 600,
   padding = 0,
@@ -45,7 +43,7 @@ const PieChart: React.FC<PieChartProps> = ({
   const total = useMemo(() => values.reduce((acc, v) => acc + v, 0), [values]);
 
   return (
-    <div className="w-full h-full flex items-center justify-center">
+    <div className="flex h-full w-full items-center justify-center">
       <ClippedSVG id="pie" width={width} height={height}>
         <g transform={`translate(${width / 2}, ${height / 2})`}>
           <AnimatePresence>
@@ -54,7 +52,7 @@ const PieChart: React.FC<PieChartProps> = ({
               const centroid = pathArc.centroid(d);
 
               return (
-                <React.Fragment key={i}>
+                <Fragment key={i}>
                   <motion.path
                     d={pathArc(d) || ""}
                     fill={colorScale(i)}
@@ -76,12 +74,12 @@ const PieChart: React.FC<PieChartProps> = ({
                       initial={{ opacity: 0 }}
                       animate={{ opacity: 1 }}
                       transition={{ delay: 0.5 + i * 0.1 }}
-                      className="font-bold pointer-events-none"
+                      className="pointer-events-none font-bold"
                     >
                       {format(".0%")(percentage)}
                     </motion.text>
                   )}
-                </React.Fragment>
+                </Fragment>
               );
             })}
           </AnimatePresence>

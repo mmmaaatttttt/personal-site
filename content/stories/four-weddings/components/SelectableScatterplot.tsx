@@ -1,37 +1,54 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Scatterplot from "@/components/story/shared/Scatterplot";
 import Select from "@/components/story/shared/Select";
-import FlexContainer from "@/components/story/shared/FlexContainer";
 import NarrowContainer from "@/components/story/shared/NarrowContainer";
+import FlexContainer from "@/components/story/shared/FlexContainer";
+import { WeddingData, ScatterOption } from "../types";
 
 interface SelectableScatterplotProps {
-    data: any[];
-    selectOptions: any[];
-    graphOptions: any;
+    data: WeddingData[];
+    selectOptions: ScatterOption[];
+    graphOptions: {
+        colorScale: (ranking: number | null) => string;
+    };
 }
+
+const DEFAULT_HEIGHT = 400;
+const DEFAULT_WIDTH = 500;
+const DEFAULT_PADDING = 55;
+const DEFAULT_DOT_AREA = 100;
 
 const SelectableScatterplot: React.FC<SelectableScatterplotProps> = ({
     data,
     selectOptions,
     graphOptions,
 }) => {
-    const [selectedOptionX, setSelectedOptionX] = useState(selectOptions[0]);
-    const [selectedOptionY, setSelectedOptionY] = useState(selectOptions[1]);
-    const [selectedOptionR, setSelectedOptionR] = useState(null);
+    const [isMounted, setIsMounted] = useState(false);
+    const [selectedOptionX, setSelectedOptionX] = useState<ScatterOption>(selectOptions[0]);
+    const [selectedOptionY, setSelectedOptionY] = useState<ScatterOption>(selectOptions[1]);
+    const [selectedOptionR] = useState<ScatterOption | null>(null);
 
-    const { accessor: accessorX, value: valueX, format: formatX, label: labelX } = selectedOptionX;
-    const { accessor: accessorY, value: valueY, format: formatY, label: labelY } = selectedOptionY;
-    const accessorR = (selectedOptionR as any)?.accessor || ((d: any) => 100);
+    useEffect(() => {
+        setIsMounted(true);
+    }, []);
+
+    const { accessor: accessorX, value: valueX, format: formatX } = selectedOptionX;
+    const { accessor: accessorY, value: valueY, format: formatY } = selectedOptionY;
+    const accessorR = (selectedOptionR as ScatterOption)?.accessor || (() => DEFAULT_DOT_AREA);
     const { colorScale } = graphOptions;
+
+    if (!isMounted) {
+        return <div className="h-[400px] w-full animate-pulse bg-nav/10" />;
+    }
 
     const scatterData = data
         .filter(d => accessorX(d) !== null && accessorY(d) !== null && accessorR(d) !== null)
         .map(d => ({
-            cx: accessorX(d),
-            cy: accessorY(d),
-            area: accessorR(d),
+            cx: accessorX(d) || 0,
+            cy: accessorY(d) || 0,
+            area: accessorR(d) || DEFAULT_DOT_AREA,
             fill: colorScale(d.ranking),
             key: `${d.season}:${d.episode} - ${d.name}`
         }));
@@ -63,7 +80,9 @@ const SelectableScatterplot: React.FC<SelectableScatterplotProps> = ({
             <Scatterplot
                 data={scatterData}
                 {...graphOptions}
-                graphPadding={55}
+                width={DEFAULT_WIDTH}
+                height={DEFAULT_HEIGHT}
+                graphPadding={DEFAULT_PADDING}
                 tickFormatX={formatX}
                 tickFormatY={formatY}
             />

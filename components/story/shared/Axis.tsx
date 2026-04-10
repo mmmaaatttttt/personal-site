@@ -72,21 +72,19 @@ const Axis: React.FC<AxisProps> = ({
       .attr("stroke-dasharray", "10, 5")
       .attr("pointer-events", "none");
 
-    if (tickFormat) {
-      const labels = g.selectAll(".tick text");
-      labels
-        .style("text-anchor", textAnchor)
-        .style("font-size", fontSize);
+    const labels = g.selectAll(".tick text");
+    labels
+      .style("text-anchor", textAnchor)
+      .style("font-size", fontSize);
 
-      if (rotateLabels) {
-        labels.attr("transform", "rotate(90)");
-      }
-
-      // fine-tune text label position
-      Object.entries(labelPosition).forEach(([attr, val]) => {
-        labels.attr(attr, val);
-      });
+    if (rotateLabels) {
+      labels.attr("transform", "rotate(90)");
     }
+
+    // fine-tune text label position
+    Object.entries(labelPosition).forEach(([attr, val]) => {
+      labels.attr(attr, val);
+    });
   }, [direction, fontSize, labelPosition, scale, textAnchor, tickColor, tickSize, tickShift, tickStep, tickFormat, rotateLabels, xShift, yShift]);
 
   return <g ref={axisRef} className="axis-group" />;

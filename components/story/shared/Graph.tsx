@@ -18,6 +18,8 @@ interface GraphProps {
   tickFormatX?: string;
   tickFormatY?: string;
   tickStep?: (scale: any) => number;
+  tickStepX?: (scale: any) => number;
+  tickStepY?: (scale: any) => number;
   xAxisPosition?: "bottom" | "center";
   yAxisPosition?: "left" | "center";
   xLabel?: string;
@@ -40,6 +42,8 @@ const Graph: React.FC<GraphProps> = ({
   tickFormatX = "",
   tickFormatY = "",
   tickStep,
+  tickStepX,
+  tickStepY,
   xAxisPosition = "bottom",
   yAxisPosition = "left",
   xLabel = "",
@@ -65,7 +69,7 @@ const Graph: React.FC<GraphProps> = ({
           textAnchor="end"
           tickSize={yOptions.tickSize}
           tickShift={yOptions.tickShift}
-          tickStep={tickStep?.(yScale)}
+          tickStep={(tickStepY || tickStep)?.(yScale)}
           tickFormat={tickFormatY}
           xShift={yOptions.xShift}
         />
@@ -77,7 +81,7 @@ const Graph: React.FC<GraphProps> = ({
           textAnchor="start"
           tickSize={xOptions.tickSize}
           tickShift={xOptions.tickShift}
-          tickStep={tickStep?.(xScale)}
+          tickStep={(tickStepX || tickStep)?.(xScale)}
           tickFormat={tickFormatX}
           yShift={xOptions.yShift}
         />
