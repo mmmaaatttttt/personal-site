@@ -1,0 +1,101 @@
+"use client";
+
+import { FC, useEffect, useState } from "react";
+import { PieArcDatum } from "d3-shape";
+import { format } from "d3-format";
+import { motion, useSpring, useTransform, MotionValue } from "framer-motion";
+
+interface AnimatedPercentageProps {
+  startAngle: MotionValue<number>;
+  endAngle: MotionValue<number>;
+  textFill: string;
+  x: MotionValue<number>;
+  y: MotionValue<number>;
+}
+
+const AnimatedPercentage: FC<AnimatedPercentageProps> = ({ startAngle, endAngle, textFill, x, y }) => {
+  const [displayValue, setDisplayValue] = useState("");
+  
+  const percentageValue = useTransform([startAngle, endAngle], ([sa, ea]: number[]) => 
+    format(".0%")((ea - sa) / (2 * Math.PI))
+  );
+
+  const opacityValue = useTransform([startAngle, endAngle], ([sa, ea]: number[]) => 
+    (ea - sa) / (2 * Math.PI) > 0.05 ? 1 : 0
+  );
+
+  useEffect(() => {
+    return percentageValue.on("change", (latest) => setDisplayValue(latest));
+  }, [percentageValue]);
+
+  useEffect(() => {
+    setDisplayValue(percentageValue.get());
+  }, []);
+
+  return (
+    <motion.text
+      style={{ x, y, opacity: opacityValue }}
+      textAnchor="middle"
+      dominantBaseline="middle"
+      fontSize="24"
+      fill={textFill}
+      className="pointer-events-none font-bold"
+    >
+      {displayValue}
+    </motion.text>
+  );
+};
+
+interface PieSliceProps {
+  datum: PieArcDatum<number>;
+  index: number;
+  pathArc: any;
+  colorScale: (key: number) => string;
+  stroke: string;
+  showLabels: boolean;
+  textFill: string;
+}
+
+const PieSlice: FC<PieSliceProps> = ({ datum, index, pathArc, colorScale, stroke, showLabels, textFill }) => {
+  const startAngle = useSpring(datum.startAngle, { bounce: 0, duration: 500 });
+  const endAngle = useSpring(datum.endAngle, { bounce: 0, duration: 500 });
+
+  useEffect(() => {
+    startAngle.set(datum.startAngle);
+    endAngle.set(datum.endAngle);
+  }, [datum.startAngle, datum.endAngle, startAngle, endAngle]);
+
+  const d = useTransform([startAngle, endAngle], ([sa, ea]: number[]) => 
+    pathArc({ startAngle: sa, endAngle: ea }) || ""
+  );
+
+  const labelX = useTransform([startAngle, endAngle], ([sa, ea]: number[]) => 
+    pathArc.centroid({ startAngle: sa, endAngle: ea })[0]
+  );
+  
+  const labelY = useTransform([startAngle, endAngle], ([sa, ea]: number[]) => 
+    pathArc.centroid({ startAngle: sa, endAngle: ea })[1]
+  );
+
+  return (
+    <>
+      <motion.path
+        d={d}
+        fill={colorScale(index)}
+        stroke={stroke}
+        strokeWidth={3}
+      />
+      {showLabels && (
+        <AnimatedPercentage
+          startAngle={startAngle}
+          endAngle={endAngle}
+          textFill={textFill}
+          x={labelX}
+          y={labelY}
+        />
+      )}
+    </>
+  );
+};
+
+export default PieSlice;
