@@ -54,7 +54,7 @@ describe('SelectableHistogram Component', () => {
   it('bins data correctly for the initial selection', () => {
     const { getByTestId } = render(
       <SelectableHistogram 
-        data={mockData} 
+        data={mockData as any} 
         selectOptions={mockOptions} 
       />
     );
@@ -80,7 +80,7 @@ describe('SelectableHistogram Component', () => {
   it('updates bins when a new option is selected', () => {
     const { getByTestId } = render(
       <SelectableHistogram 
-        data={mockData} 
+        data={mockData as any} 
         selectOptions={mockOptions} 
       />
     );
@@ -105,7 +105,7 @@ describe('SelectableHistogram Component', () => {
   it('maintains consistent bin widths for all bars', () => {
       const { getByTestId } = render(
           <SelectableHistogram 
-            data={mockData} 
+            data={mockData as any} 
             selectOptions={mockOptions} 
           />
         );
