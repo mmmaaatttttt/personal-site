@@ -5,8 +5,9 @@ import { geoPath, geoAlbers } from "d3-geo";
 import { scaleLinear } from "d3-scale";
 import { extent } from "d3-array";
 import { feature } from "topojson-client";
-import { motion, AnimatePresence } from "framer-motion";
-import ClippedSVG from "./ClippedSVG";
+import { AnimatePresence } from "framer-motion";
+import ClippedSVG from "../ClippedSVG";
+import USState from "./USState";
 import usTopo from "./us-topo.json";
 
 interface USMapProps {
@@ -86,20 +87,15 @@ const USMap: React.FC<USMapProps> = ({
               const body = getTooltipBody(d.properties);
 
               return (
-                <motion.path
+                <USState
                   key={d.id || i}
                   d={pathGenerator(d) || ""}
                   fill={fill}
-                  stroke="white"
-                  strokeWidth={4}
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1, fill }}
-                  transition={{ duration: 0.5, delay: i * 0.005 }}
-                  onMouseMove={onMouseMove?.(title, body)}
+                  index={i}
+                  title={title}
+                  body={body}
+                  onMouseMove={onMouseMove}
                   onMouseLeave={onMouseLeave}
-                  onTouchStart={onMouseMove?.(title, body)}
-                  onTouchEnd={onMouseLeave}
-                  className="cursor-pointer"
                 />
               );
             })}
