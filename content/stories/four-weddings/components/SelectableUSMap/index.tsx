@@ -5,7 +5,7 @@ import USMap from "@/components/story/shared/USMap";
 import Select from "@/components/story/shared/Select";
 import NarrowContainer from "@/components/story/shared/NarrowContainer";
 import Tooltip, { useTooltip } from "@/components/story/shared/Tooltip";
-import { WeddingData, MapOption } from "../types";
+import { WeddingData, MapOption } from "../../types";
 
 interface SelectableUSMapProps {
   data: WeddingData[];

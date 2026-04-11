@@ -4,7 +4,7 @@ import React, { useState, useEffect } from "react";
 import PieChart from "@/components/story/shared/PieChart";
 import Select from "@/components/story/shared/Select";
 import NarrowContainer from "@/components/story/shared/NarrowContainer";
-import { WeddingData, PieOption } from "../types";
+import { WeddingData, PieOption } from "../../types";
 
 interface SelectablePieChartProps {
   data: WeddingData[];

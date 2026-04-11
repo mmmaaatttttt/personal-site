@@ -5,7 +5,7 @@ import Scatterplot from "@/components/story/shared/Scatterplot";
 import Select from "@/components/story/shared/Select";
 import NarrowContainer from "@/components/story/shared/NarrowContainer";
 import FlexContainer from "@/components/story/shared/FlexContainer";
-import { WeddingData, ScatterOption } from "../types";
+import { WeddingData, ScatterOption } from "../../types";
 
 interface SelectableScatterplotProps {
     data: WeddingData[];
