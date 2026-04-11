@@ -85,28 +85,12 @@ export const story_components = {
   HorizontalBarGraph: (props: any) => <HorizontalBarGraph {...props} />,
   Legend: (props: any) => <Legend {...props} />,
 
-  // Missing components from templates/organisms
-  CoinFlipBayesianModel: (props: any) => <Placeholder name="CoinFlipBayesianModel" />,
-  CoinFlipHistogram: (props: any) => <Placeholder name="CoinFlipHistogram" />,
-  EconomyNodeGroup: (props: any) => <Placeholder name="EconomyNodeGroup" />,
-  HarassmentNodeGroup: (props: any) => <Placeholder name="HarassmentNodeGroup" />,
-  IsoperimetricExplorer: (props: any) => <Placeholder name="IsoperimetricExplorer" />,
-  SelectableHeatMap: (props: any) => <Placeholder name="SelectableHeatMap" />,
-  SelectableHistogram: (props: any) => <Placeholder name="SelectableHistogram" />,
-  SelectablePieChart: (props: any) => <Placeholder name="SelectablePieChart" />,
-  SelectableScatterplot: (props: any) => <Placeholder name="SelectableScatterplot" />,
-  Spinner: (props: any) => <Placeholder name="Spinner" />,
-  FunctionDistanceExplorer: (props: any) => <Placeholder name="FunctionDistanceExplorer" />,
-  OrchardGameHeatData: (props: any) => <Placeholder name="OrchardGameHeatData" />,
-  OrchardGameSimulation: (props: any) => <Placeholder name="OrchardGameSimulation" />,
-  PAdicHeatChart: (props: any) => <Placeholder name="PAdicHeatChart" />,
-  StringDistanceExplorer: (props: any) => <Placeholder name="StringDistanceExplorer" />,
-  VotingBarChart: (props: any) => <Placeholder name="VotingBarChart" />,
-  VotingLineChart: (props: any) => <Placeholder name="VotingLineChart" />,
-  VotingPollWorkerAge: (props: any) => <Placeholder name="VotingPollWorkerAge" />,
-  VotingTable: (props: any) => <Placeholder name="VotingTable" />,
-  EfficiencyGapTable: (props: any) => <Placeholder name="EfficiencyGapTable" />,
-  
+  // Stabilized Four Weddings Interactive Components
+  SelectableHistogram: (props: any) => <SelectableHistogram {...props} />,
+  SelectablePieChart: (props: any) => <SelectablePieChart {...props} />,
+  SelectableScatterplot: (props: any) => <SelectableScatterplot {...props} />,
+  SelectableUSMap: (props: any) => <SelectableUSMap {...props} />,
+
   // Providers (often wrap content)
   SliderProvider: (props: any) => <SliderProvider {...props} />,
 };
@@ -116,6 +100,12 @@ import Image from "next/image";
 
 const WarmingDots = dynamic(() => import("@/content/stories/warming-dots/components/WarmingDots"));
 const FourWeddingsVisualization = dynamic(() => import("@/content/stories/four-weddings/components/FourWeddingsVisualization"));
+
+// Four Weddings components
+const SelectableHistogram = dynamic(() => import("@/content/stories/four-weddings/components/SelectableHistogram"));
+const SelectablePieChart = dynamic(() => import("@/content/stories/four-weddings/components/SelectablePieChart"));
+const SelectableScatterplot = dynamic(() => import("@/content/stories/four-weddings/components/SelectableScatterplot"));
+const SelectableUSMap = dynamic(() => import("@/content/stories/four-weddings/components/SelectableUSMap"));
 
 // Beautiful Analysis components
 const PodcastAllSentiments = dynamic(() => import("@/content/stories/beautiful-analysis/components/PodcastAllSentiments"));
