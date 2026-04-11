@@ -101,4 +101,24 @@ describe('SelectableHistogram Component', () => {
     expect(firstBin.height).toBe(2);
     // Values: 20, 30 are in [0, 50)
   });
+
+  it('maintains consistent bin widths for all bars', () => {
+      const { getByTestId } = render(
+          <SelectableHistogram 
+            data={mockData} 
+            selectOptions={mockOptions} 
+          />
+        );
+        
+        const graph = getByTestId('mock-bar-graph');
+        const barData = JSON.parse(graph.getAttribute('data-bar-data') || '[]');
+        
+        // Check filtering out null/undefined bins if any
+        const validBins = barData.filter((b: any) => b.x0 !== undefined && b.x1 !== undefined);
+        
+        const firstWidth = validBins[0].x1 - validBins[0].x0;
+        validBins.forEach((bin: any, i: number) => {
+            expect(bin.x1 - bin.x0).toBe(firstWidth);
+        });
+  });
 });

@@ -7,7 +7,7 @@ import COLORS from "@/utils/styles";
 import BarGraph from "@/components/story/shared/BarGraph";
 import NarrowContainer from "@/components/story/shared/NarrowContainer";
 import Select from "@/components/story/shared/Select";
-import { WeddingData, HistogramOption } from "../types";
+import { WeddingData, HistogramOption } from "../../types";
 
 const DEFAULT_HEIGHT = 400;
 const DEFAULT_WIDTH = 600;
@@ -43,16 +43,10 @@ const SelectableHistogram: React.FC<SelectableHistogramProps> = ({
     
     const binner = bin<WeddingData, number>()
       .value((d) => accessor(d) || 0)
-      .thresholds(thresholds);
+      .thresholds(thresholds)
+      .domain([thresholds[0], thresholds[thresholds.length - 1]]);
     
-    const bins = binner(validData);
-
-    const lastIdx = bins.length - 1;
-    if (bins.length > 1) {
-      const bWidth = (bins[1].x1 ?? 0) - (bins[1].x0 ?? 0);
-      if (bins[0].x0 === undefined) bins[0].x0 = (bins[0].x1 ?? 0) - bWidth;
-      if (bins[lastIdx].x1 === undefined) bins[lastIdx].x1 = (bins[lastIdx].x0 ?? 0) + bWidth;
-    }
+    const bins = binner(validData).filter(b => b.x0 !== undefined && b.x1 !== undefined && b.x0 < b.x1);
 
     const yScale = scaleLinear()
       .domain([0, (max(bins, (d) => d.length) || 0) * 1.1])
