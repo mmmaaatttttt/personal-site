@@ -3,8 +3,9 @@
 import React, { useState, useEffect, useMemo } from "react";
 import { extent } from "d3-array";
 import { scaleLinear } from "d3-scale";
-import { motion, AnimatePresence } from "framer-motion";
-import Graph from "./Graph";
+import { AnimatePresence } from "framer-motion";
+import Graph from "../Graph";
+import ScatterPoint from "./ScatterPoint";
 
 interface ScatterplotData {
   cx: number;
@@ -47,7 +48,7 @@ const Scatterplot: React.FC<ScatterplotProps> = ({
     if (!isMounted) return scaleLinear();
     const domain = extent(data, (d) => d.cx) as [number, number];
     return scaleLinear()
-      .domain(domain)
+      .domain(domain || [0, 1])
       .range([graphPadding, width - graphPadding]);
   }, [data, graphPadding, width, isMounted]);
 
@@ -55,7 +56,7 @@ const Scatterplot: React.FC<ScatterplotProps> = ({
     if (!isMounted) return scaleLinear();
     const domain = extent(data, (d) => d.cy) as [number, number];
     return scaleLinear()
-      .domain(domain)
+      .domain(domain || [0, 1])
       .range([height - graphPadding, graphPadding]);
   }, [data, graphPadding, height, isMounted]);
 
@@ -78,23 +79,13 @@ const Scatterplot: React.FC<ScatterplotProps> = ({
         <g>
           <AnimatePresence>
             {data.map((d, i) => (
-              <motion.circle
+              <ScatterPoint
                 key={d.key}
-                initial={{ r: 0, cx: xScale(d.cx), cy: yScale(d.cy) }}
-                animate={{
-                  r: Math.sqrt(d.area),
-                  cx: xScale(d.cx),
-                  cy: yScale(d.cy),
-                  fill: d.fill,
-                }}
-                transition={{
-                  duration: 0.5,
-                  delay: i * 0.002, // Replicating the legacy staggered delay
-                }}
-                stroke="rgba(0,0,0,0.2)"
-                strokeWidth={1}
-                // Optional: add a slight hover effect
-                whileHover={{ strokeWidth: 2, stroke: "rgba(0,0,0,0.5)" }}
+                cx={xScale(d.cx) || 0}
+                cy={yScale(d.cy) || 0}
+                area={d.area}
+                fill={d.fill}
+                index={i}
               />
             ))}
           </AnimatePresence>
