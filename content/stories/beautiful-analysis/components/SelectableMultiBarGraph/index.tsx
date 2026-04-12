@@ -1,13 +1,22 @@
 "use client";
 
 import React, { useState, useMemo } from "react";
-import { max } from "d3-array";
 import MultiBarGraph from "@/components/story/shared/MultiBarGraph";
 import Select from "@/components/story/shared/Select";
 import NarrowContainer from "@/components/story/shared/NarrowContainer";
-import { generateTooltipData, defaultSentimentOptions } from "../data/beautiful-analysis";
-import baSentimentCounts from "../data/ba-sentiment-counts.json";
+import { generateTooltipData, defaultSentimentOptions } from "../../data/beautiful-analysis";
+import baSentimentCounts from "../../data/ba-sentiment-counts.json";
 import COLORS from "@/utils/styles";
+
+interface SentimentCount {
+  Chris: number;
+  Caller: number;
+}
+
+interface SentimentData {
+  meta: string;
+  counts: SentimentCount[];
+}
 
 interface SelectableMultiBarGraphProps {
   colors?: string[];
@@ -15,7 +24,7 @@ interface SelectableMultiBarGraphProps {
   height?: number;
   id?: string;
   legendTitle?: string;
-  padding?: any;
+  padding?: { top?: number; left?: number; right?: number; bottom?: number } | number;
   yAxisLabel?: string;
   yMax?: number;
 }
@@ -37,7 +46,7 @@ const SelectableMultiBarGraph: React.FC<SelectableMultiBarGraphProps> = ({
   const { value, label } = selectedOption;
   const dataForOption = useMemo(() => {
     if (!Array.isArray(baSentimentCounts) || baSentimentCounts.length === 0) return [];
-    return baSentimentCounts.map((d: any) => {
+    return (baSentimentCounts as SentimentData[]).map((d) => {
       const c = d.counts[parseInt(value || "0", 10)];
       return {
         meta: d.meta,
@@ -50,7 +59,7 @@ const SelectableMultiBarGraph: React.FC<SelectableMultiBarGraphProps> = ({
   }, [value]);
 
   return (
-    <div className="w-full my-12">
+    <div className="w-full my-12" data-testid="selectable-multi-bar-graph-container">
       <NarrowContainer width="100%" className="mb-8">
         <div className="flex items-center gap-4">
           <span className="text-sm font-bold text-gray-500 uppercase tracking-wider">Sentiment Range</span>
