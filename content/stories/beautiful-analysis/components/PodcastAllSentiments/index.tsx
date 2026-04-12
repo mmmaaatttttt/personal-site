@@ -2,18 +2,35 @@
 
 import React, { useState, useMemo } from "react";
 import { scaleLinear } from "d3-scale";
-import { motion, AnimatePresence } from "framer-motion";
+import { AnimatePresence } from "framer-motion";
 import Graph from "@/components/story/shared/Graph";
 import Legend from "@/components/story/shared/Legend";
 import NarrowContainer from "@/components/story/shared/NarrowContainer";
 import Select from "@/components/story/shared/Select";
 import Caption from "@/components/story/shared/Caption";
-import { colorMap } from "../data/beautiful-analysis";
-import baAllSentiment from "../data/ba-all-sentiment.json";
+import SentimentCircle from "./SentimentCircle";
+import { colorMap } from "../../data/beautiful-analysis";
+import baAllSentiment from "../../data/ba-all-sentiment.json";
+
+type SentimentCount = [string, number, number];
+
+interface EpisodeSentiment {
+  id: number;
+  title: string;
+  sentiment_counts: SentimentCount[];
+}
+
+interface CircData {
+  key: string;
+  x: number;
+  y: number;
+  r: number;
+  fill: string;
+}
 
 interface PodcastAllSentimentsProps {
   height?: number;
-  padding?: any;
+  padding?: { top: number; left: number; right: number; bottom: number };
   svgId?: string;
   width?: number;
   caption?: string;
@@ -26,26 +43,30 @@ const PodcastAllSentiments: React.FC<PodcastAllSentimentsProps> = ({
   width = 800,
   caption,
 }) => {
-  const options = baAllSentiment.map((ep, i) => ({
+  const options = (baAllSentiment as EpisodeSentiment[]).map((ep, i) => ({
     value: i.toString(),
     label: `Episode ${ep.id}: ${ep.title}`,
   }));
   const [selectedOption, setSelectedOption] = useState(options[0] || { value: "0", label: "Loading" });
+  
   if (!baAllSentiment || baAllSentiment.length === 0 || options.length === 0) return null;
   const { value, label } = selectedOption;
 
   const yScale = scaleLinear().domain([-1, 1]).range([height - padding.bottom, padding.top]);
   const xScale = scaleLinear().range([padding.left, width - padding.right]);
 
-  const circData = useMemo(() => {
-    const raw = (baAllSentiment[parseInt(value, 10)] as any).sentiment_counts
-      .filter((d: any[]) => d[0] in colorMap) // remove lines from third parties
-      .map(([speaker, sentiment, wc]: any[], i: number) => ({
+  const circData = useMemo<CircData[]>(() => {
+    const epData = (baAllSentiment as EpisodeSentiment[])[parseInt(value, 10)];
+    if (!epData || !epData.sentiment_counts) return [];
+
+    const raw: CircData[] = epData.sentiment_counts
+      .filter((d) => d[0] in colorMap) // remove lines from third parties
+      .map(([speaker, sentiment, wc], i) => ({
         key: `circ-${i}-${speaker}`,
         x: i,
         y: sentiment,
         r: Math.pow(wc, 0.5),
-        fill: (colorMap as Record<string, string>)[speaker],
+        fill: colorMap[speaker as keyof typeof colorMap],
       }));
     return raw;
   }, [value]);
@@ -88,21 +109,14 @@ const PodcastAllSentiments: React.FC<PodcastAllSentimentsProps> = ({
           >
             <g>
               <AnimatePresence>
-                {circData.map((d: any) => (
-                  <motion.circle
+                {circData.map((d, i) => (
+                  <SentimentCircle 
                     key={d.key}
-                    initial={{ r: 0, cx: xScale(d.x), cy: yScale(d.y) }}
-                    animate={{ r: d.r, cx: xScale(d.x), cy: yScale(d.y) }}
-                    exit={{ r: 0 }}
-                    transition={{
-                      type: "spring",
-                      stiffness: 120,
-                      damping: 18,
-                      delay: d.x * 0.003,
-                      duration: 0.6
-                    }}
+                    cx={xScale(d.x)}
+                    cy={yScale(d.y)}
+                    r={d.r}
                     fill={d.fill}
-                    opacity={0.7}
+                    delay={d.x * 0.003}
                   />
                 ))}
               </AnimatePresence>
