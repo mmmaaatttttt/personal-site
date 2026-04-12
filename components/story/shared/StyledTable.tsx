@@ -1,14 +1,33 @@
 import React from "react";
 
+interface TableCell {
+  key: string | number;
+  content: React.ReactNode;
+}
+
+interface TableRow {
+  key: string | number;
+  cells: TableCell[];
+}
+
+interface TableHeader {
+  key: string | number;
+  content: React.ReactNode;
+}
+
 interface StyledTableProps {
   margin?: string;
   padding?: string;
-  children: React.ReactNode;
+  children?: React.ReactNode;
+  headers?: TableHeader[];
+  rows?: TableRow[];
 }
 
 export default function StyledTable({
   padding = "0.75rem 1rem",
   children,
+  headers,
+  rows,
 }: StyledTableProps) {
   return (
     <div className="my-12 w-full overflow-x-auto text-center">
@@ -30,6 +49,26 @@ export default function StyledTable({
             font-size: 0.875rem;
           }
         `}</style>
+        {headers && (
+          <thead>
+            <tr>
+              {headers.map((h) => (
+                <th key={h.key}>{h.content}</th>
+              ))}
+            </tr>
+          </thead>
+        )}
+        {rows && (
+          <tbody>
+            {rows.map((row) => (
+              <tr key={row.key}>
+                {row.cells.map((cell) => (
+                  <td key={cell.key}>{cell.content}</td>
+                ))}
+              </tr>
+            ))}
+          </tbody>
+        )}
         {children}
       </table>
     </div>
