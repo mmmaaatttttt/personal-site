@@ -1,11 +1,10 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
 import { choices } from "@/utils/mathHelpers";
-import NarrowContainer from "@/components/story/shared/NarrowContainer";
 import Caption from "@/components/story/shared/Caption";
-import baQuizData from "../data/ba-quiz.json";
+import QuizReviewPanel from "./QuizReviewPanel";
+import baQuizData from "../../data/ba-quiz.json";
 
 interface Question {
   prompt: string;
@@ -33,7 +32,7 @@ const Quiz: React.FC<QuizProps> = ({
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
-    setQuestions(choices(baQuizData, maxQuestions));
+    setQuestions(choices(baQuizData as Question[], maxQuestions));
     setMounted(true);
   }, [maxQuestions]);
 
@@ -41,7 +40,7 @@ const Quiz: React.FC<QuizProps> = ({
   if (!mounted) return null;
 
   const reset = () => {
-    setQuestions(choices(baQuizData, maxQuestions));
+    setQuestions(choices(baQuizData as Question[], maxQuestions));
     setAnswers(null);
     setSelectedAnswer(null);
     setResultsIndex(0);
@@ -54,7 +53,7 @@ const Quiz: React.FC<QuizProps> = ({
         <h2 className="mb-6 font-serif text-3xl font-bold">{title}</h2>
         <button
           onClick={() => setAnswers([])}
-          className="mt-4 rounded-md bg-link px-8 py-3 font-semibold text-white shadow-md transition hover:bg-orange-600 active:scale-95"
+          className="mt-4 rounded-md bg-link px-8 py-3 font-semibold text-white shadow-md transition hover:bg-orange-600 active:scale-95 text-sm md:text-base"
         >
           Start Quiz!
         </button>
@@ -63,7 +62,6 @@ const Quiz: React.FC<QuizProps> = ({
   } else if (answers.length === questions.length) {
     const numCorrect = answers.reduce((total, answer, idx) => total + +(questions[idx].answer === answer), 0);
     const q = questions[resultsIndex];
-    const isCorrect = q.answer === answers[resultsIndex];
     
     panel = (
       <>
@@ -76,33 +74,26 @@ const Quiz: React.FC<QuizProps> = ({
         
         <div className="relative w-full max-w-lg mx-auto mb-8">
           <p className="mb-4 text-sm font-semibold uppercase tracking-wide text-gray-500">Review ({resultsIndex + 1}/{questions.length})</p>
-          <AnimatePresence mode="wait">
-            <motion.div
-              key={resultsIndex}
-              initial={{ opacity: 0, x: 10 }}
-              animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: -10 }}
-              className={`flex flex-col items-center justify-center rounded-lg border-2 p-6 shadow-sm ${isCorrect ? "bg-green-50 border-green-400" : "bg-red-50 border-red-400"}`}
-            >
-              <p className="mb-4 text-center text-lg font-bold w-full">{q.prompt}</p>
-              <div className="flex flex-col gap-1 w-full text-center text-sm">
-                <p>You chose: <span className="font-bold underline">{answers[resultsIndex]}</span>.</p>
-                <p>Correct answer: <span className="font-bold underline">{q.answer}</span>.</p>
-              </div>
-            </motion.div>
-          </AnimatePresence>
+          
+          <QuizReviewPanel 
+            resultsIndex={resultsIndex}
+            question={q}
+            userAnswer={answers[resultsIndex]}
+          />
 
           <button 
             onClick={() => setResultsIndex(prev => Math.max(0, prev - 1))}
             disabled={resultsIndex === 0}
-            className="absolute top-1/2 -left-4 p-2 rounded-full bg-white shadow-md disabled:opacity-30"
+            className="absolute top-1/2 -left-4 p-2 rounded-full bg-white shadow-md disabled:opacity-30 flex items-center justify-center h-10 w-10 z-10"
+            aria-label="Previous question results"
           >
             ←
           </button>
           <button 
             onClick={() => setResultsIndex(prev => Math.min(questions.length - 1, prev + 1))}
             disabled={resultsIndex === questions.length - 1}
-            className="absolute top-1/2 -right-4 p-2 rounded-full bg-white shadow-md disabled:opacity-30"
+            className="absolute top-1/2 -right-4 p-2 rounded-full bg-white shadow-md disabled:opacity-30 flex items-center justify-center h-10 w-10 z-10"
+            aria-label="Next question results"
           >
             →
           </button>
@@ -110,7 +101,7 @@ const Quiz: React.FC<QuizProps> = ({
 
         <button
           onClick={reset}
-          className="mt-2 rounded-md bg-link px-8 py-3 font-semibold text-white shadow-md transition hover:bg-orange-600 active:scale-95"
+          className="mt-2 rounded-md bg-link px-8 py-3 font-semibold text-white shadow-md transition hover:bg-orange-600 active:scale-95 text-sm md:text-base"
         >
           Try Again!
         </button>
@@ -133,9 +124,9 @@ const Quiz: React.FC<QuizProps> = ({
             const isSelected = selectedAnswer === choice;
             return (
               <button
-                key={choice}
+                key={`${choice}-${i}`}
                 onClick={() => setSelectedAnswer(choice)}
-                className={`w-full rounded-md border-2 px-6 py-3 font-medium transition-colors ${
+                className={`w-full rounded-md border-2 px-6 py-3 font-medium transition-colors text-sm md:text-base ${
                   isSelected ? "border-link bg-orange-50 text-link" : "border-gray-300 bg-white text-gray-700 hover:border-gray-400"
                 }`}
               >
@@ -152,7 +143,7 @@ const Quiz: React.FC<QuizProps> = ({
               setSelectedAnswer(null);
             }
           }}
-          className="mt-8 rounded-md bg-link px-8 py-3 font-semibold text-white shadow-md transition hover:bg-orange-600 disabled:cursor-not-allowed disabled:bg-gray-300 disabled:shadow-none"
+          className="mt-8 rounded-md bg-link px-8 py-3 font-semibold text-white shadow-md transition hover:bg-orange-600 disabled:cursor-not-allowed disabled:bg-gray-300 disabled:shadow-none text-sm md:text-base"
         >
           {currentNum < questions.length ? "Next Question" : "Show My Results"}
         </button>
@@ -162,7 +153,7 @@ const Quiz: React.FC<QuizProps> = ({
 
   return (
     <div className="my-12 w-full">
-      <div className="mx-auto flex min-h-[50vh] flex-col items-center justify-center overflow-hidden rounded-lg bg-gray-50 p-8 text-center shadow-inner">
+      <div className="mx-auto flex min-h-[50vh] flex-col items-center justify-center overflow-hidden rounded-lg bg-gray-50 p-6 md:p-8 text-center shadow-inner">
         {panel}
       </div>
       {caption && <Caption>{caption}</Caption>}
