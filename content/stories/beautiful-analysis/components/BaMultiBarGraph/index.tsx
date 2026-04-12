@@ -24,7 +24,7 @@ interface BaMultiBarGraphProps {
   colors?: string[];
   dataType?: "summary" | "profanity";
   legendTitle?: string;
-  padding?: { top?: number; left?: number; right?: number; bottom?: number } | number;
+  padding?: number | { top: number; bottom: number; left: number; right: number };
   yAxisLabel?: string;
   id?: string;
   containerWidth?: string | number;

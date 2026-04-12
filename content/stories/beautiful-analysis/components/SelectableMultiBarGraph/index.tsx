@@ -14,7 +14,11 @@ interface SentimentCount {
 }
 
 interface SentimentData {
-  meta: string;
+  meta: {
+    id: number;
+    title: string;
+    date: string;
+  };
   counts: SentimentCount[];
 }
 
@@ -24,7 +28,7 @@ interface SelectableMultiBarGraphProps {
   height?: number;
   id?: string;
   legendTitle?: string;
-  padding?: { top?: number; left?: number; right?: number; bottom?: number } | number;
+  padding?: number | { top: number; bottom: number; left: number; right: number };
   yAxisLabel?: string;
   yMax?: number;
 }
@@ -46,7 +50,7 @@ const SelectableMultiBarGraph: React.FC<SelectableMultiBarGraphProps> = ({
   const { value, label } = selectedOption;
   const dataForOption = useMemo(() => {
     if (!Array.isArray(baSentimentCounts) || baSentimentCounts.length === 0) return [];
-    return (baSentimentCounts as SentimentData[]).map((d) => {
+    return (baSentimentCounts as unknown as SentimentData[]).map((d) => {
       const c = d.counts[parseInt(value || "0", 10)];
       return {
         meta: d.meta,
