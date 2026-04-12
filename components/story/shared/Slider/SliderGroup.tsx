@@ -1,5 +1,5 @@
 import React from "react";
-import FlexContainer from "./FlexContainer";
+import FlexContainer from "../FlexContainer";
 import LabeledSlider from "./LabeledSlider";
 
 interface SliderData {

@@ -5,7 +5,7 @@ import { extent, max } from "d3-array";
 import { scaleLinear } from "d3-scale";
 import { generateData } from "@/utils/mathHelpers";
 import { visualizationData } from "../data/warming-dots";
-import SliderProvider from "@/components/story/shared/SliderProvider";
+import SliderProvider from "@/components/story/shared/Slider/SliderProvider";
 import FlexContainer from "@/components/story/shared/FlexContainer";
 import Graph from "@/components/story/shared/Graph";
 import LinePlot from "@/components/story/shared/LinePlot";
