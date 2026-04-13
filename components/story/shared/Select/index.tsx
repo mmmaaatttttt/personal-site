@@ -1,6 +1,4 @@
-"use client";
-
-import React from "react";
+import { FC, ChangeEvent } from "react";
 import { ChevronDown } from "lucide-react";
 
 interface Option {
@@ -8,24 +6,24 @@ interface Option {
   label: string;
 }
 
-interface SelectProps {
+interface SelectProps<T extends Option> {
   name: string;
   value: string;
-  onChange: (option: any) => void;
-  options: any[];
+  onChange: (option: T) => void;
+  options: T[];
   placeholder?: string;
   className?: string;
 }
 
-const Select: React.FC<SelectProps> = ({
+const Select = <T extends Option>({
   name,
   value,
   onChange,
   options,
   placeholder,
   className,
-}) => {
-  const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+}: SelectProps<T>) => {
+  const handleChange = (e: ChangeEvent<HTMLSelectElement>) => {
     const selected = options.find(o => o.value === e.target.value);
     if (selected) onChange(selected);
   };
