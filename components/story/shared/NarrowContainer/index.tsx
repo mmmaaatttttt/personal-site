@@ -1,8 +1,8 @@
-import React from "react";
+import { FC, ReactNode } from "react";
 import { cn } from "@/lib/utils";
 
 interface NarrowContainerProps {
-  children: React.ReactNode;
+  children: ReactNode;
   width?: string;
   margin?: string;
   fullWidthAt?: "sm" | "md" | "lg" | "xl";
@@ -11,7 +11,7 @@ interface NarrowContainerProps {
 }
 
 
-const NarrowContainer: React.FC<NarrowContainerProps> = ({
+const NarrowContainer: FC<NarrowContainerProps> = ({
   children,
   width = "80%",
   margin = "0 auto",
