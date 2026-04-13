@@ -1,4 +1,7 @@
-import React from "react";
+"use client";
+
+import { FC, useMemo } from "react";
+import { getOpaqueLightColor } from "./utils";
 
 interface SliderTicksProps {
   count: number;
@@ -9,7 +12,7 @@ interface SliderTicksProps {
   padding: number;
 }
 
-const SliderTicks: React.FC<SliderTicksProps> = ({
+const SliderTicks: FC<SliderTicksProps> = ({
   count,
   fractionFilled,
   activeColor,
@@ -17,6 +20,8 @@ const SliderTicks: React.FC<SliderTicksProps> = ({
   height,
   padding,
 }) => {
+  const lightColor = useMemo(() => getOpaqueLightColor(activeColor), [activeColor]);
+  
   if (count <= 0) return null;
 
   return (
@@ -30,7 +35,7 @@ const SliderTicks: React.FC<SliderTicksProps> = ({
             style={{
               width: height,
               height: height,
-              backgroundColor: isFilled ? activeColor : inactiveColor,
+              backgroundColor: isFilled ? lightColor : inactiveColor,
             }}
           />
         );

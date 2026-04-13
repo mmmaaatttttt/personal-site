@@ -1,5 +1,9 @@
-import React from "react";
+"use client";
+
+import { FC, useEffect, useState, useMemo } from "react";
 import { cn } from "@/lib/utils";
+import { motion } from "framer-motion";
+import { getOpaqueLightColor } from "./utils";
 
 export interface SliderProps {
   min: number;
@@ -14,7 +18,7 @@ export interface SliderProps {
   className?: string;
 }
 
-const Slider: React.FC<SliderProps> = ({
+const Slider: FC<SliderProps> = ({
   min,
   max,
   step,
@@ -26,11 +30,33 @@ const Slider: React.FC<SliderProps> = ({
   padding = 10,
   className,
 }) => {
+  const [isHovered, setIsHovered] = useState(false);
+  const [isDragging, setIsDragging] = useState(false);
   const percentage = ((value - min) / (max - min)) * 100;
+  
+  const lightColor = useMemo(() => getOpaqueLightColor(activeColor), [activeColor]);
+
+  // Handle global mouse/touch releases to ensure isDragging is reset
+  useEffect(() => {
+    if (!isDragging) return;
+    const handleUp = () => setIsDragging(false);
+    window.addEventListener("mouseup", handleUp);
+    window.addEventListener("touchend", handleUp);
+    return () => {
+      window.removeEventListener("mouseup", handleUp);
+      window.removeEventListener("touchend", handleUp);
+    };
+  }, [isDragging]);
+
+  const handleInteractionStart = () => {
+    setIsDragging(true);
+  };
+
+  const isFullDark = isHovered || isDragging;
 
   return (
     <div 
-      className={cn("relative flex w-full items-center", className)}
+      className={cn("relative flex w-full items-center group", className)}
       style={{ height: height + 2 * padding, padding: `${padding}px 0` }}
     >
       {/* Custom Track (visual only) */}
@@ -39,20 +65,43 @@ const Slider: React.FC<SliderProps> = ({
         style={{ height, backgroundColor: inactiveColor }}
       >
         <div 
-          className="h-full rounded-full transition-all duration-100"
-          style={{ width: `${percentage}%`, backgroundColor: activeColor }}
+          className="h-full rounded-full transition-all duration-300"
+          style={{ width: `${percentage}%`, backgroundColor: lightColor }}
         />
       </div>
 
-      {/* Actual Input (invisible but functional) */}
+      <div 
+        className="absolute pointer-events-none z-20 flex items-center justify-center transition-all duration-200"
+        style={{ 
+          left: `calc(${percentage}% - 12px)`,
+          width: 24, 
+          height: 24 
+        }}
+      >
+        <div 
+          className="absolute w-full h-full rounded-full shadow-sm transition-colors duration-200"
+          style={{ backgroundColor: isFullDark ? activeColor : lightColor }}
+        />
+        <motion.div 
+          animate={{ scale: isFullDark ? 1 : 0.4 }}
+          transition={{ type: "spring", stiffness: 300, damping: 20 }}
+          className="w-full h-full rounded-full"
+          style={{ backgroundColor: activeColor }}
+        />
+      </div>
+
       <input
         type="range"
         min={min}
         max={max}
         step={step}
         value={value}
+        onMouseEnter={() => setIsHovered(true)}
+        onMouseLeave={() => setIsHovered(false)}
+        onMouseDown={handleInteractionStart}
+        onTouchStart={handleInteractionStart}
         onChange={(e) => onChange(Number(e.target.value))}
-        className="absolute z-10 w-full cursor-pointer appearance-none bg-transparent accent-transparent focus:outline-none [&::-webkit-slider-thumb]:h-6 [&::-webkit-slider-thumb]:w-6 [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-link [&::-webkit-slider-thumb]:shadow-md [&::-moz-range-thumb]:h-6 [&::-moz-range-thumb]:w-6 [&::-moz-range-thumb]:rounded-full [&::-moz-range-thumb]:bg-link [&::-moz-range-thumb]:border-none"
+        className="absolute z-30 w-full cursor-pointer appearance-none bg-transparent accent-transparent focus:outline-none [&::-webkit-slider-thumb]:h-8 [&::-webkit-slider-thumb]:w-8 [&::-webkit-slider-thumb]:appearance-none [&::-moz-range-thumb]:h-8 [&::-moz-range-thumb]:w-8 [&::-moz-range-thumb]:appearance-none border-none"
         style={{ height: height + 2 * padding }}
       />
     </div>

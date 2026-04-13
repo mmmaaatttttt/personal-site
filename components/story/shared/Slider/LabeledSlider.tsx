@@ -1,8 +1,12 @@
-import React from "react";
+"use client";
+
+import { FC } from "react";
 import { Minus, Plus, LucideIcon } from "lucide-react";
 import { Icon } from "@/components/ui/Icon";
 import Slider from "./Slider";
 import SliderTicks from "./SliderTicks";
+import { hexToRgba } from "@/utils/styles";
+import { THEME_OPACITY } from "./constants";
 
 interface LabeledSliderProps {
   min: number;
@@ -25,7 +29,7 @@ const iconMap: Record<string, LucideIcon> = {
   plus: Plus,
 };
 
-const LabeledSlider: React.FC<LabeledSliderProps> = ({
+const LabeledSlider: FC<LabeledSliderProps> = ({
   min,
   max,
   step,
@@ -46,17 +50,20 @@ const LabeledSlider: React.FC<LabeledSliderProps> = ({
 
   const MinIconComp = iconMap[minIcon] || Minus;
   const MaxIconComp = iconMap[maxIcon] || Plus;
+  const lightColor = color.startsWith("#")
+    ? hexToRgba(color, THEME_OPACITY)
+    : color;
 
   return (
     <div className="flex w-full flex-col items-center text-center">
       {title && (
-        <div className="mb-2 text-xs font-semibold uppercase tracking-wider text-gray-500">
+        <div className="mb-2 text-xs font-semibold tracking-wider text-gray-500 uppercase">
           {title}
         </div>
       )}
       <section className="flex w-full items-center gap-4">
         <div className="w-8 shrink-0" style={{ opacity: leftOpacity }}>
-          <Icon icon={MinIconComp} size={18} style={{ color }} />
+          <Icon icon={MinIconComp} size={18} style={{ color: lightColor }} />
         </div>
         <div className="relative flex-1">
           <Slider
@@ -78,7 +85,7 @@ const LabeledSlider: React.FC<LabeledSliderProps> = ({
           />
         </div>
         <div className="w-8 shrink-0" style={{ opacity: rightOpacity }}>
-          <Icon icon={MaxIconComp} size={18} style={{ color }} />
+          <Icon icon={MaxIconComp} size={18} style={{ color: lightColor }} />
         </div>
       </section>
     </div>
