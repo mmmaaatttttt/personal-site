@@ -5,16 +5,18 @@ import { min, max } from "d3-array";
 import { stack as d3stack, stackOffsetNone } from "d3-shape";
 import { scaleBand, scaleLinear } from "d3-scale";
 import { motion, AnimatePresence } from "framer-motion";
-import Axis from "./Axis";
-import AxisLabel from "./AxisLabel";
-import ClippedSVG from "./ClippedSVG";
-import Legend from "./Legend";
-import NarrowContainer from "./NarrowContainer";
-import { useTooltip } from "./Tooltip";
-import Tooltip from "./Tooltip";
+import Axis from "../Axis";
+import AxisLabel from "../AxisLabel";
+import ClippedSVG from "../ClippedSVG";
+import Legend from "../Legend";
+import NarrowContainer from "../NarrowContainer";
+import { useTooltip } from "../Tooltip";
+import Tooltip from "../Tooltip";
+
+import { Series } from "d3-shape";
 
 interface MultiBarData {
-  meta: Record<string, any>;
+  meta: Record<string, string | number | boolean>;
   counts: Record<string, number>;
 }
 
@@ -61,11 +63,11 @@ const MultiBarGraph: FC<MultiBarGraphProps> = ({
   const labels = Object.keys(data[0]?.counts || {});
   if (labels.length === 0) return null;
 
-  const stackData = useMemo(() => {
+  const stackData = useMemo<Series<Record<string, number>, string>[]>(() => {
     try {
-      return d3stack().keys(labels).offset(stackOffsetNone)(
-        data.map((d) => d.counts || {}),
-      );
+      return d3stack<Record<string, number>, string>()
+        .keys(labels)
+        .offset(stackOffsetNone)(data.map((d) => d.counts || {}));
     } catch (e) {
       console.error("MultiBarGraph stacking error:", e);
       return [];
