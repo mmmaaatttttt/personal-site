@@ -1,7 +1,7 @@
 import React from "react";
 import { Minus, Plus, LucideIcon } from "lucide-react";
 import { Icon } from "@/components/ui/Icon";
-import Slider from ".";
+import Slider from "./Slider";
 import SliderTicks from "./SliderTicks";
 
 interface LabeledSliderProps {

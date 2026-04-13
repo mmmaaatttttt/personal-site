@@ -34,6 +34,8 @@ const SliderProvider: React.FC<SliderProviderProps> = ({
     initialData && Array.isArray(initialData) ? initialData.map((d) => d.initialValue) : []
   );
 
+  if (!initialData || !Array.isArray(initialData) || initialData.length === 0) return null;
+
   const handleValueChange = (idx: number, newVal: number) => {
     setSliderValues((prev) => {
       const next = [...prev];

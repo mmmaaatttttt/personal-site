@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import SliderProvider from "@/components/story/shared/Slider/SliderProvider";
+import SliderProvider from "@/components/story/shared/Slider";
 import StyledTable from "@/components/story/shared/StyledTable";
 import ColoredSpan from "@/components/story/shared/ColoredSpan";
 import { colorMap } from "../../data/beautiful-analysis";

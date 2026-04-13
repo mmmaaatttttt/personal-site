@@ -5,7 +5,7 @@ import Caption from "@/components/story/shared/Caption";
 import HorizontalBarGraph from "@/components/story/shared/HorizontalBarGraph";
 import MultiBarGraph from "@/components/story/shared/MultiBarGraph";
 import Legend from "@/components/story/shared/Legend";
-import SliderProvider from "@/components/story/shared/Slider/SliderProvider";
+import SliderProvider from "@/components/story/shared/Slider";
 
 // Placeholder for interactive components until they are fully ported in Phase 3
 const Placeholder = ({ name, children }: { name: string; children?: React.ReactNode }) => (
