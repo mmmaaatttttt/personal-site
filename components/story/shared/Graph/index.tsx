@@ -1,36 +1,44 @@
-import React from "react";
+import { FC, ReactNode } from "react";
+import { AxisScale, AxisDomain } from "d3-axis";
 import { cn } from "@/lib/utils";
-import NarrowContainer from "./NarrowContainer";
-import ClippedSVG from "./ClippedSVG";
-import Axis from "./Axis";
-import AxisLabel from "./AxisLabel";
+import NarrowContainer from "../NarrowContainer";
+import ClippedSVG from "../ClippedSVG";
+import Axis from "../Axis";
+import AxisLabel from "../AxisLabel";
 import { paddingObj } from "@/utils/styles";
 
-interface GraphProps {
-  children?: React.ReactNode;
-  graphPadding?: number | { top: number; bottom: number; left: number; right: number };
+interface Padding {
+  top: number;
+  bottom: number;
+  left: number;
+  right: number;
+}
+
+interface GraphProps<XDomain extends AxisDomain, YDomain extends AxisDomain> {
+  children?: ReactNode;
+  graphPadding?: number | Padding;
   gridlinesHorizontal?: boolean;
   gridlinesVertical?: boolean;
   height?: number;
   width?: number;
   svgId?: string;
-  svgPadding?: number | { top: number; bottom: number; left: number; right: number };
+  svgPadding?: number | Padding;
   tickFormatX?: string;
   tickFormatY?: string;
-  tickStep?: (scale: any) => number;
-  tickStepX?: (scale: any) => number;
-  tickStepY?: (scale: any) => number;
+  tickStep?: (scale: AxisScale<XDomain | YDomain>) => number;
+  tickStepX?: (scale: AxisScale<XDomain>) => number;
+  tickStepY?: (scale: AxisScale<YDomain>) => number;
   xAxisPosition?: "bottom" | "center";
   yAxisPosition?: "left" | "center";
   xLabel?: string;
-  xScale: any;
+  xScale: AxisScale<XDomain>;
   yLabel?: string;
   yLabelOffset?: number;
-  yScale: any;
+  yScale: AxisScale<YDomain>;
   className?: string;
 }
 
-const Graph: React.FC<GraphProps> = ({
+const Graph = <XDomain extends AxisDomain, YDomain extends AxisDomain>({
   children,
   graphPadding = 0,
   gridlinesHorizontal = true,
@@ -52,12 +60,16 @@ const Graph: React.FC<GraphProps> = ({
   yLabelOffset = 0,
   yScale,
   className,
-}) => {
-  const gPadding = paddingObj(graphPadding);
+}: GraphProps<XDomain, YDomain>) => {
+  const gPadding = paddingObj(graphPadding) as Padding;
   const options = getLabelOptions(width, height, gPadding, gridlinesHorizontal, gridlinesVertical, yLabelOffset);
   
   const xOptions = options.x[xAxisPosition];
   const yOptions = options.y[yAxisPosition];
+
+  // Type-safe tick step calculation
+  const calculatedTickStepY = (tickStepY ? tickStepY(yScale) : (tickStep ? tickStep(yScale as AxisScale<XDomain | YDomain>) : undefined));
+  const calculatedTickStepX = (tickStepX ? tickStepX(xScale) : (tickStep ? tickStep(xScale as AxisScale<XDomain | YDomain>) : undefined));
 
   return (
     <NarrowContainer width="100%" className={className}>
@@ -69,7 +81,7 @@ const Graph: React.FC<GraphProps> = ({
           textAnchor="end"
           tickSize={yOptions.tickSize}
           tickShift={yOptions.tickShift}
-          tickStep={(tickStepY || tickStep)?.(yScale)}
+          tickStep={calculatedTickStepY}
           tickFormat={tickFormatY}
           xShift={yOptions.xShift}
         />
@@ -81,7 +93,7 @@ const Graph: React.FC<GraphProps> = ({
           textAnchor="start"
           tickSize={xOptions.tickSize}
           tickShift={xOptions.tickShift}
-          tickStep={(tickStepX || tickStep)?.(xScale)}
+          tickStep={calculatedTickStepX}
           tickFormat={tickFormatX}
           yShift={xOptions.yShift}
         />
@@ -108,7 +120,7 @@ const Graph: React.FC<GraphProps> = ({
   );
 };
 
-function getLabelOptions(width: number, height: number, padding: any, hGrid: boolean, vGrid: boolean, yOff: number) {
+function getLabelOptions(width: number, height: number, padding: Padding, hGrid: boolean, vGrid: boolean, yOff: number) {
   const { top, bottom, left, right } = padding;
   const xTickSize = vGrid ? -height + top + bottom : 0;
   const yTickSize = hGrid ? -width + left + right : 0;
