@@ -1,12 +1,10 @@
-"use client";
-
-import React, { useEffect, useRef } from "react";
-import { axisBottom, axisLeft } from "d3-axis";
+import { FC, useEffect, useRef } from "react";
+import { axisBottom, axisLeft, AxisScale, AxisDomain } from "d3-axis";
 import { select } from "d3-selection";
 import { range } from "d3-array";
 import { format } from "d3-format";
 
-interface AxisProps {
+interface AxisProps<Domain extends AxisDomain> {
   direction: "x" | "y";
   fontSize?: string;
   labelPosition?: {
@@ -15,7 +13,7 @@ interface AxisProps {
     dx?: string;
     dy?: string;
   };
-  scale: any;
+  scale: AxisScale<Domain>;
   textAnchor?: "start" | "middle" | "end";
   tickColor?: string;
   tickSize?: number;
@@ -27,7 +25,7 @@ interface AxisProps {
   yShift?: number;
 }
 
-const Axis: React.FC<AxisProps> = ({
+const Axis = <Domain extends AxisDomain>({
   direction,
   fontSize = "0.8rem",
   labelPosition = { x: "0", y: "0", dx: "0", dy: "0" },
@@ -41,7 +39,7 @@ const Axis: React.FC<AxisProps> = ({
   rotateLabels = false,
   xShift = 0,
   yShift = 0,
-}) => {
+}: AxisProps<Domain>) => {
   const axisRef = useRef<SVGGElement>(null);
 
   useEffect(() => {
@@ -49,7 +47,16 @@ const Axis: React.FC<AxisProps> = ({
 
     const axisObj = direction === "x" ? axisBottom(scale) : axisLeft(scale);
     if (tickFormat) {
-      axisObj.tickFormat(format(tickFormat) as any);
+      const formatFn = format(tickFormat);
+      axisObj.tickFormat((d: Domain) => {
+        if (typeof d === "number") {
+          return formatFn(d);
+        }
+        if (d instanceof Date) {
+          return formatFn(d.valueOf());
+        }
+        return String(d);
+      });
     }
 
     if (tickSize !== undefined) {
@@ -58,21 +65,24 @@ const Axis: React.FC<AxisProps> = ({
 
     if (tickStep !== undefined) {
       const domain = scale.domain();
-      axisObj.tickValues(range(domain[0], domain[1] + tickStep, tickStep));
+      // Only apply tickStep if domain values are numbers
+      if (typeof domain[0] === 'number' && typeof domain[1] === 'number') {
+        axisObj.tickValues(range(domain[0], domain[1] + tickStep, tickStep) as unknown as Domain[]);
+      }
     }
 
     const transform = direction === "y" ? `translate(${tickShift}, 0)` : `translate(0, ${tickShift})`;
 
     const g = select(axisRef.current);
     g.attr("transform", `translate(${xShift - 0.5}, ${yShift - 0.5})`)
-      .call(axisObj as any)
+      .call(axisObj)
       .selectAll(".tick line")
       .attr("transform", transform)
       .attr("stroke", tickColor)
       .attr("stroke-dasharray", "10, 5")
       .attr("pointer-events", "none");
 
-    const labels = g.selectAll(".tick text");
+    const labels = g.selectAll<SVGTextElement, Domain>(".tick text");
     labels
       .style("text-anchor", textAnchor)
       .style("font-size", fontSize);

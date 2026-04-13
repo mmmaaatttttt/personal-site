@@ -1,12 +1,12 @@
-import React from "react";
+import { FC, SVGProps, ReactNode } from "react";
 import { cn } from "@/lib/utils";
 
-interface AxisLabelProps extends React.SVGProps<SVGTextElement> {
+interface AxisLabelProps extends SVGProps<SVGTextElement> {
   anchor?: "start" | "middle" | "end";
-  children: React.ReactNode;
+  children: ReactNode;
 }
 
-const AxisLabel: React.FC<AxisLabelProps> = ({
+const AxisLabel: FC<AxisLabelProps> = ({
   anchor = "middle",
   children,
   className,
