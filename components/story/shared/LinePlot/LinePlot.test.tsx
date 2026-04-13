@@ -23,12 +23,12 @@ describe('LinePlot Component', () => {
   };
 
   it('renders nothing when data is empty', () => {
-    const { container } = render(<LinePlot {...defaultProps} graphData={[]} />);
-    expect(container.firstChild).toBeNull();
+    const { container } = render(<svg><LinePlot {...defaultProps} graphData={[]} /></svg>);
+    expect(container.querySelector('path')).toBeNull();
   });
 
   it('renders a path element with correct attributes', () => {
-    const { container } = render(<LinePlot {...defaultProps} />);
+    const { container } = render(<svg><LinePlot {...defaultProps} /></svg>);
     const path = container.querySelector('path');
     
     expect(path).toBeInTheDocument();
@@ -40,10 +40,10 @@ describe('LinePlot Component', () => {
   });
 
   it('generates different paths for different curves', () => {
-    const { rerender, container } = render(<LinePlot {...defaultProps} curve="curveLinear" />);
+    const { rerender, container } = render(<svg><LinePlot {...defaultProps} curve="curveLinear" /></svg>);
     const linearPath = container.querySelector('path')?.getAttribute('d');
     
-    rerender(<LinePlot {...defaultProps} curve="curveNatural" />);
+    rerender(<svg><LinePlot {...defaultProps} curve="curveNatural" /></svg>);
     const naturalPath = container.querySelector('path')?.getAttribute('d');
     
     expect(linearPath).not.toBe(naturalPath);
@@ -56,7 +56,7 @@ describe('LinePlot Component', () => {
       { x: 100, y: -50 }, // Below domain [0, 100]
     ];
     
-    const { container } = render(<LinePlot {...defaultProps} graphData={dataWithOutliers} />);
+    const { container } = render(<svg><LinePlot {...defaultProps} graphData={dataWithOutliers} /></svg>);
     const path = container.querySelector('path');
     const pathD = path?.getAttribute('d') || '';
     

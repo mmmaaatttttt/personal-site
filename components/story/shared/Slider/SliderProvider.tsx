@@ -1,3 +1,5 @@
+"use client";
+
 import { FC, useState, useMemo, ReactNode } from "react";
 import NarrowContainer from "../NarrowContainer";
 import ColumnLayout from "../ColumnLayout";
@@ -33,10 +35,13 @@ const SliderProvider: FC<SliderProviderProps> = ({
   width = "70%",
 }) => {
   const [sliderValues, setSliderValues] = useState<number[]>(() =>
-    initialData && Array.isArray(initialData) ? initialData.map((d) => d.initialValue) : []
+    initialData && Array.isArray(initialData)
+      ? initialData.map((d) => d.initialValue)
+      : [],
   );
 
-  if (!initialData || !Array.isArray(initialData) || initialData.length === 0) return null;
+  if (!initialData || !Array.isArray(initialData) || initialData.length === 0)
+    return null;
 
   const handleValueChange = (idx: number, newVal: number) => {
     setSliderValues((prev) => {
@@ -48,12 +53,14 @@ const SliderProvider: FC<SliderProviderProps> = ({
 
   const dataWithHandlers = useMemo(
     () =>
-      initialData && Array.isArray(initialData) ? initialData.map((d, i) => ({
-        ...d,
-        value: sliderValues[i],
-        handleValueChange: (val: number) => handleValueChange(i, val),
-      })) : [],
-    [initialData, sliderValues]
+      initialData && Array.isArray(initialData)
+        ? initialData.map((d, i) => ({
+            ...d,
+            value: sliderValues[i],
+            handleValueChange: (val: number) => handleValueChange(i, val),
+          }))
+        : [],
+    [initialData, sliderValues],
   );
 
   const mainContent = (

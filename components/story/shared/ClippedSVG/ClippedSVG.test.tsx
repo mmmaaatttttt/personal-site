@@ -32,7 +32,7 @@ describe('ClippedSVG Component', () => {
   });
 
   it('generates correct clipPath and rect attributes', () => {
-    const { container } = render(<ClippedSVG {...defaultProps} />);
+    const { container } = render(<ClippedSVG {...defaultProps}><g /></ClippedSVG>);
     
     const clipPath = container.querySelector('clipPath');
     expect(clipPath).toHaveAttribute('id', 'clip-path-test-svg');
@@ -49,13 +49,13 @@ describe('ClippedSVG Component', () => {
   });
 
   it('applies clip-path to child group by default', () => {
-    const { container } = render(<ClippedSVG {...defaultProps} />);
+    const { container } = render(<ClippedSVG {...defaultProps}><g /></ClippedSVG>);
     const g = container.querySelector('svg > g');
     expect(g).toHaveAttribute('clip-path', 'url(#clip-path-test-svg)');
   });
 
   it('skips clip-path when clipChildren is false', () => {
-    const { container } = render(<ClippedSVG {...defaultProps} clipChildren={false} />);
+    const { container } = render(<ClippedSVG {...defaultProps} clipChildren={false}><g /></ClippedSVG>);
     const g = container.querySelector('svg > g');
     expect(g).not.toHaveAttribute('clip-path');
   });
