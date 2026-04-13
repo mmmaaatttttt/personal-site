@@ -1,11 +1,11 @@
 "use client";
 
-import React from "react";
+import { FC } from "react";
 import { scaleLinear, scaleBand } from "d3-scale";
 import { max } from "d3-array";
 import { motion, AnimatePresence } from "framer-motion";
-import ClippedSVG from "./ClippedSVG";
-import NarrowContainer from "./NarrowContainer";
+import ClippedSVG from "../ClippedSVG";
+import NarrowContainer from "../NarrowContainer";
 
 interface HorizontalBarData {
   caption: string;
@@ -22,7 +22,7 @@ interface HorizontalBarGraphProps {
   width?: number;
 }
 
-const HorizontalBarGraph: React.FC<HorizontalBarGraphProps> = ({
+const HorizontalBarGraph: FC<HorizontalBarGraphProps> = ({
   containerWidth = "100%",
   data = [],
   height = 600,
