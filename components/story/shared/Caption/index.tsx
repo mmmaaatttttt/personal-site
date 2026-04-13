@@ -1,13 +1,13 @@
-import React from "react";
+import { FC, ReactNode } from "react";
 import { cn } from "@/lib/utils";
 
 interface CaptionProps {
-  children: React.ReactNode;
+  children: ReactNode;
   caption?: string;
   className?: string;
 }
 
-const Caption: React.FC<CaptionProps> = ({ children, caption, className }) => {
+const Caption: FC<CaptionProps> = ({ children, caption, className }) => {
   return (
     <div className={cn("my-12 flex flex-col items-center", className)}>
       <div className="w-full">{children}</div>
