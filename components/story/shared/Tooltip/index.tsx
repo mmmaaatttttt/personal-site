@@ -1,6 +1,4 @@
-"use client";
-
-import React, { useState, useCallback, useRef, useEffect } from "react";
+import { FC, useState, useCallback, useRef, useEffect, MouseEvent, TouchEvent } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
 interface TooltipInfo {
@@ -13,10 +11,10 @@ interface TooltipInfo {
 export const useTooltip = () => {
   const [tooltip, setTooltip] = useState<TooltipInfo | null>(null);
 
-  const showTooltip = useCallback((title: string, body: string | string[]) => (e: React.MouseEvent | React.TouchEvent) => {
+  const showTooltip = useCallback((title: string, body: string | string[]) => (e: MouseEvent | TouchEvent) => {
     const isTouch = "touches" in e;
-    const clientX = isTouch ? (e as React.TouchEvent).touches[0].clientX : (e as React.MouseEvent).clientX;
-    const clientY = isTouch ? (e as React.TouchEvent).touches[0].clientY : (e as React.MouseEvent).clientY;
+    const clientX = isTouch ? (e as TouchEvent).touches[0].clientX : (e as MouseEvent).clientX;
+    const clientY = isTouch ? (e as TouchEvent).touches[0].clientY : (e as MouseEvent).clientY;
     
     setTooltip({
       title,
@@ -37,7 +35,7 @@ interface TooltipProps {
   info: TooltipInfo | null;
 }
 
-const Tooltip: React.FC<TooltipProps> = ({ info }) => {
+const Tooltip: FC<TooltipProps> = ({ info }) => {
   const tooltipRef = useRef<HTMLDivElement>(null);
   const [offset, setOffset] = useState({ x: 15, y: 15 });
 
