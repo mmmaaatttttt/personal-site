@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import { FC, ReactNode } from "react";
 import { useResizeObserver } from "@/hooks/useResizeObserver";
 import { SVGContext } from "@/context/SVGContext";
 import { cn } from "@/lib/utils";
@@ -18,12 +18,12 @@ interface ClippedSVGProps {
   height: number;
   marginTop?: number | string;
   padding?: number | Padding;
-  children: React.ReactNode;
+  children: ReactNode;
   className?: string;
   clipChildren?: boolean;
 }
 
-const ClippedSVG: React.FC<ClippedSVGProps> = ({
+const ClippedSVG: FC<ClippedSVGProps> = ({
   id,
   width,
   height,
