@@ -1,9 +1,9 @@
-import React from "react";
+import { ReactNode } from "react";
 
 interface ColoredSpanProps {
   bold?: boolean;
   color?: string;
-  children: React.ReactNode;
+  children: ReactNode;
 }
 
 export default function ColoredSpan({ bold = false, color = "black", children }: ColoredSpanProps) {
