@@ -1,8 +1,8 @@
-import React from "react";
+import { ReactNode } from "react";
 
 interface TableCell {
   key: string | number;
-  content: React.ReactNode;
+  content: ReactNode;
 }
 
 interface TableRow {
@@ -12,13 +12,13 @@ interface TableRow {
 
 interface TableHeader {
   key: string | number;
-  content: React.ReactNode;
+  content: ReactNode;
 }
 
 interface StyledTableProps {
   margin?: string;
   padding?: string;
-  children?: React.ReactNode;
+  children?: ReactNode;
   headers?: TableHeader[];
   rows?: TableRow[];
 }
