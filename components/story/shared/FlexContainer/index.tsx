@@ -1,8 +1,8 @@
-import React from "react";
+import { FC, ReactNode } from "react";
 import { cn } from "@/lib/utils";
 
 interface FlexContainerProps {
-  children: React.ReactNode;
+  children: ReactNode;
   column?: boolean;
   main?: "start" | "end" | "center" | "between" | "around" | "evenly" | "stretch";
   cross?: "start" | "end" | "center" | "baseline" | "stretch";
@@ -14,7 +14,7 @@ interface FlexContainerProps {
   className?: string;
 }
 
-const FlexContainer: React.FC<FlexContainerProps> = ({
+const FlexContainer: FC<FlexContainerProps> = ({
   children,
   column = false,
   main = "stretch",

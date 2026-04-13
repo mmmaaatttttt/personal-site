@@ -1,13 +1,13 @@
-import React from "react";
+import { FC, ReactNode, Children } from "react";
 import { cn } from "@/lib/utils";
 
 interface ColumnLayoutProps {
-  children: React.ReactNode;
+  children: ReactNode;
   break?: "sm" | "md" | "lg" | "xl";
   sizes?: number[];
 }
 
-const ColumnLayout: React.FC<ColumnLayoutProps> = ({
+const ColumnLayout: FC<ColumnLayoutProps> = ({
   children,
   break: breakAt,
   sizes,
@@ -21,7 +21,7 @@ const ColumnLayout: React.FC<ColumnLayoutProps> = ({
 
   return (
     <div className={cn("flex flex-row gap-8", breakAt && breakClasses[breakAt])}>
-      {React.Children.map(children, (child, idx) => (
+      {Children.map(children, (child, idx) => (
         <div
           key={idx}
           className="flex-1"
