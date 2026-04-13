@@ -1,7 +1,7 @@
 import { describe, it, expect, vi } from 'vitest';
 import { render } from '@testing-library/react';
 import '@testing-library/jest-dom/vitest';
-import USMap from './index';
+import USMap from '.';
 
 // Mock ClippedSVG
 vi.mock('../ClippedSVG', () => ({

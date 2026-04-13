@@ -1,7 +1,5 @@
-"use client";
-
 import { FC, useMemo } from "react";
-import { arc, pie } from "d3-shape";
+import { arc, pie, DefaultArcObject } from "d3-shape";
 import ClippedSVG from "../ClippedSVG";
 import PieSlice from "./PieSlice";
 
@@ -37,7 +35,7 @@ const PieChart: FC<PieChartProps> = ({
   }, [values]);
 
   const pathArc = useMemo(() => {
-    return arc<any>().innerRadius(innerRadius).outerRadius(radius);
+    return arc<DefaultArcObject>().innerRadius(innerRadius).outerRadius(radius);
   }, [innerRadius, radius]);
 
   return (

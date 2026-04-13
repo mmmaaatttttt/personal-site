@@ -1,7 +1,7 @@
 import { describe, it, expect, vi } from 'vitest';
 import { render } from '@testing-library/react';
 import '@testing-library/jest-dom/vitest';
-import Scatterplot from './index';
+import Scatterplot from '.';
 
 // Mock Graph component
 vi.mock('../Graph', () => ({

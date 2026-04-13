@@ -31,7 +31,7 @@ vi.mock('../ClippedSVG', () => {
   };
 });
 
-import PieChart from './index';
+import PieChart from '.';
 
 describe('PieChart Component', () => {
   const mockColorScale = (i: number) => ['red', 'blue', 'green'][i];

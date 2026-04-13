@@ -12,7 +12,7 @@ interface SliderData {
   handleValueChange: (val: number) => void;
   title: string | ((val: number) => string);
   color: string;
-  key?: any;
+  key?: string | number;
   tickCount?: number;
   minIcon?: string;
   maxIcon?: string;

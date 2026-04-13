@@ -1,6 +1,4 @@
-"use client";
-
-import React, { useState, useMemo } from "react";
+import { FC, useState, useMemo, ReactNode } from "react";
 import NarrowContainer from "../NarrowContainer";
 import ColumnLayout from "../ColumnLayout";
 import SliderGroup from "./SliderGroup";
@@ -12,18 +10,22 @@ interface SliderInitialData {
   step?: number;
   title: string | ((val: number) => string);
   color: string;
-  [key: string]: any;
+  key?: string | number;
+  tickCount?: number;
+  minIcon?: string;
+  maxIcon?: string;
+  fadeIcons?: boolean;
 }
 
 interface SliderProviderProps {
   initialData: SliderInitialData[];
   column?: boolean;
   fullWidthAt?: "sm" | "md" | "lg" | "xl";
-  render: (values: number[]) => React.ReactNode;
+  render: (values: number[]) => ReactNode;
   width?: string;
 }
 
-const SliderProvider: React.FC<SliderProviderProps> = ({
+const SliderProvider: FC<SliderProviderProps> = ({
   initialData = [],
   column = true,
   fullWidthAt = "sm",

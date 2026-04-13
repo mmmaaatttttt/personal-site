@@ -1,7 +1,5 @@
-"use client";
-
 import { FC, useEffect, useState } from "react";
-import { PieArcDatum } from "d3-shape";
+import { PieArcDatum, Arc, DefaultArcObject } from "d3-shape";
 import { format } from "d3-format";
 import { motion, useSpring, useTransform, MotionValue } from "framer-motion";
 
@@ -49,7 +47,7 @@ const AnimatedPercentage: FC<AnimatedPercentageProps> = ({ startAngle, endAngle,
 interface PieSliceProps {
   datum: PieArcDatum<number>;
   index: number;
-  pathArc: any;
+  pathArc: Arc<unknown, DefaultArcObject>;
   colorScale: (key: number) => string;
   stroke: string;
   showLabels: boolean;
@@ -66,16 +64,18 @@ const PieSlice: FC<PieSliceProps> = ({ datum, index, pathArc, colorScale, stroke
   }, [datum.startAngle, datum.endAngle, startAngle, endAngle]);
 
   const d = useTransform([startAngle, endAngle], ([sa, ea]: number[]) => 
-    pathArc({ startAngle: sa, endAngle: ea }) || ""
+    pathArc({ startAngle: sa, endAngle: ea, innerRadius: 0, outerRadius: 0 }) || ""
   );
 
-  const labelX = useTransform([startAngle, endAngle], ([sa, ea]: number[]) => 
-    pathArc.centroid({ startAngle: sa, endAngle: ea })[0]
-  );
+  const labelX = useTransform([startAngle, endAngle], ([sa, ea]: number[]) => {
+    const centroid = pathArc.centroid({ startAngle: sa, endAngle: ea, innerRadius: 0, outerRadius: 0 });
+    return centroid[0];
+  });
   
-  const labelY = useTransform([startAngle, endAngle], ([sa, ea]: number[]) => 
-    pathArc.centroid({ startAngle: sa, endAngle: ea })[1]
-  );
+  const labelY = useTransform([startAngle, endAngle], ([sa, ea]: number[]) => {
+    const centroid = pathArc.centroid({ startAngle: sa, endAngle: ea, innerRadius: 0, outerRadius: 0 });
+    return centroid[1];
+  });
 
   return (
     <>
