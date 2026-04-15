@@ -140,7 +140,7 @@ export default async function ArticlePage({ params }: PageProps) {
         </header>
 
         {/* Constrained Markdown Content */}
-        <div className="mx-auto w-full max-w-[var(--max-w-content)] px-4 sm:px-0">
+        <div className="relative mx-auto w-full max-w-[var(--max-w-content)] px-4 sm:px-0">
           <div className="prose prose-lg max-w-none text-[#1a1a1a] pb-20">
             {content}
           </div>

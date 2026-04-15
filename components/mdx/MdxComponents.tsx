@@ -6,6 +6,7 @@ import HorizontalBarGraph from "@/components/story/shared/HorizontalBarGraph";
 import MultiBarGraph from "@/components/story/shared/MultiBarGraph";
 import Legend from "@/components/story/shared/Legend";
 import SliderProvider from "@/components/story/shared/Slider";
+import Sidebar from "@/components/story/shared/Sidebar";
 
 // Placeholder for interactive components until they are fully ported in Phase 3
 const Placeholder = ({ name, children }: { name: string; children?: React.ReactNode }) => (
@@ -54,11 +55,7 @@ export const story_components = {
       <iframe className="h-full w-full" {...props} />
     </div>
   ),
-  Sidebar: (props: any) => (
-    <aside className="my-8 rounded-r-lg border-l-4 border-link bg-nav p-6 text-sm italic text-dark-gray shadow-sm">
-      {props.children}
-    </aside>
-  ),
+  Sidebar: (props: any) => <Sidebar {...props} />,
 
   // Templates & Organisms (Visualizations)
   WarmingDots: (props: any) => <Placeholder name="WarmingDots" />,
