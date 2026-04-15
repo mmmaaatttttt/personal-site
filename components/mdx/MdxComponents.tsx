@@ -104,6 +104,9 @@ const SelectablePieChart = dynamic(() => import("@/content/stories/four-weddings
 const SelectableScatterplot = dynamic(() => import("@/content/stories/four-weddings/components/SelectableScatterplot"));
 const SelectableUSMap = dynamic(() => import("@/content/stories/four-weddings/components/SelectableUSMap"));
 
+// Dishing on Petrie components
+const HarassmentSimulation = dynamic(() => import("@/content/stories/dishing-on-petrie/components/HarassmentSimulation"));
+
 // Beautiful Analysis components
 const PodcastAllSentiments = dynamic(() => import("@/content/stories/beautiful-analysis/components/PodcastAllSentiments"));
 const Quiz = dynamic(() => import("@/content/stories/beautiful-analysis/components/Quiz"));
@@ -156,6 +159,8 @@ export const MdxComponents: any = {
       )}
     </span>
   ),
+  // Dishing on Petrie
+  HarassmentSimulation: (props: any) => <HarassmentSimulation {...props} />,
   WarmingDots: (props: any) => <WarmingDots {...props} />,
   FourWeddingsVisualization: (props: any) => <FourWeddingsVisualization {...props} />,
   PodcastAllSentiments: (props: any) => <PodcastAllSentiments {...props} />,
