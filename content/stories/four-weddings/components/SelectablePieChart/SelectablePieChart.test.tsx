@@ -2,6 +2,7 @@ import { describe, it, expect, vi } from 'vitest';
 import { render, fireEvent } from '@testing-library/react';
 import '@testing-library/jest-dom/vitest';
 import SelectablePieChart from './index';
+import { WeddingData, PieOption } from '../../types';
 
 // Mock components
 vi.mock('@/components/story/shared/PieChart', () => ({
@@ -30,23 +31,23 @@ describe('SelectablePieChart Component', () => {
   const mockData = [
     { id: 1, type: 'A' },
     { id: 2, type: 'B' },
-  ];
+  ] as unknown as WeddingData[];
 
-  const mockOptions = [
-    { 
-      value: 'v1', 
-      label: 'Option 1', 
-      accessor: (data: any[]) => data.map(d => ({ label: d.type, value: 1 })) 
+  const mockOptions: PieOption[] = [
+    {
+      value: 'v1',
+      label: 'Option 1',
+      accessor: (_data: WeddingData[]) => [1, 2],
     },
-    { 
-      value: 'v2', 
-      label: 'Option 2', 
-      accessor: (data: any[]) => data.map(d => ({ label: 'fixed', value: 10 })) 
+    {
+      value: 'v2',
+      label: 'Option 2',
+      accessor: (_data: WeddingData[]) => [10, 20],
     },
   ];
 
   const graphOptions = {
-    colorScale: (i: number) => 'red',
+    colorScale: (_: number) => 'red',
   };
 
   it('renders with the initial option data passed to PieChart', () => {
@@ -61,9 +62,8 @@ describe('SelectablePieChart Component', () => {
     const chart = getByTestId('mock-pie-chart');
     const values = JSON.parse(chart.getAttribute('data-values') || '[]');
     
-    // First option accessor returns mapping of types
-    expect(values).toHaveLength(2);
-    expect(values[0].label).toBe('A');
+    // First option accessor output is passed through to PieChart
+    expect(values).toEqual([1, 2]);
   });
 
   it('updates the PieChart values when a new option is selected', () => {
@@ -81,8 +81,7 @@ describe('SelectablePieChart Component', () => {
     const chart = getByTestId('mock-pie-chart');
     const values = JSON.parse(chart.getAttribute('data-values') || '[]');
     
-    // Second option accessor returns fixed values
-    expect(values[0].label).toBe('fixed');
-    expect(values[0].value).toBe(10);
+    // Second option accessor output is passed through to PieChart
+    expect(values).toEqual([10, 20]);
   });
 });

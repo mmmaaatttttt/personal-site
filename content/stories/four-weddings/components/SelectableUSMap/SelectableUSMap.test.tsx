@@ -2,6 +2,7 @@ import { describe, it, expect, vi } from 'vitest';
 import { render, fireEvent } from '@testing-library/react';
 import '@testing-library/jest-dom/vitest';
 import SelectableUSMap from './index';
+import { WeddingData } from '../../types';
 
 // Mock components
 vi.mock('@/components/story/shared/USMap', () => ({
@@ -41,19 +42,19 @@ describe('SelectableUSMap Component', () => {
   const mockData = [
     { state: 'AL', value: 10 },
     { state: 'GA', value: 20 },
-  ];
+  ] as unknown as WeddingData[];
 
   const mockOptions = [
-    { 
-      value: 'v1', 
-      label: 'Option 1', 
-      accessor: (p: any) => 1,
+    {
+      value: 'v1',
+      label: 'Option 1',
+      accessor: (_: any) => 1,
       colors: ['red', 'blue']
     },
-    { 
-      value: 'v2', 
-      label: 'Option 2', 
-      accessor: (p: any) => 2,
+    {
+      value: 'v2',
+      label: 'Option 2',
+      accessor: (_: any) => 2,
       colors: ['green', 'yellow']
     },
   ];

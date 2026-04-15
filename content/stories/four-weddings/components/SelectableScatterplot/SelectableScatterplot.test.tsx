@@ -2,6 +2,7 @@ import { describe, it, expect, vi } from 'vitest';
 import { render, fireEvent } from '@testing-library/react';
 import '@testing-library/jest-dom/vitest';
 import SelectableScatterplot from './index';
+import { WeddingData } from '../../types';
 
 // Mock components
 vi.mock('@/components/story/shared/Scatterplot', () => ({
@@ -34,7 +35,7 @@ describe('SelectableScatterplot Component', () => {
   const mockData = [
     { season: 1, episode: 1, name: 'W1', ranking: 1, budget: 1000, guests: 50 },
     { season: 1, episode: 2, name: 'W2', ranking: 2, budget: 2000, guests: 100 },
-  ];
+  ] as unknown as WeddingData[];
 
   const mockOptions = [
     { 
@@ -58,7 +59,7 @@ describe('SelectableScatterplot Component', () => {
   ];
 
   const graphOptions = {
-    colorScale: (ranking: number | null) => 'red',
+    colorScale: (_: number | null) => 'red',
   };
 
   it('maps X and Y axis data correctly based on initial selection', () => {
