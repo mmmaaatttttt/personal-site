@@ -2,12 +2,35 @@
 
 import { FC, useEffect, useRef, useState } from "react";
 import { select, Selection } from "d3-selection";
-import { forceSimulation, Simulation, SimulationNodeDatum } from "d3-force";
-import forceBounce from "d3-force-bounce";
-import forceSurface from "d3-force-surface";
+import { forceSimulation, Simulation, SimulationNodeDatum, Force } from "d3-force";
+
+// @ts-ignore - The plugin lacks official typings, so we cast it strictly below
+import forceBounceRaw from "d3-force-bounce";
+// @ts-ignore - The plugin lacks official typings, so we cast it strictly below
+import forceSurfaceRaw from "d3-force-surface";
+
 import { interval } from "d3-timer";
 import "d3-transition"; // For .transition()
 import { easeCubicOut } from "d3-ease";
+
+export interface BounceForce<NodeDatum extends SimulationNodeDatum> extends Force<NodeDatum, any> {
+  radius(val: (node: NodeDatum) => number): this;
+  onImpact(cb: (node1: NodeDatum, node2: NodeDatum) => void): this;
+}
+
+export interface SurfaceDefinition {
+  from: { x: number; y: number };
+  to: { x: number; y: number };
+}
+
+export interface SurfaceForce<NodeDatum extends SimulationNodeDatum> extends Force<NodeDatum, any> {
+  surfaces(s: SurfaceDefinition[]): this;
+  oneWay(val: boolean): this;
+  radius(val: (node: NodeDatum) => number): this;
+}
+
+const forceBounce = forceBounceRaw as unknown as <NodeDatum extends SimulationNodeDatum>() => BounceForce<NodeDatum>;
+const forceSurface = forceSurfaceRaw as unknown as <NodeDatum extends SimulationNodeDatum>() => SurfaceForce<NodeDatum>;
 
 export interface HarassmentNode extends SimulationNodeDatum {
   key: string;
@@ -142,7 +165,7 @@ const HarassmentNodeGroup: FC<HarassmentNodeGroupProps> = ({
       .velocityDecay(0)
       .force(
         "bounce", 
-        forceBounce<HarassmentNode>().radius(node => node.r).onImpact(handleCollision)
+        forceBounce<HarassmentNode>().radius((node: HarassmentNode) => node.r).onImpact(handleCollision)
       )
       .force(
         "surface",
@@ -154,7 +177,7 @@ const HarassmentNodeGroup: FC<HarassmentNodeGroupProps> = ({
             { from: { x: width, y: 0 }, to: { x: 0, y: 0 } },
           ])
           .oneWay(true)
-          .radius(node => node.r)
+          .radius((node: HarassmentNode) => node.r)
       );
 
     simulationRef.current = sim;
