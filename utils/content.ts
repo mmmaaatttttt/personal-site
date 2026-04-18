@@ -1,6 +1,7 @@
 import fs from "fs";
 import path from "path";
 import matter from "gray-matter";
+import { storyMeta } from "@/utils/storyMeta";
 
 const ARTICLES_DIR = path.join(process.cwd(), "content", "stories");
 
@@ -38,18 +39,16 @@ export function getArticleSlugs(): string[] {
  * Articles are now stored in content/articles/[slug]/index.mdx
  */
 export function getArticle(slug: string) {
-  const filePath = path.join(ARTICLES_DIR, slug, "index.mdx");
-  if (!fs.existsSync(filePath)) {
+  const mdxPath = path.join(ARTICLES_DIR, slug, "index.mdx");
+
+  if (!fs.existsSync(mdxPath)) {
     throw new Error(`Article not found: ${slug}`);
   }
-  const raw = fs.readFileSync(filePath, "utf-8");
-  const { data, content } = matter(raw);
 
-  return {
-    frontmatter: data as ArticleFrontmatter,
-    source: content,
-    slug,
-  };
+  const frontmatter: ArticleFrontmatter =
+    storyMeta[slug] ?? (matter(fs.readFileSync(mdxPath, "utf-8")).data as ArticleFrontmatter);
+
+  return { frontmatter, slug };
 }
 
 
@@ -59,8 +58,9 @@ export function getArticle(slug: string) {
 export function getAllArticles(): ArticleMeta[] {
   const slugs = getArticleSlugs();
   const articles = slugs.map((slug) => {
-    const { frontmatter, source } = getArticle(slug);
-    const timeToRead = estimateReadingTime(source);
+    const { frontmatter } = getArticle(slug);
+    const raw = fs.readFileSync(path.join(ARTICLES_DIR, slug, "index.mdx"), "utf-8");
+    const timeToRead = estimateReadingTime(matter(raw).content);
     
     // Format date to "MMMM YYYY"
     const dateObj = new Date(frontmatter.date);

@@ -1,18 +1,5 @@
----
-title: "Dishing on Petrie"
-date: "2018-04-20"
-featured_image: "../../images/featured_images/dishing_on_petrie.jpg"
-caption: "Mathematical models of toxic tech culture."
-featured_image_caption: "Michael Scott teaches us that workplace harassment isn't always intentional. That doesn't make it any less harmful. Image credit: NBC."
-tags:
-  - modeling
-  - statistics
-  - civics
-  - relationships
----
-
 import HarassmentSimulation from "./components/HarassmentSimulation";
-import PetrieDataTable from "./components/PetrieDataTable";
+import { petrieTable1, petrieTable2 } from "./data";
 
 Many things are rotten in the state of tech. From Susan Fowler's [essay](https://www.susanjfowler.com/blog/2017/2/19/reflecting-on-one-very-strange-year-at-uber) on the toxic culture at Uber, to reports that [60% of women in tech](https://www.elephantinthevalley.com/) have received unwanted sexual advances, it's clear that these workplaces aren't quite the bastions of equality and progressive values that their marketing departments would have us believe.
 
@@ -107,11 +94,11 @@ When we keep track of all kinds of harassment, not just harassment that's receiv
 
 With such a large disparity, it should come as no surprise that the most frequent offensive remark is one said by green and heard by blue. I stopped the simulation after blue-eyed people had heard 100 offensive things from green-eyed people, and here were the tallies:
 
-<PetrieDataTable idx={0} />
+<StyledTable data={petrieTable1} />
 
 I then bumped up blue's numbers to 10 and ran the simulation again. Here's what I got:
 
-<PetrieDataTable idx={1} />
+<StyledTable data={petrieTable2} />
 
 These tables highlight an important point. When one group is significantly outnumbered by another (as in the first table), the model predicts that most of the harassment the majority group hears will come from **within the majority group itself.** In cases like this, while bringing in more people from underrepresented groups is a nice idea, as is helping teach people not to be overt jerks, it's just as important (if not more so) to encourage people in the majority group to speak up about what other people are saying, _especially_ if they're saying hurtful things about a group that isn't in the room. Put another way, ["don't be evil"](https://en.wikipedia.org/wiki/Don%27t_be_evil) seems woefully inadequate. "Be kind," while also overly broad, may offer a step in the right direction.
 
