@@ -19,6 +19,7 @@
     "deploy": "NEXT_PUBLIC_BASE_URL='https://mattlane.us' next build && s3-deploy './out/**' --cwd './out/' --region us-east-1 --bucket mattlane.us --deleteRemoved && aws-cloudfront-invalidate $npm_config_distribution_id"
   },
   "dependencies": {
+    "@next/mdx": "^16.2.4",
     "clsx": "^2.1.1",
     "d3": "^7.9.0",
     "d3-force-bounce": "^1.0.2",
@@ -27,7 +28,6 @@
     "gray-matter": "^4.0.3",
     "lucide-react": "^0.577.0",
     "next": "16.1.6",
-    "next-mdx-remote": "^6.0.0",
     "odex": "^3.0.0-rc.4",
     "react": "19.2.3",
     "react-dom": "19.2.3",
