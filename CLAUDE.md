@@ -19,31 +19,62 @@ MDX files are real modules — `import` statements work normally and are resolve
 
 ### Wiring a ported story
 
-Two steps:
+Three steps:
 
-**1. Import components directly in the MDX file** (`content/stories/<slug>/index.mdx`):
-
-```mdx
-import MyComponent from "./components/MyComponent";
-import AnotherComponent from "./components/AnotherComponent";
-```
-
-Then use them in the MDX body with any props you like:
-
-```mdx
-<MyComponent someprop="value" numericProp={42} />
-```
-
-**2. Add the story to the module map** in `app/stories/[slug]/page.tsx`:
+**1. Create `meta.ts`** in `content/stories/<slug>/meta.ts`:
 
 ```ts
-const storyModules: Record<string, () => Promise<{ default: React.ComponentType<any> }>> = {
+import type { ArticleFrontmatter } from "@/utils/content";
+
+const meta: ArticleFrontmatter = {
+  title: "...",
+  date: "YYYY-MM-DD",
+  featured_image: "../../images/featured_images/foo.jpg",
+  caption: "...",
+  featured_image_caption: "...",
+  tags: ["..."],
+};
+
+export default meta;
+```
+
+**2. Register it** in `utils/storyMeta.ts`:
+
+```ts
+import myStory from "@/content/stories/my-story/meta";
+
+export const storyMeta = {
+  "my-story": myStory,
+  // existing entries...
+};
+```
+
+**3. Add the story to the module map** in `app/stories/[slug]/page.tsx`:
+
+```ts
+const storyModules = {
   "my-story": () => import("@/content/stories/my-story/index.mdx"),
   // existing entries...
 };
 ```
 
-That's it. No registration in `MdxComponents.tsx` needed for story-specific components.
+That's it. Story-specific components are imported directly in the MDX file — no registration in `MdxComponents.tsx` needed.
+
+### Story frontmatter
+
+Ported stories keep metadata in a typed `meta.ts` file (see above) — **not** in the MDX file. The `getArticle()` utility checks `storyMeta` first and falls back to gray-matter parsing of MDX frontmatter for non-ported stories.
+
+Non-ported MDX files still have YAML frontmatter at the top — leave it there so gray-matter can read it.
+
+### Story-level data files
+
+If a story has static data (e.g. table contents, chart data), put it in `content/stories/<slug>/data.ts` and import it in the MDX:
+
+```mdx
+import { myTableData } from "./data";
+
+<StyledTable data={myTableData} />
+```
 
 ### Global components (no import needed in MDX)
 
@@ -60,6 +91,8 @@ Stories not yet in the module map display a "Coming soon" message. Their MDX fil
 ### What "done" means for a story
 
 - All custom interactive components ported from `content/stories/<slug>/components/` (Legacy JS → TypeScript)
+- `meta.ts` created and registered in `utils/storyMeta.ts`
+- Frontmatter removed from `index.mdx` (it lives in `meta.ts` now)
 - Components imported directly in the story's `index.mdx`
 - Story slug added to `storyModules` in `app/stories/[slug]/page.tsx`
 - `tsc --noEmit` passes with no new errors
@@ -73,7 +106,7 @@ Stories not yet in the module map display a "Coming soon" message. Their MDX fil
 | -------------------------------- | ------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `four-weddings`                  | ✅ Complete   | SelectableHistogram, PieChart, Scatterplot, USMap                                                                                                                      |
 | `beautiful-analysis`             | ✅ Complete   | Podcast sentiments, quiz, multi-bar graphs, etc.                                                                                                                       |
-| `dishing-on-petrie`              | In progress   | HarassmentSimulation (D3 physics sim, 3 instances with `idx` prop), PetrieDataTable                                                                                   |
+| `dishing-on-petrie`              | ✅ Complete   | HarassmentSimulation (D3 physics sim, 3 instances with `idx` prop); static tables via `StyledTable data={...}` with data in `data.ts`                                  |
 | `warming-dots`                   | ❌ Not started | Single `WarmingDots` component                                                                                                                                         |
 | `gaming-relationships-linear`    | ❌ Not started | Needs: `GamingRelationships`, `Sidebar`✓, `ResponsiveIFrame`✓, `Latex`✓                                                                                                |
 | `gaming-relationships-nonlinear` | ❌ Not started | Needs: `GamingRelationships` (same component as linear)                                                                                                                |
@@ -106,6 +139,7 @@ All in `components/story/shared/`:
 | `Tooltip` / `useTooltip`                                                                 | Tooltip hook + component                                                                                                                                                                              |
 | `Select`                                                                                 | Styled dropdown                                                                                                                                                                                       |
 | `Axis`, `AxisLabel`, `ClippedSVG`                                                        | SVG utilities                                                                                                                                                                                         |
+| `StyledTable`                                                                            | Styled table; accepts `headers`/`rows` (typed) or `data` (simple `string[][]` where first row is headers — use this for static tables)                                                               |
 
 ---
 
@@ -125,9 +159,9 @@ Prefix with `_` (e.g., `(_: number) => 'red'`).
 
 Any component using hooks, refs, event handlers, or framer-motion must have `"use client"` at the top. The `HarassmentNodeGroup` component (D3 + `useRef`) is a good reference.
 
-### Server component shells
+### No server component shells needed
 
-Some components have a thin server component wrapper (`index.tsx`) that imports a `"use client"` inner component. This pattern is fine but no longer strictly necessary — with `@next/mdx`, you can import a `"use client"` component directly from MDX and props will flow correctly.
+With `@next/mdx`, you can import a `"use client"` component directly from MDX and all props flow correctly. The old pattern of a thin server wrapper (`index.tsx`) importing a `"use client"` inner component is no longer needed — put everything in one file with `"use client"` at the top.
 
 ### Legacy component location
 
