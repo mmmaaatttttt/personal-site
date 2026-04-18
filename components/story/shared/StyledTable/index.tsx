@@ -21,6 +21,12 @@ interface StyledTableProps {
   children?: ReactNode;
   headers?: TableHeader[];
   rows?: TableRow[];
+  /**
+   * Simple 2D array: first element is the header row, rest are data rows.
+   * Useful for static data only, since in this case we use
+   * the array indices as the keys
+   */
+  data?: string[][];
 }
 
 export default function StyledTable({
@@ -28,7 +34,16 @@ export default function StyledTable({
   children,
   headers,
   rows,
+  data,
 }: StyledTableProps) {
+  if (data) {
+    const [headerRow, ...dataRows] = data;
+    headers = headerRow.map((content, i) => ({ key: i, content }));
+    rows = dataRows.map((cells, i) => ({
+      key: i,
+      cells: cells.map((content, j) => ({ key: j, content })),
+    }));
+  }
   return (
     <div className="my-12 w-full overflow-x-auto text-center">
       <table
