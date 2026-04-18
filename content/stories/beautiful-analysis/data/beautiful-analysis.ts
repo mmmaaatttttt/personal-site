@@ -1,5 +1,6 @@
 import { format } from "d3";
 import COLORS from "@/utils/styles";
+import baFeatures from "./ba-features.json";
 
 const percent = format(".1%");
 const comma = format(",.0f");
@@ -55,4 +56,14 @@ const colorMap = {
   Caller: COLORS.ORANGE
 };
 
-export { colorMap, defaultSentimentOptions, generateTooltipData };
+interface Feature {
+  caption: string;
+  width: number;
+}
+
+const horizontalBarData = (baFeatures as Feature[]).map((d) => ({
+  ...d,
+  fill: colorMap[d.width > 0 ? "Chris" : "Caller"],
+}));
+
+export { colorMap, defaultSentimentOptions, generateTooltipData, horizontalBarData };

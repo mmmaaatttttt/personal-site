@@ -1,34 +1,14 @@
 import baSummary from "./data/ba-summary.json";
-import baFeatures from "./data/ba-features.json";
-import baSentimentData from "./data/ba-sentiment-examples.json";
-import baSentimentCounts from "./data/ba-sentiment-counts.json";
-import baAllSentiment from "./data/ba-all-sentiment.json";
 import baProfanity from "./data/ba-profanity.json";
-import baCommonPhrases from "./data/ba-common-phrases.json";
-import baQuizData from "./data/ba-quiz.json";
-
-import CaptionWrapper from "@/components/story/shared/Caption";
-import ColoredSpan from "@/components/story/shared/ColoredSpan";
-import HorizontalBarGraph from "@/components/story/shared/HorizontalBarGraph";
-import MultiBarGraph from "@/components/story/shared/MultiBarGraph";
-import NarrowContainer from "@/components/story/shared/NarrowContainer";
-import StyledTable from "@/components/story/shared/StyledTable";
-import SliderProvider from "@/components/story/shared/Slider/SliderProvider";
 
 import PodcastAllSentiments from "./components/PodcastAllSentiments";
 import Quiz from "./components/Quiz";
 import SelectableMultiBarGraph from "./components/SelectableMultiBarGraph";
 import SentimentScoreTable from "./components/SentimentScoreTable";
-import BaMultiBarGraph from "./components/BaMultiBarGraph";
-import BaHorizontalBarGraph from "./components/BaHorizontalBarGraph";
 import CommonPhrasesInteractive from "./components/CommonPhrasesInteractive";
 import CollocationTable from "./components/CollocationTable";
 
-import {
-  defaultSentimentOptions,
-  generateTooltipData,
-  colorMap
-} from "./data/beautiful-analysis";
+import { generateTooltipData, horizontalBarData } from "./data/beautiful-analysis";
 import COLORS from "@/utils/styles";
 
 _[Beautiful Stories From Anonymous People](https://www.earwolf.com/show/beautiful-anonymous/)_
@@ -129,8 +109,10 @@ Here's how the number of words spoken by Gethard compares to the number of words
 spoken by the caller, for each of the ten episode transcripts:
 
 <CaptionWrapper caption="Figure 1: Word counts per episode for Gethard and the caller. Tap or mouse over a bar for more details on the episode.">
-  <BaMultiBarGraph
-    dataType="summary"
+  <MultiBarGraph
+    data={baSummary}
+    getTooltipData={generateTooltipData}
+    colors={[COLORS.DARK_BLUE, COLORS.ORANGE]}
     legendTitle="Word counts per episode"
     padding={{ top: 0, left: 70, right: 0, bottom: 10 }}
     yAxisLabel="Word count"
@@ -233,8 +215,10 @@ I was able to categorize every sentence in every conversation as either having
 profanity or not. Here are the results, again broken down by speaker:
 
 <CaptionWrapper caption="Figure 5: Profanity counts per episode for Gethard and the caller. Tap or mouse over a bar for more details on the episode.">
-  <BaMultiBarGraph
-    dataType="profanity"
+  <MultiBarGraph
+    data={baProfanity}
+    getTooltipData={generateTooltipData}
+    colors={[COLORS.DARK_BLUE, COLORS.ORANGE]}
     legendTitle="Profanity counts per episode"
     padding={{ top: 0, left: 70, right: 0, bottom: 10 }}
     yAxisLabel="Profanity count"
@@ -349,7 +333,7 @@ my training sessions:
 
 <CaptionWrapper caption="Figure 8: Twenty most informative features for
 distinguishing between Gethard and his callers.">
-  <BaHorizontalBarGraph />
+  <HorizontalBarGraph data={horizontalBarData} />
 </CaptionWrapper>
 
 The numbers in the above chart indicate the strength of each predictor. For
