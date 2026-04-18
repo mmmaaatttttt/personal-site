@@ -1,16 +1,4 @@
----
-title: "Warming Dots"
-date: "2018-07-19"
-featured_image: "../../images/featured_images/warming_dots.png"
-caption: "Looking to the stars to understand our future."
-featured_image_caption: "Humans looking to the cosmos for answers, before they are hunted down by predators, in the aptly-named film Predators. Image credit: 20th Century Fox."
-tags:
-  - modeling
-  - climate change
-  - differential equations
-  - astronomy
----
-
+import WarmingDots from "./components/WarmingDots";
 
 Sometimes, when the problems of the world seem overwhelming, it's worth remembering how small we really are. Physicist [Carl Sagan](https://en.wikipedia.org/wiki/Carl_Sagan) summed it up nicely when commenting on a 1990 image of the Earth taken by the Voyager 1 space probe, titled _Pale Blue Dot_:
 
@@ -18,7 +6,7 @@ Sometimes, when the problems of the world seem overwhelming, it's worth remember
 
 From this perspective, it's hard not to feel insignificant. This may be cold comfort, but in a twisted way it's sort of comforting. It makes a lot of the problems that we're facing seem less significant as well. After all, what's the worst that can happen? We fail as a species, and the universe marches on.
 
-![Can you find the pale blue dot?](../../images/pale_blue_dot.png "Can you find the pale blue dot? (Source: NASA)"){.w-80}
+![Can you find the pale blue dot?](../../images/pale_blue_dot.png "Can you find the pale blue dot? (Source: NASA)")
 
 But the Pale Blue Dot perspective is about more than just nihilism. It can also help frame some of our global issues in a new light. Take global warming, for instance. The surface of the Earth is warming because of human activity, and we're at a point where our survival as a species is jeopardized because of the rapid changes we've made to the planet.
 
@@ -55,7 +43,7 @@ Closely tied to the idea of a doubling time is a constant called the **growth ra
 Here's an example of an exponential growth curve for a hypothetical population. You can adjust the growth rate and see how that affects the shape of the curve: more specifically, how quickly it shoots up.
 
 <WarmingDots
-  index={0}
+  vizIndex={0}
   caption="Figure 1: An exponential model of population growth."
 />
 
@@ -76,7 +64,7 @@ As a practical matter, determining the carrying capacity of any environment is a
 The logistic model of population incorporates two parameters: a growth rate for the population, and an environmental carrying capacity that effectively caps the population. Here's what the model looks like: note that the presence of the carrying capacity gives the logistic function its signature S-shape.
 
 <WarmingDots
-  index={1}
+  vizIndex={1}
   caption="Figure 2: A logistic model of population growth."
 />
 
@@ -134,7 +122,7 @@ In order to graph this model, we need several parameters. Some are the same as i
 Whew. That's a lot. But with all of this setup, we're finally ready to explore our third model. Here it is.
 
 <WarmingDots
-  index={2}
+  vizIndex={2}
   caption="Figure 3: Modeling Population along with the environment."
 />
 
@@ -159,7 +147,7 @@ In order to do so, we need to introduce two more parameters. The first one measu
 What sorts of new trajectories can you create with these additional parameters?
 
 <WarmingDots
-  index={3}
+  vizIndex={3}
   caption="Figure 4: Modeling environment and population with two resources."
 />
 
@@ -178,7 +166,7 @@ For their final variation on the model, the authors included an environmental fr
 Now, with all nine parameters at your disposal, what sorts of population graphs can you come up with?
 
 <WarmingDots
-  vizIndex="4"
+  vizIndex={4}
   caption="Figure 5: Including an environmental fragility parameter into the model."
 />
 

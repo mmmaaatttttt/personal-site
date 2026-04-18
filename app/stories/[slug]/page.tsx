@@ -19,6 +19,7 @@ const storyModules: Record<
   "dishing-on-petrie": () =>
     import("@/content/stories/dishing-on-petrie/index.mdx"),
   "four-weddings": () => import("@/content/stories/four-weddings/index.mdx"),
+  "warming-dots": () => import("@/content/stories/warming-dots/index.mdx"),
 };
 
 export async function generateStaticParams() {

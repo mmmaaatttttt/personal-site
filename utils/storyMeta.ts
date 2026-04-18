@@ -2,6 +2,7 @@ import type { ArticleFrontmatter } from "@/utils/content";
 import fourWeddings from "@/content/stories/four-weddings/meta";
 import beautifulAnalysis from "@/content/stories/beautiful-analysis/meta";
 import dishingOnPetrie from "@/content/stories/dishing-on-petrie/meta";
+import warmingDots from "@/content/stories/warming-dots/meta";
 
 /**
  * Typed metadata for ported stories. getArticle() checks here first;
@@ -13,4 +14,5 @@ export const storyMeta: Record<string, ArticleFrontmatter> = {
   "four-weddings": fourWeddings,
   "beautiful-analysis": beautifulAnalysis,
   "dishing-on-petrie": dishingOnPetrie,
+  "warming-dots": warmingDots,
 };
