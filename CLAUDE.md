@@ -13,44 +13,55 @@ Matt's personal/blog site, actively being migrated from a legacy Gatsby/JavaScri
 
 ### How MDX stories work
 
-Stories are `.mdx` files in `content/stories/<slug>/index.mdx`. They are compiled server-side via `next-mdx-remote/rsc` in `app/stories/[slug]/page.tsx`.
+Stories are `.mdx` files in `content/stories/<slug>/index.mdx`. They are compiled at build time by `@next/mdx` (with `experimental.mdxRs: true`) and rendered via a module map in `app/stories/[slug]/page.tsx`.
 
-**Critical:** The page strips all `import` and `export` statements from MDX source before compilation:
+MDX files are real modules — `import` statements work normally and are resolved by webpack/Turbopack at build time. This means components can be imported directly in the MDX file, and all JSX props (strings, numbers, expressions) work exactly as they do in `.tsx` files.
 
-```ts
-const cleanSource = source
-  .replace(/^import\s+.*\s+from\s+['"].*['"];?\s*$/gm, "")
-  .replace(/^export\s+.*\s*$/gm, "");
+### Wiring a ported story
+
+Two steps:
+
+**1. Import components directly in the MDX file** (`content/stories/<slug>/index.mdx`):
+
+```mdx
+import MyComponent from "./components/MyComponent";
+import AnotherComponent from "./components/AnotherComponent";
 ```
 
-This means MDX components **cannot use local imports** — they must be provided via `MdxComponents`. Any `import` in an MDX file is only there as legacy documentation; it is silently stripped at runtime.
+Then use them in the MDX body with any props you like:
 
-### Wiring an interactive component
-
-Two steps in `components/mdx/MdxComponents.tsx`:
-
-1. Add a dynamic import near the top (grouped with story peers):
-
-```ts
-// Dishing on Petrie components
-const HarassmentSimulation = dynamic(
-  () =>
-    import("@/content/stories/dishing-on-petrie/components/HarassmentSimulation"),
-);
+```mdx
+<MyComponent someprop="value" numericProp={42} />
 ```
 
-2. Add an override in the `MdxComponents` export (this overrides the placeholder in `story_components`):
+**2. Add the story to the module map** in `app/stories/[slug]/page.tsx`:
 
 ```ts
-HarassmentSimulation: (props: any) => <HarassmentSimulation {...props} />,
+const storyModules: Record<string, () => Promise<{ default: React.ComponentType<any> }>> = {
+  "my-story": () => import("@/content/stories/my-story/index.mdx"),
+  // existing entries...
+};
 ```
 
-All unported components degrade to a `<Placeholder name="..." />` UI — they render but show a "arriving in Phase 3" message. This means any story can be visited without crashing; you're just replacing placeholders with real components.
+That's it. No registration in `MdxComponents.tsx` needed for story-specific components.
+
+### Global components (no import needed in MDX)
+
+The following shared utilities are registered globally in `components/mdx/MdxComponents.tsx` and are available in any MDX file without importing:
+
+`Sidebar`, `ResponsiveIFrame`, `Latex`, `ColoredSpan`, `NarrowContainer`, `StyledTable`, `CaptionWrapper`, `HorizontalBarGraph`, `MultiBarGraph`, `Legend`, `SliderProvider`, `RelativeContainer`, `Strikethrough`
+
+If a new shared component is added here it will be available in all stories automatically.
+
+### Non-ported stories
+
+Stories not yet in the module map display a "Coming soon" message. Their MDX files contain legacy Gatsby-style imports (e.g. `from "story_components"`, `from "data/..."`) that don't resolve in Next.js — do **not** add them to the module map until those imports are fixed and the components are ported.
 
 ### What "done" means for a story
 
 - All custom interactive components ported from `content/stories/<slug>/components/` (Legacy JS → TypeScript)
-- Components wired in `MdxComponents.tsx` via dynamic import
+- Components imported directly in the story's `index.mdx`
+- Story slug added to `storyModules` in `app/stories/[slug]/page.tsx`
 - `tsc --noEmit` passes with no new errors
 - Component-level tests exist and pass (`vitest run`)
 
@@ -58,12 +69,12 @@ All unported components degrade to a `<Placeholder name="..." />` UI — they re
 
 ## Story Status
 
-| Story                            | Status         | Notes                                                                                                                                                                  |
-| -------------------------------- | -------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `four-weddings`                  | ✅ Complete    | SelectableHistogram, PieChart, Scatterplot, USMap                                                                                                                      |
-| `beautiful-analysis`             | ✅ Complete    | Podcast sentiments, quiz, multi-bar graphs, etc.                                                                                                                       |
-| `dishing-on-petrie`              | In progress   | HarassmentSimulation (D3 physics sim, 3 instances with `idx` prop) - this component has some lingering issues                                                                                                     |
-| `warming-dots`                   | ❌ Not started   | Single `WarmingDots` component                                                                                                                                         |
+| Story                            | Status        | Notes                                                                                                                                                                  |
+| -------------------------------- | ------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `four-weddings`                  | ✅ Complete   | SelectableHistogram, PieChart, Scatterplot, USMap                                                                                                                      |
+| `beautiful-analysis`             | ✅ Complete   | Podcast sentiments, quiz, multi-bar graphs, etc.                                                                                                                       |
+| `dishing-on-petrie`              | In progress   | HarassmentSimulation (D3 physics sim, 3 instances with `idx` prop), PetrieDataTable                                                                                   |
+| `warming-dots`                   | ❌ Not started | Single `WarmingDots` component                                                                                                                                         |
 | `gaming-relationships-linear`    | ❌ Not started | Needs: `GamingRelationships`, `Sidebar`✓, `ResponsiveIFrame`✓, `Latex`✓                                                                                                |
 | `gaming-relationships-nonlinear` | ❌ Not started | Needs: `GamingRelationships` (same component as linear)                                                                                                                |
 | `income-inequality`              | ❌ Not started | Needs: `EconomySimulation`, `Sidebar`✓                                                                                                                                 |
@@ -94,12 +105,7 @@ All in `components/story/shared/`:
 | `USMap`                                                                                  | Choropleth US map with tooltip support                                                                                                                                                                |
 | `Tooltip` / `useTooltip`                                                                 | Tooltip hook + component                                                                                                                                                                              |
 | `Select`                                                                                 | Styled dropdown                                                                                                                                                                                       |
-| `Axis`, `AxisLabel`, `ClippedSVG`, `ClippedSVG`                                          | SVG utilities                                                                                                                                                                                         |
-
-Also available as pass-throughs in `MdxComponents` (no custom component needed):
-
-- `ResponsiveIFrame` — renders a responsive iframe wrapper
-- `Latex` — renders inline italic text (visual approximation)
+| `Axis`, `AxisLabel`, `ClippedSVG`                                                        | SVG utilities                                                                                                                                                                                         |
 
 ---
 
@@ -115,13 +121,13 @@ Mock option accessors must match the actual type contract (e.g., `PieOption.acce
 
 Prefix with `_` (e.g., `(_: number) => 'red'`).
 
-### Dynamic imports
-
-All interactive components must use `next/dynamic` — they use browser APIs (D3, canvas, etc.) and can't be statically imported in an RSC context.
-
 ### `"use client"` directive
 
 Any component using hooks, refs, event handlers, or framer-motion must have `"use client"` at the top. The `HarassmentNodeGroup` component (D3 + `useRef`) is a good reference.
+
+### Server component shells
+
+Some components have a thin server component wrapper (`index.tsx`) that imports a `"use client"` inner component. This pattern is fine but no longer strictly necessary — with `@next/mdx`, you can import a `"use client"` component directly from MDX and props will flow correctly.
 
 ### Legacy component location
 
