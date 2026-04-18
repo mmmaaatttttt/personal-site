@@ -1,13 +1,18 @@
+import createMDX from "@next/mdx";
 import type { NextConfig } from "next";
 
+const withMDX = createMDX({});
+
 const nextConfig: NextConfig = {
+  experimental: {
+    mdxRs: true,
+  },
   output: "export",
   trailingSlash: true,
   images: {
-    // Static export doesn't support Next.js image optimization server,
-    // so we use unoptimized mode. Images are still served from S3/CloudFront.
     unoptimized: true,
   },
+  pageExtensions: ["ts", "tsx", "js", "jsx", "md", "mdx"],
 };
 
-export default nextConfig;
+export default withMDX(nextConfig);
