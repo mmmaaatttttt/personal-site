@@ -1,36 +1,29 @@
 import React from "react";
-import { compileMDX } from "next-mdx-remote/rsc";
 import MainLayout from "@/components/layout/MainLayout";
-import { getArticle, ArticleFrontmatter, getArticleSlugs } from "@/utils/content";
-import { MdxComponents } from "@/components/mdx/MdxComponents";
+import { getArticle, getArticleSlugs } from "@/utils/content";
 import Image from "next/image";
 import { notFound } from "next/navigation";
-import COLORS from "@/utils/styles";
-
-// Beautiful Analysis Data
-import baSummary from "@/content/stories/beautiful-analysis/data/ba-summary.json";
-import baFeatures from "@/content/stories/beautiful-analysis/data/ba-features.json";
-import baSentimentData from "@/content/stories/beautiful-analysis/data/ba-sentiment-examples.json";
-import baSentimentCounts from "@/content/stories/beautiful-analysis/data/ba-sentiment-counts.json";
-import baAllSentiment from "@/content/stories/beautiful-analysis/data/ba-all-sentiment.json";
-import baProfanity from "@/content/stories/beautiful-analysis/data/ba-profanity.json";
-import baCommonPhrases from "@/content/stories/beautiful-analysis/data/ba-common-phrases.json";
-import baQuizData from "@/content/stories/beautiful-analysis/data/ba-quiz.json";
-import {
-  defaultSentimentOptions,
-  generateTooltipData,
-  colorMap,
-} from "@/content/stories/beautiful-analysis/data/beautiful-analysis";
 
 interface PageProps {
   params: Promise<{ slug: string }>;
 }
 
+// Stories that have been ported to TypeScript with working imports.
+// Add a story here once its components are fully ported.
+const storyModules: Record<
+  string,
+  () => Promise<{ default: React.ComponentType<any> }>
+> = {
+  "beautiful-analysis": () =>
+    import("@/content/stories/beautiful-analysis/index.mdx"),
+  "dishing-on-petrie": () =>
+    import("@/content/stories/dishing-on-petrie/index.mdx"),
+  "four-weddings": () => import("@/content/stories/four-weddings/index.mdx"),
+};
+
 export async function generateStaticParams() {
   const slugs = getArticleSlugs();
-  return slugs.map((slug) => ({
-    slug,
-  }));
+  return slugs.map((slug) => ({ slug }));
 }
 
 export async function generateMetadata({ params }: PageProps) {
@@ -56,47 +49,7 @@ export default async function ArticlePage({ params }: PageProps) {
     notFound();
   }
 
-  const { frontmatter, source } = article;
-
-  // 1. Strip import/export statements and legacy attribute syntax from MDX source
-  // 1. Strip import/export statements and legacy attribute syntax from MDX source
-  const cleanSource = source
-    .replace(/^import\s+.*\s+from\s+['"].*['"];?\s*$/gm, "")
-    .replace(/^export\s+.*\s*$/gm, "")
-    .replace(/\{(\s*\.[a-zA-Z0-9_-]+\s*)+\}/g, "");
-
-
- // Strips attributes like {.w-80} or {.my-class}
-
-  // 2. Data Resolution (Story-specific)
-  const scope: any = {
-    COLORS,
-  };
-
-  if (slug === "beautiful-analysis") {
-    Object.assign(scope, {
-      baSummary,
-      baFeatures,
-      baSentimentData,
-      baSentimentCounts,
-      baAllSentiment,
-      baProfanity,
-      baCommonPhrases,
-      baQuizData,
-      defaultSentimentOptions,
-      generateTooltipData,
-      colorMap,
-    });
-  }
-
-  const { content } = await compileMDX<{ title: string }>({
-    source: cleanSource,
-    components: MdxComponents,
-    options: {
-      parseFrontmatter: true,
-      scope,
-    },
-  });
+  const { frontmatter } = article;
 
   const featuredImage = frontmatter.featured_image.replace(
     /^(\.\.\/)+images\//,
@@ -108,6 +61,9 @@ export default async function ArticlePage({ params }: PageProps) {
     month: "long",
     year: "numeric",
   });
+
+  const storyModule = storyModules[slug];
+  const StoryContent = storyModule ? (await storyModule()).default : null;
 
   return (
     <MainLayout outline={true}>
@@ -122,27 +78,43 @@ export default async function ArticlePage({ params }: PageProps) {
             priority
           />
           <div className="absolute inset-0 bg-black/10 z-0 pointer-events-none" />
-          
+
           <div className="relative z-10 max-w-5xl mt-12 sm:mt-0">
-             <h1 
-               className="font-serif text-4xl sm:text-5xl md:text-6xl lg:text-[70px] font-bold text-white leading-tight"
-               style={{ WebkitTextStroke: "2px black", textShadow: "0 4px 12px rgba(0,0,0,0.5)" }}
-             >
-                {frontmatter.title}
-             </h1>
-             <h2 
-               className="mt-6 font-serif text-2xl sm:text-3xl font-bold text-white tracking-wide"
-               style={{ WebkitTextStroke: "1px black", textShadow: "0 2px 8px rgba(0,0,0,0.5)" }}
-             >
-                {formattedDate}
-             </h2>
+            <h1
+              className="font-serif text-4xl sm:text-5xl md:text-6xl lg:text-[70px] font-bold text-white leading-tight"
+              style={{
+                WebkitTextStroke: "2px black",
+                textShadow: "0 4px 12px rgba(0,0,0,0.5)",
+              }}
+            >
+              {frontmatter.title}
+            </h1>
+            <h2
+              className="mt-6 font-serif text-2xl sm:text-3xl font-bold text-white tracking-wide"
+              style={{
+                WebkitTextStroke: "1px black",
+                textShadow: "0 2px 8px rgba(0,0,0,0.5)",
+              }}
+            >
+              {formattedDate}
+            </h2>
           </div>
         </header>
 
         {/* Constrained Markdown Content */}
         <div className="relative mx-auto w-full max-w-[var(--max-w-content)] px-4 sm:px-0">
           <div className="prose prose-lg max-w-none text-[#1a1a1a] pb-20">
-            {content}
+            {StoryContent ? (
+              <StoryContent />
+            ) : (
+              <div className="py-24 text-center text-gray-500">
+                <p className="text-xl font-semibold mb-2">Coming soon</p>
+                <p className="text-sm">
+                  This story&apos;s interactive components are still being
+                  modernized.
+                </p>
+              </div>
+            )}
           </div>
         </div>
       </article>
