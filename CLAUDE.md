@@ -170,3 +170,9 @@ Legacy JavaScript source for each story lives alongside the MDX in `content/stor
 ### Test location
 
 Tests live co-located with components (e.g., `ComponentName.test.tsx` next to `index.tsx`). When importing from index files, remember that the word "index" is not necessary (for example, always import from "." instead of "./index").
+
+### MDX / server-client boundary
+
+MDX files are server components. Any component used directly in MDX can only receive **serializable props** (strings, numbers, booleans, plain objects, arrays). Functions cannot cross this boundary — Next.js will throw at runtime, and TypeScript will not catch it.
+
+If a component needs a function prop (e.g. `getTooltipData`), wrap it in a `"use client"` component that defines the function internally. The MDX calls the wrapper with only serializable props. `BaMultiBarGraph` is the reference example: it owns `generateTooltipData` and `colors` internally, and exposes only a `dataType` string to the MDX call site.
