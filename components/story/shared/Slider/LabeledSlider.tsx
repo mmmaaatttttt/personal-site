@@ -44,6 +44,7 @@ const LabeledSlider: FC<LabeledSliderProps> = ({
   maxIcon = "plus",
   fadeIcons = false,
 }) => {
+  const computedStep = step ?? (max - min) / 100;
   const fraction = (value - min) / (max - min);
   const leftOpacity = fadeIcons ? 1 - fraction : 1;
   const rightOpacity = fadeIcons ? fraction : 1;
@@ -69,7 +70,7 @@ const LabeledSlider: FC<LabeledSliderProps> = ({
           <Slider
             min={min}
             max={max}
-            step={step}
+            step={computedStep}
             value={value}
             onChange={handleValueChange}
             activeColor={color}

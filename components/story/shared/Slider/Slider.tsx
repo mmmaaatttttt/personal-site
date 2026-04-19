@@ -64,14 +64,14 @@ const Slider: FC<SliderProps> = ({
         className="absolute w-full rounded-full overflow-hidden" 
         style={{ height, backgroundColor: inactiveColor }}
       >
-        <div 
-          className="h-full rounded-full transition-all duration-300"
+        <div
+          className="h-full rounded-full transition-colors duration-300"
           style={{ width: `${percentage}%`, backgroundColor: lightColor }}
         />
       </div>
 
       <div 
-        className="absolute pointer-events-none z-20 flex items-center justify-center transition-all duration-200"
+        className="absolute pointer-events-none z-20 flex items-center justify-center"
         style={{ 
           left: `calc(${percentage}% - 12px)`,
           width: 24, 

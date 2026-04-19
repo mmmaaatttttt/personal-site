@@ -57,6 +57,10 @@ const Axis = <Domain extends AxisDomain>({
         }
         return String(d);
       });
+    } else {
+      // Match legacy behavior: empty tickFormat suppresses all tick labels.
+      // Components that want visible labels must pass an explicit tickFormat string.
+      axisObj.tickFormat(() => "");
     }
 
     if (tickSize !== undefined) {
@@ -82,19 +86,21 @@ const Axis = <Domain extends AxisDomain>({
       .attr("stroke-dasharray", "10, 5")
       .attr("pointer-events", "none");
 
-    const labels = g.selectAll<SVGTextElement, Domain>(".tick text");
-    labels
-      .style("text-anchor", textAnchor)
-      .style("font-size", fontSize);
+    if (tickFormat) {
+      const labels = g.selectAll<SVGTextElement, Domain>(".tick text");
+      labels
+        .style("text-anchor", textAnchor)
+        .style("font-size", fontSize);
 
-    if (rotateLabels) {
-      labels.attr("transform", "rotate(90)");
+      if (rotateLabels) {
+        labels.attr("transform", "rotate(90)");
+      }
+
+      // fine-tune text label position
+      Object.entries(labelPosition).forEach(([attr, val]) => {
+        labels.attr(attr, val);
+      });
     }
-
-    // fine-tune text label position
-    Object.entries(labelPosition).forEach(([attr, val]) => {
-      labels.attr(attr, val);
-    });
   }, [direction, fontSize, labelPosition, scale, textAnchor, tickColor, tickSize, tickShift, tickStep, tickFormat, rotateLabels, xShift, yShift]);
 
   return <g ref={axisRef} className="axis-group" />;

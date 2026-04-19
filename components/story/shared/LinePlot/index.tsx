@@ -53,7 +53,6 @@ const LinePlot: FC<LinePlotProps> = ({
       stroke={stroke}
       fill="none"
       opacity={opacity}
-      className="transition-all duration-300 ease-in-out"
     />
   );
 };

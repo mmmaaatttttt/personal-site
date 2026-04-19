@@ -63,21 +63,20 @@ const SliderProvider: FC<SliderProviderProps> = ({
     [initialData, sliderValues],
   );
 
-  const mainContent = (
-    <>
-      <SliderGroup data={dataWithHandlers} column={column} />
-      {typeof render === "function" ? render(sliderValues) : null}
-    </>
-  );
-
   const numSliders = sliderValues.length;
+  const sliderGroup = <SliderGroup data={dataWithHandlers} column={column} />;
+  const rendered = typeof render === "function" ? render(sliderValues) : null;
 
   return numSliders < 4 ? (
     <NarrowContainer width={width} fullWidthAt={fullWidthAt}>
-      {mainContent}
+      {sliderGroup}
+      {rendered}
     </NarrowContainer>
   ) : (
-    <ColumnLayout break="sm">{mainContent}</ColumnLayout>
+    <ColumnLayout break="sm">
+      {sliderGroup}
+      {rendered}
+    </ColumnLayout>
   );
 };
 

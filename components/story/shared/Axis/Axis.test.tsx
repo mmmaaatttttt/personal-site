@@ -55,9 +55,10 @@ describe('Axis Component', () => {
   it('respects labelPosition fine-tuning', () => {
     const { container } = render(
       <svg>
-        <Axis 
-          direction="x" 
-          scale={mockScale} 
+        <Axis
+          direction="x"
+          scale={mockScale}
+          tickFormat=","
           labelPosition={{ dx: '10', dy: '20' }}
         />
       </svg>

@@ -94,6 +94,7 @@ export const graph4Data = [
   {
     min: 0,
     max: 1,
+    step: 0.01,
     initialValue: 1,
     maxIcon: "thermometer-full",
     minIcon: "thermometer-empty",
@@ -119,6 +120,7 @@ export const graph5Data = [
   {
     min: 0,
     max: 10,
+    step: 0.1,
     initialValue: 0,
     maxIcon: "dizzy",
     minIcon: "smile",
