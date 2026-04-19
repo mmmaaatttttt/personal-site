@@ -171,6 +171,28 @@ Legacy JavaScript source for each story lives alongside the MDX in `content/stor
 
 Tests live co-located with components (e.g., `ComponentName.test.tsx` next to `index.tsx`). When importing from index files, remember that the word "index" is not necessary (for example, always import from "." instead of "./index").
 
+### Axis tick labels
+
+`Graph` passes `tickFormatX` / `tickFormatY` to `Axis`. **When these props are absent (the default), all tick labels are suppressed** — only gridlines render. To show labels, pass an explicit d3 format string, e.g. `tickFormatX=","` or `tickFormatY=".1f"`. This matches the legacy behavior where an empty tickFormat silenced labels.
+
+The contract: `undefined` = suppress labels; any string = format and show labels.
+
+### CSS transitions on data-driven SVG
+
+Never apply `transition-all` (or any position/geometry transition) to elements whose attributes change in response to data/slider updates. The `LinePlot` `<path d={...}>` is the canonical example — CSS path interpolation is undefined behavior and browsers animate it left-to-right, making the curve appear to "snap in" piecemeal. Same applies to anything driven by `percentage` (slider track width, thumb `left` position). Only use transitions on pure style properties like `color` or `opacity`.
+
+### SliderProvider layout
+
+`SliderProvider` wraps everything in a `NarrowContainer` (for <4 sliders) or `ColumnLayout` (≥4 sliders). `ColumnLayout` uses `React.Children.map` internally — **do not wrap its children in a Fragment** or they collapse into a single column. Pass `SliderGroup` and the render output as direct JSX siblings.
+
+### LabeledSlider step default
+
+`LabeledSlider` defaults `step` to `(max - min) / 100` when no step is provided, matching legacy behavior. Only set an explicit `step` in slider data when you need integer increments (e.g. `step: 1` for a carrying-capacity slider over `[1, 100]`). Float-range sliders (0–5, 0–10, etc.) should omit `step` and rely on this default.
+
+### Legacy Gatsby syntax in MDX
+
+When removing frontmatter from an MDX file, also scan for Gatsby-era attribute syntax like `{.classname}` on images (e.g. `![alt](img.png){.w-80}`). The Next.js MDX compiler (swc) parses `{...}` as a JSX expression and will throw a build error. Strip these attributes.
+
 ### MDX / server-client boundary
 
 MDX files are server components. Any component used directly in MDX can only receive **serializable props** (strings, numbers, booleans, plain objects, arrays). Functions cannot cross this boundary — Next.js will throw at runtime, and TypeScript will not catch it.

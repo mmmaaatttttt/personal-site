@@ -46,20 +46,16 @@ const Axis = <Domain extends AxisDomain>({
     if (!axisRef.current) return;
 
     const axisObj = direction === "x" ? axisBottom(scale) : axisLeft(scale);
-    if (tickFormat) {
+    if (tickFormat !== undefined) {
+      // Show labels using the provided d3 format string.
       const formatFn = format(tickFormat);
       axisObj.tickFormat((d: Domain) => {
-        if (typeof d === "number") {
-          return formatFn(d);
-        }
-        if (d instanceof Date) {
-          return formatFn(d.valueOf());
-        }
+        if (typeof d === "number") return formatFn(d);
+        if (d instanceof Date) return formatFn(d.valueOf());
         return String(d);
       });
     } else {
-      // Match legacy behavior: empty tickFormat suppresses all tick labels.
-      // Components that want visible labels must pass an explicit tickFormat string.
+      // No format provided → suppress all tick labels (show gridlines only).
       axisObj.tickFormat(() => "");
     }
 
@@ -86,7 +82,7 @@ const Axis = <Domain extends AxisDomain>({
       .attr("stroke-dasharray", "10, 5")
       .attr("pointer-events", "none");
 
-    if (tickFormat) {
+    if (tickFormat !== undefined) {
       const labels = g.selectAll<SVGTextElement, Domain>(".tick text");
       labels
         .style("text-anchor", textAnchor)
