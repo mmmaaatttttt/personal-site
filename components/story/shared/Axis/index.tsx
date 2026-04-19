@@ -35,7 +35,7 @@ const Axis = <Domain extends AxisDomain>({
   tickSize,
   tickShift = 0,
   tickStep,
-  tickFormat = "",
+  tickFormat,
   rotateLabels = false,
   xShift = 0,
   yShift = 0,

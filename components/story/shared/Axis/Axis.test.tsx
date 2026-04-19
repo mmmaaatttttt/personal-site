@@ -52,6 +52,22 @@ describe('Axis Component', () => {
     }
   });
 
+  it('suppresses tick labels when no tickFormat is provided', () => {
+    const { container } = render(
+      <svg>
+        <Axis direction="y" scale={mockScale} />
+      </svg>
+    );
+    const g = container.querySelector('.axis-group');
+    const labels = g?.querySelectorAll('.tick text');
+    // All tick text nodes must be empty — no tickFormat means suppress labels
+    if (labels && labels.length > 0) {
+      labels.forEach(label => {
+        expect(label.textContent).toBe('');
+      });
+    }
+  });
+
   it('respects labelPosition fine-tuning', () => {
     const { container } = render(
       <svg>

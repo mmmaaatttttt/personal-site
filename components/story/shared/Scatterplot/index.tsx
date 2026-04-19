@@ -35,8 +35,8 @@ const Scatterplot: React.FC<ScatterplotProps> = ({
   svgId = "scatterplot",
   xLabel = "",
   yLabel = "",
-  tickFormatX = "",
-  tickFormatY = "",
+  tickFormatX,
+  tickFormatY,
 }) => {
   const [isMounted, setIsMounted] = useState(false);
 
