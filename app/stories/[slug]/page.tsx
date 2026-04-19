@@ -20,6 +20,10 @@ const storyModules: Record<
     import("@/content/stories/dishing-on-petrie/index.mdx"),
   "four-weddings": () => import("@/content/stories/four-weddings/index.mdx"),
   "warming-dots": () => import("@/content/stories/warming-dots/index.mdx"),
+  "gaming-relationships-linear": () =>
+    import("@/content/stories/gaming-relationships-linear/index.mdx"),
+  "gaming-relationships-nonlinear": () =>
+    import("@/content/stories/gaming-relationships-nonlinear/index.mdx"),
 };
 
 export async function generateStaticParams() {

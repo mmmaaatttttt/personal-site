@@ -1,19 +1,4 @@
----
-title: "Gaming Relationships: Nonlinear Approaches"
-date: "2017-12-10"
-featured_image: "../../images/featured_images/jane_the_virgin.jpg"
-caption: "Love, chaos, and a three body problem."
-featured_image_caption: "Jane's relationships may be chaotic, in a mathematically precise sense. Image credit: Jane the Virgin (The CW)."
-tags:
-  - differential equations
-  - relationships
-  - modeling
-  - chaos theory
-  - functions
----
-
-import { GamingRelationships, Sidebar, Latex } from "story_components";
-import { nonlinearVisData } from "data/gaming-nonlinear-relationships.js";
+import NonlinearGamingRelationships from "./components/NonlinearGamingRelationships";
 
 _(Note: this is a follow-up to my [previous story](/stories/gaming-relationships-linear). If you haven't read that one, you should! This story assumes you've checked out the earlier one._)
 
@@ -46,9 +31,8 @@ What seems more likely is that your response to your partner's feelings may depe
 
 Let's take a look at a model that takes a more nuanced approach to how each person responds to the feelings of their partner. Below are a couple of graphs. The first one is the same one from the previous story, whose equations are given above. The second one is a modified version in which each person's response to their partner will flip if the partner's feelings become too intense. (For more on this model, check out _Dynamical Models of Love_, a paper by J. C. Sprott. There's a link at the end of this story.)
 
-<GamingRelationships
-  visData={nonlinearVisData[0]}
-  step={0.02}
+<NonlinearGamingRelationships
+  idx={0}
   caption="Figure 1: On the left, our linear model from before; on the right, a new and nonlinear model."
 />
 
@@ -116,11 +100,9 @@ In this scenario, we can think of Person B's feelings in two parts: feelings tow
 
 To see chaos in action, try adjusting one of the parameters just a little bit. For example, if you adjust A's feelings upwards just a couple of ticks, these relationships go absolutely bonkers. If you adjust A's initial feelings down a couple of ticks, things are relatively stable, but there's no rhyme or reason to how the peaks and valleys in each graph change based on this slight adjustment to initial conditions. (Note that I've extended the x-axis out so that the timeline is twice as long as in the other visualizations, so that we can see even more chaotic behavior.)
 
-<GamingRelationships
-  visData={nonlinearVisData[1]}
-  step={0.02}
+<NonlinearGamingRelationships
+  idx={1}
   caption="Figure 2: Chaotic relationship dynamics between three people."
-  max={40}
 />
 
 This is sensitivity to initial conditions in action. What this means is that even if you were able to accurately measure each of the parameters in the model, the slightest measurement error would destroy the predictive power of the model. While this seems like a bug, maybe it's actually a feature: after all, it doesn't seem reasonable that a mathematical model could predict _any_ future relationship state between a group of people.
