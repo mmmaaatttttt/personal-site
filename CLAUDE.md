@@ -108,8 +108,8 @@ Stories not yet in the module map display a "Coming soon" message. Their MDX fil
 | `beautiful-analysis`             | ✅ Complete   | Podcast sentiments, quiz, multi-bar graphs, etc.                                                                                                                       |
 | `dishing-on-petrie`              | ✅ Complete   | HarassmentSimulation (D3 physics sim, 3 instances with `idx` prop); static tables via `StyledTable data={...}` with data in `data.ts`                                  |
 | `warming-dots`                   | ✅ Complete   | Single `WarmingDots` component; 5 interactive D3 line charts via `SliderProvider` + ODE solver                                                                         |
-| `gaming-relationships-linear`    | ❌ Not started | Needs: `GamingRelationships`, `Sidebar`✓, `ResponsiveIFrame`✓, `Latex`✓                                                                                                |
-| `gaming-relationships-nonlinear` | ❌ Not started | Needs: `GamingRelationships` (same component as linear)                                                                                                                |
+| `gaming-relationships-linear`    | ✅ Complete   | `GamingRelationships` base + `LinearGamingRelationships` wrapper; diff eqs in `data.ts`; 3 ODE visualizations                                                         |
+| `gaming-relationships-nonlinear` | ✅ Complete   | `NonlinearGamingRelationships` wrapper; shares base component; 4-body chaotic ODE at `idx=1` uses `step=0.02`, `max=40`                                                |
 | `income-inequality`              | ❌ Not started | Needs: `EconomySimulation`, `Sidebar`✓                                                                                                                                 |
 | `fairest-of-them-all`            | ❌ Not started | Needs: `CoinFlipBayesianModel`, `CoinFlipHistogram`, `CoinFlipTable`, `RentDivision`                                                                                   |
 | `harvesting-wins`                | ❌ Not started | Needs: `OrchardGame`, `OrchardGameHeatData`, `OrchardGameSimulation`                                                                                                   |
@@ -166,6 +166,12 @@ With `@next/mdx`, you can import a `"use client"` component directly from MDX an
 ### Legacy component location
 
 Legacy JavaScript source for each story lives alongside the MDX in `content/stories/<slug>/components/`. These are the reference implementations when porting. The ported TypeScript versions live in the same directory.
+
+The full legacy Gatsby implementation also lives in `src/_legacy_pages/`. This is the authoritative reference when there is any ambiguity about how a story or component was supposed to work:
+
+- `src/_legacy_pages/articles/<slug>.mdx` — the original MDX for each story (Gatsby-style imports, frontmatter, etc.)
+- `src/story_components/` — the shared legacy component library (the source of truth for any component that existed before the migration)
+- `src/layouts/`, `src/templates/`, `src/utils/` — supporting legacy utilities
 
 ### Test location
 
