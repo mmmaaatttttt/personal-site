@@ -92,7 +92,7 @@ export const MdxComponents: any = {
   RelativeContainer: (props: any) => (
     <div className="relative">{props.children}</div>
   ),
-  ResponsiveIFrame: (props: any) => (
+  ResponsiveIFrame: ({ heightOverWidth: _heightOverWidth, ...props }: any) => (
     <div className="my-8 aspect-video w-full overflow-hidden rounded-xl bg-black/5">
       <iframe className="h-full w-full" {...props} />
     </div>

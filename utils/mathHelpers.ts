@@ -17,11 +17,16 @@ export function generateData(
   });
   const data: { x: number; y: number }[][] = Array.from({ length: count }, () => []);
 
-  s.solve(min, initialValues, max, s.grid(step, (x: number, y: number[]) => {
-    for (let i = 0; i < count; i++) {
-      data[i].push({ x, y: y[i] });
-    }
-  }));
+  try {
+    s.solve(min, initialValues, max, s.grid(step, (x: number, y: number[]) => {
+      for (let i = 0; i < count; i++) {
+        data[i].push({ x, y: y[i] });
+      }
+    }));
+  } catch {
+    // Solver can throw when equations blow up (e.g. "maximum allowed steps exceeded").
+    // Return whatever data was collected before the divergence.
+  }
 
   return data;
 }

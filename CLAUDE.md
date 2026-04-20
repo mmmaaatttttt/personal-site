@@ -134,6 +134,7 @@ All in `components/story/shared/`:
 | `SliderGroup`                                                                            | Renders an array of labeled sliders; takes `data: SliderData[]`                                                                                                                                       |
 | `HorizontalBar`                                                                          | Animated proportional bar chart; takes `data: { size, color, tooltipText }[]`                                                                                                                         |
 | `Legend`, `Caption`, `ColoredSpan`                                                       | Simple presentational                                                                                                                                                                                 |
+| `GamingRelationships`                                                                    | ODE-based relationship visualizer; takes `visData` (includes diff eq functions — not serializable), `caption`, `min/max/step`. Use a story-specific `"use client"` wrapper to expose only `idx` to MDX. |
 | `Scatterplot`, `BarGraph`, `HorizontalBarGraph`, `MultiBarGraph`, `LinePlot`, `PieChart` | D3-backed chart components                                                                                                                                                                            |
 | `USMap`                                                                                  | Choropleth US map with tooltip support                                                                                                                                                                |
 | `Tooltip` / `useTooltip`                                                                 | Tooltip hook + component                                                                                                                                                                              |
@@ -204,3 +205,13 @@ When removing frontmatter from an MDX file, also scan for Gatsby-era attribute s
 MDX files are server components. Any component used directly in MDX can only receive **serializable props** (strings, numbers, booleans, plain objects, arrays). Functions cannot cross this boundary — Next.js will throw at runtime, and TypeScript will not catch it.
 
 If a component needs a function prop (e.g. `getTooltipData`), wrap it in a `"use client"` component that defines the function internally. The MDX calls the wrapper with only serializable props. `BaMultiBarGraph` is the reference example: it owns `generateTooltipData` and `colors` internally, and exposes only a `dataType` string to the MDX call site.
+
+**ODE / diff-eq stories follow the same pattern.** The `visData` objects in gaming-relationships stories contain `diffEqs: DiffEq[]` (functions). The solution is a thin `"use client"` wrapper per story (e.g. `LinearGamingRelationships`) that imports its data file internally and accepts only a serializable `idx: number` from MDX. The base rendering component (`GamingRelationships` in `components/story/shared/`) receives the full `visData` object (functions included) — that's fine because the handoff stays entirely within client components.
+
+### ODE solver error handling
+
+`generateData` in `utils/mathHelpers.ts` wraps `s.solve(...)` in a try/catch. When the equations blow up (e.g. "maximum allowed steps exceeded"), the solver throws; the catch returns whatever data was collected before divergence. The chart renders as far as it got and simply stops — no crash, and visually correct (you can see the curve going unstable).
+
+### `ResponsiveIFrame` and legacy props
+
+`ResponsiveIFrame` in `MdxComponents.tsx` uses a fixed `aspect-video` class and ignores the legacy `heightOverWidth` prop. Destructure it out before spreading the rest onto `<iframe>` to avoid the React DOM prop warning.
