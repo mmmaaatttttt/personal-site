@@ -1,17 +1,4 @@
----
-title: "Laws of Inequality"
-date: "2018-01-30"
-featured_image: "../../images/featured_images/monopoly_man.jpg"
-caption: "Exploring income and wealth inequality through physics."
-featured_image_caption: "Monopoly man sitting in on a Senate hearing in the wake of the Equifax data breach during the fall of 2017. Image credit: Aaron P. Bernstein/Reuters."
-tags:
-  - income inequality
-  - modeling
-  - civics
-  - statistics
----
-
-import { EconomySimulation, Sidebar } from "story_components";
+import EconomySimulation from "./components/EconomySimulation";
 
 It's a well-established fact that in the United States, [income inequality is increasing](https://en.wikipedia.org/wiki/Income_inequality_in_the_United_States). According to a 2011 [report](https://www.cbo.gov/publication/42729?index=12485) from the Congressional Budget Office, between 1979 and 2011 income for the top 1% of households grew by 275%. Meanwhile, for the bottom 20%, income grew by only 18%.
 
@@ -47,7 +34,7 @@ I was first introduced to this idea by mathematician Brian Hayes in his book, [_
 
 If you take a moment to think about how this society is likely to evolve, you might convince yourself that people in the society should behave like gas particles, randomly colliding with one another and exchanging energy. Except instead of energy, these people are exchanging their wealth. Here's what such a simulation might look like:
 
-<EconomySimulation idx={0} caption="Figure 1: Here's how you might expect our model society to evolve."/>
+<EconomySimulation idx={0} caption="Figure 1: Here's how you might expect our model society to evolve." />
 
 In the above simulation, each person's wealth is visualized both by his or her speed and by his or her color. Faster circles correspond to wealthier individuals and have a red color, while slower circles correspond to less wealthy individuals and take on more of a blue hue.
 
@@ -61,7 +48,7 @@ Unfortunately, this isn't how our model society actually evolves.
 
 Here's what actually happens to society based on our simple bartering rules:
 
-<EconomySimulation idx={1} caption="Figure 2: Here's how our model society actually evolves."/>
+<EconomySimulation idx={1} caption="Figure 2: Here's how our model society actually evolves." />
 
 Unlike gas particles bumbling around together, this time one citizen gradually leeches the wealth away from everyone else. Eventually, almost everyone lives in extreme poverty, with one lucky individually accumulating all of the wealth in the society.
 

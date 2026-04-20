@@ -1,0 +1,55 @@
+import { describe, it, expect, vi } from "vitest";
+import { render } from "@testing-library/react";
+import "@testing-library/jest-dom/vitest";
+import EconomyNodeGroup from "./EconomyNodeGroup";
+import updateSpeeds from "../../data";
+
+const defaultProps = {
+  width: 600,
+  height: 600,
+  speeds: [10, 10, 10],
+  playing: false,
+  paused: false,
+  velocityMultiplier: 1,
+  initialV: 10,
+  updateFn: updateSpeeds[0],
+  onSpeedsChange: vi.fn(),
+};
+
+describe("EconomyNodeGroup", () => {
+  it("renders without crashing", () => {
+    const { container } = render(
+      <svg>
+        <EconomyNodeGroup {...defaultProps} />
+      </svg>
+    );
+    expect(container.querySelector("g")).toBeInTheDocument();
+  });
+
+  it("renders the svg group container", () => {
+    const { container } = render(
+      <svg>
+        <EconomyNodeGroup {...defaultProps} />
+      </svg>
+    );
+    // Nodes are rendered imperatively by D3 on each tick;
+    // JSDOM doesn't run the simulation, so we just verify the container is present.
+    expect(container.querySelector("g")).toBeInTheDocument();
+  });
+
+  it("does not crash when speeds array changes length", () => {
+    const { rerender } = render(
+      <svg>
+        <EconomyNodeGroup {...defaultProps} speeds={[10, 10]} />
+      </svg>
+    );
+    // Verify re-render with a larger population doesn't throw
+    expect(() =>
+      rerender(
+        <svg>
+          <EconomyNodeGroup {...defaultProps} speeds={[10, 10, 10, 10, 10]} />
+        </svg>
+      )
+    ).not.toThrow();
+  });
+});

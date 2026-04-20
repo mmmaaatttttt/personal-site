@@ -5,6 +5,7 @@ import dishingOnPetrie from "@/content/stories/dishing-on-petrie/meta";
 import warmingDots from "@/content/stories/warming-dots/meta";
 import gamingRelationshipsLinear from "@/content/stories/gaming-relationships-linear/meta";
 import gamingRelationshipsNonlinear from "@/content/stories/gaming-relationships-nonlinear/meta";
+import incomeInequality from "@/content/stories/income-inequality/meta";
 
 /**
  * Typed metadata for ported stories. getArticle() checks here first;
@@ -19,4 +20,5 @@ export const storyMeta: Record<string, ArticleFrontmatter> = {
   "warming-dots": warmingDots,
   "gaming-relationships-linear": gamingRelationshipsLinear,
   "gaming-relationships-nonlinear": gamingRelationshipsNonlinear,
+  "income-inequality": incomeInequality,
 };
