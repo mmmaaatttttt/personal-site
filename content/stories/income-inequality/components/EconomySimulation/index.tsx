@@ -149,7 +149,8 @@ const EconomySimulation = ({
           )}
         </div>
 
-        {showingSimulation ? (
+        {/* Both views are always mounted so collisions continue regardless of which is shown */}
+        <div style={{ display: showingSimulation ? "block" : "none" }}>
           <ClippedSVG id={`simulation-${idx}`} width={width} height={height} padding={0}>
             <EconomyNodeGroup
               width={width}
@@ -158,13 +159,16 @@ const EconomySimulation = ({
               playing={playing}
               paused={paused}
               velocityMultiplier={velocityMultiplier}
+              savingsRate={savingsRate}
               initialV={initialV}
               updateFn={updateSpeeds[idx]}
               onSpeedsChange={handleSpeedsChange}
             />
           </ClippedSVG>
-        ) : (
+        </div>
+        <div style={{ display: showingSimulation ? "none" : "block" }}>
           <BarGraph
+            animated={false}
             svgId={`bar-${idx}`}
             width={width}
             height={height}
@@ -175,7 +179,7 @@ const EconomySimulation = ({
             tickStep={initialV ** 2}
             barLabel={bar => Number(bar.key) + 1}
           />
-        )}
+        </div>
       </NarrowContainer>
     </Caption>
   );

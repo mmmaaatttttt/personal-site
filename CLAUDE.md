@@ -110,7 +110,7 @@ Stories not yet in the module map display a "Coming soon" message. Their MDX fil
 | `warming-dots`                   | ✅ Complete   | Single `WarmingDots` component; 5 interactive D3 line charts via `SliderProvider` + ODE solver                                                                         |
 | `gaming-relationships-linear`    | ✅ Complete   | `GamingRelationships` base + `LinearGamingRelationships` wrapper; diff eqs in `data.ts`; 3 ODE visualizations                                                         |
 | `gaming-relationships-nonlinear` | ✅ Complete   | `NonlinearGamingRelationships` wrapper; shares base component; 4-body chaotic ODE at `idx=1` uses `step=0.02`, `max=40`                                                |
-| `income-inequality`              | ❌ Not started | Needs: `EconomySimulation`, `Sidebar`✓                                                                                                                                 |
+| `income-inequality`              | ✅ Complete   | `EconomySimulation` + `EconomyNodeGroup` (D3 force sim); collision/wealth logic in `data.ts`; 3 instances with `idx` and optional `editSavings` prop                   |
 | `fairest-of-them-all`            | ❌ Not started | Needs: `CoinFlipBayesianModel`, `CoinFlipHistogram`, `CoinFlipTable`, `RentDivision`                                                                                   |
 | `harvesting-wins`                | ❌ Not started | Needs: `OrchardGame`, `OrchardGameHeatData`, `OrchardGameSimulation`                                                                                                   |
 | `mind-the-gerrymandered-gap`     | ❌ Not started | Needs: `EfficiencyGapTable`, `GerrymanderHistoricalMap`, `IsoperimetricExplorer`, `SampleGerrymander`, `ResponsiveIFrame`✓                                             |
@@ -211,6 +211,22 @@ If a component needs a function prop (e.g. `getTooltipData`), wrap it in a `"use
 ### ODE solver error handling
 
 `generateData` in `utils/mathHelpers.ts` wraps `s.solve(...)` in a try/catch. When the equations blow up (e.g. "maximum allowed steps exceeded"), the solver throws; the catch returns whatever data was collected before divergence. The chart renders as far as it got and simply stops — no crash, and visually correct (you can see the curve going unstable).
+
+### D3 force simulation: rendering when stopped
+
+D3's force simulation only calls the `tick` handler while running. When `playing=false`, `sim.stop()` halts ticking, so nodes exist in the simulation but are never painted. Fix: extract the render logic into a named `draw` function, store it in a `drawRef`, and call `drawRef.current?.()` after any node generation or reset that happens while the simulation is stopped. This ensures circles are visible before the user hits Start and immediately after Reset. See `EconomyNodeGroup.tsx` as the reference.
+
+### Simulation + chart view: always mount both, CSS-toggle visibility
+
+When a simulation has a "Show Chart" toggle, keep both the `<ClippedSVG>` (with the node group) and the `<BarGraph>` mounted at all times. Use `style={{ display: "none" }}` to hide the inactive view rather than conditional rendering. Unmounting the node group stops the simulation — collisions stop firing and the chart never updates. CSS toggle keeps the sim running so the chart reflects live collision data.
+
+### `BarGraph` animated prop
+
+`BarGraph` accepts `animated={false}` for use with live simulations. When false, bars use `motion.rect` with `initial={false}` and `transition={{ duration: 0.1 }}`: they appear instantly at their correct position on first render and animate in 100ms as they reorder — matching the legacy `react-move` NodeGroup behavior. The default (`animated={true}`) keeps the staggered entrance animation from the bottom used in static stories.
+
+### Ambient module declarations for untyped packages
+
+Untyped packages (`d3-force-bounce`, `d3-force-surface`) get hand-rolled ambient declarations in `types/mdx.d.ts` — no `@ts-ignore` on the imports. Put `import type` statements inside each `declare module` block (not at the top level of the file), otherwise the file becomes a module and the declarations stop being ambient. The exported function should be generic over `NodeDatum extends SimulationNodeDatum` so the same declaration works for any simulation node type.
 
 ### `ResponsiveIFrame` and legacy props
 

@@ -29,6 +29,7 @@ interface EconomyNodeGroupProps {
   playing: boolean;
   paused: boolean;
   velocityMultiplier: number;
+  savingsRate: number;
   initialV: number;
   updateFn: CollisionFn;
   onSpeedsChange: (speeds: number[]) => void;
@@ -49,6 +50,7 @@ const EconomyNodeGroup: FC<EconomyNodeGroupProps> = ({
   playing,
   paused,
   velocityMultiplier,
+  savingsRate,
   initialV,
   updateFn,
   onSpeedsChange,
@@ -56,11 +58,14 @@ const EconomyNodeGroup: FC<EconomyNodeGroupProps> = ({
   const gRef = useRef<SVGGElement>(null);
   const simRef = useRef<Simulation<EconomyNode, undefined> | null>(null);
 
-  // Keep latest values accessible inside the tick closure without re-creating the sim
-  const stateRef = useRef({ speeds, playing, paused, velocityMultiplier, initialV, updateFn, onSpeedsChange });
+  // Always-current snapshot of props for closures that can't close over changing values
+  const stateRef = useRef({ speeds, playing, paused, velocityMultiplier, savingsRate, initialV, updateFn, onSpeedsChange });
   useEffect(() => {
-    stateRef.current = { speeds, playing, paused, velocityMultiplier, initialV, updateFn, onSpeedsChange };
+    stateRef.current = { speeds, playing, paused, velocityMultiplier, savingsRate, initialV, updateFn, onSpeedsChange };
   });
+
+  // drawRef lets population/reset effects render nodes immediately without restarting the sim
+  const drawRef = useRef<(() => void) | null>(null);
 
   // Initialize simulation once per mount
   useEffect(() => {
@@ -68,8 +73,8 @@ const EconomyNodeGroup: FC<EconomyNodeGroupProps> = ({
 
     const handleCollision = (node1: EconomyNode, node2: EconomyNode) => {
       if (!stateRef.current.playing || stateRef.current.paused) return;
-      const { speeds, velocityMultiplier, updateFn, onSpeedsChange } = stateRef.current;
-      const newSpeeds = updateFn(speeds, velocityMultiplier, 0, [node1, node2]);
+      const { speeds, velocityMultiplier, savingsRate, updateFn, onSpeedsChange } = stateRef.current;
+      const newSpeeds = updateFn(speeds, velocityMultiplier, savingsRate, [node1, node2]);
       onSpeedsChange(newSpeeds);
     };
 
@@ -97,7 +102,7 @@ const EconomyNodeGroup: FC<EconomyNodeGroupProps> = ({
 
     simRef.current = sim;
 
-    sim.on("tick", () => {
+    const draw = () => {
       if (!gRef.current) return;
       const { playing, paused, speeds, velocityMultiplier, initialV } = stateRef.current;
       const isMoving = playing && !paused;
@@ -122,8 +127,6 @@ const EconomyNodeGroup: FC<EconomyNodeGroupProps> = ({
       const colorScale = scaleLinear<string>()
         .domain([0, scaledInitialSpeed, scaledInitialSpeed * 2])
         .range([COLORS.BLUE, COLORS.MAROON, COLORS.RED]);
-      const colorFn = (d: EconomyNode) =>
-        colorScale(euclideanDistance(d.vx ?? 0, d.vy ?? 0));
 
       const nodesSel = select(gRef.current)
         .selectAll<SVGCircleElement, EconomyNode>(".node")
@@ -150,7 +153,6 @@ const EconomyNodeGroup: FC<EconomyNodeGroupProps> = ({
         .attr("cx", d => d.x ?? 0)
         .attr("cy", d => d.y ?? 0)
         .attr("fill", d => {
-          // use speeds array for accurate color
           const speed = speeds[d.key] ?? 0;
           return colorScale(speed * velocityMultiplier);
         })
@@ -160,15 +162,19 @@ const EconomyNodeGroup: FC<EconomyNodeGroupProps> = ({
           return darkenHex(fill, 0.3);
         })
         .attr("stroke-width", 2);
-    });
+    };
+
+    drawRef.current = draw;
+    sim.on("tick", draw);
 
     return () => {
       sim.stop();
+      drawRef.current = null;
       if (gRef.current) select(gRef.current).selectAll("*").remove();
     };
   }, [width, height]); // eslint-disable-line react-hooks/exhaustive-deps
 
-  // React to population count changes
+  // React to population count changes; draw once so circles are visible even before start
   useEffect(() => {
     const sim = simRef.current;
     if (!sim) return;
@@ -177,7 +183,6 @@ const EconomyNodeGroup: FC<EconomyNodeGroupProps> = ({
     const currentNodes = sim.nodes();
 
     if (currentNodes.length !== count) {
-      // Rebuild nodes
       const existingNodes: EconomyNode[] = [];
       const newNodes: EconomyNode[] = [];
 
@@ -204,8 +209,9 @@ const EconomyNodeGroup: FC<EconomyNodeGroupProps> = ({
       });
 
       sim.nodes(existingNodes);
+      if (!playing) drawRef.current?.();
     }
-  }, [speeds.length, width, height, initialV, velocityMultiplier]);
+  }, [speeds.length, width, height, initialV, velocityMultiplier]); // eslint-disable-line react-hooks/exhaustive-deps
 
   // React to playing/paused changes
   useEffect(() => {
@@ -219,7 +225,7 @@ const EconomyNodeGroup: FC<EconomyNodeGroupProps> = ({
     }
   }, [playing, paused]);
 
-  // React to velocityMultiplier change — rescale existing node velocities
+  // Rescale existing node velocities when multiplier changes
   const prevMultiplierRef = useRef(velocityMultiplier);
   useEffect(() => {
     const sim = simRef.current;
@@ -235,7 +241,7 @@ const EconomyNodeGroup: FC<EconomyNodeGroupProps> = ({
     prevMultiplierRef.current = velocityMultiplier;
   }, [velocityMultiplier]);
 
-  // Reset: when playing goes false, clear and reinitialize nodes
+  // Reset: clear and reinitialize nodes, draw once so circles are visible at rest
   useEffect(() => {
     const sim = simRef.current;
     if (!sim || playing) return;
@@ -256,6 +262,7 @@ const EconomyNodeGroup: FC<EconomyNodeGroupProps> = ({
       existingNodes.push({ key: i, r: NODE_RADIUS, x, y, vx, vy });
     }
     sim.nodes(existingNodes);
+    drawRef.current?.();
   }, [playing]); // eslint-disable-line react-hooks/exhaustive-deps
 
   return <g ref={gRef} />;

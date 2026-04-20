@@ -23,6 +23,8 @@ interface BarItemProps {
   paddingBottom: number;
   barLabel?: (d: BarData) => string | number;
   fontSize: string;
+  /** When false: bars appear instantly at their position and track updates in 100ms (no entrance animation). Default true uses staggered entrance from the bottom. */
+  animated?: boolean;
 }
 
 const BarItem: React.FC<BarItemProps> = ({
@@ -37,7 +39,38 @@ const BarItem: React.FC<BarItemProps> = ({
   paddingBottom,
   barLabel,
   fontSize,
+  animated = true,
 }) => {
+  if (!animated) {
+    // No entrance animation; bars appear at their correct position and
+    // animate to new positions quickly as values change (matching legacy 100ms behavior).
+    return (
+      <g>
+        <motion.rect
+          initial={false}
+          animate={{ x, width, y, height, fill: data.color || color }}
+          transition={{ duration: 0.1 }}
+          stroke="rgba(0,0,0,0.1)"
+          strokeWidth={1}
+        />
+        {barLabel && (
+          <motion.text
+            initial={false}
+            animate={{ x: x + width / 2, y }}
+            transition={{ duration: 0.1 }}
+            dy={-12}
+            textAnchor="middle"
+            dominantBaseline="middle"
+            fontSize={fontSize}
+            className="fill-current font-medium pointer-events-none"
+          >
+            {barLabel(data)}
+          </motion.text>
+        )}
+      </g>
+    );
+  }
+
   return (
     <g>
       <motion.rect

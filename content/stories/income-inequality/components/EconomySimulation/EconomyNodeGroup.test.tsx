@@ -11,6 +11,7 @@ const defaultProps = {
   playing: false,
   paused: false,
   velocityMultiplier: 1,
+  savingsRate: 0,
   initialV: 10,
   updateFn: updateSpeeds[0],
   onSpeedsChange: vi.fn(),

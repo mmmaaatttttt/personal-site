@@ -17,6 +17,7 @@ interface BarData {
 }
 
 interface BarGraphProps {
+  animated?: boolean;
   barData: BarData[];
   barLabel?: (d: BarData) => string | number;
   color: string;
@@ -37,6 +38,7 @@ interface BarGraphProps {
 }
 
 const BarGraph: React.FC<BarGraphProps> = ({
+  animated = true,
   barData,
   barLabel,
   color,
@@ -94,7 +96,7 @@ const BarGraph: React.FC<BarGraphProps> = ({
         tickStepY={tickStepY ? () => tickStepY : (tickStep ? () => tickStep : undefined)}
       >
         <g clipPath={`url(#clip-path-${svgId})`}>
-          <AnimatePresence>
+          <AnimatePresence initial={animated}>
             {barData.map((d, i) => {
               let x: number;
               let barWidth: number;
@@ -126,6 +128,7 @@ const BarGraph: React.FC<BarGraphProps> = ({
                   paddingBottom={p.bottom}
                   barLabel={barLabel}
                   fontSize={fontSize}
+                  animated={animated}
                 />
               );
             })}
