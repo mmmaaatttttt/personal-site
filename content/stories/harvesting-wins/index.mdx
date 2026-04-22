@@ -1,28 +1,13 @@
----
-title: "Harvesting Wins"
-date: "2018-05-28"
-featured_image: "../../images/featured_images/orchard_child.jpg"
-caption: "Modeling the likelihood of board-game victory."
-featured_image_caption: "Adorable child eating fruit. Image credit: Alexas_Fotos on Pixabay."
-tags:
-  - games
-  - statistics
-  - probability
-  - decision theory
-  - modeling
----
-
-import {
-  OrchardGame,
-  OrchardGameSimulation,
-  OrchardGameHeatData
-} from "story_components";
+import OrchardGame from "./components/OrchardGame";
+import OrchardGameSimulation from "./components/OrchardGameSimulation";
+import OrchardGameHeatData from "./components/OrchardGameHeatData";
+import { firstOrchardTable, orchardGameTable } from "./data";
 
 A few months back, my son began to show an interest in board games. At the time he was only two, so we couldn't play anything too complicated (sorry, [Catan](https://en.wikipedia.org/wiki/Catan) lovers). Regardless, I soon discovered that even for very young children, there's a surprising amount of board-game variety.
 
 One of the games we started playing is called _First Orchard_. In this game, players cooperate to harvest fruit from an orchard before it gets discovered by a raven. If all of the fruit is removed before the raven appears, everyone wins; if the raven makes it to the orchard before all of the fruit has been harvested, everyone loses.
 
-![Box Art for First Orchard](../../images/first_orchard.jpg "Box Art for First Orchard (Source: HABA USA)"){.w-70}
+![Box Art for First Orchard](../../images/first_orchard.jpg "Box Art for First Orchard (Source: HABA USA)")
 
 The rules of the game are relatively straightforward. The orchard has sixteen fruits, divided into four fruits of four different colors. On your turn, you roll a six-sided die. If the color on the die matches one of the fruit colors, you're meant to move a fruit of that color out of the orchard. For example, if you roll red and there are three red apples left, you can remove one. If there are no red apples left, you forfeit your turn.
 
@@ -82,12 +67,7 @@ The specific numbers you see will vary, of course, but will even out the longer 
 
 So that's what I did. Here's the breakdown:
 
-| Strategy        | Probability of Success |
-| --------------- | ---------------------- |
-| Most Plentiful  | 63.1%                  |
-| Least Plentiful | 55.5%                  |
-| Random          | 59.7%                  |
-| Favorite Color  | 58.3%                  |
+<StyledTable data={firstOrchardTable} />
 
 To summarize, even the worst strategy here (Least Plentiful) gives you a better than 50% chance of a win. Also, the gap between best and worst strategy is less than 8 points. And unfortunately, my son's preferred strategy (Favorite Color) performs worse than selecting randomly, though it's not the worst strategy around.
 
@@ -97,7 +77,7 @@ To summarize, even the worst strategy here (Least Plentiful) gives you a better 
 
 If you don't live with a two-year old, there's probably not much reason to play this game. But if you've got older children in the house, it's possible they'll enjoy a very similar game, developed by the same company but targeting children age 3-6. This game is simply called _Orchard Game_.
 
-![Box Art for Orchard Game](../../images/orchard_game.jpg "Box Art for Orchard Game (Source: HABA USA)"){.w-70}
+![Box Art for Orchard Game](../../images/orchard_game.jpg "Box Art for Orchard Game (Source: HABA USA)")
 
 The rules of this game are nearly the same as for _First Orchard_, but there are some slight variations:
 
@@ -118,12 +98,7 @@ Notice that the relative strength of each strategy is the same as before. The mo
 
 Here are approximations to the true probabilities. Like before, I used dynamic programming to help calculate these values.
 
-| Strategy        | Probability of Success | Change |
-| --------------- | ---------------------- | ------ |
-| Most Plentiful  | 68.4%                  | +5.3   |
-| Least Plentiful | 53.2%                  | -2.3   |
-| Random          | 63.2%                  | +3.5   |
-| Favorite Color  | 56.8%                  | -1.5   |
+<StyledTable data={orchardGameTable} />
 
 As you can see, the strategy is even more important in this version of the game. The difference between the best and the worst strategy has effectively doubled: there's a difference of 15.2 points between the most and least plentiful strategies here, compared to a 7.6 difference in _First Orchard_. It's natural to assume that a game geared towards older children would have more of a focus on the winning strategy, so it's nice to see the numbers bear this assumption out.
 
