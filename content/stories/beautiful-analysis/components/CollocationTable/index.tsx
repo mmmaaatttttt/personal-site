@@ -4,7 +4,7 @@ import React from "react";
 import ColoredSpan from "@/components/story/shared/ColoredSpan";
 import StyledTable from "@/components/story/shared/StyledTable";
 import NarrowContainer from "@/components/story/shared/NarrowContainer";
-import baCommonPhrases from "../../data/ba-common-phrases.json";
+import baCommonPhrases from "../../data/ba-common-phrases";
 import { colorMap } from "../../data/beautiful-analysis";
 
 const CollocationTable = () => {

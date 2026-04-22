@@ -1,5 +1,6 @@
 import COLORS from "@/utils/styles";
 import { camelCaseToTitle } from "@/utils/stringHelpers";
+import type { OrchardDataPoint } from "./orchard-game";
 
 export interface Strategy {
   name: string;
@@ -37,13 +38,7 @@ export const strategies: Strategy[] = [
   },
 ];
 
-export interface OrchardDataPoint {
-  colors: number;
-  fruits: number;
-  ravenCount: number;
-  wildCardCount: number;
-  probs: Record<string, number>;
-}
+export type { OrchardDataPoint } from "./orchard-game";
 
 export interface SelectOption {
   value: string;
@@ -85,6 +80,8 @@ export const orchardGameTable: string[][] = [
   ["Random", "63.2%", "+3.5"],
   ["Favorite Color", "56.8%", "-1.5"],
 ];
+
+export { default as orchardGameData } from "./orchard-game";
 
 export const sliderData = [
   {

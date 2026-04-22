@@ -4,11 +4,8 @@ import { FC, useState } from "react";
 import SliderProvider from "@/components/story/shared/Slider/SliderProvider";
 import Select from "@/components/story/shared/Select";
 import COLORS from "@/utils/styles";
-import orchardData from "@/data/json/orchard-game.json";
-import { selectOptions, sliderData, type OrchardDataPoint } from "../../data";
+import { selectOptions, sliderData, orchardGameData, type OrchardDataPoint } from "../../data";
 import HeatChart from "./HeatChart";
-
-const data = orchardData as OrchardDataPoint[];
 
 const OrchardGameHeatData: FC<{ caption?: string }> = () => {
   const [selectedOption, setSelectedOption] = useState(selectOptions[0]);
@@ -39,7 +36,7 @@ const OrchardGameHeatData: FC<{ caption?: string }> = () => {
             ? [COLORS.BLUE, COLORS.DARK_BLUE]
             : [COLORS.BLACK, COLORS.RED, COLORS.ORANGE, COLORS.YELLOW, COLORS.GREEN, COLORS.DARK_GREEN];
 
-        const heatData = data
+        const heatData = orchardGameData
           .filter((d) => d.colors === colorCount && d.wildCardCount === wildCardCount)
           .reduce<(OrchardDataPoint | null)[][]>((matrix, obj) => {
             const x = obj.ravenCount - 1;

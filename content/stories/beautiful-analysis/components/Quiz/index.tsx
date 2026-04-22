@@ -4,13 +4,7 @@ import React, { useState, useEffect } from "react";
 import { choices } from "@/utils/mathHelpers";
 import Caption from "@/components/story/shared/Caption";
 import QuizReviewPanel from "./QuizReviewPanel";
-import baQuizData from "../../data/ba-quiz.json";
-
-interface Question {
-  prompt: string;
-  choices: string[];
-  answer: string;
-}
+import baQuizData, { type QuizQuestion } from "../../data/ba-quiz";
 
 interface QuizProps {
   answerColors?: string[];
@@ -25,14 +19,14 @@ const Quiz: React.FC<QuizProps> = ({
   title = "This is a quiz.",
   caption,
 }) => {
-  const [questions, setQuestions] = useState<Question[]>([]);
+  const [questions, setQuestions] = useState<QuizQuestion[]>([]);
   const [answers, setAnswers] = useState<string[] | null>(null);
   const [selectedAnswer, setSelectedAnswer] = useState<string | null>(null);
   const [resultsIndex, setResultsIndex] = useState(0);
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
-    setQuestions(choices(baQuizData as Question[], maxQuestions));
+    setQuestions(choices(baQuizData, maxQuestions));
     setMounted(true);
   }, [maxQuestions]);
 
@@ -40,7 +34,7 @@ const Quiz: React.FC<QuizProps> = ({
   if (!mounted) return null;
 
   const reset = () => {
-    setQuestions(choices(baQuizData as Question[], maxQuestions));
+    setQuestions(choices(baQuizData, maxQuestions));
     setAnswers(null);
     setSelectedAnswer(null);
     setResultsIndex(0);

@@ -1,9 +1,31 @@
-{
-  "common_phrases": [
+type PhraseEntry = [string, number];
+
+export interface SpeakerPhrases {
+  Chris: PhraseEntry[];
+  Caller: PhraseEntry[];
+}
+
+export interface CommonPhraseEntry {
+  phrase_count: number;
+  speakers: SpeakerPhrases;
+}
+
+export interface CollocationList {
+  speaker: string;
+  collocations: string[];
+}
+
+export interface CommonPhrases {
+  common_phrases: CommonPhraseEntry[];
+  collocation_lists: CollocationList[];
+}
+
+const baCommonPhrases: CommonPhrases = {
+  common_phrases: [
     {
-      "phrase_count": 2,
-      "speakers": {
-        "Chris": [
+      phrase_count: 2,
+      speakers: {
+        Chris: [
           ["going to", 160],
           ["want to", 144],
           ["and I", 126],
@@ -23,9 +45,9 @@
           ["I was", 65],
           ["I have", 64],
           ["in a", 64],
-          ["sounds like", 63]
+          ["sounds like", 63],
         ],
-        "Caller": [
+        Caller: [
           ["I was", 291],
           ["and I", 270],
           ["it was", 199],
@@ -45,14 +67,14 @@
           ["but I", 95],
           ["so I", 91],
           ["have to", 90],
-          ["I mean", 88]
-        ]
-      }
+          ["I mean", 88],
+        ],
+      },
     },
     {
-      "phrase_count": 3,
-      "speakers": {
-        "Chris": [
+      phrase_count: 3,
+      speakers: {
+        Chris: [
           ["a lot of", 75],
           ["it sounds like", 42],
           ["I don't know", 40],
@@ -72,9 +94,9 @@
           ["to be a", 20],
           ["lot of people", 20],
           ["not going to", 19],
-          ["I would imagine", 19]
+          ["I would imagine", 19],
         ],
-        "Caller": [
+        Caller: [
           ["a lot of", 129],
           ["I don't know", 96],
           ["going to be", 43],
@@ -94,14 +116,14 @@
           ["there's a lot", 23],
           ["it was a", 22],
           ["and then I", 21],
-          ["I think I", 21]
-        ]
-      }
+          ["I think I", 21],
+        ],
+      },
     },
     {
-      "phrase_count": 4,
-      "speakers": {
-        "Chris": [
+      phrase_count: 4,
+      speakers: {
+        Chris: [
           ["I don't want to", 24],
           ["a lot of people", 20],
           ["I don't know if", 15],
@@ -110,23 +132,23 @@
           ["you don't have to", 11],
           ["you don't want to", 11],
           ["what do I got", 10],
-          ["I just want to", 10]
+          ["I just want to", 10],
         ],
-        "Caller": [
+        Caller: [
           ["a lot of people", 30],
           ["there's a lot of", 21],
           ["I don't want to", 18],
           ["I was going to", 13],
           ["I don't know if", 11],
-          ["I don't know I", 11]
-        ]
-      }
-    }
+          ["I don't know I", 11],
+        ],
+      },
+    },
   ],
-  "collocation_lists": [
+  collocation_lists: [
     {
-      "speaker": "Chris",
-      "collocations": [
+      speaker: "Chris",
+      collocations: [
         "sounds like",
         "feel like",
         "little bit",
@@ -146,12 +168,12 @@
         "I've never",
         "make sure",
         "Ron Paul",
-        "uncanny valley"
-      ]
+        "uncanny valley",
+      ],
     },
     {
-      "speaker": "Caller",
-      "collocations": [
+      speaker: "Caller",
+      collocations: [
         "don't know",
         "yeah yeah",
         "little bit",
@@ -171,8 +193,10 @@
         "uncanny valley",
         "what's going",
         "junior year",
-        "electric blanket"
-      ]
-    }
-  ]
-}
+        "electric blanket",
+      ],
+    },
+  ],
+};
+
+export default baCommonPhrases;

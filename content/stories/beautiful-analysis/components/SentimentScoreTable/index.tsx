@@ -6,7 +6,7 @@ import NarrowContainer from "@/components/story/shared/NarrowContainer";
 import StyledTable from "@/components/story/shared/StyledTable";
 import Caption from "@/components/story/shared/Caption";
 import { defaultSentimentOptions } from "../../data/beautiful-analysis";
-import baSentimentData from "../../data/ba-sentiment-examples.json";
+import baSentimentData from "../../data/ba-sentiment-examples";
 
 interface SentimentScoreTableProps {
   sentimentRanges?: [number, number][];

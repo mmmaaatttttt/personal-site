@@ -10,15 +10,7 @@ import Select from "@/components/story/shared/Select";
 import Caption from "@/components/story/shared/Caption";
 import SentimentCircle from "./SentimentCircle";
 import { colorMap } from "../../data/beautiful-analysis";
-import baAllSentiment from "../../data/ba-all-sentiment.json";
-
-type SentimentCount = [string, number, number];
-
-interface EpisodeSentiment {
-  id: number;
-  title: string;
-  sentiment_counts: SentimentCount[];
-}
+import baAllSentiment, { type EpisodeSentiment } from "../../data/ba-all-sentiment";
 
 interface CircData {
   key: string;
@@ -43,7 +35,7 @@ const PodcastAllSentiments: React.FC<PodcastAllSentimentsProps> = ({
   width = 800,
   caption,
 }) => {
-  const options = (baAllSentiment as unknown as EpisodeSentiment[]).map((ep, i) => ({
+  const options = baAllSentiment.map((ep, i) => ({
     value: i.toString(),
     label: `Episode ${ep.id}: ${ep.title}`,
   }));
@@ -56,7 +48,7 @@ const PodcastAllSentiments: React.FC<PodcastAllSentimentsProps> = ({
   const xScale = scaleLinear().range([padding.left, width - padding.right]);
 
   const circData = useMemo<CircData[]>(() => {
-    const epData = (baAllSentiment as unknown as EpisodeSentiment[])[parseInt(value, 10)];
+    const epData = baAllSentiment[parseInt(value, 10)];
     if (!epData || !epData.sentiment_counts) return [];
 
     const raw: CircData[] = epData.sentiment_counts

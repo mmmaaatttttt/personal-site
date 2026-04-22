@@ -4,22 +4,10 @@ import SliderProvider from "@/components/story/shared/Slider";
 import StyledTable from "@/components/story/shared/StyledTable";
 import ColoredSpan from "@/components/story/shared/ColoredSpan";
 import { colorMap } from "../../data/beautiful-analysis";
-import baCommonPhrases from "../../data/ba-common-phrases.json";
-
-type PhraseData = [string, number];
-
-interface SpeakerData {
-  Chris: PhraseData[];
-  Caller: PhraseData[];
-}
-
-interface CommonPhraseEntry {
-  phrase_count: number;
-  speakers: SpeakerData;
-}
+import baCommonPhrases, { type CommonPhraseEntry, type SpeakerPhrases } from "../../data/ba-common-phrases";
 
 export default function CommonPhrasesInteractive() {
-  const dataset = baCommonPhrases.common_phrases as CommonPhraseEntry[];
+  const dataset: CommonPhraseEntry[] = baCommonPhrases.common_phrases;
   const initialData = [
     {
       min: dataset[0].phrase_count,
@@ -49,7 +37,7 @@ export default function CommonPhrasesInteractive() {
             speakers.Caller.length,
           );
 
-          const headers = (Object.keys(speakers) as (keyof SpeakerData)[]).map(
+          const headers = (Object.keys(speakers) as (keyof SpeakerPhrases)[]).map(
             (speaker) => ({
               key: `header-${speaker}`,
               content: (
@@ -64,13 +52,13 @@ export default function CommonPhrasesInteractive() {
           );
 
           const rows = Array.from({ length: numRows }, (_, i) => {
-            const rowKey = (Object.keys(speakers) as (keyof SpeakerData)[])
+            const rowKey = (Object.keys(speakers) as (keyof SpeakerPhrases)[])
               .map((s) => speakers[s][i]?.[0] || "--")
               .join("-");
 
             return {
               key: rowKey,
-              cells: (Object.keys(speakers) as (keyof SpeakerData)[]).map(
+              cells: (Object.keys(speakers) as (keyof SpeakerPhrases)[]).map(
                 (speaker) => {
                   const speakerPhrases = speakers[speaker][i];
                   return {

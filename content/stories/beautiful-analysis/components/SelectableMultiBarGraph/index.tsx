@@ -8,22 +8,8 @@ import {
   generateTooltipData,
   defaultSentimentOptions,
 } from "../../data/beautiful-analysis";
-import baSentimentCounts from "../../data/ba-sentiment-counts.json";
+import baSentimentCounts, { type EpisodeSentimentCounts } from "../../data/ba-sentiment-counts";
 import COLORS from "@/utils/styles";
-
-interface SentimentCount {
-  Chris: number;
-  Caller: number;
-}
-
-interface SentimentData {
-  meta: {
-    id: number;
-    title: string;
-    date: string;
-  };
-  counts: SentimentCount[];
-}
 
 interface SelectableMultiBarGraphProps {
   colors?: string[];
@@ -59,7 +45,7 @@ const SelectableMultiBarGraph: FC<SelectableMultiBarGraphProps> = ({
   const dataForOption = useMemo(() => {
     if (!Array.isArray(baSentimentCounts) || baSentimentCounts.length === 0)
       return [];
-    return (baSentimentCounts as unknown as SentimentData[]).map((d) => {
+    return baSentimentCounts.map((d: EpisodeSentimentCounts) => {
       const c = d.counts[parseInt(value || "0", 10)];
       return {
         meta: d.meta,

@@ -2,8 +2,8 @@
 
 import MultiBarGraph from "@/components/story/shared/MultiBarGraph";
 import { generateTooltipData } from "../../data/beautiful-analysis";
-import baSummary from "../../data/ba-summary.json";
-import baProfanity from "../../data/ba-profanity.json";
+import baSummary from "../../data/ba-summary";
+import baProfanity from "../../data/ba-profanity";
 import COLORS from "@/utils/styles";
 
 interface BaMultiBarGraphProps {
@@ -18,7 +18,7 @@ interface BaMultiBarGraphProps {
 }
 
 const BaMultiBarGraph = ({ dataType = "summary", ...props }: BaMultiBarGraphProps) => {
-  const data = (dataType === "summary" ? baSummary : baProfanity) as any[];
+  const data = dataType === "summary" ? baSummary : baProfanity;
   return (
     <MultiBarGraph
       {...props}
