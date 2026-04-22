@@ -26,6 +26,8 @@ const storyModules: Record<
     import("@/content/stories/gaming-relationships-nonlinear/index.mdx"),
   "income-inequality": () =>
     import("@/content/stories/income-inequality/index.mdx"),
+  "harvesting-wins": () =>
+    import("@/content/stories/harvesting-wins/index.mdx"),
 };
 
 export async function generateStaticParams() {

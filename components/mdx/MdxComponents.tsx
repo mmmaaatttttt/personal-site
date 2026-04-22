@@ -38,7 +38,7 @@ export const MdxComponents: any = {
   hr: () => <hr className="my-12 border-gray-200" />,
   img: (props: any) => (
     <span className="my-12 block">
-      <span className="relative mx-auto block w-fit overflow-hidden rounded-2xl bg-gray/5 shadow-md">
+      <span className="relative mx-auto block w-fit">
         <img
           src={props.src?.replace(/^(\.\.\/)+images\//, "/images/")}
           alt={props.alt || ""}
