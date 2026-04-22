@@ -112,7 +112,7 @@ Stories not yet in the module map display a "Coming soon" message. Their MDX fil
 | `gaming-relationships-nonlinear` | ✅ Complete   | `NonlinearGamingRelationships` wrapper; shares base component; 4-body chaotic ODE at `idx=1` uses `step=0.02`, `max=40`                                                |
 | `income-inequality`              | ✅ Complete   | `EconomySimulation` + `EconomyNodeGroup` (D3 force sim); collision/wealth logic in `data.ts`; 3 instances with `idx` and optional `editSavings` prop                   |
 | `fairest-of-them-all`            | ❌ Not started | Needs: `CoinFlipBayesianModel`, `CoinFlipHistogram`, `CoinFlipTable`, `RentDivision`                                                                                   |
-| `harvesting-wins`                | ❌ Not started | Needs: `OrchardGame`, `OrchardGameHeatData`, `OrchardGameSimulation`                                                                                                   |
+| `harvesting-wins`                | ✅ Complete   | `OrchardGame` (spinner + fruit tiles + localStorage), `OrchardGameSimulation` (rAF loop), `OrchardGameHeatData` (D3 heat map + sliders)                                |
 | `mind-the-gerrymandered-gap`     | ❌ Not started | Needs: `EfficiencyGapTable`, `GerrymanderHistoricalMap`, `IsoperimetricExplorer`, `SampleGerrymander`, `ResponsiveIFrame`✓                                             |
 | `strength-in-numbers`            | ❌ Not started | Needs: `VotingBarChart`, `VotingLineChart`, `VotingMap`, `VotingPollWorkerAge`, `VotingTable`                                                                          |
 | `keeping-distances`              | ❌ Not started | Largest: 8 components (`DistanceExplorer`, `ManhattanCircle/Paths`, `PAdicCalculator/FractalDistance/HeatChart`, `StringDistanceExplorer`, `FunctionDistanceExplorer`) |
@@ -174,9 +174,82 @@ The full legacy Gatsby implementation also lives in `src/_legacy_pages/`. This i
 - `src/story_components/` — the shared legacy component library (the source of truth for any component that existed before the migration)
 - `src/layouts/`, `src/templates/`, `src/utils/` — supporting legacy utilities
 
+### Component decomposition
+
+**One component per file — no exceptions.** Even small sub-components that are only used by one parent must live in their own file. If a file exports multiple components, split it before shipping.
+
+A typical story component folder looks like:
+
+```
+components/OrchardGame/
+  constants.ts          ← shared colors, initial values used by siblings
+  FruitContainer.tsx    ← leaf component
+  FruitContainer.test.tsx
+  ScreenOverlay.tsx     ← leaf component
+  ScreenOverlay.test.tsx
+  Spinner.tsx           ← leaf component
+  Spinner.test.tsx
+  index.tsx             ← orchestrator: state + layout only, imports siblings
+  OrchardGame.test.tsx  ← tests for the orchestrator
+```
+
+`constants.ts` is for values (colors, initial counts, magic strings) that are referenced by more than one sibling file. Do not define constants in `index.tsx` and import them into leaf files — that creates circular-ish coupling and is harder to read.
+
+### Test coverage
+
+**Every file that exports a component must have a co-located test file** — including `index.tsx` orchestrators. "I tested the leaves" is not sufficient; the orchestrator wires things together and that wiring needs tests too.
+
+What to test:
+- **Initial render**: the component mounts without crashing and the expected elements are present
+- **User interactions**: clicks, selects, slider changes — assert the resulting state or DOM change
+- **State transitions**: play → pause → reset, overlay hidden → shown, etc.
+- **Props**: verify that optional/custom props (e.g. `fruitCounts`, `ravenCount`) are accepted without crashing
+- **Persistence**: `localStorage` reads on mount and writes on interaction, clear behavior
+
+What not to test: implementation details, internal state variable names, class names.
+
+### jsdom mock patterns
+
+These are required in specific situations — copy them exactly:
+
+**`ResizeObserver` (any component that renders `ClippedSVG`):**
+```ts
+global.ResizeObserver = vi.fn().mockImplementation(() => ({
+  observe: vi.fn(),
+  unobserve: vi.fn(),
+  disconnect: vi.fn(),
+}));
+```
+Place this at module scope (outside `describe`).
+
+**`framer-motion animate()` (any component that calls `animate()` imperatively on user interaction):**
+```ts
+vi.mock("framer-motion", async (importOriginal) => {
+  const actual = await importOriginal<typeof import("framer-motion")>();
+  return { ...actual, animate: vi.fn() };
+});
+```
+Without this, clicking a button that triggers `animate()` will throw an async error in jsdom.
+
+**`localStorage` (any component that reads/writes localStorage):**
+```ts
+beforeEach(() => {
+  localStorage.clear();
+});
+```
+Without this, tests bleed state into each other.
+
+**Color assertions (jsdom normalizes hex to rgb/rgba):**
+jsdom converts `#rrggbbaa` hex values to `rgba(r, g, b, a)` format. Never assert an exact hex string — use:
+```ts
+expect(element).toHaveStyle({ backgroundColor: expect.stringMatching(/rgba?\(/) });
+// or
+expect(getComputedStyle(element).backgroundColor).toMatch(/rgba?\(/);
+```
+
 ### Test location
 
-Tests live co-located with components (e.g., `ComponentName.test.tsx` next to `index.tsx`). When importing from index files, remember that the word "index" is not necessary (for example, always import from "." instead of "./index").
+Tests live co-located with components (`ComponentName.test.tsx` next to `index.tsx`). When importing from index files, omit the word "index" — always `import from "."` not `from "./index"`.
 
 ### Axis tick labels
 
@@ -231,3 +304,27 @@ Untyped packages (`d3-force-bounce`, `d3-force-surface`) get hand-rolled ambient
 ### `ResponsiveIFrame` and legacy props
 
 `ResponsiveIFrame` in `MdxComponents.tsx` uses a fixed `aspect-video` class and ignores the legacy `heightOverWidth` prop. Destructure it out before spreading the rest onto `<iframe>` to avoid the React DOM prop warning.
+
+### Static table data belongs in `data.ts`
+
+Story-specific `StyledTable` data (the `string[][]` arrays) lives in `content/stories/<slug>/data.ts` alongside strategies and other story data — not inline in the MDX. Export each table as a named `const` (e.g. `firstOrchardTable`, `orchardGameTable`), import it in the MDX, and pass it as `<StyledTable data={myTable} />`. See `dishing-on-petrie/data.ts` and `harvesting-wins/data.ts` for examples.
+
+### Markdown tables do not render in MDX
+
+The Next.js MDX compiler does not render GFM-style `| col | col |` tables. Always use `<StyledTable data={...} />` instead. There is no remark plugin wired up for table support.
+
+### `FlexContainer` inline style overrides Tailwind margin utilities
+
+`FlexContainer` applies `style={{ margin: "0" }}` by default, which wins over Tailwind `mt-*` / `mb-*` classes on the same element. To add spacing between items in a column `FlexContainer`, use `className="gap-N"` on the parent rather than margin utilities on the children.
+
+### `polished` is not installed
+
+The `polished` npm package (used in legacy components for `darken`, `lighten`, etc.) is not in the new stack. Inline the math directly: for darkening a hex color, bit-shift the RGB channels and multiply by `(1 - amount)`.
+
+### `pie<string>()` for spinner/color-keyed pie charts
+
+When using d3-shape `pie` to render a color-keyed wheel (e.g. the `Spinner` in `harvesting-wins`), pass `pie<string>().sort(null)` with an array of equal values. Use `ClippedSVG` directly rather than the shared `PieChart` component when you need to overlay additional SVG elements (like a rotating needle) — `PieChart` does not accept children.
+
+### framer-motion `animate()` for imperative animations
+
+For one-shot imperative animations (e.g. spinning a needle to a random angle), use framer-motion's `animate(from, to, { duration, ease, onUpdate, onComplete })`. The `ease` array `[0, 0.55, 0.45, 1]` approximates `easeQuadOut` from the legacy `d3-ease` usage in `react-move`.
