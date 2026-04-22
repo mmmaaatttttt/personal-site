@@ -1,21 +1,7 @@
----
-title: "The Fairest of Them All"
-date: "2019-01-08"
-featured_image: "../../images/featured_images/fairest_of_them_all.jpg"
-caption: "A mathematical exploration of fairness."
-featured_image_caption: "Playing a (hopefully fair) board game. Image credit: Brendan Humphreys from Pexels."
-tags:
-  - probability
-  - civics
-  - modeling
----
-
-import {
-  CoinFlipHistogram,
-  CoinFlipBayesianModel,
-  CoinFlipTable,
-  RentDivision
-} from "story_components";
+import CoinFlipHistogram from "./components/CoinFlipHistogram";
+import CoinFlipBayesianModel from "./components/CoinFlipBayesianModel";
+import CoinFlipTable from "./components/CoinFlipTable";
+import RentDivision from "./components/RentDivision";
 
 Whether it's a game on the playground or a policy proposal on Capitol Hill,
 debates about fairness are commonplace. But what does it mean for something to
@@ -74,7 +60,7 @@ times? or 10,000? Or --- wait for it --- one _billion_ times?
 As the number of flips grows, the proportion of flips that land on any one side
 begins to approximate a **normal distribution**, or bell curve. This means that
 we can estimate the likelihood of certain outcomes by calculating the area under
-that curve. 
+that curve.
 
 Here's a demonstration of what we're getting at. Below, you can adjust the true
 probability that a coin lands on heads, and then model how many times you'd like
@@ -246,10 +232,10 @@ example of the algorithm in action, with three roommates deciding between three
 rooms: a green one, an orange one, and a purple one. (You can mouse over any
 point to see the room prices at that point.)
 
-<RentDivision captionMarginTop="-2.8em" caption="Figure 4: Determining a fair division of rent for three roommates." />
+<RentDivision caption="Figure 4: Determining a fair division of rent for three roommates." />
 
 Here are some questions people typically ask after playing around with this
-algorithm: 
+algorithm:
 
 **How do you know you can find a triangle in the mesh where each roommate
 selects a different room?** This requires proof! I'll let you fill in the
@@ -372,7 +358,7 @@ institutions of justice.
 
 The practical argument is that it turns out humans care about fairness. This
 fact has been borne out in a number of economics experiments, which are
-summarized in a 2006 paper titled [The economics of fairness, reciprocity and altruism--experimental evidence and new theories](https://www.sciencedirect.com/science/article/pii/S1574071406010086). 
+summarized in a 2006 paper titled [The economics of fairness, reciprocity and altruism--experimental evidence and new theories](https://www.sciencedirect.com/science/article/pii/S1574071406010086).
 Two illustrative examples come in the form of games:
 the **ultimatum game** and the "**dictator game.**
 

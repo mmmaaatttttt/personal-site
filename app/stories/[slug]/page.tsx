@@ -28,6 +28,8 @@ const storyModules: Record<
     import("@/content/stories/income-inequality/index.mdx"),
   "harvesting-wins": () =>
     import("@/content/stories/harvesting-wins/index.mdx"),
+  "fairest-of-them-all": () =>
+    import("@/content/stories/fairest-of-them-all/index.mdx"),
 };
 
 export async function generateStaticParams() {

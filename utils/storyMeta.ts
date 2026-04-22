@@ -7,6 +7,7 @@ import gamingRelationshipsLinear from "@/content/stories/gaming-relationships-li
 import gamingRelationshipsNonlinear from "@/content/stories/gaming-relationships-nonlinear/meta";
 import incomeInequality from "@/content/stories/income-inequality/meta";
 import harvestingWins from "@/content/stories/harvesting-wins/meta";
+import fairestOfThemAll from "@/content/stories/fairest-of-them-all/meta";
 
 /**
  * Typed metadata for ported stories. getArticle() checks here first;
@@ -23,4 +24,5 @@ export const storyMeta: Record<string, ArticleFrontmatter> = {
   "gaming-relationships-nonlinear": gamingRelationshipsNonlinear,
   "income-inequality": incomeInequality,
   "harvesting-wins": harvestingWins,
+  "fairest-of-them-all": fairestOfThemAll,
 };
