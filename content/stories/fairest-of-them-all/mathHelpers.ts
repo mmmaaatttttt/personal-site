@@ -32,3 +32,17 @@ export function betaPdf(x: number, a: number, b: number): number {
   const logNorm = logGamma(a) + logGamma(b) - logGamma(a + b);
   return Math.exp((a - 1) * Math.log(x) + (b - 1) * Math.log(1 - x) - logNorm);
 }
+
+/**
+ * Computes the probability mass function of the binomial distribution
+ * for all k in [0, n], using a recurrence relation for numerical stability.
+ */
+export function binomialDensityValues(n: number, p: number): number[] {
+  if (p === 0 || p === 1) return Array.from({ length: n + 1 }, () => p);
+  const masses = [(1 - p) ** n];
+  for (let k = 0; k < n; k++) {
+    const last = masses[masses.length - 1];
+    masses.push(((n - k) * p * last) / ((k + 1) * (1 - p)));
+  }
+  return masses;
+}
