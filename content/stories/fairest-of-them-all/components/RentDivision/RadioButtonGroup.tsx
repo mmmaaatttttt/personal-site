@@ -107,16 +107,18 @@ const RadioButtonGroup: FC<RadioButtonGroupProps> = ({
       <FlexContainer main="around" cross="center" width="100%" shouldWrap>
         {options}
       </FlexContainer>
-      {selectedIndex === null ? (
-        <Button disabled>Please make a selection.</Button>
-      ) : (
-        <Button
-          onClick={handleConfirm}
-          style={{ backgroundColor: labels[selectedIndex].color }}
-        >
-          {buttonText}
-        </Button>
-      )}
+      <FlexContainer main="center" margin="1rem 0">
+        {selectedIndex === null ? (
+          <Button variant="white" disabled>Please make a selection.</Button>
+        ) : (
+          <Button
+            onClick={handleConfirm}
+            style={{ backgroundColor: labels[selectedIndex].color }}
+          >
+            {buttonText}
+          </Button>
+        )}
+      </FlexContainer>
     </div>
   );
 };

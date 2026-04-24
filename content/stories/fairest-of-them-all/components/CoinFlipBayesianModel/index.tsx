@@ -1,6 +1,7 @@
 "use client";
 
-import { FC, useState } from "react";
+import { FC, useState, useEffect } from "react";
+import { animate, useMotionValue, useMotionValueEvent } from "framer-motion";
 import { scaleLinear } from "d3-scale";
 import { max } from "d3-array";
 import Caption from "@/components/story/shared/Caption";
@@ -27,14 +28,30 @@ const CoinFlipBayesianModel: FC<CoinFlipBayesianModelProps> = ({ caption }) => {
   const [tails, setTails] = useState(0);
   const [uniform, setUniform] = useState(true);
 
-  const headsDisplay = heads;
-  const tailsDisplay = tails;
-  const a = uniform ? heads + 1 : heads + 51;
-  const b = uniform ? tails + 1 : tails + 51;
+  const targetA = uniform ? heads + 1 : heads + 51;
+  const targetB = uniform ? tails + 1 : tails + 51;
+  const targetColor = uniform ? COLORS.RED : COLORS.BLUE;
 
-  const color = uniform ? COLORS.RED : COLORS.BLUE;
+  // Animated display values — interpolate smoothly on every state change
+  const aMotion = useMotionValue(targetA);
+  const bMotion = useMotionValue(targetB);
+  const colorMotion = useMotionValue(targetColor);
+  const [displayA, setDisplayA] = useState(targetA);
+  const [displayB, setDisplayB] = useState(targetB);
+  const [displayColor, setDisplayColor] = useState(targetColor);
 
-  const graphData = X_COORDS.map((x) => ({ x, y: betaPdf(x, a, b) }));
+  useMotionValueEvent(aMotion, "change", setDisplayA);
+  useMotionValueEvent(bMotion, "change", setDisplayB);
+  useMotionValueEvent(colorMotion, "change", setDisplayColor);
+
+  useEffect(() => {
+    animate(aMotion, targetA, { duration: 0.4, ease: "easeOut" });
+    animate(bMotion, targetB, { duration: 0.4, ease: "easeOut" });
+    animate(colorMotion, targetColor, { duration: 0.4, ease: "easeOut" });
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [targetA, targetB, targetColor]);
+
+  const graphData = X_COORDS.map((x) => ({ x, y: betaPdf(x, displayA, displayB) }));
   const yMax = max(graphData, (d) => d.y) ?? 1;
 
   const xScale = scaleLinear()
@@ -54,19 +71,19 @@ const CoinFlipBayesianModel: FC<CoinFlipBayesianModelProps> = ({ caption }) => {
           rightColor={COLORS.BLUE}
           handleSwitchChange={(checked) => setUniform(!checked)}
         />
-        <FlexContainer main="evenly" className="gap-2">
-          <Button onClick={() => setHeads((h) => h + 1)}>
-            Heads: {headsDisplay}
+        <FlexContainer main="evenly" margin="1rem 0" className="gap-2">
+          <Button variant="white" onClick={() => setHeads((h) => h + 1)}>
+            Heads: {heads}
           </Button>
-          <Button onClick={() => setTails((t) => t + 1)}>
-            Tails: {tailsDisplay}
+          <Button variant="white" onClick={() => setTails((t) => t + 1)}>
+            Tails: {tails}
           </Button>
           <Button
+            variant="white"
             onClick={() => {
               setHeads(0);
               setTails(0);
             }}
-            style={{ backgroundColor: COLORS.DARK_GRAY }}
           >
             Reset Counts
           </Button>
@@ -85,7 +102,7 @@ const CoinFlipBayesianModel: FC<CoinFlipBayesianModelProps> = ({ caption }) => {
         >
           <LinePlot
             graphData={graphData}
-            stroke={color}
+            stroke={displayColor}
             xScale={xScale}
             yScale={yScale}
           />

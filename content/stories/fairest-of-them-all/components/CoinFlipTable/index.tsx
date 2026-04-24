@@ -3,7 +3,6 @@
 import { FC, useState } from "react";
 import Caption from "@/components/story/shared/Caption";
 import LabeledSlider from "@/components/story/shared/Slider/LabeledSlider";
-import StyledTable from "@/components/story/shared/StyledTable";
 import ColoredSpan from "@/components/story/shared/ColoredSpan";
 import COLORS from "@/utils/styles";
 
@@ -15,49 +14,17 @@ interface CoinFlipTableProps {
   caption?: string;
 }
 
+// Shared cell style matching StyledTable appearance
+const cellStyle = {
+  textAlign: "center" as const,
+  padding: "0.75rem 1rem",
+  border: "1px solid rgba(0, 0, 0, 0.1)",
+};
+
 const CoinFlipTable: FC<CoinFlipTableProps> = ({ caption }) => {
   const [headsProb, setHeadsProb] = useState(0.5);
   const tailsProb = 1 - headsProb;
   const pairProb = headsProb * tailsProb;
-
-  const headers = [
-    { key: 0, content: "Prob. of H" },
-    { key: 1, content: "Prob. of T" },
-    { key: 2, content: "Prob. of HT" },
-    { key: 3, content: "Prob. of TH" },
-  ];
-
-  const rows = [
-    {
-      key: 0,
-      cells: [
-        { key: 0, content: format(headsProb) },
-        { key: 1, content: format(tailsProb) },
-        {
-          key: 2,
-          content: (
-            <>
-              {format(headsProb)} &times; {format(tailsProb)} ={" "}
-              <ColoredSpan color={COLORS.GREEN} bold>
-                {format(pairProb, 2)}
-              </ColoredSpan>
-            </>
-          ),
-        },
-        {
-          key: 3,
-          content: (
-            <>
-              {format(tailsProb)} &times; {format(headsProb)} ={" "}
-              <ColoredSpan color={COLORS.GREEN} bold>
-                {format(pairProb, 2)}
-              </ColoredSpan>
-            </>
-          ),
-        },
-      ],
-    },
-  ];
 
   return (
     <Caption caption={caption}>
@@ -70,7 +37,54 @@ const CoinFlipTable: FC<CoinFlipTableProps> = ({ caption }) => {
         title={`Probability of flipping heads: ${format(headsProb)}`}
         color={COLORS.GREEN}
       />
-      <StyledTable headers={headers} rows={rows} />
+      {/* Fixed column widths prevent the cells from resizing as text changes. */}
+      <div className="my-12 w-full overflow-x-auto text-center">
+        <table className="mx-auto w-full border-collapse border shadow-sm" style={{ tableLayout: "fixed" }}>
+          <colgroup>
+            <col style={{ width: "25%" }} />
+            <col style={{ width: "25%" }} />
+            <col style={{ width: "25%" }} />
+            <col style={{ width: "25%" }} />
+          </colgroup>
+          <thead>
+            <tr>
+              {["Prob. of H", "Prob. of T", "Prob. of HT", "Prob. of TH"].map((h) => (
+                <th
+                  key={h}
+                  style={{
+                    ...cellStyle,
+                    backgroundColor: "rgba(0, 0, 0, 0.03)",
+                    fontWeight: 800,
+                    textTransform: "uppercase",
+                    letterSpacing: "0.05em",
+                    fontSize: "0.875rem",
+                  }}
+                >
+                  {h}
+                </th>
+              ))}
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td style={cellStyle}>{format(headsProb)}</td>
+              <td style={cellStyle}>{format(tailsProb)}</td>
+              <td style={cellStyle}>
+                {format(headsProb)} &times; {format(tailsProb)} ={" "}
+                <ColoredSpan color={COLORS.GREEN} bold>
+                  {format(pairProb, 2)}
+                </ColoredSpan>
+              </td>
+              <td style={cellStyle}>
+                {format(tailsProb)} &times; {format(headsProb)} ={" "}
+                <ColoredSpan color={COLORS.GREEN} bold>
+                  {format(pairProb, 2)}
+                </ColoredSpan>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </Caption>
   );
 };

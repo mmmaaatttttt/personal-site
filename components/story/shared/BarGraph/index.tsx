@@ -29,6 +29,8 @@ interface BarGraphProps {
   thresholds?: number[];
   tickFormat?: string;
   yTickLabelPosition?: "left" | "center";
+  yLabelSide?: "left" | "right";
+  gridlinesVertical?: boolean;
   yTickFormat?: string;
   tickStep?: number;
   tickStepX?: number;
@@ -50,6 +52,8 @@ const BarGraph: React.FC<BarGraphProps> = ({
   thresholds,
   tickFormat,
   yTickLabelPosition = "left",
+  yLabelSide = "left",
+  gridlinesVertical = true,
   yTickFormat,
   tickStep,
   tickStepX,
@@ -92,6 +96,9 @@ const BarGraph: React.FC<BarGraphProps> = ({
         tickFormatX={tickFormat}
         tickFormatY={yTickFormat}
         yAxisPosition={yTickLabelPosition}
+        yLabelSide={yLabelSide}
+        yAxisOnTop={yLabelSide === "right"}
+        gridlinesVertical={gridlinesVertical}
         tickStepX={tickStepX ? () => tickStepX : undefined}
         tickStepY={tickStepY ? () => tickStepY : (tickStep ? () => tickStep : undefined)}
       >

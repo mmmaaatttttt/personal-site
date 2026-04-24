@@ -25,11 +25,27 @@ export function logGamma(z: number): number {
 
 /**
  * Probability density function of the Beta distribution.
- * Returns 0 for x outside (0, 1).
+ *
+ * Handles the boundary cases at x=0 and x=1 correctly so that callers can
+ * include those endpoints without getting spurious zeros:
+ *   - a > 1 at x=0 (or b > 1 at x=1): limit is 0
+ *   - a = 1 at x=0 (or b = 1 at x=1): limit equals 1/B(a,b) (finite)
+ *   - a < 1 at x=0 (or b < 1 at x=1): limit is +∞ (returns Infinity)
+ * Returns 0 for x strictly outside [0, 1].
  */
 export function betaPdf(x: number, a: number, b: number): number {
-  if (x <= 0 || x >= 1) return 0;
+  if (x < 0 || x > 1) return 0;
   const logNorm = logGamma(a) + logGamma(b) - logGamma(a + b);
+  if (x === 0) {
+    if (a < 1) return Infinity;
+    if (a === 1) return Math.exp(-logNorm); // (1-0)^(b-1) / B(a,b) = 1/B(1,b)
+    return 0; // a > 1
+  }
+  if (x === 1) {
+    if (b < 1) return Infinity;
+    if (b === 1) return Math.exp(-logNorm); // 1^(a-1) / B(a,b) = 1/B(a,1)
+    return 0; // b > 1
+  }
   return Math.exp((a - 1) * Math.log(x) + (b - 1) * Math.log(1 - x) - logNorm);
 }
 

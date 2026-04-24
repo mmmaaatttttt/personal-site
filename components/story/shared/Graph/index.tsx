@@ -30,6 +30,12 @@ interface GraphProps<XDomain extends AxisDomain, YDomain extends AxisDomain> {
   tickStepY?: (scale: AxisScale<YDomain>) => number;
   xAxisPosition?: "bottom" | "center";
   yAxisPosition?: "left" | "center";
+  /** "left" (default): y-axis tick labels appear to the left of the axis line.
+   *  "right": labels appear to the right, inside the chart — avoids clipping when left padding is small. */
+  yLabelSide?: "left" | "right";
+  /** When true, the y-axis is rendered after {children} in SVG order, so labels
+   *  paint on top of bars. Default false (y-axis renders before children). */
+  yAxisOnTop?: boolean;
   xLabel?: string;
   xScale: AxisScale<XDomain>;
   yLabel?: string;
@@ -54,6 +60,8 @@ const Graph = <XDomain extends AxisDomain, YDomain extends AxisDomain>({
   tickStepY,
   xAxisPosition = "bottom",
   yAxisPosition = "left",
+  yLabelSide = "left",
+  yAxisOnTop = false,
   xLabel = "",
   xScale,
   yLabel = "",
@@ -74,18 +82,22 @@ const Graph = <XDomain extends AxisDomain, YDomain extends AxisDomain>({
   return (
     <NarrowContainer width="100%" className={className}>
       <ClippedSVG id={svgId} width={width} height={height} padding={svgPadding}>
+        {!yAxisOnTop && (
+          <Axis
+            key="y-axis"
+            direction="y"
+            labelPosition={yLabelSide === "right" ? { x: "4", dy: "12" } : { x: "-3", dy: "0.32em" }}
+            scale={yScale}
+            textAnchor={yLabelSide === "right" ? "start" : "end"}
+            tickSize={yOptions.tickSize}
+            tickShift={yOptions.tickShift}
+            tickStep={calculatedTickStepY}
+            tickFormat={tickFormatY}
+            xShift={yOptions.xShift}
+          />
+        )}
         <Axis
-          direction="y"
-          labelPosition={{ x: "-3", dy: "0.32em" }}
-          scale={yScale}
-          textAnchor="end"
-          tickSize={yOptions.tickSize}
-          tickShift={yOptions.tickShift}
-          tickStep={calculatedTickStepY}
-          tickFormat={tickFormatY}
-          xShift={yOptions.xShift}
-        />
-        <Axis
+          key="x-axis"
           direction="x"
           labelPosition={{ y: "0.35em", x: "9", dy: "0" }}
           rotateLabels
@@ -106,6 +118,20 @@ const Graph = <XDomain extends AxisDomain, YDomain extends AxisDomain>({
           strokeWidth="1"
         />
         {children}
+        {yAxisOnTop && (
+          <Axis
+            key="y-axis"
+            direction="y"
+            labelPosition={yLabelSide === "right" ? { x: "4", dy: "12" } : { x: "-3", dy: "0.32em" }}
+            scale={yScale}
+            textAnchor={yLabelSide === "right" ? "start" : "end"}
+            tickSize={yOptions.tickSize}
+            tickShift={yOptions.tickShift}
+            tickStep={calculatedTickStepY}
+            tickFormat={tickFormatY}
+            xShift={yOptions.xShift}
+          />
+        )}
         {xLabel && <AxisLabel {...xOptions.label}>{xLabel}</AxisLabel>}
         {yLabel && (
           <AxisLabel

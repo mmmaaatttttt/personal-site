@@ -53,8 +53,10 @@ const CoinFlipHistogram: FC<CoinFlipHistogramProps> = ({ caption }) => {
             .range([HEIGHT - PADDING.bottom, PADDING.top]);
           return (
             <BarGraph
+              animated={false}
               barData={barData}
               color={COLORS.GREEN}
+              gridlinesVertical={false}
               height={HEIGHT}
               histogram
               padding={PADDING}
@@ -62,6 +64,7 @@ const CoinFlipHistogram: FC<CoinFlipHistogramProps> = ({ caption }) => {
               thresholds={barData
                 .map((d) => d.key as number)
                 .concat(numTrials + 1)}
+              yLabelSide="right"
               yTickFormat=".0%"
               tickStep={0.02}
               width={600}

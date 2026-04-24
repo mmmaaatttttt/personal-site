@@ -211,8 +211,8 @@ const RentDivision: FC<RentDivisionProps> = ({ caption }) => {
             value={meshLevels}
             color={COLORS.DARK_GRAY}
           />
-          <FlexContainer main="center">
-            <Button onClick={() => setStarted(true)}>Start Demonstration</Button>
+          <FlexContainer main="center" margin="1rem 0">
+            <Button variant="white" onClick={() => setStarted(true)}>Start Demonstration</Button>
           </FlexContainer>
         </NarrowContainer>
       );
@@ -250,7 +250,7 @@ const RentDivision: FC<RentDivisionProps> = ({ caption }) => {
             <br />
             If that doesn&apos;t seem fair, you can refine the mesh and try again.
           </p>
-          <Button onClick={handleReset}>Try again</Button>
+          <Button variant="white" className="mt-4" onClick={handleReset}>Try again</Button>
         </FlexContainer>
       );
     }
