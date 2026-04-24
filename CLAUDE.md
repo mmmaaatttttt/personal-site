@@ -111,7 +111,7 @@ Stories not yet in the module map display a "Coming soon" message. Their MDX fil
 | `gaming-relationships-linear`    | ✅ Complete   | `GamingRelationships` base + `LinearGamingRelationships` wrapper; diff eqs in `data.ts`; 3 ODE visualizations                                                         |
 | `gaming-relationships-nonlinear` | ✅ Complete   | `NonlinearGamingRelationships` wrapper; shares base component; 4-body chaotic ODE at `idx=1` uses `step=0.02`, `max=40`                                                |
 | `income-inequality`              | ✅ Complete   | `EconomySimulation` + `EconomyNodeGroup` (D3 force sim); collision/wealth logic in `data.ts`; 3 instances with `idx` and optional `editSavings` prop                   |
-| `fairest-of-them-all`            | ⚠️ In progress | Components ported and wired; interactives need UI/behaviour fixes (tracked separately). `CoinFlipHistogram`, `CoinFlipTable`, `CoinFlipBayesianModel` (beta PDF inline, no jStat), `RentDivision` (Sperner's Lemma triangle mesh; `ToggleSwitch`, `LabeledCircle`, `RadioButtonGroup`, `Polygon` as local leaf components) |
+| `fairest-of-them-all`            | ✅ Complete   | `CoinFlipHistogram`, `CoinFlipTable`, `CoinFlipBayesianModel` (beta PDF inline, no jStat; framer-motion animation for curve/color), `RentDivision` (Sperner's Lemma triangle mesh; `ToggleSwitch`, `LabeledCircle`, `RadioButtonGroup`, `Polygon` as local leaf components) |
 | `harvesting-wins`                | ✅ Complete   | `OrchardGame` (spinner + fruit tiles + localStorage), `OrchardGameSimulation` (rAF loop), `OrchardGameHeatData` (D3 heat map + sliders)                                |
 | `mind-the-gerrymandered-gap`     | ❌ Not started | Needs: `EfficiencyGapTable`, `GerrymanderHistoricalMap`, `IsoperimetricExplorer`, `SampleGerrymander`, `ResponsiveIFrame`✓                                             |
 | `strength-in-numbers`            | ❌ Not started | Needs: `VotingBarChart`, `VotingLineChart`, `VotingMap`, `VotingPollWorkerAge`, `VotingTable`                                                                          |
@@ -328,3 +328,20 @@ When using d3-shape `pie` to render a color-keyed wheel (e.g. the `Spinner` in `
 ### framer-motion `animate()` for imperative animations
 
 For one-shot imperative animations (e.g. spinning a needle to a random angle), use framer-motion's `animate(from, to, { duration, ease, onUpdate, onComplete })`. The `ease` array `[0, 0.55, 0.45, 1]` approximates `easeQuadOut` from the legacy `d3-ease` usage in `react-move`.
+
+### Never change defaults in shared components
+
+**Do not change the default props of any shared component** (`BarGraph`, `Graph`, `Axis`, `LinePlot`, etc.). Story-specific behavior must be set explicitly at the call site. If a story needs non-standard behavior (e.g. no vertical gridlines, right-aligned labels), pass those values as explicit props — never make them the new default. Changing defaults silently breaks every other story that relies on the original behavior.
+
+### React keys required when SVG children change position
+
+When a component uses d3 to imperatively draw into a `ref`-attached DOM element (e.g. the `Axis` component and its `<g ref={axisRef}>`), and that element can move to a different position in the React children array across renders, **explicit `key` props are mandatory**. Without keys, React's positional reconciliation can hand the wrong DOM `<g>` to the wrong Axis instance — causing d3 to draw an x-axis into a `<g>` that was previously a y-axis (or vice versa), which produces visually diagonal gridlines. The fix is `key="y-axis"` and `key="x-axis"` on the respective `<Axis>` elements inside `Graph`. This is already in place; preserve it when editing `Graph`.
+
+### `Graph` y-axis label position and paint order (`yLabelSide`, `yAxisOnTop`)
+
+`Graph` supports two props for histogram-style layouts where y-axis labels would otherwise be hidden under bars:
+
+- `yLabelSide="right"`: renders y-axis tick labels to the right of the axis line (inside the chart area) rather than the left. Use when left padding is too small for labels.
+- `yAxisOnTop={true}`: renders the y-axis `<Axis>` after `{children}` in SVG paint order, so labels appear on top of bars. **Only use via `BarGraph`'s `yLabelSide="right"` prop** — BarGraph sets `yAxisOnTop` automatically when `yLabelSide="right"`. Never pass `yAxisOnTop` directly to `Graph` from a story component.
+
+`BarGraph` passes `yAxisOnTop={yLabelSide === "right"}` to `Graph`. The defaults remain `yLabelSide="left"` and `yAxisOnTop=false`, matching all pre-existing stories.
