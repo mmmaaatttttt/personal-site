@@ -113,11 +113,44 @@ Stories not yet in the module map display a "Coming soon" message. Their MDX fil
 | `income-inequality`              | ✅ Complete   | `EconomySimulation` + `EconomyNodeGroup` (D3 force sim); collision/wealth logic in `data.ts`; 3 instances with `idx` and optional `editSavings` prop                   |
 | `fairest-of-them-all`            | ✅ Complete   | `CoinFlipHistogram`, `CoinFlipTable`, `CoinFlipBayesianModel` (beta PDF inline, no jStat; framer-motion animation for curve/color), `RentDivision` (Sperner's Lemma triangle mesh; `ToggleSwitch`, `LabeledCircle`, `RadioButtonGroup`, `Polygon` as local leaf components) |
 | `harvesting-wins`                | ✅ Complete   | `OrchardGame` (spinner + fruit tiles + localStorage), `OrchardGameSimulation` (rAF loop), `OrchardGameHeatData` (D3 heat map + sliders)                                |
-| `mind-the-gerrymandered-gap`     | ❌ Not started | Needs: `EfficiencyGapTable`, `GerrymanderHistoricalMap`, `IsoperimetricExplorer`, `SampleGerrymander`, `ResponsiveIFrame`✓                                             |
+| `mind-the-gerrymandered-gap`     | 🔄 In progress (G1 done) | G1 complete: `IsoperimetricExplorer` (pointer-drag, shoelace area, crossing guard) + `data.ts` (CSV parsed via `fs`, `ElectionRow[]`, `StateSummary[]`, `calculateNormalizedEg`, slider configs). Remaining: `SampleGerrymander`, `EfficiencyGapTable`, `GerrymanderHistoricalMap`, MDX wiring. |
 | `strength-in-numbers`            | ❌ Not started | Needs: `VotingBarChart`, `VotingLineChart`, `VotingMap`, `VotingPollWorkerAge`, `VotingTable`                                                                          |
 | `keeping-distances`              | ❌ Not started | Largest: 8 components (`DistanceExplorer`, `ManhattanCircle/Paths`, `PAdicCalculator/FractalDistance/HeatChart`, `StringDistanceExplorer`, `FunctionDistanceExplorer`) |
 
 ✓ = already available as a shared component or simple wrapper
+
+### Remaining migration: session plan
+
+8 sessions across 3 stories. Sessions are sized to be completable in one sitting.
+
+**`mind-the-gerrymandered-gap`**
+
+| Session | Focus | Risk |
+|---------|-------|------|
+| G1 ✅ | `IsoperimetricExplorer` + `data.ts` | Done |
+| G2 | `SampleGerrymander` (flood-fill, localStorage, interactive grid) + `EfficiencyGapTable` + shared-state wrapper replacing Redux | High |
+| G3 | `GerrymanderHistoricalMap` (USMap + BarGraph, dual sliders, election data) + MDX wiring + `meta.ts` + all tests | Medium |
+
+Key architecture note: legacy code uses Redux to share `districtCounts` between `SampleGerrymander` and `EfficiencyGapTable`. Replace with a thin wrapper component that holds state and passes it as props to both.
+
+**`strength-in-numbers`**
+
+| Session | Focus | Risk |
+|---------|-------|------|
+| S1 | Load voting CSV into `data.ts` (groupBy state, compute averages) + `VotingTable` (sortable, slider-controlled rows) + `VotingPollWorkerAge` (pie chart, year/state selectors) | Low |
+| S2 | `VotingBarChart` + `VotingLineChart` (framer-motion replaces `react-move/Animate`) + `VotingMap` (USMap, year slider, stat selector) + MDX wiring + `meta.ts` + all tests | Medium |
+
+All five components share one CSV (`data/csv/voting_data_2008_2016.csv`).
+
+**`keeping-distances`**
+
+| Session | Focus | Risk |
+|---------|-------|------|
+| K1 | `DistanceExplorer` (draggable points, euclidean distance) + `ManhattanCircle` (taxicab geometry) + `ManhattanPaths` (all-shortest-paths, clickable grid). Port `useDragState` hook once, reuse. | Low |
+| K2 | `PAdicCalculator` (p-adic math, LaTeX) + `StringDistanceExplorer` (Hamming, Levenshtein, Damerau-Levenshtein) + `FunctionDistanceExplorer` (draggable piecewise functions, L¹/L∞ toggle) | Low–Medium |
+| K3 | `HeatChart` as story-local component + `PAdicHeatChart` (grid of p-adic distances, tooltip) + `PAdicFractalDistance` (level/prime sliders, animated point emergence — `react-move/NodeGroup` → framer-motion) + MDX wiring + `meta.ts` + all tests | High |
+
+No external data — all components use on-the-fly math. `HeatChart` is story-local (not shared); `OrchardGameHeatData` has a similar local `HeatChart.tsx` as a reference for the pattern.
 
 ---
 
@@ -230,6 +263,16 @@ vi.mock("framer-motion", async (importOriginal) => {
 });
 ```
 Without this, clicking a button that triggers `animate()` will throw an async error in jsdom.
+
+**Pointer-event drag (any component using `onPointerDown/Move/Up` + `setPointerCapture`):**
+```ts
+beforeEach(() => {
+  Element.prototype.setPointerCapture = vi.fn();
+  Element.prototype.releasePointerCapture = vi.fn();
+  SVGSVGElement.prototype.getScreenCTM = vi.fn().mockReturnValue({ a: 1, d: 1, e: 0, f: 0 });
+});
+```
+jsdom doesn't implement `setPointerCapture` or `getScreenCTM`. The identity CTM (`a=1, d=1, e=0, f=0`) means clientX/Y maps directly to SVG coordinates in tests.
 
 **`localStorage` (any component that reads/writes localStorage):**
 ```ts
