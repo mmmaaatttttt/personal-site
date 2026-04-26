@@ -113,7 +113,7 @@ Stories not yet in the module map display a "Coming soon" message. Their MDX fil
 | `income-inequality`              | ✅ Complete   | `EconomySimulation` + `EconomyNodeGroup` (D3 force sim); collision/wealth logic in `data.ts`; 3 instances with `idx` and optional `editSavings` prop                   |
 | `fairest-of-them-all`            | ✅ Complete   | `CoinFlipHistogram`, `CoinFlipTable`, `CoinFlipBayesianModel` (beta PDF inline, no jStat; framer-motion animation for curve/color), `RentDivision` (Sperner's Lemma triangle mesh; `ToggleSwitch`, `LabeledCircle`, `RadioButtonGroup`, `Polygon` as local leaf components) |
 | `harvesting-wins`                | ✅ Complete   | `OrchardGame` (spinner + fruit tiles + localStorage), `OrchardGameSimulation` (rAF loop), `OrchardGameHeatData` (D3 heat map + sliders)                                |
-| `mind-the-gerrymandered-gap`     | 🔄 In progress (G1 done) | G1 complete: `IsoperimetricExplorer` (pointer-drag, shoelace area, crossing guard) + `data.ts` (CSV parsed via `fs`, `ElectionRow[]`, `StateSummary[]`, `calculateNormalizedEg`, slider configs). Remaining: `SampleGerrymander`, `EfficiencyGapTable`, `GerrymanderHistoricalMap`, MDX wiring. |
+| `mind-the-gerrymandered-gap`     | 🔄 In progress (G2 done) | G1: `IsoperimetricExplorer` + `data.ts`. G2: `SampleGerrymander` (flood-fill BFS, localStorage, `GerrymanderGrid` + `InteractiveGrid` + `DistrictStatus` sub-components), `EfficiencyGapTable` (wasted votes table), `GerrymanderPlayground` (shared-state wrapper replacing Redux). Remaining: `GerrymanderHistoricalMap`, MDX wiring. |
 | `strength-in-numbers`            | ❌ Not started | Needs: `VotingBarChart`, `VotingLineChart`, `VotingMap`, `VotingPollWorkerAge`, `VotingTable`                                                                          |
 | `keeping-distances`              | ❌ Not started | Largest: 8 components (`DistanceExplorer`, `ManhattanCircle/Paths`, `PAdicCalculator/FractalDistance/HeatChart`, `StringDistanceExplorer`, `FunctionDistanceExplorer`) |
 
@@ -128,7 +128,7 @@ Stories not yet in the module map display a "Coming soon" message. Their MDX fil
 | Session | Focus | Risk |
 |---------|-------|------|
 | G1 ✅ | `IsoperimetricExplorer` + `data.ts` | Done |
-| G2 | `SampleGerrymander` (flood-fill, localStorage, interactive grid) + `EfficiencyGapTable` + shared-state wrapper replacing Redux | High |
+| G2 ✅ | `SampleGerrymander` (flood-fill, localStorage, interactive grid) + `EfficiencyGapTable` + shared-state wrapper replacing Redux | Done |
 | G3 | `GerrymanderHistoricalMap` (USMap + BarGraph, dual sliders, election data) + MDX wiring + `meta.ts` + all tests | Medium |
 
 Key architecture note: legacy code uses Redux to share `districtCounts` between `SampleGerrymander` and `EfficiencyGapTable`. Replace with a thin wrapper component that holds state and passes it as props to both.
@@ -178,6 +178,10 @@ All in `components/story/shared/`:
 ---
 
 ## Key Decisions & Conventions
+
+### Pure helpers belong in their own file
+
+Pure functions (math, algorithms, data transforms) must **never** live in the same file as a component. Extract them to a dedicated module (e.g. `floodFill.ts`, `mathHelpers.ts`) and test them there. This applies even when a function is only used by one component — co-locating logic inside a component file makes it untestable in isolation and obscures the component's responsibility. The rule is: if a function doesn't import React and doesn't touch the DOM, it goes in its own file.
 
 ### TypeScript errors in test fixtures
 
