@@ -30,6 +30,8 @@ const storyModules: Record<
     import("@/content/stories/harvesting-wins/index.mdx"),
   "fairest-of-them-all": () =>
     import("@/content/stories/fairest-of-them-all/index.mdx"),
+  "mind-the-gerrymandered-gap": () =>
+    import("@/content/stories/mind-the-gerrymandered-gap/index.mdx"),
 };
 
 export async function generateStaticParams() {

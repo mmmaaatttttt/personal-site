@@ -1,24 +1,7 @@
----
-title: "Mind the Gerrymandered Gap"
-date: "2018-10-19"
-featured_image: "../../images/featured_images/mind_the_gerrymandered_gap.jpg"
-caption: "An interactive introduction to gerrymandering."
-featured_image_caption: "A map of the United States. Image credit: John-Mark Smith on Unsplash."
-tags:
-  - geometry
-  - statistics
-  - civics
-  - modeling
-  - voting
----
-
-import {
-  EfficiencyGapTable,
-  GerrymanderHistoricalMap,
-  IsoperimetricExplorer,
-  ResponsiveIFrame,
-  SampleGerrymander
-} from "story_components";
+import IsoperimetricExplorer from "./components/IsoperimetricExplorer";
+import GerrymanderGrid from "./components/SampleGerrymander";
+import StandaloneEfficiencyGapTable from "./components/StandaloneEfficiencyGapTable";
+import GerrymanderHistoricalMap from "./components/GerrymanderHistoricalMap";
 
 2018 has been a big year for raising awareness on how states draw congressional districts. The Supreme Court [heard two cases](https://www.washingtonpost.com/politics/courts_law/supreme-court-sidesteps-decision-on-partisan-gerrymandering/2018/06/18/c909bf26-7303-11e8-805c-4b67019fcfe4_story.html) arguing that the way states delineate these districts is, in certain cases, unconstitutional. Pennsylvania's state supreme court said that its congressional lines violated the state constitution, and then [assigned a new map](https://www.washingtonpost.com/news/wonk/wp/2018/02/19/pennsylvania-supreme-court-draws-a-much-more-competitive-district-map-to-overturn-republican-gerrymander/) when the legislature couldn't come up with one on its own. And voters in Michigan, Missouri, Utah, and Colorado can expect to vote on redistricting measures [this fall](https://www.nytimes.com/2018/07/23/us/gerrymandering-states.html).
 
@@ -34,7 +17,7 @@ There are some basic redistricting rules that states must abide by, such as ensu
 
 Unfortunately, this means that the process of drawing congressional lines is ripe for manipulation. And in many cases, when one party is in power, it's possible for them to draw congressional boundaries in a way that preserves or enhances their power, by exploiting geography to bolster their representation in Congress. This process, as you may well know, is called **gerrymandering**. The name comes from an 1812 political cartoon which drew attention to a wonky looking state senate district. The name itself is a portmanteau of the name of the Governor at the time, Elbridge Gerry, and the word _salamander_, as the district was said to resemble said amphibian. Gerry caught flak for the shape of this district because it was believed that the district was drawn this way to help his party in an upcoming election.
 
-![In a cruel twist of fate, Gerry pronounced his last name with a hard 'G.'](../../images/first_gerrymander.png "In a cruel twist of fate, Gerry pronounced his last name with a hard 'G.' (Source: Wikipedia)"){.w-60}
+![In a cruel twist of fate, Gerry pronounced his last name with a hard 'G.'](../../images/first_gerrymander.png "In a cruel twist of fate, Gerry pronounced his last name with a hard 'G.' (Source: Wikipedia)")
 
 ---
 
@@ -44,7 +27,7 @@ It turns out that it's not too hard to gerrymander districts. Let's take a look 
 
 In this scenario, how would you draw congressional lines to divide this region into six districts?
 
-<SampleGerrymander />
+<GerrymanderGrid />
 
 Typically gerrymandering is achieved by combining two strategies: **packing** and **cracking**. Packing refers to consolidating large numbers of one party into a small number of districts. Cracking is the opposite: diluting the voting power of a large bloc of voters in one party by splitting them up so that they form minorities in multiple districts.
 
@@ -116,7 +99,7 @@ The **efficiency gap** is a gerrymandering metric that takes these observations 
 
 This gap is calculated by counting the number of votes each party has wasted in each district. Once the total number of wasted votes has been found, we take the difference, and divide it by the total number of votes cast.
 
-<EfficiencyGapTable />
+<StandaloneEfficiencyGapTable />
 
 This calculation has nothing to do with the shape of the districts, and everything to do with the resulting election outcome. When a collection of districts yield a high efficiency gap, does this mean that something sinister is going on with redistricting? In order to answer this question more fully, we need to take a look at how this metric fares against actual election data.
 
