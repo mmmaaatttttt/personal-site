@@ -21,7 +21,7 @@ interface MapProperties<T> {
 interface USMapProps<T> {
   colors: string[];
   data: T[];
-  domain?: [number, number];
+  domain?: number[];
   fillAccessor: (properties: MapProperties<T>) => number | null;
   getTooltipBody: (properties: MapProperties<T>) => string | string[];
   getTooltipTitle: (properties: MapProperties<T>) => string;
