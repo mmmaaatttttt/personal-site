@@ -48,7 +48,8 @@ const BarItem: React.FC<BarItemProps> = ({
       <g>
         <motion.rect
           initial={false}
-          animate={{ x, width, y, height, fill: data.color || color }}
+          animate={{ x, width, y, height }}
+          fill={data.color || color}
           transition={{ duration: 0.1 }}
           stroke="rgba(0,0,0,0.1)"
           strokeWidth={1}
@@ -75,7 +76,8 @@ const BarItem: React.FC<BarItemProps> = ({
     <g>
       <motion.rect
         initial={{ height: 0, y: graphHeight - paddingBottom }}
-        animate={{ x, width, y, height, fill: data.color || color }}
+        animate={{ x, width, y, height }}
+        fill={data.color || color}
         transition={{ duration: 0.5, delay: index * 0.05 }}
         stroke="rgba(0,0,0,0.1)"
         strokeWidth={1}

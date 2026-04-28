@@ -103,8 +103,8 @@ const BarGraph: React.FC<BarGraphProps> = ({
         tickStepY={tickStepY ? () => tickStepY : (tickStep ? () => tickStep : undefined)}
       >
         <g clipPath={`url(#clip-path-${svgId})`}>
-          <AnimatePresence initial={animated}>
-            {barData.map((d, i) => {
+          {(() => {
+            const items = barData.map((d, i) => {
               let x: number;
               let barWidth: number;
 
@@ -138,8 +138,14 @@ const BarGraph: React.FC<BarGraphProps> = ({
                   animated={animated}
                 />
               );
-            })}
-          </AnimatePresence>
+            });
+            // AnimatePresence is only needed for animated=true (exit animations on bar removal).
+            // For animated=false, React's key-based reconciliation immediately removes bars,
+            // preventing ghost bars that would otherwise stack during the transition.
+            return animated ? (
+              <AnimatePresence initial={true}>{items}</AnimatePresence>
+            ) : items;
+          })()}
         </g>
       </Graph>
     </div>
