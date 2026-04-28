@@ -114,7 +114,7 @@ Stories not yet in the module map display a "Coming soon" message. Their MDX fil
 | `fairest-of-them-all`            | ✅ Complete   | `CoinFlipHistogram`, `CoinFlipTable`, `CoinFlipBayesianModel` (beta PDF inline, no jStat; framer-motion animation for curve/color), `RentDivision` (Sperner's Lemma triangle mesh; `ToggleSwitch`, `LabeledCircle`, `RadioButtonGroup`, `Polygon` as local leaf components) |
 | `harvesting-wins`                | ✅ Complete   | `OrchardGame` (spinner + fruit tiles + localStorage), `OrchardGameSimulation` (rAF loop), `OrchardGameHeatData` (D3 heat map + sliders)                                |
 | `mind-the-gerrymandered-gap`     | ✅ Complete   | `IsoperimetricExplorer` + `data.ts`; `SampleGerrymander` (flood-fill BFS, localStorage, `GerrymanderGrid` + `InteractiveGrid` + `DistrictStatus`), `EfficiencyGapTable`, `GerrymanderPlayground` (shared-state wrapper replacing Redux); `GerrymanderHistoricalMap` (USMap + BarGraph, dual sliders, election data) |
-| `strength-in-numbers`            | ❌ Not started | Needs: `VotingBarChart`, `VotingLineChart`, `VotingMap`, `VotingPollWorkerAge`, `VotingTable`                                                                          |
+| `strength-in-numbers`            | 🔄 S1 done    | `data.ts` (CSV → `voterTableData`, `pollWorkerAgeData`, `allStates`), `VotingTable` (sortable, slider rows), `VotingPollWorkerAge` (pie chart, year/state selectors) done. Needs: `VotingBarChart`, `VotingLineChart`, `VotingMap` + MDX wiring + `meta.ts` |
 | `keeping-distances`              | ❌ Not started | Largest: 8 components (`DistanceExplorer`, `ManhattanCircle/Paths`, `PAdicCalculator/FractalDistance/HeatChart`, `StringDistanceExplorer`, `FunctionDistanceExplorer`) |
 
 ✓ = already available as a shared component or simple wrapper
@@ -127,7 +127,7 @@ Stories not yet in the module map display a "Coming soon" message. Their MDX fil
 
 | Session | Focus | Risk |
 |---------|-------|------|
-| S1 | Load voting CSV into `data.ts` (groupBy state, compute averages) + `VotingTable` (sortable, slider-controlled rows) + `VotingPollWorkerAge` (pie chart, year/state selectors) | Low |
+| ~~S1~~ | ~~Load voting CSV into `data.ts` (groupBy state, compute averages) + `VotingTable` (sortable, slider-controlled rows) + `VotingPollWorkerAge` (pie chart, year/state selectors)~~ | ~~done~~ |
 | S2 | `VotingBarChart` + `VotingLineChart` (framer-motion replaces `react-move/Animate`) + `VotingMap` (USMap, year slider, stat selector) + MDX wiring + `meta.ts` + all tests | Medium |
 
 All five components share one CSV (`data/csv/voting_data_2008_2016.csv`).
