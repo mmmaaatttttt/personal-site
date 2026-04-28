@@ -113,7 +113,7 @@ Stories not yet in the module map display a "Coming soon" message. Their MDX fil
 | `income-inequality`              | ✅ Complete   | `EconomySimulation` + `EconomyNodeGroup` (D3 force sim); collision/wealth logic in `data.ts`; 3 instances with `idx` and optional `editSavings` prop                   |
 | `fairest-of-them-all`            | ✅ Complete   | `CoinFlipHistogram`, `CoinFlipTable`, `CoinFlipBayesianModel` (beta PDF inline, no jStat; framer-motion animation for curve/color), `RentDivision` (Sperner's Lemma triangle mesh; `ToggleSwitch`, `LabeledCircle`, `RadioButtonGroup`, `Polygon` as local leaf components) |
 | `harvesting-wins`                | ✅ Complete   | `OrchardGame` (spinner + fruit tiles + localStorage), `OrchardGameSimulation` (rAF loop), `OrchardGameHeatData` (D3 heat map + sliders)                                |
-| `mind-the-gerrymandered-gap`     | 🔄 In progress (G2 done) | G1: `IsoperimetricExplorer` + `data.ts`. G2: `SampleGerrymander` (flood-fill BFS, localStorage, `GerrymanderGrid` + `InteractiveGrid` + `DistrictStatus` sub-components), `EfficiencyGapTable` (wasted votes table), `GerrymanderPlayground` (shared-state wrapper replacing Redux). Remaining: `GerrymanderHistoricalMap`, MDX wiring. |
+| `mind-the-gerrymandered-gap`     | ✅ Complete   | `IsoperimetricExplorer` + `data.ts`; `SampleGerrymander` (flood-fill BFS, localStorage, `GerrymanderGrid` + `InteractiveGrid` + `DistrictStatus`), `EfficiencyGapTable`, `GerrymanderPlayground` (shared-state wrapper replacing Redux); `GerrymanderHistoricalMap` (USMap + BarGraph, dual sliders, election data) |
 | `strength-in-numbers`            | ❌ Not started | Needs: `VotingBarChart`, `VotingLineChart`, `VotingMap`, `VotingPollWorkerAge`, `VotingTable`                                                                          |
 | `keeping-distances`              | ❌ Not started | Largest: 8 components (`DistanceExplorer`, `ManhattanCircle/Paths`, `PAdicCalculator/FractalDistance/HeatChart`, `StringDistanceExplorer`, `FunctionDistanceExplorer`) |
 
@@ -121,17 +121,7 @@ Stories not yet in the module map display a "Coming soon" message. Their MDX fil
 
 ### Remaining migration: session plan
 
-8 sessions across 3 stories. Sessions are sized to be completable in one sitting.
-
-**`mind-the-gerrymandered-gap`**
-
-| Session | Focus | Risk |
-|---------|-------|------|
-| G1 ✅ | `IsoperimetricExplorer` + `data.ts` | Done |
-| G2 ✅ | `SampleGerrymander` (flood-fill, localStorage, interactive grid) + `EfficiencyGapTable` + shared-state wrapper replacing Redux | Done |
-| G3 | `GerrymanderHistoricalMap` (USMap + BarGraph, dual sliders, election data) + MDX wiring + `meta.ts` + all tests | Medium |
-
-Key architecture note: legacy code uses Redux to share `districtCounts` between `SampleGerrymander` and `EfficiencyGapTable`. Replace with a thin wrapper component that holds state and passes it as props to both.
+6 sessions across 2 stories. Sessions are sized to be completable in one sitting.
 
 **`strength-in-numbers`**
 
