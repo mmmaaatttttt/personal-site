@@ -5,6 +5,8 @@ export const COL_COUNT = 9;
 export const GRID_WIDTH = 450;
 export const STROKE_WIDTH = 6;
 export const STORAGE_KEY = "segments";
+export const GERRYMANDER_COUNTS_EVENT = "gerrymander:counts";
+export const GERRYMANDER_COUNTS_KEY = "gerrymanderCounts";
 export const COLOR_RANGE: [string, string] = [COLORS.DARK_BLUE, COLORS.RED];
 
 const PADDING_SCALE = 0.075;

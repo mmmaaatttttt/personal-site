@@ -11,6 +11,8 @@ import {
   GRID_WIDTH,
   STROKE_WIDTH,
   STORAGE_KEY,
+  GERRYMANDER_COUNTS_EVENT,
+  GERRYMANDER_COUNTS_KEY,
   COLOR_RANGE,
   computeGridDimensions,
   getInitialSegments,
@@ -21,7 +23,7 @@ interface SampleGerrymanderProps {
   rowCount?: number;
   colCount?: number;
   colorRange?: [string, string];
-  onDistrictCountsChange: (counts: [number, number][] | null) => void;
+  onDistrictCountsChange?: (counts: [number, number][] | null) => void;
 }
 
 const SampleGerrymander: FC<SampleGerrymanderProps> = ({
@@ -64,13 +66,16 @@ const SampleGerrymander: FC<SampleGerrymanderProps> = ({
     const valid =
       newDistricts.length === rowCount &&
       newDistricts.every((d) => d.length === colCount);
-    onChangeRef.current(
-      valid
-        ? newDistricts.map((d) => [
-            d.filter(([r]) => r % 2 === 0).length,
-            d.filter(([r]) => r % 2 === 1).length,
-          ])
-        : null
+    const counts = valid
+      ? newDistricts.map((d) => [
+          d.filter(([r]) => r % 2 === 0).length,
+          d.filter(([r]) => r % 2 === 1).length,
+        ] as [number, number])
+      : null;
+    onChangeRef.current?.(counts);
+    localStorage.setItem(GERRYMANDER_COUNTS_KEY, JSON.stringify(counts));
+    window.dispatchEvent(
+      new CustomEvent(GERRYMANDER_COUNTS_EVENT, { detail: counts })
     );
   }, [segments, rowCount, colCount]);
 
