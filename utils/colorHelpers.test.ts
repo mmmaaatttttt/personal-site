@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { darkenHex } from "./colorHelpers";
+import { darkenHex, lightenHex } from "./colorHelpers";
 
 describe("darkenHex", () => {
   it("returns black when amount is 1", () => {
@@ -28,5 +28,19 @@ describe("darkenHex", () => {
 
   it("works without a leading #", () => {
     expect(darkenHex("ffffff", 1)).toBe("#000000");
+  });
+});
+
+describe("lightenHex", () => {
+  it("lightens black by 40% to 66 per channel", () => {
+    expect(lightenHex("#000000", 0.4)).toBe("#666666");
+  });
+
+  it("leaves white unchanged", () => {
+    expect(lightenHex("#ffffff", 0.4)).toBe("#ffffff");
+  });
+
+  it("lightens pure red by 50% (HSL: L=50%→100%) to white", () => {
+    expect(lightenHex("#ff0000", 0.5)).toBe("#ffffff");
   });
 });
