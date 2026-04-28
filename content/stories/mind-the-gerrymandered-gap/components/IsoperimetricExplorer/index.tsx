@@ -35,8 +35,12 @@ const IsoperimetricExplorer: FC = () => {
   };
 
   const handleDrag = (idx: number, coords: { x: number; y: number }) => {
+    const clamped = {
+      x: Math.max(CIRCLE_RADIUS, Math.min(WIDTH - CIRCLE_RADIUS, coords.x)),
+      y: Math.max(CIRCLE_RADIUS, Math.min(HEIGHT - CIRCLE_RADIUS, coords.y)),
+    };
     const next = [...points];
-    next[idx] = { ...coords };
+    next[idx] = clamped;
     if (crossingExists(next, idx)) return;
     setPoints(next);
   };
@@ -62,13 +66,12 @@ const IsoperimetricExplorer: FC = () => {
         height={HEIGHT}
         id="isoperimetric-svg"
         marginTop="0.5rem"
-        clipChildren={false}
       >
         <rect
-          x={0}
-          y={0}
-          width={WIDTH}
-          height={HEIGHT}
+          x={STROKE_WIDTH / 2}
+          y={STROKE_WIDTH / 2}
+          width={WIDTH - STROKE_WIDTH}
+          height={HEIGHT - STROKE_WIDTH}
           stroke={COLORS.GRAY}
           strokeWidth={STROKE_WIDTH}
           fill="none"
