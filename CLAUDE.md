@@ -114,23 +114,15 @@ Stories not yet in the module map display a "Coming soon" message. Their MDX fil
 | `fairest-of-them-all`            | ✅ Complete   | `CoinFlipHistogram`, `CoinFlipTable`, `CoinFlipBayesianModel` (beta PDF inline, no jStat; framer-motion animation for curve/color), `RentDivision` (Sperner's Lemma triangle mesh; `ToggleSwitch`, `LabeledCircle`, `RadioButtonGroup`, `Polygon` as local leaf components) |
 | `harvesting-wins`                | ✅ Complete   | `OrchardGame` (spinner + fruit tiles + localStorage), `OrchardGameSimulation` (rAF loop), `OrchardGameHeatData` (D3 heat map + sliders)                                |
 | `mind-the-gerrymandered-gap`     | ✅ Complete   | `IsoperimetricExplorer` + `data.ts`; `SampleGerrymander` (flood-fill BFS, localStorage, `GerrymanderGrid` + `InteractiveGrid` + `DistrictStatus`), `EfficiencyGapTable`, `GerrymanderPlayground` (shared-state wrapper replacing Redux); `GerrymanderHistoricalMap` (USMap + BarGraph, dual sliders, election data) |
-| `strength-in-numbers`            | 🔄 S1 done    | `data.ts` (CSV → `voterTableData`, `pollWorkerAgeData`, `allStates`), `VotingTable` (sortable, slider rows), `VotingPollWorkerAge` (pie chart, year/state selectors) done. Needs: `VotingBarChart`, `VotingLineChart`, `VotingMap` + MDX wiring + `meta.ts` |
+| `strength-in-numbers`            | ✅ Complete   | `VotingTable`, `VotingPollWorkerAge`, `VotingBarChart` (voters/party variants), `VotingLineChart` (voters/workers), `VotingMap` (voters/workers); variant prop replaces function props across MDX boundary; `motion.circle` unavailable in framer-motion v12 jsdom — use plain `<circle>` |
 | `keeping-distances`              | ❌ Not started | Largest: 8 components (`DistanceExplorer`, `ManhattanCircle/Paths`, `PAdicCalculator/FractalDistance/HeatChart`, `StringDistanceExplorer`, `FunctionDistanceExplorer`) |
 
 ✓ = already available as a shared component or simple wrapper
 
 ### Remaining migration: session plan
 
-6 sessions across 2 stories. Sessions are sized to be completable in one sitting.
+3 sessions across 1 story. Sessions are sized to be completable in one sitting.
 
-**`strength-in-numbers`**
-
-| Session | Focus | Risk |
-|---------|-------|------|
-| ~~S1~~ | ~~Load voting CSV into `data.ts` (groupBy state, compute averages) + `VotingTable` (sortable, slider-controlled rows) + `VotingPollWorkerAge` (pie chart, year/state selectors)~~ | ~~done~~ |
-| S2 | `VotingBarChart` + `VotingLineChart` (framer-motion replaces `react-move/Animate`) + `VotingMap` (USMap, year slider, stat selector) + MDX wiring + `meta.ts` + all tests | Medium |
-
-All five components share one CSV (`data/csv/voting_data_2008_2016.csv`).
 
 **`keeping-distances`**
 
@@ -373,6 +365,20 @@ For one-shot imperative animations (e.g. spinning a needle to a random angle), u
 ### React keys required when SVG children change position
 
 When a component uses d3 to imperatively draw into a `ref`-attached DOM element (e.g. the `Axis` component and its `<g ref={axisRef}>`), and that element can move to a different position in the React children array across renders, **explicit `key` props are mandatory**. Without keys, React's positional reconciliation can hand the wrong DOM `<g>` to the wrong Axis instance — causing d3 to draw an x-axis into a `<g>` that was previously a y-axis (or vice versa), which produces visually diagonal gridlines. The fix is `key="y-axis"` and `key="x-axis"` on the respective `<Axis>` elements inside `Graph`. This is already in place; preserve it when editing `Graph`.
+
+### CSV line endings
+
+Strip Windows line endings before parsing any CSV loaded with `fs.readFileSync`:
+
+```ts
+const text = fs.readFileSync(csvPath, "utf-8").replace(/\r/g, "");
+```
+
+Without this, rows end with `\r` and header-column index lookups (`indexOf('column_name')`) silently return `-1`, producing `NaN` for every value in that column.
+
+### Choropleth color scales
+
+`USMap` choropleth scales use `COLORS.WHITE` (`#ffffff`) as the minimum color — not a lightened/tinted variant of the target color. A scale like `[COLORS.WHITE, COLORS.ORANGE]` matches production. If states look darker than expected, the minimum color is wrong.
 
 ### `Graph` y-axis label position and paint order (`yLabelSide`, `yAxisOnTop`)
 
