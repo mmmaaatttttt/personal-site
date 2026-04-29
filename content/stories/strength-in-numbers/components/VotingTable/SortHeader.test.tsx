@@ -17,8 +17,8 @@ describe("SortHeader", () => {
     expect(screen.getByText("State")).toBeInTheDocument();
   });
 
-  it("shows unsorted icon when not the active sort key", () => {
-    render(
+  it("renders an SVG icon in the sort button", () => {
+    const { container } = render(
       <SortHeader
         label="State"
         sortKey="state"
@@ -27,11 +27,11 @@ describe("SortHeader", () => {
         onClick={vi.fn()}
       />
     );
-    expect(screen.getByRole("button")).toHaveTextContent("⇅");
+    expect(container.querySelector("button svg")).toBeInTheDocument();
   });
 
-  it("shows ascending icon when active and ascending", () => {
-    render(
+  it("renders an SVG icon when active and ascending", () => {
+    const { container } = render(
       <SortHeader
         label="State"
         sortKey="state"
@@ -40,11 +40,11 @@ describe("SortHeader", () => {
         onClick={vi.fn()}
       />
     );
-    expect(screen.getByRole("button")).toHaveTextContent("▲");
+    expect(container.querySelector("button svg")).toBeInTheDocument();
   });
 
-  it("shows descending icon when active and descending", () => {
-    render(
+  it("renders an SVG icon when active and descending", () => {
+    const { container } = render(
       <SortHeader
         label="State"
         sortKey="state"
@@ -53,7 +53,7 @@ describe("SortHeader", () => {
         onClick={vi.fn()}
       />
     );
-    expect(screen.getByRole("button")).toHaveTextContent("▼");
+    expect(container.querySelector("button svg")).toBeInTheDocument();
   });
 
   it("calls onClick with the sort key when clicked", () => {
