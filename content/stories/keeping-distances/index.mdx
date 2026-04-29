@@ -1,27 +1,6 @@
----
-title: "Keeping Distances"
-date: "2019-07-01"
-featured_image: "../../images/featured_images/taxicab_view.jpg"
-caption: "On the intersection between Google maps, spelling mistakes, and prime numbers."
-featured_image_caption: "View from the top of a taxi. Photo by Clem Onojeghuo on Unsplash."
-outline: true
-tags:
-  - geometry
-  - number theory
-  - functions
----
-
-import {
-  DistanceExplorer,
-  FunctionDistanceExplorer,
-  ManhattanCircle,
-  ManhattanPaths,
-  PAdicCalculator,
-  PAdicFractalDistance,
-  PAdicHeatChart,
-  Sidebar,
-  StringDistanceExplorer
-} from "story_components";
+import DistanceExplorer from "./components/DistanceExplorer";
+import ManhattanCircle from "./components/ManhattanCircle";
+import ManhattanPaths from "./components/ManhattanPaths";
 
 When was the last time you went more than a day without thinking about distance?
 It might seem like a strange question. But notions of distance, whether literal
@@ -189,7 +168,7 @@ Here's a demonstration for you to play around with these three notions of word
 distance. (Bonus question: what would a circle look like in the geometries
 determined by these distances?)
 
-<StringDistanceExplorer caption="Figure 4: Type words into the boxes to compare three different distance measures." />
+*(Interactive coming in session K2)*
 
 ---
 
@@ -227,7 +206,7 @@ this distance is 0, the functions are the same.
 Here's a demonstration where you can adjust some simple functions and see both
 of these distances change.
 
-<FunctionDistanceExplorer caption="Figure 4: You can adjust a few points on the orange and green function to explore how our notions of distance change." />
+*(Interactive coming in session K2)*
 
 A question for you to ponder: if the largest difference distance is small, what
 (if anything) can you say about the area distance? If the area distance is
@@ -313,7 +292,7 @@ Here's a demonstration that will allow you to play around with these ideas in
 more detail. You can select a prime and then calculate the *p*-adic distance
 between any two whole numbers within the range from -1,000,000 to 1,000,000.
 
-<PAdicCalculator caption="Figure 5: Use this tool to calculating the p-adic difference between any numbers within the range from -1,000,000 to 1,000,000."/>
+*(Interactive coming in session K2)*
 
 Why in the world would you want to do this? I'm afraid a historical motivation
 would take us too far afield, so if nothing else, just take it as a mathematical
@@ -325,7 +304,7 @@ distances are equal along diagonals that move up and to the right. This is
 because adding the same value to two numbers has no effect on their *p*-adic
 distance: 10 - 2 has a 2-adic distance of 0.125, just as (10 + 5) - (2 + 5) = 15 - 7 does.
 
-<PAdicHeatChart caption="Figure 6: A heat chart of p-adic distances for pairs of numbers between 1 and 25. The darker the square, the closer the distance to 1. The lighter the square, the closer the distance to 0. Hover over (or tap on) a square to see the numbers and their distance."/>
+*(Interactive coming in session K3)*
 
 While the chart above can show us several distance calculations at a glance, it
 also has a flaw. By putting numbers along the top and right in increasing order
@@ -337,7 +316,7 @@ distance between 1 and 25 is much smaller.
 Here's another way to visualize numbers based on their *p*-adic distance, adapted
 from [Visualizing the p-adic Integers](https://www.jstor.org/stable/2323809) and [The p-adic integers: General introduction and visual representation](http://math.uni.lu/eml/projects/reports/P-adics.pdf). In this representation, numbers form a fractal-like structure. The numbers clump together quickly, so this demonstration only supports seeing a handful of them for the primes 3, 5, and 7:
 
-<PAdicFractalDistance caption="Figure 7: Another representation of nearby numbers. Choose a prime, and then use the slider to see all numbers less than that prime (black), less then the square of that prime (black and blue), or less than the cube of that prime (black, blue, and orange). Points within a cluster are 'close' in the p-adic sense." />
+*(Interactive coming in session K3)*
 
 ---
 
@@ -359,12 +338,12 @@ any distance function on pairs of rational numbers must be equivalent to one of 
 3. The **p-adic distance** function for some prime _p_.
 
 In other words, even though *p*-adic distances fall outside of our everyday
-experience, mathematically they are of fundamental importance. 
+experience, mathematically they are of fundamental importance.
 
 Second, since there are infinitely prime numbers, in some sense it is the
 absolute value function that's the outlier, not the notion of *p*-adic distance.
 In fact, there's active research at the intersection of physics and *p*-adic
-distance functions (see the resources at the end if you're curious). 
+distance functions (see the resources at the end if you're curious).
 
 Third, there are some fun and counter-intuitive results in geometry that emerge
 when working with *p*-adic distance. Here are two to break your brain a little.

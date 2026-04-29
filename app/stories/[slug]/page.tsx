@@ -34,6 +34,8 @@ const storyModules: Record<
     import("@/content/stories/mind-the-gerrymandered-gap/index.mdx"),
   "strength-in-numbers": () =>
     import("@/content/stories/strength-in-numbers/index.mdx"),
+  "keeping-distances": () =>
+    import("@/content/stories/keeping-distances/index.mdx"),
 };
 
 export async function generateStaticParams() {

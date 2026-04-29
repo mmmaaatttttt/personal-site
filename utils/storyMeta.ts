@@ -10,6 +10,7 @@ import harvestingWins from "@/content/stories/harvesting-wins/meta";
 import fairestOfThemAll from "@/content/stories/fairest-of-them-all/meta";
 import mindTheGerrymanderGap from "@/content/stories/mind-the-gerrymandered-gap/meta";
 import strengthInNumbers from "@/content/stories/strength-in-numbers/meta";
+import keepingDistances from "@/content/stories/keeping-distances/meta";
 
 /**
  * Typed metadata for ported stories. getArticle() checks here first;
@@ -29,4 +30,5 @@ export const storyMeta: Record<string, ArticleFrontmatter> = {
   "fairest-of-them-all": fairestOfThemAll,
   "mind-the-gerrymandered-gap": mindTheGerrymanderGap,
   "strength-in-numbers": strengthInNumbers,
+  "keeping-distances": keepingDistances,
 };
