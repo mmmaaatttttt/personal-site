@@ -7,6 +7,7 @@ interface PieChartProps {
   colorScale: (key: number) => string;
   height?: number;
   padding?: number;
+  percentFormat?: string;
   showLabels?: boolean;
   stroke?: string;
   textFill?: string;
@@ -19,6 +20,7 @@ const PieChart: FC<PieChartProps> = ({
   colorScale,
   height = 600,
   padding = 0,
+  percentFormat = ".0%",
   showLabels = true,
   stroke = "white",
   textFill = "white",
@@ -52,6 +54,7 @@ const PieChart: FC<PieChartProps> = ({
               stroke={stroke}
               showLabels={showLabels}
               textFill={textFill}
+              percentFormat={percentFormat}
             />
           ))}
         </g>

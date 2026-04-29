@@ -9,13 +9,14 @@ interface AnimatedPercentageProps {
   textFill: string;
   x: MotionValue<number>;
   y: MotionValue<number>;
+  percentFormat: string;
 }
 
-const AnimatedPercentage: FC<AnimatedPercentageProps> = ({ startAngle, endAngle, textFill, x, y }) => {
+const AnimatedPercentage: FC<AnimatedPercentageProps> = ({ startAngle, endAngle, textFill, x, y, percentFormat }) => {
   const [displayValue, setDisplayValue] = useState("");
-  
-  const percentageValue = useTransform([startAngle, endAngle], ([sa, ea]: number[]) => 
-    format(".0%")((ea - sa) / (2 * Math.PI))
+
+  const percentageValue = useTransform([startAngle, endAngle], ([sa, ea]: number[]) =>
+    format(percentFormat)((ea - sa) / (2 * Math.PI))
   );
 
   const opacityValue = useTransform([startAngle, endAngle], ([sa, ea]: number[]) => 
@@ -52,9 +53,10 @@ interface PieSliceProps {
   stroke: string;
   showLabels: boolean;
   textFill: string;
+  percentFormat: string;
 }
 
-const PieSlice: FC<PieSliceProps> = ({ datum, index, pathArc, colorScale, stroke, showLabels, textFill }) => {
+const PieSlice: FC<PieSliceProps> = ({ datum, index, pathArc, colorScale, stroke, showLabels, textFill, percentFormat }) => {
   const startAngle = useSpring(datum.startAngle, { bounce: 0, duration: 500 });
   const endAngle = useSpring(datum.endAngle, { bounce: 0, duration: 500 });
 
@@ -92,6 +94,7 @@ const PieSlice: FC<PieSliceProps> = ({ datum, index, pathArc, colorScale, stroke
           textFill={textFill}
           x={labelX}
           y={labelY}
+          percentFormat={percentFormat}
         />
       )}
     </>
