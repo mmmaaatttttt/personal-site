@@ -82,6 +82,7 @@ const VotingPollWorkerAge: FC<VotingPollWorkerAgeProps> = ({ data, states }) => 
                     colorScale={(i) => colorScale(i)}
                     values={ages}
                     textFill={COLORS.BLACK}
+                    percentFormat=".1%"
                   />
                 </NarrowContainer>
               </>

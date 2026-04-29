@@ -50,6 +50,7 @@ const VotingTable: FC<VotingTableProps> = ({ tableData }) => {
   const headers = [
     {
       key: "state",
+      className: "w-1/3",
       content: (
         <SortHeader
           label="State"
@@ -62,6 +63,7 @@ const VotingTable: FC<VotingTableProps> = ({ tableData }) => {
     },
     {
       key: "sat",
+      className: "w-1/3",
       content: (
         <SortHeader
           label="Average Saturation"
@@ -74,6 +76,7 @@ const VotingTable: FC<VotingTableProps> = ({ tableData }) => {
     },
     {
       key: "turnout",
+      className: "w-1/3",
       content: (
         <SortHeader
           label="Average Turnout"
