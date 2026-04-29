@@ -115,7 +115,7 @@ Stories not yet in the module map display a "Coming soon" message. Their MDX fil
 | `harvesting-wins`                | ✅ Complete   | `OrchardGame` (spinner + fruit tiles + localStorage), `OrchardGameSimulation` (rAF loop), `OrchardGameHeatData` (D3 heat map + sliders)                                |
 | `mind-the-gerrymandered-gap`     | ✅ Complete   | `IsoperimetricExplorer` + `data.ts`; `SampleGerrymander` (flood-fill BFS, localStorage, `GerrymanderGrid` + `InteractiveGrid` + `DistrictStatus`), `EfficiencyGapTable`, `GerrymanderPlayground` (shared-state wrapper replacing Redux); `GerrymanderHistoricalMap` (USMap + BarGraph, dual sliders, election data) |
 | `strength-in-numbers`            | ✅ Complete   | `VotingTable`, `VotingPollWorkerAge`, `VotingBarChart` (voters/party variants), `VotingLineChart` (voters/workers), `VotingMap` (voters/workers); variant prop replaces function props across MDX boundary; `motion.circle` unavailable in framer-motion v12 jsdom — use plain `<circle>` |
-| `keeping-distances`              | ❌ Not started | Largest: 8 components (`DistanceExplorer`, `ManhattanCircle/Paths`, `PAdicCalculator/FractalDistance/HeatChart`, `StringDistanceExplorer`, `FunctionDistanceExplorer`) |
+| `keeping-distances`              | 🔄 K1 done    | K1: `DistanceExplorer` (+ `useDragState`), `ManhattanCircle`, `ManhattanPaths`. `DraggableCircle` promoted to shared. Story wired, K2/K3 slots are placeholder text in MDX. |
 
 ✓ = already available as a shared component or simple wrapper
 
@@ -128,7 +128,7 @@ Stories not yet in the module map display a "Coming soon" message. Their MDX fil
 
 | Session | Focus | Risk |
 |---------|-------|------|
-| K1 | `DistanceExplorer` (draggable points, euclidean distance) + `ManhattanCircle` (taxicab geometry) + `ManhattanPaths` (all-shortest-paths, clickable grid). Port `useDragState` hook once, reuse. | Low |
+| K1 | `DistanceExplorer` (draggable points, euclidean distance) + `ManhattanCircle` (taxicab geometry) + `ManhattanPaths` (all-shortest-paths, clickable grid). Port `useDragState` hook once, reuse. | ✅ Done |
 | K2 | `PAdicCalculator` (p-adic math, LaTeX) + `StringDistanceExplorer` (Hamming, Levenshtein, Damerau-Levenshtein) + `FunctionDistanceExplorer` (draggable piecewise functions, L¹/L∞ toggle) | Low–Medium |
 | K3 | `HeatChart` as story-local component + `PAdicHeatChart` (grid of p-adic distances, tooltip) + `PAdicFractalDistance` (level/prime sliders, animated point emergence — `react-move/NodeGroup` → framer-motion) + MDX wiring + `meta.ts` + all tests | High |
 
@@ -155,6 +155,7 @@ All in `components/story/shared/`:
 | `Tooltip` / `useTooltip`                                                                 | Tooltip hook + component                                                                                                                                                                              |
 | `Select`                                                                                 | Styled dropdown                                                                                                                                                                                       |
 | `Axis`, `AxisLabel`, `ClippedSVG`                                                        | SVG utilities                                                                                                                                                                                         |
+| `DraggableCircle`                                                                        | Pointer-event draggable SVG circle; props: `id`, `cx`, `cy`, `r` (default 8), `fill`, `stroke?`, `strokeWidth?`, `onDrag(id, {x,y})`. Reports SVG-pixel coords.                                      |
 | `StyledTable`                                                                            | Styled table; accepts `headers`/`rows` (typed) or `data` (simple `string[][]` where first row is headers — use this for static tables)                                                               |
 
 ---
@@ -388,3 +389,29 @@ Without this, rows end with `\r` and header-column index lookups (`indexOf('colu
 - `yAxisOnTop={true}`: renders the y-axis `<Axis>` after `{children}` in SVG paint order, so labels appear on top of bars. **Only use via `BarGraph`'s `yLabelSide="right"` prop** — BarGraph sets `yAxisOnTop` automatically when `yLabelSide="right"`. Never pass `yAxisOnTop` directly to `Graph` from a story component.
 
 `BarGraph` passes `yAxisOnTop={yLabelSide === "right"}` to `Graph`. The defaults remain `yLabelSide="left"` and `yAxisOnTop=false`, matching all pre-existing stories.
+
+### Draggable SVG elements: use pointer events, not `cx.baseVal.value`
+
+`DraggableCircle` is a shared component at `components/story/shared/DraggableCircle/`. It uses `onPointerDown/Move/Up` with `setPointerCapture` and `getScreenCTM` to convert mouse coords to SVG space, calling `onDrag(id, { x, y })` with SVG-pixel coordinates. The `useDragState` hook in `keeping-distances/components/DistanceExplorer/useDragState.ts` receives these SVG-pixel coords and converts to data space via `xScale.invert`/`yScale.invert`.
+
+For click handlers on SVG grid points, **close over the data coordinate** in the JSX rather than reading `e.currentTarget.cx.baseVal.value`. This is simpler and testable without mocks:
+
+```tsx
+// ✅ close over pt directly
+onClick={() => { setActivePoint({ x: pt.x, y: pt.y }); }}
+
+// ❌ reads SVG geometry — fragile in tests
+onClick={(e) => setActivePoint({ x: xScale.invert(e.currentTarget.cx.baseVal.value), ... })}
+```
+
+### Slider `NaN%` when `min === max`
+
+The `Slider` component computes `percentage = ((value - min) / (max - min)) * 100`. When `min === max` (e.g. a path explorer where only one path exists), this produces `NaN`, and jsdom throws a css-tree SyntaxError when it tries to parse `width: NaN%`. Avoid tests that put the slider in this state — click on grid points that produce at least 2 paths.
+
+### Axis tick labels suppressed by default; suppress in tests by querying fill
+
+`Axis` (and therefore `Graph`) suppresses all tick labels when no `tickFormat` is passed — text elements exist in the DOM but have empty `textContent`. When testing that a specific SVG `<text>` contains a value (e.g. a distance label), **do not** use `document.querySelector("text")` as it may return an empty axis tick text first. Instead query by attribute:
+
+```ts
+const label = document.querySelector('text[fill="#ff8f34"]');
+```
