@@ -1,24 +1,25 @@
 "use client";
 
 import { FC, useState } from "react";
+import COLORS from "@/utils/styles";
 
-interface DraggableVertexProps {
+interface DraggableCircleProps {
   id: number;
   cx: number;
   cy: number;
-  r: number;
-  fill: string;
-  stroke: string;
-  strokeWidth: number;
+  r?: number;
+  fill?: string;
+  stroke?: string;
+  strokeWidth?: number;
   onDrag: (id: number, coords: { x: number; y: number }) => void;
 }
 
-const DraggableVertex: FC<DraggableVertexProps> = ({
+const DraggableCircle: FC<DraggableCircleProps> = ({
   id,
   cx,
   cy,
-  r,
-  fill,
+  r = 8,
+  fill = COLORS.BLACK,
   stroke,
   strokeWidth,
   onDrag,
@@ -61,4 +62,4 @@ const DraggableVertex: FC<DraggableVertexProps> = ({
   );
 };
 
-export default DraggableVertex;
+export default DraggableCircle;

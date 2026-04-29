@@ -1,5 +1,5 @@
 import { FC } from "react";
-import DraggableVertex from "./DraggableVertex";
+import DraggableCircle from "@/components/story/shared/DraggableCircle";
 
 interface Point {
   x: number;
@@ -43,7 +43,7 @@ const InteractivePolygon: FC<InteractivePolygonProps> = ({
         );
       })}
       {points.map((pt, i) => (
-        <DraggableVertex
+        <DraggableCircle
           key={`vertex-${i}`}
           id={i}
           cx={pt.x}
