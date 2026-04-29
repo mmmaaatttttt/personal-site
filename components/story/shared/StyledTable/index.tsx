@@ -13,6 +13,7 @@ interface TableRow {
 interface TableHeader {
   key: string | number;
   content: ReactNode;
+  className?: string;
 }
 
 interface StyledTableProps {
@@ -68,7 +69,7 @@ export default function StyledTable({
           <thead>
             <tr>
               {headers.map((h) => (
-                <th key={h.key}>{h.content}</th>
+                <th key={h.key} className={h.className}>{h.content}</th>
               ))}
             </tr>
           </thead>

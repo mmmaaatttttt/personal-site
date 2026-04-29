@@ -1,5 +1,4 @@
 import { FC, useState, useCallback, useRef, useEffect, MouseEvent, TouchEvent } from "react";
-import { motion, AnimatePresence } from "framer-motion";
 
 interface TooltipInfo {
   title: string;
@@ -11,22 +10,22 @@ interface TooltipInfo {
 export const useTooltip = () => {
   const [tooltip, setTooltip] = useState<TooltipInfo | null>(null);
 
-  const showTooltip = useCallback((title: string, body: string | string[]) => (e: MouseEvent | TouchEvent) => {
-    const isTouch = "touches" in e;
-    const clientX = isTouch ? (e as TouchEvent).touches[0].clientX : (e as MouseEvent).clientX;
-    const clientY = isTouch ? (e as TouchEvent).touches[0].clientY : (e as MouseEvent).clientY;
-    
-    setTooltip({
-      title,
-      body,
-      x: clientX,
-      y: clientY,
-    });
-  }, []);
+  const showTooltip = useCallback(
+    (title: string, body: string | string[]) =>
+      (e: MouseEvent | TouchEvent) => {
+        const isTouch = "touches" in e;
+        const clientX = isTouch
+          ? (e as TouchEvent).touches[0].clientX
+          : (e as MouseEvent).clientX;
+        const clientY = isTouch
+          ? (e as TouchEvent).touches[0].clientY
+          : (e as MouseEvent).clientY;
+        setTooltip({ title, body, x: clientX, y: clientY });
+      },
+    []
+  );
 
-  const hideTooltip = useCallback(() => {
-    setTooltip(null);
-  }, []);
+  const hideTooltip = useCallback(() => setTooltip(null), []);
 
   return { tooltip, showTooltip, hideTooltip };
 };
@@ -37,51 +36,57 @@ interface TooltipProps {
 
 const Tooltip: FC<TooltipProps> = ({ info }) => {
   const tooltipRef = useRef<HTMLDivElement>(null);
-  const [offset, setOffset] = useState({ x: 15, y: 15 });
+  const [size, setSize] = useState({ width: 0, height: 0 });
 
   useEffect(() => {
-    if (info && tooltipRef.current) {
-        const { width, height } = tooltipRef.current.getBoundingClientRect();
-        const overflowX = info.x + width + 20 > window.innerWidth;
-        const overflowY = info.y + height + 20 > window.innerHeight;
-        
-        setOffset({
-            x: overflowX ? -width - 20 : 20,
-            y: overflowY ? -height - 20 : 20
-        });
+    if (!tooltipRef.current) return;
+    const { offsetWidth, offsetHeight } = tooltipRef.current;
+    if (Math.abs(offsetWidth - size.width) + Math.abs(offsetHeight - size.height) > 2) {
+      setSize({ width: offsetWidth, height: offsetHeight });
     }
-  }, [info]);
+  });
+
+  if (!info) return null;
+
+  const left = Math.max(info.x - size.width / 2, 0);
+  const top = info.y - size.height - 20;
+  const width = info.x > size.width / 2 ? undefined : `${2 * info.x}px`;
 
   return (
-    <AnimatePresence>
-      {info && (
-        <motion.div
-          ref={tooltipRef}
-          initial={{ opacity: 0, scale: 0.95 }}
-          animate={{ 
-            opacity: 1, 
-            scale: 1,
-            left: info.x + offset.x,
-            top: info.y + offset.y
-          }}
-          exit={{ opacity: 0, scale: 0.95 }}
-          transition={{ type: "spring", damping: 25, stiffness: 300, mass: 0.5 }}
-          className="fixed z-50 pointer-events-none bg-white/90 backdrop-blur-md border border-gray-200 p-3 rounded-lg shadow-xl max-w-xs transition-shadow"
-          style={{ position: 'fixed' }}
-        >
-          <div className="font-bold text-gray-900 border-b border-gray-100 pb-1 mb-1">
-            {info.title}
-          </div>
-          <div className="text-sm text-gray-600 space-y-1">
-            {Array.isArray(info.body) ? (
-              info.body.map((line, i) => <div key={i}>{line}</div>)
-            ) : (
-              <div>{info.body}</div>
-            )}
-          </div>
-        </motion.div>
+    <div
+      ref={tooltipRef}
+      className="pointer-events-none fixed z-50 rounded bg-black/60 p-3 text-white"
+      style={{ left, top, width }}
+    >
+      {info.title && (
+        <h4 className="mb-2 text-center font-bold">{info.title}</h4>
       )}
-    </AnimatePresence>
+      {info.body &&
+        (Array.isArray(info.body) ? (
+          <ul className="mb-0 ml-3 list-disc">
+            {info.body.map((text, i) => (
+              <li key={i} className="leading-tight">
+                <small>{text}</small>
+              </li>
+            ))}
+          </ul>
+        ) : (
+          <small>{info.body}</small>
+        ))}
+      <div
+        style={{
+          position: "absolute",
+          top: "100%",
+          left: "50%",
+          marginLeft: "-7px",
+          width: 0,
+          height: 0,
+          borderLeft: "7px solid transparent",
+          borderRight: "7px solid transparent",
+          borderTop: "7px solid rgba(0,0,0,0.6)",
+        }}
+      />
+    </div>
   );
 };
 
