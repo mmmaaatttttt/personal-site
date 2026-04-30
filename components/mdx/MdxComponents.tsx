@@ -1,4 +1,5 @@
 import ColoredSpan from "@/components/story/shared/ColoredSpan";
+import Latex from "@/components/story/shared/Latex";
 import NarrowContainer from "@/components/story/shared/NarrowContainer";
 import StyledTable from "@/components/story/shared/StyledTable";
 import Caption from "@/components/story/shared/Caption";
@@ -85,9 +86,7 @@ export const MdxComponents: any = {
   Legend: (props: any) => <Legend {...props} />,
   SliderProvider: (props: any) => <SliderProvider {...props} />,
   Sidebar: (props: any) => <Sidebar {...props} />,
-  Latex: (props: any) => (
-    <span className="font-serif italic">{props.children}</span>
-  ),
+  Latex: (props: any) => <Latex {...props} />,
   Strikethrough: (props: any) => <del>{props.children}</del>,
   RelativeContainer: (props: any) => (
     <div className="relative">{props.children}</div>

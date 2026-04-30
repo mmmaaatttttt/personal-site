@@ -1,6 +1,9 @@
 import DistanceExplorer from "./components/DistanceExplorer";
 import ManhattanCircle from "./components/ManhattanCircle";
 import ManhattanPaths from "./components/ManhattanPaths";
+import StringDistanceExplorer from "./components/StringDistanceExplorer";
+import FunctionDistanceExplorer from "./components/FunctionDistanceExplorer";
+import PAdicCalculator from "./components/PAdicCalculator";
 
 When was the last time you went more than a day without thinking about distance?
 It might seem like a strange question. But notions of distance, whether literal
@@ -168,7 +171,7 @@ Here's a demonstration for you to play around with these three notions of word
 distance. (Bonus question: what would a circle look like in the geometries
 determined by these distances?)
 
-*(Interactive coming in session K2)*
+<StringDistanceExplorer caption="Figure 4: Enter two words to compare their Hamming, Levenshtein, and Damerau-Levenshtein distances." />
 
 ---
 
@@ -206,7 +209,7 @@ this distance is 0, the functions are the same.
 Here's a demonstration where you can adjust some simple functions and see both
 of these distances change.
 
-*(Interactive coming in session K2)*
+<FunctionDistanceExplorer caption="Figure 5: Drag the control points to reshape the two functions. Toggle between the largest-difference and area measures." />
 
 A question for you to ponder: if the largest difference distance is small, what
 (if anything) can you say about the area distance? If the area distance is
@@ -292,7 +295,7 @@ Here's a demonstration that will allow you to play around with these ideas in
 more detail. You can select a prime and then calculate the *p*-adic distance
 between any two whole numbers within the range from -1,000,000 to 1,000,000.
 
-*(Interactive coming in session K2)*
+<PAdicCalculator caption="Figure 6: Select a prime and enter two integers to see their p-adic distance." />
 
 Why in the world would you want to do this? I'm afraid a historical motivation
 would take us too far afield, so if nothing else, just take it as a mathematical
