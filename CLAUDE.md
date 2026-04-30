@@ -111,11 +111,11 @@ Stories not yet in the module map display a "Coming soon" message. Their MDX fil
 | `gaming-relationships-linear`    | ✅ Complete   | `GamingRelationships` base + `LinearGamingRelationships` wrapper; diff eqs in `data.ts`; 3 ODE visualizations                                                         |
 | `gaming-relationships-nonlinear` | ✅ Complete   | `NonlinearGamingRelationships` wrapper; shares base component; 4-body chaotic ODE at `idx=1` uses `step=0.02`, `max=40`                                                |
 | `income-inequality`              | ✅ Complete   | `EconomySimulation` + `EconomyNodeGroup` (D3 force sim); collision/wealth logic in `data.ts`; 3 instances with `idx` and optional `editSavings` prop                   |
-| `fairest-of-them-all`            | ✅ Complete   | `CoinFlipHistogram`, `CoinFlipTable`, `CoinFlipBayesianModel` (beta PDF inline, no jStat; framer-motion animation for curve/color), `RentDivision` (Sperner's Lemma triangle mesh; `ToggleSwitch`, `LabeledCircle`, `RadioButtonGroup`, `Polygon` as local leaf components) |
+| `fairest-of-them-all`            | ✅ Complete   | `CoinFlipHistogram`, `CoinFlipTable`, `CoinFlipBayesianModel` (beta PDF inline, no jStat; framer-motion animation for curve/color; `ToggleSwitch` now in shared), `RentDivision` (Sperner's Lemma triangle mesh; `LabeledCircle`, `RadioButtonGroup`, `Polygon` as local leaf components) |
 | `harvesting-wins`                | ✅ Complete   | `OrchardGame` (spinner + fruit tiles + localStorage), `OrchardGameSimulation` (rAF loop), `OrchardGameHeatData` (D3 heat map + sliders)                                |
 | `mind-the-gerrymandered-gap`     | ✅ Complete   | `IsoperimetricExplorer` + `data.ts`; `SampleGerrymander` (flood-fill BFS, localStorage, `GerrymanderGrid` + `InteractiveGrid` + `DistrictStatus`), `EfficiencyGapTable`, `GerrymanderPlayground` (shared-state wrapper replacing Redux); `GerrymanderHistoricalMap` (USMap + BarGraph, dual sliders, election data) |
 | `strength-in-numbers`            | ✅ Complete   | `VotingTable`, `VotingPollWorkerAge`, `VotingBarChart` (voters/party variants), `VotingLineChart` (voters/workers), `VotingMap` (voters/workers); variant prop replaces function props across MDX boundary; `motion.circle` unavailable in framer-motion v12 jsdom — use plain `<circle>` |
-| `keeping-distances`              | 🔄 K1 done    | K1: `DistanceExplorer` (+ `useDragState`), `ManhattanCircle`, `ManhattanPaths`. `DraggableCircle` promoted to shared. Story wired, K2/K3 slots are placeholder text in MDX. |
+| `keeping-distances`              | 🔄 K2 done    | K1: `DistanceExplorer` (+ `useDragState`), `ManhattanCircle`, `ManhattanPaths`. K2: `StringDistanceExplorer`, `FunctionDistanceExplorer`, `PAdicCalculator`. `DraggableCircle` + `ToggleSwitch` + `Latex` promoted to shared. K3 slots are placeholder text in MDX. |
 
 ✓ = already available as a shared component or simple wrapper
 
@@ -129,10 +129,10 @@ Stories not yet in the module map display a "Coming soon" message. Their MDX fil
 | Session | Focus | Risk |
 |---------|-------|------|
 | K1 | `DistanceExplorer` (draggable points, euclidean distance) + `ManhattanCircle` (taxicab geometry) + `ManhattanPaths` (all-shortest-paths, clickable grid). Port `useDragState` hook once, reuse. | ✅ Done |
-| K2 | `PAdicCalculator` (p-adic math, LaTeX) + `StringDistanceExplorer` (Hamming, Levenshtein, Damerau-Levenshtein) + `FunctionDistanceExplorer` (draggable piecewise functions, L¹/L∞ toggle) | Low–Medium |
+| K2 | `PAdicCalculator` (p-adic math, LaTeX) + `StringDistanceExplorer` (Hamming, Levenshtein, Damerau-Levenshtein) + `FunctionDistanceExplorer` (draggable piecewise functions, L¹/L∞ toggle) | ✅ Done |
 | K3 | `HeatChart` as story-local component + `PAdicHeatChart` (grid of p-adic distances, tooltip) + `PAdicFractalDistance` (level/prime sliders, animated point emergence — `react-move/NodeGroup` → framer-motion) + MDX wiring + `meta.ts` + all tests | High |
 
-No external data — all components use on-the-fly math. `HeatChart` is story-local (not shared); `OrchardGameHeatData` has a similar local `HeatChart.tsx` as a reference for the pattern.
+No external data — all components use on-the-fly math. `HeatChart` should be promoted to `components/story/shared/` — it is used in `harvesting-wins` (`OrchardGameHeatData`) and will be used twice in `keeping-distances` (`PAdicHeatChart`, `PAdicFractalDistance`). Promote it at the start of K3: move `harvesting-wins`'s local `HeatChart.tsx` to shared, update that story's import, then build the K3 components against the shared version.
 
 ---
 
@@ -157,10 +157,27 @@ All in `components/story/shared/`:
 | `Axis`, `AxisLabel`, `ClippedSVG`                                                        | SVG utilities                                                                                                                                                                                         |
 | `DraggableCircle`                                                                        | Pointer-event draggable SVG circle; props: `id`, `cx`, `cy`, `r` (default 8), `fill`, `stroke?`, `strokeWidth?`, `onDrag(id, {x,y})`. Reports SVG-pixel coords.                                      |
 | `StyledTable`                                                                            | Styled table; accepts `headers`/`rows` (typed) or `data` (simple `string[][]` where first row is headers — use this for static tables)                                                               |
+| `ToggleSwitch`                                                                           | Two-label toggle; props: `leftText`, `rightText`, `leftColor`, `rightColor`, `handleSwitchChange(checked: boolean)`. Manages its own checked state internally.                                        |
+| `Latex`                                                                                  | Renders a LaTeX string via katex; props: `str`, `displayMode?` (default false). Requires `katex` in deps. Mock `katex` and `katex/dist/katex.min.css` in test files that import it.                  |
 
 ---
 
 ## Key Decisions & Conventions
+
+### Identifying shared vs story-local components
+
+Before writing any new component, check two places:
+
+1. **Other stories' `components/` folders** — if the component already exists in a ported story (e.g. `fairest-of-them-all/components/CoinFlipBayesianModel/`), promote it to `components/story/shared/` rather than duplicating it.
+2. **`src/story_components/atoms/` and `src/story_components/molecules/`** — these are the original shared library from the Gatsby stack. Any component that lived there is a strong candidate for `components/story/shared/` in the new stack.
+
+**Decision rule:** if a component is used in 2+ stories — even if currently local to one — promote it to shared before shipping. The cost of the cross-story duplication compounds quickly.
+
+When promoting a component to shared:
+- Move the source file to `components/story/shared/<ComponentName>/index.tsx`
+- Move or recreate its test at `components/story/shared/<ComponentName>/<ComponentName>.test.tsx` with `import from "."`
+- Update all story imports to the new shared path
+- Delete the old local copies
 
 ### Pure helpers belong in their own file
 
@@ -407,6 +424,20 @@ onClick={(e) => setActivePoint({ x: xScale.invert(e.currentTarget.cx.baseVal.val
 ### Slider `NaN%` when `min === max`
 
 The `Slider` component computes `percentage = ((value - min) / (max - min)) * 100`. When `min === max` (e.g. a path explorer where only one path exists), this produces `NaN`, and jsdom throws a css-tree SyntaxError when it tries to parse `width: NaN%`. Avoid tests that put the slider in this state — click on grid points that produce at least 2 paths.
+
+### JSX string attributes do not process backslash escapes
+
+In a JSX attribute written as a string literal, backslashes are **not** treated as escape sequences — the characters are passed literally. This matters for LaTeX strings:
+
+```tsx
+// ❌ passes the two-character sequence \\ to the prop
+<Latex str="\\frac{1}{2}" />
+
+// ✅ JS string in {} — \\ becomes a single backslash → passes \frac{1}{2}
+<Latex str={"\\frac{1}{2}"} />
+```
+
+Always use curly-brace JS expressions when passing strings that contain backslashes (LaTeX, regex, escape codes).
 
 ### Axis tick labels suppressed by default; suppress in tests by querying fill
 
