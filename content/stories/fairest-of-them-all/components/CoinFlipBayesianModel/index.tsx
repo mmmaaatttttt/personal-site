@@ -10,7 +10,7 @@ import FlexContainer from "@/components/story/shared/FlexContainer";
 import Graph from "@/components/story/shared/Graph";
 import LinePlot from "@/components/story/shared/LinePlot";
 import { Button } from "@/components/ui/Button";
-import ToggleSwitch from "./ToggleSwitch";
+import ToggleSwitch from "@/components/story/shared/ToggleSwitch";
 import { betaPdf } from "../../mathHelpers";
 import COLORS from "@/utils/styles";
 
