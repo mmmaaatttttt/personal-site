@@ -15,15 +15,11 @@ const Sidebar: FC<SidebarProps> = ({ children, direction = "left" }) => {
       whileInView={{ opacity: 1 }}
       viewport={{ once: true, margin: "-100px" }}
       transition={{ duration: 0.8 }}
-      className="absolute hidden xl:block z-10"
-      style={{
-        width: "calc((100vw - var(--max-w-content)) / 2 - 2rem)",
-        [direction]: "calc((var(--max-w-content) - 100vw) / 2 + 1rem)",
-        backgroundColor: "#fff4eb", // Lightened #ff5700
-        boxShadow: "0 0 6px 2px #ff5700",
-        borderRadius: "10px",
-        padding: "0.8rem",
-      }}
+      className={`absolute hidden xl:block z-10 w-[calc((100vw-var(--max-w-content))/2-2rem)] bg-[#fff4eb] shadow-[0_0_6px_2px_#ff5700] rounded-[10px] p-[0.8rem] ${
+        direction === "left"
+          ? "left-[calc((var(--max-w-content)-100vw)/2+1rem)]"
+          : "right-[calc((var(--max-w-content)-100vw)/2+1rem)]"
+      }`}
     >
       <div className="italic text-sm leading-loose text-gray-800">
         {children}

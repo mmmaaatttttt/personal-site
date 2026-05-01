@@ -20,13 +20,13 @@ export const MdxComponents: any = {
   h3: (props: any) => (
     <h3 className="mt-8 mb-4 text-xl font-bold italic" {...props} />
   ),
-  p: (props: any) => <p className="mb-6 leading-relaxed" {...props} />,
+  p: (props: any) => <p className="mb-6 last:mb-0 leading-relaxed" {...props} />,
   ul: (props: any) => <ul className="mb-6 list-disc pl-6" {...props} />,
   ol: (props: any) => <ol className="mb-6 list-decimal pl-6" {...props} />,
   li: (props: any) => <li className="mb-2" {...props} />,
   blockquote: (props: any) => (
     <blockquote
-      className="mb-8 border-l-4 border-link bg-light-gray p-6 italic text-gray-700 underline-offset-4"
+      className="mb-8 last:mb-0 border-l-4 border-link bg-light-gray p-6 italic text-gray-700 underline-offset-4"
       {...props}
     />
   ),
