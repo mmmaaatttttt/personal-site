@@ -29,9 +29,9 @@
   /* Content width */
   --max-w-content: 768px;
 
-  /* Typography strictly mapped to Next.js CSS variables */
-  --font-sans: var(--font-inter);
-  --font-serif: var(--font-merriweather);
+  /* Typography: Open Sans (body) + Domine (headers) */
+  --font-sans: var(--font-open-sans);
+  --font-serif: var(--font-domine);
 }
 
 /* ============================================================
