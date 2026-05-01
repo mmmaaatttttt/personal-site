@@ -1,6 +1,6 @@
 "use client";
 
-import { FC, useMemo } from "react";
+import { useMemo } from "react";
 import { scaleLinear } from "d3-scale";
 import { interpolateRgb, piecewise } from "d3-interpolate";
 import ClippedSVG from "@/components/story/shared/ClippedSVG";
@@ -8,22 +8,22 @@ import Axis from "@/components/story/shared/Axis";
 import AxisLabel from "@/components/story/shared/AxisLabel";
 import Tooltip, { useTooltip } from "@/components/story/shared/Tooltip";
 import COLORS from "@/utils/styles";
-import type { OrchardDataPoint } from "../../data";
 
-const PADDING_SCALE = 0.075;
 const WIDTH = 600;
 
-export interface HeatChartProps {
-  data: (OrchardDataPoint | null)[][];
-  accessor: (d: OrchardDataPoint) => number;
-  getTooltipBody: (d: OrchardDataPoint, x: number, y: number) => string[];
+export interface HeatChartProps<T> {
+  data: (T | null)[][];
+  accessor: (d: T) => number;
+  getTooltipBody: (d: T, x: number, y: number) => string[];
   colorDomain: number[];
   colorRange: string[];
   xAxisLabel: string;
   yAxisLabel: string;
+  axes?: boolean;
+  paddingScale?: number;
 }
 
-const HeatChart: FC<HeatChartProps> = ({
+function HeatChart<T>({
   data,
   accessor,
   getTooltipBody,
@@ -31,15 +31,17 @@ const HeatChart: FC<HeatChartProps> = ({
   colorRange,
   xAxisLabel,
   yAxisLabel,
-}) => {
+  axes = true,
+  paddingScale = 0.075,
+}: HeatChartProps<T>) {
   const { tooltip, showTooltip, hideTooltip } = useTooltip();
 
   const numCols = data.length;
   const numRows = data[0]?.length ?? 0;
   const squareWidth = WIDTH / numCols;
   const height = numRows * squareWidth;
-  const padX = WIDTH * PADDING_SCALE;
-  const padY = height * PADDING_SCALE;
+  const padX = WIDTH * paddingScale;
+  const padY = height * paddingScale;
 
   const xScale = useMemo(
     () => scaleLinear().domain([0, numCols]).range([padX, WIDTH - padX]),
@@ -68,7 +70,7 @@ const HeatChart: FC<HeatChartProps> = ({
       <ClippedSVG id="heat-chart" width={WIDTH} height={height} clipChildren={false}>
         {data.map((col, x) =>
           col.map((d, y) => {
-            if (!d) return null;
+            if (d == null) return null;
             return (
               <rect
                 key={`${x}:${y}`}
@@ -86,38 +88,42 @@ const HeatChart: FC<HeatChartProps> = ({
             );
           })
         )}
-        <Axis
-          direction="x"
-          labelPosition={{ y: "9", dy: "0.71em" }}
-          scale={xScale}
-          tickFormat=","
-          tickColor={COLORS.BLACK}
-          yShift={height - padY}
-        />
-        <Axis
-          direction="y"
-          labelPosition={{ x: "-9", dy: "0.32em" }}
-          scale={yScale}
-          textAnchor="end"
-          tickFormat=","
-          tickColor={COLORS.BLACK}
-          xShift={padX}
-        />
-        <AxisLabel x={WIDTH / 2} y={height}>
-          {xAxisLabel}
-        </AxisLabel>
-        <AxisLabel
-          x={0}
-          y={height / 2}
-          transform={`rotate(-90 10,${height / 2})`}
-          dy={10}
-        >
-          {yAxisLabel}
-        </AxisLabel>
+        {axes && (
+          <>
+            <Axis
+              direction="x"
+              labelPosition={{ y: "9", dy: "0.71em" }}
+              scale={xScale}
+              tickFormat=","
+              tickColor={COLORS.BLACK}
+              yShift={height - padY}
+            />
+            <Axis
+              direction="y"
+              labelPosition={{ x: "-9", dy: "0.32em" }}
+              scale={yScale}
+              textAnchor="end"
+              tickFormat=","
+              tickColor={COLORS.BLACK}
+              xShift={padX}
+            />
+            <AxisLabel x={WIDTH / 2} y={height}>
+              {xAxisLabel}
+            </AxisLabel>
+            <AxisLabel
+              x={0}
+              y={height / 2}
+              transform={`rotate(-90 10,${height / 2})`}
+              dy={10}
+            >
+              {yAxisLabel}
+            </AxisLabel>
+          </>
+        )}
       </ClippedSVG>
       <Tooltip info={tooltip} />
     </div>
   );
-};
+}
 
 export default HeatChart;

@@ -5,7 +5,7 @@ import SliderProvider from "@/components/story/shared/Slider/SliderProvider";
 import Select from "@/components/story/shared/Select";
 import COLORS from "@/utils/styles";
 import { selectOptions, sliderData, orchardGameData, type OrchardDataPoint } from "../../data";
-import HeatChart from "./HeatChart";
+import HeatChart from "@/components/story/shared/HeatChart";
 
 const OrchardGameHeatData: FC<{ caption?: string }> = () => {
   const [selectedOption, setSelectedOption] = useState(selectOptions[0]);
