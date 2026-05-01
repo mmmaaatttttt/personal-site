@@ -2,7 +2,7 @@
 
 ## What This Is
 
-Matt's personal/blog site, actively being migrated from a legacy Gatsby/JavaScript stack to Next.js + TypeScript + React. The site hosts long-form "stories" — articles with embedded interactives and D3 visualizations.
+Matt's personal/blog site. The Gatsby/JavaScript → Next.js + TypeScript + React migration is complete — all 12 stories are ported and live. The site hosts long-form "stories" — articles with embedded interactives and D3 visualizations.
 
 **Active branch:** `next-upgrade-ftw`  
 **Main branch:** `master`
@@ -115,24 +115,7 @@ Stories not yet in the module map display a "Coming soon" message. Their MDX fil
 | `harvesting-wins`                | ✅ Complete   | `OrchardGame` (spinner + fruit tiles + localStorage), `OrchardGameSimulation` (rAF loop), `OrchardGameHeatData` (D3 heat map + sliders)                                |
 | `mind-the-gerrymandered-gap`     | ✅ Complete   | `IsoperimetricExplorer` + `data.ts`; `SampleGerrymander` (flood-fill BFS, localStorage, `GerrymanderGrid` + `InteractiveGrid` + `DistrictStatus`), `EfficiencyGapTable`, `GerrymanderPlayground` (shared-state wrapper replacing Redux); `GerrymanderHistoricalMap` (USMap + BarGraph, dual sliders, election data) |
 | `strength-in-numbers`            | ✅ Complete   | `VotingTable`, `VotingPollWorkerAge`, `VotingBarChart` (voters/party variants), `VotingLineChart` (voters/workers), `VotingMap` (voters/workers); variant prop replaces function props across MDX boundary; `motion.circle` unavailable in framer-motion v12 jsdom — use plain `<circle>` |
-| `keeping-distances`              | 🔄 K2 done    | K1: `DistanceExplorer` (+ `useDragState`), `ManhattanCircle`, `ManhattanPaths`. K2: `StringDistanceExplorer`, `FunctionDistanceExplorer`, `PAdicCalculator`. `DraggableCircle` + `ToggleSwitch` + `Latex` promoted to shared. K3 slots are placeholder text in MDX. |
-
-✓ = already available as a shared component or simple wrapper
-
-### Remaining migration: session plan
-
-3 sessions across 1 story. Sessions are sized to be completable in one sitting.
-
-
-**`keeping-distances`**
-
-| Session | Focus | Risk |
-|---------|-------|------|
-| K1 | `DistanceExplorer` (draggable points, euclidean distance) + `ManhattanCircle` (taxicab geometry) + `ManhattanPaths` (all-shortest-paths, clickable grid). Port `useDragState` hook once, reuse. | ✅ Done |
-| K2 | `PAdicCalculator` (p-adic math, LaTeX) + `StringDistanceExplorer` (Hamming, Levenshtein, Damerau-Levenshtein) + `FunctionDistanceExplorer` (draggable piecewise functions, L¹/L∞ toggle) | ✅ Done |
-| K3 | `HeatChart` as story-local component + `PAdicHeatChart` (grid of p-adic distances, tooltip) + `PAdicFractalDistance` (level/prime sliders, animated point emergence — `react-move/NodeGroup` → framer-motion) + MDX wiring + `meta.ts` + all tests | High |
-
-No external data — all components use on-the-fly math. `HeatChart` should be promoted to `components/story/shared/` — it is used in `harvesting-wins` (`OrchardGameHeatData`) and will be used twice in `keeping-distances` (`PAdicHeatChart`, `PAdicFractalDistance`). Promote it at the start of K3: move `harvesting-wins`'s local `HeatChart.tsx` to shared, update that story's import, then build the K3 components against the shared version.
+| `keeping-distances`              | ✅ Complete   | K1: `DistanceExplorer` (+ `useDragState`), `ManhattanCircle`, `ManhattanPaths`. K2: `StringDistanceExplorer`, `FunctionDistanceExplorer`, `PAdicCalculator`. K3: `PAdicHeatChart` (p-adic distance grid), `PAdicFractalDistance` (`react-move/NodeGroup` → framer-motion `AnimatePresence`); `HeatChart` promoted to shared. `DraggableCircle` + `ToggleSwitch` + `Latex` promoted to shared. |
 
 ---
 
@@ -155,7 +138,8 @@ All in `components/story/shared/`:
 | `Tooltip` / `useTooltip`                                                                 | Tooltip hook + component                                                                                                                                                                              |
 | `Select`                                                                                 | Styled dropdown                                                                                                                                                                                       |
 | `Axis`, `AxisLabel`, `ClippedSVG`                                                        | SVG utilities                                                                                                                                                                                         |
-| `DraggableCircle`                                                                        | Pointer-event draggable SVG circle; props: `id`, `cx`, `cy`, `r` (default 8), `fill`, `stroke?`, `strokeWidth?`, `onDrag(id, {x,y})`. Reports SVG-pixel coords.                                      |
+| `DraggableCircle`                                                                        | Pointer-event draggable SVG circle; props: `id`, `cx`, `cy`, `r` (default 8), `fill`, `stroke?`, `strokeWidth?`, `onDrag(id, {x,y})`. Reports SVG-pixel coords. Grows by 4px on hover/drag (CSS `r` transition). To clamp so the circle edge never leaves the SVG, wrap `onDrag` in the story and pre-clamp coords to `[2r, W−2r] × [2r, H−2r]`. |
+| `HeatChart`                                                                              | Generic 2D heat map; props: `data: (T\|null)[][]`, `accessor`, `getTooltipBody(d,x,y)`, `colorDomain`, `colorRange`, `xAxisLabel`, `yAxisLabel`, `axes?` (default `true`), `paddingScale?` (default `0.075`). Pass `axes={false}` and a small `paddingScale` (e.g. `0.02`) when tick marks would be misleading. |
 | `StyledTable`                                                                            | Styled table; accepts `headers`/`rows` (typed) or `data` (simple `string[][]` where first row is headers — use this for static tables)                                                               |
 | `ToggleSwitch`                                                                           | Two-label toggle; props: `leftText`, `rightText`, `leftColor`, `rightColor`, `handleSwitchChange(checked: boolean)`. Manages its own checked state internally.                                        |
 | `Latex`                                                                                  | Renders a LaTeX string via katex; props: `str`, `displayMode?` (default false). Requires `katex` in deps. Mock `katex` and `katex/dist/katex.min.css` in test files that import it.                  |
