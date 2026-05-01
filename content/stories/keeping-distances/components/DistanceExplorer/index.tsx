@@ -1,6 +1,6 @@
 "use client";
 
-import { FC } from "react";
+import { FC, useCallback } from "react";
 import { scaleLinear } from "d3-scale";
 import { extent } from "d3-array";
 import Caption from "@/components/story/shared/Caption";
@@ -13,6 +13,7 @@ import useDragState from "./useDragState";
 
 const WIDTH = 600;
 const HEIGHT = 600;
+const CIRCLE_R = 8; // matches DraggableCircle default r
 
 const xScale = scaleLinear().domain([-10, 10]).range([0, WIDTH]);
 const yScale = scaleLinear().domain([-10, 10]).range([HEIGHT, 0]);
@@ -29,6 +30,16 @@ const DistanceExplorer: FC<DistanceExplorerProps> = ({ caption }) => {
     ],
     xScale,
     yScale
+  );
+
+  const offset = CIRCLE_R * 2;
+  const clampedHandleDrag = useCallback(
+    (idx: number, coords: { x: number; y: number }) =>
+      handleDrag(idx, {
+        x: Math.max(offset, Math.min(WIDTH - offset, coords.x)),
+        y: Math.max(offset, Math.min(HEIGHT - offset, coords.y)),
+      }),
+    [handleDrag, offset]
   );
 
   const scaledPoints = points.map(({ x, y }) => ({
@@ -101,7 +112,7 @@ const DistanceExplorer: FC<DistanceExplorerProps> = ({ caption }) => {
               id={idx}
               cx={point.x}
               cy={point.y}
-              onDrag={handleDrag}
+              onDrag={clampedHandleDrag}
             />
           ))}
         </Graph>

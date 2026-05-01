@@ -48,6 +48,23 @@ describe("DistanceExplorer", () => {
     expect(screen.getByText("Test caption")).toBeTruthy();
   });
 
+  it("clamps drag so the circle edge stays inside the SVG (2r pixel offset)", () => {
+    render(<DistanceExplorer />);
+    const circle = document.querySelectorAll("circle")[0];
+
+    // Drag far outside the 600×600 SVG (identity CTM: clientX === SVG x).
+    // Without clamping, xScale.invert(1200) = 30 which is outside [-10, 10].
+    // With 2r=16 offset, x is clamped to 600-16=584 before inversion.
+    fireEvent.pointerDown(circle, { pointerId: 1, clientX: 300, clientY: 300 });
+    fireEvent.pointerMove(circle, { clientX: 1200, clientY: -200 });
+    fireEvent.pointerUp(circle);
+
+    const label = document.querySelector('text[fill="#ff8f34"]');
+    const value = parseFloat(label?.textContent ?? "NaN");
+    expect(isNaN(value)).toBe(false);
+    expect(value).toBeGreaterThanOrEqual(0);
+  });
+
   it("updates distance label on drag", () => {
     render(<DistanceExplorer />);
     const circles = document.querySelectorAll("circle");
