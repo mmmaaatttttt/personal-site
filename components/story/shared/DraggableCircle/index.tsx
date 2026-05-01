@@ -26,7 +26,7 @@ const DraggableCircle: FC<DraggableCircleProps> = ({
 }) => {
   const [dragging, setDragging] = useState(false);
   const [hovered, setHovered] = useState(false);
-  const currentR = hovered || dragging ? r + 4 : r;
+  const currentR = hovered || dragging ? r * 1.5 : r;
 
   const toSVGCoords = (e: React.PointerEvent<SVGCircleElement>) => {
     const svg = e.currentTarget.ownerSVGElement;
