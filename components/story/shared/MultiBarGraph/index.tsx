@@ -121,7 +121,6 @@ const MultiBarGraph: FC<MultiBarGraphProps> = ({
             scale={xScale}
             yShift={height - p.bottom}
             fontSize="0.8rem"
-            tickFormat={""}
           />
 
           <g clipPath={`url(#clip-path-${id})`}>

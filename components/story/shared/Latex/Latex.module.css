@@ -1,0 +1,8 @@
+.wrapper :global(.katex),
+.wrapper :global(.katex *) {
+  font-family: inherit !important;
+}
+
+.wrapper :global(.katex .delimsizing.mult) {
+  font-family: KaTeX_Size1 !important;
+}
