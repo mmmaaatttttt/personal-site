@@ -75,4 +75,27 @@ describe("DraggableCircle", () => {
 
     expect(onDrag).not.toHaveBeenCalled();
   });
+
+  it("grows radius on pointer enter and shrinks on pointer leave", () => {
+    const { circle } = renderInSVG(
+      <DraggableCircle id={0} cx={50} cy={50} r={8} onDrag={vi.fn()} />
+    );
+
+    expect(circle.getAttribute("r")).toBe("8");
+    fireEvent.pointerEnter(circle);
+    expect(circle.getAttribute("r")).toBe("12");
+    fireEvent.pointerLeave(circle);
+    expect(circle.getAttribute("r")).toBe("8");
+  });
+
+  it("stays grown while dragging even without hover", () => {
+    const { circle } = renderInSVG(
+      <DraggableCircle id={0} cx={50} cy={50} r={8} onDrag={vi.fn()} />
+    );
+
+    fireEvent.pointerDown(circle, { pointerId: 1 });
+    expect(circle.getAttribute("r")).toBe("12");
+    fireEvent.pointerUp(circle, { pointerId: 1 });
+    expect(circle.getAttribute("r")).toBe("8");
+  });
 });

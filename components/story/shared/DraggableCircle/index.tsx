@@ -25,6 +25,8 @@ const DraggableCircle: FC<DraggableCircleProps> = ({
   onDrag,
 }) => {
   const [dragging, setDragging] = useState(false);
+  const [hovered, setHovered] = useState(false);
+  const currentR = hovered || dragging ? r + 4 : r;
 
   const toSVGCoords = (e: React.PointerEvent<SVGCircleElement>) => {
     const svg = e.currentTarget.ownerSVGElement;
@@ -41,11 +43,13 @@ const DraggableCircle: FC<DraggableCircleProps> = ({
     <circle
       cx={cx}
       cy={cy}
-      r={r}
+      r={currentR}
       fill={fill}
       stroke={stroke}
       strokeWidth={strokeWidth}
-      style={{ cursor: dragging ? "grabbing" : "grab", touchAction: "none" }}
+      style={{ cursor: dragging ? "grabbing" : "grab", touchAction: "none", transition: "r 0.15s ease" }}
+      onPointerEnter={() => setHovered(true)}
+      onPointerLeave={() => setHovered(false)}
       onPointerDown={(e) => {
         e.currentTarget.setPointerCapture(e.pointerId);
         setDragging(true);
@@ -57,7 +61,7 @@ const DraggableCircle: FC<DraggableCircleProps> = ({
         onDrag(id, coords);
       }}
       onPointerUp={() => setDragging(false)}
-      onPointerCancel={() => setDragging(false)}
+      onPointerCancel={() => { setDragging(false); setHovered(false); }}
     />
   );
 };
