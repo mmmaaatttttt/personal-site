@@ -4,6 +4,8 @@ import ManhattanPaths from "./components/ManhattanPaths";
 import StringDistanceExplorer from "./components/StringDistanceExplorer";
 import FunctionDistanceExplorer from "./components/FunctionDistanceExplorer";
 import PAdicCalculator from "./components/PAdicCalculator";
+import PAdicHeatChart from "./components/PAdicHeatChart";
+import PAdicFractalDistance from "./components/PAdicFractalDistance";
 
 When was the last time you went more than a day without thinking about distance?
 It might seem like a strange question. But notions of distance, whether literal
@@ -307,7 +309,7 @@ distances are equal along diagonals that move up and to the right. This is
 because adding the same value to two numbers has no effect on their *p*-adic
 distance: 10 - 2 has a 2-adic distance of 0.125, just as (10 + 5) - (2 + 5) = 15 - 7 does.
 
-*(Interactive coming in session K3)*
+<PAdicHeatChart caption="Figure 7: Select a prime and hover over a cell to see the p-adic distance between two numbers from 1 to 25." />
 
 While the chart above can show us several distance calculations at a glance, it
 also has a flaw. By putting numbers along the top and right in increasing order
@@ -319,7 +321,7 @@ distance between 1 and 25 is much smaller.
 Here's another way to visualize numbers based on their *p*-adic distance, adapted
 from [Visualizing the p-adic Integers](https://www.jstor.org/stable/2323809) and [The p-adic integers: General introduction and visual representation](http://math.uni.lu/eml/projects/reports/P-adics.pdf). In this representation, numbers form a fractal-like structure. The numbers clump together quickly, so this demonstration only supports seeing a handful of them for the primes 3, 5, and 7:
 
-*(Interactive coming in session K3)*
+<PAdicFractalDistance caption="Figure 8: Adjust the level slider and select a prime to see how numbers cluster under the p-adic distance." />
 
 ---
 
