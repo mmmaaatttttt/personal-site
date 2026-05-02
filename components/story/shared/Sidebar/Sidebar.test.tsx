@@ -20,12 +20,12 @@ describe("Sidebar Component", () => {
     expect(screen.getByText("Test Sidebar Content")).toBeInTheDocument();
   });
 
-  it("applies the direction style prop correctly", () => {
+  it("applies the direction class prop correctly", () => {
     const { container } = render(
       <Sidebar direction="right">Right aligned</Sidebar>,
     );
     const el = container.firstChild as HTMLElement;
-    expect(el.style.right).toBeTruthy();
-    expect(el.style.left).toBeFalsy();
+    expect(el.className).toContain("right-[");
+    expect(el.className).not.toContain("left-[");
   });
 });
