@@ -19,7 +19,9 @@ const baseProps = {
   data,
   accessor: (d: number) => d,
   getTooltipBody: (d: number, x: number, y: number) => [
-    `val=${d}`, `x=${x}`, `y=${y}`,
+    `val=${d}`,
+    `x=${x}`,
+    `y=${y}`,
   ],
   colorDomain: [0, 1],
   colorRange: ["#0000ff", "#000000"],
@@ -53,7 +55,10 @@ describe("HeatChart", () => {
   });
 
   it("skips null cells", () => {
-    const sparse: (number | null)[][] = [[null, null], [null, 0.5]];
+    const sparse: (number | null)[][] = [
+      [null, null],
+      [null, 0.5],
+    ];
     const { container } = render(<HeatChart {...baseProps} data={sparse} />);
     const rects = container.querySelectorAll("rect");
     // 1 data rect + 1 clipPath rect
@@ -61,7 +66,9 @@ describe("HeatChart", () => {
   });
 
   it("accepts custom paddingScale without crashing", () => {
-    const { container } = render(<HeatChart {...baseProps} paddingScale={0.01} />);
+    const { container } = render(
+      <HeatChart {...baseProps} paddingScale={0.01} />,
+    );
     expect(container.querySelector("svg")).toBeInTheDocument();
   });
 });

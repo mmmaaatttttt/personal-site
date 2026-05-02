@@ -1,8 +1,12 @@
 "use client";
 
-import React from "react";
+import type React from "react";
 import Caption from "@/components/story/shared/Caption";
-import { graphOptions, selectOptions, tooltipHelpers } from "../../data/four-weddings-config";
+import {
+  graphOptions,
+  selectOptions,
+  tooltipHelpers,
+} from "../../data/four-weddings-config";
 import { fourWeddingsData } from "../../data/four-weddings-data";
 import SelectableHistogram from "../SelectableHistogram";
 import SelectablePieChart from "../SelectablePieChart";
@@ -23,34 +27,34 @@ const FourWeddingsVisualization: React.FC<FourWeddingsVisualizationProps> = ({
     switch (vizType) {
       case "map":
         return (
-          <SelectableUSMap 
-            data={fourWeddingsData} 
-            selectOptions={selectOptions.map} 
+          <SelectableUSMap
+            data={fourWeddingsData}
+            selectOptions={selectOptions.map}
             getTooltipTitle={tooltipHelpers.map.title}
             getTooltipBody={tooltipHelpers.map.body}
           />
         );
       case "histogram":
         return (
-          <SelectableHistogram 
-            data={fourWeddingsData} 
-            selectOptions={selectOptions.histogram} 
+          <SelectableHistogram
+            data={fourWeddingsData}
+            selectOptions={selectOptions.histogram}
           />
         );
       case "pie":
         return (
-          <SelectablePieChart 
-            data={fourWeddingsData} 
-            selectOptions={selectOptions.pie} 
-            graphOptions={graphOptions.pie} 
+          <SelectablePieChart
+            data={fourWeddingsData}
+            selectOptions={selectOptions.pie}
+            graphOptions={graphOptions.pie}
           />
         );
       case "scatter":
         return (
-          <SelectableScatterplot 
-            data={fourWeddingsData} 
-            selectOptions={selectOptions.scatter} 
-            graphOptions={graphOptions.scatter} 
+          <SelectableScatterplot
+            data={fourWeddingsData}
+            selectOptions={selectOptions.scatter}
+            graphOptions={graphOptions.scatter}
           />
         );
       default:

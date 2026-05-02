@@ -24,7 +24,7 @@ describe("PAdicHeatChart", () => {
     render(<PAdicHeatChart />);
     const select = screen.getByRole("combobox") as HTMLSelectElement;
     const options = Array.from(select.querySelectorAll("option")).map(
-      (o) => o.textContent
+      (o) => o.textContent,
     );
     expect(options).toContain("Selected prime: 2");
     expect(options).toContain("Selected prime: 23");

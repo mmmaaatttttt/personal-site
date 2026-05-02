@@ -11,7 +11,7 @@ module.exports = {
   snapshotSerializers: ["enzyme-to-json/serializer"],
   testPathIgnorePatterns: ["/node_modules/", "<rootDir>/.cache/"],
   transform: {
-    "^.+\\.jsx?$": "<rootDir>/test/transformer.js"
+    "^.+\\.jsx?$": "<rootDir>/test/transformer.js",
   },
-  transformIgnorePatterns: [`node_modules/(?!(gatsby)/)`]
+  transformIgnorePatterns: [`node_modules/(?!(gatsby)/)`],
 };

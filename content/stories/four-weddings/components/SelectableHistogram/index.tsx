@@ -2,12 +2,13 @@
 
 import { bin, extent, max, range } from "d3-array";
 import { scaleLinear } from "d3-scale";
-import React, { useEffect, useMemo, useState } from "react";
+import type React from "react";
+import { useEffect, useMemo, useState } from "react";
 import BarGraph from "@/components/story/shared/BarGraph";
 import NarrowContainer from "@/components/story/shared/NarrowContainer";
 import Select from "@/components/story/shared/Select";
 import COLORS from "@/utils/styles";
-import { HistogramOption, WeddingData } from "../../types";
+import type { HistogramOption, WeddingData } from "../../types";
 
 const DEFAULT_HEIGHT = 400;
 const DEFAULT_WIDTH = 600;
@@ -24,7 +25,9 @@ const SelectableHistogram: React.FC<SelectableHistogramProps> = ({
   selectOptions,
 }) => {
   const [isMounted, setIsMounted] = useState(false);
-  const [selectedOption, setSelectedOption] = useState<HistogramOption>(selectOptions[0]);
+  const [selectedOption, setSelectedOption] = useState<HistogramOption>(
+    selectOptions[0],
+  );
 
   useEffect(() => {
     setIsMounted(true);
@@ -38,15 +41,20 @@ const SelectableHistogram: React.FC<SelectableHistogramProps> = ({
   }, [data, accessor, isMounted]);
 
   const results = useMemo(() => {
-    const vals = (extent(validData, accessor) as unknown as [number, number]) || [0, 100];
+    const vals = (extent(validData, accessor) as unknown as [
+      number,
+      number,
+    ]) || [0, 100];
     const thresholds = range(Math.min(vals[0], 0), vals[1] + 2 * step, step);
-    
+
     const binner = bin<WeddingData, number>()
       .value((d) => accessor(d) || 0)
       .thresholds(thresholds)
       .domain([thresholds[0], thresholds[thresholds.length - 1]]);
-    
-    const bins = binner(validData).filter(b => b.x0 !== undefined && b.x1 !== undefined && b.x0 < b.x1);
+
+    const bins = binner(validData).filter(
+      (b) => b.x0 !== undefined && b.x1 !== undefined && b.x0 < b.x1,
+    );
 
     const yScale = scaleLinear()
       .domain([0, (max(bins, (d) => d.length) || 0) * 1.1])
@@ -71,7 +79,9 @@ const SelectableHistogram: React.FC<SelectableHistogramProps> = ({
   return (
     <NarrowContainer width="100%" className="space-y-4">
       <div className="flex items-center gap-4 mb-4">
-        <span className="text-sm font-semibold text-gray-500 uppercase tracking-wider">VARIABLE</span>
+        <span className="text-sm font-semibold text-gray-500 uppercase tracking-wider">
+          VARIABLE
+        </span>
         <Select
           name="bar-data"
           value={value}

@@ -1,9 +1,11 @@
 export function countRegions(
   segments: boolean[][],
   rowCount: number,
-  colCount: number
+  colCount: number,
 ): [number, number][][] {
-  const visited = Array.from({ length: rowCount }, () => Array<boolean>(colCount).fill(false));
+  const visited = Array.from({ length: rowCount }, () =>
+    Array<boolean>(colCount).fill(false),
+  );
   const districts: [number, number][][] = [];
 
   for (let r = 0; r < rowCount; r++) {
@@ -22,7 +24,7 @@ function bfsArea(
   rowCount: number,
   colCount: number,
   startRow: number,
-  startCol: number
+  startCol: number,
 ): [number, number][] {
   const district: [number, number][] = [];
   const queue: [number, number][] = [[startRow, startCol]];
@@ -37,10 +39,18 @@ function bfsArea(
     if (row > 0 && !visited[row - 1][col] && !segments[2 * row - 1][col]) {
       queue.push([row - 1, col]);
     }
-    if (col + 1 < colCount && !visited[row][col + 1] && !segments[2 * row][col]) {
+    if (
+      col + 1 < colCount &&
+      !visited[row][col + 1] &&
+      !segments[2 * row][col]
+    ) {
       queue.push([row, col + 1]);
     }
-    if (row + 1 < rowCount && !visited[row + 1][col] && !segments[2 * row + 1][col]) {
+    if (
+      row + 1 < rowCount &&
+      !visited[row + 1][col] &&
+      !segments[2 * row + 1][col]
+    ) {
       queue.push([row + 1, col]);
     }
     if (col > 0 && !visited[row][col - 1] && !segments[2 * row][col - 1]) {

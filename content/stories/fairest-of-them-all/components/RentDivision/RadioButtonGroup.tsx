@@ -1,6 +1,6 @@
 "use client";
 
-import { FC, useState } from "react";
+import { type FC, useState } from "react";
 import FlexContainer from "@/components/story/shared/FlexContainer";
 import { Button } from "@/components/ui/Button";
 import COLORS from "@/utils/styles";
@@ -109,7 +109,9 @@ const RadioButtonGroup: FC<RadioButtonGroupProps> = ({
       </FlexContainer>
       <FlexContainer main="center" margin="1rem 0">
         {selectedIndex === null ? (
-          <Button variant="white" disabled>Please make a selection.</Button>
+          <Button variant="white" disabled>
+            Please make a selection.
+          </Button>
         ) : (
           <Button
             onClick={handleConfirm}

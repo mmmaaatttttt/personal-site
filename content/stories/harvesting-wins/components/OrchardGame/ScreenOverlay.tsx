@@ -1,13 +1,16 @@
 "use client";
 
-import { FC, ReactNode } from "react";
+import type { FC, ReactNode } from "react";
 
 interface ScreenOverlayProps {
   backgroundColor: string;
   children: ReactNode;
 }
 
-const ScreenOverlay: FC<ScreenOverlayProps> = ({ backgroundColor, children }) => (
+const ScreenOverlay: FC<ScreenOverlayProps> = ({
+  backgroundColor,
+  children,
+}) => (
   <div
     className="absolute inset-0 flex items-center justify-center rounded-lg z-10"
     style={{ backgroundColor: `${backgroundColor}b3` }}

@@ -1,6 +1,6 @@
 "use client";
 
-import { FC, useState } from "react";
+import { type FC, useState } from "react";
 import COLORS from "@/utils/styles";
 
 interface DraggableCircleProps {
@@ -47,7 +47,11 @@ const DraggableCircle: FC<DraggableCircleProps> = ({
       fill={fill}
       stroke={stroke}
       strokeWidth={strokeWidth}
-      style={{ cursor: dragging ? "grabbing" : "grab", touchAction: "none", transition: "r 0.15s ease" }}
+      style={{
+        cursor: dragging ? "grabbing" : "grab",
+        touchAction: "none",
+        transition: "r 0.15s ease",
+      }}
       onPointerEnter={() => setHovered(true)}
       onPointerLeave={() => setHovered(false)}
       onPointerDown={(e) => {
@@ -61,7 +65,10 @@ const DraggableCircle: FC<DraggableCircleProps> = ({
         onDrag(id, coords);
       }}
       onPointerUp={() => setDragging(false)}
-      onPointerCancel={() => { setDragging(false); setHovered(false); }}
+      onPointerCancel={() => {
+        setDragging(false);
+        setHovered(false);
+      }}
     />
   );
 };

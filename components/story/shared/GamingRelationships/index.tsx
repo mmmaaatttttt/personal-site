@@ -1,7 +1,7 @@
 "use client";
 
 import { extent } from "d3-array";
-import { AxisScale } from "d3-axis";
+import type { AxisScale } from "d3-axis";
 import { scaleLinear } from "d3-scale";
 import { useCallback, useState } from "react";
 import Caption from "@/components/story/shared/Caption";
@@ -21,7 +21,9 @@ export interface SliderDatum {
   equationParameter: boolean;
 }
 
-export type DiffEq = (...params: number[]) => (x: number, y: number[]) => number[];
+export type DiffEq = (
+  ...params: number[]
+) => (x: number, y: number[]) => number[];
 
 export interface GamingVisData {
   initialData: SliderDatum[];
@@ -56,7 +58,7 @@ export default function GamingRelationships({
   graphPadding = 30,
 }: GamingRelationshipsProps) {
   const [values, setValues] = useState<number[]>(
-    visData.initialData.map((d) => d.initialValue)
+    visData.initialData.map((d) => d.initialValue),
   );
 
   const handleValueChange = useCallback((idx: number, newVal: number) => {
@@ -73,10 +75,24 @@ export default function GamingRelationships({
     key: i,
   }));
 
-  const { width, height, diffEqs, svgIds, xLabel, yLabel, colors, smallestY, largestY } = visData;
+  const {
+    width,
+    height,
+    diffEqs,
+    svgIds,
+    xLabel,
+    yLabel,
+    colors,
+    smallestY,
+    largestY,
+  } = visData;
 
-  const getYDomain = (graphData: { x: number; y: number }[][]): [number, number] => {
-    const allY = graphData.flatMap((series) => series.map((d) => Math.abs(d.y)));
+  const getYDomain = (
+    graphData: { x: number; y: number }[][],
+  ): [number, number] => {
+    const allY = graphData.flatMap((series) =>
+      series.map((d) => Math.abs(d.y)),
+    );
     const yMax0 = allY.length > 0 ? Math.max(...allY) : 0;
     const yMax = Math.min(Math.max(Math.ceil(yMax0), smallestY), largestY);
     return [-yMax, yMax];
@@ -89,11 +105,23 @@ export default function GamingRelationships({
   };
 
   const transformData = (diffEq: DiffEq) => {
-    const diffEqValues = data.filter((d) => d.equationParameter).map((d) => d.value);
+    const diffEqValues = data
+      .filter((d) => d.equationParameter)
+      .map((d) => d.value);
     const graphCount = colors.length;
-    let initialValues = data.filter((d) => !d.equationParameter).map((d) => d.value);
+    let initialValues = data
+      .filter((d) => !d.equationParameter)
+      .map((d) => d.value);
     if (initialValues.length === 0) initialValues = [0, 0];
-    return generateData(graphCount, min, max, step, initialValues, diffEqValues, diffEq);
+    return generateData(
+      graphCount,
+      min,
+      max,
+      step,
+      initialValues,
+      diffEqValues,
+      diffEq,
+    );
   };
 
   const uniqueColors = Array.from(new Set(colors));
@@ -102,7 +130,9 @@ export default function GamingRelationships({
     const sliceIdx = i === 1 && colors.length === 4 ? 2 : 0;
     const allGraphData = transformData(diffEq).slice(sliceIdx, sliceIdx + 2);
     const xDomain = extent(allGraphData[0], (d) => d.x) as [number, number];
-    const xScale = scaleLinear().domain(xDomain).range([graphPadding, width - graphPadding]);
+    const xScale = scaleLinear()
+      .domain(xDomain)
+      .range([graphPadding, width - graphPadding]);
     const yScale = scaleLinear()
       .domain(getYDomain(allGraphData))
       .range([height - graphPadding, graphPadding]);

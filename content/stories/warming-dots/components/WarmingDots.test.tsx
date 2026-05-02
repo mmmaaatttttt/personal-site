@@ -24,7 +24,9 @@ vi.mock("@/components/story/shared/Slider", () => ({
 }));
 
 vi.mock("@/components/story/shared/FlexContainer", () => ({
-  default: ({ children }: any) => <div data-testid="flex-container">{children}</div>,
+  default: ({ children }: any) => (
+    <div data-testid="flex-container">{children}</div>
+  ),
 }));
 
 vi.mock("@/components/story/shared/Graph", () => ({
@@ -36,7 +38,9 @@ vi.mock("@/components/story/shared/Graph", () => ({
 }));
 
 vi.mock("@/components/story/shared/LinePlot", () => ({
-  default: ({ stroke }: any) => <path data-testid="line-plot" stroke={stroke} />,
+  default: ({ stroke }: any) => (
+    <path data-testid="line-plot" stroke={stroke} />
+  ),
 }));
 
 vi.mock("@/components/story/shared/Caption", () => ({
@@ -50,9 +54,11 @@ vi.mock("@/components/story/shared/Caption", () => ({
 
 describe("WarmingDots", () => {
   it("renders the caption", () => {
-    render(<WarmingDots vizIndex={0} caption="Figure 1: Exponential growth." />);
+    render(
+      <WarmingDots vizIndex={0} caption="Figure 1: Exponential growth." />,
+    );
     expect(screen.getByTestId("caption")).toHaveTextContent(
-      "Figure 1: Exponential growth."
+      "Figure 1: Exponential growth.",
     );
   });
 
@@ -72,7 +78,10 @@ describe("WarmingDots", () => {
   it("passes correct axis labels for population+environment charts (vizIndex 2)", () => {
     render(<WarmingDots vizIndex={2} caption="Test" />);
     const graph = screen.getByTestId("graph");
-    expect(graph).toHaveAttribute("data-ylabel", "Population & Environment State");
+    expect(graph).toHaveAttribute(
+      "data-ylabel",
+      "Population & Environment State",
+    );
   });
 
   it("renders two LinePlots for two-color charts (vizIndex 2)", () => {

@@ -1,5 +1,5 @@
-import { arc, DefaultArcObject, pie } from "d3-shape";
-import { FC, useMemo } from "react";
+import { arc, type DefaultArcObject, pie } from "d3-shape";
+import { type FC, useMemo } from "react";
 import ClippedSVG from "../ClippedSVG";
 import PieSlice from "./PieSlice";
 

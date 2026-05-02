@@ -46,11 +46,11 @@ export function getArticle(slug: string) {
   }
 
   const frontmatter: ArticleFrontmatter =
-    storyMeta[slug] ?? (matter(fs.readFileSync(mdxPath, "utf-8")).data as ArticleFrontmatter);
+    storyMeta[slug] ??
+    (matter(fs.readFileSync(mdxPath, "utf-8")).data as ArticleFrontmatter);
 
   return { frontmatter, slug };
 }
-
 
 /**
  * Get metadata for all articles, sorted by date descending.
@@ -59,9 +59,12 @@ export function getAllArticles(): ArticleMeta[] {
   const slugs = getArticleSlugs();
   const articles = slugs.map((slug) => {
     const { frontmatter } = getArticle(slug);
-    const raw = fs.readFileSync(path.join(ARTICLES_DIR, slug, "index.mdx"), "utf-8");
+    const raw = fs.readFileSync(
+      path.join(ARTICLES_DIR, slug, "index.mdx"),
+      "utf-8",
+    );
     const timeToRead = estimateReadingTime(matter(raw).content);
-    
+
     // Format date to "MMMM YYYY"
     const dateObj = new Date(frontmatter.date);
     const formattedDate = dateObj.toLocaleDateString("en-US", {
@@ -69,20 +72,20 @@ export function getAllArticles(): ArticleMeta[] {
       year: "numeric",
     });
 
-    return { 
-      ...frontmatter, 
+    return {
+      ...frontmatter,
       date: formattedDate,
       slug,
-      timeToRead 
+      timeToRead,
     };
   });
 
   // Sort by date descending (using the original YYYY-MM-DD for sorting)
   // Wait, I should probably keep the raw date for sorting.
   // Let's refine this to keep frontmatter clean but provide formatted date.
-  
+
   return articles.sort(
-    (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
+    (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime(),
   );
 }
 
@@ -91,12 +94,10 @@ export function getAllArticles(): ArticleMeta[] {
  */
 export function getMetadataOptions(articles: ArticleMeta[]) {
   const years = Array.from(
-    new Set(articles.map((a) => new Date(a.date).getFullYear()))
+    new Set(articles.map((a) => new Date(a.date).getFullYear())),
   ).sort((a, b) => b - a);
 
-  const tags = Array.from(
-    new Set(articles.flatMap((a) => a.tags))
-  ).sort();
+  const tags = Array.from(new Set(articles.flatMap((a) => a.tags))).sort();
 
   return { years, tags };
 }

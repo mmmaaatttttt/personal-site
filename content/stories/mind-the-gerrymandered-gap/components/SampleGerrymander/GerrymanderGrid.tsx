@@ -1,7 +1,7 @@
 "use client";
 
 import { scaleLinear } from "d3-scale";
-import { FC, ReactNode } from "react";
+import type { FC, ReactNode } from "react";
 import ClippedSVG from "@/components/story/shared/ClippedSVG";
 
 interface GerrymanderGridProps {
@@ -25,14 +25,23 @@ const GerrymanderGrid: FC<GerrymanderGridProps> = ({
   colorRange,
   children,
 }) => {
-  const xScale = scaleLinear().domain([0, colCount]).range([paddingX, width - paddingX]);
-  const yScale = scaleLinear().domain([0, rowCount]).range([height - paddingY, paddingY]);
+  const xScale = scaleLinear()
+    .domain([0, colCount])
+    .range([paddingX, width - paddingX]);
+  const yScale = scaleLinear()
+    .domain([0, rowCount])
+    .range([height - paddingY, paddingY]);
 
   const rectW = xScale(1) - xScale(0) - 2;
   const rectH = yScale(0) - yScale(1) - 2;
 
   return (
-    <ClippedSVG id="gerrymander-grid" width={width} height={height} clipChildren={false}>
+    <ClippedSVG
+      id="gerrymander-grid"
+      width={width}
+      height={height}
+      clipChildren={false}
+    >
       {Array.from({ length: colCount }, (_, x) =>
         Array.from({ length: rowCount }, (_, y) => (
           <rect
@@ -43,7 +52,7 @@ const GerrymanderGrid: FC<GerrymanderGridProps> = ({
             height={rectH}
             fill={colorRange[y % 2]}
           />
-        ))
+        )),
       )}
       {children}
     </ClippedSVG>

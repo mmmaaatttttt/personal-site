@@ -1,7 +1,7 @@
 "use client";
 
 import katex from "katex";
-import { FC, useEffect, useRef } from "react";
+import { type FC, useEffect, useRef } from "react";
 import "katex/dist/katex.min.css";
 import styles from "./Latex.module.css";
 

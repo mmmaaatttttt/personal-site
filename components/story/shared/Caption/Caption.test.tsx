@@ -1,39 +1,39 @@
-import { render, screen } from '@testing-library/react';
-import { describe, expect, it } from 'vitest';
-import '@testing-library/jest-dom/vitest';
-import Caption from '.';
+import { render, screen } from "@testing-library/react";
+import { describe, expect, it } from "vitest";
+import "@testing-library/jest-dom/vitest";
+import Caption from ".";
 
-describe('Caption Component', () => {
-  it('renders children and caption correctly', () => {
+describe("Caption Component", () => {
+  it("renders children and caption correctly", () => {
     render(
       <Caption caption="This is a test caption">
         <div data-testid="child">Main Content</div>
-      </Caption>
+      </Caption>,
     );
-    
-    expect(screen.getByTestId('child')).toBeInTheDocument();
-    expect(screen.getByText('This is a test caption')).toBeInTheDocument();
-    expect(screen.getByText('This is a test caption')).toHaveClass('italic');
+
+    expect(screen.getByTestId("child")).toBeInTheDocument();
+    expect(screen.getByText("This is a test caption")).toBeInTheDocument();
+    expect(screen.getByText("This is a test caption")).toHaveClass("italic");
   });
 
-  it('renders without caption if not provided', () => {
+  it("renders without caption if not provided", () => {
     const { container } = render(
       <Caption>
         <div>Content only</div>
-      </Caption>
+      </Caption>,
     );
-    
-    expect(screen.getByText('Content only')).toBeInTheDocument();
-    expect(container.querySelector('p')).not.toBeInTheDocument();
+
+    expect(screen.getByText("Content only")).toBeInTheDocument();
+    expect(container.querySelector("p")).not.toBeInTheDocument();
   });
 
-  it('applies custom className to wrapper', () => {
+  it("applies custom className to wrapper", () => {
     const { container } = render(
       <Caption className="custom-wrapper-class">
         <div>Content</div>
-      </Caption>
+      </Caption>,
     );
-    
-    expect(container.firstChild).toHaveClass('custom-wrapper-class');
+
+    expect(container.firstChild).toHaveClass("custom-wrapper-class");
   });
 });

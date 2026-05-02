@@ -18,7 +18,9 @@ describe("OrchardGameHeatData", () => {
   it("populates the dropdown with all strategy options plus diff", () => {
     render(<OrchardGameHeatData />);
     const select = screen.getByRole("combobox");
-    const options = Array.from(select.querySelectorAll("option")).map((o) => o.textContent);
+    const options = Array.from(select.querySelectorAll("option")).map(
+      (o) => o.textContent,
+    );
     expect(options).toContain("Most Plentiful Strategy");
     expect(options).toContain("Least Plentiful Strategy");
     expect(options).toContain("Random Strategy");

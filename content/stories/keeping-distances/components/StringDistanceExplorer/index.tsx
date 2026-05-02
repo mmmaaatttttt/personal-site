@@ -1,6 +1,6 @@
 "use client";
 
-import { FC, useState } from "react";
+import { type FC, useState } from "react";
 import Caption from "@/components/story/shared/Caption";
 import NarrowContainer from "@/components/story/shared/NarrowContainer";
 import StyledTable from "@/components/story/shared/StyledTable";
@@ -30,7 +30,10 @@ const StringDistanceExplorer: FC<StringDistanceExplorerProps> = ({
   const tableData: string[][] = [
     ["Metric", "Distance"],
     ["Hamming distance", hammingDist],
-    ["Levenshtein distance", String(levenshteinDistance(firstString, secondString))],
+    [
+      "Levenshtein distance",
+      String(levenshteinDistance(firstString, secondString)),
+    ],
     [
       "Damerau-Levenshtein distance",
       String(damerauLevenshteinDistance(firstString, secondString)),

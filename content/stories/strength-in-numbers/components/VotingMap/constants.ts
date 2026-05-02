@@ -82,7 +82,9 @@ export const WORKERS_MAP_OPTIONS: MapOption[] = [
     value: "3",
     label: "Poll Workers per Polling Place",
     accessor: (d) =>
-      d.poll_workers && d.polling_places ? d.poll_workers / d.polling_places : null,
+      d.poll_workers && d.polling_places
+        ? d.poll_workers / d.polling_places
+        : null,
     format: ".2f",
     colors: [COLORS.WHITE, COLORS.GREEN],
   },
@@ -91,7 +93,9 @@ export const WORKERS_MAP_OPTIONS: MapOption[] = [
     label: "Poll Workers per 1,000 Election Participants",
     accessor: (d) =>
       d.poll_workers && d.participants_in_jurisdictions_with_poll_worker_info
-        ? (d.poll_workers / d.participants_in_jurisdictions_with_poll_worker_info) * 1000
+        ? (d.poll_workers /
+            d.participants_in_jurisdictions_with_poll_worker_info) *
+          1000
         : null,
     format: ".2f",
     colors: [COLORS.WHITE, COLORS.DARK_BLUE],
@@ -100,8 +104,11 @@ export const WORKERS_MAP_OPTIONS: MapOption[] = [
     value: "5",
     label: "Polling Places per 1,000 Election Participants",
     accessor: (d) =>
-      d.polling_places && d.participants_in_jurisdictions_with_polling_place_info
-        ? (d.polling_places / d.participants_in_jurisdictions_with_polling_place_info) * 1000
+      d.polling_places &&
+      d.participants_in_jurisdictions_with_polling_place_info
+        ? (d.polling_places /
+            d.participants_in_jurisdictions_with_polling_place_info) *
+          1000
         : null,
     format: ".2f",
     colors: [COLORS.WHITE, COLORS.DARK_GREEN],
@@ -110,9 +117,17 @@ export const WORKERS_MAP_OPTIONS: MapOption[] = [
     value: "6",
     label: "Average Difficulty of Finding Poll Workers",
     accessor: (d) => {
-      const { difficulty_very_difficult: d5, difficulty_somewhat_difficult: d4, difficulty_neither_difficult_nor_easy: d3, difficulty_somewhat_easy: d2, difficulty_very_easy: d1 } = d;
+      const {
+        difficulty_very_difficult: d5,
+        difficulty_somewhat_difficult: d4,
+        difficulty_neither_difficult_nor_easy: d3,
+        difficulty_somewhat_easy: d2,
+        difficulty_very_easy: d1,
+      } = d;
       const numCounts = d1 + d2 + d3 + d4 + d5;
-      return numCounts > 0 ? (1 * d1 + 2 * d2 + 3 * d3 + 4 * d4 + 5 * d5) / numCounts : null;
+      return numCounts > 0
+        ? (1 * d1 + 2 * d2 + 3 * d3 + 4 * d4 + 5 * d5) / numCounts
+        : null;
     },
     format: ".1f",
     colors: [COLORS.WHITE, COLORS.PURPLE],

@@ -31,7 +31,9 @@ describe("SampleGerrymander", () => {
 
   it("calls onDistrictCountsChange(null) initially (no valid districts)", () => {
     const onDistrictCountsChange = vi.fn();
-    render(<SampleGerrymander onDistrictCountsChange={onDistrictCountsChange} />);
+    render(
+      <SampleGerrymander onDistrictCountsChange={onDistrictCountsChange} />,
+    );
     // Initial state: 1 region spanning all cells — not 6 districts of size 9 each
     expect(onDistrictCountsChange).toHaveBeenCalledWith(null);
   });
@@ -53,7 +55,9 @@ describe("SampleGerrymander", () => {
 
     const onDistrictCountsChange = vi.fn();
     await act(async () => {
-      render(<SampleGerrymander onDistrictCountsChange={onDistrictCountsChange} />);
+      render(
+        <SampleGerrymander onDistrictCountsChange={onDistrictCountsChange} />,
+      );
     });
 
     // Should eventually call with valid district counts
@@ -65,11 +69,13 @@ describe("SampleGerrymander", () => {
   it("resets segments and clears localStorage on Reset click", () => {
     // Store valid-shaped segments (rowCount*2-1=11 rows) so the component loads them
     const segments = Array.from({ length: 11 }, (_, i) =>
-      Array(i % 2 === 0 ? 8 : 9).fill(false)
+      Array(i % 2 === 0 ? 8 : 9).fill(false),
     );
     localStorage.setItem("segments", JSON.stringify(segments));
     const onDistrictCountsChange = vi.fn();
-    render(<SampleGerrymander onDistrictCountsChange={onDistrictCountsChange} />);
+    render(
+      <SampleGerrymander onDistrictCountsChange={onDistrictCountsChange} />,
+    );
 
     fireEvent.click(screen.getByText("Reset"));
     expect(localStorage.getItem("segments")).toBeNull();
@@ -79,7 +85,7 @@ describe("SampleGerrymander", () => {
     render(<SampleGerrymander onDistrictCountsChange={vi.fn()} />);
     // Toggle a segment to make saveable
     const { container } = render(
-      <SampleGerrymander onDistrictCountsChange={vi.fn()} />
+      <SampleGerrymander onDistrictCountsChange={vi.fn()} />,
     );
     const lines = container.querySelectorAll("line");
     if (lines.length > 0) {

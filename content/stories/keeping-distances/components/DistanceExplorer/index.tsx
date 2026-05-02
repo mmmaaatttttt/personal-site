@@ -2,7 +2,7 @@
 
 import { extent } from "d3-array";
 import { scaleLinear } from "d3-scale";
-import { FC, useCallback } from "react";
+import { type FC, useCallback } from "react";
 import Caption from "@/components/story/shared/Caption";
 import DraggableCircle from "@/components/story/shared/DraggableCircle";
 import Graph from "@/components/story/shared/Graph";
@@ -29,7 +29,7 @@ const DistanceExplorer: FC<DistanceExplorerProps> = ({ caption }) => {
       { x: 2, y: 2 },
     ],
     xScale,
-    yScale
+    yScale,
   );
 
   const offset = CIRCLE_R * 2;
@@ -39,7 +39,7 @@ const DistanceExplorer: FC<DistanceExplorerProps> = ({ caption }) => {
         x: Math.max(offset, Math.min(WIDTH - offset, coords.x)),
         y: Math.max(offset, Math.min(HEIGHT - offset, coords.y)),
       }),
-    [handleDrag, offset]
+    [handleDrag, offset],
   );
 
   const scaledPoints = points.map(({ x, y }) => ({
@@ -48,7 +48,7 @@ const DistanceExplorer: FC<DistanceExplorerProps> = ({ caption }) => {
   }));
 
   const theta = Math.atan(
-    (points[1].y - points[0].y) / (points[1].x - points[0].x)
+    (points[1].y - points[0].y) / (points[1].x - points[0].x),
   );
   const [minX, maxX] = extent(scaledPoints, (d) => d.x) as [number, number];
   const [minY, maxY] = extent(scaledPoints, (d) => d.y) as [number, number];
@@ -103,7 +103,7 @@ const DistanceExplorer: FC<DistanceExplorerProps> = ({ caption }) => {
           >
             {euclideanDistance(
               points[1].x - points[0].x,
-              points[1].y - points[0].y
+              points[1].y - points[0].y,
             ).toFixed(2)}
           </text>
           {scaledPoints.map((point, idx) => (

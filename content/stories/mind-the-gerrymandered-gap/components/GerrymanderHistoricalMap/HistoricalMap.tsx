@@ -1,18 +1,14 @@
 "use client";
 
 import { scaleLinear } from "d3-scale";
-import { FC, } from "react";
+import type { FC } from "react";
 import BarGraph from "@/components/story/shared/BarGraph";
 import ColumnLayout from "@/components/story/shared/ColumnLayout";
 import SliderProvider from "@/components/story/shared/Slider/SliderProvider";
 import USMap from "@/components/story/shared/USMap";
 import COLORS from "@/utils/styles";
 import type { ElectionRow, StateSummary } from "../../data";
-import {
-  buildBarData,
-  computeFillValue,
-  formatTooltip,
-} from "./helpers";
+import { buildBarData, computeFillValue, formatTooltip } from "./helpers";
 
 const EG_MAX = 0.5;
 const BAR_WIDTH = 1600;
@@ -64,7 +60,7 @@ const HistoricalMap: FC<HistoricalMapProps> = ({
           currentYear,
           currentMinElectors,
           electionData,
-          stateSummaries
+          stateSummaries,
         );
         const labelFontSize = `${(currentMinElectors - 1) / 10 + 1.2}rem`;
 
@@ -76,30 +72,30 @@ const HistoricalMap: FC<HistoricalMapProps> = ({
               domain={MAP_DOMAIN}
               fillAccessor={(properties) => {
                 const yearRows = (properties.values as ElectionRow[]).filter(
-                  (r) => r.year === currentYear
+                  (r) => r.year === currentYear,
                 );
                 const summary = stateSummaries.find(
-                  (s) => s.state === properties.name
+                  (s) => s.state === properties.name,
                 );
                 return computeFillValue(
                   yearRows.length,
                   currentMinElectors,
-                  summary?.efficiencyGaps[currentYear]
+                  summary?.efficiencyGaps[currentYear],
                 );
               }}
               getTooltipTitle={(properties) => properties.name}
               getTooltipBody={(properties) => {
                 const yearRows = (properties.values as ElectionRow[]).filter(
-                  (r) => r.year === currentYear
+                  (r) => r.year === currentYear,
                 );
                 const summary = stateSummaries.find(
-                  (s) => s.state === properties.name
+                  (s) => s.state === properties.name,
                 );
                 return formatTooltip(
                   yearRows.length,
                   currentMinElectors,
                   summary?.efficiencyGaps[currentYear],
-                  summary?.seatGaps[currentYear]
+                  summary?.seatGaps[currentYear],
                 );
               }}
             />

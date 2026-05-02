@@ -1,11 +1,11 @@
-
 import MainLayout from "@/components/layout/MainLayout";
 import { getAllArticles, getMetadataOptions } from "@/utils/content";
 import ArticlesContent from "./ArticlesContent";
 
 export const metadata = {
   title: "Stories | Matt Lane",
-  description: "A collection of stories at the intersection of math, equity, games, and more.",
+  description:
+    "A collection of stories at the intersection of math, equity, games, and more.",
 };
 
 export default async function ArticlesPage() {

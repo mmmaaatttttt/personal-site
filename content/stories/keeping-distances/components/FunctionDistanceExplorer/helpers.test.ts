@@ -127,7 +127,7 @@ describe("lInfNormEndpoints", () => {
     ];
     const seg = lInfNormEndpoints(pts1, pts2);
     expect(Math.abs(seg.y2 - seg.y1)).toBeGreaterThanOrEqual(
-      Math.abs(pts2[0].y - pts1[0].y) - 0.01
+      Math.abs(pts2[0].y - pts1[0].y) - 0.01,
     );
   });
 
@@ -145,7 +145,7 @@ describe("lInfNormEndpoints", () => {
     const seg1 = lInfNormEndpoints(a, b);
     const seg2 = lInfNormEndpoints(b, a);
     expect(Math.abs(seg1.y2 - seg1.y1)).toBeCloseTo(
-      Math.abs(seg2.y2 - seg2.y1)
+      Math.abs(seg2.y2 - seg2.y1),
     );
   });
 });

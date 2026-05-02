@@ -1,10 +1,11 @@
 "use client";
 
 import { Search } from "lucide-react";
-import React, { useMemo, useState } from "react";
+import type React from "react";
+import { useMemo, useState } from "react";
 import Select from "react-select";
 import StoryCard from "@/components/layout/StoryCard";
-import { ArticleMeta } from "@/utils/content";
+import type { ArticleMeta } from "@/utils/content";
 
 interface ArticlesContentProps {
   articles: ArticleMeta[];
@@ -58,9 +59,12 @@ const ArticlesContent: React.FC<ArticlesContentProps> = ({
       backgroundColor: state.isSelected
         ? "var(--color-dark-gray)"
         : state.isFocused
-        ? "var(--color-light-gray)"
-        : "white",
-      color: state.isSelected || state.isFocused ? "var(--color-dark-gray)" : "inherit",
+          ? "var(--color-light-gray)"
+          : "white",
+      color:
+        state.isSelected || state.isFocused
+          ? "var(--color-dark-gray)"
+          : "inherit",
       cursor: "pointer",
     }),
     multiValue: (base: any) => ({
@@ -91,7 +95,9 @@ const ArticlesContent: React.FC<ArticlesContentProps> = ({
   return (
     <div className="mx-auto w-full max-w-[var(--max-w-content)] px-4 sm:px-0">
       <div className="mb-12 flex flex-col gap-8">
-        <h1 className="font-serif text-4xl font-bold tracking-tight">Stories</h1>
+        <h1 className="font-serif text-4xl font-bold tracking-tight">
+          Stories
+        </h1>
 
         <div className="relative z-20 border-gray bg-nav/50 flex flex-col gap-6 rounded-xl border p-6 backdrop-blur-sm">
           {/* Search */}
@@ -137,7 +143,9 @@ const ArticlesContent: React.FC<ArticlesContentProps> = ({
                 placeholder="Filter by tag..."
                 value={selectedTags.map((t) => ({ value: t, label: t }))}
                 onChange={(options: any) =>
-                  setSelectedTags(options ? options.map((o: any) => o.value) : [])
+                  setSelectedTags(
+                    options ? options.map((o: any) => o.value) : [],
+                  )
                 }
                 styles={selectStyles}
               />

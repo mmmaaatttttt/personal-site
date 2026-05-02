@@ -3,7 +3,7 @@
 import { max } from "d3-array";
 import { scaleLinear } from "d3-scale";
 import { animate, useMotionValue, useMotionValueEvent } from "framer-motion";
-import { FC, useEffect, useState } from "react";
+import { type FC, useEffect, useState } from "react";
 import Caption from "@/components/story/shared/Caption";
 import FlexContainer from "@/components/story/shared/FlexContainer";
 import Graph from "@/components/story/shared/Graph";
@@ -48,10 +48,13 @@ const CoinFlipBayesianModel: FC<CoinFlipBayesianModelProps> = ({ caption }) => {
     animate(aMotion, targetA, { duration: 0.4, ease: "easeOut" });
     animate(bMotion, targetB, { duration: 0.4, ease: "easeOut" });
     animate(colorMotion, targetColor, { duration: 0.4, ease: "easeOut" });
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [targetA, targetB, targetColor]);
 
-  const graphData = X_COORDS.map((x) => ({ x, y: betaPdf(x, displayA, displayB) }));
+  const graphData = X_COORDS.map((x) => ({
+    x,
+    y: betaPdf(x, displayA, displayB),
+  }));
   const yMax = max(graphData, (d) => d.y) ?? 1;
 
   const xScale = scaleLinear()

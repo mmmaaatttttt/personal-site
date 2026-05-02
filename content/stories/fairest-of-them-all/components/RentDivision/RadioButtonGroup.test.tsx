@@ -36,14 +36,24 @@ describe("RadioButtonGroup", () => {
 
   it("calls handleRadioChange with the correct index on selection", () => {
     const handleRadioChange = vi.fn();
-    render(<RadioButtonGroup {...defaultProps} handleRadioChange={handleRadioChange} />);
+    render(
+      <RadioButtonGroup
+        {...defaultProps}
+        handleRadioChange={handleRadioChange}
+      />,
+    );
     fireEvent.click(screen.getByLabelText(/Room B/));
     expect(handleRadioChange).toHaveBeenCalledWith(1);
   });
 
   it("calls handleSelectConfirm and resets selection on confirm", () => {
     const handleSelectConfirm = vi.fn();
-    render(<RadioButtonGroup {...defaultProps} handleSelectConfirm={handleSelectConfirm} />);
+    render(
+      <RadioButtonGroup
+        {...defaultProps}
+        handleSelectConfirm={handleSelectConfirm}
+      />,
+    );
     fireEvent.click(screen.getByLabelText(/Room A/));
     fireEvent.click(screen.getByText("Confirm selection"));
     expect(handleSelectConfirm).toHaveBeenCalledWith(0);

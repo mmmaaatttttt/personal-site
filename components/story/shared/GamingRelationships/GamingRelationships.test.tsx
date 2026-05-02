@@ -2,7 +2,7 @@ import { render, screen } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
 import "@testing-library/jest-dom/vitest";
 import COLORS from "@/utils/styles";
-import GamingRelationships, { GamingVisData } from ".";
+import GamingRelationships, { type GamingVisData } from ".";
 
 vi.mock("odex", () => ({
   Solver: vi.fn().mockImplementation((_fn: unknown, _n: number) => ({
@@ -26,14 +26,21 @@ vi.mock("@/components/story/shared/Caption", () => ({
 
 vi.mock("@/components/story/shared/Graph", () => ({
   default: ({ children, xLabel, yLabel, svgId }: any) => (
-    <div data-testid="graph" data-xlabel={xLabel} data-ylabel={yLabel} data-svgid={svgId}>
+    <div
+      data-testid="graph"
+      data-xlabel={xLabel}
+      data-ylabel={yLabel}
+      data-svgid={svgId}
+    >
       {children}
     </div>
   ),
 }));
 
 vi.mock("@/components/story/shared/LinePlot", () => ({
-  default: ({ stroke }: any) => <path data-testid="line-plot" stroke={stroke} />,
+  default: ({ stroke }: any) => (
+    <path data-testid="line-plot" stroke={stroke} />
+  ),
 }));
 
 vi.mock("@/components/story/shared/Slider/SliderGroup", () => ({
@@ -43,24 +50,59 @@ vi.mock("@/components/story/shared/Slider/SliderGroup", () => ({
 }));
 
 vi.mock("@/components/story/shared/ColumnLayout", () => ({
-  default: ({ children }: any) => <div data-testid="column-layout">{children}</div>,
+  default: ({ children }: any) => (
+    <div data-testid="column-layout">{children}</div>
+  ),
 }));
 
 vi.mock("@/components/story/shared/FlexContainer", () => ({
-  default: ({ children }: any) => <div data-testid="flex-container">{children}</div>,
+  default: ({ children }: any) => (
+    <div data-testid="flex-container">{children}</div>
+  ),
 }));
 
 const A = COLORS.ORANGE;
 const B = COLORS.GREEN;
 
-const simpleDiffEq = (a: number, b: number) => (_x: number, y: number[]) => [a * y[1], b * y[0]];
+const simpleDiffEq = (a: number, b: number) => (_x: number, y: number[]) => [
+  a * y[1],
+  b * y[0],
+];
 
 const twoPersonVisData: GamingVisData = {
   initialData: [
-    { min: -5, max: 5, initialValue: 3, title: "A's Initial Feelings", color: A, equationParameter: false },
-    { min: -5, max: 5, initialValue: -1, title: "A's Response to B", color: A, equationParameter: true },
-    { min: -5, max: 5, initialValue: -3, title: "B's Initial Feelings", color: B, equationParameter: false },
-    { min: -5, max: 5, initialValue: 1, title: "B's Response to A", color: B, equationParameter: true },
+    {
+      min: -5,
+      max: 5,
+      initialValue: 3,
+      title: "A's Initial Feelings",
+      color: A,
+      equationParameter: false,
+    },
+    {
+      min: -5,
+      max: 5,
+      initialValue: -1,
+      title: "A's Response to B",
+      color: A,
+      equationParameter: true,
+    },
+    {
+      min: -5,
+      max: 5,
+      initialValue: -3,
+      title: "B's Initial Feelings",
+      color: B,
+      equationParameter: false,
+    },
+    {
+      min: -5,
+      max: 5,
+      initialValue: 1,
+      title: "B's Response to A",
+      color: B,
+      equationParameter: true,
+    },
   ],
   diffEqs: [simpleDiffEq],
   colors: [A, B],
@@ -81,8 +123,15 @@ const twoGraphVisData: GamingVisData = {
 
 describe("GamingRelationships", () => {
   it("renders the caption", () => {
-    render(<GamingRelationships visData={twoPersonVisData} caption="Figure 1: Test caption." />);
-    expect(screen.getByTestId("caption")).toHaveTextContent("Figure 1: Test caption.");
+    render(
+      <GamingRelationships
+        visData={twoPersonVisData}
+        caption="Figure 1: Test caption."
+      />,
+    );
+    expect(screen.getByTestId("caption")).toHaveTextContent(
+      "Figure 1: Test caption.",
+    );
   });
 
   it("renders without a caption", () => {

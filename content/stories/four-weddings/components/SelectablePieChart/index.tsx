@@ -1,10 +1,11 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import type React from "react";
+import { useEffect, useState } from "react";
 import NarrowContainer from "@/components/story/shared/NarrowContainer";
 import PieChart from "@/components/story/shared/PieChart";
 import Select from "@/components/story/shared/Select";
-import { PieOption, WeddingData } from "../../types";
+import type { PieOption, WeddingData } from "../../types";
 
 interface SelectablePieChartProps {
   data: WeddingData[];
@@ -22,7 +23,9 @@ const SelectablePieChart: React.FC<SelectablePieChartProps> = ({
   graphOptions,
 }) => {
   const [isMounted, setIsMounted] = useState(false);
-  const [selectedOption, setSelectedOption] = useState<PieOption>(selectOptions[0]);
+  const [selectedOption, setSelectedOption] = useState<PieOption>(
+    selectOptions[0],
+  );
 
   useEffect(() => {
     setIsMounted(true);
@@ -37,7 +40,9 @@ const SelectablePieChart: React.FC<SelectablePieChartProps> = ({
   return (
     <NarrowContainer width="100%" className="space-y-4">
       <div className="flex items-center gap-4 mb-4">
-        <span className="text-sm font-semibold text-gray-500 uppercase tracking-wider">VARIABLE</span>
+        <span className="text-sm font-semibold text-gray-500 uppercase tracking-wider">
+          VARIABLE
+        </span>
         <Select
           name="pie-data"
           value={value}
@@ -47,7 +52,11 @@ const SelectablePieChart: React.FC<SelectablePieChartProps> = ({
           className="flex-1 max-w-sm"
         />
       </div>
-      <PieChart values={accessor(data)} padding={CHART_PADDING} {...graphOptions} />
+      <PieChart
+        values={accessor(data)}
+        padding={CHART_PADDING}
+        {...graphOptions}
+      />
     </NarrowContainer>
   );
 };

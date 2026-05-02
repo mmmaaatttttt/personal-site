@@ -47,7 +47,9 @@ function generatePoint(
     x: interpolate(pt1.x, pt2.x, frac),
     y: interpolate(pt1.y, pt2.y, frac),
     color: COLORS.BLACK,
-    prices: pt1.prices.map((price, i) => interpolate(price, pt2.prices[i], frac)),
+    prices: pt1.prices.map((price, i) =>
+      interpolate(price, pt2.prices[i], frac),
+    ),
     r: initialR / meshLevels,
     label: "",
   };
@@ -66,7 +68,11 @@ function generateLabels(points: PointData[][], names: string[]): PointData[][] {
     for (let cellIdx = 1; cellIdx < rowIdx; cellIdx++) {
       const leftParent = points[rowIdx - 1][cellIdx - 1];
       const rightParent = points[rowIdx - 1][cellIdx];
-      points[rowIdx][cellIdx].label = deduceLabel(leftParent, rightParent, names);
+      points[rowIdx][cellIdx].label = deduceLabel(
+        leftParent,
+        rightParent,
+        names,
+      );
     }
     points[rowIdx][0].label = deduceLabel(
       points[rowIdx - 1][0],
@@ -100,18 +106,41 @@ export function generateAllPoints(
     (_, rowIdx) => {
       if (rowIdx === 0) {
         return [
-          { ...corners[0], color: COLORS.BLACK, r: initialR / meshLevels, label: "" },
+          {
+            ...corners[0],
+            color: COLORS.BLACK,
+            r: initialR / meshLevels,
+            label: "",
+          },
         ];
       }
       const fraction = rowIdx / (rowCount - 1);
       const [top, left, right] = corners;
-      const firstPoint = generatePoint(left, top, fraction, meshLevels, initialR);
-      const lastPoint = generatePoint(right, top, fraction, meshLevels, initialR);
+      const firstPoint = generatePoint(
+        left,
+        top,
+        fraction,
+        meshLevels,
+        initialR,
+      );
+      const lastPoint = generatePoint(
+        right,
+        top,
+        fraction,
+        meshLevels,
+        initialR,
+      );
       if (rowIdx === 1) return [firstPoint, lastPoint];
       const points: PointData[] = [firstPoint];
       for (let i = 1; i < rowIdx; i++) {
         points.push(
-          generatePoint(lastPoint, firstPoint, i / rowIdx, meshLevels, initialR),
+          generatePoint(
+            lastPoint,
+            firstPoint,
+            i / rowIdx,
+            meshLevels,
+            initialR,
+          ),
         );
       }
       points.push(lastPoint);

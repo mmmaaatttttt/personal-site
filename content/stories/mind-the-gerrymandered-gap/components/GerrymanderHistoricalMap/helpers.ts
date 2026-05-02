@@ -20,7 +20,7 @@ export function getStateBarColor(seatGap: number): string {
 export function computeFillValue(
   yearRowCount: number,
   minElectors: number,
-  efficiencyGap: number | undefined
+  efficiencyGap: number | undefined,
 ): number | null {
   if (yearRowCount < minElectors || efficiencyGap === undefined) return null;
   return efficiencyGap;
@@ -30,7 +30,7 @@ export function formatTooltip(
   yearRowCount: number,
   minElectors: number,
   efficiencyGap: number | undefined,
-  seatGap: number | undefined
+  seatGap: number | undefined,
 ): string | string[] {
   if (yearRowCount < minElectors) return "Not enough districts.";
   if (efficiencyGap === undefined || seatGap === undefined) return "No data.";
@@ -47,7 +47,7 @@ export function buildBarData(
   year: number,
   minElectors: number,
   electionData: ElectionRow[],
-  stateSummaries: StateSummary[]
+  stateSummaries: StateSummary[],
 ): { key: string; height: number; color: string }[] {
   const countByState: Record<string, number> = {};
   for (const row of electionData) {

@@ -1,6 +1,6 @@
 "use client";
 
-import { FC } from "react";
+import type { FC } from "react";
 
 interface SliderTicksProps {
   count: number;
@@ -22,7 +22,10 @@ const SliderTicks: FC<SliderTicksProps> = ({
   if (count <= 0) return null;
 
   return (
-    <div className="flex w-full justify-between px-0 absolute top-0 pointer-events-none" style={{ height: height + 2 * padding, padding: `${padding}px 0` }}>
+    <div
+      className="flex w-full justify-between px-0 absolute top-0 pointer-events-none"
+      style={{ height: height + 2 * padding, padding: `${padding}px 0` }}
+    >
       {Array.from({ length: count }, (_, i) => {
         const isFilled = i / (count - 1) <= fractionFilled;
         return (

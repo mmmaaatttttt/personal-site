@@ -1,10 +1,10 @@
-import { ScaleLinear } from "d3-scale";
+import type { ScaleLinear } from "d3-scale";
 
 export function generatePathOptions(
   pathHeight: number,
   pathWidth: number,
   memo: Record<string, string[]> = {},
-  paths: string[] = [""]
+  paths: string[] = [""],
 ): string[] {
   if (pathHeight + pathWidth === 0) return paths;
   if (pathWidth === 0) return paths.map((p) => p + "y".repeat(pathHeight));
@@ -13,17 +13,17 @@ export function generatePathOptions(
   if (memo[key]) return memo[key];
   memo[key] = [
     ...generatePathOptions(pathHeight - 1, pathWidth, memo, paths).map(
-      (p) => p + "y"
+      (p) => p + "y",
     ),
     ...generatePathOptions(pathHeight, pathWidth - 1, memo, paths).map(
-      (p) => p + "x"
+      (p) => p + "x",
     ),
   ];
   return memo[key];
 }
 
 export function generatePathPoints(
-  pathStr: string
+  pathStr: string,
 ): { x: number; y: number }[] {
   const points: { x: number; y: number }[] = [{ x: 0, y: 0 }];
   for (const xOrY of pathStr) {
@@ -37,7 +37,7 @@ export function generatePathPoints(
 
 export function generateGridPoints(
   xScale: ScaleLinear<number, number>,
-  yScale: ScaleLinear<number, number>
+  yScale: ScaleLinear<number, number>,
 ): { x: number; y: number }[] {
   const [xMin, xMax] = xScale.domain();
   const [yMin, yMax] = yScale.domain();

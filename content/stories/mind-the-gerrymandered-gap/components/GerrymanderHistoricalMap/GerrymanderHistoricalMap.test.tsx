@@ -7,8 +7,15 @@ vi.mock("../../data", () => ({
 }));
 
 vi.mock("./HistoricalMap", () => ({
-  default: ({ electionData, stateSummaries }: { electionData: unknown[]; stateSummaries: unknown[] }) => (
-    <div data-testid="historical-map"
+  default: ({
+    electionData,
+    stateSummaries,
+  }: {
+    electionData: unknown[];
+    stateSummaries: unknown[];
+  }) => (
+    <div
+      data-testid="historical-map"
       data-election-count={electionData.length}
       data-summary-count={stateSummaries.length}
     />

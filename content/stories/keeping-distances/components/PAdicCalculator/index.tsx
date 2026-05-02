@@ -1,6 +1,6 @@
 "use client";
 
-import { ChangeEvent, FC, useState } from "react";
+import { type ChangeEvent, type FC, useState } from "react";
 import Caption from "@/components/story/shared/Caption";
 import Latex from "@/components/story/shared/Latex";
 import NarrowContainer from "@/components/story/shared/NarrowContainer";

@@ -1,6 +1,6 @@
 "use client";
 
-import { FC, ReactNode } from "react";
+import type { FC, ReactNode } from "react";
 import { SVGContext } from "@/context/SVGContext";
 import { useResizeObserver } from "@/hooks/useResizeObserver";
 import { cn } from "@/lib/utils";
@@ -42,7 +42,9 @@ const ClippedSVG: FC<ClippedSVGProps> = ({
 
   return (
     <div ref={measureRef} className={cn("w-full h-full", className)}>
-      <SVGContext.Provider value={{ width, height, padding: paddingObj, dimensions }}>
+      <SVGContext.Provider
+        value={{ width, height, padding: paddingObj, dimensions }}
+      >
         <svg
           xmlns="http://www.w3.org/2000/svg"
           viewBox={`0 0 ${width} ${height}`}
@@ -59,7 +61,9 @@ const ClippedSVG: FC<ClippedSVGProps> = ({
               />
             </clipPath>
           </defs>
-          <g clipPath={clipChildren ? `url(#clip-path-${id})` : undefined}>{children}</g>
+          <g clipPath={clipChildren ? `url(#clip-path-${id})` : undefined}>
+            {children}
+          </g>
         </svg>
       </SVGContext.Provider>
     </div>

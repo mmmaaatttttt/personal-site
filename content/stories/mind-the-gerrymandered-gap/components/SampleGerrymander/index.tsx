@@ -1,6 +1,13 @@
 "use client";
 
-import { FC, useCallback, useEffect, useMemo, useRef, useState } from "react";
+import {
+  type FC,
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 import ColumnLayout from "@/components/story/shared/ColumnLayout";
 import {
   COL_COUNT,
@@ -33,7 +40,7 @@ const SampleGerrymander: FC<SampleGerrymanderProps> = ({
   onDistrictCountsChange,
 }) => {
   const [segments, setSegments] = useState<boolean[][]>(() =>
-    getInitialSegments(rowCount, colCount)
+    getInitialSegments(rowCount, colCount),
   );
   const [districts, setDistricts] = useState<[number, number][][]>([]);
   const [saveable, setSaveable] = useState(false);
@@ -55,8 +62,8 @@ const SampleGerrymander: FC<SampleGerrymanderProps> = ({
         // ignore malformed data
       }
     }
-  // rowCount is stable (prop default), so this runs effectively once
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // rowCount is stable (prop default), so this runs effectively once
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   // Recompute districts and propagate counts whenever segments change
@@ -67,15 +74,18 @@ const SampleGerrymander: FC<SampleGerrymanderProps> = ({
       newDistricts.length === rowCount &&
       newDistricts.every((d) => d.length === colCount);
     const counts = valid
-      ? newDistricts.map((d) => [
-          d.filter(([r]) => r % 2 === 0).length,
-          d.filter(([r]) => r % 2 === 1).length,
-        ] as [number, number])
+      ? newDistricts.map(
+          (d) =>
+            [
+              d.filter(([r]) => r % 2 === 0).length,
+              d.filter(([r]) => r % 2 === 1).length,
+            ] as [number, number],
+        )
       : null;
     onChangeRef.current?.(counts);
     localStorage.setItem(GERRYMANDER_COUNTS_KEY, JSON.stringify(counts));
     window.dispatchEvent(
-      new CustomEvent(GERRYMANDER_COUNTS_EVENT, { detail: counts })
+      new CustomEvent(GERRYMANDER_COUNTS_EVENT, { detail: counts }),
     );
   }, [segments, rowCount, colCount]);
 
@@ -89,7 +99,7 @@ const SampleGerrymander: FC<SampleGerrymanderProps> = ({
       });
       setSaveable(true);
     },
-    []
+    [],
   );
 
   const handleSave = useCallback(() => {
@@ -105,7 +115,7 @@ const SampleGerrymander: FC<SampleGerrymanderProps> = ({
 
   const dims = useMemo(
     () => computeGridDimensions(GRID_WIDTH, rowCount, colCount),
-    [rowCount, colCount]
+    [rowCount, colCount],
   );
 
   return (

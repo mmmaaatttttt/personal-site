@@ -12,7 +12,7 @@ export function generatePoints(
   newCount: number,
   initialSides: number,
   svgWidth: number,
-  svgHeight: number
+  svgHeight: number,
 ): Point[] {
   return Array.from({ length: newCount }, (_, i) => {
     const angle = (2 * Math.PI * i) / newCount - Math.PI / 2;
@@ -34,7 +34,11 @@ export function getPerimeter(points: Point[]): number {
 }
 
 // Returns the center (centroid) and the radius of the circle with the same perimeter.
-export function getCircleParams(points: Point[]): { x: number; y: number; r: number } {
+export function getCircleParams(points: Point[]): {
+  x: number;
+  y: number;
+  r: number;
+} {
   return {
     x: average(points, (p) => p.x),
     y: average(points, (p) => p.y),
@@ -50,14 +54,18 @@ export interface AreaInfo {
 
 // Returns normalized area strings (scaled so baseArea = 100) and the polygon/circle ratio.
 // Uses the shoelace formula for polygon area.
-export function getAreaInfo(points: Point[], circleR: number, baseArea: number): AreaInfo {
+export function getAreaInfo(
+  points: Point[],
+  circleR: number,
+  baseArea: number,
+): AreaInfo {
   const circleArea = Math.PI * circleR ** 2;
 
   const polygonArea = Math.abs(
     points.reduce((area, pt, i) => {
       const next = points[mod(i + 1, points.length)];
       return area + (pt.x + next.x) * (-pt.y + next.y);
-    }, 0) / 2
+    }, 0) / 2,
   );
 
   return {

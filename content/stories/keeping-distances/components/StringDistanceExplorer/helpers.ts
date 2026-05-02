@@ -22,7 +22,7 @@ function _editDistance(
   len1: number,
   len2: number,
   memo: Record<string, number>,
-  swapsAllowed: boolean
+  swapsAllowed: boolean,
 ): number {
   if (len1 === 0) return len2;
   if (len2 === 0) return len1;
@@ -43,7 +43,7 @@ function _editDistance(
   let dist = Math.min(
     memo[`${len1 - 1}|${len2}`] + 1,
     memo[`${len1}|${len2 - 1}`] + 1,
-    memo[`${len1 - 1}|${len2 - 1}`] + cost
+    memo[`${len1 - 1}|${len2 - 1}`] + cost,
   );
 
   if (

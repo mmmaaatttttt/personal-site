@@ -1,11 +1,12 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import type React from "react";
+import { useEffect, useState } from "react";
 import NarrowContainer from "@/components/story/shared/NarrowContainer";
 import Select from "@/components/story/shared/Select";
 import Tooltip, { useTooltip } from "@/components/story/shared/Tooltip";
 import USMap from "@/components/story/shared/USMap";
-import { MapOption, WeddingData } from "../../types";
+import type { MapOption, WeddingData } from "../../types";
 
 interface SelectableUSMapProps {
   data: WeddingData[];
@@ -21,7 +22,9 @@ const SelectableUSMap: React.FC<SelectableUSMapProps> = ({
   getTooltipBody,
 }) => {
   const [isMounted, setIsMounted] = useState(false);
-  const [selectedOption, setSelectedOption] = useState<MapOption>(selectOptions[0]);
+  const [selectedOption, setSelectedOption] = useState<MapOption>(
+    selectOptions[0],
+  );
   const { tooltip, showTooltip, hideTooltip } = useTooltip();
 
   useEffect(() => {
@@ -31,16 +34,22 @@ const SelectableUSMap: React.FC<SelectableUSMapProps> = ({
   const { value, label, accessor, colors } = selectedOption;
 
   if (!isMounted) {
-    return <div className="aspect-[16/9] w-full animate-pulse rounded-xl bg-nav/10" />;
+    return (
+      <div className="aspect-[16/9] w-full animate-pulse rounded-xl bg-nav/10" />
+    );
   }
 
   const titleHelper = getTooltipTitle || ((p: any) => p.name || "");
-  const bodyHelper = getTooltipBody || ((p: any) => p.values?.length ? `${p.values.length} items` : "");
+  const bodyHelper =
+    getTooltipBody ||
+    ((p: any) => (p.values?.length ? `${p.values.length} items` : ""));
 
   return (
     <NarrowContainer width="100%" className="space-y-4">
       <div className="flex items-center gap-4 mb-4">
-        <span className="text-sm font-semibold text-gray-500 uppercase tracking-wider">VARIABLE</span>
+        <span className="text-sm font-semibold text-gray-500 uppercase tracking-wider">
+          VARIABLE
+        </span>
         <Select
           name="map-data"
           value={value}

@@ -2,7 +2,7 @@
 
 import { max } from "d3-array";
 import { scaleLinear } from "d3-scale";
-import { FC } from "react";
+import type { FC } from "react";
 import BarGraph from "@/components/story/shared/BarGraph";
 import Caption from "@/components/story/shared/Caption";
 import SliderProvider from "@/components/story/shared/Slider";

@@ -1,7 +1,7 @@
 "use client";
 
 import { scaleLinear } from "d3-scale";
-import { FC } from "react";
+import type { FC } from "react";
 import Caption from "@/components/story/shared/Caption";
 import Graph from "@/components/story/shared/Graph";
 import SliderProvider from "@/components/story/shared/Slider";
@@ -35,8 +35,12 @@ const ManhattanCircle: FC<ManhattanCircleProps> = ({ caption }) => {
         initialData={sliderData}
         render={([r]) => {
           const bound = Math.max(r + 1, 10);
-          const xScale = scaleLinear().domain([-bound, bound]).range([0, WIDTH]);
-          const yScale = scaleLinear().domain([-bound, bound]).range([HEIGHT, 0]);
+          const xScale = scaleLinear()
+            .domain([-bound, bound])
+            .range([0, WIDTH]);
+          const yScale = scaleLinear()
+            .domain([-bound, bound])
+            .range([HEIGHT, 0]);
           const points = generateCirclePoints(r);
           return (
             <Graph

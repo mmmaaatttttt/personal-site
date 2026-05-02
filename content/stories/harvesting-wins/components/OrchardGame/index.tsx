@@ -1,6 +1,6 @@
 "use client";
 
-import { FC, useCallback, useEffect, useState } from "react";
+import { type FC, useCallback, useEffect, useState } from "react";
 import FlexContainer from "@/components/story/shared/FlexContainer";
 import NarrowContainer from "@/components/story/shared/NarrowContainer";
 import { Button } from "@/components/ui/Button";
@@ -78,25 +78,29 @@ const OrchardGame: FC<{ caption?: string }> = () => {
         removeAt(Math.min(idx, RAVEN_IDX));
       }
     },
-    [removeAt]
+    [removeAt],
   );
 
   const message = fruitBasketEnabled
     ? "Click on a square to remove a fruit."
     : gameState !== "playing"
-    ? "\u00a0"
-    : "";
+      ? "\u00a0"
+      : "";
 
   return (
     <NarrowContainer width="70%" fullWidthAt="sm">
       <div className="relative pb-4">
         {gameState !== "playing" && (
           <ScreenOverlay backgroundColor={OVERLAYS[gameState].bg}>
-            <h1 className="text-3xl font-bold mb-2">{OVERLAYS[gameState].title}</h1>
+            <h1 className="text-3xl font-bold mb-2">
+              {OVERLAYS[gameState].title}
+            </h1>
             <p>Games won: {gamesWon}</p>
             <p>Games played: {gamesPlayed}</p>
             <div className="flex flex-col gap-2 mt-4">
-              <Button onClick={startGame}>{OVERLAYS[gameState].buttonText}</Button>
+              <Button onClick={startGame}>
+                {OVERLAYS[gameState].buttonText}
+              </Button>
               <Button variant="outline" onClick={clearData}>
                 Clear Game Data
               </Button>

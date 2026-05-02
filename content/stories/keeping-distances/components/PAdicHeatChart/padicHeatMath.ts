@@ -13,6 +13,6 @@ export function generateGrid(size: number, prime: number): (number | null)[][] {
     Array.from({ length: size }, (_, xIdx) => {
       if (yIdx < xIdx) return null;
       return pAdicNorm(xIdx - yIdx, prime);
-    })
+    }),
   );
 }

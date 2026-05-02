@@ -33,7 +33,9 @@ describe("DistrictStatus", () => {
   });
 
   it("shows district size when district exists", () => {
-    const districts: [number, number][][] = [makeDistrict([0, 1, 2, 0, 1, 2, 0, 1, 2])];
+    const districts: [number, number][][] = [
+      makeDistrict([0, 1, 2, 0, 1, 2, 0, 1, 2]),
+    ];
     render(<DistrictStatus {...baseProps} districts={districts} />);
     expect(screen.getByText(/D1: 9/)).toBeInTheDocument();
   });
@@ -41,13 +43,17 @@ describe("DistrictStatus", () => {
   it("shows blue/red breakdown when district exists", () => {
     // rows 0,2,4,6,8 are even (blue); rows 1,3 are odd (red)
     const district = [
-      [0, 0], [0, 1], [0, 2],
-      [1, 0], [1, 1], [1, 2],
-      [2, 0], [2, 1], [2, 2],
+      [0, 0],
+      [0, 1],
+      [0, 2],
+      [1, 0],
+      [1, 1],
+      [1, 2],
+      [2, 0],
+      [2, 1],
+      [2, 2],
     ] as [number, number][];
-    render(
-      <DistrictStatus {...baseProps} districts={[district]} />
-    );
+    render(<DistrictStatus {...baseProps} districts={[district]} />);
     // 3 blue (rows 0,2), 3 red (row 1) - wait rows are [0,0][0,1][0,2][1,0][1,1][1,2][2,0][2,1][2,2]
     // rows 0,2 = even (blue) = 6 cells; row 1 = odd (red) = 3 cells
     expect(screen.getByText(/6 blue, 3 red/)).toBeInTheDocument();

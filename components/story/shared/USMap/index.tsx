@@ -2,10 +2,10 @@ import { extent } from "d3-array";
 import { geoAlbers, geoPath } from "d3-geo";
 import { scaleLinear } from "d3-scale";
 import { AnimatePresence } from "framer-motion";
-import { FeatureCollection, Geometry } from "geojson";
-import { MouseEvent, TouchEvent, useMemo } from "react";
+import type { FeatureCollection, Geometry } from "geojson";
+import { type MouseEvent, type TouchEvent, useMemo } from "react";
 import { feature } from "topojson-client";
-import { GeometryCollection, Topology } from "topojson-specification";
+import type { GeometryCollection, Topology } from "topojson-specification";
 import ClippedSVG from "../ClippedSVG";
 import USState from "./USState";
 import usTopoRaw from "./us-topo.json";
@@ -29,7 +29,10 @@ interface USMapProps<T> {
   scale?: number;
   topoKey?: "states" | "counties";
   translate?: [number, number];
-  onMouseMove?: (title: string, body: string | string[]) => (e: MouseEvent | TouchEvent) => void;
+  onMouseMove?: (
+    title: string,
+    body: string | string[],
+  ) => (e: MouseEvent | TouchEvent) => void;
   onMouseLeave?: () => void;
 }
 
@@ -57,34 +60,45 @@ const USMap = <T extends { state?: string }>({
 
   // Merge data into topojson properties
   const geoData = useMemo(() => {
-    const object = usTopo.objects[topoKey] as GeometryCollection<MapProperties<T>>;
-    const features = feature(usTopo, object) as unknown as FeatureCollection<Geometry, MapProperties<T>>;
-    
+    const object = usTopo.objects[topoKey] as GeometryCollection<
+      MapProperties<T>
+    >;
+    const features = feature(usTopo, object) as unknown as FeatureCollection<
+      Geometry,
+      MapProperties<T>
+    >;
+
     // Group data by state
     const dataByState: Record<string, T[]> = {};
-    data.forEach(d => {
-        const stateKey = d.state;
-        if (stateKey) {
-          if (!dataByState[stateKey]) dataByState[stateKey] = [];
-          dataByState[stateKey].push(d);
-        }
+    data.forEach((d) => {
+      const stateKey = d.state;
+      if (stateKey) {
+        if (!dataByState[stateKey]) dataByState[stateKey] = [];
+        dataByState[stateKey].push(d);
+      }
     });
 
     features.features.forEach((f) => {
-        f.properties.values = dataByState[f.properties.name] || [];
+      f.properties.values = dataByState[f.properties.name] || [];
     });
 
     return features.features;
   }, [data, topoKey]);
 
   const colorScale = useMemo(() => {
-    const dataWithValues = geoData.filter((d) => d.properties.values && d.properties.values.length > 0);
-    const effectiveDomain = domain || (extent(
-      dataWithValues,
-      (d) => fillAccessor(d.properties)
-    ) as [number, number]);
+    const dataWithValues = geoData.filter(
+      (d) => d.properties.values && d.properties.values.length > 0,
+    );
+    const effectiveDomain =
+      domain ||
+      (extent(dataWithValues, (d) => fillAccessor(d.properties)) as [
+        number,
+        number,
+      ]);
 
-    return scaleLinear<string>().domain(effectiveDomain || [0, 1]).range(colors);
+    return scaleLinear<string>()
+      .domain(effectiveDomain || [0, 1])
+      .range(colors);
   }, [geoData, domain, colors, fillAccessor]);
 
   return (
@@ -94,7 +108,10 @@ const USMap = <T extends { state?: string }>({
           <AnimatePresence>
             {geoData.map((d, i) => {
               const val = fillAccessor(d.properties);
-              const hasData = d.properties.values && d.properties.values.length > 0 && val !== null;
+              const hasData =
+                d.properties.values &&
+                d.properties.values.length > 0 &&
+                val !== null;
               const fill = hasData ? colorScale(val!) : "#eeeeee";
               const title = getTooltipTitle(d.properties);
               const body = getTooltipBody(d.properties);

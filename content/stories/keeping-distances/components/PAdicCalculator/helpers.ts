@@ -13,7 +13,7 @@ export function findLargestPower(n: number, p: number): number {
 export function displayIntegerDifference(
   num1: number,
   num2: number,
-  prime: number
+  prime: number,
 ): string {
   const difference = num1 - num2;
   const exp = findLargestPower(difference, prime);

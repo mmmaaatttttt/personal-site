@@ -2,7 +2,8 @@
 
 import { extent, max } from "d3-array";
 import { scaleLinear } from "d3-scale";
-import React, { useMemo } from "react";
+import type React from "react";
+import { useMemo } from "react";
 import Caption from "@/components/story/shared/Caption";
 import FlexContainer from "@/components/story/shared/FlexContainer";
 import Graph from "@/components/story/shared/Graph";
@@ -30,13 +31,28 @@ const WarmingDots: React.FC<WarmingDotsProps> = ({
   stepT = 0.005,
   svgPadding = { top: 30, left: 0, bottom: 0, right: 30 },
 }) => {
-  const vizIndexNum = typeof vizIndex === "string" ? parseInt(vizIndex, 10) : vizIndex;
+  const vizIndexNum =
+    typeof vizIndex === "string" ? parseInt(vizIndex, 10) : vizIndex;
   const visData = visualizationData[vizIndexNum];
 
-  const { initialData, width, height, svgIds, xLabel, yLabel, colors, integrationConstants, diffEqs, smallestY, largestY } = visData;
+  const {
+    initialData,
+    width,
+    height,
+    svgIds,
+    xLabel,
+    yLabel,
+    colors,
+    integrationConstants,
+    diffEqs,
+    smallestY,
+    largestY,
+  } = visData;
 
   const sliderData = useMemo(() => {
-    return colors.flatMap((color) => initialData.filter((d) => d.color === color));
+    return colors.flatMap((color) =>
+      initialData.filter((d) => d.color === color),
+    );
   }, [colors, initialData]);
 
   const tickStep = (scale: any) => {
@@ -46,8 +62,8 @@ const WarmingDots: React.FC<WarmingDotsProps> = ({
 
   const transformData = (dataValues: number[], diffEq: any) => {
     const dataWithValues = initialData.map((d, i) => ({
-       ...d,
-       value: dataValues[i] ?? (d as any).initialValue
+      ...d,
+      value: dataValues[i] ?? (d as any).initialValue,
     }));
 
     const diffEqValues = dataWithValues
@@ -61,7 +77,7 @@ const WarmingDots: React.FC<WarmingDotsProps> = ({
       stepT,
       integrationConstants,
       diffEqValues,
-      diffEq
+      diffEq,
     );
   };
 
@@ -72,15 +88,18 @@ const WarmingDots: React.FC<WarmingDotsProps> = ({
         width="100%"
         render={(sliderVals) => {
           const graphData = transformData(sliderVals, diffEqs[0]);
-          
+
           const flatData = graphData.flat();
           const yMaxVal = max(flatData, (d) => Math.abs(d.y)) || 0;
-          const yMax = Math.min(Math.max(Math.ceil(yMaxVal), smallestY), largestY);
-          
+          const yMax = Math.min(
+            Math.max(Math.ceil(yMaxVal), smallestY),
+            largestY,
+          );
+
           const xScale = scaleLinear()
             .domain(extent(graphData[0], (d) => d.x) as [number, number])
             .range([graphPadding, width - graphPadding]);
-            
+
           const yScale = scaleLinear()
             .domain([0, yMax])
             .range([height - graphPadding, graphPadding]);

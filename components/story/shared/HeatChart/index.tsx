@@ -44,12 +44,18 @@ function HeatChart<T>({
   const padY = height * paddingScale;
 
   const xScale = useMemo(
-    () => scaleLinear().domain([0, numCols]).range([padX, WIDTH - padX]),
-    [numCols, padX]
+    () =>
+      scaleLinear()
+        .domain([0, numCols])
+        .range([padX, WIDTH - padX]),
+    [numCols, padX],
   );
   const yScale = useMemo(
-    () => scaleLinear().domain([0, numRows]).range([height - padY, padY]),
-    [numRows, height, padY]
+    () =>
+      scaleLinear()
+        .domain([0, numRows])
+        .range([height - padY, padY]),
+    [numRows, height, padY],
   );
 
   const colorScale = useMemo(() => {
@@ -67,7 +73,12 @@ function HeatChart<T>({
 
   return (
     <div>
-      <ClippedSVG id="heat-chart" width={WIDTH} height={height} clipChildren={false}>
+      <ClippedSVG
+        id="heat-chart"
+        width={WIDTH}
+        height={height}
+        clipChildren={false}
+      >
         {data.map((col, x) =>
           col.map((d, y) => {
             if (d == null) return null;
@@ -86,7 +97,7 @@ function HeatChart<T>({
                 onTouchEnd={hideTooltip}
               />
             );
-          })
+          }),
         )}
         {axes && (
           <>

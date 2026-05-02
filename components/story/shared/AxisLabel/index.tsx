@@ -1,4 +1,4 @@
-import { FC, ReactNode, SVGProps } from "react";
+import type { FC, ReactNode, SVGProps } from "react";
 import { cn } from "@/lib/utils";
 
 interface AxisLabelProps extends SVGProps<SVGTextElement> {
@@ -19,7 +19,7 @@ const AxisLabel: FC<AxisLabelProps> = ({
       className={cn(
         "fill-current font-bold italic prose-sm",
         "stroke-white stroke-[0.5px]",
-        className
+        className,
       )}
       style={{ fontSize }}
       {...props}

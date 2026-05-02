@@ -24,7 +24,9 @@ describe("GerrymanderPlayground", () => {
 
   it("renders the EfficiencyGapTable placeholder initially", () => {
     render(<GerrymanderPlayground />);
-    expect(screen.getByText(/please finish drawing your districts/i)).toBeInTheDocument();
+    expect(
+      screen.getByText(/please finish drawing your districts/i),
+    ).toBeInTheDocument();
   });
 
   it("shows Save and Reset buttons", () => {

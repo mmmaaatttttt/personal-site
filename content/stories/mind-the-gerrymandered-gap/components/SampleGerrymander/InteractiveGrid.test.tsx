@@ -24,7 +24,7 @@ describe("InteractiveGrid", () => {
     const { container } = render(
       <svg>
         <InteractiveGrid {...defaultProps} />
-      </svg>
+      </svg>,
     );
     // For rowCount=6, colCount=9:
     // Even rows (0,2,4,6,8,10): 6 rows × (colCount-1=8) = 48 vertical segments
@@ -39,14 +39,14 @@ describe("InteractiveGrid", () => {
     const { container } = render(
       <svg>
         <InteractiveGrid {...defaultProps} onSegmentUpdate={onSegmentUpdate} />
-      </svg>
+      </svg>,
     );
     const lines = container.querySelectorAll("line");
     fireEvent.mouseDown(lines[0]);
     expect(onSegmentUpdate).toHaveBeenCalledWith(
       expect.any(Number),
       expect.any(Number),
-      true
+      true,
     );
   });
 
@@ -55,7 +55,7 @@ describe("InteractiveGrid", () => {
     const { container } = render(
       <svg>
         <InteractiveGrid {...defaultProps} onSegmentUpdate={onSegmentUpdate} />
-      </svg>
+      </svg>,
     );
     const lines = container.querySelectorAll("line");
     // mouseenter without prior mousedown — activeStatus is null
@@ -63,7 +63,7 @@ describe("InteractiveGrid", () => {
     expect(onSegmentUpdate).toHaveBeenCalledWith(
       expect.any(Number),
       expect.any(Number),
-      null
+      null,
     );
   });
 
@@ -73,12 +73,12 @@ describe("InteractiveGrid", () => {
     const { container } = render(
       <svg>
         <InteractiveGrid {...defaultProps} segments={segments} />
-      </svg>
+      </svg>,
     );
     const lines = container.querySelectorAll("line");
     // The first on segment should have DARK_GRAY stroke
     const onSegment = Array.from(lines).find(
-      (l) => l.getAttribute("stroke") !== "#ffffff"
+      (l) => l.getAttribute("stroke") !== "#ffffff",
     );
     expect(onSegment).toBeTruthy();
   });
@@ -88,7 +88,7 @@ describe("InteractiveGrid", () => {
     const { container } = render(
       <svg>
         <InteractiveGrid {...defaultProps} onSegmentUpdate={onSegmentUpdate} />
-      </svg>
+      </svg>,
     );
     const lines = container.querySelectorAll("line");
     fireEvent.mouseDown(lines[0]);
@@ -99,7 +99,7 @@ describe("InteractiveGrid", () => {
     expect(onSegmentUpdate).toHaveBeenCalledWith(
       expect.any(Number),
       expect.any(Number),
-      null
+      null,
     );
   });
 });

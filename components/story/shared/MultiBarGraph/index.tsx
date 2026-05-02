@@ -2,9 +2,9 @@
 
 import { max, min } from "d3-array";
 import { scaleBand, scaleLinear } from "d3-scale";
-import { stack as d3stack, Series, stackOffsetNone } from "d3-shape";
+import { stack as d3stack, type Series, stackOffsetNone } from "d3-shape";
 import { AnimatePresence, motion } from "framer-motion";
-import { FC, useMemo } from "react";
+import { type FC, useMemo } from "react";
 import Axis from "../Axis";
 import AxisLabel from "../AxisLabel";
 import ClippedSVG from "../ClippedSVG";

@@ -1,6 +1,6 @@
 "use client";
 
-import { FC, useState } from "react";
+import { type FC, useState } from "react";
 import Caption from "@/components/story/shared/Caption";
 import ColoredSpan from "@/components/story/shared/ColoredSpan";
 import LabeledSlider from "@/components/story/shared/Slider/LabeledSlider";
@@ -39,7 +39,10 @@ const CoinFlipTable: FC<CoinFlipTableProps> = ({ caption }) => {
       />
       {/* Fixed column widths prevent the cells from resizing as text changes. */}
       <div className="my-12 w-full overflow-x-auto text-center">
-        <table className="mx-auto w-full border-collapse border shadow-sm" style={{ tableLayout: "fixed" }}>
+        <table
+          className="mx-auto w-full border-collapse border shadow-sm"
+          style={{ tableLayout: "fixed" }}
+        >
           <colgroup>
             <col style={{ width: "25%" }} />
             <col style={{ width: "25%" }} />
@@ -48,21 +51,23 @@ const CoinFlipTable: FC<CoinFlipTableProps> = ({ caption }) => {
           </colgroup>
           <thead>
             <tr>
-              {["Prob. of H", "Prob. of T", "Prob. of HT", "Prob. of TH"].map((h) => (
-                <th
-                  key={h}
-                  style={{
-                    ...cellStyle,
-                    backgroundColor: "rgba(0, 0, 0, 0.03)",
-                    fontWeight: 800,
-                    textTransform: "uppercase",
-                    letterSpacing: "0.05em",
-                    fontSize: "0.875rem",
-                  }}
-                >
-                  {h}
-                </th>
-              ))}
+              {["Prob. of H", "Prob. of T", "Prob. of HT", "Prob. of TH"].map(
+                (h) => (
+                  <th
+                    key={h}
+                    style={{
+                      ...cellStyle,
+                      backgroundColor: "rgba(0, 0, 0, 0.03)",
+                      fontWeight: 800,
+                      textTransform: "uppercase",
+                      letterSpacing: "0.05em",
+                      fontSize: "0.875rem",
+                    }}
+                  >
+                    {h}
+                  </th>
+                ),
+              )}
             </tr>
           </thead>
           <tbody>

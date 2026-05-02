@@ -11,7 +11,7 @@ export interface EconomyNode extends SimulationNodeDatum {
 type UpdateHandler = (
   eps: number,
   savingsRate: number,
-  energies: number[]
+  energies: number[],
 ) => number[];
 
 const _updateHandlerNormal: UpdateHandler = (eps, savingsRate, energies) => {
@@ -24,7 +24,11 @@ const _updateHandlerNormal: UpdateHandler = (eps, savingsRate, energies) => {
   }
 };
 
-const _updateHandlerLeastWealth: UpdateHandler = (eps, _savingsRate, energies) => {
+const _updateHandlerLeastWealth: UpdateHandler = (
+  eps,
+  _savingsRate,
+  energies,
+) => {
   const delta = eps * Math.min(...energies);
   return Math.random() < 0.5
     ? [energies[0] + delta, energies[1] - delta]
@@ -36,18 +40,22 @@ const _handleCollision = (
   multiplier: number,
   savingsRate: number,
   nodes: EconomyNode[],
-  updateHandler: UpdateHandler
+  updateHandler: UpdateHandler,
 ): number[] => {
-  const originalEnergies = nodes.map(node => speeds[node.key] ** 2);
+  const originalEnergies = nodes.map((node) => speeds[node.key] ** 2);
   const newEnergies = nodes.map(
-    node => (euclideanDistance(node.vx ?? 0, node.vy ?? 0) / multiplier) ** 2
+    (node) => (euclideanDistance(node.vx ?? 0, node.vy ?? 0) / multiplier) ** 2,
   );
 
   // leave early if unpausing
   if (newEnergies[0] === 0 && newEnergies[1] === 0) return speeds;
 
   const epsilon = newEnergies[0] / (originalEnergies[0] + originalEnergies[1]);
-  const updatedNewEnergies = updateHandler(epsilon, savingsRate, originalEnergies);
+  const updatedNewEnergies = updateHandler(
+    epsilon,
+    savingsRate,
+    originalEnergies,
+  );
   const newSpeeds = [...speeds];
   nodes.forEach((node, idx) => {
     let scaleFactor = 0;
@@ -65,21 +73,35 @@ const normalCollision = (
   speeds: number[],
   multiplier: number,
   savingsRate: number,
-  nodes: EconomyNode[]
-) => _handleCollision(speeds, multiplier, savingsRate, nodes, _updateHandlerNormal);
+  nodes: EconomyNode[],
+) =>
+  _handleCollision(
+    speeds,
+    multiplier,
+    savingsRate,
+    nodes,
+    _updateHandlerNormal,
+  );
 
 const collisionMaximizedByLeastWealth = (
   speeds: number[],
   multiplier: number,
   savingsRate: number,
-  nodes: EconomyNode[]
-) => _handleCollision(speeds, multiplier, savingsRate, nodes, _updateHandlerLeastWealth);
+  nodes: EconomyNode[],
+) =>
+  _handleCollision(
+    speeds,
+    multiplier,
+    savingsRate,
+    nodes,
+    _updateHandlerLeastWealth,
+  );
 
 export type CollisionFn = (
   speeds: number[],
   multiplier: number,
   savingsRate: number,
-  nodes: EconomyNode[]
+  nodes: EconomyNode[],
 ) => number[];
 
 const updateSpeeds: CollisionFn[] = [

@@ -1,7 +1,12 @@
 import { format } from "d3-format";
-import { Arc, DefaultArcObject, PieArcDatum } from "d3-shape";
-import { MotionValue, motion, useSpring, useTransform } from "framer-motion";
-import { FC, useEffect, useState } from "react";
+import type { Arc, DefaultArcObject, PieArcDatum } from "d3-shape";
+import {
+  type MotionValue,
+  motion,
+  useSpring,
+  useTransform,
+} from "framer-motion";
+import { type FC, useEffect, useState } from "react";
 
 interface AnimatedPercentageProps {
   startAngle: MotionValue<number>;
@@ -12,15 +17,24 @@ interface AnimatedPercentageProps {
   percentFormat: string;
 }
 
-const AnimatedPercentage: FC<AnimatedPercentageProps> = ({ startAngle, endAngle, textFill, x, y, percentFormat }) => {
+const AnimatedPercentage: FC<AnimatedPercentageProps> = ({
+  startAngle,
+  endAngle,
+  textFill,
+  x,
+  y,
+  percentFormat,
+}) => {
   const [displayValue, setDisplayValue] = useState("");
 
-  const percentageValue = useTransform([startAngle, endAngle], ([sa, ea]: number[]) =>
-    format(percentFormat)((ea - sa) / (2 * Math.PI))
+  const percentageValue = useTransform(
+    [startAngle, endAngle],
+    ([sa, ea]: number[]) => format(percentFormat)((ea - sa) / (2 * Math.PI)),
   );
 
-  const opacityValue = useTransform([startAngle, endAngle], ([sa, ea]: number[]) => 
-    (ea - sa) / (2 * Math.PI) > 0.05 ? 1 : 0
+  const opacityValue = useTransform(
+    [startAngle, endAngle],
+    ([sa, ea]: number[]) => ((ea - sa) / (2 * Math.PI) > 0.05 ? 1 : 0),
   );
 
   useEffect(() => {
@@ -56,7 +70,16 @@ interface PieSliceProps {
   percentFormat: string;
 }
 
-const PieSlice: FC<PieSliceProps> = ({ datum, index, pathArc, colorScale, stroke, showLabels, textFill, percentFormat }) => {
+const PieSlice: FC<PieSliceProps> = ({
+  datum,
+  index,
+  pathArc,
+  colorScale,
+  stroke,
+  showLabels,
+  textFill,
+  percentFormat,
+}) => {
   const startAngle = useSpring(datum.startAngle, { bounce: 0, duration: 500 });
   const endAngle = useSpring(datum.endAngle, { bounce: 0, duration: 500 });
 
@@ -65,17 +88,34 @@ const PieSlice: FC<PieSliceProps> = ({ datum, index, pathArc, colorScale, stroke
     endAngle.set(datum.endAngle);
   }, [datum.startAngle, datum.endAngle, startAngle, endAngle]);
 
-  const d = useTransform([startAngle, endAngle], ([sa, ea]: number[]) => 
-    pathArc({ startAngle: sa, endAngle: ea, innerRadius: 0, outerRadius: 0 }) || ""
+  const d = useTransform(
+    [startAngle, endAngle],
+    ([sa, ea]: number[]) =>
+      pathArc({
+        startAngle: sa,
+        endAngle: ea,
+        innerRadius: 0,
+        outerRadius: 0,
+      }) || "",
   );
 
   const labelX = useTransform([startAngle, endAngle], ([sa, ea]: number[]) => {
-    const centroid = pathArc.centroid({ startAngle: sa, endAngle: ea, innerRadius: 0, outerRadius: 0 });
+    const centroid = pathArc.centroid({
+      startAngle: sa,
+      endAngle: ea,
+      innerRadius: 0,
+      outerRadius: 0,
+    });
     return centroid[0];
   });
-  
+
   const labelY = useTransform([startAngle, endAngle], ([sa, ea]: number[]) => {
-    const centroid = pathArc.centroid({ startAngle: sa, endAngle: ea, innerRadius: 0, outerRadius: 0 });
+    const centroid = pathArc.centroid({
+      startAngle: sa,
+      endAngle: ea,
+      innerRadius: 0,
+      outerRadius: 0,
+    });
     return centroid[1];
   });
 

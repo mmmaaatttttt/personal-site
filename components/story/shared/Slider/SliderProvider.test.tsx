@@ -1,4 +1,3 @@
-
 import { fireEvent, render, screen } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
 import SliderProvider from "./index";
@@ -38,7 +37,9 @@ describe("SliderProvider", () => {
     expect(screen.getByText(/Val: 20/i)).toBeInTheDocument();
 
     // Check initial values in render function
-    expect(screen.getByTestId("render-content")).toHaveTextContent("Values: 50, 20");
+    expect(screen.getByTestId("render-content")).toHaveTextContent(
+      "Values: 50, 20",
+    );
     expect(renderFn).toHaveBeenCalledWith([50, 20]);
   });
 
@@ -57,7 +58,9 @@ describe("SliderProvider", () => {
     fireEvent.change(sliders[0], { target: { value: "75" } });
 
     // Verify state update and re-render
-    expect(screen.getByTestId("render-content")).toHaveTextContent("Values: 75, 20");
+    expect(screen.getByTestId("render-content")).toHaveTextContent(
+      "Values: 75, 20",
+    );
     expect(renderFn).toHaveBeenLastCalledWith([75, 20]);
   });
 
@@ -65,7 +68,7 @@ describe("SliderProvider", () => {
     render(<SliderProvider initialData={initialData} render={() => null} />);
 
     const sliders = screen.getAllByRole("slider");
-    
+
     // Change second slider value
     fireEvent.change(sliders[1], { target: { value: "25" } });
 
@@ -75,9 +78,9 @@ describe("SliderProvider", () => {
 
   it("renders within NarrowContainer for few sliders", () => {
     const { container } = render(
-      <SliderProvider initialData={initialData} render={() => <div />} />
+      <SliderProvider initialData={initialData} render={() => <div />} />,
     );
-    
+
     // NarrowContainer usually uses a specific width class or structure
     // We can check if it's rendered by looking for its characteristic wrapper
     // Since we can't easily check for the specific component name in JSDOM,
@@ -87,7 +90,7 @@ describe("SliderProvider", () => {
 
   it("returns null if no initial data is provided", () => {
     const { container } = render(
-      <SliderProvider initialData={[] as any} render={() => <div />} />
+      <SliderProvider initialData={[] as any} render={() => <div />} />,
     );
     expect(container.firstChild).toBeNull();
   });

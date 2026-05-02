@@ -1,7 +1,7 @@
 "use client";
 
 import { scaleLinear } from "d3-scale";
-import { FC, useState } from "react";
+import { type FC, useState } from "react";
 import Caption from "@/components/story/shared/Caption";
 import Graph from "@/components/story/shared/Graph";
 import NarrowContainer from "@/components/story/shared/NarrowContainer";
@@ -64,8 +64,7 @@ const ManhattanPaths: FC<ManhattanPathsProps> = ({ caption }) => {
           yScale={yScale}
         >
           {gridPoints.map((pt) => {
-            const isActive =
-              pt.x === activePoint.x && pt.y === activePoint.y;
+            const isActive = pt.x === activePoint.x && pt.y === activePoint.y;
             const color = isActive ? COLORS.BLACK : COLORS.LIGHT_GRAY;
             return (
               <circle
@@ -75,10 +74,14 @@ const ManhattanPaths: FC<ManhattanPathsProps> = ({ caption }) => {
                 r={POINT_RADIUS}
                 fill={color}
                 stroke={color}
-                onClick={isActive ? undefined : () => {
-                  setActivePoint({ x: pt.x, y: pt.y });
-                  setSliderVal(1);
-                }}
+                onClick={
+                  isActive
+                    ? undefined
+                    : () => {
+                        setActivePoint({ x: pt.x, y: pt.y });
+                        setSliderVal(1);
+                      }
+                }
                 style={{ cursor: isActive ? "default" : "pointer" }}
               />
             );

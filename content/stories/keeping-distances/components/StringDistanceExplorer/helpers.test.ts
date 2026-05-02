@@ -48,7 +48,7 @@ describe("levenshteinDistance", () => {
 
   it("is symmetric", () => {
     expect(levenshteinDistance("kitten", "sitting")).toBe(
-      levenshteinDistance("sitting", "kitten")
+      levenshteinDistance("sitting", "kitten"),
     );
   });
 
@@ -74,7 +74,7 @@ describe("damerauLevenshteinDistance", () => {
 
   it("is symmetric", () => {
     expect(damerauLevenshteinDistance("ab", "ba")).toBe(
-      damerauLevenshteinDistance("ba", "ab")
+      damerauLevenshteinDistance("ba", "ab"),
     );
   });
 

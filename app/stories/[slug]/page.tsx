@@ -1,6 +1,6 @@
 import Image from "next/image";
 import { notFound } from "next/navigation";
-import React from "react";
+import type React from "react";
 import MainLayout from "@/components/layout/MainLayout";
 import { getArticle, getArticleSlugs } from "@/utils/content";
 
@@ -70,7 +70,7 @@ export default async function ArticlePage({ params }: PageProps) {
 
   const featuredImage = frontmatter.featured_image.replace(
     /^(\.\.\/)+images\//,
-    "/images/"
+    "/images/",
   );
 
   const dateObj = new Date(frontmatter.date);
@@ -100,7 +100,8 @@ export default async function ArticlePage({ params }: PageProps) {
             <h1
               className="font-serif text-4xl sm:text-5xl md:text-6xl lg:text-[70px] font-bold text-white leading-tight"
               style={{
-                textShadow: "3px 3px 1px #000, -1px -1px 1px #000, 1px -1px 1px #000, -1px 1px 1px #000, 1px 1px 1px #000",
+                textShadow:
+                  "3px 3px 1px #000, -1px -1px 1px #000, 1px -1px 1px #000, -1px 1px 1px #000, 1px 1px 1px #000",
               }}
             >
               {frontmatter.title}
@@ -108,7 +109,8 @@ export default async function ArticlePage({ params }: PageProps) {
             <h2
               className="mt-6 font-serif text-2xl sm:text-3xl font-bold text-white tracking-wide"
               style={{
-                textShadow: "2px 2px 1px #000, -1px -1px 1px #000, 1px -1px 1px #000, -1px 1px 1px #000, 1px 1px 1px #000",
+                textShadow:
+                  "2px 2px 1px #000, -1px -1px 1px #000, 1px -1px 1px #000, -1px 1px 1px #000, 1px 1px 1px #000",
               }}
             >
               {formattedDate}

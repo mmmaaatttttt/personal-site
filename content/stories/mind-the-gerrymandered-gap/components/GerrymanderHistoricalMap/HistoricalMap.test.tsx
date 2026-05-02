@@ -1,5 +1,5 @@
 import { act, fireEvent, render, screen } from "@testing-library/react";
-import React from "react";
+import type React from "react";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import type { ElectionRow, StateSummary } from "../../data";
 import HistoricalMap from "./HistoricalMap";
@@ -21,10 +21,42 @@ vi.mock("framer-motion", async (importOriginal) => {
 });
 
 const mockElectionData: ElectionRow[] = [
-  { year: 2016, state: "Pennsylvania", district: 1, dem: 1000, rep: 800, demEst: false, repEst: false },
-  { year: 2016, state: "Pennsylvania", district: 2, dem: 900, rep: 1100, demEst: false, repEst: false },
-  { year: 2014, state: "Pennsylvania", district: 1, dem: 800, rep: 900, demEst: false, repEst: false },
-  { year: 2014, state: "Pennsylvania", district: 2, dem: 750, rep: 850, demEst: false, repEst: false },
+  {
+    year: 2016,
+    state: "Pennsylvania",
+    district: 1,
+    dem: 1000,
+    rep: 800,
+    demEst: false,
+    repEst: false,
+  },
+  {
+    year: 2016,
+    state: "Pennsylvania",
+    district: 2,
+    dem: 900,
+    rep: 1100,
+    demEst: false,
+    repEst: false,
+  },
+  {
+    year: 2014,
+    state: "Pennsylvania",
+    district: 1,
+    dem: 800,
+    rep: 900,
+    demEst: false,
+    repEst: false,
+  },
+  {
+    year: 2014,
+    state: "Pennsylvania",
+    district: 2,
+    dem: 750,
+    rep: 850,
+    demEst: false,
+    repEst: false,
+  },
 ];
 
 const mockStateSummaries: StateSummary[] = [
@@ -46,7 +78,7 @@ describe("HistoricalMap", () => {
         <HistoricalMap
           electionData={mockElectionData}
           stateSummaries={mockStateSummaries}
-        />
+        />,
       );
     });
     expect(document.body).toBeTruthy();
@@ -58,7 +90,7 @@ describe("HistoricalMap", () => {
         <HistoricalMap
           electionData={mockElectionData}
           stateSummaries={mockStateSummaries}
-        />
+        />,
       );
     });
     expect(screen.getByText(/Year: 2016/i)).toBeInTheDocument();
@@ -70,7 +102,7 @@ describe("HistoricalMap", () => {
         <HistoricalMap
           electionData={mockElectionData}
           stateSummaries={mockStateSummaries}
-        />
+        />,
       );
     });
     expect(screen.getByText(/Minimum Number of Electors/i)).toBeInTheDocument();
@@ -89,7 +121,7 @@ describe("HistoricalMap", () => {
         <HistoricalMap
           electionData={mockElectionData}
           stateSummaries={mockStateSummaries}
-        />
+        />,
       );
     });
 

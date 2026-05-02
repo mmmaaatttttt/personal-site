@@ -32,7 +32,8 @@ const VotingLineChart = ({
   svgId = "state-line-graph",
   caption,
 }: VotingLineChartProps) => {
-  const options = variant === "voters" ? VOTERS_LINE_OPTIONS : WORKERS_LINE_OPTIONS;
+  const options =
+    variant === "voters" ? VOTERS_LINE_OPTIONS : WORKERS_LINE_OPTIONS;
   const [selectedStat, setSelectedStat] = useState(options[0].value);
   const [selectedState, setSelectedState] = useState(states[0] ?? "");
 
@@ -45,7 +46,10 @@ const VotingLineChart = ({
   const stateData = data
     .filter((d) => d.state === selectedState)
     .map((d) => ({ x: d.year, y: option.accessor(d) }))
-    .filter((d): d is { x: number; y: number } => d.y !== null && d.y !== 0 && isFinite(d.y));
+    .filter(
+      (d): d is { x: number; y: number } =>
+        d.y !== null && d.y !== 0 && isFinite(d.y),
+    );
 
   const hasData = stateData.length > 0;
 
@@ -54,7 +58,9 @@ const VotingLineChart = ({
     .range([GRAPH_PADDING.left, SVG_WIDTH - GRAPH_PADDING.right]);
 
   const yScale = scaleLinear()
-    .domain(hasData ? (extent(stateData, (d) => d.y) as [number, number]) : [0, 1])
+    .domain(
+      hasData ? (extent(stateData, (d) => d.y) as [number, number]) : [0, 1],
+    )
     .range([SVG_HEIGHT - GRAPH_PADDING.bottom, GRAPH_PADDING.top]);
 
   const contentKey = `${selectedStat}-${selectedState}`;
@@ -70,7 +76,9 @@ const VotingLineChart = ({
         />
         <Select
           name="state"
-          value={stateOptions.find((o) => o.label === selectedState)?.value ?? "0"}
+          value={
+            stateOptions.find((o) => o.label === selectedState)?.value ?? "0"
+          }
           onChange={(opt) => setSelectedState(opt.label)}
           options={stateOptions}
         />

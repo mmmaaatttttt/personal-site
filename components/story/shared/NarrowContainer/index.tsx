@@ -1,4 +1,4 @@
-import { FC, ReactNode } from "react";
+import type { FC, ReactNode } from "react";
 import { cn } from "@/lib/utils";
 
 interface NarrowContainerProps {
@@ -10,7 +10,6 @@ interface NarrowContainerProps {
   className?: string;
 }
 
-
 const NarrowContainer: FC<NarrowContainerProps> = ({
   children,
   width = "80%",
@@ -19,8 +18,6 @@ const NarrowContainer: FC<NarrowContainerProps> = ({
   center = false,
   className,
 }) => {
-
-
   const breakpointClasses = {
     sm: "max-sm:w-full max-sm:mx-0",
     md: "max-md:w-full max-md:mx-0",
@@ -35,9 +32,8 @@ const NarrowContainer: FC<NarrowContainerProps> = ({
         "transition-all duration-300",
         breakpointClasses[fullWidthAt],
         center && "text-center",
-        className
+        className,
       )}
-
     >
       {children}
     </div>

@@ -1,5 +1,5 @@
 import { fireEvent, render, screen } from "@testing-library/react";
-import { describe, expect, it, } from "vitest";
+import { describe, expect, it } from "vitest";
 import "@testing-library/jest-dom/vitest";
 import OrchardGameSimulation from ".";
 
@@ -7,7 +7,9 @@ describe("OrchardGameSimulation", () => {
   it("renders a Play button and a Reset button initially", () => {
     render(<OrchardGameSimulation />);
     expect(screen.getByRole("button", { name: "Play" })).toBeInTheDocument();
-    expect(screen.getByRole("button", { name: "Reset Simulation" })).toBeInTheDocument();
+    expect(
+      screen.getByRole("button", { name: "Reset Simulation" }),
+    ).toBeInTheDocument();
   });
 
   it("renders one bar per strategy (4 strategies)", () => {
@@ -22,7 +24,9 @@ describe("OrchardGameSimulation", () => {
     render(<OrchardGameSimulation />);
     fireEvent.click(screen.getByRole("button", { name: "Play" }));
     expect(screen.getByRole("button", { name: "Pause" })).toBeInTheDocument();
-    expect(screen.queryByRole("button", { name: "Reset Simulation" })).not.toBeInTheDocument();
+    expect(
+      screen.queryByRole("button", { name: "Reset Simulation" }),
+    ).not.toBeInTheDocument();
   });
 
   it("toggles back to Play when Pause is clicked", () => {
@@ -41,7 +45,11 @@ describe("OrchardGameSimulation", () => {
 
   it("accepts custom game parameters without crashing", () => {
     render(
-      <OrchardGameSimulation fruitCounts={[10, 10, 10, 10]} ravenCount={9} wildCardCount={2} />
+      <OrchardGameSimulation
+        fruitCounts={[10, 10, 10, 10]}
+        ravenCount={9}
+        wildCardCount={2}
+      />,
     );
     expect(screen.getByRole("button", { name: "Play" })).toBeInTheDocument();
   });

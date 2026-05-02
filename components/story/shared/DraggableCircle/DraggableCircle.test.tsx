@@ -23,7 +23,7 @@ function renderInSVG(ui: React.ReactElement) {
 describe("DraggableCircle", () => {
   it("renders with given position and radius", () => {
     const { circle } = renderInSVG(
-      <DraggableCircle id={0} cx={100} cy={200} r={8} onDrag={vi.fn()} />
+      <DraggableCircle id={0} cx={100} cy={200} r={8} onDrag={vi.fn()} />,
     );
     expect(circle.getAttribute("cx")).toBe("100");
     expect(circle.getAttribute("cy")).toBe("200");
@@ -32,7 +32,14 @@ describe("DraggableCircle", () => {
 
   it("applies optional stroke and strokeWidth", () => {
     const { circle } = renderInSVG(
-      <DraggableCircle id={0} cx={0} cy={0} stroke="black" strokeWidth={2} onDrag={vi.fn()} />
+      <DraggableCircle
+        id={0}
+        cx={0}
+        cy={0}
+        stroke="black"
+        strokeWidth={2}
+        onDrag={vi.fn()}
+      />,
     );
     expect(circle.getAttribute("stroke")).toBe("black");
     expect(circle.getAttribute("stroke-width")).toBe("2");
@@ -41,7 +48,7 @@ describe("DraggableCircle", () => {
   it("calls onDrag with id and SVG coords during drag", () => {
     const onDrag = vi.fn();
     const { circle } = renderInSVG(
-      <DraggableCircle id={3} cx={50} cy={50} onDrag={onDrag} />
+      <DraggableCircle id={3} cx={50} cy={50} onDrag={onDrag} />,
     );
 
     fireEvent.pointerDown(circle, { pointerId: 1 });
@@ -54,7 +61,7 @@ describe("DraggableCircle", () => {
   it("stops firing onDrag after pointerUp", () => {
     const onDrag = vi.fn();
     const { circle } = renderInSVG(
-      <DraggableCircle id={0} cx={50} cy={50} onDrag={onDrag} />
+      <DraggableCircle id={0} cx={50} cy={50} onDrag={onDrag} />,
     );
 
     fireEvent.pointerDown(circle, { pointerId: 1 });
@@ -68,7 +75,7 @@ describe("DraggableCircle", () => {
   it("does not fire onDrag without a prior pointerDown", () => {
     const onDrag = vi.fn();
     const { circle } = renderInSVG(
-      <DraggableCircle id={0} cx={50} cy={50} onDrag={onDrag} />
+      <DraggableCircle id={0} cx={50} cy={50} onDrag={onDrag} />,
     );
 
     fireEvent.pointerMove(circle, { clientX: 60, clientY: 60 });
@@ -78,7 +85,7 @@ describe("DraggableCircle", () => {
 
   it("grows radius on pointer enter and shrinks on pointer leave", () => {
     const { circle } = renderInSVG(
-      <DraggableCircle id={0} cx={50} cy={50} r={8} onDrag={vi.fn()} />
+      <DraggableCircle id={0} cx={50} cy={50} r={8} onDrag={vi.fn()} />,
     );
 
     expect(circle.getAttribute("r")).toBe("8");
@@ -90,7 +97,7 @@ describe("DraggableCircle", () => {
 
   it("stays grown while dragging even without hover", () => {
     const { circle } = renderInSVG(
-      <DraggableCircle id={0} cx={50} cy={50} r={8} onDrag={vi.fn()} />
+      <DraggableCircle id={0} cx={50} cy={50} r={8} onDrag={vi.fn()} />,
     );
 
     fireEvent.pointerDown(circle, { pointerId: 1 });

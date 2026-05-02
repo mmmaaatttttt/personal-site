@@ -1,7 +1,7 @@
 "use client";
 
 import { scaleLinear } from "d3-scale";
-import { FC, useCallback, useEffect, useState } from "react";
+import { type FC, useCallback, useEffect, useState } from "react";
 import COLORS, { hexToRgba } from "@/utils/styles";
 
 interface SegmentDatum {
@@ -50,8 +50,12 @@ const InteractiveGrid: FC<InteractiveGridProps> = ({
     return () => window.removeEventListener("mouseup", handleMouseUp);
   }, [handleMouseUp]);
 
-  const xScale = scaleLinear().domain([0, colCount]).range([paddingX, width - paddingX]);
-  const yScale = scaleLinear().domain([0, rowCount]).range([height - paddingY, paddingY]);
+  const xScale = scaleLinear()
+    .domain([0, colCount])
+    .range([paddingX, width - paddingX]);
+  const yScale = scaleLinear()
+    .domain([0, rowCount])
+    .range([height - paddingY, paddingY]);
 
   const segmentData: SegmentDatum[] = segments
     .flatMap((row, rowIdx) =>
@@ -68,7 +72,7 @@ const InteractiveGrid: FC<InteractiveGridProps> = ({
           rowIdx,
           colIdx,
         };
-      })
+      }),
     )
     .sort((a, b) => {
       if (hovered) {

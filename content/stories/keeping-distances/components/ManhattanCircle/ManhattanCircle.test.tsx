@@ -20,7 +20,7 @@ describe("ManhattanCircle", () => {
     render(<ManhattanCircle />);
     const circles = document.querySelectorAll("circle");
     const red = Array.from(circles).find(
-      (c) => c.getAttribute("fill") === "#ff3c23"
+      (c) => c.getAttribute("fill") === "#ff3c23",
     );
     expect(red).not.toBeUndefined();
   });
@@ -38,7 +38,9 @@ describe("ManhattanCircle", () => {
 
   it("increases circle point count as radius grows", () => {
     render(<ManhattanCircle />);
-    const slider = document.querySelector('input[type="range"]') as HTMLInputElement;
+    const slider = document.querySelector(
+      'input[type="range"]',
+    ) as HTMLInputElement;
     // radius=1 → 4 circle points + 1 center = 5
     expect(document.querySelectorAll("circle").length).toBe(5);
 

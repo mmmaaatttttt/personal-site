@@ -1,7 +1,7 @@
 "use client";
 
 import { scaleOrdinal } from "d3-scale";
-import { FC, useState } from "react";
+import { type FC, useState } from "react";
 import Legend from "@/components/story/shared/Legend";
 import NarrowContainer from "@/components/story/shared/NarrowContainer";
 import PieChart from "@/components/story/shared/PieChart";
@@ -33,7 +33,10 @@ interface VotingPollWorkerAgeProps {
   states: string[];
 }
 
-const VotingPollWorkerAge: FC<VotingPollWorkerAgeProps> = ({ data, states }) => {
+const VotingPollWorkerAge: FC<VotingPollWorkerAgeProps> = ({
+  data,
+  states,
+}) => {
   const initialState = states[2] ?? states[0] ?? "";
   const [selectedState, setSelectedState] = useState(initialState);
 
@@ -57,11 +60,14 @@ const VotingPollWorkerAge: FC<VotingPollWorkerAgeProps> = ({ data, states }) => 
       width="60%"
       fullWidthAt="md"
       render={([curYear]) => {
-        const match = data.find((d) => d.year === curYear && d.state === selectedState);
+        const match = data.find(
+          (d) => d.year === curYear && d.state === selectedState,
+        );
         const ages = match?.ages ?? [0, 0, 0, 0, 0, 0];
         const hasData = ages.some((a) => a > 0);
         const selectedOption =
-          stateOptions.find((o) => o.label === selectedState) ?? stateOptions[0];
+          stateOptions.find((o) => o.label === selectedState) ??
+          stateOptions[0];
 
         return (
           <div className="mt-4 space-y-3">
@@ -75,7 +81,10 @@ const VotingPollWorkerAge: FC<VotingPollWorkerAgeProps> = ({ data, states }) => 
               <>
                 <Legend
                   title="Poll worker ages (years)"
-                  labels={AGE_COLORS.map((color, i) => ({ color, text: AGE_LABELS[i] }))}
+                  labels={AGE_COLORS.map((color, i) => ({
+                    color,
+                    text: AGE_LABELS[i],
+                  }))}
                 />
                 <NarrowContainer width="70%" fullWidthAt="md">
                   <PieChart
@@ -88,7 +97,9 @@ const VotingPollWorkerAge: FC<VotingPollWorkerAgeProps> = ({ data, states }) => 
               </>
             ) : (
               <>
-                <h4>No data available for {selectedState} in {curYear}.</h4>
+                <h4>
+                  No data available for {selectedState} in {curYear}.
+                </h4>
                 <p>Please make another selection.</p>
               </>
             )}

@@ -1,10 +1,17 @@
-import { FC, ReactNode } from "react";
+import type { FC, ReactNode } from "react";
 import { cn } from "@/lib/utils";
 
 interface FlexContainerProps {
   children: ReactNode;
   column?: boolean;
-  main?: "start" | "end" | "center" | "between" | "around" | "evenly" | "stretch";
+  main?:
+    | "start"
+    | "end"
+    | "center"
+    | "between"
+    | "around"
+    | "evenly"
+    | "stretch";
   cross?: "start" | "end" | "center" | "baseline" | "stretch";
   flex?: number | string;
   margin?: string;
@@ -74,7 +81,7 @@ const FlexContainer: FC<FlexContainerProps> = ({
         shouldWrap ? "flex-wrap" : "flex-nowrap",
         column ? mainDirClasses[main] : mainClasses[main],
         column ? crossDirClasses[cross] : crossClasses[cross],
-        className
+        className,
       )}
       style={{ flex, margin, width, textAlign }}
     >

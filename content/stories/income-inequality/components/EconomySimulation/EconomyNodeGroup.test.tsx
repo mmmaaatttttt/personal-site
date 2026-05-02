@@ -22,7 +22,7 @@ describe("EconomyNodeGroup", () => {
     const { container } = render(
       <svg>
         <EconomyNodeGroup {...defaultProps} />
-      </svg>
+      </svg>,
     );
     expect(container.querySelector("g")).toBeInTheDocument();
   });
@@ -31,7 +31,7 @@ describe("EconomyNodeGroup", () => {
     const { container } = render(
       <svg>
         <EconomyNodeGroup {...defaultProps} />
-      </svg>
+      </svg>,
     );
     // Nodes are rendered imperatively by D3 on each tick;
     // JSDOM doesn't run the simulation, so we just verify the container is present.
@@ -42,15 +42,15 @@ describe("EconomyNodeGroup", () => {
     const { rerender } = render(
       <svg>
         <EconomyNodeGroup {...defaultProps} speeds={[10, 10]} />
-      </svg>
+      </svg>,
     );
     // Verify re-render with a larger population doesn't throw
     expect(() =>
       rerender(
         <svg>
           <EconomyNodeGroup {...defaultProps} speeds={[10, 10, 10, 10, 10]} />
-        </svg>
-      )
+        </svg>,
+      ),
     ).not.toThrow();
   });
 });

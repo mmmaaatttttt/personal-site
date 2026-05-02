@@ -8,7 +8,7 @@ const comma = format(",.0f");
 // for use with a tooltip.
 function generateTooltipData({ meta: { id, title }, counts }: any) {
   let total = 0;
-  for (let speaker in counts) {
+  for (const speaker in counts) {
     total += counts[speaker];
   }
   return {
@@ -16,12 +16,12 @@ function generateTooltipData({ meta: { id, title }, counts }: any) {
     body: [
       `Episode: ${id}`,
       ...Object.keys(counts).map(
-        speaker =>
+        (speaker) =>
           `${speaker}: ${comma(counts[speaker])} (${percent(
-            counts[speaker] / total
-          )} of total)`
-      )
-    ]
+            counts[speaker] / total,
+          )} of total)`,
+      ),
+    ],
   };
 }
 
@@ -32,12 +32,12 @@ const defaultSentimentOptions = [
     { value: "2", label: "Neutral (-0.05 to 0.05)" },
     { value: "3", label: "Positive (0.05 to 0.5)" },
     { value: "4", label: "Extremely Positive (0.5 to 1)" },
-  ]
+  ],
 ];
 
 const colorMap = {
   Chris: COLORS.DARK_BLUE,
-  Caller: COLORS.ORANGE
+  Caller: COLORS.ORANGE,
 };
 
 interface Feature {
@@ -73,4 +73,9 @@ const horizontalBarData = baFeatures.map((d) => ({
   fill: colorMap[d.width > 0 ? "Chris" : "Caller"],
 }));
 
-export { colorMap, defaultSentimentOptions, generateTooltipData, horizontalBarData };
+export {
+  colorMap,
+  defaultSentimentOptions,
+  generateTooltipData,
+  horizontalBarData,
+};

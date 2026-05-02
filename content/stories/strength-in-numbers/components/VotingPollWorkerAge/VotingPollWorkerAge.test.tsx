@@ -51,7 +51,9 @@ describe("VotingPollWorkerAge", () => {
   it("populates the dropdown with all states", () => {
     render(<VotingPollWorkerAge data={mockData} states={mockStates} />);
     const select = screen.getByRole("combobox");
-    const options = Array.from(select.querySelectorAll("option")).map((o) => o.textContent);
+    const options = Array.from(select.querySelectorAll("option")).map(
+      (o) => o.textContent,
+    );
     expect(options).toContain("Alabama");
     expect(options).toContain("California");
   });

@@ -7,7 +7,13 @@ const meta: ArticleFrontmatter = {
   caption: "Love, chaos, and a three body problem.",
   featured_image_caption:
     "Jane's relationships may be chaotic, in a mathematically precise sense. Image credit: Jane the Virgin (The CW).",
-  tags: ["differential equations", "relationships", "modeling", "chaos theory", "functions"],
+  tags: [
+    "differential equations",
+    "relationships",
+    "modeling",
+    "chaos theory",
+    "functions",
+  ],
 };
 
 export default meta;

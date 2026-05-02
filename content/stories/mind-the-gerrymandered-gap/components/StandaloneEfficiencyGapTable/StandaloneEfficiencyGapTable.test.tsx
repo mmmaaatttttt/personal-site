@@ -1,6 +1,9 @@
 import { act, render, screen } from "@testing-library/react";
 import { beforeEach, describe, expect, it } from "vitest";
-import { GERRYMANDER_COUNTS_EVENT, GERRYMANDER_COUNTS_KEY } from "../SampleGerrymander/constants";
+import {
+  GERRYMANDER_COUNTS_EVENT,
+  GERRYMANDER_COUNTS_KEY,
+} from "../SampleGerrymander/constants";
 import StandaloneEfficiencyGapTable from ".";
 
 describe("StandaloneEfficiencyGapTable", () => {
@@ -16,7 +19,7 @@ describe("StandaloneEfficiencyGapTable", () => {
   it("shows prompt when no district counts are available", () => {
     render(<StandaloneEfficiencyGapTable />);
     expect(
-      screen.getByText(/finish drawing your districts/i)
+      screen.getByText(/finish drawing your districts/i),
     ).toBeInTheDocument();
   });
 
@@ -32,7 +35,7 @@ describe("StandaloneEfficiencyGapTable", () => {
     localStorage.setItem(GERRYMANDER_COUNTS_KEY, JSON.stringify(counts));
     render(<StandaloneEfficiencyGapTable />);
     expect(
-      screen.getByText(/sample efficiency gap calculation/i)
+      screen.getByText(/sample efficiency gap calculation/i),
     ).toBeInTheDocument();
   });
 
@@ -50,12 +53,12 @@ describe("StandaloneEfficiencyGapTable", () => {
     ];
     await act(async () => {
       window.dispatchEvent(
-        new CustomEvent(GERRYMANDER_COUNTS_EVENT, { detail: counts })
+        new CustomEvent(GERRYMANDER_COUNTS_EVENT, { detail: counts }),
       );
     });
 
     expect(
-      screen.getByText(/sample efficiency gap calculation/i)
+      screen.getByText(/sample efficiency gap calculation/i),
     ).toBeInTheDocument();
   });
 
@@ -73,7 +76,7 @@ describe("StandaloneEfficiencyGapTable", () => {
 
     await act(async () => {
       window.dispatchEvent(
-        new CustomEvent(GERRYMANDER_COUNTS_EVENT, { detail: null })
+        new CustomEvent(GERRYMANDER_COUNTS_EVENT, { detail: null }),
       );
     });
 

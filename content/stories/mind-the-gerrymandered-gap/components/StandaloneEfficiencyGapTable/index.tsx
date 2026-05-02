@@ -1,6 +1,6 @@
 "use client";
 
-import { FC, useEffect, useState } from "react";
+import { type FC, useEffect, useState } from "react";
 import EfficiencyGapTable from "../EfficiencyGapTable";
 import {
   GERRYMANDER_COUNTS_EVENT,

@@ -2,7 +2,8 @@
 
 import { scaleLinear } from "d3-scale";
 import { AnimatePresence } from "framer-motion";
-import React, { useMemo, useState } from "react";
+import type React from "react";
+import { useMemo, useState } from "react";
 import Caption from "@/components/story/shared/Caption";
 import Graph from "@/components/story/shared/Graph";
 import Legend from "@/components/story/shared/Legend";
@@ -39,12 +40,17 @@ const PodcastAllSentiments: React.FC<PodcastAllSentimentsProps> = ({
     value: i.toString(),
     label: `Episode ${ep.id}: ${ep.title}`,
   }));
-  const [selectedOption, setSelectedOption] = useState(options[0] || { value: "0", label: "Loading" });
-  
-  if (!baAllSentiment || baAllSentiment.length === 0 || options.length === 0) return null;
+  const [selectedOption, setSelectedOption] = useState(
+    options[0] || { value: "0", label: "Loading" },
+  );
+
+  if (!baAllSentiment || baAllSentiment.length === 0 || options.length === 0)
+    return null;
   const { value, label } = selectedOption;
 
-  const yScale = scaleLinear().domain([-1, 1]).range([height - padding.bottom, padding.top]);
+  const yScale = scaleLinear()
+    .domain([-1, 1])
+    .range([height - padding.bottom, padding.top]);
   const xScale = scaleLinear().range([padding.left, width - padding.right]);
 
   const circData = useMemo<CircData[]>(() => {
@@ -57,7 +63,7 @@ const PodcastAllSentiments: React.FC<PodcastAllSentimentsProps> = ({
         key: `circ-${i}-${speaker}`,
         x: i,
         y: sentiment,
-        r: Math.pow(wc, 0.5),
+        r: wc ** 0.5,
         fill: colorMap[speaker as keyof typeof colorMap],
       }));
     return raw;
@@ -102,7 +108,7 @@ const PodcastAllSentiments: React.FC<PodcastAllSentimentsProps> = ({
             <g>
               <AnimatePresence>
                 {circData.map((d, i) => (
-                  <SentimentCircle 
+                  <SentimentCircle
                     key={d.key}
                     cx={xScale(d.x)}
                     cy={yScale(d.y)}

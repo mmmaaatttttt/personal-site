@@ -7,7 +7,7 @@ export function generateData(
   step: number,
   initialValues: number[],
   diffEqValues: any[],
-  diffEq: (...args: any[]) => any
+  diffEq: (...args: any[]) => any,
 ) {
   const diffEqFn = diffEq(...diffEqValues);
   const s = new (odex as any).Solver(diffEqFn, count, {
@@ -15,14 +15,22 @@ export function generateData(
     absoluteTolerance: 1e-10,
     relativeTolerance: 1e-10,
   });
-  const data: { x: number; y: number }[][] = Array.from({ length: count }, () => []);
+  const data: { x: number; y: number }[][] = Array.from(
+    { length: count },
+    () => [],
+  );
 
   try {
-    s.solve(min, initialValues, max, s.grid(step, (x: number, y: number[]) => {
-      for (let i = 0; i < count; i++) {
-        data[i].push({ x, y: y[i] });
-      }
-    }));
+    s.solve(
+      min,
+      initialValues,
+      max,
+      s.grid(step, (x: number, y: number[]) => {
+        for (let i = 0; i < count; i++) {
+          data[i].push({ x, y: y[i] });
+        }
+      }),
+    );
   } catch {
     // Solver can throw when equations blow up (e.g. "maximum allowed steps exceeded").
     // Return whatever data was collected before the divergence.
@@ -30,8 +38,6 @@ export function generateData(
 
   return data;
 }
-
-
 
 export function choices<T>(arr: T[], num: number): T[] {
   return shuffle(arr.slice()).slice(0, num);
@@ -65,13 +71,19 @@ export function euclideanDistance(...pts: number[]): number {
   return pts.reduce((sum, pt) => sum + pt ** 2, 0) ** (1 / 2) || 0;
 }
 
-export function total<T>(nums: T[], accessor: (num: T) => number = (num: any) => num): number {
+export function total<T>(
+  nums: T[],
+  accessor: (num: T) => number = (num: any) => num,
+): number {
   let sum = 0;
-  for (let num of nums) sum += accessor(num);
+  for (const num of nums) sum += accessor(num);
   return sum;
 }
 
-export function average<T>(nums: T[], accessor: (num: T) => number = (num: any) => num): number {
+export function average<T>(
+  nums: T[],
+  accessor: (num: T) => number = (num: any) => num,
+): number {
   if (!nums.length) return 0;
   return total(nums, accessor) / nums.length;
 }
@@ -79,12 +91,12 @@ export function average<T>(nums: T[], accessor: (num: T) => number = (num: any) 
 export function calculateWastedVotes<T>(
   votes: T[],
   party1Accessor: (d: T) => number,
-  party2Accessor: (d: T) => number
+  party2Accessor: (d: T) => number,
 ): Array<[number, number]> {
   return votes.map((district) => {
-    let party1Votes = party1Accessor(district);
-    let party2Votes = party2Accessor(district);
-    let votesNeededToWin = Math.ceil((party1Votes + party2Votes + 1) / 2);
+    const party1Votes = party1Accessor(district);
+    const party2Votes = party2Accessor(district);
+    const votesNeededToWin = Math.ceil((party1Votes + party2Votes + 1) / 2);
     return party1Votes > party2Votes
       ? [party1Votes - votesNeededToWin, party2Votes]
       : [party1Votes, party2Votes - votesNeededToWin];

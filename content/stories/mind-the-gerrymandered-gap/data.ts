@@ -47,7 +47,7 @@ export function calculateNormalizedEg(values: ElectionRow[]): number {
 function parseCSV(): ElectionRow[] {
   const csvPath = path.join(
     process.cwd(),
-    "data/csv/congressional_election_results_1996_2016.csv"
+    "data/csv/congressional_election_results_1996_2016.csv",
   );
   const text = fs.readFileSync(csvPath, "utf-8");
   const lines = text.trim().split("\n").slice(1);
@@ -66,8 +66,8 @@ function parseCSV(): ElectionRow[] {
         year: +Year,
         state: State,
         district: +District,
-        dem: +(Democrat.replace("*", "")),
-        rep: +(Republican.replace("*", "")),
+        dem: +Democrat.replace("*", ""),
+        rep: +Republican.replace("*", ""),
         demEst,
         repEst,
       };
@@ -101,7 +101,8 @@ function computeStateSummaries(rows: ElectionRow[]): StateSummary[] {
 
 export const electionData: ElectionRow[] = parseCSV();
 
-export const stateSummaries: StateSummary[] = computeStateSummaries(electionData);
+export const stateSummaries: StateSummary[] =
+  computeStateSummaries(electionData);
 
 export const gerrymanderSliders: SliderConfig[] = [
   {

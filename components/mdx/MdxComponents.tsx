@@ -20,7 +20,9 @@ export const MdxComponents: any = {
   h3: (props: any) => (
     <h3 className="mt-8 mb-4 text-xl font-bold italic" {...props} />
   ),
-  p: (props: any) => <p className="mb-6 last:mb-0 leading-relaxed" {...props} />,
+  p: (props: any) => (
+    <p className="mb-6 last:mb-0 leading-relaxed" {...props} />
+  ),
   ul: (props: any) => <ul className="mb-6 list-disc pl-6" {...props} />,
   ol: (props: any) => <ol className="mb-6 list-decimal pl-6" {...props} />,
   li: (props: any) => <li className="mb-2" {...props} />,

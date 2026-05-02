@@ -2,7 +2,7 @@
 
 import { arc, pie } from "d3-shape";
 import { animate } from "framer-motion";
-import { FC, useCallback, useRef, useState } from "react";
+import { type FC, useCallback, useRef, useState } from "react";
 import ClippedSVG from "@/components/story/shared/ClippedSVG";
 import { Button } from "@/components/ui/Button";
 import COLORS from "@/utils/styles";
@@ -61,7 +61,12 @@ const Spinner: FC<SpinnerProps> = ({ onSpinEnd, message }) => {
 
   return (
     <div>
-      <ClippedSVG id="spinner" width={WIDTH} height={HEIGHT} clipChildren={false}>
+      <ClippedSVG
+        id="spinner"
+        width={WIDTH}
+        height={HEIGHT}
+        clipChildren={false}
+      >
         <g transform={`translate(${CX}, ${CY})`}>
           {ARCS.map((d, i) => (
             <path

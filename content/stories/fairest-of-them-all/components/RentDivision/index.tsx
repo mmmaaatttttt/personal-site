@@ -1,6 +1,6 @@
 "use client";
 
-import { FC, useState } from "react";
+import { type FC, useState } from "react";
 import Caption from "@/components/story/shared/Caption";
 import ClippedSVG from "@/components/story/shared/ClippedSVG";
 import ColoredSpan from "@/components/story/shared/ColoredSpan";
@@ -89,16 +89,24 @@ const RentDivision: FC<RentDivisionProps> = ({ caption }) => {
     if (colorMap.size === 3) return COLORS.WHITE;
     const colorHexes = Array.from(colorMap.keys()) as string[];
     const counts = Array.from(colorMap.values());
-    return mixColors(counts[0] / (counts[0] + counts[1]), colorHexes[0], colorHexes[1]);
+    return mixColors(
+      counts[0] / (counts[0] + counts[1]),
+      colorHexes[0],
+      colorHexes[1],
+    );
   };
 
-
-  const advanceToNext = (updatedPoints: PointData[][], loc: [number, number]) => {
+  const advanceToNext = (
+    updatedPoints: PointData[][],
+    loc: [number, number],
+  ) => {
     const [y, x] = loc;
     const point = updatedPoints[y][x];
 
-    if (y === 0) return { activePtLoc: [1, 0] as [number, number], finalCorners: null };
-    if (y === 1 && x === 0) return { activePtLoc: [1, 1] as [number, number], finalCorners: null };
+    if (y === 0)
+      return { activePtLoc: [1, 0] as [number, number], finalCorners: null };
+    if (y === 1 && x === 0)
+      return { activePtLoc: [1, 1] as [number, number], finalCorners: null };
 
     const candidates = [
       { x: x - 1, y: y - 1 },
@@ -212,7 +220,9 @@ const RentDivision: FC<RentDivisionProps> = ({ caption }) => {
             color={COLORS.DARK_GRAY}
           />
           <FlexContainer main="center" margin="1rem 0">
-            <Button variant="white" onClick={() => setStarted(true)}>Start Demonstration</Button>
+            <Button variant="white" onClick={() => setStarted(true)}>
+              Start Demonstration
+            </Button>
           </FlexContainer>
         </NarrowContainer>
       );
@@ -233,7 +243,9 @@ const RentDivision: FC<RentDivisionProps> = ({ caption }) => {
       const rentRemaining = RENT - totalPledged;
       return (
         <FlexContainer column main="center" cross="start" textAlign="center">
-          <h3>You&apos;re within ${rentRemaining.toFixed(0)} of a fair division!</h3>
+          <h3>
+            You&apos;re within ${rentRemaining.toFixed(0)} of a fair division!
+          </h3>
           <FlexContainer main="around" width="100%" shouldWrap>
             {pointData.map((d) => (
               <ColoredSpan
@@ -245,12 +257,15 @@ const RentDivision: FC<RentDivisionProps> = ({ caption }) => {
             ))}
           </FlexContainer>
           <p>
-            They can each chip in an additional ${(rentRemaining / 3).toFixed(2)}{" "}
-            to make up the remaining cost.{" "}
+            They can each chip in an additional $
+            {(rentRemaining / 3).toFixed(2)} to make up the remaining cost.{" "}
             <br />
-            If that doesn&apos;t seem fair, you can refine the mesh and try again.
+            If that doesn&apos;t seem fair, you can refine the mesh and try
+            again.
           </p>
-          <Button variant="white" className="mt-4" onClick={handleReset}>Try again</Button>
+          <Button variant="white" className="mt-4" onClick={handleReset}>
+            Try again
+          </Button>
         </FlexContainer>
       );
     }

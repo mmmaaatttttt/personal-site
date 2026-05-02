@@ -1,6 +1,6 @@
 "use client";
 
-import { FC, useMemo, useState } from "react";
+import { type FC, useMemo, useState } from "react";
 import Caption from "@/components/story/shared/Caption";
 import HeatChart from "@/components/story/shared/HeatChart";
 import Select from "@/components/story/shared/Select";

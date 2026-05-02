@@ -13,7 +13,7 @@ export interface Segment {
 export function clamped(
   points: Point[],
   [xMin, xMax]: [number, number],
-  [yMin, yMax]: [number, number]
+  [yMin, yMax]: [number, number],
 ): Point[] {
   return points.map((pt) => ({
     x: Math.min(Math.max(pt.x, xMin), xMax),
@@ -46,7 +46,7 @@ export function lInfNormEndpoints(pts1: Point[], pts2: Point[]): Segment {
   ];
 
   return segments.reduce((best, seg) =>
-    Math.abs(seg.y2 - seg.y1) > Math.abs(best.y2 - best.y1) ? seg : best
+    Math.abs(seg.y2 - seg.y1) > Math.abs(best.y2 - best.y1) ? seg : best,
   );
 }
 
@@ -84,7 +84,9 @@ export function areaHelper(pts1: Point[], pts2: Point[]): number {
     Math.sign(leftDiff) !== Math.sign(rightDiff);
 
   if (!crossingExists) {
-    return Math.abs(areaUnderLine(pts1[0], pts1[1]) - areaUnderLine(pts2[0], pts2[1]));
+    return Math.abs(
+      areaUnderLine(pts1[0], pts1[1]) - areaUnderLine(pts2[0], pts2[1]),
+    );
   }
 
   const slope1 = (pts1[1].y - pts1[0].y) / (pts1[1].x - pts1[0].x);
@@ -95,8 +97,12 @@ export function areaHelper(pts1: Point[], pts2: Point[]): number {
   const intersect: Point = { x: intersectionX, y: intersectionY };
 
   return (
-    Math.abs(areaUnderLine(pts1[0], intersect) - areaUnderLine(pts2[0], intersect)) +
-    (Math.abs(areaUnderLine(intersect, pts1[1]) - areaUnderLine(intersect, pts2[1])) || 0)
+    Math.abs(
+      areaUnderLine(pts1[0], intersect) - areaUnderLine(pts2[0], intersect),
+    ) +
+    (Math.abs(
+      areaUnderLine(intersect, pts1[1]) - areaUnderLine(intersect, pts2[1]),
+    ) || 0)
   );
 }
 

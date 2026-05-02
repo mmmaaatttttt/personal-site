@@ -35,10 +35,32 @@ const makeRow = (overrides: Partial<VotingDataRow>): VotingDataRow => ({
 });
 
 const mockData: VotingDataRow[] = [
-  makeRow({ year: 2008, state: "Alabama", abbreviation: "AL", active_registration: 2800000, election_participants: 1900000 }),
-  makeRow({ year: 2008, state: "Alaska", abbreviation: "AK", active_registration: 450000, election_participants: 300000, eligible_voters_estimated: 500000 }),
+  makeRow({
+    year: 2008,
+    state: "Alabama",
+    abbreviation: "AL",
+    active_registration: 2800000,
+    election_participants: 1900000,
+  }),
+  makeRow({
+    year: 2008,
+    state: "Alaska",
+    abbreviation: "AK",
+    active_registration: 450000,
+    election_participants: 300000,
+    eligible_voters_estimated: 500000,
+  }),
   makeRow({ year: 2016, state: "Alabama", abbreviation: "AL" }),
-  makeRow({ year: 2016, state: "Alaska", abbreviation: "AK", active_registration: 500000, election_participants: 320000, eligible_voters_estimated: 530000, dem_percent: 38, rep_percent: 45 }),
+  makeRow({
+    year: 2016,
+    state: "Alaska",
+    abbreviation: "AK",
+    active_registration: 500000,
+    election_participants: 320000,
+    eligible_voters_estimated: 530000,
+    dem_percent: 38,
+    rep_percent: 45,
+  }),
 ];
 
 describe("VotingBarChart (voters variant)", () => {
@@ -54,14 +76,22 @@ describe("VotingBarChart (voters variant)", () => {
   it("renders the statistic select with voters options", () => {
     render(<VotingBarChart data={mockData} variant="voters" />);
     const select = screen.getByRole("combobox");
-    const options = Array.from(select.querySelectorAll("option")).map((o) => o.textContent);
+    const options = Array.from(select.querySelectorAll("option")).map(
+      (o) => o.textContent,
+    );
     expect(options).toContain("Registration Saturation");
     expect(options).toContain("Election Turnout");
     expect(options).toHaveLength(2);
   });
 
   it("renders the caption when provided", () => {
-    render(<VotingBarChart data={mockData} variant="voters" caption="Test caption" />);
+    render(
+      <VotingBarChart
+        data={mockData}
+        variant="voters"
+        caption="Test caption"
+      />,
+    );
     expect(screen.getByText("Test caption")).toBeInTheDocument();
   });
 
@@ -81,7 +111,9 @@ describe("VotingBarChart (party variant)", () => {
   it("renders the party statistic select with many options", () => {
     render(<VotingBarChart data={mockData} variant="party" />);
     const select = screen.getByRole("combobox");
-    const options = Array.from(select.querySelectorAll("option")).map((o) => o.textContent);
+    const options = Array.from(select.querySelectorAll("option")).map(
+      (o) => o.textContent,
+    );
     expect(options).toContain("Most Democratic States");
     expect(options).toContain("Most Republican States");
     expect(options.length).toBeGreaterThan(10);

@@ -9,11 +9,21 @@ export interface ButtonProps
 }
 
 const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
-  ({ className, variant = "default", size = "default", isFullWidth = false, ...props }, ref) => {
+  (
+    {
+      className,
+      variant = "default",
+      size = "default",
+      isFullWidth = false,
+      ...props
+    },
+    ref,
+  ) => {
     const variants = {
       default: "bg-link text-white hover:bg-link/90",
       white: "bg-white text-black border border-black hover:bg-gray-100",
-      outline: "border border-input bg-background hover:bg-accent hover:text-accent-foreground",
+      outline:
+        "border border-input bg-background hover:bg-accent hover:text-accent-foreground",
       ghost: "hover:bg-accent hover:text-accent-foreground",
     };
 
@@ -31,13 +41,13 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
           variants[variant],
           sizes[size],
           isFullWidth && "w-full",
-          className
+          className,
         )}
         ref={ref}
         {...props}
       />
     );
-  }
+  },
 );
 Button.displayName = "Button";
 

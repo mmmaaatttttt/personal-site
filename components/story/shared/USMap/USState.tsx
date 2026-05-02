@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import React from "react";
+import type React from "react";
 
 interface USStateProps {
   d: string;
@@ -9,7 +9,10 @@ interface USStateProps {
   index: number;
   title: string;
   body: string | string[];
-  onMouseMove?: (title: string, body: string | string[]) => (e: React.MouseEvent | React.TouchEvent) => void;
+  onMouseMove?: (
+    title: string,
+    body: string | string[],
+  ) => (e: React.MouseEvent | React.TouchEvent) => void;
   onMouseLeave?: () => void;
 }
 

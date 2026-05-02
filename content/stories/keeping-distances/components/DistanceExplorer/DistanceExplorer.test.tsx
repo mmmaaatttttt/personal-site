@@ -38,7 +38,7 @@ describe("DistanceExplorer", () => {
     render(<DistanceExplorer />);
     const lines = document.querySelectorAll("line");
     const orange = Array.from(lines).find(
-      (l) => l.getAttribute("stroke") === "#ff8f34"
+      (l) => l.getAttribute("stroke") === "#ff8f34",
     );
     expect(orange).not.toBeUndefined();
   });
@@ -70,7 +70,11 @@ describe("DistanceExplorer", () => {
     const circles = document.querySelectorAll("circle");
     const draggable = circles[0];
 
-    fireEvent.pointerDown(draggable, { pointerId: 1, clientX: 200, clientY: 400 });
+    fireEvent.pointerDown(draggable, {
+      pointerId: 1,
+      clientX: 200,
+      clientY: 400,
+    });
     fireEvent.pointerMove(draggable, { clientX: 250, clientY: 350 });
     fireEvent.pointerUp(draggable);
 

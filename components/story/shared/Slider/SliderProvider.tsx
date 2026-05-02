@@ -1,6 +1,6 @@
 "use client";
 
-import { FC, ReactNode, useMemo, useState } from "react";
+import { type FC, type ReactNode, useMemo, useState } from "react";
 import ColumnLayout from "../ColumnLayout";
 import NarrowContainer from "../NarrowContainer";
 import SliderGroup from "./SliderGroup";

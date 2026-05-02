@@ -1,4 +1,3 @@
-
 import type { Metadata } from "next";
 import Image from "next/image";
 import MainLayout from "@/components/layout/MainLayout";
@@ -59,17 +58,17 @@ export default function AboutPage() {
             .
           </p>
           <p>
-            Or, you may not know me at all. In which case, it's nice to meet you.
-            I look forward to creating many wonderful memories together!
+            Or, you may not know me at all. In which case, it's nice to meet
+            you. I look forward to creating many wonderful memories together!
           </p>
           <p>
-            A little bit about me: I received my Ph.D. in mathematics from UCLA in
-            2012. I love my family, problem solving, teaching, learning, and ice
-            cream.
+            A little bit about me: I received my Ph.D. in mathematics from UCLA
+            in 2012. I love my family, problem solving, teaching, learning, and
+            ice cream.
           </p>
           <p>
-            Even though it's a cesspool, the best way to reach me if you'd like to
-            chat more is probably{" "}
+            Even though it's a cesspool, the best way to reach me if you'd like
+            to chat more is probably{" "}
             <a
               href="https://www.twitter.com/mmmaaatttttt"
               target="_blank"
@@ -79,8 +78,8 @@ export default function AboutPage() {
               Twitter
             </a>
             . The only bigger cesspool I can think of is the comments section on
-            any website, so for that reason, I don't enable comments on anything I
-            write here.
+            any website, so for that reason, I don't enable comments on anything
+            I write here.
           </p>
           <p>Take a look around, and let me know what you think!</p>
           <p className="text-right text-lg mt-8">

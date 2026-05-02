@@ -1,5 +1,5 @@
 import { ChevronDown } from "lucide-react";
-import { ChangeEvent } from "react";
+import type { ChangeEvent } from "react";
 
 interface Option {
   value: string;
@@ -24,7 +24,7 @@ const Select = <T extends Option>({
   className,
 }: SelectProps<T>) => {
   const handleChange = (e: ChangeEvent<HTMLSelectElement>) => {
-    const selected = options.find(o => o.value === e.target.value);
+    const selected = options.find((o) => o.value === e.target.value);
     if (selected) onChange(selected);
   };
 
@@ -37,7 +37,11 @@ const Select = <T extends Option>({
         onChange={handleChange}
         className="block w-full appearance-none bg-white border-2 border-gray-200 hover:border-gray-300 px-4 py-2 pr-10 rounded-xl text-sm font-medium text-gray-700 transition-all focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 cursor-pointer"
       >
-        {placeholder && <option value="" disabled>{placeholder}</option>}
+        {placeholder && (
+          <option value="" disabled>
+            {placeholder}
+          </option>
+        )}
         {options.map((option) => (
           <option key={option.value} value={option.value}>
             {option.label}

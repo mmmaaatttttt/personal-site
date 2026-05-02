@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import React from "react";
+import type React from "react";
 import { cn } from "@/lib/utils";
 
 interface StoryCardProps {
@@ -31,10 +31,13 @@ const StoryCard: React.FC<StoryCardProps> = ({
     <div
       className={cn(
         "group border-b border-gray py-8 last:border-0 sm:px-4",
-        className
+        className,
       )}
     >
-      <Link href={`/stories/${slug}`} className="flex flex-col gap-6 sm:flex-row">
+      <Link
+        href={`/stories/${slug}`}
+        className="flex flex-col gap-6 sm:flex-row"
+      >
         <div className="relative w-full shrink-0 overflow-hidden rounded-lg sm:w-64 aspect-video">
           <Image
             src={imagePath}
@@ -44,7 +47,9 @@ const StoryCard: React.FC<StoryCardProps> = ({
           />
         </div>
         <div className="flex flex-1 flex-col justify-center">
-          <h4 className="mb-1 font-serif text-2xl font-bold text-[#1a1a1a] group-hover:text-link transition-colors duration-200">{title}</h4>
+          <h4 className="mb-1 font-serif text-2xl font-bold text-[#1a1a1a] group-hover:text-link transition-colors duration-200">
+            {title}
+          </h4>
           <h6 className="mb-4 text-sm font-bold text-gray-400">
             {date} {timeToRead ? `- ${timeToRead} minute read` : ""}
           </h6>

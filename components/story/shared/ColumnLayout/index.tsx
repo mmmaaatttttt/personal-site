@@ -1,4 +1,4 @@
-import { Children, FC, ReactNode } from "react";
+import { Children, type FC, type ReactNode } from "react";
 import { cn } from "@/lib/utils";
 
 interface ColumnLayoutProps {
@@ -20,7 +20,9 @@ const ColumnLayout: FC<ColumnLayoutProps> = ({
   };
 
   return (
-    <div className={cn("flex flex-row gap-8", breakAt && breakClasses[breakAt])}>
+    <div
+      className={cn("flex flex-row gap-8", breakAt && breakClasses[breakAt])}
+    >
       {Children.map(children, (child, idx) => (
         <div
           key={idx}

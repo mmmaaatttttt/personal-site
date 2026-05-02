@@ -1,6 +1,6 @@
-import '@testing-library/jest-dom/vitest';
-import { cleanup } from '@testing-library/react';
-import { afterEach, vi } from 'vitest';
+import "@testing-library/jest-dom/vitest";
+import { cleanup } from "@testing-library/react";
+import { afterEach, vi } from "vitest";
 
 // Automatically cleanup after each test to prevent memory leaks or side effects between tests
 afterEach(() => {
@@ -8,7 +8,7 @@ afterEach(() => {
 });
 
 // Minimalist passthrough mock for framer-motion to ensure JSDOM stability
-vi.mock('framer-motion', () => ({
+vi.mock("framer-motion", () => ({
   motion: {
     div: ({ children, ...props }: any) => <div {...props}>{children}</div>,
     rect: ({ children, ...props }: any) => <rect {...props}>{children}</rect>,
@@ -17,10 +17,18 @@ vi.mock('framer-motion', () => ({
     g: ({ children, ...props }: any) => <g {...props}>{children}</g>,
   },
   AnimatePresence: ({ children }: any) => <>{children}</>,
-  useSpring: (v: number) => ({ get: () => v, set: vi.fn(), on: vi.fn(() => vi.fn()) }),
-  useTransform: (v: any, transform: any) => ({ 
-    get: () => transform(v && v.get ? v.get() : v), 
-    on: vi.fn(() => vi.fn()) 
+  useSpring: (v: number) => ({
+    get: () => v,
+    set: vi.fn(),
+    on: vi.fn(() => vi.fn()),
   }),
-  useMotionValue: (v: any) => ({ get: () => v, set: vi.fn(), on: vi.fn(() => vi.fn()) }),
+  useTransform: (v: any, transform: any) => ({
+    get: () => transform(v && v.get ? v.get() : v),
+    on: vi.fn(() => vi.fn()),
+  }),
+  useMotionValue: (v: any) => ({
+    get: () => v,
+    set: vi.fn(),
+    on: vi.fn(() => vi.fn()),
+  }),
 }));

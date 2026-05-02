@@ -12,7 +12,7 @@ describe("SortHeader", () => {
         currentKey="averageTurnout"
         ascending={true}
         onClick={vi.fn()}
-      />
+      />,
     );
     expect(screen.getByText("State")).toBeInTheDocument();
   });
@@ -25,7 +25,7 @@ describe("SortHeader", () => {
         currentKey="averageTurnout"
         ascending={true}
         onClick={vi.fn()}
-      />
+      />,
     );
     expect(container.querySelector("button svg")).toBeInTheDocument();
   });
@@ -38,7 +38,7 @@ describe("SortHeader", () => {
         currentKey="state"
         ascending={true}
         onClick={vi.fn()}
-      />
+      />,
     );
     expect(container.querySelector("button svg")).toBeInTheDocument();
   });
@@ -51,7 +51,7 @@ describe("SortHeader", () => {
         currentKey="state"
         ascending={false}
         onClick={vi.fn()}
-      />
+      />,
     );
     expect(container.querySelector("button svg")).toBeInTheDocument();
   });
@@ -65,7 +65,7 @@ describe("SortHeader", () => {
         currentKey="state"
         ascending={true}
         onClick={handleClick}
-      />
+      />,
     );
     fireEvent.click(screen.getByRole("button"));
     expect(handleClick).toHaveBeenCalledWith("averageTurnout");

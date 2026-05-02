@@ -1,5 +1,5 @@
 import { range } from "d3-array";
-import { AxisDomain, AxisScale, axisBottom, axisLeft } from "d3-axis";
+import { type AxisDomain, type AxisScale, axisBottom, axisLeft } from "d3-axis";
 import { format } from "d3-format";
 import { select } from "d3-selection";
 import { useEffect, useRef } from "react";
@@ -66,12 +66,21 @@ const Axis = <Domain extends AxisDomain>({
     if (tickStep !== undefined) {
       const domain = scale.domain();
       // Only apply tickStep if domain values are numbers
-      if (typeof domain[0] === 'number' && typeof domain[1] === 'number') {
-        axisObj.tickValues(range(domain[0], domain[1] + tickStep, tickStep) as unknown as Domain[]);
+      if (typeof domain[0] === "number" && typeof domain[1] === "number") {
+        axisObj.tickValues(
+          range(
+            domain[0],
+            domain[1] + tickStep,
+            tickStep,
+          ) as unknown as Domain[],
+        );
       }
     }
 
-    const transform = direction === "y" ? `translate(${tickShift}, 0)` : `translate(0, ${tickShift})`;
+    const transform =
+      direction === "y"
+        ? `translate(${tickShift}, 0)`
+        : `translate(0, ${tickShift})`;
 
     const g = select(axisRef.current);
     g.attr("transform", `translate(${xShift - 0.5}, ${yShift - 0.5})`)
@@ -84,9 +93,7 @@ const Axis = <Domain extends AxisDomain>({
 
     if (tickFormat !== undefined) {
       const labels = g.selectAll<SVGTextElement, Domain>(".tick text");
-      labels
-        .style("text-anchor", textAnchor)
-        .style("font-size", fontSize);
+      labels.style("text-anchor", textAnchor).style("font-size", fontSize);
 
       if (rotateLabels) {
         labels.attr("transform", "rotate(90)");
@@ -97,7 +104,21 @@ const Axis = <Domain extends AxisDomain>({
         labels.attr(attr, val);
       });
     }
-  }, [direction, fontSize, labelPosition, scale, textAnchor, tickColor, tickSize, tickShift, tickStep, tickFormat, rotateLabels, xShift, yShift]);
+  }, [
+    direction,
+    fontSize,
+    labelPosition,
+    scale,
+    textAnchor,
+    tickColor,
+    tickSize,
+    tickShift,
+    tickStep,
+    tickFormat,
+    rotateLabels,
+    xShift,
+    yShift,
+  ]);
 
   return <g ref={axisRef} className="axis-group" />;
 };

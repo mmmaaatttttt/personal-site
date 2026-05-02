@@ -1,13 +1,18 @@
 "use client";
 
-import { FC, useEffect, useState } from "react";
+import { type FC, useEffect, useState } from "react";
 import ClippedSVG from "@/components/story/shared/ClippedSVG";
 import LabeledSlider from "@/components/story/shared/Slider/LabeledSlider";
 import StyledTable from "@/components/story/shared/StyledTable";
 import COLORS from "@/utils/styles";
 import { crossingExists } from "./crossingHelpers";
 import InteractivePolygon from "./InteractivePolygon";
-import { generatePoints, getAreaInfo, getCircleParams, type Point } from "./mathHelpers";
+import {
+  generatePoints,
+  getAreaInfo,
+  getCircleParams,
+  type Point,
+} from "./mathHelpers";
 
 const WIDTH = 600;
 const HEIGHT = 400;
@@ -48,7 +53,11 @@ const IsoperimetricExplorer: FC = () => {
   if (!points.length) return null;
 
   const circle = getCircleParams(points);
-  const { circleArea, polygonArea, ratio } = getAreaInfo(points, circle.r, baseArea);
+  const { circleArea, polygonArea, ratio } = getAreaInfo(
+    points,
+    circle.r,
+    baseArea,
+  );
 
   return (
     <div>

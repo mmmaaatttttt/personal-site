@@ -1,10 +1,11 @@
 "use client";
 
-import { AxisScale } from "d3-axis";
+import type { AxisScale } from "d3-axis";
 import type { ScaleBand, ScaleLinear } from "d3-scale";
 import { scaleBand, scaleLinear } from "d3-scale";
 import { AnimatePresence } from "framer-motion";
-import React, { useEffect, useMemo, useState } from "react";
+import type React from "react";
+import { useEffect, useMemo, useState } from "react";
 import Graph from "../Graph";
 import BarItem from "./BarItem";
 
@@ -24,7 +25,9 @@ interface BarGraphProps {
   height?: number;
   histogram?: boolean;
   labelFontSize?: string;
-  padding?: number | { top: number; bottom: number; left: number; right: number };
+  padding?:
+    | number
+    | { top: number; bottom: number; left: number; right: number };
   svgId?: string;
   thresholds?: number[];
   tickFormat?: string;
@@ -62,7 +65,10 @@ const BarGraph: React.FC<BarGraphProps> = ({
   yScale,
 }) => {
   const [isMounted, setIsMounted] = useState(false);
-  const p = typeof padding === "number" ? { top: padding, bottom: padding, left: padding, right: padding } : padding;
+  const p =
+    typeof padding === "number"
+      ? { top: padding, bottom: padding, left: padding, right: padding }
+      : padding;
 
   useEffect(() => {
     setIsMounted(true);
@@ -80,9 +86,17 @@ const BarGraph: React.FC<BarGraphProps> = ({
       .padding(0.1);
   }, [histogram, thresholds, barData, p.left, p.right, width]);
 
-  if (!isMounted) return <div className="animate-pulse bg-nav/10" style={{ height, width: "100%" }} />;
+  if (!isMounted)
+    return (
+      <div
+        className="animate-pulse bg-nav/10"
+        style={{ height, width: "100%" }}
+      />
+    );
 
-  const fontSize = labelFontSize || (barData.length < 11 ? "100%" : `${110 - 1 * barData.length}%`);
+  const fontSize =
+    labelFontSize ||
+    (barData.length < 11 ? "100%" : `${110 - 1 * barData.length}%`);
 
   return (
     <div className="w-full h-full">
@@ -100,7 +114,9 @@ const BarGraph: React.FC<BarGraphProps> = ({
         yAxisOnTop={yLabelSide === "right"}
         gridlinesVertical={gridlinesVertical}
         tickStepX={tickStepX ? () => tickStepX : undefined}
-        tickStepY={tickStepY ? () => tickStepY : (tickStep ? () => tickStep : undefined)}
+        tickStepY={
+          tickStepY ? () => tickStepY : tickStep ? () => tickStep : undefined
+        }
       >
         <g clipPath={`url(#clip-path-${svgId})`}>
           {(() => {
@@ -144,7 +160,9 @@ const BarGraph: React.FC<BarGraphProps> = ({
             // preventing ghost bars that would otherwise stack during the transition.
             return animated ? (
               <AnimatePresence initial={true}>{items}</AnimatePresence>
-            ) : items;
+            ) : (
+              items
+            );
           })()}
         </g>
       </Graph>

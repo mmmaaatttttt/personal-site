@@ -133,29 +133,58 @@ export const graph5Data = [
 const K = (K_0: number, e_c: number, e: number) => K_0 * (1 - e / e_c);
 const H = (x: number) => (1 + Math.tanh(x)) / 2;
 
-export const exponential = (A: number) => (x: number, y: number[]) => [A * y[0]];
-export const logistic = (A: number, r: number) => (x: number, y: number[]) => [A * y[0] * (1 - y[0] / r)];
-
-export const model1 = (A: number, B: number, K_0: number, e_c: number, C: number, D: number) => (x: number, y: number[]) => [
-  A * y[0] * (1 - y[0] / K(K_0, e_c, y[1])) + B * y[0],
-  -C * y[1] + D * y[0],
+export const exponential = (A: number) => (x: number, y: number[]) => [
+  A * y[0],
+];
+export const logistic = (A: number, r: number) => (x: number, y: number[]) => [
+  A * y[0] * (1 - y[0] / r),
 ];
 
-export const model2 = (A: number, B: number, K_0: number, e_c: number, C: number, D: number, phi: number, lambda: number) => (x: number, y: number[]) => {
-  const Harg = (y[1] / e_c - phi) / lambda;
-  return [
+export const model1 =
+  (A: number, B: number, K_0: number, e_c: number, C: number, D: number) =>
+  (x: number, y: number[]) => [
     A * y[0] * (1 - y[0] / K(K_0, e_c, y[1])) + B * y[0],
-    -C * y[1] + D * y[0] * (1 - H(Harg)),
+    -C * y[1] + D * y[0],
   ];
-};
 
-export const model3 = (A: number, B: number, K_0: number, e_c: number, C: number, D: number, phi: number, lambda: number, xi: number) => (x: number, y: number[]) => {
-  const Harg = (y[1] / e_c - phi) / lambda;
-  return [
-    A * y[0] * (1 - y[0] / K(K_0, e_c, y[1])) + B * y[0],
-    -C * y[1] + (xi * y[1] * y[1]) / e_c + D * y[0] * (1 - H(Harg)),
-  ];
-};
+export const model2 =
+  (
+    A: number,
+    B: number,
+    K_0: number,
+    e_c: number,
+    C: number,
+    D: number,
+    phi: number,
+    lambda: number,
+  ) =>
+  (x: number, y: number[]) => {
+    const Harg = (y[1] / e_c - phi) / lambda;
+    return [
+      A * y[0] * (1 - y[0] / K(K_0, e_c, y[1])) + B * y[0],
+      -C * y[1] + D * y[0] * (1 - H(Harg)),
+    ];
+  };
+
+export const model3 =
+  (
+    A: number,
+    B: number,
+    K_0: number,
+    e_c: number,
+    C: number,
+    D: number,
+    phi: number,
+    lambda: number,
+    xi: number,
+  ) =>
+  (x: number, y: number[]) => {
+    const Harg = (y[1] / e_c - phi) / lambda;
+    return [
+      A * y[0] * (1 - y[0] / K(K_0, e_c, y[1])) + B * y[0],
+      -C * y[1] + (xi * y[1] * y[1]) / e_c + D * y[0] * (1 - H(Harg)),
+    ];
+  };
 
 export const visualizationData = [
   {

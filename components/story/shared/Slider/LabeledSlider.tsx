@@ -1,7 +1,7 @@
 "use client";
 
-import { LucideIcon, Minus, Plus } from "lucide-react";
-import { FC } from "react";
+import { type LucideIcon, Minus, Plus } from "lucide-react";
+import type { FC } from "react";
 import { Icon } from "@/components/ui/Icon";
 import { hexToRgba } from "@/utils/styles";
 import { THEME_OPACITY } from "./constants";

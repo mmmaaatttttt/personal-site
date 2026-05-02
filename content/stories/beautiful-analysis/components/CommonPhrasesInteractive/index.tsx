@@ -3,7 +3,10 @@
 import ColoredSpan from "@/components/story/shared/ColoredSpan";
 import SliderProvider from "@/components/story/shared/Slider";
 import StyledTable from "@/components/story/shared/StyledTable";
-import baCommonPhrases, { type CommonPhraseEntry, type SpeakerPhrases } from "../../data/ba-common-phrases";
+import baCommonPhrases, {
+  type CommonPhraseEntry,
+  type SpeakerPhrases,
+} from "../../data/ba-common-phrases";
 import { colorMap } from "../../data/beautiful-analysis";
 
 export default function CommonPhrasesInteractive() {
@@ -37,19 +40,19 @@ export default function CommonPhrasesInteractive() {
             speakers.Caller.length,
           );
 
-          const headers = (Object.keys(speakers) as (keyof SpeakerPhrases)[]).map(
-            (speaker) => ({
-              key: `header-${speaker}`,
-              content: (
-                <ColoredSpan
-                  bold
-                  color={colorMap[speaker as keyof typeof colorMap]}
-                >
-                  {speaker}
-                </ColoredSpan>
-              ),
-            }),
-          );
+          const headers = (
+            Object.keys(speakers) as (keyof SpeakerPhrases)[]
+          ).map((speaker) => ({
+            key: `header-${speaker}`,
+            content: (
+              <ColoredSpan
+                bold
+                color={colorMap[speaker as keyof typeof colorMap]}
+              >
+                {speaker}
+              </ColoredSpan>
+            ),
+          }));
 
           const rows = Array.from({ length: numRows }, (_, i) => {
             const rowKey = (Object.keys(speakers) as (keyof SpeakerPhrases)[])

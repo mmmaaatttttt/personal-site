@@ -44,7 +44,13 @@ const mockData: VotingDataRow[] = [
   makeRow({ year: 2008, state: "Alabama" }),
   makeRow({ year: 2012, state: "Alabama" }),
   makeRow({ year: 2016, state: "Alabama" }),
-  makeRow({ year: 2016, state: "Alaska", active_registration: 500000, election_participants: 320000, eligible_voters_estimated: 530000 }),
+  makeRow({
+    year: 2016,
+    state: "Alaska",
+    active_registration: 500000,
+    election_participants: 320000,
+    eligible_voters_estimated: 530000,
+  }),
 ];
 
 describe("VotingMap (voters variant)", () => {
@@ -65,7 +71,9 @@ describe("VotingMap (voters variant)", () => {
   it("populates the statistic select with voters options", () => {
     render(<VotingMap data={mockData} variant="voters" />);
     const select = screen.getByRole("combobox");
-    const options = Array.from(select.querySelectorAll("option")).map((o) => o.textContent);
+    const options = Array.from(select.querySelectorAll("option")).map(
+      (o) => o.textContent,
+    );
     expect(options).toContain("Active Registered Voters");
     expect(options).toContain("Election Turnout");
     expect(options).toHaveLength(5);
@@ -78,11 +86,16 @@ describe("VotingMap (voters variant)", () => {
 
   it("uses the voters variant map id", () => {
     render(<VotingMap data={mockData} variant="voters" />);
-    expect(screen.getByTestId("us-map")).toHaveAttribute("data-id", "voting-map-voters");
+    expect(screen.getByTestId("us-map")).toHaveAttribute(
+      "data-id",
+      "voting-map-voters",
+    );
   });
 
   it("renders the caption when provided", () => {
-    render(<VotingMap data={mockData} variant="voters" caption="Map caption" />);
+    render(
+      <VotingMap data={mockData} variant="voters" caption="Map caption" />,
+    );
     expect(screen.getByText("Map caption")).toBeInTheDocument();
   });
 
@@ -102,7 +115,9 @@ describe("VotingMap (workers variant)", () => {
   it("populates the statistic select with workers options", () => {
     render(<VotingMap data={mockData} variant="workers" />);
     const select = screen.getByRole("combobox");
-    const options = Array.from(select.querySelectorAll("option")).map((o) => o.textContent);
+    const options = Array.from(select.querySelectorAll("option")).map(
+      (o) => o.textContent,
+    );
     expect(options).toContain("Poll Workers");
     expect(options).toContain("Average Difficulty of Finding Poll Workers");
     expect(options).toHaveLength(7);
@@ -110,6 +125,9 @@ describe("VotingMap (workers variant)", () => {
 
   it("uses the workers variant map id", () => {
     render(<VotingMap data={mockData} variant="workers" />);
-    expect(screen.getByTestId("us-map")).toHaveAttribute("data-id", "voting-map-workers");
+    expect(screen.getByTestId("us-map")).toHaveAttribute(
+      "data-id",
+      "voting-map-workers",
+    );
   });
 });

@@ -1,11 +1,11 @@
 "use client";
 
-import { forceSimulation, Simulation } from "d3-force";
+import { forceSimulation, type Simulation } from "d3-force";
 import forceBounce from "d3-force-bounce";
 import forceSurface from "d3-force-surface";
 import { scaleLinear } from "d3-scale";
 import { select } from "d3-selection";
-import { FC, useEffect, useRef } from "react";
+import { type FC, useEffect, useRef } from "react";
 
 import COLORS from "@/utils/styles";
 import type { CollisionFn, EconomyNode } from "../../data";
@@ -34,12 +34,17 @@ interface EconomyNodeGroupProps {
   onSpeedsChange: (speeds: number[]) => void;
 }
 
-const someNodesTouch = (nodes: EconomyNode[], x: number, y: number, r: number) =>
+const someNodesTouch = (
+  nodes: EconomyNode[],
+  x: number,
+  y: number,
+  r: number,
+) =>
   nodes.some(
-    n =>
+    (n) =>
       n.x !== undefined &&
       n.y !== undefined &&
-      (n.x - x) ** 2 + (n.y - y) ** 2 < (3 * r) ** 2
+      (n.x - x) ** 2 + (n.y - y) ** 2 < (3 * r) ** 2,
   );
 
 const EconomyNodeGroup: FC<EconomyNodeGroupProps> = ({
@@ -58,9 +63,27 @@ const EconomyNodeGroup: FC<EconomyNodeGroupProps> = ({
   const simRef = useRef<Simulation<EconomyNode, undefined> | null>(null);
 
   // Always-current snapshot of props for closures that can't close over changing values
-  const stateRef = useRef({ speeds, playing, paused, velocityMultiplier, savingsRate, initialV, updateFn, onSpeedsChange });
+  const stateRef = useRef({
+    speeds,
+    playing,
+    paused,
+    velocityMultiplier,
+    savingsRate,
+    initialV,
+    updateFn,
+    onSpeedsChange,
+  });
   useEffect(() => {
-    stateRef.current = { speeds, playing, paused, velocityMultiplier, savingsRate, initialV, updateFn, onSpeedsChange };
+    stateRef.current = {
+      speeds,
+      playing,
+      paused,
+      velocityMultiplier,
+      savingsRate,
+      initialV,
+      updateFn,
+      onSpeedsChange,
+    };
   });
 
   // drawRef lets population/reset effects render nodes immediately without restarting the sim
@@ -72,8 +95,17 @@ const EconomyNodeGroup: FC<EconomyNodeGroupProps> = ({
 
     const handleCollision = (node1: EconomyNode, node2: EconomyNode) => {
       if (!stateRef.current.playing || stateRef.current.paused) return;
-      const { speeds, velocityMultiplier, savingsRate, updateFn, onSpeedsChange } = stateRef.current;
-      const newSpeeds = updateFn(speeds, velocityMultiplier, savingsRate, [node1, node2]);
+      const {
+        speeds,
+        velocityMultiplier,
+        savingsRate,
+        updateFn,
+        onSpeedsChange,
+      } = stateRef.current;
+      const newSpeeds = updateFn(speeds, velocityMultiplier, savingsRate, [
+        node1,
+        node2,
+      ]);
       onSpeedsChange(newSpeeds);
     };
 
@@ -84,7 +116,7 @@ const EconomyNodeGroup: FC<EconomyNodeGroupProps> = ({
         "bounce",
         forceBounce<EconomyNode>()
           .radius(() => NODE_RADIUS)
-          .onImpact(handleCollision)
+          .onImpact(handleCollision),
       )
       .force(
         "surface",
@@ -96,17 +128,18 @@ const EconomyNodeGroup: FC<EconomyNodeGroupProps> = ({
             { from: { x: width, y: 0 }, to: { x: 0, y: 0 } },
           ])
           .oneWay(true)
-          .radius(() => NODE_RADIUS)
+          .radius(() => NODE_RADIUS),
       );
 
     simRef.current = sim;
 
     const draw = () => {
       if (!gRef.current) return;
-      const { playing, paused, speeds, velocityMultiplier, initialV } = stateRef.current;
+      const { playing, paused, speeds, velocityMultiplier, initialV } =
+        stateRef.current;
       const isMoving = playing && !paused;
 
-      sim.nodes().forEach(node => {
+      sim.nodes().forEach((node) => {
         if (isMoving) {
           node.fx = null;
           node.fy = null;
@@ -130,12 +163,18 @@ const EconomyNodeGroup: FC<EconomyNodeGroupProps> = ({
       const nodesSel = select(gRef.current)
         .selectAll<SVGCircleElement, EconomyNode>(".node")
         .data(
-          sim.nodes().map(node => {
-            node.x = Math.max(NODE_RADIUS, Math.min(width - NODE_RADIUS, node.x ?? 0));
-            node.y = Math.max(NODE_RADIUS, Math.min(height - NODE_RADIUS, node.y ?? 0));
+          sim.nodes().map((node) => {
+            node.x = Math.max(
+              NODE_RADIUS,
+              Math.min(width - NODE_RADIUS, node.x ?? 0),
+            );
+            node.y = Math.max(
+              NODE_RADIUS,
+              Math.min(height - NODE_RADIUS, node.y ?? 0),
+            );
             return node;
           }),
-          d => d.key
+          (d) => d.key,
         );
 
       nodesSel.exit().remove();
@@ -149,13 +188,13 @@ const EconomyNodeGroup: FC<EconomyNodeGroupProps> = ({
       const toUpdate = isMoving ? entered.merge(nodesSel) : entered;
 
       toUpdate
-        .attr("cx", d => d.x ?? 0)
-        .attr("cy", d => d.y ?? 0)
-        .attr("fill", d => {
+        .attr("cx", (d) => d.x ?? 0)
+        .attr("cy", (d) => d.y ?? 0)
+        .attr("fill", (d) => {
           const speed = speeds[d.key] ?? 0;
           return colorScale(speed * velocityMultiplier);
         })
-        .attr("stroke", d => {
+        .attr("stroke", (d) => {
           const speed = speeds[d.key] ?? 0;
           const fill = colorScale(speed * velocityMultiplier);
           return darkenHex(fill, 0.3);
@@ -186,7 +225,7 @@ const EconomyNodeGroup: FC<EconomyNodeGroupProps> = ({
       const newNodes: EconomyNode[] = [];
 
       for (let i = 0; i < count; i++) {
-        const match = currentNodes.find(n => n.key === i);
+        const match = currentNodes.find((n) => n.key === i);
         if (match) {
           existingNodes.push(match);
         } else {
@@ -195,11 +234,12 @@ const EconomyNodeGroup: FC<EconomyNodeGroupProps> = ({
       }
 
       const { cos, sin, PI, random } = Math;
-      newNodes.forEach(node => {
+      newNodes.forEach((node) => {
         const theta = 2 * PI * random();
         const vx = initialV * velocityMultiplier * cos(theta);
         const vy = initialV * velocityMultiplier * sin(theta);
-        let x = 0, y = 0;
+        let x = 0,
+          y = 0;
         do {
           x = random() * (width - 2 * NODE_RADIUS) + NODE_RADIUS;
           y = random() * (height - 2 * NODE_RADIUS) + NODE_RADIUS;
@@ -231,8 +271,8 @@ const EconomyNodeGroup: FC<EconomyNodeGroupProps> = ({
     if (!sim) return;
     const prev = prevMultiplierRef.current;
     if (prev === velocityMultiplier) return;
-    sim.nodes().forEach(node => {
-      (["vx", "vy", "lastVx", "lastVy"] as const).forEach(key => {
+    sim.nodes().forEach((node) => {
+      (["vx", "vy", "lastVx", "lastVy"] as const).forEach((key) => {
         const v = node[key];
         if (v) node[key] = (v * velocityMultiplier) / prev;
       });
@@ -253,7 +293,8 @@ const EconomyNodeGroup: FC<EconomyNodeGroupProps> = ({
       const theta = 2 * PI * random();
       const vx = initialV * cos(theta);
       const vy = initialV * sin(theta);
-      let x = 0, y = 0;
+      let x = 0,
+        y = 0;
       do {
         x = random() * (width - 2 * NODE_RADIUS) + NODE_RADIUS;
         y = random() * (height - 2 * NODE_RADIUS) + NODE_RADIUS;

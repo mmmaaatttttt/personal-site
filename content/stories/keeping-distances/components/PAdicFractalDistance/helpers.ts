@@ -29,14 +29,17 @@ function pointSum(
   k: number,
   a_k: number,
   prime: number,
-  key: "cx" | "cy"
+  key: "cx" | "cy",
 ): number {
   const firstIdx = n % prime ** k;
   const secondIdx = (n + a_k * prime ** (k - 1)) % prime ** k;
   return ((prime - 1) * points[firstIdx][key] + points[secondIdx][key]) / prime;
 }
 
-export function generatePAdicPoints(prime: number, level: number): PAdicPoint[] {
+export function generatePAdicPoints(
+  prime: number,
+  level: number,
+): PAdicPoint[] {
   const points: PAdicPoint[] = Array.from({ length: prime }, (_, i) => {
     const angle = (Math.PI * 2 * i) / prime + Math.PI / 2;
     return { cx: Math.cos(angle), cy: Math.sin(angle), fillIdx: 0, num: i };
@@ -56,7 +59,11 @@ export function generatePAdicPoints(prime: number, level: number): PAdicPoint[] 
   return points;
 }
 
-export function getStartIdx(num: number, prime: number, points: PAdicPoint[]): number {
+export function getStartIdx(
+  num: number,
+  prime: number,
+  points: PAdicPoint[],
+): number {
   let idx = 0;
   const exp = largestPrimePower(num, prime);
   if (exp > 0) idx = num % prime ** exp;

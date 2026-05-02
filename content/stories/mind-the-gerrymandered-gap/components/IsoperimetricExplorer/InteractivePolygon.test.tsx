@@ -30,7 +30,7 @@ function renderPolygon(points = triangle, onDrag = vi.fn()) {
         circleRadius={8}
         onDrag={onDrag}
       />
-    </svg>
+    </svg>,
   );
 }
 
@@ -68,7 +68,11 @@ describe("InteractivePolygon", () => {
     const firstCircle = container.querySelector("circle")!;
 
     fireEvent.pointerDown(firstCircle, { pointerId: 1 });
-    fireEvent.pointerMove(firstCircle, { clientX: 60, clientY: 10, pointerId: 1 });
+    fireEvent.pointerMove(firstCircle, {
+      clientX: 60,
+      clientY: 10,
+      pointerId: 1,
+    });
 
     expect(onDrag).toHaveBeenCalledWith(0, { x: 60, y: 10 });
   });

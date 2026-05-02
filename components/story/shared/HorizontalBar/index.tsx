@@ -1,5 +1,5 @@
 import { AnimatePresence, motion } from "framer-motion";
-import { FC } from "react";
+import type { FC } from "react";
 import Tooltip, { useTooltip } from "../Tooltip";
 
 interface BarData {
@@ -15,15 +15,21 @@ interface HorizontalBarProps {
   height?: number;
 }
 
-const HorizontalBar: FC<HorizontalBarProps> = ({ title = "", data, height = 24 }) => {
+const HorizontalBar: FC<HorizontalBarProps> = ({
+  title = "",
+  data,
+  height = 24,
+}) => {
   const { tooltip, showTooltip, hideTooltip } = useTooltip();
 
   const total = data.reduce((sum, d) => sum + d.size, 0) || 1;
 
   return (
     <div className="w-full">
-      {title && <h4 className="text-center font-bold text-gray-800 mb-2">{title}</h4>}
-      <div 
+      {title && (
+        <h4 className="text-center font-bold text-gray-800 mb-2">{title}</h4>
+      )}
+      <div
         className="flex w-full overflow-hidden rounded-lg border border-gray-300"
         style={{ height }}
         onMouseLeave={hideTooltip}
@@ -40,8 +46,12 @@ const HorizontalBar: FC<HorizontalBarProps> = ({ title = "", data, height = 24 }
                 transition={{ duration: 0.3, ease: "easeOut" }}
                 style={{ backgroundColor: d.color }}
                 className="h-full cursor-pointer hover:brightness-110"
-                onMouseMove={d.tooltipText ? showTooltip("", d.tooltipText) : undefined}
-                onTouchMove={d.tooltipText ? showTooltip("", d.tooltipText) : undefined}
+                onMouseMove={
+                  d.tooltipText ? showTooltip("", d.tooltipText) : undefined
+                }
+                onTouchMove={
+                  d.tooltipText ? showTooltip("", d.tooltipText) : undefined
+                }
               />
             );
           })}

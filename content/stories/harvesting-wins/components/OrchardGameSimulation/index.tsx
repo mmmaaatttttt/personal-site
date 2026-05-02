@@ -1,6 +1,6 @@
 "use client";
 
-import { FC, useCallback, useEffect, useRef, useState } from "react";
+import { type FC, useCallback, useEffect, useRef, useState } from "react";
 import FlexContainer from "@/components/story/shared/FlexContainer";
 import HorizontalBar from "@/components/story/shared/HorizontalBar";
 import NarrowContainer from "@/components/story/shared/NarrowContainer";
@@ -28,7 +28,7 @@ const OrchardGameSimulation: FC<OrchardGameSimulationProps> = ({
 }) => {
   const [playing, setPlaying] = useState(false);
   const [playData, setPlayData] = useState<PlayData[]>(() =>
-    strategies.map(() => ({ gamesPlayed: 0, gamesWon: 0 }))
+    strategies.map(() => ({ gamesPlayed: 0, gamesWon: 0 })),
   );
 
   const playingRef = useRef(false);
@@ -56,7 +56,7 @@ const OrchardGameSimulation: FC<OrchardGameSimulationProps> = ({
         if (raven === 0) return false;
       }
     },
-    [initialFruitCounts, initialRavenCount, wildCardCount]
+    [initialFruitCounts, initialRavenCount, wildCardCount],
   );
 
   const tick = useCallback(
@@ -79,7 +79,7 @@ const OrchardGameSimulation: FC<OrchardGameSimulationProps> = ({
 
       requestAnimationFrame(tick);
     },
-    [simulateGame]
+    [simulateGame],
   );
 
   const togglePlaying = useCallback(() => {

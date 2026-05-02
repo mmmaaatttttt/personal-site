@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { FC, useEffect, useMemo, useState } from "react";
+import { type FC, useEffect, useMemo, useState } from "react";
 import { cn } from "@/lib/utils";
 import { getOpaqueLightColor } from "./utils";
 
@@ -33,8 +33,11 @@ const Slider: FC<SliderProps> = ({
   const [isHovered, setIsHovered] = useState(false);
   const [isDragging, setIsDragging] = useState(false);
   const percentage = ((value - min) / (max - min)) * 100;
-  
-  const lightColor = useMemo(() => getOpaqueLightColor(activeColor), [activeColor]);
+
+  const lightColor = useMemo(
+    () => getOpaqueLightColor(activeColor),
+    [activeColor],
+  );
 
   // Handle global mouse/touch releases to ensure isDragging is reset
   useEffect(() => {
@@ -55,13 +58,13 @@ const Slider: FC<SliderProps> = ({
   const isFullDark = isHovered || isDragging;
 
   return (
-    <div 
+    <div
       className={cn("relative flex w-full items-center group", className)}
       style={{ height: height + 2 * padding, padding: `${padding}px 0` }}
     >
       {/* Custom Track (visual only) */}
-      <div 
-        className="absolute w-full rounded-full overflow-hidden" 
+      <div
+        className="absolute w-full rounded-full overflow-hidden"
         style={{ height, backgroundColor: inactiveColor }}
       >
         <div
@@ -70,19 +73,19 @@ const Slider: FC<SliderProps> = ({
         />
       </div>
 
-      <div 
+      <div
         className="absolute pointer-events-none z-20 flex items-center justify-center"
-        style={{ 
+        style={{
           left: `calc(${percentage}% - 12px)`,
-          width: 24, 
-          height: 24 
+          width: 24,
+          height: 24,
         }}
       >
-        <div 
+        <div
           className="absolute w-full h-full rounded-full shadow-sm transition-colors duration-200"
           style={{ backgroundColor: isFullDark ? activeColor : lightColor }}
         />
-        <motion.div 
+        <motion.div
           animate={{ scale: isFullDark ? 1 : 0.4 }}
           transition={{ type: "spring", stiffness: 300, damping: 20 }}
           className="w-full h-full rounded-full"

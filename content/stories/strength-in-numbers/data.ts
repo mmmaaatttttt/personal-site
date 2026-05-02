@@ -65,7 +65,10 @@ interface RawRow {
 }
 
 function parseCSV(): RawRow[] {
-  const csvPath = path.join(process.cwd(), "data/csv/voting_data_2008_2016.csv");
+  const csvPath = path.join(
+    process.cwd(),
+    "data/csv/voting_data_2008_2016.csv",
+  );
   const text = fs.readFileSync(csvPath, "utf-8").replace(/\r/g, "");
   const [headerLine, ...dataLines] = text.trim().split("\n");
   const headers = headerLine.split(",");
@@ -80,8 +83,12 @@ function parseCSV(): RawRow[] {
   const participantsIdx = idx("election_participants");
   const eligibleIdx = idx("eligible_voters_estimated");
   const jurisWorkerCountIdx = idx("jurisdictions_with_poll_worker_count");
-  const partWorkerInfoIdx = idx("participants_in_jurisdictions_with_poll_worker_info");
-  const partPollingPlaceInfoIdx = idx("participants_in_jurisdictions_with_polling_place_info");
+  const partWorkerInfoIdx = idx(
+    "participants_in_jurisdictions_with_poll_worker_info",
+  );
+  const partPollingPlaceInfoIdx = idx(
+    "participants_in_jurisdictions_with_polling_place_info",
+  );
   const pollingPlacesIdx = idx("polling_places");
   const pollWorkersIdx = idx("poll_workers");
   const age1Idx = idx("worker_age_group_1");
@@ -104,8 +111,10 @@ function parseCSV(): RawRow[] {
       election_participants: +cols[participantsIdx],
       eligible_voters_estimated: +cols[eligibleIdx],
       jurisdictions_with_poll_worker_count: +cols[jurisWorkerCountIdx],
-      participants_in_jurisdictions_with_poll_worker_info: +cols[partWorkerInfoIdx],
-      participants_in_jurisdictions_with_polling_place_info: +cols[partPollingPlaceInfoIdx],
+      participants_in_jurisdictions_with_poll_worker_info:
+        +cols[partWorkerInfoIdx],
+      participants_in_jurisdictions_with_polling_place_info:
+        +cols[partPollingPlaceInfoIdx],
       polling_places: +cols[pollingPlacesIdx],
       poll_workers: +cols[pollWorkersIdx],
       worker_age_group_1: +cols[age1Idx],
@@ -142,9 +151,13 @@ function computeVoterTableData(rows: RawRow[]): VoterStateRow[] {
       .filter((n) => n !== 0 && isFinite(n));
 
     const averageSaturation =
-      saturations.length > 0 ? saturations.reduce((a, b) => a + b, 0) / saturations.length : 0;
+      saturations.length > 0
+        ? saturations.reduce((a, b) => a + b, 0) / saturations.length
+        : 0;
     const averageTurnout =
-      turnouts.length > 0 ? turnouts.reduce((a, b) => a + b, 0) / turnouts.length : 0;
+      turnouts.length > 0
+        ? turnouts.reduce((a, b) => a + b, 0) / turnouts.length
+        : 0;
 
     return { state, averageSaturation, averageTurnout };
   });
@@ -174,14 +187,18 @@ function computeRawVotingData(rows: RawRow[]): VotingDataRow[] {
     active_registration: row.active_registration,
     election_participants: row.election_participants,
     eligible_voters_estimated: row.eligible_voters_estimated,
-    jurisdictions_with_poll_worker_count: row.jurisdictions_with_poll_worker_count,
-    participants_in_jurisdictions_with_poll_worker_info: row.participants_in_jurisdictions_with_poll_worker_info,
-    participants_in_jurisdictions_with_polling_place_info: row.participants_in_jurisdictions_with_polling_place_info,
+    jurisdictions_with_poll_worker_count:
+      row.jurisdictions_with_poll_worker_count,
+    participants_in_jurisdictions_with_poll_worker_info:
+      row.participants_in_jurisdictions_with_poll_worker_info,
+    participants_in_jurisdictions_with_polling_place_info:
+      row.participants_in_jurisdictions_with_polling_place_info,
     polling_places: row.polling_places,
     poll_workers: row.poll_workers,
     difficulty_very_difficult: row.difficulty_very_difficult,
     difficulty_somewhat_difficult: row.difficulty_somewhat_difficult,
-    difficulty_neither_difficult_nor_easy: row.difficulty_neither_difficult_nor_easy,
+    difficulty_neither_difficult_nor_easy:
+      row.difficulty_neither_difficult_nor_easy,
     difficulty_somewhat_easy: row.difficulty_somewhat_easy,
     difficulty_very_easy: row.difficulty_very_easy,
     dem_percent: row.dem_percent,
@@ -201,10 +218,11 @@ const rawRows = parseCSV();
 
 export const voterTableData: VoterStateRow[] = computeVoterTableData(rawRows);
 
-export const pollWorkerAgeData: PollWorkerAgeRow[] = computePollWorkerAgeData(rawRows);
+export const pollWorkerAgeData: PollWorkerAgeRow[] =
+  computePollWorkerAgeData(rawRows);
 
 export const rawVotingData: VotingDataRow[] = computeRawVotingData(rawRows);
 
 export const allStates: string[] = Array.from(
-  new Set(rawRows.map((r) => r.state))
+  new Set(rawRows.map((r) => r.state)),
 ).sort();

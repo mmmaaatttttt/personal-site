@@ -1,4 +1,12 @@
-import { FC, MouseEvent, TouchEvent, useCallback, useEffect, useRef, useState } from "react";
+import {
+  type FC,
+  type MouseEvent,
+  type TouchEvent,
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 
 interface TooltipInfo {
   title: string;
@@ -22,7 +30,7 @@ export const useTooltip = () => {
           : (e as MouseEvent).clientY;
         setTooltip({ title, body, x: clientX, y: clientY });
       },
-    []
+    [],
   );
 
   const hideTooltip = useCallback(() => setTooltip(null), []);
@@ -41,7 +49,11 @@ const Tooltip: FC<TooltipProps> = ({ info }) => {
   useEffect(() => {
     if (!tooltipRef.current) return;
     const { offsetWidth, offsetHeight } = tooltipRef.current;
-    if (Math.abs(offsetWidth - size.width) + Math.abs(offsetHeight - size.height) > 2) {
+    if (
+      Math.abs(offsetWidth - size.width) +
+        Math.abs(offsetHeight - size.height) >
+      2
+    ) {
       setSize({ width: offsetWidth, height: offsetHeight });
     }
   });

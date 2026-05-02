@@ -22,7 +22,9 @@ describe("PAdicCalculator", () => {
 
   it("renders the formula container", () => {
     render(<PAdicCalculator />);
-    expect(document.querySelector("[data-testid='padic-formula']")).toBeTruthy();
+    expect(
+      document.querySelector("[data-testid='padic-formula']"),
+    ).toBeTruthy();
   });
 
   it("renders a caption when provided", () => {

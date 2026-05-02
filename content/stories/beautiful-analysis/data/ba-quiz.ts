@@ -11,7 +11,8 @@ const baQuizData: QuizQuestion[] = [
     answer: "A Computer",
   },
   {
-    prompt: "Who said: \"Yeah, I have to say, I don't want to be the course of the show.\"?",
+    prompt:
+      'Who said: "Yeah, I have to say, I don\'t want to be the course of the show."?',
     choices: ["Chris Gethard", "A Computer"],
     answer: "A Computer",
   },
@@ -26,17 +27,20 @@ const baQuizData: QuizQuestion[] = [
     answer: "A Computer",
   },
   {
-    prompt: 'Who said: "Yeah. I mean, I would have to imagine that\'s okay. I have to hear that one."?',
+    prompt:
+      'Who said: "Yeah. I mean, I would have to imagine that\'s okay. I have to hear that one."?',
     choices: ["Chris Gethard", "A Computer"],
     answer: "A Computer",
   },
   {
-    prompt: 'Who said: "Wow. It\'s a really blanket indictment. I think that\'s awesome."?',
+    prompt:
+      "Who said: \"Wow. It's a really blanket indictment. I think that's awesome.\"?",
     choices: ["Chris Gethard", "A Computer"],
     answer: "A Computer",
   },
   {
-    prompt: "Who said: \"I don't know. I don't want to want to hear more about being married.\"?",
+    prompt:
+      "Who said: \"I don't know. I don't want to want to hear more about being married.\"?",
     choices: ["Chris Gethard", "A Computer"],
     answer: "A Computer",
   },
@@ -46,7 +50,8 @@ const baQuizData: QuizQuestion[] = [
     answer: "A Computer",
   },
   {
-    prompt: 'Who said: "Yeah. I mean, I would imagine this podcast is called Bank Tech."?',
+    prompt:
+      'Who said: "Yeah. I mean, I would imagine this podcast is called Bank Tech."?',
     choices: ["Chris Gethard", "A Computer"],
     answer: "A Computer",
   },
@@ -71,7 +76,8 @@ const baQuizData: QuizQuestion[] = [
     answer: "Chris Gethard",
   },
   {
-    prompt: 'Who said: "That\'s beautiful. We\'re sending him the best. We\'re sending him the best."?',
+    prompt:
+      "Who said: \"That's beautiful. We're sending him the best. We're sending him the best.\"?",
     choices: ["Chris Gethard", "A Computer"],
     answer: "Chris Gethard",
   },
@@ -91,7 +97,8 @@ const baQuizData: QuizQuestion[] = [
     answer: "Chris Gethard",
   },
   {
-    prompt: 'Who said: "So I got a question on my mind and I feel like I have to ask it."?',
+    prompt:
+      'Who said: "So I got a question on my mind and I feel like I have to ask it."?',
     choices: ["Chris Gethard", "A Computer"],
     answer: "Chris Gethard",
   },
@@ -111,7 +118,8 @@ const baQuizData: QuizQuestion[] = [
     answer: "Chris Gethard",
   },
   {
-    prompt: 'Who said: "That\'s our policy. It will be bleeped I promise you that."?',
+    prompt:
+      'Who said: "That\'s our policy. It will be bleeped I promise you that."?',
     choices: ["Chris Gethard", "A Computer"],
     answer: "Chris Gethard",
   },

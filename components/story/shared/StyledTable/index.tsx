@@ -1,4 +1,4 @@
-import { ReactNode } from "react";
+import type { ReactNode } from "react";
 
 interface TableCell {
   key: string | number;
@@ -69,7 +69,9 @@ export default function StyledTable({
           <thead>
             <tr>
               {headers.map((h) => (
-                <th key={h.key} className={h.className}>{h.content}</th>
+                <th key={h.key} className={h.className}>
+                  {h.content}
+                </th>
               ))}
             </tr>
           </thead>

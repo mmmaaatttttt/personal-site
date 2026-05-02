@@ -27,13 +27,13 @@ describe("StringDistanceExplorer", () => {
     // 'matehmatics' vs 'mathematics' → D-L distance = 1
     const cells = screen.getAllByRole("cell");
     const damerauRow = cells.find((c) =>
-      c.textContent?.includes("Damerau-Levenshtein")
+      c.textContent?.includes("Damerau-Levenshtein"),
     );
     expect(damerauRow).toBeTruthy();
     // the next sibling cell should contain "1"
     const rows = screen.getAllByRole("row");
     const damerauDataRow = rows.find((r) =>
-      r.textContent?.includes("Damerau-Levenshtein")
+      r.textContent?.includes("Damerau-Levenshtein"),
     );
     expect(damerauDataRow?.textContent).toContain("1");
   });
@@ -44,9 +44,7 @@ describe("StringDistanceExplorer", () => {
     // change first word to a shorter one
     const input = screen.getByLabelText("First Word");
     fireEvent.change(input, { target: { value: "cat" } });
-    expect(
-      screen.getByText("Strings must have the same length")
-    ).toBeTruthy();
+    expect(screen.getByText("Strings must have the same length")).toBeTruthy();
   });
 
   it("shows Hamming distance as a number when strings have equal length", () => {

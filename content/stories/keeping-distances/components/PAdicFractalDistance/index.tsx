@@ -1,13 +1,20 @@
 "use client";
 
 import { AnimatePresence, motion } from "framer-motion";
-import { FC, useState } from "react";
+import { type FC, useState } from "react";
 import Caption from "@/components/story/shared/Caption";
 import ClippedSVG from "@/components/story/shared/ClippedSVG";
 import Select from "@/components/story/shared/Select";
 import SliderProvider from "@/components/story/shared/Slider/SliderProvider";
 import COLORS from "@/utils/styles";
-import { HEIGHT, LEVEL_COLORS, PRIME_OPTIONS, WIDTH, xScale, yScale } from "./constants";
+import {
+  HEIGHT,
+  LEVEL_COLORS,
+  PRIME_OPTIONS,
+  WIDTH,
+  xScale,
+  yScale,
+} from "./constants";
 import { generatePAdicPoints, getStartIdx, showLabel } from "./helpers";
 
 const LEVEL_SLIDER = [
@@ -45,7 +52,12 @@ const PAdicFractalDistance: FC<PAdicFractalDistanceProps> = ({ caption }) => {
                 onChange={setPrimeOpt}
                 options={PRIME_OPTIONS}
               />
-              <ClippedSVG id="p-adic-distances" width={WIDTH} height={HEIGHT} clipChildren={false}>
+              <ClippedSVG
+                id="p-adic-distances"
+                width={WIDTH}
+                height={HEIGHT}
+                clipChildren={false}
+              >
                 <AnimatePresence>
                   {points.map((pt, i) => {
                     const startPt = points[getStartIdx(i, prime, points)];

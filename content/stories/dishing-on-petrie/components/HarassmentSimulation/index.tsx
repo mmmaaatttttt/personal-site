@@ -1,6 +1,6 @@
 "use client";
 
-import { FC, useCallback, useMemo, useState } from "react";
+import { type FC, useCallback, useMemo, useState } from "react";
 import ClippedSVG from "@/components/story/shared/ClippedSVG";
 import FlexContainer from "@/components/story/shared/FlexContainer";
 import HorizontalBar from "@/components/story/shared/HorizontalBar";

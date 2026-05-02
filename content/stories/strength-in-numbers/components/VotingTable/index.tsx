@@ -1,7 +1,7 @@
 "use client";
 
 import { format } from "d3-format";
-import { FC, useState } from "react";
+import { type FC, useState } from "react";
 import SliderProvider from "@/components/story/shared/Slider/SliderProvider";
 import StyledTable from "@/components/story/shared/StyledTable";
 import COLORS from "@/utils/styles";

@@ -14,7 +14,7 @@ const PADDING_SCALE = 0.075;
 export function computeGridDimensions(
   width: number,
   rowCount: number,
-  colCount: number
+  colCount: number,
 ) {
   const squareWidth = width / colCount;
   const height = rowCount * squareWidth;
@@ -23,8 +23,11 @@ export function computeGridDimensions(
   return { width, height, paddingX, paddingY };
 }
 
-export function getInitialSegments(rowCount: number, colCount: number): boolean[][] {
+export function getInitialSegments(
+  rowCount: number,
+  colCount: number,
+): boolean[][] {
   return Array.from({ length: rowCount * 2 - 1 }, (_, i) =>
-    Array(colCount - 1 + (i % 2)).fill(false)
+    Array(colCount - 1 + (i % 2)).fill(false),
   );
 }

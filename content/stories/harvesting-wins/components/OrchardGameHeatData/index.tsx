@@ -1,11 +1,16 @@
 "use client";
 
-import { FC, useState } from "react";
+import { type FC, useState } from "react";
 import HeatChart from "@/components/story/shared/HeatChart";
 import Select from "@/components/story/shared/Select";
 import SliderProvider from "@/components/story/shared/Slider/SliderProvider";
 import COLORS from "@/utils/styles";
-import { type OrchardDataPoint, orchardGameData, selectOptions, sliderData } from "../../data";
+import {
+  type OrchardDataPoint,
+  orchardGameData,
+  selectOptions,
+  sliderData,
+} from "../../data";
 
 const OrchardGameHeatData: FC<{ caption?: string }> = () => {
   const [selectedOption, setSelectedOption] = useState(selectOptions[0]);
@@ -30,14 +35,24 @@ const OrchardGameHeatData: FC<{ caption?: string }> = () => {
         const [colorCount, wildCardCount] = sliderVals;
         const { value, accessor } = selectedOption;
 
-        const colorDomain = value === "diff" ? [0.05, 0.25] : [0, 0.2, 0.4, 0.6, 0.8, 1];
+        const colorDomain =
+          value === "diff" ? [0.05, 0.25] : [0, 0.2, 0.4, 0.6, 0.8, 1];
         const colorRange =
           value === "diff"
             ? [COLORS.BLUE, COLORS.DARK_BLUE]
-            : [COLORS.BLACK, COLORS.RED, COLORS.ORANGE, COLORS.YELLOW, COLORS.GREEN, COLORS.DARK_GREEN];
+            : [
+                COLORS.BLACK,
+                COLORS.RED,
+                COLORS.ORANGE,
+                COLORS.YELLOW,
+                COLORS.GREEN,
+                COLORS.DARK_GREEN,
+              ];
 
         const heatData = orchardGameData
-          .filter((d) => d.colors === colorCount && d.wildCardCount === wildCardCount)
+          .filter(
+            (d) => d.colors === colorCount && d.wildCardCount === wildCardCount,
+          )
           .reduce<(OrchardDataPoint | null)[][]>((matrix, obj) => {
             const x = obj.ravenCount - 1;
             const y = obj.fruits - 1;
@@ -53,10 +68,14 @@ const OrchardGameHeatData: FC<{ caption?: string }> = () => {
               value={selectedOption.value}
               onChange={(opt) =>
                 setSelectedOption(
-                  selectOptions.find((o) => o.value === opt.value) ?? selectOptions[0]
+                  selectOptions.find((o) => o.value === opt.value) ??
+                    selectOptions[0],
                 )
               }
-              options={selectOptions.map(({ value, label }) => ({ value, label }))}
+              options={selectOptions.map(({ value, label }) => ({
+                value,
+                label,
+              }))}
             />
             <HeatChart
               data={heatData}

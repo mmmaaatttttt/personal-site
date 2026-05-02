@@ -10,7 +10,9 @@ vi.mock("framer-motion", async (importOriginal) => {
       ...actual.motion,
       g: "g",
     },
-    AnimatePresence: ({ children }: { children: React.ReactNode }) => <>{children}</>,
+    AnimatePresence: ({ children }: { children: React.ReactNode }) => (
+      <>{children}</>
+    ),
   };
 });
 
@@ -51,28 +53,63 @@ const mockStates = ["Alabama", "Alaska", "Arizona"];
 
 const mockData: VotingDataRow[] = [
   makeRow({ year: 2008, state: "Alabama" }),
-  makeRow({ year: 2010, state: "Alabama", active_registration: 2900000, election_participants: 1800000 }),
-  makeRow({ year: 2012, state: "Alabama", active_registration: 3100000, election_participants: 2100000 }),
-  makeRow({ year: 2014, state: "Alabama", active_registration: 3050000, election_participants: 1950000 }),
+  makeRow({
+    year: 2010,
+    state: "Alabama",
+    active_registration: 2900000,
+    election_participants: 1800000,
+  }),
+  makeRow({
+    year: 2012,
+    state: "Alabama",
+    active_registration: 3100000,
+    election_participants: 2100000,
+  }),
+  makeRow({
+    year: 2014,
+    state: "Alabama",
+    active_registration: 3050000,
+    election_participants: 1950000,
+  }),
   makeRow({ year: 2016, state: "Alabama" }),
-  makeRow({ year: 2008, state: "Alaska", active_registration: 420000, election_participants: 280000, eligible_voters_estimated: 480000 }),
-  makeRow({ year: 2016, state: "Alaska", active_registration: 500000, election_participants: 320000, eligible_voters_estimated: 530000 }),
+  makeRow({
+    year: 2008,
+    state: "Alaska",
+    active_registration: 420000,
+    election_participants: 280000,
+    eligible_voters_estimated: 480000,
+  }),
+  makeRow({
+    year: 2016,
+    state: "Alaska",
+    active_registration: 500000,
+    election_participants: 320000,
+    eligible_voters_estimated: 530000,
+  }),
 ];
 
 describe("VotingLineChart (voters variant)", () => {
   it("renders without crashing", () => {
-    render(<VotingLineChart data={mockData} states={mockStates} variant="voters" />);
+    render(
+      <VotingLineChart data={mockData} states={mockStates} variant="voters" />,
+    );
   });
 
   it("renders two select dropdowns (statistic and state)", () => {
-    render(<VotingLineChart data={mockData} states={mockStates} variant="voters" />);
+    render(
+      <VotingLineChart data={mockData} states={mockStates} variant="voters" />,
+    );
     expect(screen.getAllByRole("combobox")).toHaveLength(2);
   });
 
   it("populates the statistic select with voter options", () => {
-    render(<VotingLineChart data={mockData} states={mockStates} variant="voters" />);
+    render(
+      <VotingLineChart data={mockData} states={mockStates} variant="voters" />,
+    );
     const [statSelect] = screen.getAllByRole("combobox");
-    const options = Array.from(statSelect.querySelectorAll("option")).map((o) => o.textContent);
+    const options = Array.from(statSelect.querySelectorAll("option")).map(
+      (o) => o.textContent,
+    );
     expect(options).toContain("Active Registered Voters");
     expect(options).toContain("Election Participants");
     expect(options).toContain("Election Turnout");
@@ -80,36 +117,60 @@ describe("VotingLineChart (voters variant)", () => {
   });
 
   it("populates the state select with all states", () => {
-    render(<VotingLineChart data={mockData} states={mockStates} variant="voters" />);
+    render(
+      <VotingLineChart data={mockData} states={mockStates} variant="voters" />,
+    );
     const [, stateSelect] = screen.getAllByRole("combobox");
-    const options = Array.from(stateSelect.querySelectorAll("option")).map((o) => o.textContent);
+    const options = Array.from(stateSelect.querySelectorAll("option")).map(
+      (o) => o.textContent,
+    );
     expect(options).toContain("Alabama");
     expect(options).toContain("Alaska");
     expect(options).toContain("Arizona");
   });
 
   it("renders the caption when provided", () => {
-    render(<VotingLineChart data={mockData} states={mockStates} variant="voters" caption="Line chart caption" />);
+    render(
+      <VotingLineChart
+        data={mockData}
+        states={mockStates}
+        variant="voters"
+        caption="Line chart caption"
+      />,
+    );
     expect(screen.getByText("Line chart caption")).toBeInTheDocument();
   });
 
   it("uses the provided svgId for the clip path", () => {
     const { container } = render(
-      <VotingLineChart data={mockData} states={mockStates} variant="voters" svgId="my-line-graph" />
+      <VotingLineChart
+        data={mockData}
+        states={mockStates}
+        variant="voters"
+        svgId="my-line-graph"
+      />,
     );
-    expect(container.querySelector('[id="clip-path-my-line-graph"]')).toBeInTheDocument();
+    expect(
+      container.querySelector('[id="clip-path-my-line-graph"]'),
+    ).toBeInTheDocument();
   });
 
   it("changes statistic when select changes", () => {
-    render(<VotingLineChart data={mockData} states={mockStates} variant="voters" />);
+    render(
+      <VotingLineChart data={mockData} states={mockStates} variant="voters" />,
+    );
     const [statSelect] = screen.getAllByRole("combobox") as HTMLSelectElement[];
     fireEvent.change(statSelect, { target: { value: "1" } });
     expect(statSelect.value).toBe("1");
   });
 
   it("changes state when state select changes", () => {
-    render(<VotingLineChart data={mockData} states={mockStates} variant="voters" />);
-    const [, stateSelect] = screen.getAllByRole("combobox") as HTMLSelectElement[];
+    render(
+      <VotingLineChart data={mockData} states={mockStates} variant="voters" />,
+    );
+    const [, stateSelect] = screen.getAllByRole(
+      "combobox",
+    ) as HTMLSelectElement[];
     fireEvent.change(stateSelect, { target: { value: "1" } });
     expect(stateSelect.options[stateSelect.selectedIndex].text).toBe("Alaska");
   });
@@ -117,13 +178,19 @@ describe("VotingLineChart (voters variant)", () => {
 
 describe("VotingLineChart (workers variant)", () => {
   it("renders without crashing", () => {
-    render(<VotingLineChart data={mockData} states={mockStates} variant="workers" />);
+    render(
+      <VotingLineChart data={mockData} states={mockStates} variant="workers" />,
+    );
   });
 
   it("populates the statistic select with worker options", () => {
-    render(<VotingLineChart data={mockData} states={mockStates} variant="workers" />);
+    render(
+      <VotingLineChart data={mockData} states={mockStates} variant="workers" />,
+    );
     const [statSelect] = screen.getAllByRole("combobox");
-    const options = Array.from(statSelect.querySelectorAll("option")).map((o) => o.textContent);
+    const options = Array.from(statSelect.querySelectorAll("option")).map(
+      (o) => o.textContent,
+    );
     expect(options).toContain("Poll Workers");
     expect(options).toContain("Polling Places");
     expect(options).toContain("Average Difficulty of Finding Poll Workers");
@@ -132,8 +199,10 @@ describe("VotingLineChart (workers variant)", () => {
 
   it("uses the default svgId clip path when not provided", () => {
     const { container } = render(
-      <VotingLineChart data={mockData} states={mockStates} variant="workers" />
+      <VotingLineChart data={mockData} states={mockStates} variant="workers" />,
     );
-    expect(container.querySelector('[id="clip-path-state-line-graph"]')).toBeInTheDocument();
+    expect(
+      container.querySelector('[id="clip-path-state-line-graph"]'),
+    ).toBeInTheDocument();
   });
 });

@@ -13,7 +13,7 @@ const CollocationTable = () => {
       <ColoredSpan bold color={colorMap[speaker as keyof typeof colorMap]}>
         {speaker}
       </ColoredSpan>
-    )
+    ),
   }));
 
   const rows = baCommonPhrases.collocation_lists[0].collocations.map(
@@ -23,10 +23,8 @@ const CollocationTable = () => {
         {
           key: "chris-collocation",
           content: (
-            <ColoredSpan color={colorMap["Chris"]}>
-              {phrase}
-            </ColoredSpan>
-          )
+            <ColoredSpan color={colorMap["Chris"]}>{phrase}</ColoredSpan>
+          ),
         },
         {
           key: "caller-collocation",
@@ -34,10 +32,10 @@ const CollocationTable = () => {
             <ColoredSpan color={colorMap["Caller"]}>
               {baCommonPhrases.collocation_lists[1].collocations[idx]}
             </ColoredSpan>
-          )
-        }
-      ]
-    })
+          ),
+        },
+      ],
+    }),
   );
 
   return (

@@ -1,9 +1,9 @@
-import { render } from '@testing-library/react';
-import { describe, expect, it, vi } from 'vitest';
-import '@testing-library/jest-dom/vitest';
-import HarassmentNodeGroup from './HarassmentNodeGroup';
+import { render } from "@testing-library/react";
+import { describe, expect, it, vi } from "vitest";
+import "@testing-library/jest-dom/vitest";
+import HarassmentNodeGroup from "./HarassmentNodeGroup";
 
-describe('HarassmentNodeGroup Component', () => {
+describe("HarassmentNodeGroup Component", () => {
   const defaultProps = {
     width: 600,
     height: 400,
@@ -19,23 +19,23 @@ describe('HarassmentNodeGroup Component', () => {
     greenOnBlueProb: 0.05,
   };
 
-  it('renders without crashing and outputs an svg group with border', () => {
+  it("renders without crashing and outputs an svg group with border", () => {
     const { container } = render(
       <svg>
         <HarassmentNodeGroup {...defaultProps} />
-      </svg>
+      </svg>,
     );
-    expect(container.querySelector('rect')).toBeInTheDocument();
+    expect(container.querySelector("rect")).toBeInTheDocument();
   });
 
-  it('renders correct number of nodes when initial counts are passed', () => {
+  it("renders correct number of nodes when initial counts are passed", () => {
     const { container } = render(
       <svg>
         <HarassmentNodeGroup {...defaultProps} />
-      </svg>
+      </svg>,
     );
     // 5 green + 3 blue = 8 circles
-    const circles = container.querySelectorAll('circle.node');
+    const circles = container.querySelectorAll("circle.node");
     expect(circles.length).toBe(8);
   });
 });

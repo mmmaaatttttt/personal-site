@@ -24,7 +24,9 @@ describe("Spinner", () => {
   it("renders message text instead of button when message is set", () => {
     render(<Spinner onSpinEnd={vi.fn()} message="Pick a fruit." />);
     expect(screen.getByText("Pick a fruit.")).toBeInTheDocument();
-    expect(screen.queryByRole("button", { name: "Spin!" })).not.toBeInTheDocument();
+    expect(
+      screen.queryByRole("button", { name: "Spin!" }),
+    ).not.toBeInTheDocument();
   });
 
   it("disables the button while spinning", () => {

@@ -22,7 +22,7 @@ describe("Latex", () => {
     expect(katex.render).toHaveBeenCalledWith(
       "E = mc^2",
       expect.any(HTMLDivElement),
-      expect.objectContaining({ displayMode: false })
+      expect.objectContaining({ displayMode: false }),
     );
   });
 
@@ -31,7 +31,7 @@ describe("Latex", () => {
     expect(katex.render).toHaveBeenCalledWith(
       "\\frac{1}{2}",
       expect.any(HTMLDivElement),
-      expect.objectContaining({ displayMode: true })
+      expect.objectContaining({ displayMode: true }),
     );
   });
 

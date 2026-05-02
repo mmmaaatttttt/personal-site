@@ -31,7 +31,12 @@ function doLinesIntersect(seg1: Segment, seg2: Segment): boolean {
   const lowerBound = 1e-6;
   const upperBound = 1 - lowerBound;
 
-  return lowerBound < lambda && lambda < upperBound && lowerBound < gamma && gamma < upperBound;
+  return (
+    lowerBound < lambda &&
+    lambda < upperBound &&
+    lowerBound < gamma &&
+    gamma < upperBound
+  );
 }
 
 // Given an array of points (forming a closed polygon) and the index of a just-moved point,
@@ -42,11 +47,16 @@ export function crossingExists(points: Point[], idx: number): boolean {
     return { x1: pt.x, y1: pt.y, x2: next.x, y2: next.y };
   });
 
-  const potentialCrossingSegments = [segments[idx], segments[mod(idx - 1, segments.length)]];
+  const potentialCrossingSegments = [
+    segments[idx],
+    segments[mod(idx - 1, segments.length)],
+  ];
 
   for (const seg of segments) {
     if (potentialCrossingSegments.includes(seg)) continue;
-    if (potentialCrossingSegments.some((other) => doLinesIntersect(seg, other))) {
+    if (
+      potentialCrossingSegments.some((other) => doLinesIntersect(seg, other))
+    ) {
       return true;
     }
   }

@@ -16,7 +16,7 @@ const mockData: VoterStateRow[] = [
   { state: "Arizona", averageSaturation: 0.68, averageTurnout: 0.47 },
   { state: "Arkansas", averageSaturation: 0.63, averageTurnout: 0.43 },
   { state: "California", averageSaturation: 0.79, averageTurnout: 0.57 },
-  { state: "Colorado", averageSaturation: 0.91, averageTurnout: 0.70 },
+  { state: "Colorado", averageSaturation: 0.91, averageTurnout: 0.7 },
 ];
 
 describe("VotingTable", () => {
@@ -54,7 +54,9 @@ describe("VotingTable", () => {
   it("sorts by state when State header is clicked", () => {
     render(<VotingTable tableData={mockData} />);
     const sortButtons = screen.getAllByRole("button", { name: /sort by/i });
-    const stateButton = sortButtons.find((b) => b.getAttribute("aria-label") === "Sort by State");
+    const stateButton = sortButtons.find(
+      (b) => b.getAttribute("aria-label") === "Sort by State",
+    );
     fireEvent.click(stateButton!);
     const rows = screen.getAllByRole("row");
     // Alabama should be first alphabetically
@@ -64,7 +66,9 @@ describe("VotingTable", () => {
   it("toggles sort direction when the same header is clicked twice", () => {
     render(<VotingTable tableData={mockData} />);
     const sortButtons = screen.getAllByRole("button", { name: /sort by/i });
-    const stateButton = sortButtons.find((b) => b.getAttribute("aria-label") === "Sort by State")!;
+    const stateButton = sortButtons.find(
+      (b) => b.getAttribute("aria-label") === "Sort by State",
+    )!;
     // First click: ascending by state
     fireEvent.click(stateButton);
     let rows = screen.getAllByRole("row");

@@ -97,16 +97,64 @@ describe("formatTooltip", () => {
 
 describe("buildBarData", () => {
   const electionData: ElectionRow[] = [
-    { year: 2016, state: "Pennsylvania", district: 1, dem: 1000, rep: 800, demEst: false, repEst: false },
-    { year: 2016, state: "Pennsylvania", district: 2, dem: 900, rep: 1100, demEst: false, repEst: false },
-    { year: 2016, state: "Ohio", district: 1, dem: 500, rep: 600, demEst: false, repEst: false },
-    { year: 2014, state: "Pennsylvania", district: 1, dem: 800, rep: 900, demEst: false, repEst: false },
-    { year: 2014, state: "Pennsylvania", district: 2, dem: 750, rep: 850, demEst: false, repEst: false },
+    {
+      year: 2016,
+      state: "Pennsylvania",
+      district: 1,
+      dem: 1000,
+      rep: 800,
+      demEst: false,
+      repEst: false,
+    },
+    {
+      year: 2016,
+      state: "Pennsylvania",
+      district: 2,
+      dem: 900,
+      rep: 1100,
+      demEst: false,
+      repEst: false,
+    },
+    {
+      year: 2016,
+      state: "Ohio",
+      district: 1,
+      dem: 500,
+      rep: 600,
+      demEst: false,
+      repEst: false,
+    },
+    {
+      year: 2014,
+      state: "Pennsylvania",
+      district: 1,
+      dem: 800,
+      rep: 900,
+      demEst: false,
+      repEst: false,
+    },
+    {
+      year: 2014,
+      state: "Pennsylvania",
+      district: 2,
+      dem: 750,
+      rep: 850,
+      demEst: false,
+      repEst: false,
+    },
   ];
 
   const stateSummaries: StateSummary[] = [
-    { state: "Pennsylvania", efficiencyGaps: { 2016: 0.1, 2014: 0.05 }, seatGaps: { 2016: 2.0, 2014: 0.5 } },
-    { state: "Ohio", efficiencyGaps: { 2016: -0.08 }, seatGaps: { 2016: -0.8 } },
+    {
+      state: "Pennsylvania",
+      efficiencyGaps: { 2016: 0.1, 2014: 0.05 },
+      seatGaps: { 2016: 2.0, 2014: 0.5 },
+    },
+    {
+      state: "Ohio",
+      efficiencyGaps: { 2016: -0.08 },
+      seatGaps: { 2016: -0.8 },
+    },
   ];
 
   it("filters out states with fewer districts than minElectors", () => {

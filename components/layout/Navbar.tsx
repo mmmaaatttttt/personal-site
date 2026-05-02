@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import React from "react";
+import type React from "react";
 
 interface NavbarProps {
   title: string;
@@ -9,7 +9,11 @@ interface NavbarProps {
   outline?: boolean;
 }
 
-const Navbar: React.FC<NavbarProps> = ({ title, hide = false, outline = false }) => {
+const Navbar: React.FC<NavbarProps> = ({
+  title,
+  hide = false,
+  outline = false,
+}) => {
   return (
     <nav
       className={`flex flex-col items-center justify-center border-b py-4 px-6 transition-all duration-300 ${
@@ -23,7 +27,9 @@ const Navbar: React.FC<NavbarProps> = ({ title, hide = false, outline = false })
       }`}
     >
       <Link href="/" className="mb-2 hover:opacity-80">
-        <h3 className="font-serif text-2xl font-bold tracking-tight">{title}</h3>
+        <h3 className="font-serif text-2xl font-bold tracking-tight">
+          {title}
+        </h3>
       </Link>
       <div className="flex justify-center gap-4 text-sm font-sans">
         <Link href="/about" className="hover:opacity-80">

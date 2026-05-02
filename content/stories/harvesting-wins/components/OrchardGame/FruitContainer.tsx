@@ -1,6 +1,6 @@
 "use client";
 
-import { FC } from "react";
+import type { FC } from "react";
 import { darkenHex } from "@/utils/colorHelpers";
 
 export interface FruitContainerProps {

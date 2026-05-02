@@ -32,7 +32,12 @@ describe("Polygon", () => {
   it("applies fill and stroke props", () => {
     const { container } = render(
       <svg>
-        <Polygon points={points} fill="#ff0000" stroke="#0000ff" strokeWidth={2} />
+        <Polygon
+          points={points}
+          fill="#ff0000"
+          stroke="#0000ff"
+          strokeWidth={2}
+        />
       </svg>,
     );
     const el = container.querySelector("polygon")!;

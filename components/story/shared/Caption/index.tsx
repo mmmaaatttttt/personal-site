@@ -1,4 +1,4 @@
-import { FC, ReactNode } from "react";
+import type { FC, ReactNode } from "react";
 import { cn } from "@/lib/utils";
 
 interface CaptionProps {
@@ -16,7 +16,7 @@ const Caption: FC<CaptionProps> = ({ children, caption, className }) => {
         "min-[890px]:w-[120%] min-[890px]:-ml-[10%]",
         "min-[1020px]:w-[140%] min-[1020px]:-ml-[20%]",
         "min-[1240px]:w-[150%] min-[1240px]:-ml-[25%]",
-        className
+        className,
       )}
     >
       <div className="w-full">{children}</div>

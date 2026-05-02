@@ -1,6 +1,6 @@
 "use client";
 
-import { FC } from "react";
+import type { FC } from "react";
 
 type SortKey = "state" | "averageSaturation" | "averageTurnout";
 
@@ -37,7 +37,13 @@ function sortIcon(isActive: boolean, ascending: boolean) {
   return <DownArrow />;
 }
 
-const SortHeader: FC<SortHeaderProps> = ({ label, sortKey, currentKey, ascending, onClick }) => {
+const SortHeader: FC<SortHeaderProps> = ({
+  label,
+  sortKey,
+  currentKey,
+  ascending,
+  onClick,
+}) => {
   const isActive = sortKey === currentKey;
 
   return (

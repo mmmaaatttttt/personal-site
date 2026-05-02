@@ -3,7 +3,8 @@
 import { extent } from "d3-array";
 import { scaleLinear } from "d3-scale";
 import { AnimatePresence } from "framer-motion";
-import React, { useEffect, useMemo, useState } from "react";
+import type React from "react";
+import { useEffect, useMemo, useState } from "react";
 import Graph from "../Graph";
 import ScatterPoint from "./ScatterPoint";
 
@@ -60,7 +61,13 @@ const Scatterplot: React.FC<ScatterplotProps> = ({
       .range([height - graphPadding, graphPadding]);
   }, [data, graphPadding, height, isMounted]);
 
-  if (!isMounted) return <div className="animate-pulse bg-nav/10" style={{ height, width: "100%" }} />;
+  if (!isMounted)
+    return (
+      <div
+        className="animate-pulse bg-nav/10"
+        style={{ height, width: "100%" }}
+      />
+    );
 
   return (
     <div className="w-full">

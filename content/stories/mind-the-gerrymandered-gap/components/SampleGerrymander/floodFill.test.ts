@@ -5,15 +5,18 @@ import { countRegions } from "./floodFill";
 const ROW = 6;
 const COL = 9;
 
-function allHorizontalSegments(rowCount: number, colCount: number): boolean[][] {
+function allHorizontalSegments(
+  rowCount: number,
+  colCount: number,
+): boolean[][] {
   return Array.from({ length: rowCount * 2 - 1 }, (_, i) =>
-    i % 2 === 1 ? Array(colCount).fill(true) : Array(colCount - 1).fill(false)
+    i % 2 === 1 ? Array(colCount).fill(true) : Array(colCount - 1).fill(false),
   );
 }
 
 function allVerticalSegments(rowCount: number, colCount: number): boolean[][] {
   return Array.from({ length: rowCount * 2 - 1 }, (_, i) =>
-    i % 2 === 0 ? Array(colCount - 1).fill(true) : Array(colCount).fill(false)
+    i % 2 === 0 ? Array(colCount - 1).fill(true) : Array(colCount).fill(false),
   );
 }
 
@@ -41,7 +44,7 @@ describe("countRegions", () => {
 
   it("returns rowCount * colCount single-cell regions when all dividers are on", () => {
     const segments = Array.from({ length: ROW * 2 - 1 }, (_, i) =>
-      i % 2 === 0 ? Array(COL - 1).fill(true) : Array(COL).fill(true)
+      i % 2 === 0 ? Array(COL - 1).fill(true) : Array(COL).fill(true),
     );
     const districts = countRegions(segments, ROW, COL);
     expect(districts).toHaveLength(ROW * COL);

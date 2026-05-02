@@ -11,7 +11,7 @@ describe("ScreenOverlay", () => {
 
   it("applies the background color with opacity", () => {
     const { container } = render(
-      <ScreenOverlay backgroundColor="#52a081">content</ScreenOverlay>
+      <ScreenOverlay backgroundColor="#52a081">content</ScreenOverlay>,
     );
     const overlay = container.firstChild as HTMLElement;
     // jsdom normalizes #rrggbbaa to rgba(); just verify it's non-empty and color-based
@@ -21,7 +21,7 @@ describe("ScreenOverlay", () => {
 
   it("is positioned absolute to cover the parent", () => {
     const { container } = render(
-      <ScreenOverlay backgroundColor="#000">content</ScreenOverlay>
+      <ScreenOverlay backgroundColor="#000">content</ScreenOverlay>,
     );
     expect(container.firstChild).toHaveClass("absolute", "inset-0");
   });

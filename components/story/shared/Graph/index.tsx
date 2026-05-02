@@ -1,5 +1,5 @@
-import { AxisDomain, AxisScale } from "d3-axis";
-import { ReactNode } from "react";
+import type { AxisDomain, AxisScale } from "d3-axis";
+import type { ReactNode } from "react";
 import { paddingObj } from "@/utils/styles";
 import Axis from "../Axis";
 import AxisLabel from "../AxisLabel";
@@ -69,14 +69,29 @@ const Graph = <XDomain extends AxisDomain, YDomain extends AxisDomain>({
   className,
 }: GraphProps<XDomain, YDomain>) => {
   const gPadding = paddingObj(graphPadding) as Padding;
-  const options = getLabelOptions(width, height, gPadding, gridlinesHorizontal, gridlinesVertical, yLabelOffset);
-  
+  const options = getLabelOptions(
+    width,
+    height,
+    gPadding,
+    gridlinesHorizontal,
+    gridlinesVertical,
+    yLabelOffset,
+  );
+
   const xOptions = options.x[xAxisPosition];
   const yOptions = options.y[yAxisPosition];
 
   // Type-safe tick step calculation
-  const calculatedTickStepY = (tickStepY ? tickStepY(yScale) : (tickStep ? tickStep(yScale as AxisScale<XDomain | YDomain>) : undefined));
-  const calculatedTickStepX = (tickStepX ? tickStepX(xScale) : (tickStep ? tickStep(xScale as AxisScale<XDomain | YDomain>) : undefined));
+  const calculatedTickStepY = tickStepY
+    ? tickStepY(yScale)
+    : tickStep
+      ? tickStep(yScale as AxisScale<XDomain | YDomain>)
+      : undefined;
+  const calculatedTickStepX = tickStepX
+    ? tickStepX(xScale)
+    : tickStep
+      ? tickStep(xScale as AxisScale<XDomain | YDomain>)
+      : undefined;
 
   return (
     <NarrowContainer width="100%" className={className}>
@@ -85,7 +100,11 @@ const Graph = <XDomain extends AxisDomain, YDomain extends AxisDomain>({
           <Axis
             key="y-axis"
             direction="y"
-            labelPosition={yLabelSide === "right" ? { x: "4", dy: "12" } : { x: "-3", dy: "0.32em" }}
+            labelPosition={
+              yLabelSide === "right"
+                ? { x: "4", dy: "12" }
+                : { x: "-3", dy: "0.32em" }
+            }
             scale={yScale}
             textAnchor={yLabelSide === "right" ? "start" : "end"}
             tickSize={yOptions.tickSize}
@@ -121,7 +140,11 @@ const Graph = <XDomain extends AxisDomain, YDomain extends AxisDomain>({
           <Axis
             key="y-axis"
             direction="y"
-            labelPosition={yLabelSide === "right" ? { x: "4", dy: "12" } : { x: "-3", dy: "0.32em" }}
+            labelPosition={
+              yLabelSide === "right"
+                ? { x: "4", dy: "12" }
+                : { x: "-3", dy: "0.32em" }
+            }
             scale={yScale}
             textAnchor={yLabelSide === "right" ? "start" : "end"}
             tickSize={yOptions.tickSize}
@@ -145,7 +168,14 @@ const Graph = <XDomain extends AxisDomain, YDomain extends AxisDomain>({
   );
 };
 
-function getLabelOptions(width: number, height: number, padding: Padding, hGrid: boolean, vGrid: boolean, yOff: number) {
+function getLabelOptions(
+  width: number,
+  height: number,
+  padding: Padding,
+  hGrid: boolean,
+  vGrid: boolean,
+  yOff: number,
+) {
   const { top, bottom, left, right } = padding;
   const xTickSize = vGrid ? -height + top + bottom : 0;
   const yTickSize = hGrid ? -width + left + right : 0;

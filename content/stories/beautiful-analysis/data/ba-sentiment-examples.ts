@@ -10,7 +10,8 @@ const baSentimentExamples: SentimentExample[] = [
     score: -0.8201,
   },
   {
-    sentence: "You've wasted a year and it's starting to freak you out a little bit.",
+    sentence:
+      "You've wasted a year and it's starting to freak you out a little bit.",
     score: -0.7269,
   },
   {
@@ -51,7 +52,8 @@ const baSentimentExamples: SentimentExample[] = [
   },
   { sentence: "I just feel lucky.", score: 0.4215 },
   {
-    sentence: "I feel like I'd be traveling around eating all the food that I like.",
+    sentence:
+      "I feel like I'd be traveling around eating all the food that I like.",
     score: 0.6124,
   },
   {

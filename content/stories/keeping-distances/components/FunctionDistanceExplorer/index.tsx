@@ -1,7 +1,7 @@
 "use client";
 
 import { scaleLinear } from "d3-scale";
-import { FC, useCallback, useState } from "react";
+import { type FC, useCallback, useState } from "react";
 import Caption from "@/components/story/shared/Caption";
 import DraggableCircle from "@/components/story/shared/DraggableCircle";
 import Graph from "@/components/story/shared/Graph";
@@ -54,18 +54,24 @@ const FunctionDistanceExplorer: FC<FunctionDistanceExplorerProps> = ({
         y: coords.y,
       });
     },
-    [handleDrag, points]
+    [handleDrag, points],
   );
 
   const clamped1 = clamped(points.slice(0, 3), X_DOMAIN, Y_DOMAIN);
   const clamped2 = clamped(points.slice(3), X_DOMAIN, Y_DOMAIN);
 
-  const graph1Pts = clamped1.map((pt) => ({ x: xScale(pt.x), y: yScale(pt.y) }));
-  const graph2Pts = clamped2.map((pt) => ({ x: xScale(pt.x), y: yScale(pt.y) }));
+  const graph1Pts = clamped1.map((pt) => ({
+    x: xScale(pt.x),
+    y: yScale(pt.y),
+  }));
+  const graph2Pts = clamped2.map((pt) => ({
+    x: xScale(pt.x),
+    y: yScale(pt.y),
+  }));
 
   const lInfSeg = lInfNormEndpoints(graph1Pts, graph2Pts);
   const lInfDistance = Math.abs(
-    yScale.invert(lInfSeg.y1) - yScale.invert(lInfSeg.y2)
+    yScale.invert(lInfSeg.y1) - yScale.invert(lInfSeg.y2),
   ).toFixed(2);
   const area = l1Norm(clamped1, clamped2).toFixed(2);
 

@@ -24,7 +24,12 @@ describe("ToggleSwitch", () => {
 
   it("toggles to checked on click and calls handleSwitchChange", () => {
     const handleSwitchChange = vi.fn();
-    render(<ToggleSwitch {...defaultProps} handleSwitchChange={handleSwitchChange} />);
+    render(
+      <ToggleSwitch
+        {...defaultProps}
+        handleSwitchChange={handleSwitchChange}
+      />,
+    );
     fireEvent.click(screen.getByRole("switch"));
     expect(screen.getByRole("switch")).toHaveAttribute("aria-checked", "true");
     expect(handleSwitchChange).toHaveBeenCalledWith(true);
@@ -32,7 +37,12 @@ describe("ToggleSwitch", () => {
 
   it("toggles back to unchecked on second click", () => {
     const handleSwitchChange = vi.fn();
-    render(<ToggleSwitch {...defaultProps} handleSwitchChange={handleSwitchChange} />);
+    render(
+      <ToggleSwitch
+        {...defaultProps}
+        handleSwitchChange={handleSwitchChange}
+      />,
+    );
     fireEvent.click(screen.getByRole("switch"));
     fireEvent.click(screen.getByRole("switch"));
     expect(screen.getByRole("switch")).toHaveAttribute("aria-checked", "false");

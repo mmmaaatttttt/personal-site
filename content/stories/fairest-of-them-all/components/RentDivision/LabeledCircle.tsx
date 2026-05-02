@@ -1,4 +1,4 @@
-import { FC, MouseEvent, TouchEvent } from "react";
+import type { FC, MouseEvent, TouchEvent } from "react";
 
 interface LabeledCircleProps {
   x: number;

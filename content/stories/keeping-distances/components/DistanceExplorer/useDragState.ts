@@ -1,11 +1,14 @@
-import { ScaleLinear } from "d3-scale";
+import type { ScaleLinear } from "d3-scale";
 import { useCallback, useState } from "react";
 
 function useDragState(
   initialState: { x: number; y: number }[],
   xScale: ScaleLinear<number, number>,
-  yScale: ScaleLinear<number, number>
-): [{ x: number; y: number }[], (idx: number, coords: { x: number; y: number }) => void] {
+  yScale: ScaleLinear<number, number>,
+): [
+  { x: number; y: number }[],
+  (idx: number, coords: { x: number; y: number }) => void,
+] {
   const [points, setPoints] = useState(initialState);
   const handleDrag = useCallback(
     (idx: number, { x, y }: { x: number; y: number }) => {
@@ -13,7 +16,7 @@ function useDragState(
       pointsCopy[idx] = { x: xScale.invert(x), y: yScale.invert(y) };
       setPoints(pointsCopy);
     },
-    [points, xScale, yScale]
+    [points, xScale, yScale],
   );
   return [points, handleDrag];
 }

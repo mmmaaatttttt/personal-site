@@ -12,12 +12,17 @@ interface BaMultiBarGraphProps {
   height?: number;
   id?: string;
   legendTitle?: string;
-  padding?: number | { top: number; bottom: number; left: number; right: number };
+  padding?:
+    | number
+    | { top: number; bottom: number; left: number; right: number };
   yAxisLabel?: string;
   yMax?: number;
 }
 
-const BaMultiBarGraph = ({ dataType = "summary", ...props }: BaMultiBarGraphProps) => {
+const BaMultiBarGraph = ({
+  dataType = "summary",
+  ...props
+}: BaMultiBarGraphProps) => {
   const data = dataType === "summary" ? baSummary : baProfanity;
   return (
     <MultiBarGraph

@@ -3,7 +3,7 @@
 import { max } from "d3-array";
 import { scaleBand, scaleLinear } from "d3-scale";
 import { AnimatePresence, motion } from "framer-motion";
-import { FC } from "react";
+import type { FC } from "react";
 import ClippedSVG from "../ClippedSVG";
 import NarrowContainer from "../NarrowContainer";
 
@@ -18,7 +18,9 @@ interface HorizontalBarGraphProps {
   data: HorizontalBarData[];
   height?: number;
   id?: string;
-  padding?: number | { top: number; bottom: number; left: number; right: number };
+  padding?:
+    | number
+    | { top: number; bottom: number; left: number; right: number };
   width?: number;
 }
 
@@ -30,7 +32,10 @@ const HorizontalBarGraph: FC<HorizontalBarGraphProps> = ({
   padding = 0,
   width = 600,
 }) => {
-  const p = typeof padding === "number" ? { top: padding, bottom: padding, left: padding, right: padding } : padding;
+  const p =
+    typeof padding === "number"
+      ? { top: padding, bottom: padding, left: padding, right: padding }
+      : padding;
   const absXMax = max(data, (d) => Math.abs(d.width)) || 1;
   const xScale = scaleLinear()
     .domain([-absXMax, absXMax])
@@ -51,10 +56,19 @@ const HorizontalBarGraph: FC<HorizontalBarGraphProps> = ({
               const rectY = (yScale(i.toString()) || 0) + yScale.step() * 0.1;
 
               return (
-                <g key={d.caption} className="opacity-80 hover:opacity-100 transition-opacity cursor-pointer">
+                <g
+                  key={d.caption}
+                  className="opacity-80 hover:opacity-100 transition-opacity cursor-pointer"
+                >
                   <motion.rect
                     initial={{ width: 0, x: xScale(0) }}
-                    animate={{ x: rectX, width: rectWidth, y: rectY, height: rectHeight, fill: d.fill }}
+                    animate={{
+                      x: rectX,
+                      width: rectWidth,
+                      y: rectY,
+                      height: rectHeight,
+                      fill: d.fill,
+                    }}
                     transition={{ duration: 0.5, delay: i * 0.05 }}
                   />
                   <motion.text

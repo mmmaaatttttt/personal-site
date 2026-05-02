@@ -1,6 +1,6 @@
 "use client";
 
-import { FC } from "react";
+import type { FC } from "react";
 import FlexContainer from "../FlexContainer";
 import LabeledSlider from "./LabeledSlider";
 
