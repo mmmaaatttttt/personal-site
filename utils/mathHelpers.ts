@@ -125,8 +125,8 @@ function swap<T>(arr: T[], i: number, j: number): T[] {
 }
 
 export function shuffle<T>(arr: T[]): T[] {
-  for (var i = arr.length - 1; i >= 0; i--) {
-    var randomIdx = Math.floor(Math.random() * i);
+  for (let i = arr.length - 1; i >= 0; i--) {
+    const randomIdx = Math.floor(Math.random() * i);
     swap(arr, i, randomIdx);
   }
   return arr;

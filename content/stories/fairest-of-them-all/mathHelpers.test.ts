@@ -66,12 +66,12 @@ describe("binomialDensityValues", () => {
   it("returns all zeros for p=0", () => {
     const vals = binomialDensityValues(5, 0);
     expect(vals[0]).toBe(0); // P(X=0) = 1 would be expected mathematically, but p=0 returns all p
-    vals.forEach((v) => expect(v).toBe(0));
+    for (const v of vals) expect(v).toBe(0);
   });
 
   it("returns all ones for p=1", () => {
     const vals = binomialDensityValues(5, 1);
-    vals.forEach((v) => expect(v).toBe(1));
+    for (const v of vals) expect(v).toBe(1);
   });
 
   it("all values sum to 1 for a valid p", () => {

@@ -32,14 +32,14 @@ describe("countRegions", () => {
     const segments = allHorizontalSegments(ROW, COL);
     const districts = countRegions(segments, ROW, COL);
     expect(districts).toHaveLength(ROW);
-    districts.forEach((d) => expect(d).toHaveLength(COL));
+    for (const d of districts) expect(d).toHaveLength(COL);
   });
 
   it("returns colCount regions of rowCount cells each when all vertical dividers are on", () => {
     const segments = allVerticalSegments(ROW, COL);
     const districts = countRegions(segments, ROW, COL);
     expect(districts).toHaveLength(COL);
-    districts.forEach((d) => expect(d).toHaveLength(ROW));
+    for (const d of districts) expect(d).toHaveLength(ROW);
   });
 
   it("returns rowCount * colCount single-cell regions when all dividers are on", () => {
@@ -48,7 +48,7 @@ describe("countRegions", () => {
     );
     const districts = countRegions(segments, ROW, COL);
     expect(districts).toHaveLength(ROW * COL);
-    districts.forEach((d) => expect(d).toHaveLength(1));
+    for (const d of districts) expect(d).toHaveLength(1);
   });
 
   it("each cell appears in exactly one district", () => {

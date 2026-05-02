@@ -13,7 +13,7 @@ let percent = 0;
 // update random strategy for dynamic programming approach
 strategies[2].fn = function random(fruitCounts) {
   const possibleNewCounts = [];
-  for (var i = 0; i < fruitCounts.length; i++) {
+  for (let i = 0; i < fruitCounts.length; i++) {
     if (fruitCounts[i] > 0) {
       const copy = [...fruitCounts];
       copy[i]--;
@@ -108,7 +108,7 @@ function probWin(fruitCounts, ravenCount, wildCardCount, strategy, memo = {}) {
   let probFromFruitBasket = 0;
   if (fruitsRemaining <= wildCardCount) probFromFruitBasket = 1;
   else if (strategy.name !== "random") {
-    for (var i = 0; i < wildCardCount; i++) {
+    for (let i = 0; i < wildCardCount; i++) {
       const idx = strategy.fn(strategyCopy);
       strategyCopy[idx]--;
     }
@@ -122,7 +122,7 @@ function probWin(fruitCounts, ravenCount, wildCardCount, strategy, memo = {}) {
   } else {
     // for random strategy, check all possible outcomes
     let possibleNewCounts = [strategyCopy];
-    for (var i = 0; i < wildCardCount; i++) {
+    for (let i = 0; i < wildCardCount; i++) {
       let newCounts = [];
       possibleNewCounts.forEach((countsArr) => {
         newCounts = newCounts.concat(strategy.fn(countsArr));

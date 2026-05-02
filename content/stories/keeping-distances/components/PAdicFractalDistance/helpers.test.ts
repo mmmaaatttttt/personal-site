@@ -19,7 +19,7 @@ describe("generatePAdicPoints", () => {
 
   it("all level-1 points have fillIdx 0", () => {
     const pts = generatePAdicPoints(3, 1);
-    pts.forEach((p) => expect(p.fillIdx).toBe(0));
+    for (const p of pts) expect(p.fillIdx).toBe(0);
   });
 
   it("level-2 points 3..8 have fillIdx 1 for p=3", () => {
@@ -38,7 +38,7 @@ describe("generatePAdicPoints", () => {
 
   it("each point has the correct num field", () => {
     const pts = generatePAdicPoints(3, 2);
-    pts.forEach((p, i) => expect(p.num).toBe(i));
+    pts.forEach((p, i) => { expect(p.num).toBe(i); });
   });
 });
 
