@@ -44,7 +44,13 @@ vi.mock("./BarItem", () => {
 // Mock Graph component since it handles its own SVG/Axis logic
 vi.mock("../Graph", () => {
   return {
-    default: ({ children, svgId }: { children?: React.ReactNode; svgId?: string }) => (
+    default: ({
+      children,
+      svgId,
+    }: {
+      children?: React.ReactNode;
+      svgId?: string;
+    }) => (
       <svg data-testid="mock-graph" id={svgId}>
         {children}
       </svg>

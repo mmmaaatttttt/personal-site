@@ -3,8 +3,8 @@
 import { Search } from "lucide-react";
 import type React from "react";
 import { useMemo, useState } from "react";
-import Select from "react-select";
 import type { CSSObjectWithLabel, MultiValue, SingleValue } from "react-select";
+import Select from "react-select";
 import StoryCard from "@/components/layout/StoryCard";
 import type { ArticleMeta } from "@/utils/content";
 
@@ -153,9 +153,7 @@ const ArticlesContent: React.FC<ArticlesContentProps> = ({
                 placeholder="Filter by tag..."
                 value={selectedTags.map((t) => ({ value: t, label: t }))}
                 onChange={(options: MultiValue<TagOption>) =>
-                  setSelectedTags(
-                    options ? options.map((o) => o.value) : [],
-                  )
+                  setSelectedTags(options ? options.map((o) => o.value) : [])
                 }
                 styles={selectStyles}
               />
