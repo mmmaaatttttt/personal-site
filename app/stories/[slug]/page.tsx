@@ -12,7 +12,7 @@ interface PageProps {
 // Add a story here once its components are fully ported.
 const storyModules: Record<
   string,
-  () => Promise<{ default: React.ComponentType<any> }>
+  () => Promise<{ default: React.ComponentType<Record<string, unknown>> }>
 > = {
   "beautiful-analysis": () =>
     import("@/content/stories/beautiful-analysis/index.mdx"),

@@ -4,8 +4,12 @@ import { Search } from "lucide-react";
 import type React from "react";
 import { useMemo, useState } from "react";
 import Select from "react-select";
+import type { CSSObjectWithLabel, MultiValue, SingleValue } from "react-select";
 import StoryCard from "@/components/layout/StoryCard";
 import type { ArticleMeta } from "@/utils/content";
+
+type YearOption = { value: number; label: string };
+type TagOption = { value: string; label: string };
 
 interface ArticlesContentProps {
   articles: ArticleMeta[];
@@ -40,11 +44,14 @@ const ArticlesContent: React.FC<ArticlesContentProps> = ({
     });
   }, [articles, selectedYear, selectedTags, searchQuery]);
 
-  const yearOptions = years.map((y) => ({ value: y, label: y.toString() }));
-  const tagOptions = tags.map((t) => ({ value: t, label: t }));
+  const yearOptions: YearOption[] = years.map((y) => ({
+    value: y,
+    label: y.toString(),
+  }));
+  const tagOptions: TagOption[] = tags.map((t) => ({ value: t, label: t }));
 
   const selectStyles = {
-    control: (base: any, state: any) => ({
+    control: (base: CSSObjectWithLabel, state: { isFocused: boolean }) => ({
       ...base,
       borderRadius: "0.5rem",
       borderColor: state.isFocused ? "var(--color-link)" : "var(--color-gray)",
@@ -54,7 +61,10 @@ const ArticlesContent: React.FC<ArticlesContentProps> = ({
         borderColor: "var(--color-link)",
       },
     }),
-    option: (base: any, state: any) => ({
+    option: (
+      base: CSSObjectWithLabel,
+      state: { isSelected: boolean; isFocused: boolean },
+    ) => ({
       ...base,
       backgroundColor: state.isSelected
         ? "var(--color-dark-gray)"
@@ -67,18 +77,18 @@ const ArticlesContent: React.FC<ArticlesContentProps> = ({
           : "inherit",
       cursor: "pointer",
     }),
-    multiValue: (base: any) => ({
+    multiValue: (base: CSSObjectWithLabel) => ({
       ...base,
       backgroundColor: "var(--color-gray)",
       borderRadius: "0.25rem",
     }),
-    multiValueLabel: (base: any) => ({
+    multiValueLabel: (base: CSSObjectWithLabel) => ({
       ...base,
       color: "white",
       fontWeight: 500,
       fontSize: "0.75rem",
     }),
-    multiValueRemove: (base: any) => ({
+    multiValueRemove: (base: CSSObjectWithLabel) => ({
       ...base,
       color: "white",
       ":hover": {
@@ -86,7 +96,7 @@ const ArticlesContent: React.FC<ArticlesContentProps> = ({
         color: "white",
       },
     }),
-    menu: (base: any) => ({
+    menu: (base: CSSObjectWithLabel) => ({
       ...base,
       zIndex: 50,
     }),
@@ -127,7 +137,7 @@ const ArticlesContent: React.FC<ArticlesContentProps> = ({
                     ? { value: selectedYear, label: selectedYear.toString() }
                     : null
                 }
-                onChange={(option: any) =>
+                onChange={(option: SingleValue<YearOption>) =>
                   setSelectedYear(option ? option.value : null)
                 }
                 styles={selectStyles}
@@ -142,9 +152,9 @@ const ArticlesContent: React.FC<ArticlesContentProps> = ({
                 isClearable
                 placeholder="Filter by tag..."
                 value={selectedTags.map((t) => ({ value: t, label: t }))}
-                onChange={(options: any) =>
+                onChange={(options: MultiValue<TagOption>) =>
                   setSelectedTags(
-                    options ? options.map((o: any) => o.value) : [],
+                    options ? options.map((o) => o.value) : [],
                   )
                 }
                 styles={selectStyles}

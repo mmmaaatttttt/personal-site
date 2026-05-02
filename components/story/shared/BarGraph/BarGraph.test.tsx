@@ -2,13 +2,28 @@ import { render, screen } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
 import "@testing-library/jest-dom/vitest";
 import { scaleLinear } from "d3-scale";
+import type React from "react";
 import BarGraph from ".";
 
 // Mock the BarItem component directly to bypass all framer-motion complexity
 vi.mock("./BarItem", () => {
   const React = require("react");
   return {
-    default: ({ data, x, y, width, height, barLabel }: any) => {
+    default: ({
+      data,
+      x,
+      y,
+      width,
+      height,
+      barLabel,
+    }: {
+      data: { key: string | number; height: number; color?: string };
+      x: number;
+      y: number;
+      width: number;
+      height: number;
+      barLabel?: (d: { height: number }) => string | number;
+    }) => {
       const labelText = barLabel ? barLabel(data) : null;
       return (
         <g data-testid="bar-item">
@@ -29,7 +44,7 @@ vi.mock("./BarItem", () => {
 // Mock Graph component since it handles its own SVG/Axis logic
 vi.mock("../Graph", () => {
   return {
-    default: ({ children, svgId }: any) => (
+    default: ({ children, svgId }: { children?: React.ReactNode; svgId?: string }) => (
       <svg data-testid="mock-graph" id={svgId}>
         {children}
       </svg>
@@ -75,7 +90,7 @@ describe("BarGraph Component", () => {
   });
 
   it("renders bar labels when provided", () => {
-    const barLabel = (d: any) => `Value: ${d.height}`;
+    const barLabel = (d: { height: number }) => `Value: ${d.height}`;
     render(<BarGraph {...defaultProps} barLabel={barLabel} />);
 
     expect(screen.getByText("Value: 10")).toBeInTheDocument();
