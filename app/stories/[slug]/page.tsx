@@ -1,6 +1,6 @@
 import Image from "next/image";
 import { notFound } from "next/navigation";
-import type React from "react";
+import type { ComponentType } from "react";
 import MainLayout from "@/components/layout/MainLayout";
 import { getArticle, getArticleSlugs } from "@/utils/content";
 
@@ -12,7 +12,7 @@ interface PageProps {
 // Add a story here once its components are fully ported.
 const storyModules: Record<
   string,
-  () => Promise<{ default: React.ComponentType<Record<string, unknown>> }>
+  () => Promise<{ default: ComponentType<Record<string, unknown>> }>
 > = {
   "beautiful-analysis": () =>
     import("@/content/stories/beautiful-analysis/index.mdx"),

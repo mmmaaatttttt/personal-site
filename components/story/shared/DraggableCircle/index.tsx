@@ -1,6 +1,7 @@
 "use client";
 
 import { type FC, useState } from "react";
+import type { PointerEvent } from "react";
 import COLORS from "@/utils/styles";
 
 interface DraggableCircleProps {
@@ -28,7 +29,7 @@ const DraggableCircle: FC<DraggableCircleProps> = ({
   const [hovered, setHovered] = useState(false);
   const currentR = hovered || dragging ? r * 1.5 : r;
 
-  const toSVGCoords = (e: React.PointerEvent<SVGCircleElement>) => {
+  const toSVGCoords = (e: PointerEvent<SVGCircleElement>) => {
     const svg = e.currentTarget.ownerSVGElement;
     if (!svg) return null;
     const ctm = svg.getScreenCTM();

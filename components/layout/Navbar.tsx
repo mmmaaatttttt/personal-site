@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import type React from "react";
+import type { FC } from "react";
 
 interface NavbarProps {
   title: string;
@@ -9,7 +9,7 @@ interface NavbarProps {
   outline?: boolean;
 }
 
-const Navbar: React.FC<NavbarProps> = ({
+const Navbar: FC<NavbarProps> = ({
   title,
   hide = false,
   outline = false,

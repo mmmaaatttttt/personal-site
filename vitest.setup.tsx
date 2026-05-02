@@ -1,6 +1,6 @@
 import "@testing-library/jest-dom/vitest";
 import { cleanup } from "@testing-library/react";
-import type React from "react";
+import type { ComponentPropsWithoutRef, ReactNode } from "react";
 import { afterEach, vi } from "vitest";
 
 // Automatically cleanup after each test to prevent memory leaks or side effects between tests
@@ -11,23 +11,23 @@ afterEach(() => {
 // Minimalist passthrough mock for framer-motion to ensure JSDOM stability
 vi.mock("framer-motion", () => ({
   motion: {
-    div: ({ children, ...props }: React.ComponentPropsWithoutRef<"div">) => (
+    div: ({ children, ...props }: ComponentPropsWithoutRef<"div">) => (
       <div {...props}>{children}</div>
     ),
-    rect: ({ children, ...props }: React.ComponentPropsWithoutRef<"rect">) => (
+    rect: ({ children, ...props }: ComponentPropsWithoutRef<"rect">) => (
       <rect {...props}>{children}</rect>
     ),
-    path: ({ children, ...props }: React.ComponentPropsWithoutRef<"path">) => (
+    path: ({ children, ...props }: ComponentPropsWithoutRef<"path">) => (
       <path {...props}>{children}</path>
     ),
-    text: ({ children, ...props }: React.ComponentPropsWithoutRef<"text">) => (
+    text: ({ children, ...props }: ComponentPropsWithoutRef<"text">) => (
       <text {...props}>{children}</text>
     ),
-    g: ({ children, ...props }: React.ComponentPropsWithoutRef<"g">) => (
+    g: ({ children, ...props }: ComponentPropsWithoutRef<"g">) => (
       <g {...props}>{children}</g>
     ),
   },
-  AnimatePresence: ({ children }: { children?: React.ReactNode }) => (
+  AnimatePresence: ({ children }: { children?: ReactNode }) => (
     <>{children}</>
   ),
   useSpring: (v: number) => ({

@@ -1,4 +1,5 @@
 import { render, screen } from "@testing-library/react";
+import type { ReactNode } from "react";
 import { describe, expect, it, vi } from "vitest";
 import "@testing-library/jest-dom/vitest";
 import type { PieArcDatum } from "d3-shape";
@@ -33,7 +34,7 @@ vi.mock("./PieSlice", () => {
 // Mock ClippedSVG to just render its children
 vi.mock("../ClippedSVG", () => {
   return {
-    default: ({ children }: any) => (
+    default: ({ children }: { children?: ReactNode }) => (
       <svg data-testid="clipped-svg">{children}</svg>
     ),
   };

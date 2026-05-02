@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import type React from "react";
+import type { FC } from "react";
 
 interface BarData {
   key: string | number;
@@ -27,7 +27,7 @@ interface BarItemProps {
   animated?: boolean;
 }
 
-const BarItem: React.FC<BarItemProps> = ({
+const BarItem: FC<BarItemProps> = ({
   data,
   index,
   x,

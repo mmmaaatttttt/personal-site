@@ -1,17 +1,17 @@
 "use client";
 
 import { usePathname } from "next/navigation";
-import type React from "react";
 import { useEffect, useState } from "react";
+import type { FC, ReactNode } from "react";
 import Footer from "./Footer";
 import Navbar from "./Navbar";
 
 interface MainLayoutProps {
-  children: React.ReactNode;
+  children: ReactNode;
   outline?: boolean;
 }
 
-const MainLayout: React.FC<MainLayoutProps> = ({
+const MainLayout: FC<MainLayoutProps> = ({
   children,
   outline = false,
 }) => {

@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import type React from "react";
+import type { FC } from "react";
 import { cn } from "@/lib/utils";
 
 interface StoryCardProps {
@@ -14,7 +14,7 @@ interface StoryCardProps {
   className?: string;
 }
 
-const StoryCard: React.FC<StoryCardProps> = ({
+const StoryCard: FC<StoryCardProps> = ({
   caption,
   date,
   featured_image,

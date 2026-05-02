@@ -44,14 +44,7 @@ const PodcastAllSentiments: React.FC<PodcastAllSentimentsProps> = ({
     options[0] || { value: "0", label: "Loading" },
   );
 
-  if (!baAllSentiment || baAllSentiment.length === 0 || options.length === 0)
-    return null;
   const { value, label } = selectedOption;
-
-  const yScale = scaleLinear()
-    .domain([-1, 1])
-    .range([height - padding.bottom, padding.top]);
-  const xScale = scaleLinear().range([padding.left, width - padding.right]);
 
   const circData = useMemo<CircData[]>(() => {
     const epData = baAllSentiment[parseInt(value, 10)];
@@ -68,6 +61,14 @@ const PodcastAllSentiments: React.FC<PodcastAllSentimentsProps> = ({
       }));
     return raw;
   }, [value]);
+
+  if (!baAllSentiment || baAllSentiment.length === 0 || options.length === 0)
+    return null;
+
+  const yScale = scaleLinear()
+    .domain([-1, 1])
+    .range([height - padding.bottom, padding.top]);
+  const xScale = scaleLinear().range([padding.left, width - padding.right]);
 
   xScale.domain([0, circData.length]);
 

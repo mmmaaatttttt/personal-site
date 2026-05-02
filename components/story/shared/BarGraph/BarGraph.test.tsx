@@ -2,7 +2,7 @@ import { render, screen } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
 import "@testing-library/jest-dom/vitest";
 import { scaleLinear } from "d3-scale";
-import type React from "react";
+import type { ReactNode } from "react";
 import BarGraph from ".";
 
 // Mock the BarItem component directly to bypass all framer-motion complexity
@@ -48,7 +48,7 @@ vi.mock("../Graph", () => {
       children,
       svgId,
     }: {
-      children?: React.ReactNode;
+      children?: ReactNode;
       svgId?: string;
     }) => (
       <svg data-testid="mock-graph" id={svgId}>

@@ -1,9 +1,9 @@
 import { BookOpen, Github, Rss, Twitter } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import type React from "react";
+import type { FC } from "react";
 
-const Footer: React.FC = () => {
+const Footer: FC = () => {
   return (
     <footer className="relative z-10 border-t border-gray bg-nav py-4 px-8 text-sm text-gray-600">
       <div className="flex flex-col items-center justify-between gap-4 sm:flex-row sm:gap-6">

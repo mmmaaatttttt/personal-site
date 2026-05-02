@@ -1,4 +1,5 @@
 import { fireEvent, render } from "@testing-library/react";
+import type { ReactElement } from "react";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import DraggableCircle from ".";
 
@@ -13,7 +14,7 @@ beforeEach(() => {
   Element.prototype.releasePointerCapture = vi.fn();
 });
 
-function renderInSVG(ui: React.ReactElement) {
+function renderInSVG(ui: ReactElement) {
   const { container } = render(<svg>{ui}</svg>);
   return {
     circle: container.querySelector("circle")!,

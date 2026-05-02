@@ -1,8 +1,7 @@
 "use client";
 
 import { Search } from "lucide-react";
-import type React from "react";
-import { useMemo, useState } from "react";
+import { type FC, useMemo, useState } from "react";
 import type { CSSObjectWithLabel, MultiValue, SingleValue } from "react-select";
 import Select from "react-select";
 import StoryCard from "@/components/layout/StoryCard";
@@ -17,7 +16,7 @@ interface ArticlesContentProps {
   tags: string[];
 }
 
-const ArticlesContent: React.FC<ArticlesContentProps> = ({
+const ArticlesContent: FC<ArticlesContentProps> = ({
   articles,
   years,
   tags,
