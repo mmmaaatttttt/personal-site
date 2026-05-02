@@ -4,7 +4,15 @@ import "@testing-library/jest-dom/vitest";
 import BaMultiBarGraph from ".";
 
 vi.mock("@/components/story/shared/MultiBarGraph", () => ({
-  default: ({ data, getTooltipData, colors }: any) => (
+  default: ({
+    data,
+    getTooltipData,
+    colors,
+  }: {
+    data: unknown[];
+    getTooltipData: unknown;
+    colors?: string[];
+  }) => (
     <div
       data-testid="mock-multi-bar-graph"
       data-data-length={data.length}

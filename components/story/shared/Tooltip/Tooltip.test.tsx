@@ -1,4 +1,5 @@
 import { act, render, renderHook, screen } from "@testing-library/react";
+import type { HTMLAttributes, ReactNode } from "react";
 import { describe, expect, it, vi } from "vitest";
 import "@testing-library/jest-dom/vitest";
 import Tooltip, { useTooltip } from ".";
@@ -10,9 +11,11 @@ vi.mock("framer-motion", async (importOriginal) => {
     ...actual,
     motion: {
       ...actual.motion,
-      div: (props: any) => <div {...props} />,
+      div: (props: HTMLAttributes<HTMLDivElement>) => <div {...props} />,
     },
-    AnimatePresence: ({ children }: any) => <>{children}</>,
+    AnimatePresence: ({ children }: { children?: ReactNode }) => (
+      <>{children}</>
+    ),
   };
 });
 

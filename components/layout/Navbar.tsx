@@ -9,11 +9,7 @@ interface NavbarProps {
   outline?: boolean;
 }
 
-const Navbar: FC<NavbarProps> = ({
-  title,
-  hide = false,
-  outline = false,
-}) => {
+const Navbar: FC<NavbarProps> = ({ title, hide = false, outline = false }) => {
   return (
     <nav
       className={`flex flex-col items-center justify-center border-b py-4 px-6 transition-all duration-300 ${

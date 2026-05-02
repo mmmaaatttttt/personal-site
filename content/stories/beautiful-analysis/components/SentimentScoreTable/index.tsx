@@ -1,6 +1,6 @@
 "use client";
 
-import type React from "react";
+import type { FC } from "react";
 import { useMemo, useState } from "react";
 import Caption from "@/components/story/shared/Caption";
 import NarrowContainer from "@/components/story/shared/NarrowContainer";
@@ -22,7 +22,7 @@ const defaultSentimentRanges: [number, number][] = [
   [0.5, 1],
 ];
 
-const SentimentScoreTable: React.FC<SentimentScoreTableProps> = ({
+const SentimentScoreTable: FC<SentimentScoreTableProps> = ({
   sentimentRanges = defaultSentimentRanges,
   caption,
 }) => {

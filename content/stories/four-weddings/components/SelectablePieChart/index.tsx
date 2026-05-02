@@ -1,7 +1,6 @@
 "use client";
 
-import type React from "react";
-import { useEffect, useState } from "react";
+import { type FC, useEffect, useState } from "react";
 import NarrowContainer from "@/components/story/shared/NarrowContainer";
 import PieChart from "@/components/story/shared/PieChart";
 import Select from "@/components/story/shared/Select";
@@ -17,7 +16,7 @@ interface SelectablePieChartProps {
 
 const CHART_PADDING = 20;
 
-const SelectablePieChart: React.FC<SelectablePieChartProps> = ({
+const SelectablePieChart: FC<SelectablePieChartProps> = ({
   data,
   selectOptions,
   graphOptions,

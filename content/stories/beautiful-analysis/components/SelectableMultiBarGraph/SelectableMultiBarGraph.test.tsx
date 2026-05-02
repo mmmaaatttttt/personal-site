@@ -5,7 +5,7 @@ import SelectableMultiBarGraph from "./index";
 
 // Mock MultiBarGraph to verify the data and yMax passed to it
 vi.mock("@/components/story/shared/MultiBarGraph", () => ({
-  default: ({ data, yMax }: any) => (
+  default: ({ data, yMax }: { data: unknown[]; yMax?: number }) => (
     <div
       data-testid="mock-multi-bar-graph"
       data-data={JSON.stringify(data)}
@@ -34,8 +34,8 @@ describe("SelectableMultiBarGraph Component", () => {
 
     // Calculate expected yMax based on mock data (default selection index 2)
     const maxVal = Math.max(
-      ...data.map((d: any) =>
-        Object.values(d.counts).reduce((a: any, b: any) => a + b, 0),
+      ...data.map((d: { counts: Record<string, number> }) =>
+        Object.values(d.counts).reduce((a: number, b: number) => a + b, 0),
       ),
     );
     const expectedYMax = Math.ceil((maxVal * 1.1) / 100) * 100;

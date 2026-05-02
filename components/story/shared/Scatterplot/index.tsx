@@ -3,7 +3,7 @@
 import { extent } from "d3-array";
 import { scaleLinear } from "d3-scale";
 import { AnimatePresence } from "framer-motion";
-import type React from "react";
+import type { FC } from "react";
 import { useEffect, useMemo, useState } from "react";
 import Graph from "../Graph";
 import ScatterPoint from "./ScatterPoint";
@@ -28,7 +28,7 @@ interface ScatterplotProps {
   tickFormatY?: string;
 }
 
-const Scatterplot: React.FC<ScatterplotProps> = ({
+const Scatterplot: FC<ScatterplotProps> = ({
   data,
   width = 600,
   height = 600,

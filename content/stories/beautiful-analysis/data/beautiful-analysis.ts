@@ -4,9 +4,16 @@ import COLORS from "@/utils/styles";
 const percent = format(".1%");
 const comma = format(",.0f");
 
+interface EpisodeDatum {
+  meta: Record<string, string | number | boolean>;
+  counts: Record<string, number>;
+}
+
 // format data as an array of objects with title / body keys
 // for use with a tooltip.
-function generateTooltipData({ meta: { id, title }, counts }: any) {
+function generateTooltipData({ meta, counts }: EpisodeDatum) {
+  const id = meta.id;
+  const title = String(meta.title);
   let total = 0;
   for (const speaker in counts) {
     total += counts[speaker];

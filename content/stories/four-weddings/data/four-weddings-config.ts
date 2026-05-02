@@ -3,6 +3,7 @@ import { scaleOrdinal } from "d3-scale";
 import type {
   HistogramOption,
   MapOption,
+  MapProperties,
   PieOption,
   ScatterOption,
   WeddingData,
@@ -69,13 +70,13 @@ const selectOptionsMap: MapOption[] = [
   {
     value: "weddingCount",
     label: "Color by Number of Weddings",
-    accessor: (properties: any) => properties.values?.length || 0,
+    accessor: (properties: MapProperties) => properties.values?.length || 0,
     colors: [RED_LIGHT, COLORS.RED],
   },
   {
     value: "avgBudget",
     label: "Color by Average Wedding Budget",
-    accessor: (properties: any) => {
+    accessor: (properties: MapProperties) => {
       const values = properties.values;
       if (!values || values.length === 0) return 0;
       return (
@@ -177,7 +178,7 @@ const selectOptionsScatter: ScatterOption[] = [
     accessor: (d: WeddingData) => {
       let total = 0;
       for (const key in d.scoresReceived) {
-        total += (d.scoresReceived as any)[key];
+        total += (d.scoresReceived as unknown as Record<string, number>)[key];
       }
       return total;
     },
@@ -224,9 +225,9 @@ const selectOptionsScatter: ScatterOption[] = [
   },
 ];
 
-const mapTooltipTitle = (properties: any) => properties.name || "";
+const mapTooltipTitle = (properties: MapProperties) => properties.name || "";
 
-const mapTooltipBody = (properties: any) => {
+const mapTooltipBody = (properties: MapProperties) => {
   const weddingCount = properties.values?.length;
   if (weddingCount) {
     const totalBudget = properties.values.reduce(

@@ -1,18 +1,29 @@
 import { render } from "@testing-library/react";
+import type { ReactNode } from "react";
 import { describe, expect, it, vi } from "vitest";
 import "@testing-library/jest-dom/vitest";
 import Scatterplot from ".";
 
 // Mock Graph component
 vi.mock("../Graph", () => ({
-  default: ({ children }: any) => (
+  default: ({ children }: { children?: ReactNode }) => (
     <svg data-testid="mock-graph">{children}</svg>
   ),
 }));
 
 // Mock ScatterPoint component
 vi.mock("./ScatterPoint", () => ({
-  default: ({ cx, cy, area, fill }: any) => (
+  default: ({
+    cx,
+    cy,
+    area,
+    fill,
+  }: {
+    cx: number;
+    cy: number;
+    area: number;
+    fill: string;
+  }) => (
     <circle
       data-testid="scatter-point"
       cx={cx}

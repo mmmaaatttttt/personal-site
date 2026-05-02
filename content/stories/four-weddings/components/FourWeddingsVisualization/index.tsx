@@ -1,6 +1,6 @@
 "use client";
 
-import type React from "react";
+import type { FC } from "react";
 import Caption from "@/components/story/shared/Caption";
 import {
   graphOptions,
@@ -19,7 +19,7 @@ interface FourWeddingsVisualizationProps {
   caption?: string;
 }
 
-const FourWeddingsVisualization: React.FC<FourWeddingsVisualizationProps> = ({
+const FourWeddingsVisualization: FC<FourWeddingsVisualizationProps> = ({
   vizType,
   caption,
 }) => {

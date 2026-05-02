@@ -27,9 +27,7 @@ vi.mock("framer-motion", () => ({
       <g {...props}>{children}</g>
     ),
   },
-  AnimatePresence: ({ children }: { children?: ReactNode }) => (
-    <>{children}</>
-  ),
+  AnimatePresence: ({ children }: { children?: ReactNode }) => <>{children}</>,
   useSpring: (v: number) => ({
     get: () => v,
     set: vi.fn(),

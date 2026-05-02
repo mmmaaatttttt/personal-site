@@ -90,7 +90,7 @@ describe("SliderProvider", () => {
 
   it("returns null if no initial data is provided", () => {
     const { container } = render(
-      <SliderProvider initialData={[] as any} render={() => <div />} />,
+      <SliderProvider initialData={[]} render={() => <div />} />,
     );
     expect(container.firstChild).toBeNull();
   });

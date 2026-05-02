@@ -3,8 +3,17 @@ import { lightenHex } from "@/utils/colorHelpers";
 import COLORS from "@/utils/styles";
 import type { ElectionRow, StateSummary } from "../../data";
 
+interface TopoGeometry {
+  properties: { name: string; code: string };
+}
+
+interface TopoObjects {
+  states: { geometries: TopoGeometry[] };
+}
+
 const stateCodeMap: Record<string, string> = {};
-for (const geom of (usTopoRaw as any).objects.states.geometries) {
+for (const geom of (usTopoRaw as unknown as { objects: TopoObjects }).objects
+  .states.geometries) {
   stateCodeMap[geom.properties.name] = geom.properties.code;
 }
 

@@ -1,21 +1,20 @@
 "use client";
 
-import type React from "react";
-import { useEffect, useState } from "react";
+import { type FC, useEffect, useState } from "react";
 import NarrowContainer from "@/components/story/shared/NarrowContainer";
 import Select from "@/components/story/shared/Select";
 import Tooltip, { useTooltip } from "@/components/story/shared/Tooltip";
 import USMap from "@/components/story/shared/USMap";
-import type { MapOption, WeddingData } from "../../types";
+import type { MapOption, MapProperties, WeddingData } from "../../types";
 
 interface SelectableUSMapProps {
   data: WeddingData[];
   selectOptions: MapOption[];
-  getTooltipTitle?: (properties: any) => string;
-  getTooltipBody?: (properties: any) => string | string[];
+  getTooltipTitle?: (properties: MapProperties) => string;
+  getTooltipBody?: (properties: MapProperties) => string | string[];
 }
 
-const SelectableUSMap: React.FC<SelectableUSMapProps> = ({
+const SelectableUSMap: FC<SelectableUSMapProps> = ({
   data,
   selectOptions,
   getTooltipTitle,
@@ -39,10 +38,11 @@ const SelectableUSMap: React.FC<SelectableUSMapProps> = ({
     );
   }
 
-  const titleHelper = getTooltipTitle || ((p: any) => p.name || "");
+  const titleHelper = getTooltipTitle || ((p: MapProperties) => p.name || "");
   const bodyHelper =
     getTooltipBody ||
-    ((p: any) => (p.values?.length ? `${p.values.length} items` : ""));
+    ((p: MapProperties) =>
+      p.values?.length ? `${p.values.length} items` : "");
 
   return (
     <NarrowContainer width="100%" className="space-y-4">

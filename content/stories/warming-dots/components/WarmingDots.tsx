@@ -1,14 +1,15 @@
 "use client";
 
 import { extent, max } from "d3-array";
-import { scaleLinear } from "d3-scale";
-import type React from "react";
-import { useMemo } from "react";
+import type { AxisScale } from "d3-axis";
+import { type NumberValue, scaleLinear } from "d3-scale";
+import { type FC, useMemo } from "react";
 import Caption from "@/components/story/shared/Caption";
 import FlexContainer from "@/components/story/shared/FlexContainer";
 import Graph from "@/components/story/shared/Graph";
 import LinePlot from "@/components/story/shared/LinePlot";
 import SliderProvider from "@/components/story/shared/Slider";
+import type { DiffEqFactory } from "@/utils/mathHelpers";
 import { generateData } from "@/utils/mathHelpers";
 import { visualizationData } from "../data/warming-dots";
 
@@ -22,7 +23,7 @@ interface WarmingDotsProps {
   svgPadding?: { top: number; bottom: number; left: number; right: number };
 }
 
-const WarmingDots: React.FC<WarmingDotsProps> = ({
+const WarmingDots: FC<WarmingDotsProps> = ({
   vizIndex = 0,
   caption,
   graphPadding = 30,
@@ -55,19 +56,25 @@ const WarmingDots: React.FC<WarmingDotsProps> = ({
     );
   }, [colors, initialData]);
 
-  const tickStep = (scale: any) => {
-    const [tickMin, tickMax] = scale.domain();
+  const tickStep = (scale: AxisScale<NumberValue>) => {
+    const [tickMin, tickMax] = scale.domain() as number[];
     return tickMax > 500 ? (tickMax - tickMin) / 1000 : 1;
   };
 
-  const transformData = (dataValues: number[], diffEq: any) => {
-    const dataWithValues = initialData.map((d, i) => ({
+  type SliderItem = {
+    initialValue: number;
+    equationParameter: boolean;
+    color: string;
+  };
+
+  const transformData = (dataValues: number[], diffEq: DiffEqFactory) => {
+    const dataWithValues = (initialData as SliderItem[]).map((d, i) => ({
       ...d,
-      value: dataValues[i] ?? (d as any).initialValue,
+      value: dataValues[i] ?? d.initialValue,
     }));
 
     const diffEqValues = dataWithValues
-      .filter((d) => (d as any).equationParameter)
+      .filter((d) => d.equationParameter)
       .map((d) => d.value);
 
     return generateData(

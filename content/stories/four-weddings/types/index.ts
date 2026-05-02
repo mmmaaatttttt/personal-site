@@ -31,7 +31,7 @@ export interface WeddingData {
   ageGap?: number | null;
 }
 
-export interface SelectOption<T = any, R = number | null> {
+export interface SelectOption<T = WeddingData, R = number | null> {
   value: string;
   label: string;
   accessor: (d: T) => R;
@@ -42,7 +42,13 @@ export interface HistogramOption extends SelectOption<WeddingData> {
   step: number;
 }
 
-export interface MapOption extends SelectOption<any> {
+export interface MapProperties {
+  name: string;
+  values: WeddingData[];
+  [key: string]: string | number | boolean | WeddingData[] | undefined;
+}
+
+export interface MapOption extends SelectOption<MapProperties, number | null> {
   colors: string[];
 }
 

@@ -2,8 +2,7 @@
 
 import { bin, extent, max, range } from "d3-array";
 import { scaleLinear } from "d3-scale";
-import type React from "react";
-import { useEffect, useMemo, useState } from "react";
+import { type FC, useEffect, useMemo, useState } from "react";
 import BarGraph from "@/components/story/shared/BarGraph";
 import NarrowContainer from "@/components/story/shared/NarrowContainer";
 import Select from "@/components/story/shared/Select";
@@ -20,7 +19,7 @@ interface SelectableHistogramProps {
   selectOptions: HistogramOption[];
 }
 
-const SelectableHistogram: React.FC<SelectableHistogramProps> = ({
+const SelectableHistogram: FC<SelectableHistogramProps> = ({
   data,
   selectOptions,
 }) => {

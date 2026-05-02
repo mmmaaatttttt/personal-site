@@ -1,6 +1,6 @@
 "use client";
 
-import type React from "react";
+import type { FC } from "react";
 import { useEffect, useState } from "react";
 import Caption from "@/components/story/shared/Caption";
 import { choices } from "@/utils/mathHelpers";
@@ -14,7 +14,7 @@ interface QuizProps {
   caption?: string;
 }
 
-const Quiz: React.FC<QuizProps> = ({
+const Quiz: FC<QuizProps> = ({
   answerColors = ["#ff5700", "#10b981", "#3b82f6"],
   maxQuestions = 10,
   title = "This is a quiz.",

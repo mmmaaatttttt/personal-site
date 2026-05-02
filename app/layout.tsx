@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
-import type { ReactNode } from "react";
 import { Domine, Open_Sans } from "next/font/google";
+import type { ReactNode } from "react";
 import "./globals.css";
 
 const openSans = Open_Sans({
@@ -20,11 +20,7 @@ export const metadata: Metadata = {
     "Inside the mind of Matt Lane. Teacher, math doctor, lover of ice cream. Stories on the intersection of math, equity, games, and whatever else piques my interest.",
 };
 
-export default function RootLayout({
-  children,
-}: {
-  children: ReactNode;
-}) {
+export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="en" className={`${openSans.variable} ${domine.variable}`}>
       <body className="font-sans antialiased text-[#1a1a1a] bg-white">

@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import type React from "react";
+import type { FC } from "react";
 
 interface ScatterPointProps {
   cx: number;
@@ -11,13 +11,7 @@ interface ScatterPointProps {
   index: number;
 }
 
-const ScatterPoint: React.FC<ScatterPointProps> = ({
-  cx,
-  cy,
-  area,
-  fill,
-  index,
-}) => {
+const ScatterPoint: FC<ScatterPointProps> = ({ cx, cy, area, fill, index }) => {
   return (
     <motion.circle
       initial={{ r: 0, cx: cx, cy: cy }}

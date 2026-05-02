@@ -1,4 +1,5 @@
 import { render, screen } from "@testing-library/react";
+import type { ReactNode } from "react";
 import { describe, expect, it, vi } from "vitest";
 import "@testing-library/jest-dom/vitest";
 import WarmingDots from "./WarmingDots";
@@ -17,20 +18,34 @@ vi.mock("odex", () => ({
 
 // Mock SliderProvider — renders children with initial slider values
 vi.mock("@/components/story/shared/Slider", () => ({
-  default: ({ initialData, render }: any) => {
-    const values = initialData.map((d: any) => d.initialValue);
+  default: ({
+    initialData,
+    render,
+  }: {
+    initialData: { initialValue: number }[];
+    render: (vals: number[]) => ReactNode;
+  }) => {
+    const values = initialData.map((d) => d.initialValue);
     return <div data-testid="slider-provider">{render(values)}</div>;
   },
 }));
 
 vi.mock("@/components/story/shared/FlexContainer", () => ({
-  default: ({ children }: any) => (
+  default: ({ children }: { children?: ReactNode }) => (
     <div data-testid="flex-container">{children}</div>
   ),
 }));
 
 vi.mock("@/components/story/shared/Graph", () => ({
-  default: ({ children, xLabel, yLabel }: any) => (
+  default: ({
+    children,
+    xLabel,
+    yLabel,
+  }: {
+    children?: ReactNode;
+    xLabel?: string;
+    yLabel?: string;
+  }) => (
     <div data-testid="graph" data-xlabel={xLabel} data-ylabel={yLabel}>
       {children}
     </div>
@@ -38,13 +53,19 @@ vi.mock("@/components/story/shared/Graph", () => ({
 }));
 
 vi.mock("@/components/story/shared/LinePlot", () => ({
-  default: ({ stroke }: any) => (
+  default: ({ stroke }: { stroke?: string }) => (
     <path data-testid="line-plot" stroke={stroke} />
   ),
 }));
 
 vi.mock("@/components/story/shared/Caption", () => ({
-  default: ({ children, caption }: any) => (
+  default: ({
+    children,
+    caption,
+  }: {
+    children?: ReactNode;
+    caption?: string;
+  }) => (
     <div>
       <div data-testid="caption">{caption}</div>
       {children}

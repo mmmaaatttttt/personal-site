@@ -5,7 +5,13 @@ import CollocationTable from "./index";
 
 // Mock StyledTable for verification
 vi.mock("@/components/story/shared/StyledTable", () => ({
-  default: ({ headers, rows }: any) => (
+  default: ({
+    headers,
+    rows,
+  }: {
+    headers: unknown[];
+    rows: { cells: { content: { props: { children: unknown } } }[] }[];
+  }) => (
     <div data-testid="mock-styled-table">
       <div data-testid="headers-count">{headers.length}</div>
       <div data-testid="rows-count">{rows.length}</div>

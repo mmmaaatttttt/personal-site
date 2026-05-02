@@ -4,8 +4,8 @@ import type { AxisScale } from "d3-axis";
 import type { ScaleBand, ScaleLinear } from "d3-scale";
 import { scaleBand, scaleLinear } from "d3-scale";
 import { AnimatePresence } from "framer-motion";
-import { useEffect, useMemo, useState } from "react";
 import type { FC } from "react";
+import { useEffect, useMemo, useState } from "react";
 import Graph from "../Graph";
 import BarItem from "./BarItem";
 

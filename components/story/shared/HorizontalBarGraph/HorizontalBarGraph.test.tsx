@@ -1,4 +1,5 @@
 import { render } from "@testing-library/react";
+import type { ReactNode, SVGProps } from "react";
 import { describe, expect, it, vi } from "vitest";
 import "@testing-library/jest-dom/vitest";
 import HorizontalBarGraph from ".";
@@ -17,11 +18,34 @@ vi.mock("framer-motion", async (importOriginal) => {
     ...actual,
     motion: {
       ...actual.motion,
-      rect: (props: any) => <rect {...props} {...props.animate} />,
-      g: (props: any) => <g {...props} {...props.animate} />,
-      text: (props: any) => <text {...props} {...props.animate} />,
+      rect: (
+        props: SVGProps<SVGRectElement> & {
+          animate?: Record<string, unknown>;
+        },
+      ) => {
+        const { animate, ...rest } = props;
+        return <rect {...rest} {...animate} />;
+      },
+      g: (
+        props: SVGProps<SVGGElement> & {
+          animate?: Record<string, unknown>;
+        },
+      ) => {
+        const { animate, ...rest } = props;
+        return <g {...rest} {...animate} />;
+      },
+      text: (
+        props: SVGProps<SVGTextElement> & {
+          animate?: Record<string, unknown>;
+        },
+      ) => {
+        const { animate, ...rest } = props;
+        return <text {...rest} {...animate} />;
+      },
     },
-    AnimatePresence: ({ children }: any) => <>{children}</>,
+    AnimatePresence: ({ children }: { children?: ReactNode }) => (
+      <>{children}</>
+    ),
   };
 });
 

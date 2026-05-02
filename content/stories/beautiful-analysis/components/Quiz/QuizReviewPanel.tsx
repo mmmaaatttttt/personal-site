@@ -1,6 +1,7 @@
 "use client";
 
 import { AnimatePresence, motion } from "framer-motion";
+import type { FC } from "react";
 
 interface QuizReviewPanelProps {
   resultsIndex: number;
@@ -11,7 +12,7 @@ interface QuizReviewPanelProps {
   userAnswer: string;
 }
 
-const QuizReviewPanel: React.FC<QuizReviewPanelProps> = ({
+const QuizReviewPanel: FC<QuizReviewPanelProps> = ({
   resultsIndex,
   question,
   userAnswer,

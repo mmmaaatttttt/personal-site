@@ -1,4 +1,5 @@
 import { fireEvent, render } from "@testing-library/react";
+import type { ReactNode } from "react";
 import { describe, expect, it, vi } from "vitest";
 import "@testing-library/jest-dom/vitest";
 import type { PieOption, WeddingData } from "../../types";
@@ -6,21 +7,27 @@ import SelectablePieChart from "./index";
 
 // Mock components
 vi.mock("@/components/story/shared/PieChart", () => ({
-  default: ({ values }: any) => (
+  default: ({ values }: { values: number[] }) => (
     <div data-testid="mock-pie-chart" data-values={JSON.stringify(values)} />
   ),
 }));
 
 vi.mock("@/components/story/shared/Select", () => ({
-  default: ({ onChange, options }: any) => (
+  default: ({
+    onChange,
+    options,
+  }: {
+    onChange: (opt: { value: string; label: string }) => void;
+    options: { value: string; label: string }[];
+  }) => (
     <select
       data-testid="mock-select"
       onChange={(e) => {
-        const opt = options.find((o: any) => o.value === e.target.value);
+        const opt = options.find((o) => o.value === e.target.value);
         if (opt) onChange(opt);
       }}
     >
-      {options.map((o: any) => (
+      {options.map((o) => (
         <option key={o.value} value={o.value}>
           {o.label}
         </option>
@@ -30,7 +37,7 @@ vi.mock("@/components/story/shared/Select", () => ({
 }));
 
 vi.mock("@/components/story/shared/NarrowContainer", () => ({
-  default: ({ children }: any) => (
+  default: ({ children }: { children?: ReactNode }) => (
     <div data-testid="mock-narrow-container">{children}</div>
   ),
 }));

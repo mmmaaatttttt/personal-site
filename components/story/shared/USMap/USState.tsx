@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import type React from "react";
+import type { FC, MouseEvent, TouchEvent } from "react";
 
 interface USStateProps {
   d: string;
@@ -12,11 +12,11 @@ interface USStateProps {
   onMouseMove?: (
     title: string,
     body: string | string[],
-  ) => (e: React.MouseEvent | React.TouchEvent) => void;
+  ) => (e: MouseEvent | TouchEvent) => void;
   onMouseLeave?: () => void;
 }
 
-const USState: React.FC<USStateProps> = ({
+const USState: FC<USStateProps> = ({
   d,
   fill,
   index,

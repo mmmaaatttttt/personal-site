@@ -1,16 +1,19 @@
 import { render } from "@testing-library/react";
+import type { ReactNode } from "react";
 import { describe, expect, it, vi } from "vitest";
 import "@testing-library/jest-dom/vitest";
 import USMap from ".";
 
 // Mock ClippedSVG
 vi.mock("../ClippedSVG", () => ({
-  default: ({ children }: any) => <svg data-testid="mock-svg">{children}</svg>,
+  default: ({ children }: { children?: ReactNode }) => (
+    <svg data-testid="mock-svg">{children}</svg>
+  ),
 }));
 
 // Mock USState
 vi.mock("./USState", () => ({
-  default: ({ fill, title }: any) => (
+  default: ({ fill, title }: { fill?: string; title?: string }) => (
     <path data-testid="us-state" fill={fill} data-title={title} />
   ),
 }));
@@ -23,15 +26,17 @@ describe("USMap Component", () => {
 
   const colors = ["#ffffff", "#000000"];
 
+  type MockProperties = { name: string; values: (typeof mockData)[0][] };
+
   const defaultProps = {
     colors,
     data: mockData,
-    fillAccessor: (props: any) => {
+    fillAccessor: (props: MockProperties) => {
       const matching = mockData.find((d) => d.state === props.name);
       return matching ? matching.value : null;
     },
-    getTooltipTitle: (props: any) => props.name,
-    getTooltipBody: (props: any) => `Value: ${props.name}`,
+    getTooltipTitle: (props: MockProperties) => props.name,
+    getTooltipBody: (props: MockProperties) => `Value: ${props.name}`,
   };
 
   it("renders a USState for each feature in the topojson", () => {

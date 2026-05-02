@@ -1,4 +1,5 @@
 import { fireEvent, render, screen } from "@testing-library/react";
+import type { ReactNode } from "react";
 import { describe, expect, it, vi } from "vitest";
 import "@testing-library/jest-dom/vitest";
 
@@ -10,9 +11,7 @@ vi.mock("framer-motion", async (importOriginal) => {
       ...actual.motion,
       g: "g",
     },
-    AnimatePresence: ({ children }: { children: React.ReactNode }) => (
-      <>{children}</>
-    ),
+    AnimatePresence: ({ children }: { children: ReactNode }) => <>{children}</>,
   };
 });
 

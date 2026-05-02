@@ -35,12 +35,12 @@ declare module "d3-force-surface" {
 declare module "*.mdx" {
   import type { ComponentType } from "react";
 
-  const Component: ComponentType<any>;
+  const Component: ComponentType<Record<string, unknown>>;
   export default Component;
 }
 
 declare module "mdx/types" {
-  import type { ComponentType, ReactNode } from "react";
-  export type MDXComponents = Record<string, ComponentType<any>>;
+  import type { ReactNode } from "react";
+  export type MDXComponents = Record<string, unknown>;
   export type MDXProps = { children?: ReactNode; components?: MDXComponents };
 }

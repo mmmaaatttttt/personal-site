@@ -2,7 +2,7 @@
 
 import { scaleLinear } from "d3-scale";
 import { AnimatePresence } from "framer-motion";
-import type React from "react";
+import type { FC } from "react";
 import { useMemo, useState } from "react";
 import Caption from "@/components/story/shared/Caption";
 import Graph from "@/components/story/shared/Graph";
@@ -29,7 +29,7 @@ interface PodcastAllSentimentsProps {
   caption?: string;
 }
 
-const PodcastAllSentiments: React.FC<PodcastAllSentimentsProps> = ({
+const PodcastAllSentiments: FC<PodcastAllSentimentsProps> = ({
   height = 400,
   padding = { top: 10, left: 50, right: 20, bottom: 10 },
   svgId = "all-sentiments",

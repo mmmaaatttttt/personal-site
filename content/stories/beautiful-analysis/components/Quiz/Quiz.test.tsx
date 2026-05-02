@@ -5,7 +5,15 @@ import Quiz from "./index";
 
 // Mock the animated sub-component
 vi.mock("./QuizReviewPanel", () => ({
-  default: ({ resultsIndex, question, userAnswer }: any) => (
+  default: ({
+    resultsIndex,
+    question,
+    userAnswer,
+  }: {
+    resultsIndex: number;
+    question: { prompt: string };
+    userAnswer: string;
+  }) => (
     <div data-testid="mock-review-panel">
       Reviewing index {resultsIndex}: {question.prompt}. User said {userAnswer}.
     </div>
@@ -14,7 +22,7 @@ vi.mock("./QuizReviewPanel", () => ({
 
 // Mock mathHelpers for deterministic questions
 vi.mock("@/utils/mathHelpers", () => ({
-  choices: (data: any[], count: number) => data.slice(0, count),
+  choices: <T,>(data: T[], count: number) => data.slice(0, count),
 }));
 
 describe("Quiz Component", () => {

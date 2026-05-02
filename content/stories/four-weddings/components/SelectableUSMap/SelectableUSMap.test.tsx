@@ -1,12 +1,19 @@
 import { fireEvent, render } from "@testing-library/react";
+import type { ReactNode } from "react";
 import { describe, expect, it, vi } from "vitest";
 import "@testing-library/jest-dom/vitest";
-import type { WeddingData } from "../../types";
+import type { MapProperties, WeddingData } from "../../types";
 import SelectableUSMap from "./index";
 
 // Mock components
 vi.mock("@/components/story/shared/USMap", () => ({
-  default: ({ data, fillAccessor }: any) => (
+  default: ({
+    data,
+    fillAccessor,
+  }: {
+    data: unknown[];
+    fillAccessor: unknown;
+  }) => (
     <div
       data-testid="mock-us-map"
       data-data-len={data.length}
@@ -16,15 +23,21 @@ vi.mock("@/components/story/shared/USMap", () => ({
 }));
 
 vi.mock("@/components/story/shared/Select", () => ({
-  default: ({ onChange, options }: any) => (
+  default: ({
+    onChange,
+    options,
+  }: {
+    onChange: (opt: { value: string; label: string }) => void;
+    options: { value: string; label: string }[];
+  }) => (
     <select
       data-testid="mock-select"
       onChange={(e) => {
-        const opt = options.find((o: any) => o.value === e.target.value);
+        const opt = options.find((o) => o.value === e.target.value);
         if (opt) onChange(opt);
       }}
     >
-      {options.map((o: any) => (
+      {options.map((o) => (
         <option key={o.value} value={o.value}>
           {o.label}
         </option>
@@ -34,7 +47,7 @@ vi.mock("@/components/story/shared/Select", () => ({
 }));
 
 vi.mock("@/components/story/shared/NarrowContainer", () => ({
-  default: ({ children }: any) => (
+  default: ({ children }: { children?: ReactNode }) => (
     <div data-testid="mock-narrow-container">{children}</div>
   ),
 }));
@@ -58,13 +71,13 @@ describe("SelectableUSMap Component", () => {
     {
       value: "v1",
       label: "Option 1",
-      accessor: (_: any) => 1,
+      accessor: (_: MapProperties) => 1 as number | null,
       colors: ["red", "blue"],
     },
     {
       value: "v2",
       label: "Option 2",
-      accessor: (_: any) => 2,
+      accessor: (_: MapProperties) => 2 as number | null,
       colors: ["green", "yellow"],
     },
   ];

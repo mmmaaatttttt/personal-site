@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import type React from "react";
+import type { FC } from "react";
 
 interface SentimentCircleProps {
   cx: number;
@@ -11,7 +11,7 @@ interface SentimentCircleProps {
   delay: number;
 }
 
-const SentimentCircle: React.FC<SentimentCircleProps> = ({
+const SentimentCircle: FC<SentimentCircleProps> = ({
   cx,
   cy,
   r,

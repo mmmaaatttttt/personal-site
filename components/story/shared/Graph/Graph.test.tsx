@@ -1,4 +1,5 @@
 import { render, screen } from "@testing-library/react";
+import type { ReactNode } from "react";
 import { describe, expect, it, vi } from "vitest";
 import "@testing-library/jest-dom/vitest";
 import { scaleLinear } from "d3-scale";
@@ -14,7 +15,15 @@ global.ResizeObserver = vi.fn().mockImplementation(() => ({
 // Mock Axis and AxisLabel because they are tested separately
 // This keeps Graph tests focused on layout coordination
 vi.mock("../Axis", () => ({
-  default: ({ direction, xShift = 0, yShift = 0 }: any) => (
+  default: ({
+    direction,
+    xShift = 0,
+    yShift = 0,
+  }: {
+    direction: string;
+    xShift?: number;
+    yShift?: number;
+  }) => (
     <g
       data-testid={`axis-${direction}`}
       transform={`translate(${xShift},${yShift})`}
@@ -23,7 +32,15 @@ vi.mock("../Axis", () => ({
 }));
 
 vi.mock("../AxisLabel", () => ({
-  default: ({ children, x, y }: any) => (
+  default: ({
+    children,
+    x,
+    y,
+  }: {
+    children?: ReactNode;
+    x?: number;
+    y?: number;
+  }) => (
     <text data-testid="axis-label" x={x} y={y}>
       {children}
     </text>

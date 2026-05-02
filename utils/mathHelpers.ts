@@ -1,16 +1,28 @@
 import * as odex from "odex";
 
+type DiffEqFn = (x: number, y: number[]) => number[];
+export type DiffEqFactory = (...params: number[]) => DiffEqFn;
+
+interface OdexSolver {
+  solve(min: number, initialValues: number[], max: number, grid: unknown): void;
+  grid(step: number, cb: (x: number, y: number[]) => void): unknown;
+}
+
+interface OdexModule {
+  Solver: new (fn: DiffEqFn, n: number, opts: object) => OdexSolver;
+}
+
 export function generateData(
   count: number,
   min: number,
   max: number,
   step: number,
   initialValues: number[],
-  diffEqValues: any[],
-  diffEq: (...args: any[]) => any,
+  diffEqValues: number[],
+  diffEq: DiffEqFactory,
 ) {
   const diffEqFn = diffEq(...diffEqValues);
-  const s = new (odex as any).Solver(diffEqFn, count, {
+  const s = new (odex as unknown as OdexModule).Solver(diffEqFn, count, {
     denseOutput: true,
     absoluteTolerance: 1e-10,
     relativeTolerance: 1e-10,
@@ -73,7 +85,7 @@ export function euclideanDistance(...pts: number[]): number {
 
 export function total<T>(
   nums: T[],
-  accessor: (num: T) => number = (num: any) => num,
+  accessor: (num: T) => number = (num: T) => num as unknown as number,
 ): number {
   let sum = 0;
   for (const num of nums) sum += accessor(num);
@@ -82,7 +94,7 @@ export function total<T>(
 
 export function average<T>(
   nums: T[],
-  accessor: (num: T) => number = (num: any) => num,
+  accessor: (num: T) => number = (num: T) => num as unknown as number,
 ): number {
   if (!nums.length) return 0;
   return total(nums, accessor) / nums.length;

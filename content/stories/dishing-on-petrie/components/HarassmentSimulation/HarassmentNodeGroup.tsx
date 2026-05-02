@@ -153,7 +153,7 @@ const HarassmentNodeGroup: FC<HarassmentNodeGroupProps> = ({
             .attr("r", node.r * 8)
             .style("stroke-opacity", 1e-6)
             .style("fill-opacity", 1e-6)
-            .on("end", (d: any) => {
+            .on("end", (d: { nodeKey: string; shoutCount: number }) => {
               const color = String(d.nodeKey).split("-")[0];
               const key =
                 color === COLORS.BLUE

@@ -1,4 +1,5 @@
 import { render, screen } from "@testing-library/react";
+import type { ReactNode } from "react";
 import { describe, expect, it, vi } from "vitest";
 import "@testing-library/jest-dom/vitest";
 import COLORS from "@/utils/styles";
@@ -16,7 +17,13 @@ vi.mock("odex", () => ({
 }));
 
 vi.mock("@/components/story/shared/Caption", () => ({
-  default: ({ children, caption }: any) => (
+  default: ({
+    children,
+    caption,
+  }: {
+    children?: ReactNode;
+    caption?: string;
+  }) => (
     <div>
       <div data-testid="caption">{caption}</div>
       {children}
@@ -25,7 +32,17 @@ vi.mock("@/components/story/shared/Caption", () => ({
 }));
 
 vi.mock("@/components/story/shared/Graph", () => ({
-  default: ({ children, xLabel, yLabel, svgId }: any) => (
+  default: ({
+    children,
+    xLabel,
+    yLabel,
+    svgId,
+  }: {
+    children?: ReactNode;
+    xLabel?: string;
+    yLabel?: string;
+    svgId?: string;
+  }) => (
     <div
       data-testid="graph"
       data-xlabel={xLabel}
@@ -38,25 +55,25 @@ vi.mock("@/components/story/shared/Graph", () => ({
 }));
 
 vi.mock("@/components/story/shared/LinePlot", () => ({
-  default: ({ stroke }: any) => (
+  default: ({ stroke }: { stroke?: string }) => (
     <path data-testid="line-plot" stroke={stroke} />
   ),
 }));
 
 vi.mock("@/components/story/shared/Slider/SliderGroup", () => ({
-  default: ({ data }: any) => (
+  default: ({ data }: { data: unknown[] }) => (
     <div data-testid="slider-group" data-count={data.length} />
   ),
 }));
 
 vi.mock("@/components/story/shared/ColumnLayout", () => ({
-  default: ({ children }: any) => (
+  default: ({ children }: { children?: ReactNode }) => (
     <div data-testid="column-layout">{children}</div>
   ),
 }));
 
 vi.mock("@/components/story/shared/FlexContainer", () => ({
-  default: ({ children }: any) => (
+  default: ({ children }: { children?: ReactNode }) => (
     <div data-testid="flex-container">{children}</div>
   ),
 }));

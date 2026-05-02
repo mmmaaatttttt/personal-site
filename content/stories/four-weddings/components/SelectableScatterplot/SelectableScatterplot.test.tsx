@@ -1,4 +1,5 @@
 import { fireEvent, render } from "@testing-library/react";
+import type { ReactNode } from "react";
 import { describe, expect, it, vi } from "vitest";
 import "@testing-library/jest-dom/vitest";
 import type { WeddingData } from "../../types";
@@ -6,7 +7,7 @@ import SelectableScatterplot from "./index";
 
 // Mock components
 vi.mock("@/components/story/shared/Scatterplot", () => ({
-  default: ({ data }: any) => (
+  default: ({ data }: { data: unknown[] }) => (
     <div
       data-testid="mock-scatterplot"
       data-scatter-data={JSON.stringify(data)}
@@ -15,15 +16,23 @@ vi.mock("@/components/story/shared/Scatterplot", () => ({
 }));
 
 vi.mock("@/components/story/shared/Select", () => ({
-  default: ({ onChange, options, name }: any) => (
+  default: ({
+    onChange,
+    options,
+    name,
+  }: {
+    onChange: (opt: { value: string; label: string }) => void;
+    options: { value: string; label: string }[];
+    name?: string;
+  }) => (
     <select
       data-testid={`mock-select-${name}`}
       onChange={(e) => {
-        const opt = options.find((o: any) => o.value === e.target.value);
+        const opt = options.find((o) => o.value === e.target.value);
         if (opt) onChange(opt);
       }}
     >
-      {options.map((o: any) => (
+      {options.map((o) => (
         <option key={o.value} value={o.value}>
           {o.label}
         </option>
@@ -33,13 +42,13 @@ vi.mock("@/components/story/shared/Select", () => ({
 }));
 
 vi.mock("@/components/story/shared/NarrowContainer", () => ({
-  default: ({ children }: any) => (
+  default: ({ children }: { children?: ReactNode }) => (
     <div data-testid="mock-narrow-container">{children}</div>
   ),
 }));
 
 vi.mock("@/components/story/shared/FlexContainer", () => ({
-  default: ({ children }: any) => (
+  default: ({ children }: { children?: ReactNode }) => (
     <div data-testid="mock-flex-container">{children}</div>
   ),
 }));
@@ -61,19 +70,19 @@ describe("SelectableScatterplot Component", () => {
     {
       value: "budget",
       label: "Budget",
-      accessor: (d: any) => d.budget,
+      accessor: (d: WeddingData) => d.budget,
       format: "$,.0f",
     },
     {
       value: "guests",
       label: "Guests",
-      accessor: (d: any) => d.guests,
+      accessor: (d: WeddingData) => d.guests,
       format: ",.0f",
     },
     {
       value: "ranking",
       label: "Ranking",
-      accessor: (d: any) => d.ranking,
+      accessor: (d: WeddingData) => d.ranking,
       format: ".0f",
     },
   ];

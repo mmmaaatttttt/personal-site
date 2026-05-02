@@ -1,5 +1,5 @@
 import { act, fireEvent, render, screen } from "@testing-library/react";
-import type React from "react";
+import type { ReactNode } from "react";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import type { ElectionRow, StateSummary } from "../../data";
 import HistoricalMap from "./HistoricalMap";
@@ -14,9 +14,7 @@ vi.mock("framer-motion", async (importOriginal) => {
   const actual = await importOriginal<typeof import("framer-motion")>();
   return {
     ...actual,
-    AnimatePresence: ({ children }: { children: React.ReactNode }) => (
-      <>{children}</>
-    ),
+    AnimatePresence: ({ children }: { children: ReactNode }) => <>{children}</>,
   };
 });
 

@@ -1,15 +1,16 @@
 import type { LucideIcon } from "lucide-react";
-import * as React from "react";
+import type { SVGProps } from "react";
+import { forwardRef } from "react";
 import { cn } from "@/lib/utils";
 
-interface IconProps extends React.SVGProps<SVGSVGElement> {
+interface IconProps extends SVGProps<SVGSVGElement> {
   icon: LucideIcon;
   size?: number | string;
   className?: string;
   spin?: boolean;
 }
 
-const Icon = React.forwardRef<SVGSVGElement, IconProps>(
+const Icon = forwardRef<SVGSVGElement, IconProps>(
   (
     { icon: IconComponent, size = 20, className, spin = false, ...props },
     ref,

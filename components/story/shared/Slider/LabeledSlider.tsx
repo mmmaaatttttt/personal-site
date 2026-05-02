@@ -1,7 +1,7 @@
 "use client";
 
 import { type LucideIcon, Minus, Plus } from "lucide-react";
-import type { FC } from "react";
+import type { FC, ReactNode } from "react";
 import { Icon } from "@/components/ui/Icon";
 import { hexToRgba } from "@/utils/styles";
 import { THEME_OPACITY } from "./constants";
@@ -14,7 +14,7 @@ interface LabeledSliderProps {
   step?: number;
   value: number;
   handleValueChange: (val: number) => void;
-  title: string | React.ReactNode;
+  title: string | ReactNode;
   color: string;
   sliderHeight?: number;
   sliderPadding?: number;

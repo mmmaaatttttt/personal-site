@@ -1,7 +1,6 @@
 "use client";
 
-import type React from "react";
-import { useEffect, useState } from "react";
+import { type FC, useEffect, useState } from "react";
 import FlexContainer from "@/components/story/shared/FlexContainer";
 import NarrowContainer from "@/components/story/shared/NarrowContainer";
 import Scatterplot from "@/components/story/shared/Scatterplot";
@@ -21,7 +20,7 @@ const DEFAULT_WIDTH = 500;
 const DEFAULT_PADDING = 55;
 const DEFAULT_DOT_AREA = 100;
 
-const SelectableScatterplot: React.FC<SelectableScatterplotProps> = ({
+const SelectableScatterplot: FC<SelectableScatterplotProps> = ({
   data,
   selectOptions,
   graphOptions,

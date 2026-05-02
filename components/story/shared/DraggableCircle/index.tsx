@@ -1,7 +1,6 @@
 "use client";
 
-import { type FC, useState } from "react";
-import type { PointerEvent } from "react";
+import { type FC, type PointerEvent, useState } from "react";
 import COLORS from "@/utils/styles";
 
 interface DraggableCircleProps {

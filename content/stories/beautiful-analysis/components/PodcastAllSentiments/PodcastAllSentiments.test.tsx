@@ -1,11 +1,23 @@
 import { render, screen } from "@testing-library/react";
+import type { ReactNode } from "react";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import "@testing-library/jest-dom/vitest";
+import type { ScaleLinear } from "d3-scale";
 import PodcastAllSentiments from "./index";
 
 // Mock the animated sub-component
 vi.mock("./SentimentCircle", () => ({
-  default: ({ cx, cy, r, fill }: any) => (
+  default: ({
+    cx,
+    cy,
+    r,
+    fill,
+  }: {
+    cx: number;
+    cy: number;
+    r: number;
+    fill: string;
+  }) => (
     <circle
       data-testid="mock-sentiment-circle"
       cx={cx}
@@ -18,7 +30,15 @@ vi.mock("./SentimentCircle", () => ({
 
 // Mock shared components that use children or complex logic
 vi.mock("@/components/story/shared/Graph", () => ({
-  default: ({ children, xScale, yScale }: any) => (
+  default: ({
+    children,
+    xScale,
+    yScale,
+  }: {
+    children?: ReactNode;
+    xScale: ScaleLinear<number, number>;
+    yScale: ScaleLinear<number, number>;
+  }) => (
     <div data-testid="mock-graph">
       <div data-testid="x-scale-domain">{JSON.stringify(xScale.domain())}</div>
       <div data-testid="y-scale-domain">{JSON.stringify(yScale.domain())}</div>
