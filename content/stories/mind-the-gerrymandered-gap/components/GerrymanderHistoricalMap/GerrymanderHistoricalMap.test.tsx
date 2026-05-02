@@ -1,6 +1,5 @@
 import { render } from "@testing-library/react";
 import { vi, describe, it, expect } from "vitest";
-import React from "react";
 
 vi.mock("../../data", () => ({
   electionData: [],

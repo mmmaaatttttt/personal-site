@@ -7,7 +7,6 @@ import { scaleLinear } from "d3-scale";
 import forceBounce from "d3-force-bounce";
 import forceSurface from "d3-force-surface";
 
-import { euclideanDistance } from "@/utils/mathHelpers";
 import COLORS from "@/utils/styles";
 import type { EconomyNode, CollisionFn } from "../../data";
 

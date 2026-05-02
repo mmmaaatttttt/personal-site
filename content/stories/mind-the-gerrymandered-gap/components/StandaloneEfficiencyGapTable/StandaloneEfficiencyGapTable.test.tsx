@@ -1,5 +1,5 @@
 import { render, screen, act } from "@testing-library/react";
-import { vi, describe, it, expect, beforeEach } from "vitest";
+import { describe, it, expect, beforeEach } from "vitest";
 import { GERRYMANDER_COUNTS_EVENT, GERRYMANDER_COUNTS_KEY } from "../SampleGerrymander/constants";
 import StandaloneEfficiencyGapTable from ".";
 

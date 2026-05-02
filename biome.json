@@ -9,7 +9,7 @@
 		"ignoreUnknown": false,
 		"includes": [
 			"**",
-			"!src/",
+			"!src/**",
 			"!static/data/districts114.json",
 			"!gatsby-*.js",
 			"!wrap-with-provider.js",

@@ -10,7 +10,7 @@ import Select from "@/components/story/shared/Select";
 import Caption from "@/components/story/shared/Caption";
 import SentimentCircle from "./SentimentCircle";
 import { colorMap } from "../../data/beautiful-analysis";
-import baAllSentiment, { type EpisodeSentiment } from "../../data/ba-all-sentiment";
+import baAllSentiment from "../../data/ba-all-sentiment";
 
 interface CircData {
   key: string;

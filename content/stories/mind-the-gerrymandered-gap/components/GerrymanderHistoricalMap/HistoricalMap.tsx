@@ -1,6 +1,6 @@
 "use client";
 
-import { FC, useMemo } from "react";
+import { FC, } from "react";
 import { scaleLinear } from "d3-scale";
 import COLORS from "@/utils/styles";
 import USMap from "@/components/story/shared/USMap";

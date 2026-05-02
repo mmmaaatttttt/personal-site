@@ -1,4 +1,4 @@
-import React from "react";
+
 import MainLayout from "@/components/layout/MainLayout";
 import ArticlesContent from "./ArticlesContent";
 import { getAllArticles, getMetadataOptions } from "@/utils/content";

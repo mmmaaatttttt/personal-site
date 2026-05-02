@@ -1,4 +1,4 @@
-import { FC, ChangeEvent } from "react";
+import { ChangeEvent } from "react";
 import { ChevronDown } from "lucide-react";
 
 interface Option {

@@ -1,6 +1,5 @@
-import { FC, ReactNode } from "react";
+import { ReactNode } from "react";
 import { AxisScale, AxisDomain } from "d3-axis";
-import { cn } from "@/lib/utils";
 import NarrowContainer from "../NarrowContainer";
 import ClippedSVG from "../ClippedSVG";
 import Axis from "../Axis";

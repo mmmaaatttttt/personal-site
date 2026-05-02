@@ -1,6 +1,5 @@
-import React from "react";
+
 import Image from "next/image";
-import Link from "next/link";
 import MainLayout from "@/components/layout/MainLayout";
 import matt from "@/src/images/matt.jpg";
 import type { Metadata } from "next";

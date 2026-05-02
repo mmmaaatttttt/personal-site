@@ -1,4 +1,4 @@
-import { FC, useEffect, useRef } from "react";
+import { useEffect, useRef } from "react";
 import { axisBottom, axisLeft, AxisScale, AxisDomain } from "d3-axis";
 import { select } from "d3-selection";
 import { range } from "d3-array";
