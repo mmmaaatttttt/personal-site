@@ -40,9 +40,6 @@ const SliderProvider: FC<SliderProviderProps> = ({
       : [],
   );
 
-  if (!initialData || !Array.isArray(initialData) || initialData.length === 0)
-    return null;
-
   const handleValueChange = (idx: number, newVal: number) => {
     setSliderValues((prev) => {
       const next = [...prev];
@@ -62,6 +59,9 @@ const SliderProvider: FC<SliderProviderProps> = ({
         : [],
     [initialData, sliderValues, handleValueChange],
   );
+
+  if (!initialData || !Array.isArray(initialData) || initialData.length === 0)
+    return null;
 
   const numSliders = sliderValues.length;
   const sliderGroup = <SliderGroup data={dataWithHandlers} column={column} />;

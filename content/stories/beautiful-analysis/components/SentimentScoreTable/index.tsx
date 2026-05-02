@@ -33,7 +33,6 @@ const SentimentScoreTable: FC<SentimentScoreTableProps> = ({
       : { value: "0", label: "Loading" },
   );
 
-  if (!options || options.length === 0) return null;
   const { value, label } = selectedOption;
 
   const rangeIdx = parseInt(value, 10);
@@ -44,6 +43,8 @@ const SentimentScoreTable: FC<SentimentScoreTableProps> = ({
       (sent) => sent.score > min && sent.score < max,
     );
   }, [min, max]);
+
+  if (!options || options.length === 0) return null;
 
   const headers = [
     {

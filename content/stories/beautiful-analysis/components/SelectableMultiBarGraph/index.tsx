@@ -41,7 +41,6 @@ const SelectableMultiBarGraph: FC<SelectableMultiBarGraphProps> = ({
     options[0][Math.floor(options[0].length / 2)],
   );
 
-  if (!options || options.length === 0) return null;
   const { value, label } = selectedOption;
 
   const dataForOption = useMemo(() => {
@@ -66,8 +65,10 @@ const SelectableMultiBarGraph: FC<SelectableMultiBarGraphProps> = ({
         Object.values(d.counts).reduce((a, b) => a + b, 0),
       ),
     );
-    return Math.ceil((maxVal * 1.1) / 100) * 100; // 10% buffer, rounded to nearest 100
+    return Math.ceil((maxVal * 1.1) / 100) * 100;
   }, [dataForOption, yMax]);
+
+  if (!options || options.length === 0) return null;
 
   return (
     <div

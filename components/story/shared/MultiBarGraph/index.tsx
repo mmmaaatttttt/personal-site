@@ -55,12 +55,14 @@ const MultiBarGraph: FC<MultiBarGraphProps> = ({
       : padding;
   const { tooltip, showTooltip, hideTooltip } = useTooltip();
 
-  if (!data || !Array.isArray(data) || data.length === 0) return null;
-
-  const labels = Object.keys(data[0]?.counts || {});
-  if (labels.length === 0) return null;
+  const labels =
+    data && Array.isArray(data) && data.length > 0
+      ? Object.keys(data[0]?.counts || {})
+      : [];
 
   const stackData = useMemo<Series<Record<string, number>, string>[]>(() => {
+    if (!data || !Array.isArray(data) || data.length === 0 || labels.length === 0)
+      return [];
     try {
       return d3stack<Record<string, number>, string>()
         .keys(labels)
@@ -71,12 +73,14 @@ const MultiBarGraph: FC<MultiBarGraphProps> = ({
     }
   }, [labels, data]);
 
-  if (stackData.length === 0) return null;
-
   const tooltipData = useMemo(
-    () => data.map(getTooltipData),
+    () => (data && Array.isArray(data) ? data.map(getTooltipData) : []),
     [data, getTooltipData],
   );
+
+  if (!data || !Array.isArray(data) || data.length === 0) return null;
+  if (labels.length === 0) return null;
+  if (stackData.length === 0) return null;
 
   const yMin = min(stackData[0], (d) => d[0]) || 0;
   const computedYMax =
