@@ -13,6 +13,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
+    "lint:check": "biome check",
+    "lint:write": "biome check --write",
     "format": "prettier --write .",
     "test": "vitest run",
     "test:watch": "vitest",
@@ -38,6 +40,7 @@
     "topojson-client": "^3.1.0"
   },
   "devDependencies": {
+    "@biomejs/biome": "2.4.14",
     "@tailwindcss/postcss": "^4.2.1",
     "@testing-library/jest-dom": "^6.9.1",
     "@testing-library/react": "^16.3.2",
