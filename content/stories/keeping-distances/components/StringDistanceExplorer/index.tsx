@@ -5,9 +5,9 @@ import Caption from "@/components/story/shared/Caption";
 import NarrowContainer from "@/components/story/shared/NarrowContainer";
 import StyledTable from "@/components/story/shared/StyledTable";
 import {
+  damerauLevenshteinDistance,
   hammingDistance,
   levenshteinDistance,
-  damerauLevenshteinDistance,
 } from "./helpers";
 
 interface StringDistanceExplorerProps {

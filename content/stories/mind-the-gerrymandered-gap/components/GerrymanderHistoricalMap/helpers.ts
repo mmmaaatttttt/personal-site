@@ -1,6 +1,6 @@
-import COLORS from "@/utils/styles";
-import { lightenHex } from "@/utils/colorHelpers";
 import usTopoRaw from "@/components/story/shared/USMap/us-topo.json";
+import { lightenHex } from "@/utils/colorHelpers";
+import COLORS from "@/utils/styles";
 import type { ElectionRow, StateSummary } from "../../data";
 
 const stateCodeMap: Record<string, string> = {};

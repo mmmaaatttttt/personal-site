@@ -1,11 +1,11 @@
 "use client";
 
-import { useMemo } from "react";
-import { scaleLinear } from "d3-scale";
 import { interpolateRgb, piecewise } from "d3-interpolate";
-import ClippedSVG from "@/components/story/shared/ClippedSVG";
+import { scaleLinear } from "d3-scale";
+import { useMemo } from "react";
 import Axis from "@/components/story/shared/Axis";
 import AxisLabel from "@/components/story/shared/AxisLabel";
+import ClippedSVG from "@/components/story/shared/ClippedSVG";
 import Tooltip, { useTooltip } from "@/components/story/shared/Tooltip";
 import COLORS from "@/utils/styles";
 

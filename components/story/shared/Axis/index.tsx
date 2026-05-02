@@ -1,8 +1,8 @@
-import { useEffect, useRef } from "react";
-import { axisBottom, axisLeft, AxisScale, AxisDomain } from "d3-axis";
-import { select } from "d3-selection";
 import { range } from "d3-array";
+import { AxisDomain, AxisScale, axisBottom, axisLeft } from "d3-axis";
 import { format } from "d3-format";
+import { select } from "d3-selection";
+import { useEffect, useRef } from "react";
 
 interface AxisProps<Domain extends AxisDomain> {
   direction: "x" | "y";

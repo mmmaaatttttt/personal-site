@@ -1,8 +1,8 @@
 
+import type { Metadata } from "next";
 import Image from "next/image";
 import MainLayout from "@/components/layout/MainLayout";
 import matt from "@/src/images/matt.jpg";
-import type { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "About | Matt Lane",

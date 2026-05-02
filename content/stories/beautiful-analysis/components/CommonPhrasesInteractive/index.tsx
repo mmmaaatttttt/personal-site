@@ -1,10 +1,10 @@
 "use client";
 
+import ColoredSpan from "@/components/story/shared/ColoredSpan";
 import SliderProvider from "@/components/story/shared/Slider";
 import StyledTable from "@/components/story/shared/StyledTable";
-import ColoredSpan from "@/components/story/shared/ColoredSpan";
-import { colorMap } from "../../data/beautiful-analysis";
 import baCommonPhrases, { type CommonPhraseEntry, type SpeakerPhrases } from "../../data/ba-common-phrases";
+import { colorMap } from "../../data/beautiful-analysis";
 
 export default function CommonPhrasesInteractive() {
   const dataset: CommonPhraseEntry[] = baCommonPhrases.common_phrases;

@@ -1,18 +1,18 @@
 "use client";
 
-import { useState } from "react";
 import { scaleLinear } from "d3-scale";
-import Caption from "@/components/story/shared/Caption";
+import { useState } from "react";
 import BarGraph from "@/components/story/shared/BarGraph";
-import SliderProvider from "@/components/story/shared/Slider/SliderProvider";
+import Caption from "@/components/story/shared/Caption";
 import Select from "@/components/story/shared/Select";
+import SliderProvider from "@/components/story/shared/Slider/SliderProvider";
 import COLORS from "@/utils/styles";
 import type { VotingDataRow } from "../../data";
 import {
-  VOTERS_BAR_OPTIONS,
-  PARTY_BAR_OPTIONS,
-  MIN_YEAR,
   MAX_YEAR,
+  MIN_YEAR,
+  PARTY_BAR_OPTIONS,
+  VOTERS_BAR_OPTIONS,
   YEAR_STEP,
 } from "./constants";
 

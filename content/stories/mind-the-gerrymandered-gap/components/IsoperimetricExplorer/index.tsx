@@ -5,9 +5,9 @@ import ClippedSVG from "@/components/story/shared/ClippedSVG";
 import LabeledSlider from "@/components/story/shared/Slider/LabeledSlider";
 import StyledTable from "@/components/story/shared/StyledTable";
 import COLORS from "@/utils/styles";
-import InteractivePolygon from "./InteractivePolygon";
 import { crossingExists } from "./crossingHelpers";
-import { generatePoints, getCircleParams, getAreaInfo, type Point } from "./mathHelpers";
+import InteractivePolygon from "./InteractivePolygon";
+import { generatePoints, getAreaInfo, getCircleParams, type Point } from "./mathHelpers";
 
 const WIDTH = 600;
 const HEIGHT = 400;

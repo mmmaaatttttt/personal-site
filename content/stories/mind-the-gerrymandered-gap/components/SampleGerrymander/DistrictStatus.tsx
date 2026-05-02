@@ -1,7 +1,7 @@
 "use client";
 
-import { FC } from "react";
 import { CheckCircle2, XCircle } from "lucide-react";
+import { FC } from "react";
 import COLORS from "@/utils/styles";
 
 interface DistrictStatusProps {

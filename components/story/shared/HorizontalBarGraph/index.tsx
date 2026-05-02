@@ -1,9 +1,9 @@
 "use client";
 
-import { FC } from "react";
-import { scaleLinear, scaleBand } from "d3-scale";
 import { max } from "d3-array";
-import { motion, AnimatePresence } from "framer-motion";
+import { scaleBand, scaleLinear } from "d3-scale";
+import { AnimatePresence, motion } from "framer-motion";
+import { FC } from "react";
 import ClippedSVG from "../ClippedSVG";
 import NarrowContainer from "../NarrowContainer";
 

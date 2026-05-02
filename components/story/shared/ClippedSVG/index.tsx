@@ -1,8 +1,8 @@
 "use client";
 
 import { FC, ReactNode } from "react";
-import { useResizeObserver } from "@/hooks/useResizeObserver";
 import { SVGContext } from "@/context/SVGContext";
+import { useResizeObserver } from "@/hooks/useResizeObserver";
 import { cn } from "@/lib/utils";
 
 interface Padding {

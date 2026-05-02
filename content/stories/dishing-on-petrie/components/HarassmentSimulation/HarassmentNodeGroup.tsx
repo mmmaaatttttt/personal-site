@@ -1,12 +1,11 @@
 "use client";
 
-import { FC, useEffect, useRef, useState } from "react";
-import { select } from "d3-selection";
 import { forceSimulation, Simulation, SimulationNodeDatum } from "d3-force";
 import forceBounce from "d3-force-bounce";
 import forceSurface from "d3-force-surface";
-
+import { select } from "d3-selection";
 import { interval } from "d3-timer";
+import { FC, useEffect, useRef, useState } from "react";
 import "d3-transition"; // For .transition()
 import { easeCubicOut } from "d3-ease";
 

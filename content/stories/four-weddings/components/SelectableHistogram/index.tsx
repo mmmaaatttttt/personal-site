@@ -1,13 +1,13 @@
 "use client";
 
-import React, { useState, useMemo, useEffect } from "react";
-import { bin, max, range, extent } from "d3-array";
+import { bin, extent, max, range } from "d3-array";
 import { scaleLinear } from "d3-scale";
-import COLORS from "@/utils/styles";
+import React, { useEffect, useMemo, useState } from "react";
 import BarGraph from "@/components/story/shared/BarGraph";
 import NarrowContainer from "@/components/story/shared/NarrowContainer";
 import Select from "@/components/story/shared/Select";
-import { WeddingData, HistogramOption } from "../../types";
+import COLORS from "@/utils/styles";
+import { HistogramOption, WeddingData } from "../../types";
 
 const DEFAULT_HEIGHT = 400;
 const DEFAULT_WIDTH = 600;

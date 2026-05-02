@@ -1,13 +1,13 @@
 "use client";
 
 import React from "react";
+import Caption from "@/components/story/shared/Caption";
+import { graphOptions, selectOptions, tooltipHelpers } from "../../data/four-weddings-config";
 import { fourWeddingsData } from "../../data/four-weddings-data";
-import { selectOptions, tooltipHelpers, graphOptions } from "../../data/four-weddings-config";
-import SelectableUSMap from "../SelectableUSMap";
 import SelectableHistogram from "../SelectableHistogram";
 import SelectablePieChart from "../SelectablePieChart";
 import SelectableScatterplot from "../SelectableScatterplot";
-import Caption from "@/components/story/shared/Caption";
+import SelectableUSMap from "../SelectableUSMap";
 
 interface FourWeddingsVisualizationProps {
   vizIndex: string | number;

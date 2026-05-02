@@ -1,12 +1,12 @@
 "use client";
 
-import { FC, useState } from "react";
 import { scaleOrdinal } from "d3-scale";
-import SliderProvider from "@/components/story/shared/Slider/SliderProvider";
-import Select from "@/components/story/shared/Select";
-import PieChart from "@/components/story/shared/PieChart";
+import { FC, useState } from "react";
 import Legend from "@/components/story/shared/Legend";
 import NarrowContainer from "@/components/story/shared/NarrowContainer";
+import PieChart from "@/components/story/shared/PieChart";
+import Select from "@/components/story/shared/Select";
+import SliderProvider from "@/components/story/shared/Slider/SliderProvider";
 import COLORS from "@/utils/styles";
 import type { PollWorkerAgeRow } from "../../data";
 

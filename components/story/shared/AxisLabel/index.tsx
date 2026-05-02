@@ -1,4 +1,4 @@
-import { FC, SVGProps, ReactNode } from "react";
+import { FC, ReactNode, SVGProps } from "react";
 import { cn } from "@/lib/utils";
 
 interface AxisLabelProps extends SVGProps<SVGTextElement> {

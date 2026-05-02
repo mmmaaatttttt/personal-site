@@ -1,11 +1,11 @@
 "use client";
 
-import { useState, useCallback } from "react";
 import { scaleLinear } from "d3-scale";
+import { useCallback, useState } from "react";
+import BarGraph from "@/components/story/shared/BarGraph";
 import Caption from "@/components/story/shared/Caption";
 import ClippedSVG from "@/components/story/shared/ClippedSVG";
 import NarrowContainer from "@/components/story/shared/NarrowContainer";
-import BarGraph from "@/components/story/shared/BarGraph";
 import SliderGroup from "@/components/story/shared/Slider/SliderGroup";
 import COLORS from "@/utils/styles";
 import updateSpeeds from "../../data";

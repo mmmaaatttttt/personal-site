@@ -1,16 +1,16 @@
 "use client";
 
-import { useState, useCallback } from "react";
 import { extent } from "d3-array";
-import { scaleLinear } from "d3-scale";
 import { AxisScale } from "d3-axis";
-import { generateData } from "@/utils/mathHelpers";
+import { scaleLinear } from "d3-scale";
+import { useCallback, useState } from "react";
 import Caption from "@/components/story/shared/Caption";
 import ColumnLayout from "@/components/story/shared/ColumnLayout";
 import FlexContainer from "@/components/story/shared/FlexContainer";
 import Graph from "@/components/story/shared/Graph";
 import LinePlot from "@/components/story/shared/LinePlot";
 import SliderGroup from "@/components/story/shared/Slider/SliderGroup";
+import { generateData } from "@/utils/mathHelpers";
 
 export interface SliderDatum {
   min: number;

@@ -1,7 +1,7 @@
 "use client";
 
-import { FC, useState, useEffect, useCallback } from "react";
 import { scaleLinear } from "d3-scale";
+import { FC, useCallback, useEffect, useState } from "react";
 import COLORS, { hexToRgba } from "@/utils/styles";
 
 interface SegmentDatum {

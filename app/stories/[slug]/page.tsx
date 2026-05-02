@@ -1,8 +1,8 @@
+import Image from "next/image";
+import { notFound } from "next/navigation";
 import React from "react";
 import MainLayout from "@/components/layout/MainLayout";
 import { getArticle, getArticleSlugs } from "@/utils/content";
-import Image from "next/image";
-import { notFound } from "next/navigation";
 
 interface PageProps {
   params: Promise<{ slug: string }>;

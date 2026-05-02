@@ -1,6 +1,6 @@
 import fs from "fs";
-import path from "path";
 import matter from "gray-matter";
+import path from "path";
 import { storyMeta } from "@/utils/storyMeta";
 
 const ARTICLES_DIR = path.join(process.cwd(), "content", "stories");

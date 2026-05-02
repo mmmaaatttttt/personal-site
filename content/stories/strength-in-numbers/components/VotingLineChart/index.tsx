@@ -1,9 +1,9 @@
 "use client";
 
-import { useState } from "react";
-import { scaleLinear } from "d3-scale";
 import { extent } from "d3-array";
-import { motion, AnimatePresence } from "framer-motion";
+import { scaleLinear } from "d3-scale";
+import { AnimatePresence, motion } from "framer-motion";
+import { useState } from "react";
 import Caption from "@/components/story/shared/Caption";
 import Graph from "@/components/story/shared/Graph";
 import LinePlot from "@/components/story/shared/LinePlot";

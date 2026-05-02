@@ -1,5 +1,5 @@
-import { describe, it, expect, vi } from 'vitest';
-import { render, screen, renderHook, act } from '@testing-library/react';
+import { act, render, renderHook, screen } from '@testing-library/react';
+import { describe, expect, it, vi } from 'vitest';
 import '@testing-library/jest-dom/vitest';
 import Tooltip, { useTooltip } from '.';
 

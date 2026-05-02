@@ -1,11 +1,11 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
+import FlexContainer from "@/components/story/shared/FlexContainer";
+import NarrowContainer from "@/components/story/shared/NarrowContainer";
 import Scatterplot from "@/components/story/shared/Scatterplot";
 import Select from "@/components/story/shared/Select";
-import NarrowContainer from "@/components/story/shared/NarrowContainer";
-import FlexContainer from "@/components/story/shared/FlexContainer";
-import { WeddingData, ScatterOption } from "../../types";
+import { ScatterOption, WeddingData } from "../../types";
 
 interface SelectableScatterplotProps {
     data: WeddingData[];

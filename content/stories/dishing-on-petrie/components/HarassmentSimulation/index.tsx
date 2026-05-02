@@ -1,11 +1,11 @@
 "use client";
 
-import { FC, useState, useCallback, useMemo } from "react";
+import { FC, useCallback, useMemo, useState } from "react";
 import ClippedSVG from "@/components/story/shared/ClippedSVG";
 import FlexContainer from "@/components/story/shared/FlexContainer";
+import HorizontalBar from "@/components/story/shared/HorizontalBar";
 import NarrowContainer from "@/components/story/shared/NarrowContainer";
 import SliderGroup from "@/components/story/shared/Slider/SliderGroup";
-import HorizontalBar from "@/components/story/shared/HorizontalBar";
 import HarassmentNodeGroup from "./HarassmentNodeGroup";
 
 const COLORS = {

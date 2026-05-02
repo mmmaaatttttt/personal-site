@@ -1,5 +1,5 @@
-import { describe, it, expect } from "vitest";
-import { logGamma, betaPdf, binomialDensityValues } from "./mathHelpers";
+import { describe, expect, it } from "vitest";
+import { betaPdf, binomialDensityValues, logGamma } from "./mathHelpers";
 
 describe("logGamma", () => {
   it("matches log((n-1)!) for positive integers", () => {

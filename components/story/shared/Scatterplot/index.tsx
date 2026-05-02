@@ -1,9 +1,9 @@
 "use client";
 
-import React, { useState, useEffect, useMemo } from "react";
 import { extent } from "d3-array";
 import { scaleLinear } from "d3-scale";
 import { AnimatePresence } from "framer-motion";
+import React, { useEffect, useMemo, useState } from "react";
 import Graph from "../Graph";
 import ScatterPoint from "./ScatterPoint";
 

@@ -1,6 +1,6 @@
-import { describe, it, expect } from "vitest";
-import { countRegions } from "./floodFill";
+import { describe, expect, it } from "vitest";
 import { getInitialSegments } from "./constants";
+import { countRegions } from "./floodFill";
 
 const ROW = 6;
 const COL = 9;

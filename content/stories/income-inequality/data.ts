@@ -1,5 +1,5 @@
-import { euclideanDistance } from "@/utils/mathHelpers";
 import type { SimulationNodeDatum } from "d3-force";
+import { euclideanDistance } from "@/utils/mathHelpers";
 
 export interface EconomyNode extends SimulationNodeDatum {
   key: number;

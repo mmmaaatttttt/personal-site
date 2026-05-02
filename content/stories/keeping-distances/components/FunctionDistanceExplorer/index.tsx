@@ -1,15 +1,15 @@
 "use client";
 
-import { FC, useState, useCallback } from "react";
 import { scaleLinear } from "d3-scale";
+import { FC, useCallback, useState } from "react";
 import Caption from "@/components/story/shared/Caption";
-import NarrowContainer from "@/components/story/shared/NarrowContainer";
-import Graph from "@/components/story/shared/Graph";
 import DraggableCircle from "@/components/story/shared/DraggableCircle";
+import Graph from "@/components/story/shared/Graph";
+import NarrowContainer from "@/components/story/shared/NarrowContainer";
+import ToggleSwitch from "@/components/story/shared/ToggleSwitch";
 import COLORS from "@/utils/styles";
 import useDragState from "../DistanceExplorer/useDragState";
-import { clamped, lInfNormEndpoints, l1Norm } from "./helpers";
-import ToggleSwitch from "@/components/story/shared/ToggleSwitch";
+import { clamped, l1Norm, lInfNormEndpoints } from "./helpers";
 
 const WIDTH = 600;
 const HEIGHT = 600;

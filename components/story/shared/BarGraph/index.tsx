@@ -1,10 +1,10 @@
 "use client";
 
-import React, { useState, useMemo, useEffect } from "react";
-import { scaleBand, scaleLinear } from "d3-scale";
-import type { ScaleLinear, ScaleBand } from "d3-scale";
 import { AxisScale } from "d3-axis";
+import type { ScaleBand, ScaleLinear } from "d3-scale";
+import { scaleBand, scaleLinear } from "d3-scale";
 import { AnimatePresence } from "framer-motion";
+import React, { useEffect, useMemo, useState } from "react";
 import Graph from "../Graph";
 import BarItem from "./BarItem";
 

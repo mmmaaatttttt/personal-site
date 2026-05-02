@@ -1,7 +1,7 @@
-import { FC, useEffect, useState } from "react";
-import { PieArcDatum, Arc, DefaultArcObject } from "d3-shape";
 import { format } from "d3-format";
-import { motion, useSpring, useTransform, MotionValue } from "framer-motion";
+import { Arc, DefaultArcObject, PieArcDatum } from "d3-shape";
+import { MotionValue, motion, useSpring, useTransform } from "framer-motion";
+import { FC, useEffect, useState } from "react";
 
 interface AnimatedPercentageProps {
   startAngle: MotionValue<number>;

@@ -1,8 +1,8 @@
-import { render, screen, fireEvent, act } from "@testing-library/react";
-import { vi, describe, it, expect, beforeEach } from "vitest";
+import { act, fireEvent, render, screen } from "@testing-library/react";
 import React from "react";
-import HistoricalMap from "./HistoricalMap";
+import { beforeEach, describe, expect, it, vi } from "vitest";
 import type { ElectionRow, StateSummary } from "../../data";
+import HistoricalMap from "./HistoricalMap";
 
 global.ResizeObserver = vi.fn().mockImplementation(() => ({
   observe: vi.fn(),

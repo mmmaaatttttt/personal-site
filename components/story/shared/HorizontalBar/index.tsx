@@ -1,5 +1,5 @@
+import { AnimatePresence, motion } from "framer-motion";
 import { FC } from "react";
-import { motion, AnimatePresence } from "framer-motion";
 import Tooltip, { useTooltip } from "../Tooltip";
 
 interface BarData {

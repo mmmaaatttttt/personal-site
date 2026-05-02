@@ -1,14 +1,14 @@
 "use client";
 
-import { FC, useEffect, useRef } from "react";
-import { select } from "d3-selection";
 import { forceSimulation, Simulation } from "d3-force";
-import { scaleLinear } from "d3-scale";
 import forceBounce from "d3-force-bounce";
 import forceSurface from "d3-force-surface";
+import { scaleLinear } from "d3-scale";
+import { select } from "d3-selection";
+import { FC, useEffect, useRef } from "react";
 
 import COLORS from "@/utils/styles";
-import type { EconomyNode, CollisionFn } from "../../data";
+import type { CollisionFn, EconomyNode } from "../../data";
 
 /** Simple hex darkening — avoids a polished dependency */
 function darkenHex(hex: string, amount: number): string {

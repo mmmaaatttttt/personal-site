@@ -1,4 +1,4 @@
-import { FC, useState, useCallback, useRef, useEffect, MouseEvent, TouchEvent } from "react";
+import { FC, MouseEvent, TouchEvent, useCallback, useEffect, useRef, useState } from "react";
 
 interface TooltipInfo {
   title: string;

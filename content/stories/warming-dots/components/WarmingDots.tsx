@@ -1,15 +1,15 @@
 "use client";
 
-import React, { useMemo } from "react";
 import { extent, max } from "d3-array";
 import { scaleLinear } from "d3-scale";
-import { generateData } from "@/utils/mathHelpers";
-import { visualizationData } from "../data/warming-dots";
-import SliderProvider from "@/components/story/shared/Slider";
+import React, { useMemo } from "react";
+import Caption from "@/components/story/shared/Caption";
 import FlexContainer from "@/components/story/shared/FlexContainer";
 import Graph from "@/components/story/shared/Graph";
 import LinePlot from "@/components/story/shared/LinePlot";
-import Caption from "@/components/story/shared/Caption";
+import SliderProvider from "@/components/story/shared/Slider";
+import { generateData } from "@/utils/mathHelpers";
+import { visualizationData } from "../data/warming-dots";
 
 interface WarmingDotsProps {
   vizIndex?: number | string;

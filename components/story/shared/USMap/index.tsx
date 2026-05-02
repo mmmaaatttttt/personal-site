@@ -1,11 +1,11 @@
-import { useMemo, MouseEvent, TouchEvent } from "react";
-import { geoPath, geoAlbers } from "d3-geo";
-import { scaleLinear } from "d3-scale";
 import { extent } from "d3-array";
-import { feature } from "topojson-client";
-import { Topology, GeometryCollection } from "topojson-specification";
-import { FeatureCollection, Geometry } from "geojson";
+import { geoAlbers, geoPath } from "d3-geo";
+import { scaleLinear } from "d3-scale";
 import { AnimatePresence } from "framer-motion";
+import { FeatureCollection, Geometry } from "geojson";
+import { MouseEvent, TouchEvent, useMemo } from "react";
+import { feature } from "topojson-client";
+import { GeometryCollection, Topology } from "topojson-specification";
 import ClippedSVG from "../ClippedSVG";
 import USState from "./USState";
 import usTopoRaw from "./us-topo.json";

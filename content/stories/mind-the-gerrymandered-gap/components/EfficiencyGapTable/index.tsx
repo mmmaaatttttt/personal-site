@@ -1,8 +1,8 @@
 "use client";
 
 import { FC } from "react";
-import StyledTable from "@/components/story/shared/StyledTable";
 import ColoredSpan from "@/components/story/shared/ColoredSpan";
+import StyledTable from "@/components/story/shared/StyledTable";
 import { calculateWastedVotes, total } from "@/utils/mathHelpers";
 import COLORS from "@/utils/styles";
 

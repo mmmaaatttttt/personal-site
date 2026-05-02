@@ -1,17 +1,17 @@
 "use client";
 
-import { FC, } from "react";
 import { scaleLinear } from "d3-scale";
-import COLORS from "@/utils/styles";
-import USMap from "@/components/story/shared/USMap";
+import { FC, } from "react";
 import BarGraph from "@/components/story/shared/BarGraph";
 import ColumnLayout from "@/components/story/shared/ColumnLayout";
 import SliderProvider from "@/components/story/shared/Slider/SliderProvider";
+import USMap from "@/components/story/shared/USMap";
+import COLORS from "@/utils/styles";
 import type { ElectionRow, StateSummary } from "../../data";
 import {
+  buildBarData,
   computeFillValue,
   formatTooltip,
-  buildBarData,
 } from "./helpers";
 
 const EG_MAX = 0.5;

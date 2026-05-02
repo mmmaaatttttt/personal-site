@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Open_Sans, Domine } from "next/font/google";
+import { Domine, Open_Sans } from "next/font/google";
 import "./globals.css";
 
 const openSans = Open_Sans({

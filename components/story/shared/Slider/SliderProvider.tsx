@@ -1,8 +1,8 @@
 "use client";
 
-import { FC, useState, useMemo, ReactNode } from "react";
-import NarrowContainer from "../NarrowContainer";
+import { FC, ReactNode, useMemo, useState } from "react";
 import ColumnLayout from "../ColumnLayout";
+import NarrowContainer from "../NarrowContainer";
 import SliderGroup from "./SliderGroup";
 
 interface SliderInitialData {

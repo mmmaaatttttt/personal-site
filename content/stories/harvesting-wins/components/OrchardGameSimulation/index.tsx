@@ -1,13 +1,13 @@
 "use client";
 
-import { FC, useRef, useState, useCallback, useEffect } from "react";
-import HorizontalBar from "@/components/story/shared/HorizontalBar";
+import { FC, useCallback, useEffect, useRef, useState } from "react";
 import FlexContainer from "@/components/story/shared/FlexContainer";
+import HorizontalBar from "@/components/story/shared/HorizontalBar";
 import NarrowContainer from "@/components/story/shared/NarrowContainer";
 import { Button } from "@/components/ui/Button";
-import { strategies } from "../../data";
 import { camelCaseToTitle } from "@/utils/stringHelpers";
 import COLORS from "@/utils/styles";
+import { strategies } from "../../data";
 
 interface PlayData {
   gamesPlayed: number;

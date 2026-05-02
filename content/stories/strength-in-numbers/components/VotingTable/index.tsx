@@ -1,12 +1,12 @@
 "use client";
 
-import { FC, useState } from "react";
 import { format } from "d3-format";
+import { FC, useState } from "react";
 import SliderProvider from "@/components/story/shared/Slider/SliderProvider";
 import StyledTable from "@/components/story/shared/StyledTable";
 import COLORS from "@/utils/styles";
-import SortHeader, { type SortKey } from "./SortHeader";
 import type { VoterStateRow } from "../../data";
+import SortHeader, { type SortKey } from "./SortHeader";
 
 const percentFormat = format(".2%");
 

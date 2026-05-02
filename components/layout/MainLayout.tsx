@@ -1,9 +1,9 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
-import Navbar from "./Navbar";
+import React, { useEffect, useState } from "react";
 import Footer from "./Footer";
+import Navbar from "./Navbar";
 
 interface MainLayoutProps {
   children: React.ReactNode;

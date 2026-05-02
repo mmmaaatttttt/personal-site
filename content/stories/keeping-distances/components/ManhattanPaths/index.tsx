@@ -1,16 +1,16 @@
 "use client";
 
-import { FC, useState } from "react";
 import { scaleLinear } from "d3-scale";
+import { FC, useState } from "react";
 import Caption from "@/components/story/shared/Caption";
-import NarrowContainer from "@/components/story/shared/NarrowContainer";
 import Graph from "@/components/story/shared/Graph";
+import NarrowContainer from "@/components/story/shared/NarrowContainer";
 import LabeledSlider from "@/components/story/shared/Slider/LabeledSlider";
 import COLORS from "@/utils/styles";
 import {
+  generateGridPoints,
   generatePathOptions,
   generatePathPoints,
-  generateGridPoints,
 } from "./helpers";
 
 const WIDTH = 600;

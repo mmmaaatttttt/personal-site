@@ -1,16 +1,16 @@
 "use client";
 
-import React, { useState, useMemo } from "react";
 import { scaleLinear } from "d3-scale";
 import { AnimatePresence } from "framer-motion";
+import React, { useMemo, useState } from "react";
+import Caption from "@/components/story/shared/Caption";
 import Graph from "@/components/story/shared/Graph";
 import Legend from "@/components/story/shared/Legend";
 import NarrowContainer from "@/components/story/shared/NarrowContainer";
 import Select from "@/components/story/shared/Select";
-import Caption from "@/components/story/shared/Caption";
-import SentimentCircle from "./SentimentCircle";
-import { colorMap } from "../../data/beautiful-analysis";
 import baAllSentiment from "../../data/ba-all-sentiment";
+import { colorMap } from "../../data/beautiful-analysis";
+import SentimentCircle from "./SentimentCircle";
 
 interface CircData {
   key: string;

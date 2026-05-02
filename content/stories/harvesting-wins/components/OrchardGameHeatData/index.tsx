@@ -1,11 +1,11 @@
 "use client";
 
 import { FC, useState } from "react";
-import SliderProvider from "@/components/story/shared/Slider/SliderProvider";
-import Select from "@/components/story/shared/Select";
-import COLORS from "@/utils/styles";
-import { selectOptions, sliderData, orchardGameData, type OrchardDataPoint } from "../../data";
 import HeatChart from "@/components/story/shared/HeatChart";
+import Select from "@/components/story/shared/Select";
+import SliderProvider from "@/components/story/shared/Slider/SliderProvider";
+import COLORS from "@/utils/styles";
+import { type OrchardDataPoint, orchardGameData, selectOptions, sliderData } from "../../data";
 
 const OrchardGameHeatData: FC<{ caption?: string }> = () => {
   const [selectedOption, setSelectedOption] = useState(selectOptions[0]);

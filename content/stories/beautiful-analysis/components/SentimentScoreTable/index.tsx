@@ -1,12 +1,12 @@
 "use client";
 
-import React, { useState, useMemo } from "react";
-import Select from "@/components/story/shared/Select";
-import NarrowContainer from "@/components/story/shared/NarrowContainer";
-import StyledTable from "@/components/story/shared/StyledTable";
+import React, { useMemo, useState } from "react";
 import Caption from "@/components/story/shared/Caption";
-import { defaultSentimentOptions } from "../../data/beautiful-analysis";
+import NarrowContainer from "@/components/story/shared/NarrowContainer";
+import Select from "@/components/story/shared/Select";
+import StyledTable from "@/components/story/shared/StyledTable";
 import baSentimentData from "../../data/ba-sentiment-examples";
+import { defaultSentimentOptions } from "../../data/beautiful-analysis";
 
 interface SentimentScoreTableProps {
   sentimentRanges?: [number, number][];

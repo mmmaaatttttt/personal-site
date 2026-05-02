@@ -1,8 +1,8 @@
-import { describe, it, expect, vi } from 'vitest';
 import { render, screen } from '@testing-library/react';
+import { describe, expect, it, vi } from 'vitest';
 import '@testing-library/jest-dom/vitest';
-import Graph from '.';
 import { scaleLinear } from 'd3-scale';
+import Graph from '.';
 
 // Mock ResizeObserver for JSDOM
 global.ResizeObserver = vi.fn().mockImplementation(() => ({

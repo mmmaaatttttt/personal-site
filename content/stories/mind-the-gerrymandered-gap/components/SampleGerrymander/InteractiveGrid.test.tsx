@@ -1,7 +1,7 @@
-import { describe, it, expect, vi } from "vitest";
-import { render, fireEvent } from "@testing-library/react";
-import InteractiveGrid from "./InteractiveGrid";
+import { fireEvent, render } from "@testing-library/react";
+import { describe, expect, it, vi } from "vitest";
 import { getInitialSegments } from "./constants";
+import InteractiveGrid from "./InteractiveGrid";
 
 const defaultProps = {
   width: 450,

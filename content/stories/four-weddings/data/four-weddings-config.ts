@@ -1,11 +1,11 @@
 import { format } from "d3-format";
 import { scaleOrdinal } from "d3-scale";
 import { 
-  WeddingData, 
   HistogramOption, 
   MapOption, 
   PieOption, 
-  ScatterOption 
+  ScatterOption, 
+  WeddingData 
 } from "../types";
 
 // Colors from legacy utils/styles.js

@@ -1,13 +1,13 @@
-import { describe, it, expect } from "vitest";
+import { describe, expect, it } from "vitest";
 import COLORS from "@/utils/styles";
+import type { ElectionRow, StateSummary } from "../../data";
 import {
-  getStateBarColor,
+  buildBarData,
   computeFillValue,
   formatTooltip,
-  buildBarData,
+  getStateBarColor,
   getStateCode,
 } from "./helpers";
-import type { ElectionRow, StateSummary } from "../../data";
 
 describe("getStateCode", () => {
   it("returns state abbreviation for a known state", () => {

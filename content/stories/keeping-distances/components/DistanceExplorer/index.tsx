@@ -1,14 +1,14 @@
 "use client";
 
-import { FC, useCallback } from "react";
-import { scaleLinear } from "d3-scale";
 import { extent } from "d3-array";
+import { scaleLinear } from "d3-scale";
+import { FC, useCallback } from "react";
 import Caption from "@/components/story/shared/Caption";
-import NarrowContainer from "@/components/story/shared/NarrowContainer";
-import Graph from "@/components/story/shared/Graph";
-import COLORS from "@/utils/styles";
-import { euclideanDistance, average } from "@/utils/mathHelpers";
 import DraggableCircle from "@/components/story/shared/DraggableCircle";
+import Graph from "@/components/story/shared/Graph";
+import NarrowContainer from "@/components/story/shared/NarrowContainer";
+import { average, euclideanDistance } from "@/utils/mathHelpers";
+import COLORS from "@/utils/styles";
 import useDragState from "./useDragState";
 
 const WIDTH = 600;

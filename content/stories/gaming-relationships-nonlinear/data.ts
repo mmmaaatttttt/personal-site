@@ -1,5 +1,5 @@
-import COLORS from "@/utils/styles";
 import type { GamingVisData, SliderDatum } from "@/components/story/shared/GamingRelationships";
+import COLORS from "@/utils/styles";
 
 const A = COLORS.ORANGE;
 const B = COLORS.GREEN;

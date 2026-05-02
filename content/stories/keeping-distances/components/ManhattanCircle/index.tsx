@@ -1,7 +1,7 @@
 "use client";
 
-import { FC } from "react";
 import { scaleLinear } from "d3-scale";
+import { FC } from "react";
 import Caption from "@/components/story/shared/Caption";
 import Graph from "@/components/story/shared/Graph";
 import SliderProvider from "@/components/story/shared/Slider";

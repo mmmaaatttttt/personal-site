@@ -1,23 +1,23 @@
 "use client";
 
-import { FC, useState, useEffect, useCallback, useRef, useMemo } from "react";
+import { FC, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import ColumnLayout from "@/components/story/shared/ColumnLayout";
-import GerrymanderGrid from "./GerrymanderGrid";
-import InteractiveGrid from "./InteractiveGrid";
-import DistrictStatus from "./DistrictStatus";
 import {
-  ROW_COUNT,
   COL_COUNT,
-  GRID_WIDTH,
-  STROKE_WIDTH,
-  STORAGE_KEY,
-  GERRYMANDER_COUNTS_EVENT,
-  GERRYMANDER_COUNTS_KEY,
   COLOR_RANGE,
   computeGridDimensions,
+  GERRYMANDER_COUNTS_EVENT,
+  GERRYMANDER_COUNTS_KEY,
+  GRID_WIDTH,
   getInitialSegments,
+  ROW_COUNT,
+  STORAGE_KEY,
+  STROKE_WIDTH,
 } from "./constants";
+import DistrictStatus from "./DistrictStatus";
 import { countRegions } from "./floodFill";
+import GerrymanderGrid from "./GerrymanderGrid";
+import InteractiveGrid from "./InteractiveGrid";
 
 interface SampleGerrymanderProps {
   rowCount?: number;

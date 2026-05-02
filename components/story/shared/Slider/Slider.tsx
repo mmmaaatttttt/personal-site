@@ -1,8 +1,8 @@
 "use client";
 
-import { FC, useEffect, useState, useMemo } from "react";
-import { cn } from "@/lib/utils";
 import { motion } from "framer-motion";
+import { FC, useEffect, useMemo, useState } from "react";
+import { cn } from "@/lib/utils";
 import { getOpaqueLightColor } from "./utils";
 
 export interface SliderProps {

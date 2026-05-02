@@ -1,18 +1,18 @@
 "use client";
 
-import { FC, useState, useEffect } from "react";
-import { animate, useMotionValue, useMotionValueEvent } from "framer-motion";
-import { scaleLinear } from "d3-scale";
 import { max } from "d3-array";
+import { scaleLinear } from "d3-scale";
+import { animate, useMotionValue, useMotionValueEvent } from "framer-motion";
+import { FC, useEffect, useState } from "react";
 import Caption from "@/components/story/shared/Caption";
-import NarrowContainer from "@/components/story/shared/NarrowContainer";
 import FlexContainer from "@/components/story/shared/FlexContainer";
 import Graph from "@/components/story/shared/Graph";
 import LinePlot from "@/components/story/shared/LinePlot";
-import { Button } from "@/components/ui/Button";
+import NarrowContainer from "@/components/story/shared/NarrowContainer";
 import ToggleSwitch from "@/components/story/shared/ToggleSwitch";
-import { betaPdf } from "../../mathHelpers";
+import { Button } from "@/components/ui/Button";
 import COLORS from "@/utils/styles";
+import { betaPdf } from "../../mathHelpers";
 
 const X_COORDS = Array.from({ length: 101 }, (_, i) => i / 100);
 const GRAPH_PADDING = { top: 0, right: 10, bottom: 100, left: 10 };

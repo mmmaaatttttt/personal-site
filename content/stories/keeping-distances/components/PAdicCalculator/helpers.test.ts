@@ -1,5 +1,5 @@
-import { describe, it, expect } from "vitest";
-import { findLargestPower, displayIntegerDifference } from "./helpers";
+import { describe, expect, it } from "vitest";
+import { displayIntegerDifference, findLargestPower } from "./helpers";
 
 describe("findLargestPower", () => {
   it("returns 0 when p does not divide n", () => {

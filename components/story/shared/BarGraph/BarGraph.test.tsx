@@ -1,8 +1,8 @@
-import { describe, it, expect, vi } from 'vitest';
 import { render, screen } from '@testing-library/react';
+import { describe, expect, it, vi } from 'vitest';
 import '@testing-library/jest-dom/vitest';
-import BarGraph from '.';
 import { scaleLinear } from 'd3-scale';
+import BarGraph from '.';
 
 // Mock the BarItem component directly to bypass all framer-motion complexity
 vi.mock('./BarItem', () => {

@@ -1,6 +1,6 @@
-import { describe, it, expect } from "vitest";
 import { scaleLinear } from "d3-scale";
-import { generatePathOptions, generatePathPoints, generateGridPoints } from "./helpers";
+import { describe, expect, it } from "vitest";
+import { generateGridPoints, generatePathOptions, generatePathPoints } from "./helpers";
 
 describe("generatePathOptions", () => {
   it("returns one empty path when height and width are both 0", () => {

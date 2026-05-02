@@ -1,6 +1,6 @@
-import { FC } from "react";
-import { line, curveNatural, curveLinear } from "d3-shape";
 import { AxisScale } from "d3-axis";
+import { curveLinear, curveNatural, line } from "d3-shape";
+import { FC } from "react";
 import COLORS from "@/utils/styles";
 
 interface Point {

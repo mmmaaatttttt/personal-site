@@ -2,8 +2,8 @@
 
 import { FC, useState } from "react";
 import Caption from "@/components/story/shared/Caption";
-import LabeledSlider from "@/components/story/shared/Slider/LabeledSlider";
 import ColoredSpan from "@/components/story/shared/ColoredSpan";
+import LabeledSlider from "@/components/story/shared/Slider/LabeledSlider";
 import COLORS from "@/utils/styles";
 
 function format(probability: number, dec = 0): string {

@@ -1,14 +1,14 @@
 "use client";
 
-import { FC, useEffect, useState, useCallback } from "react";
+import { FC, useCallback, useEffect, useState } from "react";
 import FlexContainer from "@/components/story/shared/FlexContainer";
 import NarrowContainer from "@/components/story/shared/NarrowContainer";
 import { Button } from "@/components/ui/Button";
 import COLORS from "@/utils/styles";
+import { INITIAL_COUNTS, SPINNER_COLORS } from "./constants";
 import FruitContainer from "./FruitContainer";
 import ScreenOverlay from "./ScreenOverlay";
 import Spinner from "./Spinner";
-import { SPINNER_COLORS, INITIAL_COUNTS } from "./constants";
 
 type GameState = "start" | "playing" | "win" | "loss";
 

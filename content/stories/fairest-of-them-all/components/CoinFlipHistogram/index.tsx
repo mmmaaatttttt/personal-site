@@ -1,11 +1,11 @@
 "use client";
 
-import { FC } from "react";
-import { scaleLinear } from "d3-scale";
 import { max } from "d3-array";
+import { scaleLinear } from "d3-scale";
+import { FC } from "react";
+import BarGraph from "@/components/story/shared/BarGraph";
 import Caption from "@/components/story/shared/Caption";
 import SliderProvider from "@/components/story/shared/Slider";
-import BarGraph from "@/components/story/shared/BarGraph";
 import COLORS from "@/utils/styles";
 import { binomialDensityValues } from "../../mathHelpers";
 

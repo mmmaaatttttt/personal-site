@@ -1,4 +1,4 @@
-import { describe, it, expect } from "vitest";
+import { describe, expect, it } from "vitest";
 import { generateAllPoints, generateFreqMap, mixColors } from "./helpers";
 
 // Minimal corner set matching the real defaults

@@ -1,5 +1,5 @@
-import COLORS from "@/utils/styles";
 import { interpolate } from "@/utils/mathHelpers";
+import COLORS from "@/utils/styles";
 
 export interface PointData {
   x: number;

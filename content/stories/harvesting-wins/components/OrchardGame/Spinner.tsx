@@ -1,8 +1,8 @@
 "use client";
 
-import { FC, useRef, useState, useCallback } from "react";
+import { arc, pie } from "d3-shape";
 import { animate } from "framer-motion";
-import { pie, arc } from "d3-shape";
+import { FC, useCallback, useRef, useState } from "react";
 import ClippedSVG from "@/components/story/shared/ClippedSVG";
 import { Button } from "@/components/ui/Button";
 import COLORS from "@/utils/styles";

@@ -2,8 +2,8 @@
 
 import { FC, useMemo, useState } from "react";
 import Caption from "@/components/story/shared/Caption";
-import Select from "@/components/story/shared/Select";
 import HeatChart from "@/components/story/shared/HeatChart";
+import Select from "@/components/story/shared/Select";
 import COLORS from "@/utils/styles";
 import { generateGrid } from "./padicHeatMath";
 

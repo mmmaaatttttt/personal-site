@@ -1,10 +1,10 @@
+import { AxisDomain, AxisScale } from "d3-axis";
 import { ReactNode } from "react";
-import { AxisScale, AxisDomain } from "d3-axis";
-import NarrowContainer from "../NarrowContainer";
-import ClippedSVG from "../ClippedSVG";
+import { paddingObj } from "@/utils/styles";
 import Axis from "../Axis";
 import AxisLabel from "../AxisLabel";
-import { paddingObj } from "@/utils/styles";
+import ClippedSVG from "../ClippedSVG";
+import NarrowContainer from "../NarrowContainer";
 
 interface Padding {
   top: number;

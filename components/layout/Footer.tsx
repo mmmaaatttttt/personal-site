@@ -1,6 +1,6 @@
-import React from "react";
+import { BookOpen, Github, Rss, Twitter } from "lucide-react";
 import Link from "next/link";
-import { Twitter, Github, BookOpen, Rss } from "lucide-react";
+import React from "react";
 
 const Footer: React.FC = () => {
   return (

@@ -1,11 +1,11 @@
-import { describe, it, expect } from "vitest";
+import { describe, expect, it } from "vitest";
 import {
-  clamped,
-  lInfNormEndpoints,
-  l1Norm,
-  yOnLine,
   areaHelper,
   areaUnderLine,
+  clamped,
+  l1Norm,
+  lInfNormEndpoints,
+  yOnLine,
 } from "./helpers";
 
 describe("clamped", () => {

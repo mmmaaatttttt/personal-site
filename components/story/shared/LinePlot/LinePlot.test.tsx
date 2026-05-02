@@ -1,8 +1,8 @@
-import { describe, it, expect } from 'vitest';
 import { render } from '@testing-library/react';
+import { describe, expect, it } from 'vitest';
 import '@testing-library/jest-dom/vitest';
-import LinePlot from '.';
 import { scaleLinear } from 'd3-scale';
+import LinePlot from '.';
 
 describe('LinePlot Component', () => {
   const mockData = [

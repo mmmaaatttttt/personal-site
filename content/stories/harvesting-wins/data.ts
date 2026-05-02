@@ -1,5 +1,5 @@
-import COLORS from "@/utils/styles";
 import { camelCaseToTitle } from "@/utils/stringHelpers";
+import COLORS from "@/utils/styles";
 import type { OrchardDataPoint } from "./orchard-game";
 
 export interface Strategy {

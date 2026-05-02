@@ -1,8 +1,8 @@
-import { describe, it, expect } from 'vitest';
 import { render } from '@testing-library/react';
+import { describe, expect, it } from 'vitest';
 import '@testing-library/jest-dom/vitest';
-import Axis from '.';
 import { scaleLinear } from 'd3-scale';
+import Axis from '.';
 
 describe('Axis Component', () => {
   const mockScale = scaleLinear().domain([0, 100]).range([0, 500]);

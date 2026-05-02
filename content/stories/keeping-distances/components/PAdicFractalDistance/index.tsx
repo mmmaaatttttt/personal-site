@@ -1,14 +1,14 @@
 "use client";
 
-import { FC, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
+import { FC, useState } from "react";
 import Caption from "@/components/story/shared/Caption";
 import ClippedSVG from "@/components/story/shared/ClippedSVG";
 import Select from "@/components/story/shared/Select";
 import SliderProvider from "@/components/story/shared/Slider/SliderProvider";
 import COLORS from "@/utils/styles";
+import { HEIGHT, LEVEL_COLORS, PRIME_OPTIONS, WIDTH, xScale, yScale } from "./constants";
 import { generatePAdicPoints, getStartIdx, showLabel } from "./helpers";
-import { LEVEL_COLORS, PRIME_OPTIONS, WIDTH, HEIGHT, xScale, yScale } from "./constants";
 
 const LEVEL_SLIDER = [
   {

@@ -2,23 +2,23 @@
 
 import { FC, useState } from "react";
 import Caption from "@/components/story/shared/Caption";
-import NarrowContainer from "@/components/story/shared/NarrowContainer";
-import FlexContainer from "@/components/story/shared/FlexContainer";
-import ColoredSpan from "@/components/story/shared/ColoredSpan";
 import ClippedSVG from "@/components/story/shared/ClippedSVG";
+import ColoredSpan from "@/components/story/shared/ColoredSpan";
+import FlexContainer from "@/components/story/shared/FlexContainer";
+import NarrowContainer from "@/components/story/shared/NarrowContainer";
 import LabeledSlider from "@/components/story/shared/Slider/LabeledSlider";
 import Tooltip, { useTooltip } from "@/components/story/shared/Tooltip";
 import { Button } from "@/components/ui/Button";
-import COLORS from "@/utils/styles";
 import { total } from "@/utils/mathHelpers";
+import COLORS from "@/utils/styles";
 import {
   generateAllPoints,
   generateFreqMap,
   mixColors,
   type PointData,
 } from "./helpers";
-import Polygon from "./Polygon";
 import LabeledCircle from "./LabeledCircle";
+import Polygon from "./Polygon";
 import RadioButtonGroup from "./RadioButtonGroup";
 
 const SVG_WIDTH = 600;

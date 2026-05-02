@@ -1,7 +1,7 @@
 
 import MainLayout from "@/components/layout/MainLayout";
-import ArticlesContent from "./ArticlesContent";
 import { getAllArticles, getMetadataOptions } from "@/utils/content";
+import ArticlesContent from "./ArticlesContent";
 
 export const metadata = {
   title: "Stories | Matt Lane",

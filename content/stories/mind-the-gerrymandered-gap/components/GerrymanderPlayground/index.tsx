@@ -1,8 +1,8 @@
 "use client";
 
-import { FC, useState, useCallback } from "react";
-import SampleGerrymander from "../SampleGerrymander";
+import { FC, useCallback, useState } from "react";
 import EfficiencyGapTable from "../EfficiencyGapTable";
+import SampleGerrymander from "../SampleGerrymander";
 
 const GerrymanderPlayground: FC = () => {
   const [districtCounts, setDistrictCounts] = useState<[number, number][] | null>(null);

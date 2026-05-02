@@ -1,5 +1,5 @@
-import { ChangeEvent } from "react";
 import { ChevronDown } from "lucide-react";
+import { ChangeEvent } from "react";
 
 interface Option {
   value: string;

@@ -1,15 +1,15 @@
 "use client";
 
-import { FC, useState, useMemo } from "react";
+import { FC, useMemo, useState } from "react";
 import MultiBarGraph from "@/components/story/shared/MultiBarGraph";
-import Select from "@/components/story/shared/Select";
 import NarrowContainer from "@/components/story/shared/NarrowContainer";
-import {
-  generateTooltipData,
-  defaultSentimentOptions,
-} from "../../data/beautiful-analysis";
-import baSentimentCounts, { type EpisodeSentimentCounts } from "../../data/ba-sentiment-counts";
+import Select from "@/components/story/shared/Select";
 import COLORS from "@/utils/styles";
+import baSentimentCounts, { type EpisodeSentimentCounts } from "../../data/ba-sentiment-counts";
+import {
+  defaultSentimentOptions,
+  generateTooltipData,
+} from "../../data/beautiful-analysis";
 
 interface SelectableMultiBarGraphProps {
   colors?: string[];

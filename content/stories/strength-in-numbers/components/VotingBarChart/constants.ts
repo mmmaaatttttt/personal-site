@@ -1,5 +1,5 @@
-import COLORS from "@/utils/styles";
 import { total } from "@/utils/mathHelpers";
+import COLORS from "@/utils/styles";
 import type { VotingDataRow } from "../../data";
 
 export interface BarOption {

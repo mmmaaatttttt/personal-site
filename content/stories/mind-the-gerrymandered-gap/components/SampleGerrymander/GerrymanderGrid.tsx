@@ -1,7 +1,7 @@
 "use client";
 
-import { FC, ReactNode } from "react";
 import { scaleLinear } from "d3-scale";
+import { FC, ReactNode } from "react";
 import ClippedSVG from "@/components/story/shared/ClippedSVG";
 
 interface GerrymanderGridProps {

@@ -1,6 +1,6 @@
-import { describe, it, expect } from 'vitest';
-import { selectOptions } from './four-weddings-config';
+import { describe, expect, it } from 'vitest';
 import { WeddingData } from '../types';
+import { selectOptions } from './four-weddings-config';
 
 describe('four-weddings-config logic', () => {
   const mockData: Partial<WeddingData>[] = [

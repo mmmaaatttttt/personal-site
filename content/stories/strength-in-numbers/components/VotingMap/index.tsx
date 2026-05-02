@@ -1,19 +1,19 @@
 "use client";
 
-import { useState } from "react";
 import { format } from "d3-format";
+import { useState } from "react";
 import Caption from "@/components/story/shared/Caption";
-import USMap from "@/components/story/shared/USMap";
-import Tooltip, { useTooltip } from "@/components/story/shared/Tooltip";
-import SliderProvider from "@/components/story/shared/Slider/SliderProvider";
 import Select from "@/components/story/shared/Select";
+import SliderProvider from "@/components/story/shared/Slider/SliderProvider";
+import Tooltip, { useTooltip } from "@/components/story/shared/Tooltip";
+import USMap from "@/components/story/shared/USMap";
 import COLORS from "@/utils/styles";
 import type { VotingDataRow } from "../../data";
 import {
+  MAX_YEAR,
+  MIN_YEAR,
   VOTERS_MAP_OPTIONS,
   WORKERS_MAP_OPTIONS,
-  MIN_YEAR,
-  MAX_YEAR,
   YEAR_STEP,
 } from "./constants";
 

@@ -1,19 +1,16 @@
 "use client";
 
-import { FC, useMemo } from "react";
-import { min, max } from "d3-array";
-import { stack as d3stack, stackOffsetNone } from "d3-shape";
+import { max, min } from "d3-array";
 import { scaleBand, scaleLinear } from "d3-scale";
-import { motion, AnimatePresence } from "framer-motion";
+import { stack as d3stack, Series, stackOffsetNone } from "d3-shape";
+import { AnimatePresence, motion } from "framer-motion";
+import { FC, useMemo } from "react";
 import Axis from "../Axis";
 import AxisLabel from "../AxisLabel";
 import ClippedSVG from "../ClippedSVG";
 import Legend from "../Legend";
 import NarrowContainer from "../NarrowContainer";
-import { useTooltip } from "../Tooltip";
-import Tooltip from "../Tooltip";
-
-import { Series } from "d3-shape";
+import Tooltip, { useTooltip } from "../Tooltip";
 
 interface MultiBarData {
   meta: Record<string, string | number | boolean>;

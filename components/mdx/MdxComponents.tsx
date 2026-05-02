@@ -1,13 +1,13 @@
-import ColoredSpan from "@/components/story/shared/ColoredSpan";
-import Latex from "@/components/story/shared/Latex";
-import NarrowContainer from "@/components/story/shared/NarrowContainer";
-import StyledTable from "@/components/story/shared/StyledTable";
 import Caption from "@/components/story/shared/Caption";
+import ColoredSpan from "@/components/story/shared/ColoredSpan";
 import HorizontalBarGraph from "@/components/story/shared/HorizontalBarGraph";
-import MultiBarGraph from "@/components/story/shared/MultiBarGraph";
+import Latex from "@/components/story/shared/Latex";
 import Legend from "@/components/story/shared/Legend";
-import SliderProvider from "@/components/story/shared/Slider";
+import MultiBarGraph from "@/components/story/shared/MultiBarGraph";
+import NarrowContainer from "@/components/story/shared/NarrowContainer";
 import Sidebar from "@/components/story/shared/Sidebar";
+import SliderProvider from "@/components/story/shared/Slider";
+import StyledTable from "@/components/story/shared/StyledTable";
 
 export const MdxComponents: any = {
   // Markdown element overrides

@@ -1,5 +1,5 @@
-import { describe, it, expect } from "vitest";
-import { generatePoints, getPerimeter, getCircleParams, getAreaInfo } from "./mathHelpers";
+import { describe, expect, it } from "vitest";
+import { generatePoints, getAreaInfo, getCircleParams, getPerimeter } from "./mathHelpers";
 
 const W = 600;
 const H = 400;

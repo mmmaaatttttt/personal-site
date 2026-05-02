@@ -1,10 +1,10 @@
 "use client";
 
 import MultiBarGraph from "@/components/story/shared/MultiBarGraph";
-import { generateTooltipData } from "../../data/beautiful-analysis";
-import baSummary from "../../data/ba-summary";
-import baProfanity from "../../data/ba-profanity";
 import COLORS from "@/utils/styles";
+import baProfanity from "../../data/ba-profanity";
+import baSummary from "../../data/ba-summary";
+import { generateTooltipData } from "../../data/beautiful-analysis";
 
 interface BaMultiBarGraphProps {
   dataType?: "summary" | "profanity";

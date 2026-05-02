@@ -1,8 +1,8 @@
-import { describe, it, expect, vi } from "vitest";
 import { render, screen } from "@testing-library/react";
+import { describe, expect, it, vi } from "vitest";
 import "@testing-library/jest-dom/vitest";
-import GamingRelationships, { GamingVisData } from ".";
 import COLORS from "@/utils/styles";
+import GamingRelationships, { GamingVisData } from ".";
 
 vi.mock("odex", () => ({
   Solver: vi.fn().mockImplementation((_fn: unknown, _n: number) => ({

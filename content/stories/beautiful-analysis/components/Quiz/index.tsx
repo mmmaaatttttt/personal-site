@@ -1,10 +1,10 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
-import { choices } from "@/utils/mathHelpers";
+import React, { useEffect, useState } from "react";
 import Caption from "@/components/story/shared/Caption";
-import QuizReviewPanel from "./QuizReviewPanel";
+import { choices } from "@/utils/mathHelpers";
 import baQuizData, { type QuizQuestion } from "../../data/ba-quiz";
+import QuizReviewPanel from "./QuizReviewPanel";
 
 interface QuizProps {
   answerColors?: string[];

@@ -1,4 +1,4 @@
-import { FC, ReactNode, Children } from "react";
+import { Children, FC, ReactNode } from "react";
 import { cn } from "@/lib/utils";
 
 interface ColumnLayoutProps {

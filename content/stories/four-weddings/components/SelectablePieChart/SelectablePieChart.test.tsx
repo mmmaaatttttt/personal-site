@@ -1,8 +1,8 @@
-import { describe, it, expect, vi } from 'vitest';
-import { render, fireEvent } from '@testing-library/react';
+import { fireEvent, render } from '@testing-library/react';
+import { describe, expect, it, vi } from 'vitest';
 import '@testing-library/jest-dom/vitest';
+import { PieOption, WeddingData } from '../../types';
 import SelectablePieChart from './index';
-import { WeddingData, PieOption } from '../../types';
 
 // Mock components
 vi.mock('@/components/story/shared/PieChart', () => ({

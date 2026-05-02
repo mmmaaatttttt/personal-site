@@ -1,16 +1,16 @@
-import type { ArticleFrontmatter } from "@/utils/content";
-import fourWeddings from "@/content/stories/four-weddings/meta";
 import beautifulAnalysis from "@/content/stories/beautiful-analysis/meta";
 import dishingOnPetrie from "@/content/stories/dishing-on-petrie/meta";
-import warmingDots from "@/content/stories/warming-dots/meta";
+import fairestOfThemAll from "@/content/stories/fairest-of-them-all/meta";
+import fourWeddings from "@/content/stories/four-weddings/meta";
 import gamingRelationshipsLinear from "@/content/stories/gaming-relationships-linear/meta";
 import gamingRelationshipsNonlinear from "@/content/stories/gaming-relationships-nonlinear/meta";
-import incomeInequality from "@/content/stories/income-inequality/meta";
 import harvestingWins from "@/content/stories/harvesting-wins/meta";
-import fairestOfThemAll from "@/content/stories/fairest-of-them-all/meta";
+import incomeInequality from "@/content/stories/income-inequality/meta";
+import keepingDistances from "@/content/stories/keeping-distances/meta";
 import mindTheGerrymanderGap from "@/content/stories/mind-the-gerrymandered-gap/meta";
 import strengthInNumbers from "@/content/stories/strength-in-numbers/meta";
-import keepingDistances from "@/content/stories/keeping-distances/meta";
+import warmingDots from "@/content/stories/warming-dots/meta";
+import type { ArticleFrontmatter } from "@/utils/content";
 
 /**
  * Typed metadata for ported stories. getArticle() checks here first;

@@ -1,10 +1,10 @@
 "use client";
 
-import { FC, useState, ChangeEvent } from "react";
+import { ChangeEvent, FC, useState } from "react";
 import Caption from "@/components/story/shared/Caption";
+import Latex from "@/components/story/shared/Latex";
 import NarrowContainer from "@/components/story/shared/NarrowContainer";
 import Select from "@/components/story/shared/Select";
-import Latex from "@/components/story/shared/Latex";
 import { displayIntegerDifference } from "./helpers";
 
 const PRIMES = [2, 3, 5, 7, 11, 13, 17, 19, 23];

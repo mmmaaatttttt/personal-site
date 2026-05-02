@@ -1,5 +1,5 @@
-import strategies from "../src/data/orchard-game.js";
 import fs from "fs";
+import strategies from "../src/data/orchard-game.js";
 
 const colorCountMax = 5;
 const wildCardCountMax = 5;
