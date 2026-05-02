@@ -250,7 +250,7 @@ const EconomyNodeGroup: FC<EconomyNodeGroupProps> = ({
       sim.nodes(existingNodes);
       if (!playing) drawRef.current?.();
     }
-  }, [speeds.length, width, height, initialV, velocityMultiplier]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [speeds.length, width, height, initialV, velocityMultiplier, playing]); // eslint-disable-line react-hooks/exhaustive-deps
 
   // React to playing/paused changes
   useEffect(() => {
@@ -303,7 +303,7 @@ const EconomyNodeGroup: FC<EconomyNodeGroupProps> = ({
     }
     sim.nodes(existingNodes);
     drawRef.current?.();
-  }, [playing]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [playing, initialV, width, speeds.length, height]); // eslint-disable-line react-hooks/exhaustive-deps
 
   return <g ref={gRef} />;
 };

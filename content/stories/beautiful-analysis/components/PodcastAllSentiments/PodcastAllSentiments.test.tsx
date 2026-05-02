@@ -49,7 +49,7 @@ describe("PodcastAllSentiments Component", () => {
   it("updates sentiment dots when a different episode is selected", () => {
     render(<PodcastAllSentiments />);
 
-    const initialCircles = screen.getAllByTestId(
+    const _initialCircles = screen.getAllByTestId(
       "mock-sentiment-circle",
     ).length;
 

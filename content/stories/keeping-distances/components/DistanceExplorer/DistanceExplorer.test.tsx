@@ -61,7 +61,7 @@ describe("DistanceExplorer", () => {
 
     const label = document.querySelector('text[fill="#ff8f34"]');
     const value = parseFloat(label?.textContent ?? "NaN");
-    expect(isNaN(value)).toBe(false);
+    expect(Number.isNaN(value)).toBe(false);
     expect(value).toBeGreaterThanOrEqual(0);
   });
 

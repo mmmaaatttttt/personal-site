@@ -28,7 +28,7 @@ const SentimentScoreTable: React.FC<SentimentScoreTableProps> = ({
 }) => {
   const options = defaultSentimentOptions;
   const [selectedOption, setSelectedOption] = useState(
-    options && options[0]
+    options?.[0]
       ? options[0][Math.floor(options[0].length / 2)]
       : { value: "0", label: "Loading" },
   );

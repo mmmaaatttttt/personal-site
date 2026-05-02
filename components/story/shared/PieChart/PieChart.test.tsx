@@ -6,7 +6,7 @@ import type { PieArcDatum } from "d3-shape";
 // Mock the PieSlice component directly to bypass its internal animation hooks
 // allowing us to test PieChart's data mapping logic in isolation.
 vi.mock("./PieSlice", () => {
-  const React = require("react");
+  const _React = require("react");
   return {
     default: ({
       datum,

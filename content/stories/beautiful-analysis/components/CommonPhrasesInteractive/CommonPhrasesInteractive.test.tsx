@@ -39,6 +39,7 @@ describe("CommonPhrasesInteractive Component", () => {
     // Should have some rows for the initial phrase count
     const rowsCount = parseInt(
       screen.getByTestId("rows-count").textContent || "0",
+      10,
     );
     expect(rowsCount).toBeGreaterThan(0);
   });

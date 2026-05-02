@@ -28,7 +28,7 @@ describe("FruitContainer", () => {
   it("calls onRemove when clicked and clickable", () => {
     const onRemove = vi.fn();
     render(<FruitContainer {...baseProps} clickable onRemove={onRemove} />);
-    fireEvent.click(screen.getByText("Fruit").closest("div")!.parentElement!);
+    fireEvent.click(screen.getByText("Fruit").closest("div")?.parentElement!);
     expect(onRemove).toHaveBeenCalledOnce();
   });
 
@@ -37,7 +37,7 @@ describe("FruitContainer", () => {
     render(
       <FruitContainer {...baseProps} clickable={false} onRemove={onRemove} />,
     );
-    fireEvent.click(screen.getByText("Fruit").closest("div")!.parentElement!);
+    fireEvent.click(screen.getByText("Fruit").closest("div")?.parentElement!);
     expect(onRemove).not.toHaveBeenCalled();
   });
 

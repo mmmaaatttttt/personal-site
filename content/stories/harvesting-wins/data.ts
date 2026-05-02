@@ -12,14 +12,14 @@ export const strategies: Strategy[] = [
     name: "mostPlentiful",
     fn: (fruitCounts) => {
       const maxCount = Math.max(...fruitCounts);
-      return fruitCounts.findIndex((c) => c === maxCount);
+      return fruitCounts.indexOf(maxCount);
     },
   },
   {
     name: "leastPlentiful",
     fn: (fruitCounts) => {
       const minCount = Math.min(...fruitCounts.filter((c) => c > 0));
-      return fruitCounts.findIndex((c) => c === minCount);
+      return fruitCounts.indexOf(minCount);
     },
   },
   {

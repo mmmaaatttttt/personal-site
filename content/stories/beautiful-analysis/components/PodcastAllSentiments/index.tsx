@@ -55,7 +55,7 @@ const PodcastAllSentiments: React.FC<PodcastAllSentimentsProps> = ({
 
   const circData = useMemo<CircData[]>(() => {
     const epData = baAllSentiment[parseInt(value, 10)];
-    if (!epData || !epData.sentiment_counts) return [];
+    if (!epData?.sentiment_counts) return [];
 
     const raw: CircData[] = epData.sentiment_counts
       .filter((d) => d[0] in colorMap) // remove lines from third parties
@@ -107,7 +107,7 @@ const PodcastAllSentiments: React.FC<PodcastAllSentimentsProps> = ({
           >
             <g>
               <AnimatePresence>
-                {circData.map((d, i) => (
+                {circData.map((d, _i) => (
                   <SentimentCircle
                     key={d.key}
                     cx={xScale(d.x)}

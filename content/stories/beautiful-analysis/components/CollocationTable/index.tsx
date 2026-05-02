@@ -22,14 +22,12 @@ const CollocationTable = () => {
       cells: [
         {
           key: "chris-collocation",
-          content: (
-            <ColoredSpan color={colorMap["Chris"]}>{phrase}</ColoredSpan>
-          ),
+          content: <ColoredSpan color={colorMap.Chris}>{phrase}</ColoredSpan>,
         },
         {
           key: "caller-collocation",
           content: (
-            <ColoredSpan color={colorMap["Caller"]}>
+            <ColoredSpan color={colorMap.Caller}>
               {baCommonPhrases.collocation_lists[1].collocations[idx]}
             </ColoredSpan>
           ),

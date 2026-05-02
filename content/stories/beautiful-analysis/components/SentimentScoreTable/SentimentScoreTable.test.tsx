@@ -46,7 +46,7 @@ describe("SentimentScoreTable Component", () => {
     ).toBeInTheDocument();
 
     const table = screen.getByTestId("mock-styled-table");
-    const rowCount = parseInt(table.getAttribute("data-rows-count") || "0");
+    const rowCount = parseInt(table.getAttribute("data-rows-count") || "0", 10);
 
     // Initial selection should have some rows
     expect(rowCount).toBeGreaterThan(0);

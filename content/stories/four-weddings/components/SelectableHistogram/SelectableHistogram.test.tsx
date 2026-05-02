@@ -122,7 +122,7 @@ describe("SelectableHistogram Component", () => {
     );
 
     const firstWidth = validBins[0].x1 - validBins[0].x0;
-    validBins.forEach((bin: any, i: number) => {
+    validBins.forEach((bin: any, _i: number) => {
       expect(bin.x1 - bin.x0).toBe(firstWidth);
     });
   });

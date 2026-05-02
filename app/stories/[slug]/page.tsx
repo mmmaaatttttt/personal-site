@@ -51,7 +51,7 @@ export async function generateMetadata({ params }: PageProps) {
       title: `${frontmatter.title} | Matt Lane`,
       description: frontmatter.caption,
     };
-  } catch (e) {
+  } catch (_e) {
     return { title: "Article Not Found" };
   }
 }
@@ -62,7 +62,7 @@ export default async function ArticlePage({ params }: PageProps) {
   let article;
   try {
     article = getArticle(slug);
-  } catch (e) {
+  } catch (_e) {
     notFound();
   }
 

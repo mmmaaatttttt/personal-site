@@ -1,4 +1,4 @@
-const path = require("path");
+const path = require("node:path");
 const babelJest = require("babel-jest");
 
 module.exports = babelJest.createTransformer({

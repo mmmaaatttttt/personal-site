@@ -64,7 +64,7 @@ const SampleGerrymander: FC<SampleGerrymanderProps> = ({
     }
     // rowCount is stable (prop default), so this runs effectively once
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [rowCount]);
 
   // Recompute districts and propagate counts whenever segments change
   useEffect(() => {

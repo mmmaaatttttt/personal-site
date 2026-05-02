@@ -13,10 +13,10 @@ export function generatePathOptions(
   if (memo[key]) return memo[key];
   memo[key] = [
     ...generatePathOptions(pathHeight - 1, pathWidth, memo, paths).map(
-      (p) => p + "y",
+      (p) => `${p}y`,
     ),
     ...generatePathOptions(pathHeight, pathWidth - 1, memo, paths).map(
-      (p) => p + "x",
+      (p) => `${p}x`,
     ),
   ];
   return memo[key];

@@ -62,7 +62,9 @@ const VotingBarChart = ({ data, variant, caption }: VotingBarChartProps) => {
             options.find((o) => o.value === selectedValue) ?? options[0];
           const allHeights = data
             .map((d) => option.accessor(d))
-            .filter((h): h is number => h !== null && isFinite(h) && h > 0);
+            .filter(
+              (h): h is number => h !== null && Number.isFinite(h) && h > 0,
+            );
           const maxHeight = Math.max(...allHeights, 0);
 
           const yScale = scaleLinear()
@@ -75,7 +77,7 @@ const VotingBarChart = ({ data, variant, caption }: VotingBarChartProps) => {
               const height = option.accessor(d);
               return {
                 key: d.abbreviation,
-                height: height !== null && isFinite(height) ? height : 0,
+                height: height !== null && Number.isFinite(height) ? height : 0,
                 color:
                   variant === "party"
                     ? partyColorScale(d.rep_percent - d.dem_percent)

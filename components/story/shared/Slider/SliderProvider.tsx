@@ -60,7 +60,7 @@ const SliderProvider: FC<SliderProviderProps> = ({
             handleValueChange: (val: number) => handleValueChange(i, val),
           }))
         : [],
-    [initialData, sliderValues],
+    [initialData, sliderValues, handleValueChange],
   );
 
   const numSliders = sliderValues.length;

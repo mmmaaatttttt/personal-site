@@ -43,7 +43,7 @@ const AnimatedPercentage: FC<AnimatedPercentageProps> = ({
 
   useEffect(() => {
     setDisplayValue(percentageValue.get());
-  }, []);
+  }, [percentageValue.get]);
 
   return (
     <motion.text

@@ -7,7 +7,7 @@ import BarGraph from ".";
 
 // Mock the BarItem component directly to bypass all framer-motion complexity
 vi.mock("./BarItem", () => {
-  const React = require("react");
+  const _React = require("react");
   return {
     default: ({
       data,

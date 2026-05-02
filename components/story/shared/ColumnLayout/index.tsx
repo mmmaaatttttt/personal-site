@@ -27,7 +27,7 @@ const ColumnLayout: FC<ColumnLayoutProps> = ({
         <div
           key={idx}
           className="flex-1"
-          style={sizes && sizes[idx] ? { flex: sizes[idx] } : undefined}
+          style={sizes?.[idx] ? { flex: sizes[idx] } : undefined}
         >
           {child}
         </div>

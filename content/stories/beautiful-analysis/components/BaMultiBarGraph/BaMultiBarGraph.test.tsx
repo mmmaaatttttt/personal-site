@@ -19,7 +19,7 @@ describe("BaMultiBarGraph", () => {
     const { getByTestId } = render(<BaMultiBarGraph />);
     const el = getByTestId("mock-multi-bar-graph");
     expect(
-      parseInt(el.getAttribute("data-data-length") || "0"),
+      parseInt(el.getAttribute("data-data-length") || "0", 10),
     ).toBeGreaterThan(0);
     expect(el.getAttribute("data-has-tooltip")).toBe("true");
   });
@@ -31,12 +31,14 @@ describe("BaMultiBarGraph", () => {
     const summaryLength = parseInt(
       getByTestId("mock-multi-bar-graph").getAttribute("data-data-length") ||
         "0",
+      10,
     );
 
     rerender(<BaMultiBarGraph dataType="profanity" />);
     const profanityLength = parseInt(
       getByTestId("mock-multi-bar-graph").getAttribute("data-data-length") ||
         "0",
+      10,
     );
 
     // Both datasets have the same number of episodes, but verify it renders

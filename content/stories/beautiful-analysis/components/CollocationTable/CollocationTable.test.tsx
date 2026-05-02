@@ -34,6 +34,7 @@ describe("CollocationTable Component", () => {
     // Check rows are present
     const rowsCount = parseInt(
       screen.getByTestId("rows-count").textContent || "0",
+      10,
     );
     expect(rowsCount).toBeGreaterThan(0);
 

@@ -5,7 +5,7 @@ import { THEME_OPACITY } from "./constants";
  * to create an opaque version of the "light" theme color.
  */
 export function getOpaqueLightColor(color: string): string {
-  if (!color || !color.startsWith("#") || color.length !== 7) return color;
+  if (!color?.startsWith("#") || color.length !== 7) return color;
 
   const r = parseInt(color.slice(1, 3), 16);
   const g = parseInt(color.slice(3, 5), 16);

@@ -48,7 +48,7 @@ const VotingLineChart = ({
     .map((d) => ({ x: d.year, y: option.accessor(d) }))
     .filter(
       (d): d is { x: number; y: number } =>
-        d.y !== null && d.y !== 0 && isFinite(d.y),
+        d.y !== null && d.y !== 0 && Number.isFinite(d.y),
     );
 
   const hasData = stateData.length > 0;

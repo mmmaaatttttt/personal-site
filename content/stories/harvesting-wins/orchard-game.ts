@@ -17461,7 +17461,7 @@ const orchardGameData: OrchardDataPoint[] = [
     ravenCount: 3,
     wildCardCount: 1,
     probs: {
-      mostPlentiful: 0.69315,
+      mostPlentiful: Math.LN2,
       leastPlentiful: 0.66911,
       random: 0.68164,
       favoriteColor: 0.67831,

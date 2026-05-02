@@ -49,7 +49,7 @@ const CoinFlipBayesianModel: FC<CoinFlipBayesianModelProps> = ({ caption }) => {
     animate(bMotion, targetB, { duration: 0.4, ease: "easeOut" });
     animate(colorMotion, targetColor, { duration: 0.4, ease: "easeOut" });
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [targetA, targetB, targetColor]);
+  }, [targetA, targetB, targetColor, colorMotion, bMotion, aMotion]);
 
   const graphData = X_COORDS.map((x) => ({
     x,

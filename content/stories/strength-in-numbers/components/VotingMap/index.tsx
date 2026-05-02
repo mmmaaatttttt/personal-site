@@ -59,7 +59,7 @@ const VotingMap = ({ data, variant, caption }: VotingMapProps) => {
 
           const validValues = data
             .map((d) => option.accessor(d))
-            .filter((v): v is number => v !== null && isFinite(v));
+            .filter((v): v is number => v !== null && Number.isFinite(v));
           const domain: [number, number] | undefined =
             validValues.length > 0
               ? [Math.min(...validValues), Math.max(...validValues)]
@@ -91,7 +91,7 @@ const VotingMap = ({ data, variant, caption }: VotingMapProps) => {
                   );
                   if (!yearRow) return "No data available";
                   const val = option.accessor(yearRow);
-                  if (val === null || !isFinite(val))
+                  if (val === null || !Number.isFinite(val))
                     return "No data available";
                   return `${option.label}: ${fmt(val)}`;
                 }}

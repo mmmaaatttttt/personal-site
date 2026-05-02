@@ -1,4 +1,4 @@
-import fs from "fs";
+import fs from "node:fs";
 import strategies from "../src/data/orchard-game.js";
 
 const colorCountMax = 5;
@@ -83,8 +83,7 @@ function probWin(fruitCounts, ravenCount, wildCardCount, strategy, memo = {}) {
   // check if previously calculated
   const countsForKey = [...fruitCounts];
   if (strategy.name !== "favoriteColor") countsForKey.sort((a, b) => a - b);
-  const key =
-    ravenCount + "," + countsForKey + "," + wildCardCount + "," + strategy.name;
+  const key = `${ravenCount},${countsForKey},${wildCardCount},${strategy.name}`;
   if (memo[key]) return memo[key];
 
   // calculate
@@ -143,7 +142,7 @@ function probWin(fruitCounts, ravenCount, wildCardCount, strategy, memo = {}) {
     if (fruitCount === 0) return;
     const fruitCopy = [...fruitCounts];
     fruitCopy[idx] = fruitCount - 1;
-    const multiplier = 1;
+    const _multiplier = 1;
     prob += probWin(fruitCopy, ravenCount, wildCardCount, strategy, memo);
   });
   memo[key] = prob / total;

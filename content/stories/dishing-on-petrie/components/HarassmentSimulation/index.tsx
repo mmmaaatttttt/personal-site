@@ -124,7 +124,7 @@ const HarassmentSimulation: FC<HarassmentSimulationProps> = ({
       },
       { handleClick: handleStop, buttonText: "Reset", color: COLORS.RED },
     ];
-  }, [playing, paused]);
+  }, [playing, paused, handleStop, handleStart, handlePause]);
 
   const greenSliders = [
     {

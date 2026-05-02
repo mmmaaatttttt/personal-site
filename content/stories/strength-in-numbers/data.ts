@@ -1,5 +1,5 @@
-import fs from "fs";
-import path from "path";
+import fs from "node:fs";
+import path from "node:path";
 
 export interface VoterStateRow {
   state: string;
@@ -145,10 +145,10 @@ function computeVoterTableData(rows: RawRow[]): VoterStateRow[] {
   return Array.from(byState.entries()).map(([state, stateRows]) => {
     const saturations = stateRows
       .map((d) => d.active_registration / d.eligible_voters_estimated)
-      .filter((n) => n !== 0 && isFinite(n));
+      .filter((n) => n !== 0 && Number.isFinite(n));
     const turnouts = stateRows
       .map((d) => d.election_participants / d.eligible_voters_estimated)
-      .filter((n) => n !== 0 && isFinite(n));
+      .filter((n) => n !== 0 && Number.isFinite(n));
 
     const averageSaturation =
       saturations.length > 0
