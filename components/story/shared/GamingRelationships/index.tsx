@@ -2,7 +2,7 @@
 
 import { extent } from "d3-array";
 import type { AxisScale } from "d3-axis";
-import { scaleLinear } from "d3-scale";
+import { type NumberValue, scaleLinear } from "d3-scale";
 import { useCallback, useState } from "react";
 import Caption from "@/components/story/shared/Caption";
 import ColumnLayout from "@/components/story/shared/ColumnLayout";
@@ -98,8 +98,8 @@ export default function GamingRelationships({
     return [-yMax, yMax];
   };
 
-  const tickStep = (scale: AxisScale<any>) => {
-    const domain = (scale as { domain: () => number[] }).domain();
+  const tickStep = (scale: AxisScale<NumberValue>) => {
+    const domain = scale.domain() as number[];
     const [tickMin, tickMax] = domain;
     return tickMax > 500 ? (tickMax - tickMin) / 1e3 : 1;
   };

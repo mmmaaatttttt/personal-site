@@ -59,7 +59,7 @@ export async function generateMetadata({ params }: PageProps) {
 export default async function ArticlePage({ params }: PageProps) {
   const { slug } = await params;
 
-  let article;
+  let article: ReturnType<typeof getArticle> | undefined;
   try {
     article = getArticle(slug);
   } catch (_e) {

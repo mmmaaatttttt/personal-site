@@ -1,4 +1,5 @@
 import { BookOpen, Github, Rss, Twitter } from "lucide-react";
+import Image from "next/image";
 import Link from "next/link";
 import type React from "react";
 
@@ -16,9 +17,10 @@ const Footer: React.FC = () => {
             href="http://creativecommons.org/licenses/by-nc/4.0/"
             className="shrink-0"
           >
-            <img
+            <Image
               alt="Creative Commons License"
-              className="h-[31px] w-[88px]"
+              width={88}
+              height={31}
               src="https://i.creativecommons.org/l/by-nc/4.0/88x31.png"
             />
           </a>
