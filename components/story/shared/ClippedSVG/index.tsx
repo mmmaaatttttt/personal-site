@@ -50,6 +50,8 @@ const ClippedSVG: FC<ClippedSVGProps> = ({
           viewBox={`0 0 ${width} ${height}`}
           style={{ marginTop }}
           className="w-full h-auto overflow-visible"
+          role="img"
+          aria-label={id}
         >
           <defs>
             <clipPath id={`clip-path-${id}`}>

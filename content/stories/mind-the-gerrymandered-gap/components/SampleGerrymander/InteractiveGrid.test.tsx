@@ -17,12 +17,12 @@ const defaultProps = {
 
 describe("InteractiveGrid", () => {
   it("renders without crashing", () => {
-    render(<svg>{<InteractiveGrid {...defaultProps} />}</svg>);
+    render(<svg role="img" aria-label="test">{<InteractiveGrid {...defaultProps} />}</svg>);
   });
 
   it("renders the correct number of interactive segment lines", () => {
     const { container } = render(
-      <svg>
+      <svg role="img" aria-label="test">
         <InteractiveGrid {...defaultProps} />
       </svg>,
     );
@@ -37,7 +37,7 @@ describe("InteractiveGrid", () => {
   it("calls onSegmentUpdate with the toggled status on mousedown", () => {
     const onSegmentUpdate = vi.fn();
     const { container } = render(
-      <svg>
+      <svg role="img" aria-label="test">
         <InteractiveGrid {...defaultProps} onSegmentUpdate={onSegmentUpdate} />
       </svg>,
     );
@@ -53,7 +53,7 @@ describe("InteractiveGrid", () => {
   it("calls onSegmentUpdate with null-like value on mouseenter when not dragging", () => {
     const onSegmentUpdate = vi.fn();
     const { container } = render(
-      <svg>
+      <svg role="img" aria-label="test">
         <InteractiveGrid {...defaultProps} onSegmentUpdate={onSegmentUpdate} />
       </svg>,
     );
@@ -71,7 +71,7 @@ describe("InteractiveGrid", () => {
     const segments = getInitialSegments(6, 9);
     segments[0][0] = true;
     const { container } = render(
-      <svg>
+      <svg role="img" aria-label="test">
         <InteractiveGrid {...defaultProps} segments={segments} />
       </svg>,
     );
@@ -86,7 +86,7 @@ describe("InteractiveGrid", () => {
   it("clears drag state on window mouseup", () => {
     const onSegmentUpdate = vi.fn();
     const { container } = render(
-      <svg>
+      <svg role="img" aria-label="test">
         <InteractiveGrid {...defaultProps} onSegmentUpdate={onSegmentUpdate} />
       </svg>,
     );

@@ -24,7 +24,7 @@ describe("LinePlot Component", () => {
 
   it("renders nothing when data is empty", () => {
     const { container } = render(
-      <svg>
+      <svg role="img" aria-label="test">
         <LinePlot {...defaultProps} graphData={[]} />
       </svg>,
     );
@@ -33,7 +33,7 @@ describe("LinePlot Component", () => {
 
   it("renders a path element with correct attributes", () => {
     const { container } = render(
-      <svg>
+      <svg role="img" aria-label="test">
         <LinePlot {...defaultProps} />
       </svg>,
     );
@@ -49,14 +49,14 @@ describe("LinePlot Component", () => {
 
   it("generates different paths for different curves", () => {
     const { rerender, container } = render(
-      <svg>
+      <svg role="img" aria-label="test">
         <LinePlot {...defaultProps} curve="curveLinear" />
       </svg>,
     );
     const linearPath = container.querySelector("path")?.getAttribute("d");
 
     rerender(
-      <svg>
+      <svg role="img" aria-label="test">
         <LinePlot {...defaultProps} curve="curveNatural" />
       </svg>,
     );
@@ -73,7 +73,7 @@ describe("LinePlot Component", () => {
     ];
 
     const { container } = render(
-      <svg>
+      <svg role="img" aria-label="test">
         <LinePlot {...defaultProps} graphData={dataWithOutliers} />
       </svg>,
     );

@@ -21,7 +21,7 @@ describe("HarassmentNodeGroup Component", () => {
 
   it("renders without crashing and outputs an svg group with border", () => {
     const { container } = render(
-      <svg>
+      <svg role="img" aria-label="test">
         <HarassmentNodeGroup {...defaultProps} />
       </svg>,
     );
@@ -30,7 +30,7 @@ describe("HarassmentNodeGroup Component", () => {
 
   it("renders correct number of nodes when initial counts are passed", () => {
     const { container } = render(
-      <svg>
+      <svg role="img" aria-label="test">
         <HarassmentNodeGroup {...defaultProps} />
       </svg>,
     );

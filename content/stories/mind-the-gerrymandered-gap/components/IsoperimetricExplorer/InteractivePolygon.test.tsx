@@ -21,7 +21,7 @@ const triangle = [
 
 function renderPolygon(points = triangle, onDrag = vi.fn()) {
   return render(
-    <svg>
+    <svg role="img" aria-label="test">
       <InteractivePolygon
         points={points}
         fill="green"
@@ -65,7 +65,7 @@ describe("InteractivePolygon", () => {
   it("calls onDrag when a vertex is dragged", () => {
     const onDrag = vi.fn();
     const { container } = renderPolygon(triangle, onDrag);
-    const firstCircle = container.querySelector("circle")!;
+    const firstCircle = container.querySelector("circle") as SVGCircleElement;
 
     fireEvent.pointerDown(firstCircle, { pointerId: 1 });
     fireEvent.pointerMove(firstCircle, {

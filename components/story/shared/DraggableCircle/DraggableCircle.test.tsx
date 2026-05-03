@@ -15,9 +15,9 @@ beforeEach(() => {
 });
 
 function renderInSVG(ui: ReactElement) {
-  const { container } = render(<svg>{ui}</svg>);
+  const { container } = render(<svg role="img" aria-label="test">{ui}</svg>);
   return {
-    circle: container.querySelector("circle")!,
+    circle: container.querySelector("circle") as SVGCircleElement,
   };
 }
 

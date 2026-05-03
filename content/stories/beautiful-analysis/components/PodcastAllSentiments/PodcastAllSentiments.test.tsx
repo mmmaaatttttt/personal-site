@@ -42,7 +42,7 @@ vi.mock("@/components/story/shared/Graph", () => ({
     <div data-testid="mock-graph">
       <div data-testid="x-scale-domain">{JSON.stringify(xScale.domain())}</div>
       <div data-testid="y-scale-domain">{JSON.stringify(yScale.domain())}</div>
-      <svg>{children}</svg>
+      <svg role="img" aria-label="test">{children}</svg>
     </div>
   ),
 }));

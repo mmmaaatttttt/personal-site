@@ -24,8 +24,10 @@ const FruitContainer: FC<FruitContainerProps> = ({
   const border = darkenHex(color, 0.2);
 
   return (
-    <div
+    <button
+      type="button"
       onClick={clickable ? onRemove : undefined}
+      disabled={!clickable}
       className="flex flex-1 mx-[2%] rounded-lg items-center justify-center min-h-20 text-white"
       style={{
         backgroundColor: bg,
@@ -41,7 +43,7 @@ const FruitContainer: FC<FruitContainerProps> = ({
           <h1 className="text-5xl font-bold m-0">{count}</h1>
         </div>
       )}
-    </div>
+    </button>
   );
 };
 

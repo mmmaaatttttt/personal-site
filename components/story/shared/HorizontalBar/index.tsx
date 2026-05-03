@@ -30,6 +30,7 @@ const HorizontalBar: FC<HorizontalBarProps> = ({
         <h4 className="text-center font-bold text-gray-800 mb-2">{title}</h4>
       )}
       <div
+        role="img"
         className="flex w-full overflow-hidden rounded-lg border border-gray-300"
         style={{ height }}
         onMouseLeave={hideTooltip}

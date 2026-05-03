@@ -35,6 +35,8 @@ const LabeledCircle: FC<LabeledCircleProps> = ({
         `}</style>
       )}
       <g
+        role="menuitem"
+        tabIndex={0}
         onMouseMove={handleUpdate}
         onTouchMove={handleUpdate}
         onMouseLeave={handleLeave}

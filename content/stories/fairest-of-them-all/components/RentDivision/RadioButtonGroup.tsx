@@ -74,6 +74,8 @@ const RadioButtonGroup: FC<RadioButtonGroupProps> = ({
                 className="h-4 w-4 text-white"
                 fill="currentColor"
                 viewBox="0 0 20 20"
+                role="img"
+                aria-label="selected"
               >
                 <path
                   fillRule="evenodd"
@@ -87,6 +89,8 @@ const RadioButtonGroup: FC<RadioButtonGroupProps> = ({
                 className="h-4 w-4 text-white"
                 fill="currentColor"
                 viewBox="0 0 20 20"
+                role="img"
+                aria-label="not available"
               >
                 <path
                   fillRule="evenodd"

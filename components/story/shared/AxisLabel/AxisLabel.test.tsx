@@ -6,7 +6,7 @@ import AxisLabel from ".";
 describe("AxisLabel Component", () => {
   it("renders correctly with children", () => {
     render(
-      <svg>
+      <svg role="img" aria-label="test">
         <AxisLabel>Test Label</AxisLabel>
       </svg>,
     );
@@ -15,7 +15,7 @@ describe("AxisLabel Component", () => {
 
   it("applies default styles and attributes", () => {
     render(
-      <svg>
+      <svg role="img" aria-label="test">
         <AxisLabel>Test Label</AxisLabel>
       </svg>,
     );
@@ -26,7 +26,7 @@ describe("AxisLabel Component", () => {
 
   it("respects custom props", () => {
     render(
-      <svg>
+      <svg role="img" aria-label="test">
         <AxisLabel
           anchor="start"
           fontSize="2rem"

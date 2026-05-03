@@ -9,7 +9,7 @@ describe("Axis Component", () => {
 
   it("renders an x-axis correctly", () => {
     const { container } = render(
-      <svg>
+      <svg role="img" aria-label="test">
         <Axis direction="x" scale={mockScale} yShift={380} />
       </svg>,
     );
@@ -23,7 +23,7 @@ describe("Axis Component", () => {
 
   it("renders a y-axis correctly", () => {
     const { container } = render(
-      <svg>
+      <svg role="img" aria-label="test">
         <Axis direction="y" scale={mockScale} xShift={20} />
       </svg>,
     );
@@ -34,7 +34,7 @@ describe("Axis Component", () => {
 
   it("applies tick styling and formatting", () => {
     const { container } = render(
-      <svg>
+      <svg role="img" aria-label="test">
         <Axis
           direction="x"
           scale={mockScale}
@@ -54,7 +54,7 @@ describe("Axis Component", () => {
 
   it("suppresses tick labels when no tickFormat is provided", () => {
     const { container } = render(
-      <svg>
+      <svg role="img" aria-label="test">
         <Axis direction="y" scale={mockScale} />
       </svg>,
     );
@@ -70,7 +70,7 @@ describe("Axis Component", () => {
 
   it("respects labelPosition fine-tuning", () => {
     const { container } = render(
-      <svg>
+      <svg role="img" aria-label="test">
         <Axis
           direction="x"
           scale={mockScale}

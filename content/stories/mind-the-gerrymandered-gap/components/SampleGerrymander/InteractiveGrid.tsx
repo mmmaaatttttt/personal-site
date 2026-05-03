@@ -101,6 +101,8 @@ const InteractiveGrid: FC<InteractiveGridProps> = ({
       {segmentData.map((d) => (
         <line
           key={`${d.rowIdx}:${d.colIdx}`}
+          role="menuitem"
+          tabIndex={0}
           x1={d.x1}
           x2={d.x2}
           y1={d.y1}
@@ -126,6 +128,15 @@ const InteractiveGrid: FC<InteractiveGridProps> = ({
             }
           }}
           onMouseOut={() => setHovered(null)}
+          onFocus={() => setHovered([d.rowIdx, d.colIdx])}
+          onBlur={() => setHovered(null)}
+          onKeyDown={(e) => {
+            if (e.key === "Enter" || e.key === " ") {
+              const next = !d.isOn;
+              setActiveStatus(next);
+              onSegmentUpdate(d.rowIdx, d.colIdx, next);
+            }
+          }}
         />
       ))}
       <rect

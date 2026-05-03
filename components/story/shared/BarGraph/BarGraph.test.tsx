@@ -51,7 +51,7 @@ vi.mock("../Graph", () => {
       children?: ReactNode;
       svgId?: string;
     }) => (
-      <svg data-testid="mock-graph" id={svgId}>
+      <svg data-testid="mock-graph" id={svgId} role="img" aria-label="test">
         {children}
       </svg>
     ),

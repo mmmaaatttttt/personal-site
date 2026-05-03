@@ -13,11 +13,11 @@ const defaultProps = {
 describe("LabeledCircle", () => {
   it("renders a circle with the correct position and color", () => {
     const { container } = render(
-      <svg>
+      <svg role="img" aria-label="test">
         <LabeledCircle {...defaultProps} />
       </svg>,
     );
-    const circle = container.querySelector("circle")!;
+    const circle = container.querySelector("circle") as SVGCircleElement;
     expect(circle.getAttribute("cx")).toBe("50");
     expect(circle.getAttribute("cy")).toBe("50");
     expect(circle.getAttribute("fill")).toBe("#555555");
@@ -25,7 +25,7 @@ describe("LabeledCircle", () => {
 
   it("renders the label text", () => {
     render(
-      <svg>
+      <svg role="img" aria-label="test">
         <LabeledCircle {...defaultProps} />
       </svg>,
     );
@@ -34,7 +34,7 @@ describe("LabeledCircle", () => {
 
   it("injects pulse keyframe style when isActive=true", () => {
     const { container } = render(
-      <svg>
+      <svg role="img" aria-label="test">
         <LabeledCircle {...defaultProps} isActive />
       </svg>,
     );
@@ -44,7 +44,7 @@ describe("LabeledCircle", () => {
 
   it("does not add active class when isActive=false", () => {
     const { container } = render(
-      <svg>
+      <svg role="img" aria-label="test">
         <LabeledCircle {...defaultProps} isActive={false} />
       </svg>,
     );
@@ -54,11 +54,11 @@ describe("LabeledCircle", () => {
   it("calls handleLeave on mouse leave", () => {
     const handleLeave = vi.fn();
     const { container } = render(
-      <svg>
+      <svg role="img" aria-label="test">
         <LabeledCircle {...defaultProps} handleLeave={handleLeave} />
       </svg>,
     );
-    fireEvent.mouseLeave(container.querySelector("g")!);
+    fireEvent.mouseLeave(container.querySelector("g") as SVGGElement);
     expect(handleLeave).toHaveBeenCalled();
   });
 });
