@@ -11,6 +11,7 @@
       "**",
       "!src",
       "!static/data/districts114.json",
+      "!components/story/shared/USMap/us-topo.json",
       "!gatsby-*.js",
       "!wrap-with-provider.js",
       "!jsconfig.json",
