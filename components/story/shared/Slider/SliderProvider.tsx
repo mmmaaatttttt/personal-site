@@ -1,6 +1,6 @@
 "use client";
 
-import { type FC, type ReactNode, useMemo, useState } from "react";
+import { type FC, type ReactNode, useCallback, useMemo, useState } from "react";
 import ColumnLayout from "../ColumnLayout";
 import NarrowContainer from "../NarrowContainer";
 import SliderGroup from "./SliderGroup";
@@ -40,13 +40,13 @@ const SliderProvider: FC<SliderProviderProps> = ({
       : [],
   );
 
-  const handleValueChange = (idx: number, newVal: number) => {
+  const handleValueChange = useCallback((idx: number, newVal: number) => {
     setSliderValues((prev) => {
       const next = [...prev];
       next[idx] = newVal;
       return next;
     });
-  };
+  }, []);
 
   const dataWithHandlers = useMemo(
     () =>

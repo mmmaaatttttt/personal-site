@@ -1,0 +1,8 @@
+.latex-wrapper .katex,
+.latex-wrapper .katex * {
+  font-family: inherit;
+}
+
+.latex-wrapper .katex .delimsizing.mult {
+  font-family: KaTeX_Size1, serif;
+}
