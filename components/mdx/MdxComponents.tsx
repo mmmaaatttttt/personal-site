@@ -51,7 +51,10 @@ export const MdxComponents: Record<string, unknown> = {
     <span className="my-12 block">
       <span className="relative mx-auto block w-fit">
         <Image
-          src={(typeof props.src === "string" ? props.src : "").replace(/^(\.\.\/)+images\//, "/images/")}
+          src={(typeof props.src === "string" ? props.src : "").replace(
+            /^(\.\.\/)+images\//,
+            "/images/",
+          )}
           alt={props.alt || ""}
           width={800}
           height={600}

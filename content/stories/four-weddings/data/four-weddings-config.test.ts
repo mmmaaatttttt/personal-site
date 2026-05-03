@@ -16,7 +16,9 @@ describe("four-weddings-config logic", () => {
       );
       expect(budgetPerGuestOption).toBeDefined();
 
-      const accessor = budgetPerGuestOption!.accessor;
+      const { accessor } = budgetPerGuestOption as NonNullable<
+        typeof budgetPerGuestOption
+      >;
       expect(accessor(mockData[0] as WeddingData)).toBe(100);
       expect(accessor(mockData[1] as WeddingData)).toBe(100);
       expect(accessor(mockData[2] as WeddingData)).toBeNull();
@@ -26,7 +28,7 @@ describe("four-weddings-config logic", () => {
       const ageGapOption = selectOptions.histogram.find(
         (opt) => opt.value === "ageGap",
       );
-      const accessor = ageGapOption!.accessor;
+      const { accessor } = ageGapOption as NonNullable<typeof ageGapOption>;
 
       const validEntry = { age: 25, spouseAge: 30 } as WeddingData;
       const invalidEntry = { age: 25, spouseAge: null } as WeddingData;
@@ -39,7 +41,7 @@ describe("four-weddings-config logic", () => {
   describe("Pie chart helper logic", () => {
     it("tallies rankings correctly while ignoring nulls", () => {
       const pieOption = selectOptions.pie.find((opt) => opt.value === "budget");
-      const accessor = pieOption!.accessor;
+      const { accessor } = pieOption as NonNullable<typeof pieOption>;
 
       const dataForPie: WeddingData[] = [
         { ranking: 1, budgetRanking: 1 } as WeddingData,
