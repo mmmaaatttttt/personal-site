@@ -61,7 +61,12 @@ const MultiBarGraph: FC<MultiBarGraphProps> = ({
       : [];
 
   const stackData = useMemo<Series<Record<string, number>, string>[]>(() => {
-    if (!data || !Array.isArray(data) || data.length === 0 || labels.length === 0)
+    if (
+      !data ||
+      !Array.isArray(data) ||
+      data.length === 0 ||
+      labels.length === 0
+    )
       return [];
     try {
       return d3stack<Record<string, number>, string>()
@@ -164,9 +169,15 @@ const MultiBarGraph: FC<MultiBarGraphProps> = ({
                               width: (xScale.step() || 0) * 0.8,
                             }}
                             transition={{ duration: 0.5, delay }}
-                            onMouseMove={showTooltip(tooltip.title, tooltip.body)}
+                            onMouseMove={showTooltip(
+                              tooltip.title,
+                              tooltip.body,
+                            )}
                             onMouseLeave={hideTooltip}
-                            onTouchMove={showTooltip(tooltip.title, tooltip.body)}
+                            onTouchMove={showTooltip(
+                              tooltip.title,
+                              tooltip.body,
+                            )}
                             onTouchEnd={hideTooltip}
                           />
                         );

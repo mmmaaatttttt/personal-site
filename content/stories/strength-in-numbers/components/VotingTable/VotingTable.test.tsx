@@ -57,7 +57,8 @@ describe("VotingTable", () => {
     const stateButton = sortButtons.find(
       (b) => b.getAttribute("aria-label") === "Sort by State",
     );
-    fireEvent.click(stateButton!);
+    if (!stateButton) throw new Error("Sort by State button not found");
+    fireEvent.click(stateButton);
     const rows = screen.getAllByRole("row");
     // Alabama should be first alphabetically
     expect(rows[1]).toHaveTextContent("Alabama");
@@ -68,7 +69,8 @@ describe("VotingTable", () => {
     const sortButtons = screen.getAllByRole("button", { name: /sort by/i });
     const stateButton = sortButtons.find(
       (b) => b.getAttribute("aria-label") === "Sort by State",
-    )!;
+    );
+    if (!stateButton) throw new Error("Sort by State button not found");
     // First click: ascending by state
     fireEvent.click(stateButton);
     let rows = screen.getAllByRole("row");

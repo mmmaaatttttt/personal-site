@@ -45,7 +45,8 @@ const Quiz: FC<QuizProps> = ({
     panel = (
       <>
         <h2 className="mb-6 font-serif text-3xl font-bold">{title}</h2>
-        <button type="button"
+        <button
+          type="button"
           onClick={() => setAnswers([])}
           className="mt-4 rounded-md bg-link px-8 py-3 font-semibold text-white shadow-md transition hover:bg-orange-600 active:scale-95 text-sm md:text-base"
         >
@@ -80,7 +81,8 @@ const Quiz: FC<QuizProps> = ({
             userAnswer={answers[resultsIndex]}
           />
 
-          <button type="button"
+          <button
+            type="button"
             onClick={() => setResultsIndex((prev) => Math.max(0, prev - 1))}
             disabled={resultsIndex === 0}
             className="absolute top-1/2 -left-4 p-2 rounded-full bg-white shadow-md disabled:opacity-30 flex items-center justify-center h-10 w-10 z-10"
@@ -88,7 +90,8 @@ const Quiz: FC<QuizProps> = ({
           >
             ←
           </button>
-          <button type="button"
+          <button
+            type="button"
             onClick={() =>
               setResultsIndex((prev) =>
                 Math.min(questions.length - 1, prev + 1),
@@ -102,7 +105,8 @@ const Quiz: FC<QuizProps> = ({
           </button>
         </div>
 
-        <button type="button"
+        <button
+          type="button"
           onClick={reset}
           className="mt-2 rounded-md bg-link px-8 py-3 font-semibold text-white shadow-md transition hover:bg-orange-600 active:scale-95 text-sm md:text-base"
         >
@@ -126,7 +130,8 @@ const Quiz: FC<QuizProps> = ({
           {question.choices.map((choice) => {
             const isSelected = selectedAnswer === choice;
             return (
-              <button type="button"
+              <button
+                type="button"
                 key={choice}
                 onClick={() => setSelectedAnswer(choice)}
                 className={`w-full rounded-md border-2 px-6 py-3 font-medium transition-colors text-sm md:text-base ${
@@ -140,7 +145,8 @@ const Quiz: FC<QuizProps> = ({
             );
           })}
         </div>
-        <button type="button"
+        <button
+          type="button"
           disabled={!selectedAnswer}
           onClick={() => {
             if (selectedAnswer) {

@@ -60,7 +60,9 @@ describe("IsoperimetricExplorer", () => {
       render(<IsoperimetricExplorer />);
     });
 
-    const input = document.querySelector('input[type="range"]')!;
+    const input = document.querySelector(
+      'input[type="range"]',
+    ) as HTMLInputElement;
     await act(async () => {
       fireEvent.change(input, { target: { value: "6" } });
     });

@@ -17,7 +17,11 @@ const defaultProps = {
 
 describe("InteractiveGrid", () => {
   it("renders without crashing", () => {
-    render(<svg role="img" aria-label="test">{<InteractiveGrid {...defaultProps} />}</svg>);
+    render(
+      <svg role="img" aria-label="test">
+        {<InteractiveGrid {...defaultProps} />}
+      </svg>,
+    );
   });
 
   it("renders the correct number of interactive segment lines", () => {

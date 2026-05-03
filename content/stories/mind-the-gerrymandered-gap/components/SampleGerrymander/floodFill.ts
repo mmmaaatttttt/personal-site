@@ -30,7 +30,7 @@ function bfsArea(
   const queue: [number, number][] = [[startRow, startCol]];
 
   while (queue.length > 0) {
-    const cell = queue.shift()!;
+    const cell = queue.shift() as [number, number];
     const [row, col] = cell;
     if (visited[row][col]) continue;
     visited[row][col] = true;

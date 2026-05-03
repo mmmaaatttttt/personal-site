@@ -35,7 +35,9 @@ vi.mock("./PieSlice", () => {
 vi.mock("../ClippedSVG", () => {
   return {
     default: ({ children }: { children?: ReactNode }) => (
-      <svg data-testid="clipped-svg" role="img" aria-label="test">{children}</svg>
+      <svg data-testid="clipped-svg" role="img" aria-label="test">
+        {children}
+      </svg>
     ),
   };
 });

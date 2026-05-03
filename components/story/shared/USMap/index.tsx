@@ -112,7 +112,8 @@ const USMap = <T extends { state?: string }>({
                 d.properties.values &&
                 d.properties.values.length > 0 &&
                 val !== null;
-              const fill = hasData ? colorScale(val!) : "#eeeeee";
+              const fill =
+                hasData && val !== null ? colorScale(val) : "#eeeeee";
               const title = getTooltipTitle(d.properties);
               const body = getTooltipBody(d.properties);
 

@@ -126,8 +126,8 @@ const BarGraph: FC<BarGraphProps> = ({
 
               if (histogram) {
                 const linearScale = xScale as ScaleLinear<number, number>;
-                x = linearScale(d.x0!) + 1;
-                barWidth = linearScale(d.x1!) - linearScale(d.x0!) - 2;
+                x = linearScale(d.x0 ?? 0) + 1;
+                barWidth = linearScale(d.x1 ?? 0) - linearScale(d.x0 ?? 0) - 2;
               } else {
                 const bandScale = xScale as ScaleBand<string>;
                 x = bandScale(i.toString()) || 0;

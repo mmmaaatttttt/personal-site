@@ -7,7 +7,9 @@ import Scatterplot from ".";
 // Mock Graph component
 vi.mock("../Graph", () => ({
   default: ({ children }: { children?: ReactNode }) => (
-    <svg data-testid="mock-graph" role="img" aria-label="test">{children}</svg>
+    <svg data-testid="mock-graph" role="img" aria-label="test">
+      {children}
+    </svg>
   ),
 }));
 

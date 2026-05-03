@@ -53,15 +53,15 @@ const HarassmentSimulation: FC<HarassmentSimulationProps> = ({
   const [blueOnGreenProb, setBlueOnGreenProb] = useState(0.05);
   const [greenOnBlueProb, setGreenOnBlueProb] = useState(0.05);
 
-  const handleStart = () => {
+  const handleStart = useCallback(() => {
     setPlaying(true);
     setBlueShoutsHeardFromBlueOnly(new Set());
     setBlueShoutsHeardFromGreen(new Set());
     setGreenShoutsHeardFromBlue(new Set());
     setGreenShoutsHeardFromGreenOnly(new Set());
-  };
+  }, []);
 
-  const handleStop = () => {
+  const handleStop = useCallback(() => {
     setPlaying(false);
     setPaused(false);
     setBlueCount(10);
@@ -70,7 +70,7 @@ const HarassmentSimulation: FC<HarassmentSimulationProps> = ({
     setGreenOnGreenProb(0.05);
     setBlueOnGreenProb(0.05);
     setGreenOnBlueProb(0.05);
-  };
+  }, []);
 
   const handleShout = useCallback(
     (key: string, shoutId: number) => {
@@ -108,7 +108,7 @@ const HarassmentSimulation: FC<HarassmentSimulationProps> = ({
     [greenShoutsHeardFromBlue, blueShoutsHeardFromGreen],
   );
 
-  const handlePause = () => setPaused((prev) => !prev);
+  const handlePause = useCallback(() => setPaused((prev) => !prev), []);
 
   const buttonData = useMemo(() => {
     if (!playing) {
@@ -272,8 +272,12 @@ const HarassmentSimulation: FC<HarassmentSimulationProps> = ({
       <div className="mb-4">
         {playing ? (
           <div>
-            {barInfo.map((bar, i) => (
-              <HorizontalBar data={bar.data} title={bar.title} key={i} />
+            {barInfo.map((bar) => (
+              <HorizontalBar
+                data={bar.data}
+                title={bar.title}
+                key={bar.title}
+              />
             ))}
           </div>
         ) : (
@@ -289,9 +293,10 @@ const HarassmentSimulation: FC<HarassmentSimulationProps> = ({
       </div>
 
       <div className="my-8 flex justify-center gap-4">
-        {buttonData.map((b, i) => (
+        {buttonData.map((b) => (
           <button
-            key={i}
+            type="button"
+            key={b.buttonText}
             onClick={b.handleClick}
             style={{ backgroundColor: b.color }}
             className="rounded-lg px-6 py-2 font-bold tracking-wide text-white shadow-md transition-all hover:brightness-110 focus:ring-2 focus:ring-offset-2 focus:outline-none active:scale-95"

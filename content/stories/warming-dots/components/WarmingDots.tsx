@@ -128,15 +128,15 @@ const WarmingDots: FC<WarmingDotsProps> = ({
                 {graphData
                   .map((plot, i) => ({ plot, color: colors[i] }))
                   .map(({ plot, color }) => (
-                  <LinePlot
-                    key={color}
-                    graphData={plot}
-                    stroke={color}
-                    xScale={xScale}
-                    yScale={yScale}
-                    strokeWidth={5}
-                  />
-                ))}
+                    <LinePlot
+                      key={color}
+                      graphData={plot}
+                      stroke={color}
+                      xScale={xScale}
+                      yScale={yScale}
+                      strokeWidth={5}
+                    />
+                  ))}
               </Graph>
             </FlexContainer>
           );

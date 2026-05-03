@@ -1,5 +1,5 @@
 import { act, render, renderHook, screen } from "@testing-library/react";
-import type { HTMLAttributes, ReactNode } from "react";
+import type { HTMLAttributes, MouseEvent, ReactNode } from "react";
 import { describe, expect, it, vi } from "vitest";
 import "@testing-library/jest-dom/vitest";
 import Tooltip, { useTooltip } from ".";
@@ -26,11 +26,10 @@ describe("Tooltip Hook and Component", () => {
     expect(result.current.tooltip).toBeNull();
 
     act(() => {
-      // @ts-expect-error - Mocking event
       result.current.showTooltip(
         "Title",
         "Body",
-      )({ clientX: 100, clientY: 200 });
+      )({ clientX: 100, clientY: 200 } as unknown as MouseEvent<Element>);
     });
 
     expect(result.current.tooltip).toEqual({

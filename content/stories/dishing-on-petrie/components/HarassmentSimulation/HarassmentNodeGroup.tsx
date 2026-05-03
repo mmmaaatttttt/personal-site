@@ -120,23 +120,23 @@ const HarassmentNodeGroup: FC<HarassmentNodeGroupProps> = ({
       const currentShoutCount = shoutCountRef.current;
       setShoutCount((prev) => prev + 1);
 
+      let callCount = 0;
       const soundWave = interval(() => {
         const waveCount = 5;
-        // @ts-expect-error
-        soundWave.__calledCount = (soundWave.__calledCount || 0) + 1;
-        // @ts-expect-error
+        callCount += 1;
         if (
-          soundWave.__calledCount <= waveCount &&
+          callCount <= waveCount &&
           propsRef.current.playing &&
           !propsRef.current.paused
         ) {
-          // @ts-expect-error
-          const currentIdx = soundWave.__calledCount;
+          const currentIdx = callCount;
 
-          select(gRef.current!)
+          const g = gRef.current;
+          if (!g) return;
+          select(g)
             .insert("circle", "circle")
-            .attr("cx", node.x!)
-            .attr("cy", node.y!)
+            .attr("cx", node.x ?? 0)
+            .attr("cy", node.y ?? 0)
             .attr("r", node.r * 2)
             .attr("fill", COLORS.RED)
             .attr("fill-opacity", 0.75)
@@ -244,7 +244,9 @@ const HarassmentNodeGroup: FC<HarassmentNodeGroupProps> = ({
 
     // Check intersections on tick
     const checkIntersections = () => {
-      const gSelection = select(gRef.current!);
+      const gcur = gRef.current;
+      if (!gcur) return;
+      const gSelection = select(gcur);
       const nodeSelection = gSelection.selectAll<
         SVGCircleElement,
         HarassmentNode
@@ -309,7 +311,9 @@ const HarassmentNodeGroup: FC<HarassmentNodeGroupProps> = ({
         }
       });
 
-      const nodesSel = select(gRef.current!)
+      const gcur = gRef.current;
+      if (!gcur) return;
+      const nodesSel = select(gcur)
         .selectAll<SVGCircleElement, HarassmentNode>(".node")
         .data(
           sim.nodes().map((node) => {
@@ -333,7 +337,7 @@ const HarassmentNodeGroup: FC<HarassmentNodeGroupProps> = ({
         .attr("stroke-width", 2);
 
       const nodesToUpdate = isMoving ? enterNodes.merge(nodesSel) : enterNodes;
-      nodesToUpdate.attr("cx", (d) => d.x!).attr("cy", (d) => d.y!);
+      nodesToUpdate.attr("cx", (d) => d.x ?? 0).attr("cy", (d) => d.y ?? 0);
 
       if (isMoving) {
         checkIntersections();
@@ -406,7 +410,7 @@ const HarassmentNodeGroup: FC<HarassmentNodeGroupProps> = ({
   // Keep clearing shouts purely on reset (!playing)
   useEffect(() => {
     if (!playing) {
-      select(gRef.current!).selectAll(".shout").remove();
+      if (gRef.current) select(gRef.current).selectAll(".shout").remove();
       setShoutCount(0);
     }
   }, [playing]);

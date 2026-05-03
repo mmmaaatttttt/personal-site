@@ -29,8 +29,8 @@ const OrchardGame: FC<{ caption?: string }> = () => {
   const [gamesWon, setGamesWon] = useState(0);
 
   useEffect(() => {
-    setGamesWon(+localStorage.getItem("harvestingWins:gamesWon")! || 0);
-    setGamesPlayed(+localStorage.getItem("harvestingWins:gamesPlayed")! || 0);
+    setGamesWon(+(localStorage.getItem("harvestingWins:gamesWon") ?? 0));
+    setGamesPlayed(+(localStorage.getItem("harvestingWins:gamesPlayed") ?? 0));
   }, []);
 
   const startGame = useCallback(() => {

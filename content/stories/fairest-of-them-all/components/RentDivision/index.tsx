@@ -69,7 +69,7 @@ const RentDivision: FC<RentDivisionProps> = ({ caption }) => {
   const { tooltip, showTooltip, hideTooltip } = useTooltip();
 
   const getNameFromLabel = (pt: PointData) =>
-    NAMES.find((name) => name[0] === pt.label)!;
+    NAMES.find((name) => name[0] === pt.label) ?? "";
 
   const getTooltipBody = (point: PointData) =>
     point.prices.map(

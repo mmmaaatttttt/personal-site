@@ -7,7 +7,9 @@ import USMap from ".";
 // Mock ClippedSVG
 vi.mock("../ClippedSVG", () => ({
   default: ({ children }: { children?: ReactNode }) => (
-    <svg data-testid="mock-svg" role="img" aria-label="test">{children}</svg>
+    <svg data-testid="mock-svg" role="img" aria-label="test">
+      {children}
+    </svg>
   ),
 }));
 

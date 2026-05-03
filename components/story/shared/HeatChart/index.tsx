@@ -80,7 +80,9 @@ function HeatChart<T>({
         clipChildren={false}
       >
         {data
-          .flatMap((col, x) => col.map((d, y) => ({ d, x, y, cellKey: `${x}:${y}` })))
+          .flatMap((col, x) =>
+            col.map((d, y) => ({ d, x, y, cellKey: `${x}:${y}` })),
+          )
           .map(({ d, x, y, cellKey }) => {
             if (d == null) return null;
             return (

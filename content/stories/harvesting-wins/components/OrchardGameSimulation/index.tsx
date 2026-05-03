@@ -120,31 +120,31 @@ const OrchardGameSimulation: FC<OrchardGameSimulationProps> = ({
         {playData
           .map((d, i) => ({ d, label: camelCaseToTitle(strategies[i].name) }))
           .map(({ d, label }) => {
-          const pct = ((d.gamesWon / d.gamesPlayed) * 100 || 0).toFixed(1);
-          return (
-            <HorizontalBar
-              key={label}
-              title={`${label} Strategy: ${pct}%`}
-              data={[
-                {
-                  size: d.gamesWon,
-                  color: COLORS.GREEN,
-                  tooltipText: `Games Won: ${d.gamesWon.toLocaleString()}`,
-                },
-                {
-                  size: d.gamesPlayed - d.gamesWon,
-                  color: COLORS.RED,
-                  tooltipText: `Games Played: ${d.gamesPlayed.toLocaleString()}`,
-                },
-                {
-                  size: 0,
-                  color: COLORS.GRAY,
-                  tooltipText: `Win Percentage: ${pct}%`,
-                },
-              ]}
-            />
-          );
-        })}
+            const pct = ((d.gamesWon / d.gamesPlayed) * 100 || 0).toFixed(1);
+            return (
+              <HorizontalBar
+                key={label}
+                title={`${label} Strategy: ${pct}%`}
+                data={[
+                  {
+                    size: d.gamesWon,
+                    color: COLORS.GREEN,
+                    tooltipText: `Games Won: ${d.gamesWon.toLocaleString()}`,
+                  },
+                  {
+                    size: d.gamesPlayed - d.gamesWon,
+                    color: COLORS.RED,
+                    tooltipText: `Games Played: ${d.gamesPlayed.toLocaleString()}`,
+                  },
+                  {
+                    size: 0,
+                    color: COLORS.GRAY,
+                    tooltipText: `Win Percentage: ${pct}%`,
+                  },
+                ]}
+              />
+            );
+          })}
       </div>
     </NarrowContainer>
   );

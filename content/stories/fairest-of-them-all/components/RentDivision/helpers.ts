@@ -28,9 +28,11 @@ function deduceLabel(
 ): string {
   const label1 = neighbor1.label;
   const label2 = neighbor2.label;
-  return names
-    .map((name) => name[0])
-    .find((ltr) => ltr !== label1 && ltr !== label2)!;
+  return (
+    names
+      .map((name) => name[0])
+      .find((ltr) => ltr !== label1 && ltr !== label2) ?? ""
+  );
 }
 
 /**

@@ -3,7 +3,7 @@
 import katex from "katex";
 import { type FC, useEffect, useRef } from "react";
 import "katex/dist/katex.min.css";
-import styles from "./Latex.module.css";
+import "./Latex.css";
 
 interface LatexProps {
   str: string;
@@ -19,7 +19,7 @@ const Latex: FC<LatexProps> = ({ str, displayMode = false }) => {
     }
   }, [str, displayMode]);
 
-  return <div ref={ref} className={styles.wrapper} />;
+  return <div ref={ref} className="latex-wrapper" />;
 };
 
 export default Latex;

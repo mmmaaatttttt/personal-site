@@ -38,7 +38,9 @@ describe("generatePAdicPoints", () => {
 
   it("each point has the correct num field", () => {
     const pts = generatePAdicPoints(3, 2);
-    pts.forEach((p, i) => { expect(p.num).toBe(i); });
+    pts.forEach((p, i) => {
+      expect(p.num).toBe(i);
+    });
   });
 });
 

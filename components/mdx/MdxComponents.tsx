@@ -1,3 +1,4 @@
+import Image from "next/image";
 import type { ComponentPropsWithoutRef, ReactNode } from "react";
 import Caption from "@/components/story/shared/Caption";
 import ColoredSpan from "@/components/story/shared/ColoredSpan";
@@ -49,9 +50,11 @@ export const MdxComponents: Record<string, unknown> = {
   img: (props: ComponentPropsWithoutRef<"img">) => (
     <span className="my-12 block">
       <span className="relative mx-auto block w-fit">
-        <img
-          src={props.src?.replace(/^(\.\.\/)+images\//, "/images/")}
+        <Image
+          src={(typeof props.src === "string" ? props.src : "").replace(/^(\.\.\/)+images\//, "/images/")}
           alt={props.alt || ""}
+          width={800}
+          height={600}
           className="block h-auto max-h-[600px] max-w-full object-contain"
         />
       </span>
