@@ -76,8 +76,8 @@ const Tooltip: FC<TooltipProps> = ({ info }) => {
       {info.body &&
         (Array.isArray(info.body) ? (
           <ul className="mb-0 ml-3 list-disc">
-            {info.body.map((text, i) => (
-              <li key={i} className="leading-tight">
+            {info.body.map((text) => (
+              <li key={text} className="leading-tight">
                 <small>{text}</small>
               </li>
             ))}

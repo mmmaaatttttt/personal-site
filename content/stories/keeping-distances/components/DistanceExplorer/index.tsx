@@ -106,15 +106,17 @@ const DistanceExplorer: FC<DistanceExplorerProps> = ({ caption }) => {
               points[1].y - points[0].y,
             ).toFixed(2)}
           </text>
-          {scaledPoints.map((point, idx) => (
-            <DraggableCircle
-              key={idx}
-              id={idx}
-              cx={point.x}
-              cy={point.y}
-              onDrag={clampedHandleDrag}
-            />
-          ))}
+          {scaledPoints
+            .map((point, idx) => ({ point, id: idx }))
+            .map(({ point, id }) => (
+              <DraggableCircle
+                key={id}
+                id={id}
+                cx={point.x}
+                cy={point.y}
+                onDrag={clampedHandleDrag}
+              />
+            ))}
         </Graph>
       </NarrowContainer>
     </Caption>

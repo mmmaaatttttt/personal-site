@@ -20,7 +20,7 @@ const defaultProps = {
 describe("EconomyNodeGroup", () => {
   it("renders without crashing", () => {
     const { container } = render(
-      <svg>
+      <svg role="img" aria-label="test">
         <EconomyNodeGroup {...defaultProps} />
       </svg>,
     );
@@ -29,7 +29,7 @@ describe("EconomyNodeGroup", () => {
 
   it("renders the svg group container", () => {
     const { container } = render(
-      <svg>
+      <svg role="img" aria-label="test">
         <EconomyNodeGroup {...defaultProps} />
       </svg>,
     );
@@ -40,14 +40,14 @@ describe("EconomyNodeGroup", () => {
 
   it("does not crash when speeds array changes length", () => {
     const { rerender } = render(
-      <svg>
+      <svg role="img" aria-label="test">
         <EconomyNodeGroup {...defaultProps} speeds={[10, 10]} />
       </svg>,
     );
     // Verify re-render with a larger population doesn't throw
     expect(() =>
       rerender(
-        <svg>
+        <svg role="img" aria-label="test">
           <EconomyNodeGroup {...defaultProps} speeds={[10, 10, 10, 10, 10]} />
         </svg>,
       ),

@@ -28,11 +28,11 @@ const InteractivePolygon: FC<InteractivePolygonProps> = ({
   return (
     <g>
       <polygon points={polygonPoints} fill={fill} stroke="none" />
-      {points.map((pt, i) => {
-        const next = points[(i + 1) % points.length];
-        return (
+      {points
+        .map((pt, i) => ({ pt, next: points[(i + 1) % points.length], edgeId: i }))
+        .map(({ pt, next, edgeId }) => (
           <line
-            key={`edge-${i}`}
+            key={edgeId}
             x1={pt.x}
             y1={pt.y}
             x2={next.x}
@@ -40,12 +40,13 @@ const InteractivePolygon: FC<InteractivePolygonProps> = ({
             stroke={stroke}
             strokeWidth={strokeWidth}
           />
-        );
-      })}
-      {points.map((pt, i) => (
-        <DraggableCircle
-          key={`vertex-${i}`}
-          id={i}
+        ))}
+      {points
+        .map((pt, i) => ({ pt, vertexId: i }))
+        .map(({ pt, vertexId }) => (
+          <DraggableCircle
+            key={vertexId}
+            id={vertexId}
           cx={pt.x}
           cy={pt.y}
           r={circleRadius}

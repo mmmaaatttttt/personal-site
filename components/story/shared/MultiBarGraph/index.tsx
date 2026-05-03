@@ -126,45 +126,53 @@ const MultiBarGraph: FC<MultiBarGraphProps> = ({
 
           <g clipPath={`url(#clip-path-${id})`}>
             <AnimatePresence>
-              {data.map((_, colIndex) => {
-                const { title, body } = tooltipData[colIndex];
-                const extentsForCol = stackData.map((layer) => layer[colIndex]);
-                const colX = xScale(colIndex.toString());
-
-                return (
+              {data
+                .map((_, colIndex) => ({
+                  colIndex,
+                  tooltip: tooltipData[colIndex],
+                  extentsForCol: stackData.map((layer) => layer[colIndex]),
+                  colX: xScale(colIndex.toString()),
+                  delay: colIndex * 0.02,
+                }))
+                .map(({ tooltip, extentsForCol, colX, delay }) => (
                   <g
-                    key={`col-${colIndex}`}
+                    key={tooltip.title}
                     className="cursor-pointer opacity-80 transition-opacity hover:opacity-100"
                   >
-                    {extentsForCol.map(([minVal, maxVal], layerIndex) => {
-                      const rectY = yScale(maxVal);
-                      const rectHeight = Math.max(
-                        0,
-                        yScale(minVal) - yScale(maxVal),
-                      );
-
-                      return (
-                        <motion.rect
-                          key={`rect-${colIndex}-${layerIndex}`}
-                          fill={colors[layerIndex]}
-                          initial={{ height: 0, y: yScale(minVal) }}
-                          animate={{
-                            x: colX,
-                            y: rectY,
-                            height: rectHeight,
-                            width: (xScale.step() || 0) * 0.8,
-                          }}
-                          transition={{ duration: 0.5, delay: colIndex * 0.02 }}
-                          onMouseMove={showTooltip(title, body)}
-                          onMouseLeave={hideTooltip}
-                          onTouchMove={showTooltip(title, body)}
-                          onTouchEnd={hideTooltip}
-                        />
-                      );
-                    })}
+                    {extentsForCol
+                      .map(([minVal, maxVal], layerIndex) => ({
+                        minVal,
+                        maxVal,
+                        color: colors[layerIndex],
+                        layerIndex,
+                      }))
+                      .map(({ minVal, maxVal, color, layerIndex }) => {
+                        const rectY = yScale(maxVal);
+                        const rectHeight = Math.max(
+                          0,
+                          yScale(minVal) - yScale(maxVal),
+                        );
+                        return (
+                          <motion.rect
+                            key={`${tooltip.title}-layer-${layerIndex}`}
+                            fill={color}
+                            initial={{ height: 0, y: yScale(minVal) }}
+                            animate={{
+                              x: colX,
+                              y: rectY,
+                              height: rectHeight,
+                              width: (xScale.step() || 0) * 0.8,
+                            }}
+                            transition={{ duration: 0.5, delay }}
+                            onMouseMove={showTooltip(tooltip.title, tooltip.body)}
+                            onMouseLeave={hideTooltip}
+                            onTouchMove={showTooltip(tooltip.title, tooltip.body)}
+                            onTouchEnd={hideTooltip}
+                          />
+                        );
+                      })}
                   </g>
-                );
-              })}
+                ))}
             </AnimatePresence>
           </g>
 

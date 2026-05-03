@@ -26,8 +26,8 @@ const DistrictStatus: FC<DistrictStatusProps> = ({
       {districts.length > rowCount ? (
         <h2>Too many districts!</h2>
       ) : (
-        Array.from({ length: rowCount }, (_, idx) => {
-          const district = districts[idx];
+        Array.from({ length: rowCount }, (_, idx) => idx + 1).map((districtNum) => {
+          const district = districts[districtNum - 1];
           const size = district ? district.length : "--";
           const isComplete = district && district.length === colCount;
 
@@ -43,9 +43,9 @@ const DistrictStatus: FC<DistrictStatusProps> = ({
           }
 
           return (
-            <div key={idx} className="flex items-center gap-2">
+            <div key={districtNum} className="flex items-center gap-2">
               <h4 className="m-0" style={{ color: labelColor }}>
-                D{idx + 1}: {size} {msgByColor}
+                D{districtNum}: {size} {msgByColor}
               </h4>
               {isComplete ? (
                 <CheckCircle2 size={24} color={COLORS.GREEN} />
@@ -58,6 +58,7 @@ const DistrictStatus: FC<DistrictStatusProps> = ({
       )}
       <div className="mt-2 flex gap-2">
         <button
+          type="button"
           onClick={onSave}
           disabled={!saveable}
           className="cursor-pointer rounded border-none px-4 py-2 text-white disabled:cursor-not-allowed disabled:opacity-60"
@@ -66,6 +67,7 @@ const DistrictStatus: FC<DistrictStatusProps> = ({
           {saveable ? "Save" : "Saved"}
         </button>
         <button
+          type="button"
           onClick={onReset}
           className="cursor-pointer rounded border-none px-4 py-2 text-white"
           style={{ backgroundColor: COLORS.RED }}

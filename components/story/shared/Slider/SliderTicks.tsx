@@ -26,11 +26,11 @@ const SliderTicks: FC<SliderTicksProps> = ({
       className="flex w-full justify-between px-0 absolute top-0 pointer-events-none"
       style={{ height: height + 2 * padding, padding: `${padding}px 0` }}
     >
-      {Array.from({ length: count }, (_, i) => {
-        const isFilled = i / (count - 1) <= fractionFilled;
+      {Array.from({ length: count }, (_, i) => i).map((tickIdx) => {
+        const isFilled = tickIdx / (count - 1) <= fractionFilled;
         return (
           <div
-            key={i}
+            key={tickIdx}
             className="rounded-full transition-colors duration-200"
             style={{
               width: height,

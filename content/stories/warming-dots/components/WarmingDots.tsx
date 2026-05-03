@@ -125,11 +125,13 @@ const WarmingDots: FC<WarmingDotsProps> = ({
                 yScale={yScale}
                 tickStep={tickStep}
               >
-                {graphData.map((plot, i) => (
+                {graphData
+                  .map((plot, i) => ({ plot, color: colors[i] }))
+                  .map(({ plot, color }) => (
                   <LinePlot
-                    key={i}
+                    key={color}
                     graphData={plot}
-                    stroke={colors[i]}
+                    stroke={color}
                     xScale={xScale}
                     yScale={yScale}
                     strokeWidth={5}

@@ -117,12 +117,13 @@ const OrchardGameSimulation: FC<OrchardGameSimulationProps> = ({
         )}
       </FlexContainer>
       <div className="mt-4 space-y-4">
-        {playData.map((d, i) => {
+        {playData
+          .map((d, i) => ({ d, label: camelCaseToTitle(strategies[i].name) }))
+          .map(({ d, label }) => {
           const pct = ((d.gamesWon / d.gamesPlayed) * 100 || 0).toFixed(1);
-          const label = camelCaseToTitle(strategies[i].name);
           return (
             <HorizontalBar
-              key={i}
+              key={label}
               title={`${label} Strategy: ${pct}%`}
               data={[
                 {

@@ -1,6 +1,6 @@
 "use client";
 
-import type { FC } from "react";
+import type { FC, ReactNode } from "react";
 import { useEffect, useState } from "react";
 import Caption from "@/components/story/shared/Caption";
 import { choices } from "@/utils/mathHelpers";
@@ -15,7 +15,6 @@ interface QuizProps {
 }
 
 const Quiz: FC<QuizProps> = ({
-  answerColors = ["#ff5700", "#10b981", "#3b82f6"],
   maxQuestions = 10,
   title = "This is a quiz.",
   caption,
@@ -41,12 +40,12 @@ const Quiz: FC<QuizProps> = ({
     setResultsIndex(0);
   };
 
-  let panel;
+  let panel: ReactNode;
   if (answers === null) {
     panel = (
       <>
         <h2 className="mb-6 font-serif text-3xl font-bold">{title}</h2>
-        <button
+        <button type="button"
           onClick={() => setAnswers([])}
           className="mt-4 rounded-md bg-link px-8 py-3 font-semibold text-white shadow-md transition hover:bg-orange-600 active:scale-95 text-sm md:text-base"
         >
@@ -81,7 +80,7 @@ const Quiz: FC<QuizProps> = ({
             userAnswer={answers[resultsIndex]}
           />
 
-          <button
+          <button type="button"
             onClick={() => setResultsIndex((prev) => Math.max(0, prev - 1))}
             disabled={resultsIndex === 0}
             className="absolute top-1/2 -left-4 p-2 rounded-full bg-white shadow-md disabled:opacity-30 flex items-center justify-center h-10 w-10 z-10"
@@ -89,7 +88,7 @@ const Quiz: FC<QuizProps> = ({
           >
             ←
           </button>
-          <button
+          <button type="button"
             onClick={() =>
               setResultsIndex((prev) =>
                 Math.min(questions.length - 1, prev + 1),
@@ -103,7 +102,7 @@ const Quiz: FC<QuizProps> = ({
           </button>
         </div>
 
-        <button
+        <button type="button"
           onClick={reset}
           className="mt-2 rounded-md bg-link px-8 py-3 font-semibold text-white shadow-md transition hover:bg-orange-600 active:scale-95 text-sm md:text-base"
         >
@@ -124,11 +123,11 @@ const Quiz: FC<QuizProps> = ({
           "{question.prompt}"
         </h2>
         <div className="flex w-full max-w-lg flex-col gap-3">
-          {question.choices.map((choice, i) => {
+          {question.choices.map((choice) => {
             const isSelected = selectedAnswer === choice;
             return (
-              <button
-                key={`${choice}-${i}`}
+              <button type="button"
+                key={choice}
                 onClick={() => setSelectedAnswer(choice)}
                 className={`w-full rounded-md border-2 px-6 py-3 font-medium transition-colors text-sm md:text-base ${
                   isSelected
@@ -141,7 +140,7 @@ const Quiz: FC<QuizProps> = ({
             );
           })}
         </div>
-        <button
+        <button type="button"
           disabled={!selectedAnswer}
           onClick={() => {
             if (selectedAnswer) {

@@ -63,13 +63,15 @@ const EfficiencyGapTable: FC<EfficiencyGapTableProps> = ({
           </tr>
         </thead>
         <tbody>
-          {wastedVotes.map(([blue, red], i) => (
-            <tr key={i}>
-              <td style={{ fontWeight: "bold" }}>{i + 1}</td>
-              <td style={{ color: COLORS.DARK_BLUE }}>{blue}</td>
-              <td style={{ color: COLORS.RED }}>{red}</td>
-            </tr>
-          ))}
+          {wastedVotes
+            .map(([blue, red], i) => ({ blue, red, district: i + 1 }))
+            .map(({ blue, red, district }) => (
+              <tr key={district}>
+                <td style={{ fontWeight: "bold" }}>{district}</td>
+                <td style={{ color: COLORS.DARK_BLUE }}>{blue}</td>
+                <td style={{ color: COLORS.RED }}>{red}</td>
+              </tr>
+            ))}
           <tr>
             <td style={{ fontWeight: "bold" }}>Total</td>
             <td style={{ color: COLORS.DARK_BLUE }}>{totalWasted[0]}</td>

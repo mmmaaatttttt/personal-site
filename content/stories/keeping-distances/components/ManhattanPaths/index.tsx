@@ -69,6 +69,8 @@ const ManhattanPaths: FC<ManhattanPathsProps> = ({ caption }) => {
             return (
               <circle
                 key={`${pt.x}|${pt.y}`}
+                role="menuitem"
+                tabIndex={0}
                 cx={xScale(pt.x)}
                 cy={yScale(pt.y)}
                 r={POINT_RADIUS}
@@ -80,6 +82,16 @@ const ManhattanPaths: FC<ManhattanPathsProps> = ({ caption }) => {
                     : () => {
                         setActivePoint({ x: pt.x, y: pt.y });
                         setSliderVal(1);
+                      }
+                }
+                onKeyDown={
+                  isActive
+                    ? undefined
+                    : (e) => {
+                        if (e.key === "Enter" || e.key === " ") {
+                          setActivePoint({ x: pt.x, y: pt.y });
+                          setSliderVal(1);
+                        }
                       }
                 }
                 style={{ cursor: isActive ? "default" : "pointer" }}

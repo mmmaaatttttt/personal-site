@@ -118,6 +118,7 @@ const EconomySimulation = ({
         <div className="my-4 flex justify-center gap-3">
           {!playing ? (
             <button
+              type="button"
               onClick={handleStart}
               style={{ backgroundColor: COLORS.MAROON }}
               className="rounded-lg px-6 py-2 font-bold tracking-wide text-white shadow-md transition-all hover:brightness-110 active:scale-95"
@@ -127,6 +128,7 @@ const EconomySimulation = ({
           ) : (
             <>
               <button
+                type="button"
                 onClick={handlePause}
                 style={{ backgroundColor: COLORS.ORANGE }}
                 className="rounded-lg px-6 py-2 font-bold tracking-wide text-white shadow-md transition-all hover:brightness-110 active:scale-95"
@@ -134,6 +136,7 @@ const EconomySimulation = ({
                 {paused ? "Resume" : "Pause"}
               </button>
               <button
+                type="button"
                 onClick={() => setShowingSimulation((s) => !s)}
                 style={{ backgroundColor: COLORS.BLUE }}
                 className="rounded-lg px-6 py-2 font-bold tracking-wide text-white shadow-md transition-all hover:brightness-110 active:scale-95"
@@ -141,6 +144,7 @@ const EconomySimulation = ({
                 {showingSimulation ? "Show Chart" : "Show Nodes"}
               </button>
               <button
+                type="button"
                 onClick={handleStop}
                 style={{ backgroundColor: COLORS.RED }}
                 className="rounded-lg px-6 py-2 font-bold tracking-wide text-white shadow-md transition-all hover:brightness-110 active:scale-95"

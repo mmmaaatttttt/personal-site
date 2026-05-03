@@ -42,18 +42,24 @@ const GerrymanderGrid: FC<GerrymanderGridProps> = ({
       height={height}
       clipChildren={false}
     >
-      {Array.from({ length: colCount }, (_, x) =>
-        Array.from({ length: rowCount }, (_, y) => (
+      {Array.from({ length: colCount }, (_, x) => x)
+        .flatMap((cx) =>
+          Array.from({ length: rowCount }, (_, y) => y).map((cy) => ({
+            cx,
+            cy,
+            cellKey: `${cx}:${cy}`,
+          })),
+        )
+        .map(({ cx, cy, cellKey }) => (
           <rect
-            key={`${x}:${y}`}
-            x={xScale(x) + 1}
-            y={yScale(y + 1) + 1}
+            key={cellKey}
+            x={xScale(cx) + 1}
+            y={yScale(cy + 1) + 1}
             width={rectW}
             height={rectH}
-            fill={colorRange[y % 2]}
+            fill={colorRange[cy % 2]}
           />
-        )),
-      )}
+        ))}
       {children}
     </ClippedSVG>
   );

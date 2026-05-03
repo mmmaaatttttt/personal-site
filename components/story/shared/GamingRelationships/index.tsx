@@ -126,50 +126,51 @@ export default function GamingRelationships({
 
   const uniqueColors = Array.from(new Set(colors));
 
-  const graphs = diffEqs.map((diffEq, i) => {
-    const sliceIdx = i === 1 && colors.length === 4 ? 2 : 0;
-    const allGraphData = transformData(diffEq).slice(sliceIdx, sliceIdx + 2);
-    const xDomain = extent(allGraphData[0], (d) => d.x) as [number, number];
-    const xScale = scaleLinear()
-      .domain(xDomain)
-      .range([graphPadding, width - graphPadding]);
-    const yScale = scaleLinear()
-      .domain(getYDomain(allGraphData))
-      .range([height - graphPadding, graphPadding]);
+  const graphs = diffEqs
+    .map((diffEq, i) => ({ diffEq, graphIdx: i }))
+    .map(({ diffEq, graphIdx }) => {
+      const sliceIdx = graphIdx === 1 && colors.length === 4 ? 2 : 0;
+      const allGraphData = transformData(diffEq).slice(sliceIdx, sliceIdx + 2);
+      const xDomain = extent(allGraphData[0], (d) => d.x) as [number, number];
+      const xScale = scaleLinear()
+        .domain(xDomain)
+        .range([graphPadding, width - graphPadding]);
+      const yScale = scaleLinear()
+        .domain(getYDomain(allGraphData))
+        .range([height - graphPadding, graphPadding]);
 
-    const linePlots = allGraphData.map((graphData, j) => {
-      const colorIdx = (2 * i + j) % colors.length;
+      const linePlots = allGraphData
+        .map((graphData, j) => ({ graphData, lineIdx: 2 * graphIdx + j }))
+        .map(({ graphData, lineIdx }) => (
+          <LinePlot
+            key={lineIdx}
+            stroke={colors[lineIdx % colors.length]}
+            graphData={graphData}
+            xScale={xScale}
+            yScale={yScale}
+          />
+        ));
+
       return (
-        <LinePlot
-          key={j}
-          stroke={colors[colorIdx]}
-          graphData={graphData}
+        <Graph
+          key={graphIdx}
+          graphPadding={graphPadding}
+          gridlinesVertical={false}
+          height={height}
+          svgId={svgIds[graphIdx]}
+          svgPadding={svgPadding}
+          tickStep={tickStep}
+          width={width}
+          xAxisPosition="center"
+          xLabel={xLabel}
           xScale={xScale}
+          yLabel={yLabel}
           yScale={yScale}
-        />
+        >
+          {linePlots}
+        </Graph>
       );
     });
-
-    return (
-      <Graph
-        key={i}
-        graphPadding={graphPadding}
-        gridlinesVertical={false}
-        height={height}
-        svgId={svgIds[i]}
-        svgPadding={svgPadding}
-        tickStep={tickStep}
-        width={width}
-        xAxisPosition="center"
-        xLabel={xLabel}
-        xScale={xScale}
-        yLabel={yLabel}
-        yScale={yScale}
-      >
-        {linePlots}
-      </Graph>
-    );
-  });
 
   const sliderGroups = uniqueColors.map((color) => {
     const sliderData = data

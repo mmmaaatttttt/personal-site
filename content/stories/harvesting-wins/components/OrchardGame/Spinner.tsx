@@ -68,11 +68,13 @@ const Spinner: FC<SpinnerProps> = ({ onSpinEnd, message }) => {
         clipChildren={false}
       >
         <g transform={`translate(${CX}, ${CY})`}>
-          {ARCS.map((d, i) => (
+          {ARCS
+            .map((d, i) => ({ d, color: SPINNER_COLORS[i] }))
+            .map(({ d, color }) => (
             <path
-              key={i}
+              key={color}
               d={arcGen(d) ?? ""}
-              fill={SPINNER_COLORS[i]}
+              fill={color}
               stroke={COLORS.BLACK}
               strokeWidth={1}
             />

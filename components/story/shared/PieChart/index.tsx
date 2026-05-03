@@ -44,11 +44,11 @@ const PieChart: FC<PieChartProps> = ({
     <div className="flex h-full w-full items-center justify-center">
       <ClippedSVG id="pie" width={width} height={height}>
         <g transform={`translate(${width / 2}, ${height / 2})`}>
-          {arcs.map((d, i) => (
+          {arcs.map((d) => (
             <PieSlice
-              key={i}
+              key={d.index}
               datum={d}
-              index={i}
+              index={d.index}
               pathArc={pathArc}
               colorScale={colorScale}
               stroke={stroke}

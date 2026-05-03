@@ -68,7 +68,7 @@ const PAdicFractalDistance: FC<PAdicFractalDistanceProps> = ({ caption }) => {
                     const sy = yScale(startPt.cy);
                     return (
                       <motion.g
-                        key={i}
+                        key={pt.num}
                         initial={{ x: sx, y: sy, opacity: 0 }}
                         animate={{ x: tx, y: ty, opacity: 1 }}
                         exit={{ opacity: 0 }}

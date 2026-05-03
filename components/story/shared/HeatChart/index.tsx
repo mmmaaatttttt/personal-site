@@ -79,12 +79,15 @@ function HeatChart<T>({
         height={height}
         clipChildren={false}
       >
-        {data.map((col, x) =>
-          col.map((d, y) => {
+        {data
+          .flatMap((col, x) => col.map((d, y) => ({ d, x, y, cellKey: `${x}:${y}` })))
+          .map(({ d, x, y, cellKey }) => {
             if (d == null) return null;
             return (
               <rect
-                key={`${x}:${y}`}
+                key={cellKey}
+                role="menuitem"
+                tabIndex={0}
                 x={xScale(x) + 1}
                 y={yScale(y + 1) + 1}
                 width={rectW}
@@ -95,10 +98,10 @@ function HeatChart<T>({
                 onTouchMove={showTooltip("", getTooltipBody(d, x, y))}
                 onMouseLeave={hideTooltip}
                 onTouchEnd={hideTooltip}
+                onKeyDown={hideTooltip}
               />
             );
-          }),
-        )}
+          })}
         {axes && (
           <>
             <Axis

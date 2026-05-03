@@ -11,7 +11,7 @@ const points = [
 describe("Polygon", () => {
   it("renders a polygon by default", () => {
     const { container } = render(
-      <svg>
+      <svg role="img" aria-label="test">
         <Polygon points={points} />
       </svg>,
     );
@@ -21,7 +21,7 @@ describe("Polygon", () => {
 
   it("renders a polyline when open=true", () => {
     const { container } = render(
-      <svg>
+      <svg role="img" aria-label="test">
         <Polygon points={points} open />
       </svg>,
     );
@@ -31,7 +31,7 @@ describe("Polygon", () => {
 
   it("applies fill and stroke props", () => {
     const { container } = render(
-      <svg>
+      <svg role="img" aria-label="test">
         <Polygon
           points={points}
           fill="#ff0000"
@@ -40,7 +40,7 @@ describe("Polygon", () => {
         />
       </svg>,
     );
-    const el = container.querySelector("polygon")!;
+    const el = container.querySelector("polygon") as SVGPolygonElement;
     expect(el.getAttribute("fill")).toBe("#ff0000");
     expect(el.getAttribute("stroke")).toBe("#0000ff");
     expect(el.getAttribute("stroke-width")).toBe("2");
@@ -48,11 +48,11 @@ describe("Polygon", () => {
 
   it("generates the points attribute string correctly", () => {
     const { container } = render(
-      <svg>
+      <svg role="img" aria-label="test">
         <Polygon points={points} />
       </svg>,
     );
-    const el = container.querySelector("polygon")!;
+    const el = container.querySelector("polygon") as SVGPolygonElement;
     expect(el.getAttribute("points")).toBe("0,0 100,0 50,100");
   });
 });

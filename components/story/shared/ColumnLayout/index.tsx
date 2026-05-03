@@ -23,15 +23,17 @@ const ColumnLayout: FC<ColumnLayoutProps> = ({
     <div
       className={cn("flex flex-row gap-8", breakAt && breakClasses[breakAt])}
     >
-      {Children.map(children, (child, idx) => (
-        <div
-          key={idx}
-          className="flex-1"
-          style={sizes?.[idx] ? { flex: sizes[idx] } : undefined}
-        >
-          {child}
-        </div>
-      ))}
+      {Children.toArray(children)
+        .map((child, i) => ({ child, i }))
+        .map(({ child, i }) => (
+          <div
+            key={i}
+            className="flex-1"
+            style={sizes?.[i] ? { flex: sizes[i] } : undefined}
+          >
+            {child}
+          </div>
+        ))}
     </div>
   );
 };

@@ -132,28 +132,32 @@ const FunctionDistanceExplorer: FC<FunctionDistanceExplorerProps> = ({
             stroke={COLORS.GREEN}
             strokeWidth={3}
           />
-          {graph1Pts.map((pt, i) => (
-            <DraggableCircle
-              key={i}
-              id={i}
-              cx={pt.x}
-              cy={pt.y}
-              fill={COLORS.ORANGE}
-              stroke={COLORS.ORANGE}
-              onDrag={constrainedHandleDrag}
-            />
-          ))}
-          {graph2Pts.map((pt, i) => (
-            <DraggableCircle
-              key={i + 3}
-              id={i + 3}
-              cx={pt.x}
-              cy={pt.y}
-              fill={COLORS.GREEN}
-              stroke={COLORS.GREEN}
-              onDrag={constrainedHandleDrag}
-            />
-          ))}
+          {graph1Pts
+            .map((pt, i) => ({ pt, id: i }))
+            .map(({ pt, id }) => (
+              <DraggableCircle
+                key={id}
+                id={id}
+                cx={pt.x}
+                cy={pt.y}
+                fill={COLORS.ORANGE}
+                stroke={COLORS.ORANGE}
+                onDrag={constrainedHandleDrag}
+              />
+            ))}
+          {graph2Pts
+            .map((pt, i) => ({ pt, id: i + 3 }))
+            .map(({ pt, id }) => (
+              <DraggableCircle
+                key={id}
+                id={id}
+                cx={pt.x}
+                cy={pt.y}
+                fill={COLORS.GREEN}
+                stroke={COLORS.GREEN}
+                onDrag={constrainedHandleDrag}
+              />
+            ))}
         </Graph>
       </NarrowContainer>
     </Caption>

@@ -63,7 +63,7 @@ describe("Graph Component", () => {
   };
 
   it("renders correctly with axes and labels", () => {
-    const { container } = render(
+    render(
       <Graph {...defaultProps}>
         <circle cx={100} cy={100} r={5} data-testid="child-element" />
       </Graph>,
