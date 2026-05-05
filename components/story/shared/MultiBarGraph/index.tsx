@@ -73,21 +73,26 @@ const MultiBarGraph: FC<MultiBarGraphProps> = ({
     [data, getTooltipData],
   );
 
+  const scales = useMemo(() => {
+    if (stackData.length === 0) return null;
+    const yMin = min(stackData[0], (d) => d[0]) ?? 0;
+    const computedYMax =
+      yMax ?? max(stackData[stackData.length - 1], (d) => d[1]) ?? 1;
+    return {
+      xScale: scaleBand()
+        .domain(stackData[0].map((_, i) => i.toString()))
+        .rangeRound([p.left, width - p.right])
+        .padding(0.1),
+      yScale: scaleLinear()
+        .domain([yMin, computedYMax])
+        .range([height - p.bottom, p.top]),
+    };
+  }, [stackData, p.left, p.right, p.top, p.bottom, width, height, yMax]);
+
   if (!data || !Array.isArray(data) || data.length === 0) return null;
-  if (stackData.length === 0) return null;
+  if (!scales) return null;
 
-  const yMin = min(stackData[0], (d) => d[0]) || 0;
-  const computedYMax =
-    yMax || max(stackData[stackData.length - 1], (d) => d[1]) || 1;
-
-  const xScale = scaleBand()
-    .domain(stackData[0].map((_, i) => i.toString()))
-    .rangeRound([p.left, width - p.right])
-    .padding(0.1);
-
-  const yScale = scaleLinear()
-    .domain([yMin, computedYMax])
-    .range([height - p.bottom, p.top]);
+  const { xScale, yScale } = scales;
 
   return (
     <NarrowContainer

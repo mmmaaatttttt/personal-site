@@ -139,79 +139,85 @@ const HarassmentSimulation: FC<HarassmentSimulationProps> = ({
     ];
   }, [playing, paused, handleStop, handleStart, handlePause]);
 
-  const greenSliders = [
-    {
-      key: "greenCount",
-      handleValueChange: setGreenCount,
-      title: `Number of Green-eyed People: ${greenCount}`,
-      value: greenCount,
-      min: 1,
-      max: 20,
-      step: 1,
-      color: COLORS.GREEN,
-    },
-    ...(idx > 0
-      ? [
-          {
-            key: "greenOnGreenProb",
-            value: greenOnGreenProb,
-            handleValueChange: setGreenOnGreenProb,
-            title: `${(greenOnGreenProb * 100).toFixed(0)}% chance of harassment with ${capitalize("green")}`,
-            min: 0,
-            max: 0.25,
-            step: 0.01,
-            color: COLORS.GREEN,
-          },
-          {
-            key: "greenOnBlueProb",
-            value: greenOnBlueProb,
-            handleValueChange: setGreenOnBlueProb,
-            title: `${(greenOnBlueProb * 100).toFixed(0)}% chance of harassment with ${capitalize("blue")}`,
-            min: 0,
-            max: 0.25,
-            step: 0.01,
-            color: COLORS.GREEN,
-          },
-        ]
-      : []),
-  ];
+  const greenSliders = useMemo(
+    () => [
+      {
+        key: "greenCount",
+        handleValueChange: setGreenCount,
+        title: `Number of Green-eyed People: ${greenCount}`,
+        value: greenCount,
+        min: 1,
+        max: 20,
+        step: 1,
+        color: COLORS.GREEN,
+      },
+      ...(idx > 0
+        ? [
+            {
+              key: "greenOnGreenProb",
+              value: greenOnGreenProb,
+              handleValueChange: setGreenOnGreenProb,
+              title: `${(greenOnGreenProb * 100).toFixed(0)}% chance of harassment with ${capitalize("green")}`,
+              min: 0,
+              max: 0.25,
+              step: 0.01,
+              color: COLORS.GREEN,
+            },
+            {
+              key: "greenOnBlueProb",
+              value: greenOnBlueProb,
+              handleValueChange: setGreenOnBlueProb,
+              title: `${(greenOnBlueProb * 100).toFixed(0)}% chance of harassment with ${capitalize("blue")}`,
+              min: 0,
+              max: 0.25,
+              step: 0.01,
+              color: COLORS.GREEN,
+            },
+          ]
+        : []),
+    ],
+    [idx, greenCount, greenOnGreenProb, greenOnBlueProb],
+  );
 
-  const blueSliders = [
-    {
-      key: "blueCount",
-      handleValueChange: setBlueCount,
-      title: `Number of Blue-eyed People: ${blueCount}`,
-      value: blueCount,
-      min: 1,
-      max: 20,
-      step: 1,
-      color: COLORS.BLUE,
-    },
-    ...(idx > 0
-      ? [
-          {
-            key: "blueOnBlueProb",
-            value: blueOnBlueProb,
-            handleValueChange: setBlueOnBlueProb,
-            title: `${(blueOnBlueProb * 100).toFixed(0)}% chance of harassment with ${capitalize("blue")}`,
-            min: 0,
-            max: 0.25,
-            step: 0.01,
-            color: COLORS.BLUE,
-          },
-          {
-            key: "blueOnGreenProb",
-            value: blueOnGreenProb,
-            handleValueChange: setBlueOnGreenProb,
-            title: `${(blueOnGreenProb * 100).toFixed(0)}% chance of harassment with ${capitalize("green")}`,
-            min: 0,
-            max: 0.25,
-            step: 0.01,
-            color: COLORS.BLUE,
-          },
-        ]
-      : []),
-  ];
+  const blueSliders = useMemo(
+    () => [
+      {
+        key: "blueCount",
+        handleValueChange: setBlueCount,
+        title: `Number of Blue-eyed People: ${blueCount}`,
+        value: blueCount,
+        min: 1,
+        max: 20,
+        step: 1,
+        color: COLORS.BLUE,
+      },
+      ...(idx > 0
+        ? [
+            {
+              key: "blueOnBlueProb",
+              value: blueOnBlueProb,
+              handleValueChange: setBlueOnBlueProb,
+              title: `${(blueOnBlueProb * 100).toFixed(0)}% chance of harassment with ${capitalize("blue")}`,
+              min: 0,
+              max: 0.25,
+              step: 0.01,
+              color: COLORS.BLUE,
+            },
+            {
+              key: "blueOnGreenProb",
+              value: blueOnGreenProb,
+              handleValueChange: setBlueOnGreenProb,
+              title: `${(blueOnGreenProb * 100).toFixed(0)}% chance of harassment with ${capitalize("green")}`,
+              min: 0,
+              max: 0.25,
+              step: 0.01,
+              color: COLORS.BLUE,
+            },
+          ]
+        : []),
+    ],
+    [idx, blueCount, blueOnBlueProb, blueOnGreenProb],
+  );
 
   const barInfo = useMemo(() => {
     const info = [
