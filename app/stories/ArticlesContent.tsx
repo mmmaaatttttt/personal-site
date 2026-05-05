@@ -7,6 +7,58 @@ import Select from "react-select";
 import StoryCard from "@/components/layout/StoryCard";
 import type { ArticleMeta } from "@/utils/content";
 
+const selectStyles = {
+  control: (base: CSSObjectWithLabel, state: { isFocused: boolean }) => ({
+    ...base,
+    borderRadius: "0.5rem",
+    borderColor: state.isFocused ? "var(--color-link)" : "var(--color-gray)",
+    boxShadow: state.isFocused ? "0 0 0 1px var(--color-link)" : "none",
+    padding: "2px",
+    "&:hover": {
+      borderColor: "var(--color-link)",
+    },
+  }),
+  option: (
+    base: CSSObjectWithLabel,
+    state: { isSelected: boolean; isFocused: boolean },
+  ) => ({
+    ...base,
+    backgroundColor: state.isSelected
+      ? "var(--color-dark-gray)"
+      : state.isFocused
+        ? "var(--color-light-gray)"
+        : "white",
+    color:
+      state.isSelected || state.isFocused
+        ? "var(--color-dark-gray)"
+        : "inherit",
+    cursor: "pointer",
+  }),
+  multiValue: (base: CSSObjectWithLabel) => ({
+    ...base,
+    backgroundColor: "var(--color-gray)",
+    borderRadius: "0.25rem",
+  }),
+  multiValueLabel: (base: CSSObjectWithLabel) => ({
+    ...base,
+    color: "white",
+    fontWeight: 500,
+    fontSize: "0.75rem",
+  }),
+  multiValueRemove: (base: CSSObjectWithLabel) => ({
+    ...base,
+    color: "white",
+    ":hover": {
+      backgroundColor: "var(--color-dark-gray)",
+      color: "white",
+    },
+  }),
+  menu: (base: CSSObjectWithLabel) => ({
+    ...base,
+    zIndex: 50,
+  }),
+};
+
 type YearOption = { value: number; label: string };
 type TagOption = { value: string; label: string };
 
@@ -43,63 +95,14 @@ const ArticlesContent: FC<ArticlesContentProps> = ({
     });
   }, [articles, selectedYear, selectedTags, searchQuery]);
 
-  const yearOptions: YearOption[] = years.map((y) => ({
-    value: y,
-    label: y.toString(),
-  }));
-  const tagOptions: TagOption[] = tags.map((t) => ({ value: t, label: t }));
-
-  const selectStyles = {
-    control: (base: CSSObjectWithLabel, state: { isFocused: boolean }) => ({
-      ...base,
-      borderRadius: "0.5rem",
-      borderColor: state.isFocused ? "var(--color-link)" : "var(--color-gray)",
-      boxShadow: state.isFocused ? "0 0 0 1px var(--color-link)" : "none",
-      padding: "2px",
-      "&:hover": {
-        borderColor: "var(--color-link)",
-      },
-    }),
-    option: (
-      base: CSSObjectWithLabel,
-      state: { isSelected: boolean; isFocused: boolean },
-    ) => ({
-      ...base,
-      backgroundColor: state.isSelected
-        ? "var(--color-dark-gray)"
-        : state.isFocused
-          ? "var(--color-light-gray)"
-          : "white",
-      color:
-        state.isSelected || state.isFocused
-          ? "var(--color-dark-gray)"
-          : "inherit",
-      cursor: "pointer",
-    }),
-    multiValue: (base: CSSObjectWithLabel) => ({
-      ...base,
-      backgroundColor: "var(--color-gray)",
-      borderRadius: "0.25rem",
-    }),
-    multiValueLabel: (base: CSSObjectWithLabel) => ({
-      ...base,
-      color: "white",
-      fontWeight: 500,
-      fontSize: "0.75rem",
-    }),
-    multiValueRemove: (base: CSSObjectWithLabel) => ({
-      ...base,
-      color: "white",
-      ":hover": {
-        backgroundColor: "var(--color-dark-gray)",
-        color: "white",
-      },
-    }),
-    menu: (base: CSSObjectWithLabel) => ({
-      ...base,
-      zIndex: 50,
-    }),
-  };
+  const yearOptions = useMemo<YearOption[]>(
+    () => years.map((y) => ({ value: y, label: y.toString() })),
+    [years],
+  );
+  const tagOptions = useMemo<TagOption[]>(
+    () => tags.map((t) => ({ value: t, label: t })),
+    [tags],
+  );
 
   return (
     <div className="mx-auto w-full max-w-[var(--max-w-content)] px-4 sm:px-0">
