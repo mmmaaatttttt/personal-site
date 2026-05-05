@@ -1,6 +1,7 @@
 "use client";
 
 import { type FC, useCallback, useEffect, useRef, useState } from "react";
+import Caption from "@/components/story/shared/Caption";
 import FlexContainer from "@/components/story/shared/FlexContainer";
 import HorizontalBar from "@/components/story/shared/HorizontalBar";
 import NarrowContainer from "@/components/story/shared/NarrowContainer";
@@ -22,6 +23,7 @@ interface OrchardGameSimulationProps {
 }
 
 const OrchardGameSimulation: FC<OrchardGameSimulationProps> = ({
+  caption,
   fruitCounts: initialFruitCounts = [4, 4, 4, 4],
   ravenCount: initialRavenCount = 5,
   wildCardCount = 1,
@@ -146,6 +148,7 @@ const OrchardGameSimulation: FC<OrchardGameSimulationProps> = ({
             );
           })}
       </div>
+      {caption && <Caption>{caption}</Caption>}
     </NarrowContainer>
   );
 };

@@ -55,28 +55,18 @@ const MultiBarGraph: FC<MultiBarGraphProps> = ({
       : padding;
   const { tooltip, showTooltip, hideTooltip } = useTooltip();
 
-  const labels =
-    data && Array.isArray(data) && data.length > 0
-      ? Object.keys(data[0]?.counts || {})
-      : [];
-
   const stackData = useMemo<Series<Record<string, number>, string>[]>(() => {
-    if (
-      !data ||
-      !Array.isArray(data) ||
-      data.length === 0 ||
-      labels.length === 0
-    )
-      return [];
+    if (!data || !Array.isArray(data) || data.length === 0) return [];
+    const labels = Object.keys(data[0]?.counts || {});
+    if (labels.length === 0) return [];
     try {
       return d3stack<Record<string, number>, string>()
         .keys(labels)
         .offset(stackOffsetNone)(data.map((d) => d.counts || {}));
-    } catch (e) {
-      console.error("MultiBarGraph stacking error:", e);
+    } catch {
       return [];
     }
-  }, [labels, data]);
+  }, [data]);
 
   const tooltipData = useMemo(
     () => (data && Array.isArray(data) ? data.map(getTooltipData) : []),
@@ -84,7 +74,6 @@ const MultiBarGraph: FC<MultiBarGraphProps> = ({
   );
 
   if (!data || !Array.isArray(data) || data.length === 0) return null;
-  if (labels.length === 0) return null;
   if (stackData.length === 0) return null;
 
   const yMin = min(stackData[0], (d) => d[0]) || 0;
@@ -107,7 +96,10 @@ const MultiBarGraph: FC<MultiBarGraphProps> = ({
     >
       <Legend
         title={legendTitle}
-        labels={labels.map((label, i) => ({ text: label, color: colors[i] }))}
+        labels={stackData.map((series, i) => ({
+          text: series.key,
+          color: colors[i],
+        }))}
       />
       <ClippedSVG id={id} width={width} height={height} clipChildren={false}>
         <g>

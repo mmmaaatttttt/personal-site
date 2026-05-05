@@ -1,6 +1,7 @@
 "use client";
 
 import { type FC, useCallback, useEffect, useState } from "react";
+import Caption from "@/components/story/shared/Caption";
 import FlexContainer from "@/components/story/shared/FlexContainer";
 import NarrowContainer from "@/components/story/shared/NarrowContainer";
 import { Button } from "@/components/ui/Button";
@@ -21,7 +22,7 @@ const OVERLAYS = {
   loss: { title: "You lost.", buttonText: "Play Again", bg: COLORS.RED },
 } as const;
 
-const OrchardGame: FC<{ caption?: string }> = () => {
+const OrchardGame: FC<{ caption?: string }> = ({ caption }) => {
   const [counts, setCounts] = useState<number[]>(INITIAL_COUNTS);
   const [fruitBasketEnabled, setFruitBasketEnabled] = useState(false);
   const [gameState, setGameState] = useState<GameState>("start");
@@ -88,7 +89,7 @@ const OrchardGame: FC<{ caption?: string }> = () => {
       : "";
 
   return (
-    <NarrowContainer width="70%" fullWidthAt="sm">
+    <NarrowContainer width="70%" fullWidthAt="sm" className="pb-4">
       <div className="relative pb-4">
         {gameState !== "playing" && (
           <ScreenOverlay backgroundColor={OVERLAYS[gameState].bg}>
@@ -129,6 +130,7 @@ const OrchardGame: FC<{ caption?: string }> = () => {
           </FlexContainer>
         </FlexContainer>
       </div>
+      {caption && <Caption>{caption}</Caption>}
     </NarrowContainer>
   );
 };

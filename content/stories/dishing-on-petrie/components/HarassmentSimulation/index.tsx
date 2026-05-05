@@ -1,6 +1,6 @@
 "use client";
 
-import { type FC, useCallback, useMemo, useState } from "react";
+import { type FC, useCallback, useMemo, useReducer, useState } from "react";
 import ClippedSVG from "@/components/story/shared/ClippedSVG";
 import FlexContainer from "@/components/story/shared/FlexContainer";
 import HorizontalBar from "@/components/story/shared/HorizontalBar";
@@ -25,6 +25,63 @@ export interface HarassmentSimulationProps {
 
 const capitalize = (s: string) => s.charAt(0).toUpperCase() + s.slice(1);
 
+type ShoutState = {
+  blueShoutsHeardFromBlueOnly: Set<number>;
+  blueShoutsHeardFromGreen: Set<number>;
+  greenShoutsHeardFromBlue: Set<number>;
+  greenShoutsHeardFromGreenOnly: Set<number>;
+};
+
+const initialShoutState: ShoutState = {
+  blueShoutsHeardFromBlueOnly: new Set(),
+  blueShoutsHeardFromGreen: new Set(),
+  greenShoutsHeardFromBlue: new Set(),
+  greenShoutsHeardFromGreenOnly: new Set(),
+};
+
+type ShoutAction =
+  | { type: "shout"; key: string; shoutId: number }
+  | { type: "reset" };
+
+function shoutReducer(state: ShoutState, action: ShoutAction): ShoutState {
+  if (action.type === "reset") return initialShoutState;
+  const { key, shoutId } = action;
+  switch (key) {
+    case "blueShoutsHeardFromGreen":
+      return {
+        ...state,
+        blueShoutsHeardFromGreen: new Set(state.blueShoutsHeardFromGreen).add(
+          shoutId,
+        ),
+      };
+    case "greenShoutsHeardFromBlue":
+      return {
+        ...state,
+        greenShoutsHeardFromBlue: new Set(state.greenShoutsHeardFromBlue).add(
+          shoutId,
+        ),
+      };
+    case "blueShoutsHeardFromBlueOnly":
+      if (state.greenShoutsHeardFromBlue.has(shoutId)) return state;
+      return {
+        ...state,
+        blueShoutsHeardFromBlueOnly: new Set(
+          state.blueShoutsHeardFromBlueOnly,
+        ).add(shoutId),
+      };
+    case "greenShoutsHeardFromGreenOnly":
+      if (state.blueShoutsHeardFromGreen.has(shoutId)) return state;
+      return {
+        ...state,
+        greenShoutsHeardFromGreenOnly: new Set(
+          state.greenShoutsHeardFromGreenOnly,
+        ).add(shoutId),
+      };
+    default:
+      return state;
+  }
+}
+
 const HarassmentSimulation: FC<HarassmentSimulationProps> = ({
   idx = 0,
   initialV = 2,
@@ -37,16 +94,7 @@ const HarassmentSimulation: FC<HarassmentSimulationProps> = ({
   const [blueCount, setBlueCount] = useState(10);
   const [greenCount, setGreenCount] = useState(20);
 
-  const [blueShoutsHeardFromBlueOnly, setBlueShoutsHeardFromBlueOnly] =
-    useState<Set<number>>(new Set());
-  const [blueShoutsHeardFromGreen, setBlueShoutsHeardFromGreen] = useState<
-    Set<number>
-  >(new Set());
-  const [greenShoutsHeardFromBlue, setGreenShoutsHeardFromBlue] = useState<
-    Set<number>
-  >(new Set());
-  const [greenShoutsHeardFromGreenOnly, setGreenShoutsHeardFromGreenOnly] =
-    useState<Set<number>>(new Set());
+  const [shouts, dispatchShout] = useReducer(shoutReducer, initialShoutState);
 
   const [blueOnBlueProb, setBlueOnBlueProb] = useState(0.05);
   const [greenOnGreenProb, setGreenOnGreenProb] = useState(0.05);
@@ -55,10 +103,7 @@ const HarassmentSimulation: FC<HarassmentSimulationProps> = ({
 
   const handleStart = useCallback(() => {
     setPlaying(true);
-    setBlueShoutsHeardFromBlueOnly(new Set());
-    setBlueShoutsHeardFromGreen(new Set());
-    setGreenShoutsHeardFromBlue(new Set());
-    setGreenShoutsHeardFromGreenOnly(new Set());
+    dispatchShout({ type: "reset" });
   }, []);
 
   const handleStop = useCallback(() => {
@@ -72,41 +117,9 @@ const HarassmentSimulation: FC<HarassmentSimulationProps> = ({
     setGreenOnBlueProb(0.05);
   }, []);
 
-  const handleShout = useCallback(
-    (key: string, shoutId: number) => {
-      setBlueShoutsHeardFromBlueOnly((prevBlueOnly) => {
-        const newBlueOnly = new Set(prevBlueOnly);
-        if (
-          key === "blueShoutsHeardFromBlueOnly" &&
-          !greenShoutsHeardFromBlue.has(shoutId)
-        ) {
-          newBlueOnly.add(shoutId);
-          return newBlueOnly;
-        }
-        return prevBlueOnly;
-      });
-
-      setGreenShoutsHeardFromGreenOnly((prevGreenOnly) => {
-        const newGreenOnly = new Set(prevGreenOnly);
-        if (
-          key === "greenShoutsHeardFromGreenOnly" &&
-          !blueShoutsHeardFromGreen.has(shoutId)
-        ) {
-          newGreenOnly.add(shoutId);
-          return newGreenOnly;
-        }
-        return prevGreenOnly;
-      });
-
-      if (key === "blueShoutsHeardFromGreen") {
-        setBlueShoutsHeardFromGreen((prev) => new Set(prev).add(shoutId));
-      }
-      if (key === "greenShoutsHeardFromBlue") {
-        setGreenShoutsHeardFromBlue((prev) => new Set(prev).add(shoutId));
-      }
-    },
-    [greenShoutsHeardFromBlue, blueShoutsHeardFromGreen],
-  );
+  const handleShout = useCallback((key: string, shoutId: number) => {
+    dispatchShout({ type: "shout", key, shoutId });
+  }, []);
 
   const handlePause = useCallback(() => setPaused((prev) => !prev), []);
 
@@ -223,15 +236,15 @@ const HarassmentSimulation: FC<HarassmentSimulationProps> = ({
         title: "Comments Overheard by Opposite Group",
         data: [
           {
-            size: blueShoutsHeardFromGreen.size,
+            size: shouts.blueShoutsHeardFromGreen.size,
             color: COLORS.BLUE,
-            tooltipText: `Harassment heard by blue, coming from green: ${blueShoutsHeardFromGreen.size}`,
+            tooltipText: `Harassment heard by blue, coming from green: ${shouts.blueShoutsHeardFromGreen.size}`,
             key: "blueHeardGreen",
           },
           {
-            size: greenShoutsHeardFromBlue.size,
+            size: shouts.greenShoutsHeardFromBlue.size,
             color: COLORS.GREEN,
-            tooltipText: `Harassment heard by green, coming from blue: ${greenShoutsHeardFromBlue.size}`,
+            tooltipText: `Harassment heard by green, coming from blue: ${shouts.greenShoutsHeardFromBlue.size}`,
             key: "greenHeardBlue",
           },
         ],
@@ -242,30 +255,22 @@ const HarassmentSimulation: FC<HarassmentSimulationProps> = ({
       info[1].title = "All Comments Heard";
       info[1].data = [
         {
-          size: blueShoutsHeardFromBlueOnly.size,
+          size: shouts.blueShoutsHeardFromBlueOnly.size,
           color: "#1E40AF",
-          tooltipText: `Harassment heard only by blue, coming from blue: ${blueShoutsHeardFromBlueOnly.size}`,
+          tooltipText: `Harassment heard only by blue, coming from blue: ${shouts.blueShoutsHeardFromBlueOnly.size}`,
           key: "blueHeardBlue",
         },
         ...info[1].data,
         {
-          size: greenShoutsHeardFromGreenOnly.size,
+          size: shouts.greenShoutsHeardFromGreenOnly.size,
           color: "#166534",
-          tooltipText: `Harassment heard only by green, coming from green: ${greenShoutsHeardFromGreenOnly.size}`,
+          tooltipText: `Harassment heard only by green, coming from green: ${shouts.greenShoutsHeardFromGreenOnly.size}`,
           key: "greenHeardGreen",
         },
       ];
     }
     return info;
-  }, [
-    blueCount,
-    greenCount,
-    blueShoutsHeardFromGreen,
-    greenShoutsHeardFromBlue,
-    blueShoutsHeardFromBlueOnly,
-    greenShoutsHeardFromGreenOnly,
-    idx,
-  ]);
+  }, [blueCount, greenCount, shouts, idx]);
 
   return (
     <NarrowContainer width="75%" className="mb-8 font-sans">
