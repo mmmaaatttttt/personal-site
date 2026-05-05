@@ -1,1 +1,3 @@
-npm run lint:write && git add -u
+STAGED=$(git diff --name-only --cached)
+npm run lint:write
+echo "$STAGED" | xargs git add
