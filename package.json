@@ -16,7 +16,8 @@
     "lint:write": "biome check --write",
     "test": "vitest run",
     "test:watch": "vitest",
-    "deploy": "NEXT_PUBLIC_BASE_URL='https://mattlane.us' next build && s3-deploy './out/**' --cwd './out/' --region us-east-1 --bucket mattlane.us --deleteRemoved && aws-cloudfront-invalidate $npm_config_distribution_id"
+    "deploy": "NEXT_PUBLIC_BASE_URL='https://mattlane.us' next build && s3-deploy './out/**' --cwd './out/' --region us-east-1 --bucket mattlane.us --deleteRemoved && aws-cloudfront-invalidate $npm_config_distribution_id",
+    "prepare": "husky"
   },
   "dependencies": {
     "@next/mdx": "^16.2.4",
@@ -50,6 +51,7 @@
     "@types/topojson-client": "^3.1.5",
     "@types/topojson-specification": "^1.0.5",
     "@vitejs/plugin-react": "^4.7.0",
+    "husky": "^9.1.7",
     "jsdom": "^29.0.2",
     "tailwindcss": "^4.2.1",
     "typescript": "^5.9.3",
