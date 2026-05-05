@@ -58,8 +58,8 @@ const EfficiencyGapTable: FC<EfficiencyGapTableProps> = ({
         <thead>
           <tr>
             <th>District</th>
-            <th style={{ color: COLORS.DARK_BLUE }}>Wasted Votes (Blue)</th>
-            <th style={{ color: COLORS.RED }}>Wasted Votes (Red)</th>
+            <th className="text-dark-blue">Wasted Votes (Blue)</th>
+            <th className="text-red">Wasted Votes (Red)</th>
           </tr>
         </thead>
         <tbody>
@@ -68,14 +68,14 @@ const EfficiencyGapTable: FC<EfficiencyGapTableProps> = ({
             .map(({ blue, red, district }) => (
               <tr key={district}>
                 <td className="font-bold">{district}</td>
-                <td style={{ color: COLORS.DARK_BLUE }}>{blue}</td>
-                <td style={{ color: COLORS.RED }}>{red}</td>
+                <td className="text-dark-blue">{blue}</td>
+                <td className="text-red">{red}</td>
               </tr>
             ))}
           <tr>
             <td className="font-bold">Total</td>
-            <td style={{ color: COLORS.DARK_BLUE }}>{totalWasted[0]}</td>
-            <td style={{ color: COLORS.RED }}>{totalWasted[1]}</td>
+            <td className="text-dark-blue">{totalWasted[0]}</td>
+            <td className="text-red">{totalWasted[1]}</td>
           </tr>
           <tr>
             <td className="font-bold">Efficiency Gap</td>

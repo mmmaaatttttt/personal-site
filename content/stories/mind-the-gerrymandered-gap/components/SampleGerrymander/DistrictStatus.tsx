@@ -63,16 +63,14 @@ const DistrictStatus: FC<DistrictStatusProps> = ({
           type="button"
           onClick={onSave}
           disabled={!saveable}
-          className="cursor-pointer rounded border-none px-4 py-2 text-white disabled:cursor-not-allowed disabled:opacity-60"
-          style={{ backgroundColor: saveable ? COLORS.GREEN : COLORS.GRAY }}
+          className={`cursor-pointer rounded border-none px-4 py-2 text-white disabled:cursor-not-allowed disabled:opacity-60 ${saveable ? "bg-green" : "bg-gray"}`}
         >
           {saveable ? "Save" : "Saved"}
         </button>
         <button
           type="button"
           onClick={onReset}
-          className="cursor-pointer rounded border-none px-4 py-2 text-white"
-          style={{ backgroundColor: COLORS.RED }}
+          className="cursor-pointer rounded border-none px-4 py-2 text-white bg-red"
         >
           Reset
         </button>

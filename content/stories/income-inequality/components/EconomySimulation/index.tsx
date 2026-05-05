@@ -120,8 +120,7 @@ const EconomySimulation = ({
             <button
               type="button"
               onClick={handleStart}
-              style={{ backgroundColor: COLORS.MAROON }}
-              className="rounded-lg px-6 py-2 font-bold tracking-wide text-white shadow-md transition-all hover:brightness-110 active:scale-95"
+              className="rounded-lg px-6 py-2 font-bold tracking-wide text-white shadow-md transition-all hover:brightness-110 active:scale-95 bg-maroon"
             >
               Start
             </button>
@@ -130,24 +129,21 @@ const EconomySimulation = ({
               <button
                 type="button"
                 onClick={handlePause}
-                style={{ backgroundColor: COLORS.ORANGE }}
-                className="rounded-lg px-6 py-2 font-bold tracking-wide text-white shadow-md transition-all hover:brightness-110 active:scale-95"
+                className="rounded-lg px-6 py-2 font-bold tracking-wide text-white shadow-md transition-all hover:brightness-110 active:scale-95 bg-orange"
               >
                 {paused ? "Resume" : "Pause"}
               </button>
               <button
                 type="button"
                 onClick={() => setShowingSimulation((s) => !s)}
-                style={{ backgroundColor: COLORS.BLUE }}
-                className="rounded-lg px-6 py-2 font-bold tracking-wide text-white shadow-md transition-all hover:brightness-110 active:scale-95"
+                className="rounded-lg px-6 py-2 font-bold tracking-wide text-white shadow-md transition-all hover:brightness-110 active:scale-95 bg-blue"
               >
                 {showingSimulation ? "Show Chart" : "Show Nodes"}
               </button>
               <button
                 type="button"
                 onClick={handleStop}
-                style={{ backgroundColor: COLORS.RED }}
-                className="rounded-lg px-6 py-2 font-bold tracking-wide text-white shadow-md transition-all hover:brightness-110 active:scale-95"
+                className="rounded-lg px-6 py-2 font-bold tracking-wide text-white shadow-md transition-all hover:brightness-110 active:scale-95 bg-red"
               >
                 Reset
               </button>
