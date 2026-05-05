@@ -13,7 +13,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "biome check",
-    "lint:write": "biome check --write",
+    "lint:write": "biome check --write --unsafe",
     "test": "vitest run",
     "test:watch": "vitest",
     "deploy": "NEXT_PUBLIC_BASE_URL='https://mattlane.us' next build && s3-deploy './out/**' --cwd './out/' --region us-east-1 --bucket mattlane.us --deleteRemoved && aws-cloudfront-invalidate $npm_config_distribution_id",
