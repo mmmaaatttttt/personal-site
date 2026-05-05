@@ -1,10 +1,11 @@
 "use client";
 
-import { type FC, useEffect, useState } from "react";
+import { type FC, useState } from "react";
 import NarrowContainer from "@/components/story/shared/NarrowContainer";
 import Select from "@/components/story/shared/Select";
 import Tooltip, { useTooltip } from "@/components/story/shared/Tooltip";
 import USMap from "@/components/story/shared/USMap";
+import { useIsMounted } from "@/hooks/useIsMounted";
 import type { MapOption, MapProperties, WeddingData } from "../../types";
 
 interface SelectableUSMapProps {
@@ -20,15 +21,11 @@ const SelectableUSMap: FC<SelectableUSMapProps> = ({
   getTooltipTitle,
   getTooltipBody,
 }) => {
-  const [isMounted, setIsMounted] = useState(false);
+  const isMounted = useIsMounted();
   const [selectedOption, setSelectedOption] = useState<MapOption>(
     selectOptions[0],
   );
   const { tooltip, showTooltip, hideTooltip } = useTooltip();
-
-  useEffect(() => {
-    setIsMounted(true);
-  }, []);
 
   const { value, label, accessor, colors } = selectedOption;
 

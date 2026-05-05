@@ -3,6 +3,7 @@
 import type { FC, ReactNode } from "react";
 import { useEffect, useState } from "react";
 import Caption from "@/components/story/shared/Caption";
+import { useIsMounted } from "@/hooks/useIsMounted";
 import { choices } from "@/utils/mathHelpers";
 import baQuizData, { type QuizQuestion } from "../../data/ba-quiz";
 import QuizReviewPanel from "./QuizReviewPanel";
@@ -19,19 +20,18 @@ const Quiz: FC<QuizProps> = ({
   title = "This is a quiz.",
   caption,
 }) => {
+  const isMounted = useIsMounted();
   const [questions, setQuestions] = useState<QuizQuestion[]>([]);
   const [answers, setAnswers] = useState<string[] | null>(null);
   const [selectedAnswer, setSelectedAnswer] = useState<string | null>(null);
   const [resultsIndex, setResultsIndex] = useState(0);
-  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
     setQuestions(choices(baQuizData, maxQuestions));
-    setMounted(true);
   }, [maxQuestions]);
 
   if (!baQuizData || baQuizData.length === 0) return null;
-  if (!mounted) return null;
+  if (!isMounted) return null;
 
   const reset = () => {
     setQuestions(choices(baQuizData, maxQuestions));

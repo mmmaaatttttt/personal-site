@@ -2,7 +2,7 @@
 
 import { usePathname } from "next/navigation";
 import type { FC, ReactNode } from "react";
-import { useEffect, useState } from "react";
+import { useIsMounted } from "@/hooks/useIsMounted";
 import Footer from "./Footer";
 import Navbar from "./Navbar";
 
@@ -13,11 +13,7 @@ interface MainLayoutProps {
 
 const MainLayout: FC<MainLayoutProps> = ({ children, outline = false }) => {
   const pathname = usePathname();
-  const [mounted, setMounted] = useState(false);
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
+  const mounted = useIsMounted();
 
   // Determine if it's a story page
   const isArticlePage =

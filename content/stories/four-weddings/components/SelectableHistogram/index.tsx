@@ -2,10 +2,11 @@
 
 import { bin, extent, max, range } from "d3-array";
 import { scaleLinear } from "d3-scale";
-import { type FC, useEffect, useMemo, useState } from "react";
+import { type FC, useMemo, useState } from "react";
 import BarGraph from "@/components/story/shared/BarGraph";
 import NarrowContainer from "@/components/story/shared/NarrowContainer";
 import Select from "@/components/story/shared/Select";
+import { useIsMounted } from "@/hooks/useIsMounted";
 import COLORS from "@/utils/styles";
 import type { HistogramOption, WeddingData } from "../../types";
 
@@ -23,14 +24,10 @@ const SelectableHistogram: FC<SelectableHistogramProps> = ({
   data,
   selectOptions,
 }) => {
-  const [isMounted, setIsMounted] = useState(false);
+  const isMounted = useIsMounted();
   const [selectedOption, setSelectedOption] = useState<HistogramOption>(
     selectOptions[0],
   );
-
-  useEffect(() => {
-    setIsMounted(true);
-  }, []);
 
   const { value, label, accessor, step, format } = selectedOption;
 

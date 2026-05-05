@@ -1,10 +1,11 @@
 "use client";
 
-import { type FC, useEffect, useState } from "react";
+import { type FC, useState } from "react";
 import FlexContainer from "@/components/story/shared/FlexContainer";
 import NarrowContainer from "@/components/story/shared/NarrowContainer";
 import Scatterplot from "@/components/story/shared/Scatterplot";
 import Select from "@/components/story/shared/Select";
+import { useIsMounted } from "@/hooks/useIsMounted";
 import type { ScatterOption, WeddingData } from "../../types";
 
 interface SelectableScatterplotProps {
@@ -25,7 +26,7 @@ const SelectableScatterplot: FC<SelectableScatterplotProps> = ({
   selectOptions,
   graphOptions,
 }) => {
-  const [isMounted, setIsMounted] = useState(false);
+  const isMounted = useIsMounted();
   const [selectedOptionX, setSelectedOptionX] = useState<ScatterOption>(
     selectOptions[0],
   );
@@ -33,10 +34,6 @@ const SelectableScatterplot: FC<SelectableScatterplotProps> = ({
     selectOptions[1],
   );
   const [selectedOptionR] = useState<ScatterOption | null>(null);
-
-  useEffect(() => {
-    setIsMounted(true);
-  }, []);
 
   const {
     accessor: accessorX,

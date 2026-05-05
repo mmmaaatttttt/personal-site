@@ -1,9 +1,10 @@
 "use client";
 
-import { type FC, useEffect, useState } from "react";
+import { type FC, useState } from "react";
 import NarrowContainer from "@/components/story/shared/NarrowContainer";
 import PieChart from "@/components/story/shared/PieChart";
 import Select from "@/components/story/shared/Select";
+import { useIsMounted } from "@/hooks/useIsMounted";
 import type { PieOption, WeddingData } from "../../types";
 
 interface SelectablePieChartProps {
@@ -21,14 +22,10 @@ const SelectablePieChart: FC<SelectablePieChartProps> = ({
   selectOptions,
   graphOptions,
 }) => {
-  const [isMounted, setIsMounted] = useState(false);
+  const isMounted = useIsMounted();
   const [selectedOption, setSelectedOption] = useState<PieOption>(
     selectOptions[0],
   );
-
-  useEffect(() => {
-    setIsMounted(true);
-  }, []);
 
   const { value, label, accessor } = selectedOption;
 

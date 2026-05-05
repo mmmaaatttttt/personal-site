@@ -4,7 +4,8 @@ import { extent } from "d3-array";
 import { scaleLinear } from "d3-scale";
 import { AnimatePresence } from "framer-motion";
 import type { FC } from "react";
-import { useEffect, useMemo, useState } from "react";
+import { useMemo } from "react";
+import { useIsMounted } from "@/hooks/useIsMounted";
 import Graph from "../Graph";
 import ScatterPoint from "./ScatterPoint";
 
@@ -39,11 +40,7 @@ const Scatterplot: FC<ScatterplotProps> = ({
   tickFormatX,
   tickFormatY,
 }) => {
-  const [isMounted, setIsMounted] = useState(false);
-
-  useEffect(() => {
-    setIsMounted(true);
-  }, []);
+  const isMounted = useIsMounted();
 
   const xScale = useMemo(() => {
     if (!isMounted) return scaleLinear();

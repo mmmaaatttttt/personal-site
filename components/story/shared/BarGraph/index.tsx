@@ -5,7 +5,8 @@ import type { ScaleBand, ScaleLinear } from "d3-scale";
 import { scaleBand, scaleLinear } from "d3-scale";
 import { AnimatePresence } from "framer-motion";
 import type { FC } from "react";
-import { useEffect, useMemo, useState } from "react";
+import { useMemo } from "react";
+import { useIsMounted } from "@/hooks/useIsMounted";
 import Graph from "../Graph";
 import BarItem from "./BarItem";
 
@@ -64,15 +65,11 @@ const BarGraph: FC<BarGraphProps> = ({
   width = 600,
   yScale,
 }) => {
-  const [isMounted, setIsMounted] = useState(false);
+  const isMounted = useIsMounted();
   const p =
     typeof padding === "number"
       ? { top: padding, bottom: padding, left: padding, right: padding }
       : padding;
-
-  useEffect(() => {
-    setIsMounted(true);
-  }, []);
 
   const xScale = useMemo(() => {
     if (histogram && thresholds) {
