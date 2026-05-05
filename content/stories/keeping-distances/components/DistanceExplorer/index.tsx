@@ -99,7 +99,7 @@ const DistanceExplorer: FC<DistanceExplorerProps> = ({ caption }) => {
             dominantBaseline="middle"
             transform={`rotate(${(-180 / Math.PI) * theta}, ${textX}, ${textY})`}
             dy={-Math.sign(theta) * 20}
-            style={{ userSelect: "none" }}
+            className="select-none"
           >
             {euclideanDistance(
               points[1].x - points[0].x,

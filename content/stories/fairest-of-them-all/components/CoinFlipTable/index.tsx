@@ -14,12 +14,7 @@ interface CoinFlipTableProps {
   caption?: string;
 }
 
-// Shared cell style matching StyledTable appearance
-const cellStyle = {
-  textAlign: "center" as const,
-  padding: "0.75rem 1rem",
-  border: "1px solid rgba(0, 0, 0, 0.1)",
-};
+const cellClass = "text-center py-3 px-4 border border-black/10";
 
 const CoinFlipTable: FC<CoinFlipTableProps> = ({ caption }) => {
   const [headsProb, setHeadsProb] = useState(0.5);
@@ -39,15 +34,12 @@ const CoinFlipTable: FC<CoinFlipTableProps> = ({ caption }) => {
       />
       {/* Fixed column widths prevent the cells from resizing as text changes. */}
       <div className="my-12 w-full overflow-x-auto text-center">
-        <table
-          className="mx-auto w-full border-collapse border shadow-sm"
-          style={{ tableLayout: "fixed" }}
-        >
+        <table className="mx-auto w-full table-fixed border-collapse border shadow-sm">
           <colgroup>
-            <col style={{ width: "25%" }} />
-            <col style={{ width: "25%" }} />
-            <col style={{ width: "25%" }} />
-            <col style={{ width: "25%" }} />
+            <col className="w-1/4" />
+            <col className="w-1/4" />
+            <col className="w-1/4" />
+            <col className="w-1/4" />
           </colgroup>
           <thead>
             <tr>
@@ -55,14 +47,7 @@ const CoinFlipTable: FC<CoinFlipTableProps> = ({ caption }) => {
                 (h) => (
                   <th
                     key={h}
-                    style={{
-                      ...cellStyle,
-                      backgroundColor: "rgba(0, 0, 0, 0.03)",
-                      fontWeight: 800,
-                      textTransform: "uppercase",
-                      letterSpacing: "0.05em",
-                      fontSize: "0.875rem",
-                    }}
+                    className={`${cellClass} bg-black/[0.03] font-extrabold uppercase tracking-wider text-sm`}
                   >
                     {h}
                   </th>
@@ -72,15 +57,15 @@ const CoinFlipTable: FC<CoinFlipTableProps> = ({ caption }) => {
           </thead>
           <tbody>
             <tr>
-              <td style={cellStyle}>{format(headsProb)}</td>
-              <td style={cellStyle}>{format(tailsProb)}</td>
-              <td style={cellStyle}>
+              <td className={cellClass}>{format(headsProb)}</td>
+              <td className={cellClass}>{format(tailsProb)}</td>
+              <td className={cellClass}>
                 {format(headsProb)} &times; {format(tailsProb)} ={" "}
                 <ColoredSpan color={COLORS.GREEN} bold>
                   {format(pairProb, 2)}
                 </ColoredSpan>
               </td>
-              <td style={cellStyle}>
+              <td className={cellClass}>
                 {format(tailsProb)} &times; {format(headsProb)} ={" "}
                 <ColoredSpan color={COLORS.GREEN} bold>
                   {format(pairProb, 2)}

@@ -28,13 +28,10 @@ const FruitContainer: FC<FruitContainerProps> = ({
       type="button"
       onClick={clickable ? onRemove : undefined}
       disabled={!clickable}
-      className="flex flex-1 mx-[2%] rounded-lg items-center justify-center min-h-20 text-white"
+      className={`flex flex-1 mx-[2%] rounded-lg items-center justify-center min-h-20 text-white [text-shadow:2px_2px_6px_black] ${faded ? "opacity-30" : "opacity-100"} ${clickable ? "cursor-pointer" : "cursor-not-allowed"}`}
       style={{
         backgroundColor: bg,
         border: `4px solid ${border}`,
-        opacity: faded ? 0.3 : 1,
-        cursor: clickable ? "pointer" : "not-allowed",
-        textShadow: "2px 2px 6px black",
       }}
     >
       {count > 0 && (

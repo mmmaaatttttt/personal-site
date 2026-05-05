@@ -56,7 +56,7 @@ const LabeledCircle: FC<LabeledCircleProps> = ({
           textAnchor="middle"
           dominantBaseline="central"
           fontSize={`${1.5 * r}px`}
-          style={{ userSelect: "none" }}
+          className="select-none"
         >
           {label}
         </text>

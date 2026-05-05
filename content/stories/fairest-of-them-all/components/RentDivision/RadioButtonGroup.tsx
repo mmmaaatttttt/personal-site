@@ -60,8 +60,7 @@ const RadioButtonGroup: FC<RadioButtonGroupProps> = ({
         />
         <label
           htmlFor={`radio-${i}`}
-          className="flex cursor-pointer items-center gap-2"
-          style={{ cursor: disabled ? "not-allowed" : "pointer" }}
+          className={`flex items-center gap-2 ${disabled ? "cursor-not-allowed" : "cursor-pointer"}`}
         >
           <span
             className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full border border-black"

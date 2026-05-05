@@ -94,7 +94,7 @@ const ManhattanPaths: FC<ManhattanPathsProps> = ({ caption }) => {
                         }
                       }
                 }
-                style={{ cursor: isActive ? "default" : "pointer" }}
+                className={isActive ? "cursor-default" : "cursor-pointer"}
               />
             );
           })}

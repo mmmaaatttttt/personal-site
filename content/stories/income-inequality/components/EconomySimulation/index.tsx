@@ -156,7 +156,7 @@ const EconomySimulation = ({
         </div>
 
         {/* Both views are always mounted so collisions continue regardless of which is shown */}
-        <div style={{ display: showingSimulation ? "block" : "none" }}>
+        <div className={showingSimulation ? "block" : "hidden"}>
           <ClippedSVG
             id={`simulation-${idx}`}
             width={width}
@@ -177,7 +177,7 @@ const EconomySimulation = ({
             />
           </ClippedSVG>
         </div>
-        <div style={{ display: showingSimulation ? "none" : "block" }}>
+        <div className={showingSimulation ? "hidden" : "block"}>
           <BarGraph
             animated={false}
             svgId={`bar-${idx}`}
