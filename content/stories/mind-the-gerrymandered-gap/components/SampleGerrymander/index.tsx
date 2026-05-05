@@ -9,6 +9,7 @@ import {
   useState,
 } from "react";
 import ColumnLayout from "@/components/story/shared/ColumnLayout";
+import { useLocalStorage } from "@/hooks/useLocalStorage";
 import {
   COL_COUNT,
   COLOR_RANGE,
@@ -39,42 +40,37 @@ const SampleGerrymander: FC<SampleGerrymanderProps> = ({
   colorRange = COLOR_RANGE,
   onDistrictCountsChange,
 }) => {
-  const [segments, setSegments] = useState<boolean[][]>(() =>
-    getInitialSegments(rowCount, colCount),
+  const [savedSegments, setSavedSegments, removeSavedSegments] =
+    useLocalStorage<boolean[][] | null>(STORAGE_KEY, null);
+  const [, setGerrymanderCounts] = useLocalStorage<[number, number][] | null>(
+    GERRYMANDER_COUNTS_KEY,
+    null,
   );
-  const [districts, setDistricts] = useState<[number, number][][]>([]);
+
+  // useSyncExternalStore reads localStorage synchronously, so savedSegments is
+  // available on the first render — no mount effect needed to load it.
+  const [segments, setSegments] = useState<boolean[][]>(() => {
+    const valid =
+      Array.isArray(savedSegments) && savedSegments.length === rowCount * 2 - 1;
+    return valid ? savedSegments : getInitialSegments(rowCount, colCount);
+  });
   const [saveable, setSaveable] = useState(false);
 
   const onChangeRef = useRef(onDistrictCountsChange);
   onChangeRef.current = onDistrictCountsChange;
 
-  // Load saved segments from localStorage on mount
-  useEffect(() => {
-    const saved = localStorage.getItem(STORAGE_KEY);
-    if (saved) {
-      try {
-        const parsed = JSON.parse(saved) as boolean[][];
-        // Validate dimensions before trusting saved data
-        if (Array.isArray(parsed) && parsed.length === rowCount * 2 - 1) {
-          setSegments(parsed);
-        }
-      } catch {
-        // ignore malformed data
-      }
-    }
-    // rowCount is stable (prop default), so this runs effectively once
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [rowCount]);
+  const districts = useMemo(
+    () => countRegions(segments, rowCount, colCount),
+    [segments, rowCount, colCount],
+  );
 
-  // Recompute districts and propagate counts whenever segments change
+  // Propagate district counts to sibling components and shared localStorage key
   useEffect(() => {
-    const newDistricts = countRegions(segments, rowCount, colCount);
-    setDistricts(newDistricts);
     const valid =
-      newDistricts.length === rowCount &&
-      newDistricts.every((d) => d.length === colCount);
+      districts.length === rowCount &&
+      districts.every((d) => d.length === colCount);
     const counts = valid
-      ? newDistricts.map(
+      ? districts.map(
           (d) =>
             [
               d.filter(([r]) => r % 2 === 0).length,
@@ -83,11 +79,11 @@ const SampleGerrymander: FC<SampleGerrymanderProps> = ({
         )
       : null;
     onChangeRef.current?.(counts);
-    localStorage.setItem(GERRYMANDER_COUNTS_KEY, JSON.stringify(counts));
+    setGerrymanderCounts(counts);
     window.dispatchEvent(
       new CustomEvent(GERRYMANDER_COUNTS_EVENT, { detail: counts }),
     );
-  }, [segments, rowCount, colCount]);
+  }, [districts, rowCount, colCount, setGerrymanderCounts]);
 
   const handleSegmentUpdate = useCallback(
     (row: number, col: number, status: boolean | null) => {
@@ -103,15 +99,15 @@ const SampleGerrymander: FC<SampleGerrymanderProps> = ({
   );
 
   const handleSave = useCallback(() => {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(segments));
+    setSavedSegments(segments);
     setSaveable(false);
-  }, [segments]);
+  }, [segments, setSavedSegments]);
 
   const handleReset = useCallback(() => {
-    localStorage.removeItem(STORAGE_KEY);
+    removeSavedSegments();
     setSegments(getInitialSegments(rowCount, colCount));
     setSaveable(false);
-  }, [rowCount, colCount]);
+  }, [rowCount, colCount, removeSavedSegments]);
 
   const dims = useMemo(
     () => computeGridDimensions(GRID_WIDTH, rowCount, colCount),

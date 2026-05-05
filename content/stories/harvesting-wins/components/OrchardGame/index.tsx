@@ -1,10 +1,11 @@
 "use client";
 
-import { type FC, useCallback, useEffect, useState } from "react";
+import { type FC, useCallback, useState } from "react";
 import Caption from "@/components/story/shared/Caption";
 import FlexContainer from "@/components/story/shared/FlexContainer";
 import NarrowContainer from "@/components/story/shared/NarrowContainer";
 import { Button } from "@/components/ui/Button";
+import { useLocalStorage } from "@/hooks/useLocalStorage";
 import COLORS from "@/utils/styles";
 import { INITIAL_COUNTS, SPINNER_COLORS } from "./constants";
 import FruitContainer from "./FruitContainer";
@@ -26,50 +27,44 @@ const OrchardGame: FC<{ caption?: string }> = ({ caption }) => {
   const [counts, setCounts] = useState<number[]>(INITIAL_COUNTS);
   const [fruitBasketEnabled, setFruitBasketEnabled] = useState(false);
   const [gameState, setGameState] = useState<GameState>("start");
-  const [gamesPlayed, setGamesPlayed] = useState(0);
-  const [gamesWon, setGamesWon] = useState(0);
-
-  useEffect(() => {
-    setGamesWon(+(localStorage.getItem("harvestingWins:gamesWon") ?? 0));
-    setGamesPlayed(+(localStorage.getItem("harvestingWins:gamesPlayed") ?? 0));
-  }, []);
+  const [gamesPlayed, setGamesPlayed, removeGamesPlayed] = useLocalStorage(
+    "harvestingWins:gamesPlayed",
+    0,
+  );
+  const [gamesWon, setGamesWon, removeGamesWon] = useLocalStorage(
+    "harvestingWins:gamesWon",
+    0,
+  );
 
   const startGame = useCallback(() => {
     setCounts(INITIAL_COUNTS);
     setFruitBasketEnabled(false);
     setGameState("playing");
-    setGamesPlayed((prev) => {
-      const next = prev + 1;
-      localStorage.setItem("harvestingWins:gamesPlayed", String(next));
-      return next;
-    });
-  }, []);
+    setGamesPlayed((prev) => prev + 1);
+  }, [setGamesPlayed]);
 
   const clearData = useCallback(() => {
-    localStorage.removeItem("harvestingWins:gamesWon");
-    localStorage.removeItem("harvestingWins:gamesPlayed");
-    setGamesPlayed(0);
-    setGamesWon(0);
-  }, []);
+    removeGamesWon();
+    removeGamesPlayed();
+  }, [removeGamesWon, removeGamesPlayed]);
 
-  const removeAt = useCallback((idx: number) => {
-    setFruitBasketEnabled(false);
-    setCounts((prev) => {
-      const next = [...prev];
-      next[idx] = Math.max(next[idx] - 1, 0);
-      if (next.slice(0, -1).every((c) => c === 0)) {
-        setGameState("win");
-        setGamesWon((w) => {
-          const nw = w + 1;
-          localStorage.setItem("harvestingWins:gamesWon", String(nw));
-          return nw;
-        });
-      } else if (next[next.length - 1] === 0) {
-        setGameState("loss");
-      }
-      return next;
-    });
-  }, []);
+  const removeAt = useCallback(
+    (idx: number) => {
+      setFruitBasketEnabled(false);
+      setCounts((prev) => {
+        const next = [...prev];
+        next[idx] = Math.max(next[idx] - 1, 0);
+        if (next.slice(0, -1).every((c) => c === 0)) {
+          setGameState("win");
+          setGamesWon((w) => w + 1);
+        } else if (next[next.length - 1] === 0) {
+          setGameState("loss");
+        }
+        return next;
+      });
+    },
+    [setGamesWon],
+  );
 
   const handleSpinEnd = useCallback(
     (idx: number) => {
