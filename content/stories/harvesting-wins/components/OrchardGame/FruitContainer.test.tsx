@@ -47,7 +47,7 @@ describe("FruitContainer", () => {
 
   it("applies reduced opacity when faded", () => {
     const { container } = render(<FruitContainer {...baseProps} faded />);
-    expect(container.firstChild).toHaveStyle({ opacity: 0.3 });
+    expect(container.firstChild).toHaveClass("opacity-30");
   });
 
   it("darkens the background when empty", () => {
