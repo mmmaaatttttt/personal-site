@@ -3,7 +3,7 @@
 import { extent } from "d3-array";
 import type { AxisScale } from "d3-axis";
 import { type NumberValue, scaleLinear } from "d3-scale";
-import { useCallback, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 import Caption from "@/components/story/shared/Caption";
 import ColumnLayout from "@/components/story/shared/ColumnLayout";
 import FlexContainer from "@/components/story/shared/FlexContainer";
@@ -11,6 +11,23 @@ import Graph from "@/components/story/shared/Graph";
 import LinePlot from "@/components/story/shared/LinePlot";
 import SliderGroup from "@/components/story/shared/Slider/SliderGroup";
 import { generateData } from "@/utils/mathHelpers";
+
+function tickStep(scale: AxisScale<NumberValue>): number {
+  const domain = scale.domain() as number[];
+  const [tickMin, tickMax] = domain;
+  return tickMax > 500 ? (tickMax - tickMin) / 1e3 : 1;
+}
+
+function getYDomain(
+  graphData: { x: number; y: number }[][],
+  smallestY: number,
+  largestY: number,
+): [number, number] {
+  const allY = graphData.flatMap((series) => series.map((d) => Math.abs(d.y)));
+  const yMax0 = allY.length > 0 ? Math.max(...allY) : 0;
+  const yMax = Math.min(Math.max(Math.ceil(yMax0), smallestY), largestY);
+  return [-yMax, yMax];
+}
 
 export interface SliderDatum {
   min: number;
@@ -69,11 +86,11 @@ export default function GamingRelationships({
     });
   }, []);
 
-  const data = visData.initialData.map((d, i) => ({
-    ...d,
-    value: values[i],
-    key: i,
-  }));
+  const data = useMemo(
+    () =>
+      visData.initialData.map((d, i) => ({ ...d, value: values[i], key: i })),
+    [visData.initialData, values],
+  );
 
   const {
     width,
@@ -87,90 +104,94 @@ export default function GamingRelationships({
     largestY,
   } = visData;
 
-  const getYDomain = (
-    graphData: { x: number; y: number }[][],
-  ): [number, number] => {
-    const allY = graphData.flatMap((series) =>
-      series.map((d) => Math.abs(d.y)),
-    );
-    const yMax0 = allY.length > 0 ? Math.max(...allY) : 0;
-    const yMax = Math.min(Math.max(Math.ceil(yMax0), smallestY), largestY);
-    return [-yMax, yMax];
-  };
-
-  const tickStep = (scale: AxisScale<NumberValue>) => {
-    const domain = scale.domain() as number[];
-    const [tickMin, tickMax] = domain;
-    return tickMax > 500 ? (tickMax - tickMin) / 1e3 : 1;
-  };
-
-  const transformData = (diffEq: DiffEq) => {
-    const diffEqValues = data
-      .filter((d) => d.equationParameter)
-      .map((d) => d.value);
-    const graphCount = colors.length;
-    let initialValues = data
-      .filter((d) => !d.equationParameter)
-      .map((d) => d.value);
-    if (initialValues.length === 0) initialValues = [0, 0];
-    return generateData(
-      graphCount,
-      min,
-      max,
-      step,
-      initialValues,
-      diffEqValues,
-      diffEq,
-    );
-  };
-
   const uniqueColors = Array.from(new Set(colors));
 
-  const graphs = diffEqs
-    .map((diffEq, i) => ({ diffEq, graphIdx: i }))
-    .map(({ diffEq, graphIdx }) => {
-      const sliceIdx = graphIdx === 1 && colors.length === 4 ? 2 : 0;
-      const allGraphData = transformData(diffEq).slice(sliceIdx, sliceIdx + 2);
-      const xDomain = extent(allGraphData[0], (d) => d.x) as [number, number];
-      const xScale = scaleLinear()
-        .domain(xDomain)
-        .range([graphPadding, width - graphPadding]);
-      const yScale = scaleLinear()
-        .domain(getYDomain(allGraphData))
-        .range([height - graphPadding, graphPadding]);
-
-      const linePlots = allGraphData
-        .map((graphData, j) => ({ graphData, lineIdx: 2 * graphIdx + j }))
-        .map(({ graphData, lineIdx }) => (
-          <LinePlot
-            key={lineIdx}
-            stroke={colors[lineIdx % colors.length]}
-            graphData={graphData}
-            xScale={xScale}
-            yScale={yScale}
-          />
-        ));
-
-      return (
-        <Graph
-          key={graphIdx}
-          graphPadding={graphPadding}
-          gridlinesVertical={false}
-          height={height}
-          svgId={svgIds[graphIdx]}
-          svgPadding={svgPadding}
-          tickStep={tickStep}
-          width={width}
-          xAxisPosition="center"
-          xLabel={xLabel}
-          xScale={xScale}
-          yLabel={yLabel}
-          yScale={yScale}
-        >
-          {linePlots}
-        </Graph>
+  const graphs = useMemo(() => {
+    const transformData = (diffEq: DiffEq) => {
+      const diffEqValues = data
+        .filter((d) => d.equationParameter)
+        .map((d) => d.value);
+      const graphCount = colors.length;
+      let initialValues = data
+        .filter((d) => !d.equationParameter)
+        .map((d) => d.value);
+      if (initialValues.length === 0) initialValues = [0, 0];
+      return generateData(
+        graphCount,
+        min,
+        max,
+        step,
+        initialValues,
+        diffEqValues,
+        diffEq,
       );
-    });
+    };
+
+    return diffEqs
+      .map((diffEq, i) => ({ diffEq, graphIdx: i }))
+      .map(({ diffEq, graphIdx }) => {
+        const sliceIdx = graphIdx === 1 && colors.length === 4 ? 2 : 0;
+        const allGraphData = transformData(diffEq).slice(
+          sliceIdx,
+          sliceIdx + 2,
+        );
+        const xDomain = extent(allGraphData[0], (d) => d.x) as [number, number];
+        const xScale = scaleLinear()
+          .domain(xDomain)
+          .range([graphPadding, width - graphPadding]);
+        const yScale = scaleLinear()
+          .domain(getYDomain(allGraphData, smallestY, largestY))
+          .range([height - graphPadding, graphPadding]);
+
+        const linePlots = allGraphData
+          .map((graphData, j) => ({ graphData, lineIdx: 2 * graphIdx + j }))
+          .map(({ graphData, lineIdx }) => (
+            <LinePlot
+              key={lineIdx}
+              stroke={colors[lineIdx % colors.length]}
+              graphData={graphData}
+              xScale={xScale}
+              yScale={yScale}
+            />
+          ));
+
+        return (
+          <Graph
+            key={graphIdx}
+            graphPadding={graphPadding}
+            gridlinesVertical={false}
+            height={height}
+            svgId={svgIds[graphIdx]}
+            svgPadding={svgPadding}
+            tickStep={tickStep}
+            width={width}
+            xAxisPosition="center"
+            xLabel={xLabel}
+            xScale={xScale}
+            yLabel={yLabel}
+            yScale={yScale}
+          >
+            {linePlots}
+          </Graph>
+        );
+      });
+  }, [
+    data,
+    diffEqs,
+    colors,
+    width,
+    height,
+    graphPadding,
+    svgPadding,
+    svgIds,
+    xLabel,
+    yLabel,
+    smallestY,
+    largestY,
+    min,
+    max,
+    step,
+  ]);
 
   const sliderGroups = uniqueColors.map((color) => {
     const sliderData = data

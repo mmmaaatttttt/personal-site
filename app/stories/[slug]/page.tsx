@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import type { ComponentType } from "react";
 import MainLayout from "@/components/layout/MainLayout";
 import { getArticle, getArticleSlugs } from "@/utils/content";
+import { normalizeImagePath } from "@/utils/stringHelpers";
 
 interface PageProps {
   params: Promise<{ slug: string }>;
@@ -68,10 +69,7 @@ export default async function ArticlePage({ params }: PageProps) {
 
   const { frontmatter } = article;
 
-  const featuredImage = frontmatter.featured_image.replace(
-    /^(\.\.\/)+images\//,
-    "/images/",
-  );
+  const featuredImage = normalizeImagePath(frontmatter.featured_image);
 
   const dateObj = new Date(frontmatter.date);
   const formattedDate = dateObj.toLocaleDateString("en-US", {

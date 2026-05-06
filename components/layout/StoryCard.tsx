@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import type { FC } from "react";
 import { cn } from "@/lib/utils";
+import { normalizeImagePath } from "@/utils/stringHelpers";
 
 interface StoryCardProps {
   caption: string;
@@ -24,8 +25,7 @@ const StoryCard: FC<StoryCardProps> = ({
   timeToRead,
   className,
 }) => {
-  // Normalize image path. MDX has ../../images/..., public has /images/...
-  const imagePath = featured_image.replace(/^(\.\.\/)+images\//, "/images/");
+  const imagePath = normalizeImagePath(featured_image);
 
   return (
     <div

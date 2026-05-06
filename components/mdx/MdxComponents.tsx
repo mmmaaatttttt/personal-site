@@ -2,14 +2,11 @@ import Image from "next/image";
 import type { ComponentPropsWithoutRef, ReactNode } from "react";
 import Caption from "@/components/story/shared/Caption";
 import ColoredSpan from "@/components/story/shared/ColoredSpan";
-import HorizontalBarGraph from "@/components/story/shared/HorizontalBarGraph";
-import Latex from "@/components/story/shared/Latex";
 import Legend from "@/components/story/shared/Legend";
-import MultiBarGraph from "@/components/story/shared/MultiBarGraph";
 import NarrowContainer from "@/components/story/shared/NarrowContainer";
 import Sidebar from "@/components/story/shared/Sidebar";
-import SliderProvider from "@/components/story/shared/Slider";
 import StyledTable from "@/components/story/shared/StyledTable";
+import { normalizeImagePath } from "@/utils/stringHelpers";
 
 export const MdxComponents: Record<string, unknown> = {
   // Markdown element overrides
@@ -51,9 +48,8 @@ export const MdxComponents: Record<string, unknown> = {
     <span className="my-12 block">
       <span className="relative mx-auto block w-fit">
         <Image
-          src={(typeof props.src === "string" ? props.src : "").replace(
-            /^(\.\.\/)+images\//,
-            "/images/",
+          src={normalizeImagePath(
+            typeof props.src === "string" ? props.src : "",
           )}
           alt={props.alt || ""}
           width={800}
@@ -106,23 +102,11 @@ export const MdxComponents: Record<string, unknown> = {
   CaptionWrapper: (props: ComponentPropsWithoutRef<typeof Caption>) => (
     <Caption {...props} />
   ),
-  HorizontalBarGraph: (
-    props: ComponentPropsWithoutRef<typeof HorizontalBarGraph>,
-  ) => <HorizontalBarGraph {...props} />,
-  MultiBarGraph: (props: ComponentPropsWithoutRef<typeof MultiBarGraph>) => (
-    <MultiBarGraph {...props} />
-  ),
   Legend: (props: ComponentPropsWithoutRef<typeof Legend>) => (
     <Legend {...props} />
   ),
-  SliderProvider: (props: ComponentPropsWithoutRef<typeof SliderProvider>) => (
-    <SliderProvider {...props} />
-  ),
   Sidebar: (props: ComponentPropsWithoutRef<typeof Sidebar>) => (
     <Sidebar {...props} />
-  ),
-  Latex: (props: ComponentPropsWithoutRef<typeof Latex>) => (
-    <Latex {...props} />
   ),
   Strikethrough: ({ children }: { children?: ReactNode }) => (
     <del>{children}</del>
