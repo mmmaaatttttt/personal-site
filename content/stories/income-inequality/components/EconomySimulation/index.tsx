@@ -1,7 +1,7 @@
 "use client";
 
 import { scaleLinear } from "d3-scale";
-import { useCallback, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 import BarGraph from "@/components/story/shared/BarGraph";
 import Caption from "@/components/story/shared/Caption";
 import ClippedSVG from "@/components/story/shared/ClippedSVG";
@@ -59,13 +59,21 @@ const EconomySimulation = ({
     [],
   );
 
-  const yScale = scaleLinear()
-    .domain([0, Math.max(...speeds, 2.5 * initialV) ** 2 + 100])
-    .range([height, 0]);
+  const yScale = useMemo(
+    () =>
+      scaleLinear()
+        .domain([0, Math.max(...speeds, 2.5 * initialV) ** 2 + 100])
+        .range([height, 0]),
+    [speeds, initialV, height],
+  );
 
-  const barData = speeds
-    .map((speed, i) => ({ key: i, height: speed ** 2 }))
-    .sort((a, b) => a.height - b.height);
+  const barData = useMemo(
+    () =>
+      speeds
+        .map((speed, i) => ({ key: i, height: speed ** 2 }))
+        .sort((a, b) => a.height - b.height),
+    [speeds],
+  );
 
   const preStartSliders = [
     {

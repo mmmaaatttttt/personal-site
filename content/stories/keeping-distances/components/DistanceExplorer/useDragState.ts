@@ -12,11 +12,13 @@ function useDragState(
   const [points, setPoints] = useState(initialState);
   const handleDrag = useCallback(
     (idx: number, { x, y }: { x: number; y: number }) => {
-      const pointsCopy = [...points];
-      pointsCopy[idx] = { x: xScale.invert(x), y: yScale.invert(y) };
-      setPoints(pointsCopy);
+      setPoints((prev) => {
+        const next = [...prev];
+        next[idx] = { x: xScale.invert(x), y: yScale.invert(y) };
+        return next;
+      });
     },
-    [points, xScale, yScale],
+    [xScale, yScale],
   );
   return [points, handleDrag];
 }
