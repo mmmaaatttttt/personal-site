@@ -18,6 +18,9 @@
 /.next/
 /out/
 
+# generated image variants
+/public/images/_optimized/
+
 # production
 /build
 

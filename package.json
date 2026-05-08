@@ -10,13 +10,13 @@
   "license": "MIT",
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "node scripts/optimize-images.js && next build",
     "start": "next start",
     "lint": "biome check",
     "lint:write": "biome check --write --unsafe",
     "test": "vitest run",
     "test:watch": "vitest",
-    "deploy": "NEXT_PUBLIC_BASE_URL='https://mattlane.us' next build && s3-deploy './out/**' --cwd './out/' --region us-east-1 --bucket mattlane.us --deleteRemoved && aws-cloudfront-invalidate $npm_config_distribution_id",
+    "deploy": "NEXT_PUBLIC_BASE_URL='https://mattlane.us' node scripts/optimize-images.js && NEXT_PUBLIC_BASE_URL='https://mattlane.us' next build && s3-deploy './out/**' --cwd './out/' --region us-east-1 --bucket mattlane.us --deleteRemoved && aws-cloudfront-invalidate $npm_config_distribution_id",
     "prepare": "husky"
   },
   "dependencies": {

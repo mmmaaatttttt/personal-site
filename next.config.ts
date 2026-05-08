@@ -10,7 +10,8 @@ const nextConfig: NextConfig = {
   output: "export",
   trailingSlash: true,
   images: {
-    unoptimized: true,
+    loader: "custom",
+    loaderFile: "./lib/imageLoader.ts",
   },
   pageExtensions: ["ts", "tsx", "js", "jsx", "md", "mdx"],
 };
