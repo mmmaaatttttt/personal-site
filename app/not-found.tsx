@@ -1,5 +1,5 @@
+import Image from "next/image";
 import Link from "next/link";
-import Image from "next-export-optimize-images/image";
 import MainLayout from "@/components/layout/MainLayout";
 import { storyMeta } from "@/utils/storyMeta";
 import { normalizeImagePath } from "@/utils/stringHelpers";
