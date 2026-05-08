@@ -9,7 +9,7 @@
   },
   "license": "MIT",
   "scripts": {
-    "dev": "next dev",
+    "dev": "node scripts/optimize-images.js && next dev",
     "build": "node scripts/optimize-images.js && next build",
     "start": "next start",
     "lint": "biome check",

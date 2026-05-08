@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import MainLayout from "@/components/layout/MainLayout";
+import placeholders from "@/lib/imagePlaceholders.json";
 import { storyMeta } from "@/utils/storyMeta";
 import { normalizeImagePath } from "@/utils/stringHelpers";
 
@@ -15,6 +16,7 @@ function getLatestStory() {
 export default function NotFound() {
   const { slug, meta } = getLatestStory();
   const imagePath = normalizeImagePath(meta.featured_image);
+  const blurDataURL = (placeholders as Record<string, string>)[imagePath];
 
   return (
     <MainLayout>
@@ -46,6 +48,8 @@ export default function NotFound() {
               alt={meta.caption}
               fill
               className="object-cover transition-transform duration-300 group-hover:scale-105"
+              placeholder={blurDataURL ? "blur" : "empty"}
+              blurDataURL={blurDataURL}
             />
           </div>
           <p className="mt-3 text-sm text-gray-500">{meta.caption}</p>

@@ -28,6 +28,7 @@ async function processImage(srcPath) {
 
   let generated = 0;
   let skipped = 0;
+  let maxGeneratedWidth = 0;
 
   for (const w of TARGET_WIDTHS) {
     if (w > srcWidth) continue;
@@ -43,6 +44,7 @@ async function processImage(srcPath) {
       const outStat = fs.statSync(outPath);
       if (outStat.mtimeMs >= srcStat.mtimeMs) {
         skipped++;
+        maxGeneratedWidth = w;
         continue;
       }
     }
@@ -50,10 +52,23 @@ async function processImage(srcPath) {
     fs.mkdirSync(outDir, { recursive: true });
     await sharp(srcPath).resize(w).webp().toFile(outPath);
     generated++;
+    maxGeneratedWidth = w;
     console.log(`  generated ${path.relative(process.cwd(), outPath)}`);
   }
 
-  return { generated, skipped };
+  return { generated, skipped, maxGeneratedWidth };
+}
+
+async function generatePlaceholders(images) {
+  const manifest = {};
+  for (const imgPath of images) {
+    const relative = path.relative(INPUT_DIR, imgPath);
+    if (!relative.startsWith("featured_images")) continue;
+    const buf = await sharp(imgPath).resize(8).webp({ quality: 20 }).toBuffer();
+    const key = `/images/${relative.replace(/\\/g, "/")}`;
+    manifest[key] = `data:image/webp;base64,${buf.toString("base64")}`;
+  }
+  return manifest;
 }
 
 async function main() {
@@ -62,19 +77,38 @@ async function main() {
 
   let totalGenerated = 0;
   let totalSkipped = 0;
+  const maxWidths = {};
 
   for (const imgPath of images) {
     const rel = path.relative(process.cwd(), imgPath);
-    const { generated, skipped } = await processImage(imgPath);
+    const { generated, skipped, maxGeneratedWidth } =
+      await processImage(imgPath);
     if (generated > 0 || skipped > 0) {
       console.log(`${rel}: ${generated} generated, ${skipped} skipped`);
     }
     totalGenerated += generated;
     totalSkipped += skipped;
+    if (maxGeneratedWidth > 0) {
+      const key = `/images/${path.relative(INPUT_DIR, imgPath).replace(/\\/g, "/")}`;
+      maxWidths[key] = maxGeneratedWidth;
+    }
   }
 
   console.log(
     `\nDone — ${totalGenerated} variant(s) generated, ${totalSkipped} already up-to-date.`,
+  );
+
+  const widthsPath = path.join(__dirname, "../lib/imageWidths.json");
+  fs.writeFileSync(widthsPath, `${JSON.stringify(maxWidths, null, 2)}\n`);
+  console.log(
+    `Wrote ${Object.keys(maxWidths).length} width entries to lib/imageWidths.json`,
+  );
+
+  const manifest = await generatePlaceholders(images);
+  const manifestPath = path.join(__dirname, "../lib/imagePlaceholders.json");
+  fs.writeFileSync(manifestPath, `${JSON.stringify(manifest, null, 2)}\n`);
+  console.log(
+    `Wrote ${Object.keys(manifest).length} placeholder(s) to lib/imagePlaceholders.json`,
   );
 }
 

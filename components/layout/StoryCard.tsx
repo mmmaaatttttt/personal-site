@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import type { FC } from "react";
+import placeholders from "@/lib/imagePlaceholders.json";
 import { cn } from "@/lib/utils";
 import { normalizeImagePath } from "@/utils/stringHelpers";
 
@@ -26,6 +27,7 @@ const StoryCard: FC<StoryCardProps> = ({
   className,
 }) => {
   const imagePath = normalizeImagePath(featured_image);
+  const blurDataURL = (placeholders as Record<string, string>)[imagePath];
 
   return (
     <div
@@ -44,6 +46,8 @@ const StoryCard: FC<StoryCardProps> = ({
             alt={`Card for ${title}`}
             fill
             className="object-cover transition-transform duration-300 group-hover:scale-105"
+            placeholder={blurDataURL ? "blur" : "empty"}
+            blurDataURL={blurDataURL}
           />
         </div>
         <div className="flex flex-1 flex-col justify-center">

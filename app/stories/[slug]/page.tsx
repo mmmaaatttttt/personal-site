@@ -2,6 +2,7 @@ import Image from "next/image";
 import { notFound } from "next/navigation";
 import type { ComponentType } from "react";
 import MainLayout from "@/components/layout/MainLayout";
+import placeholders from "@/lib/imagePlaceholders.json";
 import { getArticle, getArticleSlugs } from "@/utils/content";
 import { normalizeImagePath } from "@/utils/stringHelpers";
 
@@ -70,6 +71,7 @@ export default async function ArticlePage({ params }: PageProps) {
   const { frontmatter } = article;
 
   const featuredImage = normalizeImagePath(frontmatter.featured_image);
+  const blurDataURL = (placeholders as Record<string, string>)[featuredImage];
 
   const dateObj = new Date(frontmatter.date);
   const formattedDate = dateObj.toLocaleDateString("en-US", {
@@ -91,6 +93,8 @@ export default async function ArticlePage({ params }: PageProps) {
             fill
             className="object-cover z-0"
             priority
+            placeholder={blurDataURL ? "blur" : "empty"}
+            blurDataURL={blurDataURL}
           />
           <div className="absolute inset-0 bg-black/10 z-0 pointer-events-none" />
 
