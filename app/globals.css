@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@plugin "@tailwindcss/typography";
 
 /* ============================================================
    Design Tokens
@@ -40,6 +41,8 @@
 html {
   color: #1a1a1a;
   background-color: #ffffff;
+  font-size: 20px;
+  line-height: 1.8;
 }
 
 /* Ensure MDX article headers use the serif font to match original aesthetic */
@@ -67,4 +70,51 @@ html {
 
 .fade-in {
   animation: fade-in 0.4s ease-out forwards;
+}
+
+/* Story card entrance animations (mirrors animate.css bounceInLeft/Right) */
+@keyframes bounceInLeft {
+  0% {
+    opacity: 0;
+    transform: translateX(-80px);
+    animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
+  }
+  60% {
+    opacity: 1;
+    transform: translateX(10px);
+    animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
+  }
+  80% {
+    transform: translateX(-5px);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+@keyframes bounceInRight {
+  0% {
+    opacity: 0;
+    transform: translateX(80px);
+    animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
+  }
+  60% {
+    opacity: 1;
+    transform: translateX(-10px);
+    animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
+  }
+  80% {
+    transform: translateX(5px);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+.bounce-in-left {
+  animation: bounceInLeft 0.75s both;
+}
+
+.bounce-in-right {
+  animation: bounceInRight 0.75s both;
 }

@@ -1,6 +1,5 @@
 "use client";
 
-import { Search } from "lucide-react";
 import { type FC, useMemo, useState } from "react";
 import type { CSSObjectWithLabel, MultiValue, SingleValue } from "react-select";
 import Select from "react-select";
@@ -10,13 +9,9 @@ import type { ArticleMeta } from "@/utils/content";
 const selectStyles = {
   control: (base: CSSObjectWithLabel, state: { isFocused: boolean }) => ({
     ...base,
-    borderRadius: "0.5rem",
     borderColor: state.isFocused ? "var(--color-link)" : "var(--color-gray)",
     boxShadow: state.isFocused ? "0 0 0 1px var(--color-link)" : "none",
-    padding: "2px",
-    "&:hover": {
-      borderColor: "var(--color-link)",
-    },
+    "&:hover": { borderColor: "var(--color-link)" },
   }),
   option: (
     base: CSSObjectWithLabel,
@@ -28,10 +23,7 @@ const selectStyles = {
       : state.isFocused
         ? "var(--color-light-gray)"
         : "white",
-    color:
-      state.isSelected || state.isFocused
-        ? "var(--color-dark-gray)"
-        : "inherit",
+    color: state.isSelected ? "white" : "inherit",
     cursor: "pointer",
   }),
   multiValue: (base: CSSObjectWithLabel) => ({
@@ -48,15 +40,9 @@ const selectStyles = {
   multiValueRemove: (base: CSSObjectWithLabel) => ({
     ...base,
     color: "white",
-    ":hover": {
-      backgroundColor: "var(--color-dark-gray)",
-      color: "white",
-    },
+    ":hover": { backgroundColor: "var(--color-dark-gray)", color: "white" },
   }),
-  menu: (base: CSSObjectWithLabel) => ({
-    ...base,
-    zIndex: 50,
-  }),
+  menu: (base: CSSObjectWithLabel) => ({ ...base, zIndex: 50 }),
 };
 
 type YearOption = { value: number; label: string };
@@ -75,7 +61,6 @@ const ArticlesContent: FC<ArticlesContentProps> = ({
 }) => {
   const [selectedYear, setSelectedYear] = useState<number | null>(null);
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
-  const [searchQuery, setSearchQuery] = useState("");
 
   const filteredArticles = useMemo(() => {
     return articles.filter((article) => {
@@ -86,14 +71,9 @@ const ArticlesContent: FC<ArticlesContentProps> = ({
         selectedTags.length > 0
           ? selectedTags.every((tag) => article.tags.includes(tag))
           : true;
-      const matchesSearch =
-        searchQuery.length > 0
-          ? article.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-            article.caption.toLowerCase().includes(searchQuery.toLowerCase())
-          : true;
-      return matchesYear && matchesTags && matchesSearch;
+      return matchesYear && matchesTags;
     });
-  }, [articles, selectedYear, selectedTags, searchQuery]);
+  }, [articles, selectedYear, selectedTags]);
 
   const yearOptions = useMemo<YearOption[]>(
     () => years.map((y) => ({ value: y, label: y.toString() })),
@@ -105,76 +85,50 @@ const ArticlesContent: FC<ArticlesContentProps> = ({
   );
 
   return (
-    <div className="mx-auto w-full max-w-[var(--max-w-content)] px-4 sm:px-0">
-      <div className="mb-12 flex flex-col gap-8">
-        <h1 className="font-serif text-4xl font-bold tracking-tight">
-          Stories
-        </h1>
-
-        <div className="relative z-20 border-gray bg-nav/50 flex flex-col gap-6 rounded-xl border p-6 backdrop-blur-sm">
-          {/* Search */}
-          <div className="relative">
-            <Search
-              className="text-gray absolute top-1/2 left-3 -translate-y-1/2"
-              size={18}
-            />
-            <input
-              type="text"
-              placeholder="Search stories..."
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              className="border-gray focus:border-link focus:ring-link w-full rounded-lg border bg-white py-2 pr-4 pl-10 focus:ring-1 focus:outline-none placeholder:text-gray-400 text-sm"
-            />
-          </div>
-
-          <div className="flex flex-col gap-4 sm:flex-row">
-            {/* Year Filter */}
-            <div className="flex-1 text-sm font-sans">
-              <Select
-                options={yearOptions}
-                isClearable
-                placeholder="Filter by year..."
-                value={
-                  selectedYear
-                    ? { value: selectedYear, label: selectedYear.toString() }
-                    : null
-                }
-                onChange={(option: SingleValue<YearOption>) =>
-                  setSelectedYear(option ? option.value : null)
-                }
-                styles={selectStyles}
-              />
-            </div>
-
-            {/* Tag Filter */}
-            <div className="flex-1 text-sm font-sans">
-              <Select
-                options={tagOptions}
-                isMulti
-                isClearable
-                placeholder="Filter by tag..."
-                value={selectedTags.map((t) => ({ value: t, label: t }))}
-                onChange={(options: MultiValue<TagOption>) =>
-                  setSelectedTags(options ? options.map((o) => o.value) : [])
-                }
-                styles={selectStyles}
-              />
-            </div>
-          </div>
+    <div className="mx-auto w-full max-w-[var(--max-w-content)] px-4 sm:px-0 pt-10 pb-12">
+      {/* Filters */}
+      <div className="mb-6 flex flex-col gap-4 sm:flex-row font-sans text-sm">
+        <div className="flex-1">
+          <Select
+            options={yearOptions}
+            isClearable
+            placeholder="Filter by year..."
+            value={
+              selectedYear
+                ? { value: selectedYear, label: selectedYear.toString() }
+                : null
+            }
+            onChange={(option: SingleValue<YearOption>) =>
+              setSelectedYear(option ? option.value : null)
+            }
+            styles={selectStyles}
+          />
+        </div>
+        <div className="flex-1">
+          <Select
+            options={tagOptions}
+            isMulti
+            isClearable
+            placeholder="Filter by tag..."
+            value={selectedTags.map((t) => ({ value: t, label: t }))}
+            onChange={(options: MultiValue<TagOption>) =>
+              setSelectedTags(options ? options.map((o) => o.value) : [])
+            }
+            styles={selectStyles}
+          />
         </div>
       </div>
 
-      <div className="fade-in relative z-10">
+      {/* Story cards — overflow-x-hidden prevents horizontal scroll during bounce animations */}
+      <div className="overflow-x-hidden">
         {filteredArticles.length > 0 ? (
-          filteredArticles.map((article) => (
-            <StoryCard key={article.slug} {...article} />
+          filteredArticles.map((article, index) => (
+            <StoryCard key={article.slug} {...article} index={index} />
           ))
         ) : (
-          <div className="py-20 text-center">
-            <p className="font-sans text-gray-500">
-              No stories match your filters. Try clearing some!
-            </p>
-          </div>
+          <p className="py-12 text-center font-sans text-gray-500">
+            No stories match your filters. Try clearing some!
+          </p>
         )}
       </div>
     </div>

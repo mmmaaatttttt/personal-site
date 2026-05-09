@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import type { FC } from "react";
+import type { CSSProperties, FC } from "react";
 import placeholders from "@/lib/imagePlaceholders.json";
 import { cn } from "@/lib/utils";
 import { normalizeImagePath } from "@/utils/stringHelpers";
@@ -13,6 +13,7 @@ interface StoryCardProps {
   tags: string[];
   title: string;
   timeToRead?: number;
+  index?: number;
   className?: string;
 }
 
@@ -24,17 +25,21 @@ const StoryCard: FC<StoryCardProps> = ({
   tags,
   title,
   timeToRead,
+  index = 0,
   className,
 }) => {
   const imagePath = normalizeImagePath(featured_image);
   const blurDataURL = (placeholders as Record<string, string>)[imagePath];
+  const isEven = index % 2 === 0;
 
   return (
     <div
       className={cn(
         "group border-b border-gray py-8 last:border-0 sm:px-4",
+        isEven ? "bounce-in-left" : "bounce-in-right",
         className,
       )}
+      style={{ animationDelay: `${index * 0.25}s` } as CSSProperties}
     >
       <Link
         href={`/stories/${slug}`}

@@ -26,10 +26,8 @@ const MainLayout: FC<MainLayoutProps> = ({ children, outline = false }) => {
       }`}
     >
       <Navbar title="Matt Lane" hide={isArticlePage} outline={outline} />
-      <main
-        className={`flex flex-1 justify-center ${isArticlePage ? "" : "py-6 sm:py-12"}`}
-      >
-        <div className="w-full">{children}</div>
+      <main className="flex flex-1 justify-center">
+        <div className="w-full flex flex-col">{children}</div>
       </main>
       <Footer />
     </div>
