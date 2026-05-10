@@ -1,36 +1,47 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# mattlane.us
 
-## Getting Started
+Matt Lane's personal site. Built with Next.js, TypeScript, Tailwind CSS, and MDX. Hosts long-form interactive stories with embedded D3 visualizations.
 
-First, run the development server:
+## Development
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm run dev      # start dev server (also runs image optimizer)
+npm run build    # production build
+npm run lint     # biome check
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Testing
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### Unit tests (Vitest + React Testing Library)
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+npm test           # run once
+npm run test:watch # watch mode
+```
 
-## Learn More
+Component tests live colocated with their source files (`*.test.tsx`).
 
-To learn more about Next.js, take a look at the following resources:
+### Visual regression tests (Playwright)
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Screenshot-based tests for four pages: home, about, stories list, and beautiful-analysis. Baselines are local only (gitignored) — they must be established after a fresh clone.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+```bash
+# First time on a fresh clone — establish local baselines
+npm run test:e2e -- --update-snapshots
 
-## Deploy on Vercel
+# Check for regressions
+npm run test:e2e
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+# Intentionally accept a formatting change and update baselines
+npm run test:e2e -- --update-snapshots
+```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Tests require a running dev server. If none is running on port 3000, Playwright starts one automatically. These tests are not wired into CI — run them locally before pushing formatting changes.
+
+## Deploying
+
+```bash
+npm run deploy -- --distribution_id=<cloudfront-id>
+```
+
+Builds, uploads to S3, and invalidates the CloudFront cache.

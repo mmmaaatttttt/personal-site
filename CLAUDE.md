@@ -9,6 +9,26 @@ Matt's personal/blog site. The Gatsby/JavaScript → Next.js + TypeScript + Reac
 
 ---
 
+## Visual Regression Tests
+
+Playwright screenshot tests cover four pages: home, about, stories list, and beautiful-analysis (`e2e/*.spec.ts`). Baselines are gitignored and live only on the local machine.
+
+**Run after any change that touches CSS, layout components, or shared MDX components:**
+
+```bash
+npm run test:e2e
+```
+
+If the change is intentional and the diff is correct, update the baselines:
+
+```bash
+npm run test:e2e -- --update-snapshots
+```
+
+Do not skip this step when making formatting changes. If the tests weren't run before a formatting session starts, establish fresh baselines first (`--update-snapshots`), then make changes, then run normally to catch regressions.
+
+---
+
 ## Migration Pattern
 
 ### How MDX stories work

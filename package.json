@@ -16,6 +16,7 @@
     "lint:write": "biome check --write --unsafe",
     "test": "vitest run",
     "test:watch": "vitest",
+    "test:e2e": "playwright test",
     "deploy": "NEXT_PUBLIC_BASE_URL='https://mattlane.us' node scripts/optimize-images.js && NEXT_PUBLIC_BASE_URL='https://mattlane.us' next build && s3-deploy './out/**' --cwd './out/' --region us-east-1 --bucket mattlane.us --deleteRemoved && aws-cloudfront-invalidate $npm_config_distribution_id",
     "prepare": "husky"
   },
@@ -41,6 +42,7 @@
   },
   "devDependencies": {
     "@biomejs/biome": "2.4.14",
+    "@playwright/test": "^1.59.1",
     "@tailwindcss/postcss": "^4.2.1",
     "@testing-library/jest-dom": "^6.9.1",
     "@testing-library/react": "^16.3.2",
