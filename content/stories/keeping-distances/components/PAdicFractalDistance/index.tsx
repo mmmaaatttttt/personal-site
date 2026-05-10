@@ -41,7 +41,7 @@ const PAdicFractalDistance: FC<PAdicFractalDistanceProps> = ({ caption }) => {
     <Caption caption={caption}>
       <SliderProvider
         initialData={LEVEL_SLIDER}
-        width="50%"
+        width="75%"
         render={([level]) => {
           const points = generatePAdicPoints(prime, level);
           return (
@@ -80,7 +80,7 @@ const PAdicFractalDistance: FC<PAdicFractalDistanceProps> = ({ caption }) => {
                           <text
                             textAnchor="middle"
                             dy={-10}
-                            fontSize={12}
+                            fontSize={16}
                             fill={fill}
                           >
                             {pt.num}

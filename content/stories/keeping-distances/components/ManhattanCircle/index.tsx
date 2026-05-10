@@ -31,16 +31,16 @@ const ManhattanCircle: FC<ManhattanCircleProps> = ({ caption }) => {
     <Caption caption={caption}>
       <SliderProvider
         fullWidthAt="sm"
-        width="50%"
+        width="75%"
         initialData={sliderData}
         render={([r]) => {
           const bound = Math.max(r + 1, 10);
           const xScale = scaleLinear()
             .domain([-bound, bound])
-            .range([0, WIDTH]);
+            .range([1, WIDTH - 1]);
           const yScale = scaleLinear()
             .domain([-bound, bound])
-            .range([HEIGHT, 0]);
+            .range([HEIGHT - 1, 1]);
           const points = generateCirclePoints(r);
           return (
             <Graph

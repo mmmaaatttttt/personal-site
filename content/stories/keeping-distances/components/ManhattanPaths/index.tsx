@@ -44,7 +44,7 @@ const ManhattanPaths: FC<ManhattanPathsProps> = ({ caption }) => {
 
   return (
     <Caption caption={caption}>
-      <NarrowContainer width="50%">
+      <NarrowContainer width="75%">
         <LabeledSlider
           min={1}
           max={paths.length}

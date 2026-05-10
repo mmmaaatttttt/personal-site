@@ -84,7 +84,7 @@ const FunctionDistanceExplorer: FC<FunctionDistanceExplorerProps> = ({
 
   return (
     <Caption caption={caption}>
-      <NarrowContainer width="50%">
+      <NarrowContainer width="75%">
         <ToggleSwitch
           leftText={`Largest Diff: ${lInfDistance}`}
           rightText={`Area: ${area}`}

@@ -72,7 +72,9 @@ const StringDistanceExplorer: FC<StringDistanceExplorerProps> = ({
             />
           </div>
         </div>
-        <StyledTable data={tableData} />
+        <div className="mt-6">
+          <StyledTable data={tableData} />
+        </div>
       </NarrowContainer>
     </Caption>
   );

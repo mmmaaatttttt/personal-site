@@ -15,8 +15,12 @@ const WIDTH = 600;
 const HEIGHT = 600;
 const CIRCLE_R = 8; // matches DraggableCircle default r
 
-const xScale = scaleLinear().domain([-10, 10]).range([0, WIDTH]);
-const yScale = scaleLinear().domain([-10, 10]).range([HEIGHT, 0]);
+const xScale = scaleLinear()
+  .domain([-10, 10])
+  .range([1, WIDTH - 1]);
+const yScale = scaleLinear()
+  .domain([-10, 10])
+  .range([HEIGHT - 1, 1]);
 
 interface DistanceExplorerProps {
   caption?: string;
@@ -57,7 +61,7 @@ const DistanceExplorer: FC<DistanceExplorerProps> = ({ caption }) => {
 
   return (
     <Caption caption={caption}>
-      <NarrowContainer width="50%">
+      <NarrowContainer width="75%">
         <Graph
           xAxisPosition="center"
           yAxisPosition="center"
