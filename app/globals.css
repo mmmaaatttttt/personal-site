@@ -77,6 +77,16 @@ html {
   margin-bottom: 0;
 }
 
+/* Typography plugin sets th { vertical-align: bottom } — override for centered header content. */
+.prose table[data-styled-table] th {
+  vertical-align: middle;
+}
+
+/* Typography plugin uses gray for list bullets — match body text color. */
+.prose ul > li::marker {
+  color: #1a1a1a;
+}
+
 /* No leading gap inside blockquotes */
 .prose blockquote > p:first-child {
   margin-top: 0;

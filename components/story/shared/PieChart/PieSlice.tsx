@@ -52,7 +52,7 @@ const AnimatedPercentage: FC<AnimatedPercentageProps> = ({
       dominantBaseline="middle"
       fontSize="24"
       fill={textFill}
-      className="pointer-events-none font-bold"
+      className="pointer-events-none"
     >
       {displayValue}
     </motion.text>

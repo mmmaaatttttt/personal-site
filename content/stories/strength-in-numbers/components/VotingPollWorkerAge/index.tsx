@@ -2,6 +2,7 @@
 
 import { scaleOrdinal } from "d3-scale";
 import { type FC, useState } from "react";
+import Caption from "@/components/story/shared/Caption";
 import Legend from "@/components/story/shared/Legend";
 import NarrowContainer from "@/components/story/shared/NarrowContainer";
 import PieChart from "@/components/story/shared/PieChart";
@@ -31,11 +32,13 @@ const YEAR_STEP = 2;
 interface VotingPollWorkerAgeProps {
   data: PollWorkerAgeRow[];
   states: string[];
+  caption?: string;
 }
 
 const VotingPollWorkerAge: FC<VotingPollWorkerAgeProps> = ({
   data,
   states,
+  caption,
 }) => {
   const initialState = states[2] ?? states[0] ?? "";
   const [selectedState, setSelectedState] = useState(initialState);
@@ -55,58 +58,60 @@ const VotingPollWorkerAge: FC<VotingPollWorkerAgeProps> = ({
   ];
 
   return (
-    <SliderProvider
-      initialData={sliderData}
-      width="60%"
-      fullWidthAt="md"
-      render={([curYear]) => {
-        const match = data.find(
-          (d) => d.year === curYear && d.state === selectedState,
-        );
-        const ages = match?.ages ?? [0, 0, 0, 0, 0, 0];
-        const hasData = ages.some((a) => a > 0);
-        const selectedOption =
-          stateOptions.find((o) => o.label === selectedState) ??
-          stateOptions[0];
+    <Caption caption={caption}>
+      <SliderProvider
+        initialData={sliderData}
+        width="60%"
+        fullWidthAt="md"
+        render={([curYear]) => {
+          const match = data.find(
+            (d) => d.year === curYear && d.state === selectedState,
+          );
+          const ages = match?.ages ?? [0, 0, 0, 0, 0, 0];
+          const hasData = ages.some((a) => a > 0);
+          const selectedOption =
+            stateOptions.find((o) => o.label === selectedState) ??
+            stateOptions[0];
 
-        return (
-          <div className="mt-4 space-y-3">
-            <Select
-              name="state"
-              value={selectedOption?.value ?? ""}
-              onChange={(opt) => setSelectedState(opt.label)}
-              options={stateOptions}
-            />
-            {hasData ? (
-              <>
-                <Legend
-                  title="Poll worker ages (years)"
-                  labels={AGE_COLORS.map((color, i) => ({
-                    color,
-                    text: AGE_LABELS[i],
-                  }))}
-                />
-                <NarrowContainer width="70%" fullWidthAt="md">
-                  <PieChart
-                    colorScale={(i) => colorScale(i)}
-                    values={ages}
-                    textFill={COLORS.BLACK}
-                    percentFormat=".1%"
+          return (
+            <div className="mt-4 space-y-3">
+              <Select
+                name="state"
+                value={selectedOption?.value ?? ""}
+                onChange={(opt) => setSelectedState(opt.label)}
+                options={stateOptions}
+              />
+              {hasData ? (
+                <>
+                  <Legend
+                    title="Poll worker ages (years)"
+                    labels={AGE_COLORS.map((color, i) => ({
+                      color,
+                      text: AGE_LABELS[i],
+                    }))}
                   />
-                </NarrowContainer>
-              </>
-            ) : (
-              <>
-                <h4>
-                  No data available for {selectedState} in {curYear}.
-                </h4>
-                <p>Please make another selection.</p>
-              </>
-            )}
-          </div>
-        );
-      }}
-    />
+                  <NarrowContainer width="100%" fullWidthAt="md">
+                    <PieChart
+                      colorScale={(i) => colorScale(i)}
+                      values={ages}
+                      textFill={COLORS.BLACK}
+                      percentFormat=".1%"
+                    />
+                  </NarrowContainer>
+                </>
+              ) : (
+                <>
+                  <h4>
+                    No data available for {selectedState} in {curYear}.
+                  </h4>
+                  <p>Please make another selection.</p>
+                </>
+              )}
+            </div>
+          );
+        }}
+      />
+    </Caption>
   );
 };
 

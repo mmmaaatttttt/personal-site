@@ -1,18 +1,11 @@
 import { fireEvent, render, screen } from "@testing-library/react";
-import type { ReactNode } from "react";
 import { describe, expect, it, vi } from "vitest";
 import "@testing-library/jest-dom/vitest";
 
+// animate() is imperative and doesn't run in jsdom — mock it as a no-op
 vi.mock("framer-motion", async (importOriginal) => {
   const actual = await importOriginal<typeof import("framer-motion")>();
-  return {
-    ...actual,
-    motion: {
-      ...actual.motion,
-      g: "g",
-    },
-    AnimatePresence: ({ children }: { children: ReactNode }) => <>{children}</>,
-  };
+  return { ...actual, animate: vi.fn() };
 });
 
 import type { VotingDataRow } from "../../data";

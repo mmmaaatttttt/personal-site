@@ -18,7 +18,7 @@ import {
 
 const SVG_WIDTH = 900;
 const SVG_HEIGHT = 400;
-const PADDING = { top: 10, right: 0, bottom: 6, left: 40 };
+const PADDING = { top: 20, right: 0, bottom: 6, left: 60 };
 
 const partyColorScale = scaleLinear<string>()
   .domain([-50, 50])
@@ -98,19 +98,21 @@ const VotingBarChart = ({ data, variant, caption }: VotingBarChartProps) => {
                 options={selectOptions}
               />
               {hasData ? (
-                <BarGraph
-                  animated={false}
-                  barData={barData}
-                  barLabel={(d) => d.key}
-                  color={option.color}
-                  height={SVG_HEIGHT}
-                  padding={PADDING}
-                  svgId={`bar-graph-${variant}`}
-                  width={SVG_WIDTH}
-                  yScale={yScale}
-                  yTickFormat={option.format}
-                  gridlinesVertical={false}
-                />
+                <div className="w-[130%] -ml-[15%] max-md:w-full max-md:ml-0">
+                  <BarGraph
+                    animated={false}
+                    barData={barData}
+                    barLabel={(d) => d.key}
+                    color={option.color}
+                    height={SVG_HEIGHT}
+                    padding={PADDING}
+                    svgId={`bar-graph-${variant}`}
+                    width={SVG_WIDTH}
+                    yScale={yScale}
+                    yTickFormat={option.format}
+                    gridlinesVertical={false}
+                  />
+                </div>
               ) : (
                 <>
                   <h4 className="text-lg font-bold">

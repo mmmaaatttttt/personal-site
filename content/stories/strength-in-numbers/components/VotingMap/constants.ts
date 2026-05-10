@@ -57,10 +57,11 @@ export const WORKERS_MAP_OPTIONS: MapOption[] = [
   {
     value: "0",
     label: "% of Jurisdictions Reporting",
-    accessor: (d) =>
-      d.num_jurisdictions > 0
-        ? d.jurisdictions_with_poll_worker_count / d.num_jurisdictions
-        : null,
+    accessor: (d) => {
+      if (d.num_jurisdictions <= 0) return null;
+      const val = d.jurisdictions_with_poll_worker_count / d.num_jurisdictions;
+      return val > 0 ? val : null;
+    },
     format: ".2%",
     colors: [COLORS.WHITE, COLORS.MAROON],
   },
