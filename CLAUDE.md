@@ -19,13 +19,15 @@ Playwright screenshot tests cover four pages: home, about, stories list, and bea
 npm run test:e2e
 ```
 
-If the change is intentional and the diff is correct, update the baselines:
+**NEVER run `--update-snapshots` without explicit user consent.** Always run the tests normally first and show the diff to the user. Only update baselines after the user confirms the visual changes are correct.
+
+If the user confirms the diff is correct, update the baselines:
 
 ```bash
 npm run test:e2e -- --update-snapshots
 ```
 
-Do not skip this step when making formatting changes. If the tests weren't run before a formatting session starts, establish fresh baselines first (`--update-snapshots`), then make changes, then run normally to catch regressions.
+Do not skip this step when making formatting changes. If the tests weren't run before a formatting session starts, ask the user before establishing fresh baselines (`--update-snapshots`), then make changes, then run normally to catch regressions.
 
 ---
 
