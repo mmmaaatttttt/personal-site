@@ -171,7 +171,7 @@ sentiment? Here's a breakdown by sentence and by episode:
 
 <CaptionWrapper caption="Figure 3: Sentiment counts per episode for Gethard and the caller. Use the dropdown to view different ranges of sentiment.">
   <SelectableMultiBarGraph
-    containerWidth="86%"
+    containerWidth="60%"
     legendTitle="Sentiment counts per episode"
     padding={{ top: 10, left: 70, right: 0, bottom: 10 }}
     yAxisLabel="Sentiment count"
@@ -187,10 +187,9 @@ out of ten episodes.
 We can take this even further by plotting the sentiment of every line in an
 episode's transcript. Here's how the episodes look:
 
-<PodcastAllSentiments
-  caption="Figure 4: Sentiment of every line in an episode.
-The larger the circle, the more words in the line."
-/>
+<CaptionWrapper caption="Figure 4: Sentiment of every line in an episode. The larger the circle, the more words in the line.">
+  <PodcastAllSentiments />
+</CaptionWrapper>
 
 As you can see, most circles lie in the upper half, i.e. they have positive
 sentiment. So if you're looking for a show that's positive on the whole, this
@@ -243,6 +242,7 @@ relatively frequently in the transcripts. Here are the most common two-, three-,
 and four-word phrases spoken by Gethard and the callers as a group:
 
 <CaptionWrapper
+  bleed={false}
   caption="Figure 6: Common phrases for Gethard and his callers.
 Phrases are restricted to the twenty most frequent, and each phrase must have
 appeared an average of at least once per episode."
@@ -268,7 +268,7 @@ disproportionately often.
 
 Here are the two-word collocations for Chris Gethard and his callers:
 
-<CaptionWrapper caption="Figure 7: Collocations for Gethard and his callers.">
+<CaptionWrapper bleed={false} caption="Figure 7: Collocations for Gethard and his callers.">
   <CollocationTable />
 </CaptionWrapper>
 
@@ -328,7 +328,7 @@ my training sessions:
 
 <CaptionWrapper caption="Figure 8: Twenty most informative features for
 distinguishing between Gethard and his callers.">
-  <HorizontalBarGraph data={horizontalBarData} />
+  <HorizontalBarGraph data={horizontalBarData} containerWidth="67%" />
 </CaptionWrapper>
 
 The numbers in the above chart indicate the strength of each predictor. For
@@ -362,11 +362,12 @@ I took all of Gethard's lines from the ten conversations, and trained a
 [text-generating neural network](https://github.com/minimaxir/textgenrnn) on
 them. Want to see how I did? Let's play a game.
 
-<Quiz
-  answerColors={[COLORS.DARK_BLUE, COLORS.PURPLE]}
-  caption="Figure 9: Chris vs. Computer: who said it? This 10 question quiz pulls from 24 examples, so you can play it a few times to see different sentences."
-  title="Who said it: Chris Gethard or an Algorithm?"
-/>
+<CaptionWrapper caption="Figure 9: Chris vs. Computer: who said it? This 10 question quiz pulls from 24 examples, so you can play it a few times to see different sentences.">
+  <Quiz
+    answerColors={[COLORS.DARK_BLUE, COLORS.PURPLE]}
+    title="Who said it: Chris Gethard or an Algorithm?"
+  />
+</CaptionWrapper>
 
 How did you do? If you didn't get 100%, don't worry. The robots aren't coming
 for Gethard's job anytime soon.

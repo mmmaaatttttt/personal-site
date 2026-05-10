@@ -58,6 +58,39 @@ html {
   opacity: 0.8;
 }
 
+/* Suppress prose's default paragraph top margin — our p component handles
+   bottom spacing via mb-6, and the double-stack creates excessive gaps. */
+.prose p {
+  margin-top: 0;
+}
+
+/* Typography plugin sets hr margins to ~57px each side — way too much. */
+.prose hr {
+  margin-top: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+/* Typography plugin sets table margin-top/bottom to 2em, which lands on the
+   inner <table> inside StyledTable's outer <div>, bypassing our utility classes. */
+.prose table[data-styled-table] {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+/* No leading gap inside blockquotes */
+.prose blockquote > p:first-child {
+  margin-top: 0;
+}
+.prose blockquote > p:last-child {
+  margin-bottom: 0;
+}
+
+/* Hero title fade-in — starts invisible, animates in after 0.5s delay */
+.hero-title-fade {
+  opacity: 0;
+  animation: fade-in 1.5s 0.5s forwards;
+}
+
 /* Smooth fade-in for page content */
 @keyframes fade-in {
   from {

@@ -2,7 +2,6 @@
 
 import type { FC } from "react";
 import { useMemo, useState } from "react";
-import Caption from "@/components/story/shared/Caption";
 import NarrowContainer from "@/components/story/shared/NarrowContainer";
 import Select from "@/components/story/shared/Select";
 import StyledTable from "@/components/story/shared/StyledTable";
@@ -77,8 +76,8 @@ const SentimentScoreTable: FC<SentimentScoreTableProps> = ({
   }));
 
   return (
-    <div className="w-full my-12" data-testid="sentiment-score-table-container">
-      <NarrowContainer width="100%" className="mb-8">
+    <div className="w-full" data-testid="sentiment-score-table-container">
+      <NarrowContainer width="100%" margin="0 auto 0.5rem">
         <div className="flex items-center gap-4">
           <span className="text-sm font-bold text-gray-500 uppercase tracking-wider">
             Sentiment Filter
@@ -97,7 +96,11 @@ const SentimentScoreTable: FC<SentimentScoreTableProps> = ({
       <NarrowContainer width="100%" className="w-full">
         <StyledTable padding="0.75rem 0.5rem" headers={headers} rows={rows} />
       </NarrowContainer>
-      {caption && <Caption>{caption}</Caption>}
+      {caption && (
+        <p className="mt-4 text-center text-sm font-bold text-gray-600">
+          {caption}
+        </p>
+      )}
     </div>
   );
 };

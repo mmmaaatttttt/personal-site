@@ -1,4 +1,5 @@
 import type { ReactNode } from "react";
+import { cn } from "@/lib/utils";
 
 interface TableCell {
   key: string | number;
@@ -19,6 +20,7 @@ interface TableHeader {
 interface StyledTableProps {
   margin?: string;
   padding?: string;
+  className?: string;
   children?: ReactNode;
   headers?: TableHeader[];
   rows?: TableRow[];
@@ -32,6 +34,8 @@ interface StyledTableProps {
 
 export default function StyledTable({
   padding = "0.75rem 1rem",
+  className,
+  margin,
   children,
   headers,
   rows,
@@ -46,7 +50,10 @@ export default function StyledTable({
     }));
   }
   return (
-    <div className="my-12 w-full overflow-x-auto text-center">
+    <div
+      className={cn("mb-6 mt-0 w-full overflow-x-auto text-center", className)}
+      style={margin !== undefined ? { margin } : undefined}
+    >
       <table
         data-styled-table
         className="border-gray/30 mx-auto w-full border-collapse border shadow-sm"
@@ -56,13 +63,11 @@ export default function StyledTable({
             text-align: center;
             padding: ${padding};
             border: 1px solid rgba(0, 0, 0, 0.1);
+            font-size: 0.85rem;
+            line-height: 1.4;
           }
           table[data-styled-table] th {
-            background-color: rgba(0, 0, 0, 0.03);
-            font-weight: 800;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-            font-size: 0.875rem;
+            font-weight: 700;
           }
         `}</style>
         {headers && (

@@ -73,7 +73,7 @@ const PodcastAllSentiments: FC<PodcastAllSentimentsProps> = ({
   xScale.domain([0, circData.length]);
 
   return (
-    <div className="w-full my-12">
+    <div className="w-full">
       <NarrowContainer width="100%" className="mb-4">
         <Select
           name="episode-select"
@@ -93,7 +93,7 @@ const PodcastAllSentiments: FC<PodcastAllSentimentsProps> = ({
             color: (colorMap as Record<string, string>)[text],
           }))}
         />
-        <div className="w-full relative overflow-hidden -mx-6 sm:mx-0">
+        <div className="w-full relative">
           <Graph
             graphPadding={padding}
             height={height}

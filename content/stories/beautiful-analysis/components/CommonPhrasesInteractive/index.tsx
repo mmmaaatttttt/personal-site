@@ -24,10 +24,7 @@ export default function CommonPhrasesInteractive() {
   ];
 
   return (
-    <div
-      className="my-12 w-full"
-      data-testid="common-phrases-interactive-container"
-    >
+    <div className="w-full" data-testid="common-phrases-interactive-container">
       <SliderProvider
         initialData={initialData}
         render={([phraseCount]) => {
@@ -86,6 +83,7 @@ export default function CommonPhrasesInteractive() {
               padding="0.5rem 0.1rem"
               headers={headers}
               rows={rows}
+              margin="0.75rem 0 0"
             />
           );
         }}

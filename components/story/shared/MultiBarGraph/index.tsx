@@ -185,10 +185,9 @@ const MultiBarGraph: FC<MultiBarGraphProps> = ({
           </g>
 
           <AxisLabel
-            x={10}
-            y={height / 2}
-            dy={-60}
-            transform={`rotate(-90 10,${height / 2})`}
+            x={p.left / 4}
+            y={(height - p.top - p.bottom) / 2}
+            transform={`rotate(-90 ${p.left / 4},${(height - p.top - p.bottom) / 2})`}
             fontSize="1rem"
           >
             {yAxisLabel}

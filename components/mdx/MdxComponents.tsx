@@ -1,6 +1,5 @@
 import Image from "next/image";
 import type { ComponentPropsWithoutRef, ReactNode } from "react";
-import Caption from "@/components/story/shared/Caption";
 import ColoredSpan from "@/components/story/shared/ColoredSpan";
 import Legend from "@/components/story/shared/Legend";
 import NarrowContainer from "@/components/story/shared/NarrowContainer";
@@ -17,7 +16,7 @@ export const MdxComponents: Record<string, unknown> = {
     <h2 className="mt-10 mb-4 text-2xl font-bold" {...props} />
   ),
   h3: (props: ComponentPropsWithoutRef<"h3">) => (
-    <h3 className="mt-8 mb-4 text-xl font-bold italic" {...props} />
+    <h3 className="mt-4 mb-4 text-xl font-bold" {...props} />
   ),
   p: (props: ComponentPropsWithoutRef<"p">) => (
     <p className="mb-6 last:mb-0 leading-relaxed" {...props} />
@@ -33,7 +32,7 @@ export const MdxComponents: Record<string, unknown> = {
   ),
   blockquote: (props: ComponentPropsWithoutRef<"blockquote">) => (
     <blockquote
-      className="mb-8 last:mb-0 border-l-4 border-link bg-light-gray p-6 italic text-gray-700 underline-offset-4"
+      className="mb-8 last:mb-0 bg-light-gray border-l-4 border-link pl-6 pr-6 py-4 italic text-gray-700"
       {...props}
     />
   ),
@@ -43,7 +42,7 @@ export const MdxComponents: Record<string, unknown> = {
       {...props}
     />
   ),
-  hr: () => <hr className="my-12 border-gray-200" />,
+  hr: () => <hr className="my-2 border-gray-200" />,
   img: (props: ComponentPropsWithoutRef<"img">) => (
     <span className="my-12 block">
       <span className="relative mx-auto block w-fit">
@@ -99,8 +98,46 @@ export const MdxComponents: Record<string, unknown> = {
   StyledTable: (props: ComponentPropsWithoutRef<typeof StyledTable>) => (
     <StyledTable {...props} />
   ),
-  CaptionWrapper: (props: ComponentPropsWithoutRef<typeof Caption>) => (
-    <Caption {...props} />
+  CaptionWrapper: ({
+    children,
+    caption,
+    className,
+    bleed = true,
+    maxContentWidth,
+  }: {
+    children?: ReactNode;
+    caption?: string;
+    className?: string;
+    bleed?: boolean;
+    maxContentWidth?: string;
+  }) => (
+    <div
+      className={[
+        "my-8 flex flex-col items-center w-full ml-0",
+        bleed
+          ? "min-[890px]:w-[110%] min-[890px]:-ml-[5%] min-[1020px]:w-[120%] min-[1020px]:-ml-[10%] min-[1240px]:w-[130%] min-[1240px]:-ml-[15%]"
+          : "",
+        className ?? "",
+      ]
+        .join(" ")
+        .trim()}
+    >
+      <div
+        className="w-full"
+        style={
+          maxContentWidth
+            ? { maxWidth: maxContentWidth, margin: "0 auto" }
+            : undefined
+        }
+      >
+        {children}
+      </div>
+      {caption && (
+        <div className="mt-2 max-w-4xl px-4 text-center text-sm font-bold text-gray-600">
+          {caption}
+        </div>
+      )}
+    </div>
   ),
   Legend: (props: ComponentPropsWithoutRef<typeof Legend>) => (
     <Legend {...props} />

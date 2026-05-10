@@ -37,9 +37,14 @@ const CollocationTable = () => {
   );
 
   return (
-    <div className="w-full my-12" data-testid="collocation-table-container">
+    <div className="w-full" data-testid="collocation-table-container">
       <NarrowContainer width="70%" fullWidthAt="sm">
-        <StyledTable padding="0.1rem" headers={headers} rows={rows} />
+        <StyledTable
+          padding="0.1rem"
+          headers={headers}
+          rows={rows}
+          margin="0 0 1.5rem"
+        />
       </NarrowContainer>
     </div>
   );

@@ -67,23 +67,25 @@ const Tooltip: FC<TooltipProps> = ({ info }) => {
   return (
     <div
       ref={tooltipRef}
-      className="pointer-events-none fixed z-50 rounded bg-black/60 p-3 text-white"
+      className="not-prose pointer-events-none fixed z-50 rounded-lg bg-black/60 p-4 text-sm text-white"
       style={{ left, top, width }}
     >
       {info.title && (
-        <h4 className="mb-2 text-center font-bold">{info.title}</h4>
+        <div className="mb-2 text-center font-bold leading-snug">
+          {info.title}
+        </div>
       )}
       {info.body &&
         (Array.isArray(info.body) ? (
-          <ul className="mb-0 ml-3 list-disc">
+          <ul className="mb-0 ml-4 list-disc">
             {info.body.map((text) => (
-              <li key={text} className="leading-tight">
-                <small>{text}</small>
+              <li key={text} className="mb-0 leading-snug text-xs">
+                {text}
               </li>
             ))}
           </ul>
         ) : (
-          <small>{info.body}</small>
+          <span className="text-xs">{info.body}</span>
         ))}
       <div
         style={{

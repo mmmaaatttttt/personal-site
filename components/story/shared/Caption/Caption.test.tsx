@@ -13,7 +13,7 @@ describe("Caption Component", () => {
 
     expect(screen.getByTestId("child")).toBeInTheDocument();
     expect(screen.getByText("This is a test caption")).toBeInTheDocument();
-    expect(screen.getByText("This is a test caption")).toHaveClass("italic");
+    expect(screen.getByText("This is a test caption")).toHaveClass("font-bold");
   });
 
   it("renders without caption if not provided", () => {

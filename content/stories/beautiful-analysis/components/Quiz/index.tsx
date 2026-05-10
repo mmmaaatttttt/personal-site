@@ -163,8 +163,8 @@ const Quiz: FC<QuizProps> = ({
   }
 
   return (
-    <div className="my-12 w-full">
-      <div className="mx-auto flex min-h-[50vh] flex-col items-center justify-center overflow-hidden rounded-lg bg-gray-50 p-6 md:p-8 text-center shadow-inner">
+    <div className="w-full">
+      <div className="mx-auto flex min-h-[50vh] flex-col items-center justify-center overflow-hidden rounded-lg bg-light-gray p-6 md:p-8 text-center shadow-inner">
         {panel}
       </div>
       {caption && <Caption>{caption}</Caption>}

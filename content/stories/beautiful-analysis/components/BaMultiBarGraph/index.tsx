@@ -21,12 +21,14 @@ interface BaMultiBarGraphProps {
 
 const BaMultiBarGraph = ({
   dataType = "summary",
+  containerWidth = "60%",
   ...props
 }: BaMultiBarGraphProps) => {
   const data = dataType === "summary" ? baSummary : baProfanity;
   return (
     <MultiBarGraph
       {...props}
+      containerWidth={containerWidth}
       data={data}
       getTooltipData={generateTooltipData}
       colors={[COLORS.DARK_BLUE, COLORS.ORANGE]}

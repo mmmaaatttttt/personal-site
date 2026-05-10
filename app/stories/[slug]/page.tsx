@@ -98,9 +98,9 @@ export default async function ArticlePage({ params }: PageProps) {
           />
           <div className="absolute inset-0 bg-black/10 z-0 pointer-events-none" />
 
-          <div className="relative z-10 max-w-5xl mt-12 sm:mt-0">
+          <div className="relative z-10 max-w-5xl mt-12 sm:mt-0 hero-title-fade">
             <h1
-              className="font-serif text-4xl sm:text-5xl md:text-6xl lg:text-[70px] font-bold text-white leading-tight"
+              className="font-serif text-3xl sm:text-4xl md:text-[46px] font-bold text-white leading-tight"
               style={{
                 textShadow:
                   "3px 3px 1px #000, -1px -1px 1px #000, 1px -1px 1px #000, -1px 1px 1px #000, 1px 1px 1px #000",
@@ -109,7 +109,7 @@ export default async function ArticlePage({ params }: PageProps) {
               {frontmatter.title}
             </h1>
             <h2
-              className="mt-6 font-serif text-2xl sm:text-3xl font-bold text-white tracking-wide"
+              className="mt-4 font-serif text-lg sm:text-xl font-bold text-white tracking-wide"
               style={{
                 textShadow:
                   "2px 2px 1px #000, -1px -1px 1px #000, 1px -1px 1px #000, -1px 1px 1px #000, 1px 1px 1px #000",
@@ -122,7 +122,7 @@ export default async function ArticlePage({ params }: PageProps) {
 
         {/* Constrained Markdown Content */}
         <div className="relative mx-auto w-full max-w-[var(--max-w-content)] px-4 sm:px-0">
-          <div className="prose prose-lg max-w-none text-[#1a1a1a] pb-20">
+          <div className="prose max-w-none text-[#1a1a1a] pb-20">
             {StoryContent ? (
               <StoryContent />
             ) : (
