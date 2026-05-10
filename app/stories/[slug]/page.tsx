@@ -86,7 +86,7 @@ export default async function ArticlePage({ params }: PageProps) {
     <MainLayout outline={true}>
       <article className="w-full">
         {/* Full Bleed Hero Header */}
-        <header className="relative w-full h-[60vh] sm:h-screen flex flex-col items-center justify-center text-center px-4 overflow-hidden mb-12 sm:mb-16">
+        <header className="relative w-full h-[60vh] sm:h-screen flex flex-col items-center justify-center text-center px-4 overflow-hidden mb-0">
           <Image
             src={featuredImage}
             alt={frontmatter.title}
@@ -119,6 +119,13 @@ export default async function ArticlePage({ params }: PageProps) {
             </h2>
           </div>
         </header>
+
+        {/* Featured image caption */}
+        {frontmatter.featured_image_caption && (
+          <small className="flex justify-end mt-0 mb-12 px-2 italic text-[#7d7d7d]">
+            {frontmatter.featured_image_caption}
+          </small>
+        )}
 
         {/* Constrained Markdown Content */}
         <div className="relative mx-auto w-full max-w-[var(--max-w-content)] px-4 sm:px-0">
