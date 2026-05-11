@@ -63,7 +63,10 @@ const LabeledSlider: FC<LabeledSliderProps> = ({
         </div>
       )}
       <section className="flex w-full items-center gap-4">
-        <div className="w-8 shrink-0" style={{ opacity: leftOpacity }}>
+        <div
+          className="flex w-8 shrink-0 items-center justify-center"
+          style={{ opacity: leftOpacity }}
+        >
           <Icon icon={MinIconComp} size={18} style={{ color: lightColor }} />
         </div>
         <div className="relative flex-1">
@@ -85,7 +88,10 @@ const LabeledSlider: FC<LabeledSliderProps> = ({
             padding={sliderPadding}
           />
         </div>
-        <div className="w-8 shrink-0" style={{ opacity: rightOpacity }}>
+        <div
+          className="flex w-8 shrink-0 items-center justify-center"
+          style={{ opacity: rightOpacity }}
+        >
           <Icon icon={MaxIconComp} size={18} style={{ color: lightColor }} />
         </div>
       </section>

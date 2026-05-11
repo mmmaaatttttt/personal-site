@@ -123,7 +123,7 @@ export const MdxComponents: Record<string, unknown> = {
         .trim()}
     >
       <div
-        className="w-full"
+        className="w-full not-prose"
         style={
           maxContentWidth
             ? { maxWidth: maxContentWidth, margin: "0 auto" }

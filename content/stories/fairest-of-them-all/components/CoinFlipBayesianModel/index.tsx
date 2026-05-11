@@ -66,7 +66,7 @@ const CoinFlipBayesianModel: FC<CoinFlipBayesianModelProps> = ({ caption }) => {
 
   return (
     <Caption caption={caption}>
-      <NarrowContainer width="70%" fullWidthAt="sm">
+      <NarrowContainer width="65%" fullWidthAt="sm">
         <ToggleSwitch
           leftText="All probs equally likely"
           rightText="Fair coin more likely"
@@ -75,13 +75,22 @@ const CoinFlipBayesianModel: FC<CoinFlipBayesianModelProps> = ({ caption }) => {
           handleSwitchChange={(checked) => setUniform(!checked)}
         />
         <FlexContainer main="evenly" margin="1rem 0" className="gap-2">
-          <Button variant="white" onClick={() => setHeads((h) => h + 1)}>
+          <Button
+            size="sm"
+            variant="white"
+            onClick={() => setHeads((h) => h + 1)}
+          >
             Heads: {heads}
           </Button>
-          <Button variant="white" onClick={() => setTails((t) => t + 1)}>
+          <Button
+            size="sm"
+            variant="white"
+            onClick={() => setTails((t) => t + 1)}
+          >
             Tails: {tails}
           </Button>
           <Button
+            size="sm"
             variant="white"
             onClick={() => {
               setHeads(0);

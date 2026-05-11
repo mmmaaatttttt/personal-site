@@ -41,7 +41,7 @@ const CoinFlipHistogram: FC<CoinFlipHistogramProps> = ({ caption }) => {
     <Caption caption={caption}>
       <SliderProvider
         initialData={sliderData}
-        width="60%"
+        width="70%"
         render={(sliderVals) => {
           const [numTrials, headsProb] = sliderVals;
           const barData = binomialDensityValues(numTrials, headsProb).map(

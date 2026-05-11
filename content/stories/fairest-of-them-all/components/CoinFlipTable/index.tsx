@@ -33,7 +33,7 @@ const CoinFlipTable: FC<CoinFlipTableProps> = ({ caption }) => {
         color={COLORS.GREEN}
       />
       {/* Fixed column widths prevent the cells from resizing as text changes. */}
-      <div className="my-12 w-full overflow-x-auto text-center">
+      <div className="mt-3 w-full overflow-x-auto text-center">
         <table className="mx-auto w-full table-fixed border-collapse border shadow-sm">
           <colgroup>
             <col className="w-1/4" />

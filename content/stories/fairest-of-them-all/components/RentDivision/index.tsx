@@ -208,7 +208,7 @@ const RentDivision: FC<RentDivisionProps> = ({ caption }) => {
   const renderTopArea = () => {
     if (!started) {
       return (
-        <NarrowContainer width="70%" fullWidthAt="sm">
+        <NarrowContainer width="75%" fullWidthAt="sm">
           <LabeledSlider
             handleValueChange={handleMeshSizeChange}
             min={2}
@@ -219,8 +219,8 @@ const RentDivision: FC<RentDivisionProps> = ({ caption }) => {
             value={meshLevels}
             color={COLORS.DARK_GRAY}
           />
-          <FlexContainer main="center" margin="1rem 0">
-            <Button variant="white" onClick={() => setStarted(true)}>
+          <FlexContainer main="center" margin="0.5rem 0">
+            <Button size="sm" variant="white" onClick={() => setStarted(true)}>
               Start Demonstration
             </Button>
           </FlexContainer>
@@ -263,7 +263,12 @@ const RentDivision: FC<RentDivisionProps> = ({ caption }) => {
             If that doesn&apos;t seem fair, you can refine the mesh and try
             again.
           </p>
-          <Button variant="white" className="mt-4" onClick={handleReset}>
+          <Button
+            size="sm"
+            variant="white"
+            className="mt-4"
+            onClick={handleReset}
+          >
             Try again
           </Button>
         </FlexContainer>
@@ -339,11 +344,16 @@ const RentDivision: FC<RentDivisionProps> = ({ caption }) => {
   );
 
   return (
-    <Caption caption={caption}>
+    <Caption caption={caption} captionMarginTop="-2.8em">
       {renderTopArea()}
       <NarrowContainer width="55%" fullWidthAt="sm">
         <div className="relative">
-          <ClippedSVG width={SVG_WIDTH} height={SVG_HEIGHT} id="rent">
+          <ClippedSVG
+            width={SVG_WIDTH}
+            height={SVG_HEIGHT}
+            id="rent"
+            marginTop="-1.5rem"
+          >
             {triangles}
             {circles}
           </ClippedSVG>

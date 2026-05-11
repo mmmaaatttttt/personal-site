@@ -32,7 +32,7 @@ const SliderProvider: FC<SliderProviderProps> = ({
   column = true,
   fullWidthAt = "sm",
   render,
-  width = "70%",
+  width = "75%",
 }) => {
   const [sliderValues, setSliderValues] = useState<number[]>(() =>
     initialData && Array.isArray(initialData)
