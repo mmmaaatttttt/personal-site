@@ -27,7 +27,7 @@ const PAdicHeatChart: FC<PAdicHeatChartProps> = ({ caption }) => {
 
   return (
     <Caption caption={caption}>
-      <NarrowContainer width="75%">
+      <NarrowContainer width="55%">
         <div className="flex flex-col items-center gap-4">
           <Select
             name="padic-heat-prime"

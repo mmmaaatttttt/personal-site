@@ -35,7 +35,7 @@ const PAdicCalculator: FC<PAdicCalculatorProps> = ({ caption }) => {
 
   return (
     <Caption caption={caption}>
-      <NarrowContainer width="60%">
+      <NarrowContainer width="46%">
         <div className="flex flex-col gap-4">
           <div className="flex flex-wrap items-center justify-center gap-6">
             <Select

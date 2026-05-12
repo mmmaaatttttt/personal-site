@@ -42,7 +42,7 @@ const StringDistanceExplorer: FC<StringDistanceExplorerProps> = ({
 
   return (
     <Caption caption={caption}>
-      <NarrowContainer width="80%">
+      <NarrowContainer width="62%">
         <div className="flex flex-wrap items-start justify-around gap-6 text-center">
           <div className="flex flex-col items-center gap-1">
             <label htmlFor="first-string-input" className="text-sm font-medium">

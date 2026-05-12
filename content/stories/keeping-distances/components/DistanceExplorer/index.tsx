@@ -61,7 +61,7 @@ const DistanceExplorer: FC<DistanceExplorerProps> = ({ caption }) => {
 
   return (
     <Caption caption={caption}>
-      <NarrowContainer width="75%">
+      <NarrowContainer width="55%">
         <Graph
           xAxisPosition="center"
           yAxisPosition="center"

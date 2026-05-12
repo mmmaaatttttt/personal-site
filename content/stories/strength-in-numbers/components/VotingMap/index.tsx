@@ -50,7 +50,7 @@ const VotingMap = ({ data, variant, caption }: VotingMapProps) => {
     <Caption caption={caption}>
       <SliderProvider
         initialData={sliderData}
-        width="100%"
+        width="77%"
         fullWidthAt="md"
         render={([curYear]) => {
           const option =

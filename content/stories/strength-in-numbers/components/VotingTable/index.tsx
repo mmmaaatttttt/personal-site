@@ -95,6 +95,7 @@ const VotingTable: FC<VotingTableProps> = ({ tableData, caption }) => {
     <Caption caption={caption}>
       <SliderProvider
         initialData={sliderData}
+        width="58%"
         render={([numRows]) => (
           <StyledTable
             headers={headers}

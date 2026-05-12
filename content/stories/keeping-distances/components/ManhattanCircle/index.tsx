@@ -31,7 +31,7 @@ const ManhattanCircle: FC<ManhattanCircleProps> = ({ caption }) => {
     <Caption caption={caption}>
       <SliderProvider
         fullWidthAt="sm"
-        width="75%"
+        width="55%"
         initialData={sliderData}
         render={([r]) => {
           const bound = Math.max(r + 1, 10);

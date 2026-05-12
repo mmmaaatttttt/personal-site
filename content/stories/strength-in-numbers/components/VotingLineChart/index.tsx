@@ -7,6 +7,7 @@ import { animate } from "framer-motion";
 import { useEffect, useMemo, useRef, useState } from "react";
 import Caption from "@/components/story/shared/Caption";
 import Graph from "@/components/story/shared/Graph";
+import NarrowContainer from "@/components/story/shared/NarrowContainer";
 import Select from "@/components/story/shared/Select";
 import type { VotingDataRow } from "../../data";
 import { VOTERS_LINE_OPTIONS, WORKERS_LINE_OPTIONS } from "./constants";
@@ -145,58 +146,60 @@ const VotingLineChart = ({
 
   return (
     <Caption caption={caption}>
-      <div className="space-y-3">
-        <Select
-          name="statistic"
-          value={selectedStat}
-          onChange={(opt) => setSelectedStat(opt.value)}
-          options={statOptions}
-        />
-        <Select
-          name="state"
-          value={
-            stateOptions.find((o) => o.label === selectedState)?.value ?? "0"
-          }
-          onChange={(opt) => setSelectedState(opt.label)}
-          options={stateOptions}
-        />
-        {hasData ? (
-          <Graph
-            width={SVG_WIDTH}
-            height={SVG_HEIGHT}
-            svgPadding={0}
-            graphPadding={GRAPH_PADDING}
-            svgId={svgId}
-            xLabel="Year"
-            xScale={xScale}
-            yScale={yScale}
-            yLabel={option.label}
-            yLabelOffset={40}
-            tickFormatX=".0f"
-            tickFormatY={option.format}
-          >
-            <path d={linePath} stroke={color} strokeWidth={5} fill="none" />
-            {YEARS.map((year) => (
-              <circle
-                key={year}
-                cx={xScale(year) as number}
-                cy={animCyRef.current[year] ?? BOTTOM_Y}
-                r={10}
-                fill={color}
-                opacity={animOpacityRef.current[year] ?? 0}
-              />
-            ))}
-          </Graph>
-        ) : (
-          <>
-            <p />
-            <h4 className="text-lg font-bold">
-              {option.label} data not available in {selectedState}.
-            </h4>
-            <p>Please explore a different option.</p>
-          </>
-        )}
-      </div>
+      <NarrowContainer width="77%">
+        <div className="space-y-3">
+          <Select
+            name="statistic"
+            value={selectedStat}
+            onChange={(opt) => setSelectedStat(opt.value)}
+            options={statOptions}
+          />
+          <Select
+            name="state"
+            value={
+              stateOptions.find((o) => o.label === selectedState)?.value ?? "0"
+            }
+            onChange={(opt) => setSelectedState(opt.label)}
+            options={stateOptions}
+          />
+          {hasData ? (
+            <Graph
+              width={SVG_WIDTH}
+              height={SVG_HEIGHT}
+              svgPadding={0}
+              graphPadding={GRAPH_PADDING}
+              svgId={svgId}
+              xLabel="Year"
+              xScale={xScale}
+              yScale={yScale}
+              yLabel={option.label}
+              yLabelOffset={40}
+              tickFormatX=".0f"
+              tickFormatY={option.format}
+            >
+              <path d={linePath} stroke={color} strokeWidth={5} fill="none" />
+              {YEARS.map((year) => (
+                <circle
+                  key={year}
+                  cx={xScale(year) as number}
+                  cy={animCyRef.current[year] ?? BOTTOM_Y}
+                  r={10}
+                  fill={color}
+                  opacity={animOpacityRef.current[year] ?? 0}
+                />
+              ))}
+            </Graph>
+          ) : (
+            <>
+              <p />
+              <h4 className="text-lg font-bold">
+                {option.label} data not available in {selectedState}.
+              </h4>
+              <p>Please explore a different option.</p>
+            </>
+          )}
+        </div>
+      </NarrowContainer>
     </Caption>
   );
 };

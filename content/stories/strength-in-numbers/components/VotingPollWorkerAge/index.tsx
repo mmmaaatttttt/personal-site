@@ -61,7 +61,7 @@ const VotingPollWorkerAge: FC<VotingPollWorkerAgeProps> = ({
     <Caption caption={caption}>
       <SliderProvider
         initialData={sliderData}
-        width="60%"
+        width="46%"
         fullWidthAt="md"
         render={([curYear]) => {
           const match = data.find(
