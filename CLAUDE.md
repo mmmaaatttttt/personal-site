@@ -445,6 +445,14 @@ In a JSX attribute written as a string literal, backslashes are **not** treated 
 
 Always use curly-brace JS expressions when passing strings that contain backslashes (LaTeX, regex, escape codes).
 
+### NarrowContainer widths inside Caption (breakout scaling)
+
+`Caption` always applies the breakout (up to `w-[130%]` at large viewports), matching the legacy `CaptionWrapper` behavior. `NarrowContainer` and `SliderProvider` widths are percentages of the Caption container, **not** the prose column. Size them for the breakout width, not for prose width.
+
+Rule of thumb: to match a target size that is X% of prose width, use `X / 1.3 ≈ X * 0.77%` as the NarrowContainer/SliderProvider width. For example, a component that should occupy ~75% of prose width gets `width="58%"` (58% × 130% ≈ 75%).
+
+If you add a breakout to Caption for a new story and the interactives look too wide, **do not add a `bleed` opt-in prop** — instead reduce the internal NarrowContainer widths by ÷1.3. That was tried and reverted; the global behavior is intentional.
+
 ### Axis tick labels suppressed by default; suppress in tests by querying fill
 
 `Axis` (and therefore `Graph`) suppresses all tick labels when no `tickFormat` is passed — text elements exist in the DOM but have empty `textContent`. When testing that a specific SVG `<text>` contains a value (e.g. a distance label), **do not** use `document.querySelector("text")` as it may return an empty axis tick text first. Instead query by attribute:
