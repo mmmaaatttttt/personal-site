@@ -2,6 +2,7 @@
 
 import { CheckCircle2, XCircle } from "lucide-react";
 import type { FC } from "react";
+import { Button } from "@/components/ui/Button";
 import COLORS from "@/utils/styles";
 
 interface DistrictStatusProps {
@@ -22,7 +23,7 @@ const DistrictStatus: FC<DistrictStatusProps> = ({
   onReset,
 }) => {
   return (
-    <div className="flex flex-col items-center justify-around gap-2">
+    <div className="flex flex-col items-center gap-2">
       {districts.length > rowCount ? (
         <h2>Too many districts!</h2>
       ) : (
@@ -45,7 +46,7 @@ const DistrictStatus: FC<DistrictStatusProps> = ({
 
             return (
               <div key={districtNum} className="flex items-center gap-2">
-                <h4 className="m-0" style={{ color: labelColor }}>
+                <h4 className="!my-0" style={{ color: labelColor }}>
                   D{districtNum}: {size} {msgByColor}
                 </h4>
                 {isComplete ? (
@@ -59,21 +60,19 @@ const DistrictStatus: FC<DistrictStatusProps> = ({
         )
       )}
       <div className="mt-2 flex gap-2">
-        <button
-          type="button"
+        <Button
+          size="sm"
           onClick={onSave}
           disabled={!saveable}
-          className={`cursor-pointer rounded border-none px-4 py-2 text-white disabled:cursor-not-allowed disabled:opacity-60 ${saveable ? "bg-green" : "bg-gray"}`}
+          className={
+            saveable ? "bg-green hover:bg-green/90" : "bg-gray hover:bg-gray/90"
+          }
         >
           {saveable ? "Save" : "Saved"}
-        </button>
-        <button
-          type="button"
-          onClick={onReset}
-          className="cursor-pointer rounded border-none px-4 py-2 text-white bg-red"
-        >
+        </Button>
+        <Button size="sm" className="bg-red hover:bg-red/90" onClick={onReset}>
           Reset
-        </button>
+        </Button>
       </div>
     </div>
   );
