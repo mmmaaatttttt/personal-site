@@ -22,16 +22,24 @@ interface SliderData {
 interface SliderGroupProps {
   data: SliderData[];
   column?: boolean;
+  compact?: boolean;
 }
 
-const SliderGroup: FC<SliderGroupProps> = ({ data = [], column = true }) => {
+const SliderGroup: FC<SliderGroupProps> = ({
+  data = [],
+  column = true,
+  compact = false,
+}) => {
   const sliders =
     data && Array.isArray(data)
       ? data.map((d, i) => {
           const title =
             typeof d.title === "function" ? d.title(d.value) : d.title || "";
           return (
-            <div key={d.key ?? i} className="m-1 flex-1">
+            <div
+              key={d.key ?? i}
+              className={`${compact ? "my-0" : "m-1"} flex-1`}
+            >
               <LabeledSlider
                 min={d.min}
                 max={d.max}
@@ -44,6 +52,7 @@ const SliderGroup: FC<SliderGroupProps> = ({ data = [], column = true }) => {
                 minIcon={d.minIcon}
                 maxIcon={d.maxIcon}
                 fadeIcons={d.fadeIcons}
+                compact={compact}
               />
             </div>
           );

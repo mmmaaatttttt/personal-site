@@ -93,6 +93,7 @@ const WarmingDots: FC<WarmingDotsProps> = ({
       <SliderProvider
         initialData={sliderData}
         width="75%"
+        compact={sliderData.length >= 6}
         render={(sliderVals) => {
           const graphData = transformData(sliderVals, diffEqs[0]);
 

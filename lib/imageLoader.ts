@@ -15,12 +15,11 @@ export default function loader({ src, width }: ImageLoaderProps): string {
     return src;
   }
 
-  // Only pick widths that were actually generated for this source image
+  // Images smaller than the smallest target width have no optimized variants — serve as-is
   const maxGenerated = (imageWidths as Record<string, number>)[src];
-  const available =
-    maxGenerated !== undefined
-      ? GENERATED_WIDTHS.filter((w) => w <= maxGenerated)
-      : GENERATED_WIDTHS;
+  if (maxGenerated === undefined) return src;
+
+  const available = GENERATED_WIDTHS.filter((w) => w <= maxGenerated);
 
   const chosen =
     available.find((w) => w >= width) ?? available[available.length - 1];

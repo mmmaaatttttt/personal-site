@@ -25,6 +25,7 @@ interface SliderProviderProps {
   fullWidthAt?: "sm" | "md" | "lg" | "xl";
   render: (values: number[]) => ReactNode;
   width?: string;
+  compact?: boolean;
 }
 
 const SliderProvider: FC<SliderProviderProps> = ({
@@ -33,6 +34,7 @@ const SliderProvider: FC<SliderProviderProps> = ({
   fullWidthAt = "sm",
   render,
   width = "75%",
+  compact = false,
 }) => {
   const [sliderValues, setSliderValues] = useState<number[]>(() =>
     initialData && Array.isArray(initialData)
@@ -64,7 +66,9 @@ const SliderProvider: FC<SliderProviderProps> = ({
     return null;
 
   const numSliders = sliderValues.length;
-  const sliderGroup = <SliderGroup data={dataWithHandlers} column={column} />;
+  const sliderGroup = (
+    <SliderGroup data={dataWithHandlers} column={column} compact={compact} />
+  );
   const rendered = typeof render === "function" ? render(sliderValues) : null;
 
   return numSliders < 4 ? (
@@ -74,7 +78,7 @@ const SliderProvider: FC<SliderProviderProps> = ({
     </NarrowContainer>
   ) : (
     <ColumnLayout break="sm">
-      {sliderGroup}
+      <div className="flex flex-col justify-center h-full">{sliderGroup}</div>
       {rendered}
     </ColumnLayout>
   );

@@ -22,6 +22,7 @@ interface LabeledSliderProps {
   minIcon?: string;
   maxIcon?: string;
   fadeIcons?: boolean;
+  compact?: boolean;
 }
 
 const iconMap: Record<string, LucideIcon> = {
@@ -43,6 +44,7 @@ const LabeledSlider: FC<LabeledSliderProps> = ({
   minIcon = "minus",
   maxIcon = "plus",
   fadeIcons = false,
+  compact = false,
 }) => {
   const computedStep = step ?? (max - min) / 100;
   const fraction = (value - min) / (max - min);
@@ -58,7 +60,9 @@ const LabeledSlider: FC<LabeledSliderProps> = ({
   return (
     <div className="flex w-full flex-col items-center text-center">
       {title && (
-        <div className="mb-2 text-xs font-semibold tracking-wider text-gray-500 uppercase">
+        <div
+          className={`${compact ? "mb-0" : "mb-2"} text-xs font-semibold tracking-wider text-gray-500`}
+        >
           {title}
         </div>
       )}
