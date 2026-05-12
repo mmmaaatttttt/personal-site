@@ -1,5 +1,17 @@
 # Personal Site — Agent Context
 
+## How to Not Be Useless
+
+**Ask before analyzing.** If a visual bug is described but you can't see the browser, ask what the user thinks the cause is before spending rounds on investigation. They can see it; you can't. One question saves three wrong fixes.
+
+**Try the smallest thing first.** A layout problem is probably one wrong CSS property on one element. Fix that before touching shared components, adding props, or restructuring anything. If the fix is wrong, it cost one line. Re-architecting a shared component and then reverting it costs everyone time and goodwill.
+
+**Don't change things you don't understand.** If you change `justify-around` to `justify-center` without understanding why it would help, you're guessing. Stop. Read the code, understand the actual rendering model, then act.
+
+**The legacy code is the answer.** This codebase has a working Gatsby reference implementation in `src/_legacy_pages/`. When something looks wrong, check the legacy before doing anything else — it shows exactly what the intended behavior is and often reveals the fix in under a minute.
+
+---
+
 ## What This Is
 
 Matt's personal/blog site. The Gatsby/JavaScript → Next.js + TypeScript + React migration is complete — all 12 stories are ported and live. The site hosts long-form "stories" — articles with embedded interactives and D3 visualizations.
@@ -460,3 +472,13 @@ If you add a breakout to Caption for a new story and the interactives look too w
 ```ts
 const label = document.querySelector('text[fill="#ff8f34"]');
 ```
+
+### Prose typography overrides Tailwind margin utilities on heading elements
+
+Story content renders inside a `.prose` wrapper. The `@tailwindcss/typography` plugin applies margins to heading elements (`h1`–`h6`) with a specificity that beats plain Tailwind utility classes. `className="my-0"` on an `h4` inside `.prose` **will not work**. Use the important modifier: `className="!my-0"`.
+
+This applies to any margin/padding utility you need to override on a heading element inside story content.
+
+### Excess vertical spacing in flex columns: check element margins before changing layout
+
+When a flex column has too much space between items, the cause is almost always **default browser/typography margins on the elements themselves** (e.g. `h4` getting `margin-top`/`margin-bottom` from the prose plugin), not the flex container's `justify-content`. Changing `justify-around` → `justify-center` or adding `items-start` to the container does nothing if the margin is on the children. Fix the margin on the element first (`!my-0`), then adjust flex spacing if still needed.
