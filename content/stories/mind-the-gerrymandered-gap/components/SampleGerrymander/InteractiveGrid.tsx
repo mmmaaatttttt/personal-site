@@ -108,7 +108,7 @@ const InteractiveGrid: FC<InteractiveGridProps> = ({
           y1={d.y1}
           y2={d.y2}
           stroke={getStroke(d)}
-          className="cursor-pointer"
+          className="cursor-pointer focus:outline-none"
           onMouseDown={() => {
             const next = !d.isOn;
             setActiveStatus(next);
