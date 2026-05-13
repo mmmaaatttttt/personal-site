@@ -15,7 +15,7 @@ export default function loader({ src, width }: ImageLoaderProps): string {
     return src;
   }
 
-  // Images smaller than the smallest target width have no optimized variants — serve as-is
+  // Images not in the manifest have no optimized variants — serve as-is
   const maxGenerated = (imageWidths as Record<string, number>)[src];
   if (maxGenerated === undefined) return src;
 

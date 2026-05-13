@@ -1,6 +1,17 @@
 import { describe, expect, it, vi } from "vitest";
 
-vi.mock("@/lib/imageWidths.json", () => ({ default: {} }));
+vi.mock("@/lib/imageWidths.json", () => ({
+  default: {
+    "/images/photo.jpg": 1920,
+    "/images/photo.jpeg": 1920,
+    "/images/photo.JPG": 1920,
+    "/images/logo.png": 1920,
+    "/images/matt.jpg": 1920,
+    "/images/featured_images/four_weddings.jpg": 1920,
+    "/images/a/b/c.png": 1920,
+    "/images/small.jpg": 640,
+  },
+}));
 
 import loader from "./imageLoader";
 
@@ -83,20 +94,22 @@ describe("imageLoader", () => {
 
   describe("width selection with imageWidths manifest", () => {
     it("caps to the largest generated width when the manifest limits available widths", () => {
-      vi.doMock("@/lib/imageWidths.json", () => ({
-        default: { "/images/small.jpg": 640 },
-      }));
-      // Without the manifest cap, width=1920 would pick the 1920 variant.
-      // With cap at 640, it must fall back to 640.
-      // (This exercises the cap logic via the top-level mock returning {}; the real
-      // cap behavior is validated by integration — the build fails if 404s occur.)
+      // /images/small.jpg has maxGenerated=640 in the mock; width=1920 must be capped to 640
+      expect(
+        loader({ src: "/images/small.jpg", width: 1920, quality: 75 }),
+      ).toBe("/images/_optimized/640/small.webp");
     });
 
     it("falls back to the largest available width when request exceeds the capped maximum", () => {
-      // With imageWidths mocked as {} (all widths available), width=2560 picks 1920.
       expect(
         loader({ src: "/images/photo.jpg", width: 2560, quality: 75 }),
       ).toBe("/images/_optimized/1920/photo.webp");
+    });
+
+    it("returns src unchanged for images not in the manifest", () => {
+      expect(
+        loader({ src: "/images/unknown.jpg", width: 800, quality: 75 }),
+      ).toBe("/images/unknown.jpg");
     });
   });
 
