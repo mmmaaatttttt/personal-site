@@ -57,7 +57,7 @@ export const MdxComponents: Record<string, unknown> = {
         />
       </span>
       {props.title && (
-        <span className="mt-4 block text-center text-sm italic text-gray-500 font-medium">
+        <span className="mt-2 block text-center text-sm font-bold text-gray-600">
           {props.title}
         </span>
       )}

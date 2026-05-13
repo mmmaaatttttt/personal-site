@@ -84,49 +84,50 @@ const OrchardGame: FC<{ caption?: string }> = ({ caption }) => {
       : "";
 
   return (
-    <NarrowContainer width="70%" fullWidthAt="sm" className="pb-4">
-      <div className="relative pb-4">
-        {gameState !== "playing" && (
-          <ScreenOverlay backgroundColor={OVERLAYS[gameState].bg}>
-            <h1 className="text-3xl font-bold mb-2">
-              {OVERLAYS[gameState].title}
-            </h1>
-            <p>Games won: {gamesWon}</p>
-            <p>Games played: {gamesPlayed}</p>
-            <div className="flex flex-col gap-2 mt-4">
-              <Button onClick={startGame}>
-                {OVERLAYS[gameState].buttonText}
-              </Button>
-              <Button variant="outline" onClick={clearData}>
-                Clear Game Data
-              </Button>
-            </div>
-          </ScreenOverlay>
-        )}
-        <FlexContainer column className="gap-4">
-          <NarrowContainer width="60%">
-            <Spinner onSpinEnd={handleSpinEnd} message={message} />
-          </NarrowContainer>
-          <FlexContainer>
-            {SPINNER_COLORS.slice(0, -1).map((color, i) => {
-              const isRaven = i === RAVEN_IDX;
-              return (
-                <FruitContainer
-                  key={color}
-                  color={color}
-                  count={counts[i]}
-                  clickable={counts[i] > 0 && !isRaven && fruitBasketEnabled}
-                  faded={isRaven && fruitBasketEnabled}
-                  title={isRaven ? "Raven" : "Fruit"}
-                  onRemove={() => removeAt(i)}
-                />
-              );
-            })}
+    <Caption caption={caption}>
+      <NarrowContainer width="77%" fullWidthAt="sm">
+        <div className="relative pb-4">
+          {gameState !== "playing" && (
+            <ScreenOverlay backgroundColor={OVERLAYS[gameState].bg}>
+              <h1 className="text-3xl font-bold mb-2">
+                {OVERLAYS[gameState].title}
+              </h1>
+              <p>Games won: {gamesWon}</p>
+              <p>Games played: {gamesPlayed}</p>
+              <div className="flex flex-col gap-2 mt-4">
+                <Button onClick={startGame}>
+                  {OVERLAYS[gameState].buttonText}
+                </Button>
+                <Button variant="outline" onClick={clearData}>
+                  Clear Game Data
+                </Button>
+              </div>
+            </ScreenOverlay>
+          )}
+          <FlexContainer column className="gap-4">
+            <NarrowContainer width="60%">
+              <Spinner onSpinEnd={handleSpinEnd} message={message} />
+            </NarrowContainer>
+            <FlexContainer>
+              {SPINNER_COLORS.slice(0, -1).map((color, i) => {
+                const isRaven = i === RAVEN_IDX;
+                return (
+                  <FruitContainer
+                    key={color}
+                    color={color}
+                    count={counts[i]}
+                    clickable={counts[i] > 0 && !isRaven && fruitBasketEnabled}
+                    faded={isRaven && fruitBasketEnabled}
+                    title={isRaven ? "Raven" : "Fruit"}
+                    onRemove={() => removeAt(i)}
+                  />
+                );
+              })}
+            </FlexContainer>
           </FlexContainer>
-        </FlexContainer>
-      </div>
-      {caption && <Caption>{caption}</Caption>}
-    </NarrowContainer>
+        </div>
+      </NarrowContainer>
+    </Caption>
   );
 };
 

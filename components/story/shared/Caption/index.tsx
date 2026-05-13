@@ -27,7 +27,7 @@ const Caption: FC<CaptionProps> = ({
       <div className="w-full not-prose">{children}</div>
       {caption && (
         <div
-          className="mt-2 max-w-2xl px-4 text-center text-sm font-bold text-gray-600"
+          className="mt-1 max-w-2xl px-4 text-center text-sm font-bold text-gray-600"
           style={captionMarginTop ? { marginTop: captionMarginTop } : undefined}
         >
           {caption}

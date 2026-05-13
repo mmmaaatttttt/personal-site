@@ -25,9 +25,9 @@ const HorizontalBar: FC<HorizontalBarProps> = ({
   const total = data.reduce((sum, d) => sum + d.size, 0) || 1;
 
   return (
-    <div className="w-full">
+    <div className="w-full mb-2">
       {title && (
-        <h4 className="text-center font-bold text-gray-800 mb-2">{title}</h4>
+        <h4 className="text-center font-bold text-gray-800 mb-0">{title}</h4>
       )}
       <div
         role="img"

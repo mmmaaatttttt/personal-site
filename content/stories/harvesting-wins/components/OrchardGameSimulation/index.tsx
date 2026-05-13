@@ -109,47 +109,50 @@ const OrchardGameSimulation: FC<OrchardGameSimulationProps> = ({
   }, []);
 
   return (
-    <NarrowContainer width="80%" fullWidthAt="sm">
-      <FlexContainer main="center">
-        <Button onClick={togglePlaying}>{playing ? "Pause" : "Play"}</Button>
-        {!playing && (
-          <Button variant="outline" onClick={reset} className="ml-2">
-            Reset Simulation
+    <Caption caption={caption}>
+      <NarrowContainer width="100%" fullWidthAt="sm">
+        <FlexContainer main="center">
+          <Button variant="outline" onClick={togglePlaying} size="sm">
+            {playing ? "Pause" : "Play"}
           </Button>
-        )}
-      </FlexContainer>
-      <div className="mt-4 space-y-4">
-        {playData
-          .map((d, i) => ({ d, label: camelCaseToTitle(strategies[i].name) }))
-          .map(({ d, label }) => {
-            const pct = ((d.gamesWon / d.gamesPlayed) * 100 || 0).toFixed(1);
-            return (
-              <HorizontalBar
-                key={label}
-                title={`${label} Strategy: ${pct}%`}
-                data={[
-                  {
-                    size: d.gamesWon,
-                    color: COLORS.GREEN,
-                    tooltipText: `Games Won: ${d.gamesWon.toLocaleString()}`,
-                  },
-                  {
-                    size: d.gamesPlayed - d.gamesWon,
-                    color: COLORS.RED,
-                    tooltipText: `Games Played: ${d.gamesPlayed.toLocaleString()}`,
-                  },
-                  {
-                    size: 0,
-                    color: COLORS.GRAY,
-                    tooltipText: `Win Percentage: ${pct}%`,
-                  },
-                ]}
-              />
-            );
-          })}
-      </div>
-      {caption && <Caption>{caption}</Caption>}
-    </NarrowContainer>
+          {!playing && (
+            <Button onClick={reset} className="ml-2" size="sm">
+              Reset Simulation
+            </Button>
+          )}
+        </FlexContainer>
+        <div className="mt-4 space-y-4">
+          {playData
+            .map((d, i) => ({ d, label: camelCaseToTitle(strategies[i].name) }))
+            .map(({ d, label }) => {
+              const pct = ((d.gamesWon / d.gamesPlayed) * 100 || 0).toFixed(1);
+              return (
+                <HorizontalBar
+                  key={label}
+                  title={`${label} Strategy: ${pct}%`}
+                  data={[
+                    {
+                      size: d.gamesWon,
+                      color: COLORS.GREEN,
+                      tooltipText: `Games Won: ${d.gamesWon.toLocaleString()}`,
+                    },
+                    {
+                      size: d.gamesPlayed - d.gamesWon,
+                      color: COLORS.RED,
+                      tooltipText: `Games Played: ${d.gamesPlayed.toLocaleString()}`,
+                    },
+                    {
+                      size: 0,
+                      color: COLORS.GRAY,
+                      tooltipText: `Win Percentage: ${pct}%`,
+                    },
+                  ]}
+                />
+              );
+            })}
+        </div>
+      </NarrowContainer>
+    </Caption>
   );
 };
 
