@@ -8,5 +8,6 @@ test("strength-in-numbers story page", async ({ page }) => {
   await page.waitForTimeout(700);
   await expect(page).toHaveScreenshot("strength-in-numbers.png", {
     fullPage: true,
+    animations: "disabled",
   });
 });

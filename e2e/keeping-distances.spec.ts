@@ -6,5 +6,6 @@ test("keeping-distances story page", async ({ page }) => {
   await page.waitForLoadState("networkidle");
   await expect(page).toHaveScreenshot("keeping-distances.png", {
     fullPage: true,
+    animations: "disabled",
   });
 });

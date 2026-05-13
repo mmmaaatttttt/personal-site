@@ -8,5 +8,6 @@ test("mind-the-gerrymandered-gap story page", async ({ page }) => {
   await page.waitForLoadState("networkidle");
   await expect(page).toHaveScreenshot("mind-the-gerrymandered-gap.png", {
     fullPage: true,
+    animations: "disabled",
   });
 });

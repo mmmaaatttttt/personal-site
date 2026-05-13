@@ -6,5 +6,6 @@ test("fairest-of-them-all story page", async ({ page }) => {
   await page.waitForLoadState("networkidle");
   await expect(page).toHaveScreenshot("fairest-of-them-all.png", {
     fullPage: true,
+    animations: "disabled",
   });
 });
