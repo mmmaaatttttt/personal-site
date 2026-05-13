@@ -1,4 +1,5 @@
 import HarassmentSimulation from "./components/HarassmentSimulation";
+import Caption from "@/components/story/shared/Caption";
 import { petrieTable1, petrieTable2 } from "./data";
 
 Many things are rotten in the state of tech. From Susan Fowler's [essay](https://www.susanjfowler.com/blog/2017/2/19/reflecting-on-one-very-strange-year-at-uber) on the toxic culture at Uber, to reports that [60% of women in tech](https://www.elephantinthevalley.com/) have received unwanted sexual advances, it's clear that these workplaces aren't quite the bastions of equality and progressive values that their marketing departments would have us believe.
@@ -50,7 +51,9 @@ However, in this model, as in real life, sound travels. If someone from the othe
 
 So let's explore. The simulation starts with 20 green-eyed people and 10 blue-eyed people, but you can adjust those parameters as you like. Once you're satisfied, start the simulation and watch the population evolve.
 
-<HarassmentSimulation idx={0} />
+<Caption caption="Figure 1: Start the animation to watch how often each group hears comments about it from the opposite group.">
+  <HarassmentSimulation idx={0} />
+</Caption>
 
 If you pressed for time, let me give you an idea of what will happen. I kept the population at 20 green and 10 blue and ran the simulation for five minutes. At the end of that time, blue-eyed people had observed 175 incidents of harassment, compared to only 84 for green-eyed people. This aligns pretty closely to the 2:1 ratio that the Petrie multiplier predicts.
 
@@ -72,7 +75,9 @@ So, let's change up the model a bit by acknowledging that it's unlikely that bot
 
 Here's a simulation that tries to account for this by breaking apart the probabilities. Now you can adjust the likelihood that a person from either group (blue or green) will say something off-color when interacting with a person from either group (blue or green). I'd argue that people from both groups will tend to be more relaxed about what they say when speaking to someone from their own group, and that people from the larger group will tend to be more careless when speaking to someone in the smaller group. But if you disagree, you can adjust the parameters accordingly.
 
-<HarassmentSimulation idx={1} />
+<Caption caption="Figure 2: Now you can adjust how likely each group is to be offensive towards their own group or the opposite group.">
+  <HarassmentSimulation idx={1} />
+</Caption>
 
 Take a look at what happens if you make it so that people are guarded around members of the opposite group and will never say anything offensive directly to them. In this scenario, things actually get much worse for the underrepresented group in terms of how much harassment they hear compared to the overrepresented group, simply because two people from the smaller group are less likely to interact. This numbers in this case align more closely to Petrie's original multiplier.
 
@@ -88,7 +93,9 @@ Below, I've got one final copy of the simulation, but this time we'll count a bi
 
 Start the simulation and see how the tallies change compared to the previous simulations. To get an even clearer sense of the difference, try making one group much larger than the other.
 
-<HarassmentSimulation idx={2} />
+<Caption caption="Figure 3: This simulation is the same as the previous one, but we are now counting more things.">
+  <HarassmentSimulation idx={2} />
+</Caption>
 
 When we keep track of all kinds of harassment, not just harassment that's received by the opposite group, another dimension of the story presents itself. For instance, I tried running the simulation with a group of 20 greens and 4 blues, leaving all of the probabilities at 5%.
 

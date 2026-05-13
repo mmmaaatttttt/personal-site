@@ -12,6 +12,7 @@ import { interval } from "d3-timer";
 import { type FC, useEffect, useRef, useState } from "react";
 import "d3-transition"; // For .transition()
 import { easeCubicOut } from "d3-ease";
+import { darkenHex } from "@/utils/colorHelpers";
 
 export interface HarassmentNode extends SimulationNodeDatum {
   key: string;
@@ -333,7 +334,7 @@ const HarassmentNodeGroup: FC<HarassmentNodeGroupProps> = ({
         .classed("node", true)
         .attr("r", (d) => d.r)
         .attr("fill", (d) => d.properties.color)
-        .attr("stroke", (d) => d.properties.color)
+        .attr("stroke", (d) => darkenHex(d.properties.color, 0.3))
         .attr("stroke-width", 2);
 
       const nodesToUpdate = isMoving ? enterNodes.merge(nodesSel) : enterNodes;
