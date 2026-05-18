@@ -11,8 +11,8 @@ import COLORS from "@/utils/styles";
 import type { HistogramOption, WeddingData } from "../../types";
 
 const DEFAULT_HEIGHT = 400;
-const DEFAULT_WIDTH = 600;
-const CHART_PADDING = { top: 10, bottom: 60, left: 60, right: 10 };
+const DEFAULT_WIDTH = 400;
+const CHART_PADDING = { top: 10, bottom: 60, left: 10, right: 10 };
 const DEFAULT_Y_TICK_STEP = 10;
 
 interface SelectableHistogramProps {
@@ -29,7 +29,7 @@ const SelectableHistogram: FC<SelectableHistogramProps> = ({
     selectOptions[0],
   );
 
-  const { value, label, accessor, step, format } = selectedOption;
+  const { value, accessor, step, format } = selectedOption;
 
   const validData = useMemo(() => {
     if (!isMounted) return [];
@@ -73,15 +73,11 @@ const SelectableHistogram: FC<SelectableHistogramProps> = ({
   }
 
   return (
-    <NarrowContainer width="100%" className="space-y-4">
-      <div className="flex items-center gap-4 mb-4">
-        <span className="text-sm font-semibold text-gray-500 uppercase tracking-wider">
-          VARIABLE
-        </span>
+    <NarrowContainer width="58%" className="space-y-4">
+      <div className="flex items-center justify-center gap-4 mb-4">
         <Select
           name="bar-data"
           value={value}
-          placeholder={label}
           onChange={setSelectedOption}
           options={selectOptions}
           className="flex-1 max-w-sm"
@@ -91,8 +87,12 @@ const SelectableHistogram: FC<SelectableHistogramProps> = ({
         barData={barData}
         barLabel={(bar) => bar.height}
         color={COLORS.BLUE}
+        gridlinesVertical={false}
         height={DEFAULT_HEIGHT}
         histogram
+        labelDy={-6}
+        labelFontSize="0.6rem"
+        tickFontSizeX="0.6rem"
         padding={CHART_PADDING}
         svgId="histogram"
         thresholds={thresholds}

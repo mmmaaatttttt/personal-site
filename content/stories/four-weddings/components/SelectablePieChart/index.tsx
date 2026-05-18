@@ -27,14 +27,14 @@ const SelectablePieChart: FC<SelectablePieChartProps> = ({
     selectOptions[0],
   );
 
-  const { value, label, accessor } = selectedOption;
+  const { value, accessor } = selectedOption;
 
   if (!isMounted) {
     return <div className="h-[400px] w-full animate-pulse bg-nav/10" />;
   }
 
   return (
-    <NarrowContainer width="100%" className="space-y-4">
+    <NarrowContainer width="55%" className="space-y-4">
       <div className="flex items-center gap-4 mb-4">
         <span className="text-sm font-semibold text-gray-500 uppercase tracking-wider">
           VARIABLE
@@ -42,7 +42,6 @@ const SelectablePieChart: FC<SelectablePieChartProps> = ({
         <Select
           name="pie-data"
           value={value}
-          placeholder={label}
           onChange={setSelectedOption}
           options={selectOptions}
           className="flex-1 max-w-sm"

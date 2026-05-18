@@ -398,6 +398,12 @@ For one-shot imperative animations (e.g. spinning a needle to a random angle), u
 
 **Do not change the default props of any shared component** (`BarGraph`, `Graph`, `Axis`, `LinePlot`, etc.). Story-specific behavior must be set explicitly at the call site. If a story needs non-standard behavior (e.g. no vertical gridlines, right-aligned labels), pass those values as explicit props — never make them the new default. Changing defaults silently breaks every other story that relies on the original behavior.
 
+### Future: rearchitect the BarGraph / Graph / Axis prop chain
+
+The current `BarGraph → Graph → Axis` stack has too many pass-through props. Adding story-specific behavior (e.g. x-axis font size, label dy offset) requires touching three files and threading props through two intermediate components. This is a sign the abstraction is at the wrong level.
+
+**Preferred direction:** shared components (`Graph`, `Axis`, `ClippedSVG`, `BarItem`) provide building blocks. Stories that need standard behavior use `BarGraph` as a convenience. Stories that need deep customization (like `SelectableHistogram`, `SelectableScatterplot`) compose `Graph` and the bar/point rendering directly, bypassing `BarGraph` entirely — the same way MDX story components compose `SliderProvider` + `LinePlot` directly instead of going through a wrapper. No work needed until a story makes the current approach genuinely painful.
+
 ### React keys required when SVG children change position
 
 When a component uses d3 to imperatively draw into a `ref`-attached DOM element (e.g. the `Axis` component and its `<g ref={axisRef}>`), and that element can move to a different position in the React children array across renders, **explicit `key` props are mandatory**. Without keys, React's positional reconciliation can hand the wrong DOM `<g>` to the wrong Axis instance — causing d3 to draw an x-axis into a `<g>` that was previously a y-axis (or vice versa), which produces visually diagonal gridlines. The fix is `key="y-axis"` and `key="x-axis"` on the respective `<Axis>` elements inside `Graph`. This is already in place; preserve it when editing `Graph`.

@@ -17,9 +17,9 @@ interface SelectableScatterplotProps {
 }
 
 const DEFAULT_HEIGHT = 400;
-const DEFAULT_WIDTH = 500;
-const DEFAULT_PADDING = 55;
-const DEFAULT_DOT_AREA = 100;
+const DEFAULT_WIDTH = 400;
+const DEFAULT_PADDING = 40;
+const DEFAULT_DOT_AREA = 45;
 
 const SelectableScatterplot: FC<SelectableScatterplotProps> = ({
   data,
@@ -67,7 +67,7 @@ const SelectableScatterplot: FC<SelectableScatterplotProps> = ({
     }));
 
   return (
-    <NarrowContainer width="100%" className="space-y-4">
+    <NarrowContainer width="55%" className="space-y-4">
       <div className="flex flex-col sm:flex-row gap-4 mb-4">
         <FlexContainer cross="center" className="flex-1">
           <span className="text-sm font-semibold text-gray-500 mr-2 whitespace-nowrap uppercase tracking-wider">
@@ -102,6 +102,8 @@ const SelectableScatterplot: FC<SelectableScatterplotProps> = ({
         graphPadding={DEFAULT_PADDING}
         tickFormatX={formatX}
         tickFormatY={formatY}
+        tickFontSizeX="0.6rem"
+        tickFontSizeY="0.6rem"
       />
     </NarrowContainer>
   );

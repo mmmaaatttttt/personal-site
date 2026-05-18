@@ -27,7 +27,7 @@ const SelectableUSMap: FC<SelectableUSMapProps> = ({
   );
   const { tooltip, showTooltip, hideTooltip } = useTooltip();
 
-  const { value, label, accessor, colors } = selectedOption;
+  const { value, accessor, colors } = selectedOption;
 
   if (!isMounted) {
     return (
@@ -43,14 +43,10 @@ const SelectableUSMap: FC<SelectableUSMapProps> = ({
 
   return (
     <NarrowContainer width="100%" className="space-y-4">
-      <div className="flex items-center gap-4 mb-4">
-        <span className="text-sm font-semibold text-gray-500 uppercase tracking-wider">
-          VARIABLE
-        </span>
+      <div className="flex items-center justify-center gap-4 mb-4">
         <Select
           name="map-data"
           value={value}
-          placeholder={label}
           onChange={setSelectedOption}
           options={selectOptions}
           className="flex-1 max-w-sm"

@@ -23,7 +23,8 @@ interface BarItemProps {
   paddingBottom: number;
   barLabel?: (d: BarData) => string | number;
   fontSize: string;
-  /** When false: bars appear instantly at their position and track updates in 100ms (no entrance animation). Default true uses staggered entrance from the bottom. */
+  labelDy?: number;
+  /** When false: bars appear instantly at their position and track updates in 100ms (no entrance animation). Default true uses staggered 500ms transitions matching legacy react-move behavior. */
   animated?: boolean;
 }
 
@@ -36,65 +37,37 @@ const BarItem = memo<BarItemProps>(
     width,
     height,
     color,
-    graphHeight,
-    paddingBottom,
+    graphHeight: _graphHeight,
+    paddingBottom: _paddingBottom,
     barLabel,
     fontSize,
+    labelDy = -12,
     animated = true,
   }) => {
-    if (!animated) {
-      // No entrance animation; bars appear at their correct position and
-      // animate to new positions quickly as values change (matching legacy 100ms behavior).
-      return (
-        <g>
-          <motion.rect
-            initial={false}
-            animate={{ x, width, y, height }}
-            fill={data.color || color}
-            transition={{ duration: 0.1 }}
-            stroke="rgba(0,0,0,0.1)"
-            strokeWidth={1}
-          />
-          {barLabel && (
-            <motion.text
-              initial={false}
-              animate={{ x: x + width / 2, y }}
-              transition={{ duration: 0.1 }}
-              dy={-12}
-              textAnchor="middle"
-              dominantBaseline="middle"
-              fontSize={fontSize}
-              className="fill-current font-medium pointer-events-none"
-            >
-              {barLabel(data)}
-            </motion.text>
-          )}
-        </g>
-      );
-    }
+    const transition = animated
+      ? { duration: 0.5, delay: index * 0.025 }
+      : { duration: 0.1 };
 
     return (
       <g>
         <motion.rect
-          initial={{ height: 0, y: graphHeight - paddingBottom }}
+          initial={false}
           animate={{ x, width, y, height }}
           fill={data.color || color}
-          transition={{ duration: 0.5, delay: index * 0.05 }}
+          transition={transition}
           stroke="rgba(0,0,0,0.1)"
           strokeWidth={1}
         />
         {barLabel && (
           <motion.text
-            x={x + width / 2}
-            y={y}
-            dy={-12}
+            initial={false}
+            animate={{ x: x + width / 2, y }}
+            dy={labelDy}
             textAnchor="middle"
             dominantBaseline="middle"
             fontSize={fontSize}
             className="fill-current font-medium pointer-events-none"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.5 + index * 0.05 }}
+            transition={transition}
           >
             {barLabel(data)}
           </motion.text>

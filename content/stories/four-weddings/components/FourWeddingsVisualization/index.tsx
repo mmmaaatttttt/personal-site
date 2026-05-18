@@ -62,12 +62,7 @@ const FourWeddingsVisualization: FC<FourWeddingsVisualizationProps> = ({
     }
   };
 
-  return (
-    <div className="my-12">
-      {renderVisualization()}
-      {caption && <Caption>{caption}</Caption>}
-    </div>
-  );
+  return <Caption caption={caption}>{renderVisualization()}</Caption>;
 };
 
 export default FourWeddingsVisualization;

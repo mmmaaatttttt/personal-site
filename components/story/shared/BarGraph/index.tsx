@@ -35,6 +35,8 @@ interface BarGraphProps {
   yTickLabelPosition?: "left" | "center";
   yLabelSide?: "left" | "right";
   gridlinesVertical?: boolean;
+  labelDy?: number;
+  tickFontSizeX?: string;
   yTickFormat?: string;
   tickStep?: number;
   tickStepX?: number;
@@ -58,6 +60,8 @@ const BarGraph: FC<BarGraphProps> = ({
   yTickLabelPosition = "left",
   yLabelSide = "left",
   gridlinesVertical = true,
+  labelDy,
+  tickFontSizeX,
   yTickFormat,
   tickStep,
   tickStepX,
@@ -110,6 +114,7 @@ const BarGraph: FC<BarGraphProps> = ({
         yLabelSide={yLabelSide}
         yAxisOnTop={yLabelSide === "right"}
         gridlinesVertical={gridlinesVertical}
+        tickFontSizeX={tickFontSizeX}
         tickStepX={tickStepX ? () => tickStepX : undefined}
         tickStepY={
           tickStepY ? () => tickStepY : tickStep ? () => tickStep : undefined
@@ -148,6 +153,7 @@ const BarGraph: FC<BarGraphProps> = ({
                   paddingBottom={p.bottom}
                   barLabel={barLabel}
                   fontSize={fontSize}
+                  labelDy={labelDy}
                   animated={animated}
                 />
               );

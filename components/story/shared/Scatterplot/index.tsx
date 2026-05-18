@@ -27,6 +27,8 @@ interface ScatterplotProps {
   yLabel?: string;
   tickFormatX?: string;
   tickFormatY?: string;
+  tickFontSizeX?: string;
+  tickFontSizeY?: string;
 }
 
 const Scatterplot: FC<ScatterplotProps> = ({
@@ -39,6 +41,8 @@ const Scatterplot: FC<ScatterplotProps> = ({
   yLabel = "",
   tickFormatX,
   tickFormatY,
+  tickFontSizeX,
+  tickFontSizeY,
 }) => {
   const isMounted = useIsMounted();
 
@@ -79,6 +83,8 @@ const Scatterplot: FC<ScatterplotProps> = ({
         yScale={yScale}
         tickFormatX={tickFormatX}
         tickFormatY={tickFormatY}
+        tickFontSizeX={tickFontSizeX}
+        tickFontSizeY={tickFontSizeY}
       >
         <g>
           <AnimatePresence>

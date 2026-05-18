@@ -24,6 +24,8 @@ interface GraphProps<XDomain extends AxisDomain, YDomain extends AxisDomain> {
   svgPadding?: number | Padding;
   tickFormatX?: string;
   tickFormatY?: string;
+  tickFontSizeX?: string;
+  tickFontSizeY?: string;
   tickStep?: (scale: AxisScale<XDomain | YDomain>) => number;
   tickStepX?: (scale: AxisScale<XDomain>) => number;
   tickStepY?: (scale: AxisScale<YDomain>) => number;
@@ -54,6 +56,8 @@ const Graph = <XDomain extends AxisDomain, YDomain extends AxisDomain>({
   svgPadding = 0,
   tickFormatX,
   tickFormatY,
+  tickFontSizeX,
+  tickFontSizeY,
   tickStep,
   tickStepX,
   tickStepY,
@@ -110,6 +114,7 @@ const Graph = <XDomain extends AxisDomain, YDomain extends AxisDomain>({
             tickSize={yOptions.tickSize}
             tickShift={yOptions.tickShift}
             tickStep={calculatedTickStepY}
+            fontSize={tickFontSizeY}
             tickFormat={tickFormatY}
             xShift={yOptions.xShift}
           />
@@ -117,6 +122,7 @@ const Graph = <XDomain extends AxisDomain, YDomain extends AxisDomain>({
         <Axis
           key="x-axis"
           direction="x"
+          fontSize={tickFontSizeX}
           labelPosition={{ y: "0.35em", x: "9", dy: "0" }}
           rotateLabels
           scale={xScale}
@@ -150,6 +156,7 @@ const Graph = <XDomain extends AxisDomain, YDomain extends AxisDomain>({
             tickSize={yOptions.tickSize}
             tickShift={yOptions.tickShift}
             tickStep={calculatedTickStepY}
+            fontSize={tickFontSizeY}
             tickFormat={tickFormatY}
             xShift={yOptions.xShift}
           />
