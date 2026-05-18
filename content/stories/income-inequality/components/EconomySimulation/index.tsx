@@ -7,6 +7,7 @@ import Caption from "@/components/story/shared/Caption";
 import ClippedSVG from "@/components/story/shared/ClippedSVG";
 import NarrowContainer from "@/components/story/shared/NarrowContainer";
 import SliderGroup from "@/components/story/shared/Slider/SliderGroup";
+import { Button } from "@/components/ui/Button";
 import COLORS from "@/utils/styles";
 import updateSpeeds from "../../data";
 import EconomyNodeGroup from "./EconomyNodeGroup";
@@ -120,41 +121,41 @@ const EconomySimulation = ({
 
   return (
     <Caption caption={caption}>
-      <NarrowContainer width="50%">
+      <NarrowContainer width="55%">
         <SliderGroup data={playing ? postStartSliders : preStartSliders} />
 
         <div className="my-4 flex justify-center gap-3">
           {!playing ? (
-            <button
-              type="button"
+            <Button
+              size="sm"
               onClick={handleStart}
-              className="rounded-lg px-6 py-2 font-bold tracking-wide text-white shadow-md transition-all hover:brightness-110 active:scale-95 bg-maroon"
+              className="bg-maroon hover:bg-maroon/90"
             >
               Start
-            </button>
+            </Button>
           ) : (
             <>
-              <button
-                type="button"
+              <Button
+                size="sm"
                 onClick={handlePause}
-                className="rounded-lg px-6 py-2 font-bold tracking-wide text-white shadow-md transition-all hover:brightness-110 active:scale-95 bg-orange"
+                className="bg-orange hover:bg-orange/90"
               >
                 {paused ? "Resume" : "Pause"}
-              </button>
-              <button
-                type="button"
+              </Button>
+              <Button
+                size="sm"
                 onClick={() => setShowingSimulation((s) => !s)}
-                className="rounded-lg px-6 py-2 font-bold tracking-wide text-white shadow-md transition-all hover:brightness-110 active:scale-95 bg-blue"
+                className="bg-blue hover:bg-blue/90"
               >
                 {showingSimulation ? "Show Chart" : "Show Nodes"}
-              </button>
-              <button
-                type="button"
+              </Button>
+              <Button
+                size="sm"
                 onClick={handleStop}
-                className="rounded-lg px-6 py-2 font-bold tracking-wide text-white shadow-md transition-all hover:brightness-110 active:scale-95 bg-red"
+                className="bg-red hover:bg-red/90"
               >
                 Reset
-              </button>
+              </Button>
             </>
           )}
         </div>

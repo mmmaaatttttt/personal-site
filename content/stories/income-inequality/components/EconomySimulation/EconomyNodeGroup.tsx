@@ -305,7 +305,20 @@ const EconomyNodeGroup: FC<EconomyNodeGroupProps> = ({
     drawRef.current?.();
   }, [playing, initialV, width, speeds.length, height]); // eslint-disable-line react-hooks/exhaustive-deps
 
-  return <g ref={gRef} />;
+  return (
+    <>
+      <rect
+        x={0}
+        y={0}
+        width={width}
+        height={height}
+        stroke={COLORS.GRAY}
+        strokeWidth={3}
+        fill="none"
+      />
+      <g ref={gRef} />
+    </>
+  );
 };
 
 export default EconomyNodeGroup;
