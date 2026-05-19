@@ -16,6 +16,13 @@ const Latex: FC<LatexProps> = ({ str, displayMode = false }) => {
   useEffect(() => {
     if (ref.current) {
       katex.render(str, ref.current, { displayMode, throwOnError: false });
+      // this is a janky hack to override default inline styles.
+      // biome doesn't let us use !important in stylesheets.
+      for (const el of ref.current.querySelectorAll<HTMLElement>(
+        ".delimcenter",
+      )) {
+        el.style.top = "0.1em";
+      }
     }
   }, [str, displayMode]);
 
