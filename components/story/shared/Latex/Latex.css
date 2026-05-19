@@ -6,3 +6,12 @@
 .latex-wrapper .katex .delimsizing.mult {
   font-family: KaTeX_Size1, serif;
 }
+
+.latex-wrapper .delimcenter {
+  top: 0.1em;
+  font-size: 2rem;
+}
+
+.latex-wrapper .newline {
+  margin-top: 1rem;
+}
