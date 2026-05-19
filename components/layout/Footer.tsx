@@ -1,7 +1,8 @@
-import { BookOpen, Github, Rss, Twitter } from "lucide-react";
+import { BookOpen, Github, Rss } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import type { FC } from "react";
+import BlueskyIcon from "@/components/icons/BlueskyIcon";
 
 const Footer: FC = () => {
   return (
@@ -31,11 +32,11 @@ const Footer: FC = () => {
 
         <div className="flex gap-6 text-link flex-wrap justify-center">
           <a
-            href="https://twitter.com/mmmaaatttttt"
+            href="https://bsky.app/profile/mattlane.us"
             className="hover:opacity-80"
-            aria-label="Twitter"
+            aria-label="Bluesky"
           >
-            <Twitter strokeWidth={1.5} size={28} />
+            <BlueskyIcon size={28} />
           </a>
           <a
             href="https://github.com/mmmaaatttttt/personal-site"

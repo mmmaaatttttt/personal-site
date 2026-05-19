@@ -69,19 +69,17 @@ export default function AboutPage() {
             ice cream.
           </p>
           <p>
-            Even though it&apos;s a cesspool, the best way to reach me if
-            you&apos;d like to chat more is probably{" "}
+            The best way to reach me if you&apos;d like to chat more is{" "}
             <a
-              href="https://www.twitter.com/mmmaaatttttt"
+              href="https://bsky.app/profile/mattlane.us"
               target="_blank"
               rel="noopener noreferrer"
               className="text-link hover:opacity-80"
             >
-              Twitter
+              Bluesky
             </a>
-            . The only bigger cesspool I can think of is the comments section on
-            any website, so for that reason, I don&apos;t enable comments on
-            anything I write here.
+            . Because this is a cesspool-free corner of the internet, I
+            don&apos;t enable comments on anything I write here.
           </p>
           <p>Take a look around, and let me know what you think!</p>
           <p className="text-right">

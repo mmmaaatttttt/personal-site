@@ -1,6 +1,7 @@
 import Image from "next/image";
 import { notFound } from "next/navigation";
 import type { ComponentType } from "react";
+import BlueskyIcon from "@/components/icons/BlueskyIcon";
 import MainLayout from "@/components/layout/MainLayout";
 import placeholders from "@/lib/imagePlaceholders.json";
 import { getArticle, getArticleSlugs } from "@/utils/content";
@@ -129,7 +130,7 @@ export default async function ArticlePage({ params }: PageProps) {
 
         {/* Constrained Markdown Content */}
         <div className="relative mx-auto w-full max-w-[var(--max-w-content)] px-4 sm:px-0">
-          <div className="prose max-w-none text-[#1a1a1a] pb-20">
+          <div className="prose max-w-none text-[#1a1a1a] pb-12">
             {StoryContent ? (
               <StoryContent />
             ) : (
@@ -141,6 +142,17 @@ export default async function ArticlePage({ params }: PageProps) {
                 </p>
               </div>
             )}
+          </div>
+          <div className="flex justify-end pb-20 not-prose">
+            <a
+              href={`https://bsky.app/intent/compose?text=${encodeURIComponent(`${frontmatter.title} https://mattlane.us/stories/${slug}`)}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 text-link hover:opacity-80 text-sm"
+            >
+              <BlueskyIcon size={20} />
+              Post this story on Bluesky
+            </a>
           </div>
         </div>
       </article>
