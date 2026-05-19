@@ -2,11 +2,6 @@ import { fireEvent, render, screen } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
 import SliderProvider from "./index";
 
-// Mock the Icon component since it's not needed for logical tests
-vi.mock("@/components/ui/Icon", () => ({
-  Icon: () => <div data-testid="mock-icon" />,
-}));
-
 describe("SliderProvider", () => {
   const initialData = [
     {

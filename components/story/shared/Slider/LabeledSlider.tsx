@@ -1,10 +1,6 @@
 "use client";
 
-import { type LucideIcon, Minus, Plus } from "lucide-react";
 import type { FC, ReactNode } from "react";
-import { Icon } from "@/components/ui/Icon";
-import { hexToRgba } from "@/utils/styles";
-import { THEME_OPACITY } from "./constants";
 import Slider from "./Slider";
 import SliderTicks from "./SliderTicks";
 
@@ -19,16 +15,8 @@ interface LabeledSliderProps {
   sliderHeight?: number;
   sliderPadding?: number;
   tickCount?: number;
-  minIcon?: string;
-  maxIcon?: string;
-  fadeIcons?: boolean;
   compact?: boolean;
 }
-
-const iconMap: Record<string, LucideIcon> = {
-  minus: Minus,
-  plus: Plus,
-};
 
 const LabeledSlider: FC<LabeledSliderProps> = ({
   min,
@@ -41,21 +29,10 @@ const LabeledSlider: FC<LabeledSliderProps> = ({
   sliderHeight = 6,
   sliderPadding = 10,
   tickCount = 2,
-  minIcon = "minus",
-  maxIcon = "plus",
-  fadeIcons = false,
   compact = false,
 }) => {
   const computedStep = step ?? (max - min) / 100;
   const fraction = (value - min) / (max - min);
-  const leftOpacity = fadeIcons ? 1 - fraction : 1;
-  const rightOpacity = fadeIcons ? fraction : 1;
-
-  const MinIconComp = iconMap[minIcon] || Minus;
-  const MaxIconComp = iconMap[maxIcon] || Plus;
-  const lightColor = color.startsWith("#")
-    ? hexToRgba(color, THEME_OPACITY)
-    : color;
 
   return (
     <div className="flex w-full flex-col items-center text-center">
@@ -66,39 +43,25 @@ const LabeledSlider: FC<LabeledSliderProps> = ({
           {title}
         </div>
       )}
-      <section className="flex w-full items-center gap-4">
-        <div
-          className="flex w-8 shrink-0 items-center justify-center"
-          style={{ opacity: leftOpacity }}
-        >
-          <Icon icon={MinIconComp} size={18} style={{ color: lightColor }} />
-        </div>
-        <div className="relative flex-1">
-          <Slider
-            min={min}
-            max={max}
-            step={computedStep}
-            value={value}
-            onChange={handleValueChange}
-            activeColor={color}
-            height={sliderHeight}
-            padding={sliderPadding}
-          />
-          <SliderTicks
-            count={tickCount}
-            fractionFilled={fraction}
-            activeColor={color}
-            height={sliderHeight}
-            padding={sliderPadding}
-          />
-        </div>
-        <div
-          className="flex w-8 shrink-0 items-center justify-center"
-          style={{ opacity: rightOpacity }}
-        >
-          <Icon icon={MaxIconComp} size={18} style={{ color: lightColor }} />
-        </div>
-      </section>
+      <div className="relative w-full">
+        <Slider
+          min={min}
+          max={max}
+          step={computedStep}
+          value={value}
+          onChange={handleValueChange}
+          activeColor={color}
+          height={sliderHeight}
+          padding={sliderPadding}
+        />
+        <SliderTicks
+          count={tickCount}
+          fractionFilled={fraction}
+          activeColor={color}
+          height={sliderHeight}
+          padding={sliderPadding}
+        />
+      </div>
     </div>
   );
 };

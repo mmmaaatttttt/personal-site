@@ -14,9 +14,6 @@ interface SliderInitialData {
   color: string;
   key?: string | number;
   tickCount?: number;
-  minIcon?: string;
-  maxIcon?: string;
-  fadeIcons?: boolean;
 }
 
 interface SliderProviderProps {

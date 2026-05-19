@@ -201,7 +201,6 @@ export default function GamingRelationships({
       .map((d) => ({
         ...d,
         tickCount: 3 as const,
-        fadeIcons: true,
         handleValueChange: (val: number) => handleValueChange(d.key, val),
       }));
     return <SliderGroup key={color} data={sliderData} compact={compact} />;

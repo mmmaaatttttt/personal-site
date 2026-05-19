@@ -14,9 +14,6 @@ interface SliderData {
   color: string;
   key?: string | number;
   tickCount?: number;
-  minIcon?: string;
-  maxIcon?: string;
-  fadeIcons?: boolean;
 }
 
 interface SliderGroupProps {
@@ -49,9 +46,6 @@ const SliderGroup: FC<SliderGroupProps> = ({
                 title={title}
                 color={d.color}
                 tickCount={d.tickCount}
-                minIcon={d.minIcon}
-                maxIcon={d.maxIcon}
-                fadeIcons={d.fadeIcons}
                 compact={compact}
               />
             </div>
