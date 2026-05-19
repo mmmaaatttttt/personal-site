@@ -17,6 +17,7 @@ export default function NonlinearGamingRelationships({ idx, caption }: Props) {
   return (
     <GamingRelationships
       visData={nonlinearVisData[i]}
+      compact={i === 1}
       caption={caption}
       step={STEP}
       max={maxByIdx[i] ?? 20}

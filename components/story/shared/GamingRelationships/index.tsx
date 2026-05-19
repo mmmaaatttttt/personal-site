@@ -58,6 +58,7 @@ export interface GamingVisData {
 interface GamingRelationshipsProps {
   visData: GamingVisData;
   caption?: string;
+  compact?: boolean;
   min?: number;
   max?: number;
   step?: number;
@@ -68,6 +69,7 @@ interface GamingRelationshipsProps {
 export default function GamingRelationships({
   visData,
   caption,
+  compact = false,
   min = 0,
   max = 20,
   step = 0.1,
@@ -202,7 +204,7 @@ export default function GamingRelationships({
         fadeIcons: true,
         handleValueChange: (val: number) => handleValueChange(d.key, val),
       }));
-    return <SliderGroup key={color} data={sliderData} />;
+    return <SliderGroup key={color} data={sliderData} compact={compact} />;
   });
 
   const content =
