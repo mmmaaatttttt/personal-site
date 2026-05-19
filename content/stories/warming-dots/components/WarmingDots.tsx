@@ -148,4 +148,3 @@ const WarmingDots: FC<WarmingDotsProps> = ({
 };
 
 export default WarmingDots;
-export { WarmingDots };
