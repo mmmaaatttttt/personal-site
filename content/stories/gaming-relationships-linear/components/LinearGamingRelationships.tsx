@@ -10,5 +10,12 @@ interface Props {
 
 export default function LinearGamingRelationships({ idx, caption }: Props) {
   const i = typeof idx === "string" ? parseInt(idx, 10) : idx;
-  return <GamingRelationships visData={linearVisData[i]} caption={caption} />;
+  const compact = i !== 0;
+  return (
+    <GamingRelationships
+      visData={linearVisData[i]}
+      caption={caption}
+      compact={compact}
+    />
+  );
 }

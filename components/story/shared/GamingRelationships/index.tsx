@@ -210,7 +210,9 @@ export default function GamingRelationships({
   const content =
     graphs.length === 1 ? (
       <ColumnLayout break="sm">
-        <FlexContainer column>{sliderGroups}</FlexContainer>
+        <FlexContainer column cross="center" className="h-full">
+          {sliderGroups}
+        </FlexContainer>
         {graphs[0]}
       </ColumnLayout>
     ) : (
