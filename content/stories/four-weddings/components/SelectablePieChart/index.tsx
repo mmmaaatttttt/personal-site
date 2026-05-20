@@ -35,8 +35,8 @@ const SelectablePieChart: FC<SelectablePieChartProps> = ({
 
   return (
     <NarrowContainer width="55%" className="space-y-4">
-      <div className="flex items-center gap-4 mb-4">
-        <span className="text-sm font-semibold text-gray-500 uppercase tracking-wider">
+      <div className="flex flex-col sm:flex-row items-start sm:items-center gap-2 mb-4">
+        <span className="text-sm font-semibold text-gray-500 uppercase tracking-wider whitespace-nowrap">
           VARIABLE
         </span>
         <Select
@@ -44,7 +44,7 @@ const SelectablePieChart: FC<SelectablePieChartProps> = ({
           value={value}
           onChange={setSelectedOption}
           options={selectOptions}
-          className="flex-1 max-w-sm"
+          className="w-full sm:flex-1 sm:max-w-sm"
         />
       </div>
       <PieChart

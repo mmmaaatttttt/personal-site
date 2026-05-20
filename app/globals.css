@@ -41,13 +41,35 @@
 html {
   color: #1a1a1a;
   background-color: #ffffff;
-  font-size: 20px;
+  font-size: 16px;
   line-height: 1.8;
+}
+
+@media (min-width: 640px) {
+  html {
+    font-size: 20px;
+  }
 }
 
 /* Ensure MDX article headers use the serif font to match original aesthetic */
 .prose :is(h1, h2, h3, h4, h5, h6) {
   font-family: var(--font-serif);
+}
+
+/* Scale prose headings down on mobile. The typography plugin never reduces
+   heading sizes responsively; the legacy site (typography.js alton theme)
+   did so aggressively below 600px. Without this, h2/h3 look too large on
+   narrow viewports relative to body text. */
+@media (max-width: 639px) {
+  .prose :is(h2) {
+    font-size: 1.2rem;
+  }
+  .prose :is(h3) {
+    font-size: 1.1rem;
+  }
+  .prose :is(h4) {
+    font-size: 1rem;
+  }
 }
 
 .prose a {

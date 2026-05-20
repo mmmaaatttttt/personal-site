@@ -73,8 +73,8 @@ const SelectableMultiBarGraph: FC<SelectableMultiBarGraphProps> = ({
   return (
     <div className="w-full" data-testid="selectable-multi-bar-graph-container">
       <NarrowContainer width={containerWidth.toString()} className="mb-8">
-        <div className="flex items-center gap-4">
-          <span className="text-sm font-bold tracking-wider text-gray-500 uppercase">
+        <div className="flex flex-col sm:flex-row items-start sm:items-center gap-2">
+          <span className="text-sm font-bold tracking-wider text-gray-500 uppercase whitespace-nowrap">
             Sentiment Range
           </span>
           <Select
@@ -83,7 +83,7 @@ const SelectableMultiBarGraph: FC<SelectableMultiBarGraphProps> = ({
             placeholder={label}
             onChange={setSelectedOption}
             options={options[0]}
-            className="max-w-md flex-1"
+            className="w-full sm:max-w-md sm:flex-1"
           />
         </div>
       </NarrowContainer>

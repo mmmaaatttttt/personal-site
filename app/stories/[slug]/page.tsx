@@ -102,7 +102,7 @@ export default async function ArticlePage({ params }: PageProps) {
     <MainLayout outline={true}>
       <article className="w-full">
         {/* Full Bleed Hero Header */}
-        <header className="relative w-full h-[60vh] sm:h-screen flex flex-col items-center justify-center text-center px-4 overflow-hidden mb-0">
+        <header className="relative w-full aspect-video sm:aspect-auto sm:h-screen flex flex-col items-center justify-center text-center px-4 overflow-hidden mb-0">
           <Image
             src={featuredImage}
             alt={frontmatter.title}
@@ -138,7 +138,7 @@ export default async function ArticlePage({ params }: PageProps) {
 
         {/* Featured image caption */}
         {frontmatter.featured_image_caption && (
-          <small className="flex justify-end mt-0 mb-12 px-2 italic text-[#7d7d7d]">
+          <small className="flex justify-end mt-0 mb-4 px-2 italic text-[#7d7d7d]">
             {frontmatter.featured_image_caption}
           </small>
         )}

@@ -78,8 +78,8 @@ const SentimentScoreTable: FC<SentimentScoreTableProps> = ({
   return (
     <div className="w-full" data-testid="sentiment-score-table-container">
       <NarrowContainer width="100%" margin="0 auto 0.5rem">
-        <div className="flex items-center gap-4">
-          <span className="text-sm font-bold text-gray-500 uppercase tracking-wider">
+        <div className="flex flex-col sm:flex-row items-start sm:items-center gap-2">
+          <span className="text-sm font-bold text-gray-500 uppercase tracking-wider whitespace-nowrap">
             Sentiment Filter
           </span>
           <Select
@@ -88,7 +88,7 @@ const SentimentScoreTable: FC<SentimentScoreTableProps> = ({
             placeholder={label}
             onChange={setSelectedOption}
             options={options[0]}
-            className="flex-1 max-w-md"
+            className="w-full sm:flex-1 sm:max-w-md"
           />
         </div>
       </NarrowContainer>

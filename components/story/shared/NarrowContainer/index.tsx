@@ -19,10 +19,10 @@ const NarrowContainer: FC<NarrowContainerProps> = ({
   className,
 }) => {
   const breakpointClasses = {
-    sm: "max-sm:w-full max-sm:mx-0",
-    md: "max-md:w-full max-md:mx-0",
-    lg: "max-lg:w-full max-lg:mx-0",
-    xl: "max-xl:w-full max-xl:mx-0",
+    sm: "max-sm:!w-full max-sm:!mx-0",
+    md: "max-md:!w-full max-md:!mx-0",
+    lg: "max-lg:!w-full max-lg:!mx-0",
+    xl: "max-xl:!w-full max-xl:!mx-0",
   };
 
   return (
