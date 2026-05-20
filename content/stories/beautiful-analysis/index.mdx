@@ -107,14 +107,14 @@ count* as a proxy.
 Here's how the number of words spoken by Gethard compares to the number of words
 spoken by the caller, for each of the ten episode transcripts:
 
-<CaptionWrapper caption="Figure 1: Word counts per episode for Gethard and the caller. Tap or mouse over a bar for more details on the episode.">
+<Caption caption="Figure 1: Word counts per episode for Gethard and the caller. Tap or mouse over a bar for more details on the episode.">
   <BaMultiBarGraph
     dataType="summary"
     legendTitle="Word counts per episode"
     padding={{ top: 0, left: 70, right: 0, bottom: 10 }}
     yAxisLabel="Word count"
   />
-</CaptionWrapper>
+</Caption>
 
 My biggest takeaway from this graph is that Gethard seems to have gotten much
 more comfortable creating space for his guests. He spoke the most in the very
@@ -169,14 +169,14 @@ Let's once again take a look at how Gethard compares to his callers. How many
 times do they each talk about things with positive, negative, or neutral
 sentiment? Here's a breakdown by sentence and by episode:
 
-<CaptionWrapper caption="Figure 3: Sentiment counts per episode for Gethard and the caller. Use the dropdown to view different ranges of sentiment.">
+<Caption caption="Figure 3: Sentiment counts per episode for Gethard and the caller. Use the dropdown to view different ranges of sentiment.">
   <SelectableMultiBarGraph
     containerWidth="60%"
     legendTitle="Sentiment counts per episode"
     padding={{ top: 10, left: 70, right: 0, bottom: 10 }}
     yAxisLabel="Sentiment count"
   />
-</CaptionWrapper>
+</Caption>
 
 As you can see, positive sentiment greatly outweighs negative sentiment across
 episodes. And for his part, Gethard plays the extremes pretty evenly: he speaks
@@ -187,9 +187,9 @@ out of ten episodes.
 We can take this even further by plotting the sentiment of every line in an
 episode's transcript. Here's how the episodes look:
 
-<CaptionWrapper caption="Figure 4: Sentiment of every line in an episode. The larger the circle, the more words in the line.">
+<Caption caption="Figure 4: Sentiment of every line in an episode. The larger the circle, the more words in the line.">
   <PodcastAllSentiments />
-</CaptionWrapper>
+</Caption>
 
 As you can see, most circles lie in the upper half, i.e. they have positive
 sentiment. So if you're looking for a show that's positive on the whole, this
@@ -210,14 +210,14 @@ one I used is called
 I was able to categorize every sentence in every conversation as either having
 profanity or not. Here are the results, again broken down by speaker:
 
-<CaptionWrapper caption="Figure 5: Profanity counts per episode for Gethard and the caller. Tap or mouse over a bar for more details on the episode.">
+<Caption caption="Figure 5: Profanity counts per episode for Gethard and the caller. Tap or mouse over a bar for more details on the episode.">
   <BaMultiBarGraph
     dataType="profanity"
     legendTitle="Profanity counts per episode"
     padding={{ top: 0, left: 70, right: 0, bottom: 10 }}
     yAxisLabel="Profanity count"
   />
-</CaptionWrapper>
+</Caption>
 
 Sorry, Sally. It looks like your son takes the crown when it comes to profane
 language. In 9 out of 10 transcripts, he had the majority of sentences marked as
@@ -241,14 +241,14 @@ One way to answer this question is to identify short phrases that appear
 relatively frequently in the transcripts. Here are the most common two-, three-,
 and four-word phrases spoken by Gethard and the callers as a group:
 
-<CaptionWrapper
+<Caption
   bleed={false}
   caption="Figure 6: Common phrases for Gethard and his callers.
 Phrases are restricted to the twenty most frequent, and each phrase must have
 appeared an average of at least once per episode."
 >
   <CommonPhrasesInteractive />
-</CaptionWrapper>
+</Caption>
 
 One difference you may notice is how often common phrases include the word "I."
 The data suggests that Gethard is good at centering the conversation on the
@@ -268,9 +268,9 @@ disproportionately often.
 
 Here are the two-word collocations for Chris Gethard and his callers:
 
-<CaptionWrapper bleed={false} caption="Figure 7: Collocations for Gethard and his callers.">
+<Caption bleed={false} caption="Figure 7: Collocations for Gethard and his callers.">
   <CollocationTable />
-</CaptionWrapper>
+</Caption>
 
 A few observations:
 
@@ -326,10 +326,10 @@ accurately predict whether or not Gethard was the speaker of a random line with
 about 70% accuracy. Here are the top twenty most informative features for one of
 my training sessions:
 
-<CaptionWrapper caption="Figure 8: Twenty most informative features for
+<Caption caption="Figure 8: Twenty most informative features for
 distinguishing between Gethard and his callers.">
   <HorizontalBarGraph data={horizontalBarData} containerWidth="67%" />
-</CaptionWrapper>
+</Caption>
 
 The numbers in the above chart indicate the strength of each predictor. For
 example, a line where the first word is "wow" is 12.9 times more likely to have
@@ -362,12 +362,12 @@ I took all of Gethard's lines from the ten conversations, and trained a
 [text-generating neural network](https://github.com/minimaxir/textgenrnn) on
 them. Want to see how I did? Let's play a game.
 
-<CaptionWrapper caption="Figure 9: Chris vs. Computer: who said it? This 10 question quiz pulls from 24 examples, so you can play it a few times to see different sentences.">
+<Caption caption="Figure 9: Chris vs. Computer: who said it? This 10 question quiz pulls from 24 examples, so you can play it a few times to see different sentences.">
   <Quiz
     answerColors={[COLORS.DARK_BLUE, COLORS.PURPLE]}
     title="Who said it: Chris Gethard or an Algorithm?"
   />
-</CaptionWrapper>
+</Caption>
 
 How did you do? If you didn't get 100%, don't worry. The robots aren't coming
 for Gethard's job anytime soon.

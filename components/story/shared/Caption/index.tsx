@@ -6,6 +6,7 @@ interface CaptionProps {
   caption?: string;
   className?: string;
   captionMarginTop?: string;
+  bleed?: boolean;
 }
 
 const Caption: FC<CaptionProps> = ({
@@ -13,14 +14,17 @@ const Caption: FC<CaptionProps> = ({
   caption,
   className,
   captionMarginTop,
+  bleed = true,
 }) => {
   return (
     <div
       className={cn(
         "my-8 flex flex-col items-center w-full ml-0",
-        "min-[890px]:w-[110%] min-[890px]:-ml-[5%]",
-        "min-[1020px]:w-[120%] min-[1020px]:-ml-[10%]",
-        "min-[1240px]:w-[130%] min-[1240px]:-ml-[15%]",
+        bleed && [
+          "min-[890px]:w-[110%] min-[890px]:-ml-[5%]",
+          "min-[1020px]:w-[120%] min-[1020px]:-ml-[10%]",
+          "min-[1240px]:w-[130%] min-[1240px]:-ml-[15%]",
+        ],
         className,
       )}
     >

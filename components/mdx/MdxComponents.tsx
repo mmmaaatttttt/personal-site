@@ -1,5 +1,6 @@
 import Image from "next/image";
 import type { ComponentPropsWithoutRef, ReactNode } from "react";
+import Caption from "@/components/story/shared/Caption";
 import ColoredSpan from "@/components/story/shared/ColoredSpan";
 import Legend from "@/components/story/shared/Legend";
 import NarrowContainer from "@/components/story/shared/NarrowContainer";
@@ -98,46 +99,8 @@ export const MdxComponents: Record<string, unknown> = {
   StyledTable: (props: ComponentPropsWithoutRef<typeof StyledTable>) => (
     <StyledTable {...props} />
   ),
-  CaptionWrapper: ({
-    children,
-    caption,
-    className,
-    bleed = true,
-    maxContentWidth,
-  }: {
-    children?: ReactNode;
-    caption?: string;
-    className?: string;
-    bleed?: boolean;
-    maxContentWidth?: string;
-  }) => (
-    <div
-      className={[
-        "my-8 flex flex-col items-center w-full ml-0",
-        bleed
-          ? "min-[890px]:w-[110%] min-[890px]:-ml-[5%] min-[1020px]:w-[120%] min-[1020px]:-ml-[10%] min-[1240px]:w-[130%] min-[1240px]:-ml-[15%]"
-          : "",
-        className ?? "",
-      ]
-        .join(" ")
-        .trim()}
-    >
-      <div
-        className="w-full not-prose"
-        style={
-          maxContentWidth
-            ? { maxWidth: maxContentWidth, margin: "0 auto" }
-            : undefined
-        }
-      >
-        {children}
-      </div>
-      {caption && (
-        <div className="mt-2 max-w-4xl px-4 text-center text-sm font-bold text-gray-600">
-          {caption}
-        </div>
-      )}
-    </div>
+  Caption: (props: ComponentPropsWithoutRef<typeof Caption>) => (
+    <Caption {...props} />
   ),
   Legend: (props: ComponentPropsWithoutRef<typeof Legend>) => (
     <Legend {...props} />

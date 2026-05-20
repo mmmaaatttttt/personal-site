@@ -114,7 +114,7 @@ import { myTableData } from "./data";
 
 The following shared utilities are registered globally in `components/mdx/MdxComponents.tsx` and are available in any MDX file without importing:
 
-`Sidebar`, `ResponsiveIFrame`, `Latex`, `ColoredSpan`, `NarrowContainer`, `StyledTable`, `CaptionWrapper`, `HorizontalBarGraph`, `MultiBarGraph`, `Legend`, `SliderProvider`, `RelativeContainer`, `Strikethrough`
+`Sidebar`, `ResponsiveIFrame`, `Latex`, `ColoredSpan`, `NarrowContainer`, `StyledTable`, `Caption`, `HorizontalBarGraph`, `MultiBarGraph`, `Legend`, `SliderProvider`, `RelativeContainer`, `Strikethrough`
 
 If a new shared component is added here it will be available in all stories automatically.
 
@@ -465,7 +465,7 @@ Always use curly-brace JS expressions when passing strings that contain backslas
 
 ### NarrowContainer widths inside Caption (breakout scaling)
 
-`Caption` always applies the breakout (up to `w-[130%]` at large viewports), matching the legacy `CaptionWrapper` behavior. `NarrowContainer` and `SliderProvider` widths are percentages of the Caption container, **not** the prose column. Size them for the breakout width, not for prose width.
+`Caption` always applies the breakout (up to `w-[130%]` at large viewports) unless `bleed={false}`. `NarrowContainer` and `SliderProvider` widths are percentages of the Caption container, **not** the prose column. Size them for the breakout width, not for prose width.
 
 Rule of thumb: to match a target size that is X% of prose width, use `X / 1.3 ≈ X * 0.77%` as the NarrowContainer/SliderProvider width. For example, a component that should occupy ~75% of prose width gets `width="58%"` (58% × 130% ≈ 75%).
 
