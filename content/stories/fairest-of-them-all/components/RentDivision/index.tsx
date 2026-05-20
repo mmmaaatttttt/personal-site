@@ -348,12 +348,7 @@ const RentDivision: FC<RentDivisionProps> = ({ caption }) => {
       {renderTopArea()}
       <NarrowContainer width="55%" fullWidthAt="sm">
         <div className="relative">
-          <ClippedSVG
-            width={SVG_WIDTH}
-            height={SVG_HEIGHT}
-            id="rent"
-            marginTop="-1.5rem"
-          >
+          <ClippedSVG width={SVG_WIDTH} height={SVG_HEIGHT} id="rent">
             {triangles}
             {circles}
           </ClippedSVG>

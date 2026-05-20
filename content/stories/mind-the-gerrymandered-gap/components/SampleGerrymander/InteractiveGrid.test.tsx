@@ -1,7 +1,12 @@
 import { fireEvent, render } from "@testing-library/react";
-import { describe, expect, it, vi } from "vitest";
+import { beforeEach, describe, expect, it, vi } from "vitest";
 import { getInitialSegments } from "./constants";
 import InteractiveGrid from "./InteractiveGrid";
+
+beforeEach(() => {
+  Element.prototype.setPointerCapture = vi.fn();
+  Element.prototype.releasePointerCapture = vi.fn();
+});
 
 const defaultProps = {
   width: 450,
@@ -38,7 +43,20 @@ describe("InteractiveGrid", () => {
     expect(lines).toHaveLength(93);
   });
 
-  it("calls onSegmentUpdate with the toggled status on mousedown", () => {
+  it("lines have data-row and data-col attributes for hit-testing", () => {
+    const { container } = render(
+      <svg role="img" aria-label="test">
+        <InteractiveGrid {...defaultProps} />
+      </svg>,
+    );
+    const lines = container.querySelectorAll("line");
+    lines.forEach((line) => {
+      expect(line.getAttribute("data-row")).not.toBeNull();
+      expect(line.getAttribute("data-col")).not.toBeNull();
+    });
+  });
+
+  it("calls onSegmentUpdate with the toggled status on pointerDown", () => {
     const onSegmentUpdate = vi.fn();
     const { container } = render(
       <svg role="img" aria-label="test">
@@ -46,28 +64,11 @@ describe("InteractiveGrid", () => {
       </svg>,
     );
     const lines = container.querySelectorAll("line");
-    fireEvent.mouseDown(lines[0]);
+    fireEvent.pointerDown(lines[0]);
     expect(onSegmentUpdate).toHaveBeenCalledWith(
       expect.any(Number),
       expect.any(Number),
       true,
-    );
-  });
-
-  it("calls onSegmentUpdate with null-like value on mouseenter when not dragging", () => {
-    const onSegmentUpdate = vi.fn();
-    const { container } = render(
-      <svg role="img" aria-label="test">
-        <InteractiveGrid {...defaultProps} onSegmentUpdate={onSegmentUpdate} />
-      </svg>,
-    );
-    const lines = container.querySelectorAll("line");
-    // mouseenter without prior mousedown — activeStatus is null
-    fireEvent.mouseEnter(lines[0]);
-    expect(onSegmentUpdate).toHaveBeenCalledWith(
-      expect.any(Number),
-      expect.any(Number),
-      null,
     );
   });
 
@@ -85,25 +86,5 @@ describe("InteractiveGrid", () => {
       (l) => l.getAttribute("stroke") !== "#ffffff",
     );
     expect(onSegment).toBeTruthy();
-  });
-
-  it("clears drag state on window mouseup", () => {
-    const onSegmentUpdate = vi.fn();
-    const { container } = render(
-      <svg role="img" aria-label="test">
-        <InteractiveGrid {...defaultProps} onSegmentUpdate={onSegmentUpdate} />
-      </svg>,
-    );
-    const lines = container.querySelectorAll("line");
-    fireEvent.mouseDown(lines[0]);
-    fireEvent.mouseUp(window);
-    // After mouseup, entering another segment should pass null as activeStatus
-    onSegmentUpdate.mockClear();
-    fireEvent.mouseEnter(lines[1]);
-    expect(onSegmentUpdate).toHaveBeenCalledWith(
-      expect.any(Number),
-      expect.any(Number),
-      null,
-    );
   });
 });

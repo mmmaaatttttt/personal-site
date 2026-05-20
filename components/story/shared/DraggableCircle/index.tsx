@@ -1,6 +1,6 @@
 "use client";
 
-import { type FC, type PointerEvent, useState } from "react";
+import { type FC, type PointerEvent, useEffect, useRef, useState } from "react";
 import COLORS from "@/utils/styles";
 
 interface DraggableCircleProps {
@@ -27,6 +27,17 @@ const DraggableCircle: FC<DraggableCircleProps> = ({
   const [dragging, setDragging] = useState(false);
   const [hovered, setHovered] = useState(false);
   const currentR = hovered || dragging ? r * 1.5 : r;
+  const circleRef = useRef<SVGCircleElement>(null);
+
+  useEffect(() => {
+    const svg = circleRef.current?.ownerSVGElement;
+    if (!svg) return;
+    const prev = svg.style.touchAction;
+    svg.style.touchAction = "none";
+    return () => {
+      svg.style.touchAction = prev;
+    };
+  }, []);
 
   const toSVGCoords = (e: PointerEvent<SVGCircleElement>) => {
     const svg = e.currentTarget.ownerSVGElement;
@@ -41,6 +52,7 @@ const DraggableCircle: FC<DraggableCircleProps> = ({
 
   return (
     <circle
+      ref={circleRef}
       cx={cx}
       cy={cy}
       r={currentR}
@@ -49,12 +61,12 @@ const DraggableCircle: FC<DraggableCircleProps> = ({
       strokeWidth={strokeWidth}
       style={{
         cursor: dragging ? "grabbing" : "grab",
-        touchAction: "none",
         transition: "r 0.15s ease",
       }}
       onPointerEnter={() => setHovered(true)}
       onPointerLeave={() => setHovered(false)}
       onPointerDown={(e) => {
+        e.preventDefault();
         e.currentTarget.setPointerCapture(e.pointerId);
         setDragging(true);
       }}

@@ -1,7 +1,7 @@
 "use client";
 
 import { scaleLinear } from "d3-scale";
-import { type FC, useCallback, useEffect, useState } from "react";
+import { type FC, useCallback, useEffect, useRef, useState } from "react";
 import COLORS, { hexToRgba } from "@/utils/styles";
 
 interface SegmentDatum {
@@ -39,16 +39,36 @@ const InteractiveGrid: FC<InteractiveGridProps> = ({
 }) => {
   const [activeStatus, setActiveStatus] = useState<boolean | null>(null);
   const [hovered, setHovered] = useState<[number, number] | null>(null);
+  const containerRef = useRef<SVGGElement>(null);
 
-  const handleMouseUp = useCallback(() => {
+  useEffect(() => {
+    const svg = containerRef.current?.ownerSVGElement;
+    if (!svg) return;
+    const prev = svg.style.touchAction;
+    svg.style.touchAction = "none";
+    return () => {
+      svg.style.touchAction = prev;
+    };
+  }, []);
+
+  const endDrag = useCallback(() => {
     setActiveStatus(null);
     setHovered(null);
   }, []);
 
-  useEffect(() => {
-    window.addEventListener("mouseup", handleMouseUp);
-    return () => window.removeEventListener("mouseup", handleMouseUp);
-  }, [handleMouseUp]);
+  const handleContainerPointerMove = useCallback(
+    (e: React.PointerEvent<SVGGElement>) => {
+      if (activeStatus === null) return;
+      const el = document.elementFromPoint(e.clientX, e.clientY);
+      if (!(el instanceof SVGLineElement)) return;
+      const row = el.getAttribute("data-row");
+      const col = el.getAttribute("data-col");
+      if (row !== null && col !== null) {
+        onSegmentUpdate(Number(row), Number(col), activeStatus);
+      }
+    },
+    [activeStatus, onSegmentUpdate],
+  );
 
   const xScale = scaleLinear()
     .domain([0, colCount])
@@ -97,10 +117,18 @@ const InteractiveGrid: FC<InteractiveGridProps> = ({
   }
 
   return (
-    <g strokeWidth={strokeWidth}>
+    <g
+      ref={containerRef}
+      strokeWidth={strokeWidth}
+      onPointerMove={handleContainerPointerMove}
+      onPointerUp={endDrag}
+      onPointerCancel={endDrag}
+    >
       {segmentData.map((d) => (
         <line
           key={`${d.rowIdx}:${d.colIdx}`}
+          data-row={d.rowIdx}
+          data-col={d.colIdx}
           role="menuitem"
           tabIndex={0}
           x1={d.x1}
@@ -109,15 +137,14 @@ const InteractiveGrid: FC<InteractiveGridProps> = ({
           y2={d.y2}
           stroke={getStroke(d)}
           className="cursor-pointer focus:outline-none"
-          onMouseDown={() => {
+          onPointerDown={(e) => {
+            e.preventDefault();
             const next = !d.isOn;
             setActiveStatus(next);
             onSegmentUpdate(d.rowIdx, d.colIdx, next);
+            containerRef.current?.setPointerCapture(e.pointerId);
           }}
-          onMouseEnter={() => {
-            onSegmentUpdate(d.rowIdx, d.colIdx, activeStatus);
-          }}
-          onMouseMove={() => {
+          onPointerMove={() => {
             if (
               activeStatus === null &&
               (hovered === null ||
@@ -127,7 +154,7 @@ const InteractiveGrid: FC<InteractiveGridProps> = ({
               setHovered([d.rowIdx, d.colIdx]);
             }
           }}
-          onMouseOut={() => setHovered(null)}
+          onPointerLeave={() => setHovered(null)}
           onFocus={() => setHovered([d.rowIdx, d.colIdx])}
           onBlur={() => setHovered(null)}
           onKeyDown={(e) => {
