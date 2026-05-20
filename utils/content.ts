@@ -17,6 +17,7 @@ export interface ArticleFrontmatter {
 
 export interface ArticleMeta extends ArticleFrontmatter {
   slug: string;
+  timeToRead: number;
 }
 
 /**

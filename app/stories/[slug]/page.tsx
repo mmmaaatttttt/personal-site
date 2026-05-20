@@ -5,7 +5,12 @@ import BlueskyIcon from "@/components/icons/BlueskyIcon";
 import MainLayout from "@/components/layout/MainLayout";
 import StoryCard from "@/components/layout/StoryCard";
 import placeholders from "@/lib/imagePlaceholders.json";
-import { getArticle, getArticleSlugs, jaccardDistance } from "@/utils/content";
+import {
+  getAllArticles,
+  getArticle,
+  getArticleSlugs,
+  jaccardDistance,
+} from "@/utils/content";
 import { normalizeImagePath } from "@/utils/stringHelpers";
 
 interface PageProps {
@@ -84,21 +89,9 @@ export default async function ArticlePage({ params }: PageProps) {
   const storyModule = storyModules[slug];
   const StoryContent = storyModule ? (await storyModule()).default : null;
 
-  const relatedArticles = getArticleSlugs()
-    .filter((s) => s !== slug)
-    .map((s) => {
-      const { frontmatter: fm } = getArticle(s);
-      const date = new Date(fm.date).toLocaleDateString("en-US", {
-        month: "long",
-        year: "numeric",
-      });
-      return {
-        ...fm,
-        date,
-        slug: s,
-        distance: jaccardDistance(fm.tags, frontmatter.tags),
-      };
-    })
+  const relatedArticles = getAllArticles()
+    .filter((a) => a.slug !== slug)
+    .map((a) => ({ ...a, distance: jaccardDistance(a.tags, frontmatter.tags) }))
     .filter((a) => a.distance < 1)
     .sort((a, b) => a.distance - b.distance)
     .slice(0, 3);
@@ -198,6 +191,7 @@ export default async function ArticlePage({ params }: PageProps) {
                   slug={a.slug}
                   tags={a.tags ? [...a.tags].sort() : []}
                   title={a.title}
+                  timeToRead={a.timeToRead}
                   index={i}
                 />
               ))}

@@ -85,11 +85,12 @@ const ArticlesContent: FC<ArticlesContentProps> = ({
   );
 
   return (
-    <div className="mx-auto w-full max-w-[var(--max-w-content)] px-4 sm:px-0 pt-10 pb-12">
+    <div className="mx-auto w-full min-[890px]:w-3/5 px-4 min-[890px]:px-2 pt-10 pb-12">
       {/* Filters */}
       <div className="mb-6 flex flex-col gap-4 sm:flex-row font-sans text-sm">
         <div className="flex-1">
           <Select
+            instanceId="year-select"
             options={yearOptions}
             isClearable
             placeholder="Filter by year..."
@@ -106,6 +107,7 @@ const ArticlesContent: FC<ArticlesContentProps> = ({
         </div>
         <div className="flex-1">
           <Select
+            instanceId="tag-select"
             options={tagOptions}
             isMulti
             isClearable

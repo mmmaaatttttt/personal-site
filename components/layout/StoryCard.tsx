@@ -35,7 +35,7 @@ const StoryCard: FC<StoryCardProps> = ({
   return (
     <div
       className={cn(
-        "group border-b border-gray py-8 last:border-0 sm:px-4",
+        "group border-b border-gray py-6 last:border-0",
         isEven ? "bounce-in-left" : "bounce-in-right",
         className,
       )}
@@ -45,31 +45,32 @@ const StoryCard: FC<StoryCardProps> = ({
         href={`/stories/${slug}`}
         className="flex flex-col gap-6 sm:flex-row"
       >
-        <div className="relative w-full shrink-0 overflow-hidden rounded-lg sm:w-64 aspect-video">
+        <div className="w-full self-start shrink-0 overflow-hidden rounded-lg sm:w-[216px]">
           <Image
             src={imagePath}
             alt={`Card for ${title}`}
-            fill
-            className="object-cover transition-transform duration-300 group-hover:scale-105"
+            width={1920}
+            height={1080}
+            className="w-full h-auto block object-cover transition-transform duration-300 group-hover:scale-105"
             placeholder={blurDataURL ? "blur" : "empty"}
             blurDataURL={blurDataURL}
           />
         </div>
-        <div className="flex flex-1 flex-col justify-center">
-          <h4 className="mb-1 font-serif text-2xl font-bold text-[#1a1a1a] group-hover:text-link transition-colors duration-200">
+        <div className="flex flex-1 flex-col">
+          <h4 className="mb-0 font-serif text-[20px] font-bold text-[#1a1a1a] group-hover:text-link transition-colors duration-200">
             {title}
           </h4>
-          <h6 className="mb-4 text-sm font-bold text-gray-400">
+          <h6 className="mb-4 text-sm font-serif font-bold text-gray-400">
             {date} {timeToRead ? `- ${timeToRead} minute read` : ""}
           </h6>
           <p className="text-sm leading-relaxed text-dark-gray">{caption}</p>
         </div>
       </Link>
-      <div className="mt-4 flex flex-wrap justify-end gap-2">
+      <div className="flex flex-wrap justify-end gap-1">
         {tags.map((tag) => (
           <span
             key={tag}
-            className="rounded-full bg-gray-400 px-3 py-1 text-[11px] font-medium italic text-white"
+            className="rounded-full bg-gray-400 px-2 py-0 text-[13px] font-medium italic text-white"
           >
             {tag}
           </span>
