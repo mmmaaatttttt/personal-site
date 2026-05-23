@@ -8,15 +8,8 @@ import type { FC } from "react";
 import { useMemo } from "react";
 import { useIsMounted } from "@/hooks/useIsMounted";
 import Graph from "../Graph";
+import type { BarData } from "./BarItem";
 import BarItem from "./BarItem";
-
-interface BarData {
-  key: string | number;
-  height: number;
-  color?: string;
-  x0?: number; // For histogram
-  x1?: number; // For histogram
-}
 
 interface BarGraphProps {
   animated?: boolean;
@@ -149,8 +142,6 @@ const BarGraph: FC<BarGraphProps> = ({
                   width={barWidth}
                   height={barHeight}
                   color={color}
-                  graphHeight={height}
-                  paddingBottom={p.bottom}
                   barLabel={barLabel}
                   fontSize={fontSize}
                   labelDy={labelDy}
