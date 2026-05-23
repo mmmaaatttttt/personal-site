@@ -1,3 +1,3 @@
 STAGED=$(git diff --name-only --cached)
-npm run lint:write
+echo "$STAGED" | xargs npx biome check --write --unsafe
 echo "$STAGED" | xargs git add

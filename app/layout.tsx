@@ -15,6 +15,7 @@ const domine = Domine({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://mattlane.us"),
   title: "Matt Lane",
   description:
     "Inside the mind of Matt Lane. Teacher, math doctor, lover of ice cream. Stories on the intersection of math, equity, games, and whatever else piques my interest.",
