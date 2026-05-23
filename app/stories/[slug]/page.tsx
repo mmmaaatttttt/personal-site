@@ -56,9 +56,19 @@ export async function generateMetadata({ params }: PageProps) {
   const { slug } = await params;
   try {
     const { frontmatter } = getArticle(slug);
+    const imagePath = normalizeImagePath(frontmatter.featured_image);
     return {
       title: `${frontmatter.title} | Matt Lane`,
       description: frontmatter.caption,
+      openGraph: {
+        title: `${frontmatter.title} | Matt Lane`,
+        description: frontmatter.caption,
+        images: [{ url: imagePath }],
+      },
+      twitter: {
+        card: "summary_large_image",
+        images: [imagePath],
+      },
     };
   } catch (_e) {
     return { title: "Article Not Found" };
