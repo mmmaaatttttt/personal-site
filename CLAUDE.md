@@ -16,9 +16,6 @@
 
 Matt's personal/blog site. The Gatsby/JavaScript → Next.js + TypeScript + React migration is complete — all 12 stories are ported and live. The site hosts long-form "stories" — articles with embedded interactives and D3 visualizations.
 
-**Active branch:** `next-upgrade-ftw`  
-**Main branch:** `master`
-
 ---
 
 ## Visual Regression Tests
@@ -43,66 +40,19 @@ Do not skip this step when making formatting changes. If the tests weren't run b
 
 ---
 
-## Migration Pattern
-
-### How MDX stories work
+## How MDX Stories Work
 
 Stories are `.mdx` files in `content/stories/<slug>/index.mdx`. They are compiled at build time by `@next/mdx` (with `experimental.mdxRs: true`) and rendered via a module map in `app/stories/[slug]/page.tsx`.
 
-MDX files are real modules — `import` statements work normally and are resolved by webpack/Turbopack at build time. This means components can be imported directly in the MDX file, and all JSX props (strings, numbers, expressions) work exactly as they do in `.tsx` files.
+MDX files are real modules — `import` statements work normally and are resolved by webpack/Turbopack at build time.
 
-### Wiring a ported story
+### Story metadata
 
-Three steps:
-
-**1. Create `meta.ts`** in `content/stories/<slug>/meta.ts`:
-
-```ts
-import type { ArticleFrontmatter } from "@/utils/content";
-
-const meta: ArticleFrontmatter = {
-  title: "...",
-  date: "YYYY-MM-DD",
-  featured_image: "../../images/featured_images/foo.jpg",
-  caption: "...",
-  featured_image_caption: "...",
-  tags: ["..."],
-};
-
-export default meta;
-```
-
-**2. Register it** in `utils/storyMeta.ts`:
-
-```ts
-import myStory from "@/content/stories/my-story/meta";
-
-export const storyMeta = {
-  "my-story": myStory,
-  // existing entries...
-};
-```
-
-**3. Add the story to the module map** in `app/stories/[slug]/page.tsx`:
-
-```ts
-const storyModules = {
-  "my-story": () => import("@/content/stories/my-story/index.mdx"),
-  // existing entries...
-};
-```
-
-That's it. Story-specific components are imported directly in the MDX file — no registration in `MdxComponents.tsx` needed.
-
-### Story frontmatter
-
-Ported stories keep metadata in a typed `meta.ts` file (see above) — **not** in the MDX file. The `getArticle()` utility checks `storyMeta` first and falls back to gray-matter parsing of MDX frontmatter for non-ported stories.
-
-Non-ported MDX files still have YAML frontmatter at the top — leave it there so gray-matter can read it.
+Each story has a typed `meta.ts` in `content/stories/<slug>/meta.ts` — not frontmatter in the MDX file. The `getArticle()` utility reads from `utils/storyMeta.ts` which re-exports all story metas.
 
 ### Story-level data files
 
-If a story has static data (e.g. table contents, chart data), put it in `content/stories/<slug>/data.ts` and import it in the MDX:
+Static data (table contents, chart data, diff eq functions) lives in `content/stories/<slug>/data.ts` and is imported directly in the MDX:
 
 ```mdx
 import { myTableData } from "./data";
@@ -112,44 +62,9 @@ import { myTableData } from "./data";
 
 ### Global components (no import needed in MDX)
 
-The following shared utilities are registered globally in `components/mdx/MdxComponents.tsx` and are available in any MDX file without importing:
+The following shared utilities are registered in `components/mdx/MdxComponents.tsx` and are available in any MDX file without importing:
 
 `Sidebar`, `ResponsiveIFrame`, `Latex`, `ColoredSpan`, `NarrowContainer`, `StyledTable`, `Caption`, `HorizontalBarGraph`, `MultiBarGraph`, `Legend`, `SliderProvider`, `RelativeContainer`, `Strikethrough`
-
-If a new shared component is added here it will be available in all stories automatically.
-
-### Non-ported stories
-
-Stories not yet in the module map display a "Coming soon" message. Their MDX files contain legacy Gatsby-style imports (e.g. `from "story_components"`, `from "data/..."`) that don't resolve in Next.js — do **not** add them to the module map until those imports are fixed and the components are ported.
-
-### What "done" means for a story
-
-- All custom interactive components ported from `content/stories/<slug>/components/` (Legacy JS → TypeScript)
-- `meta.ts` created and registered in `utils/storyMeta.ts`
-- Frontmatter removed from `index.mdx` (it lives in `meta.ts` now)
-- Components imported directly in the story's `index.mdx`
-- Story slug added to `storyModules` in `app/stories/[slug]/page.tsx`
-- `tsc --noEmit` passes with no new errors
-- Component-level tests exist and pass (`vitest run`)
-
----
-
-## Story Status
-
-| Story                            | Status        | Notes                                                                                                                                                                  |
-| -------------------------------- | ------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `four-weddings`                  | ✅ Complete   | SelectableHistogram, PieChart, Scatterplot, USMap                                                                                                                      |
-| `beautiful-analysis`             | ✅ Complete   | Podcast sentiments, quiz, multi-bar graphs, etc.                                                                                                                       |
-| `dishing-on-petrie`              | ✅ Complete   | HarassmentSimulation (D3 physics sim, 3 instances with `idx` prop); static tables via `StyledTable data={...}` with data in `data.ts`                                  |
-| `warming-dots`                   | ✅ Complete   | Single `WarmingDots` component; 5 interactive D3 line charts via `SliderProvider` + ODE solver                                                                         |
-| `gaming-relationships-linear`    | ✅ Complete   | `GamingRelationships` base + `LinearGamingRelationships` wrapper; diff eqs in `data.ts`; 3 ODE visualizations                                                         |
-| `gaming-relationships-nonlinear` | ✅ Complete   | `NonlinearGamingRelationships` wrapper; shares base component; 4-body chaotic ODE at `idx=1` uses `step=0.02`, `max=40`                                                |
-| `income-inequality`              | ✅ Complete   | `EconomySimulation` + `EconomyNodeGroup` (D3 force sim); collision/wealth logic in `data.ts`; 3 instances with `idx` and optional `editSavings` prop                   |
-| `fairest-of-them-all`            | ✅ Complete   | `CoinFlipHistogram`, `CoinFlipTable`, `CoinFlipBayesianModel` (beta PDF inline, no jStat; framer-motion animation for curve/color; `ToggleSwitch` now in shared), `RentDivision` (Sperner's Lemma triangle mesh; `LabeledCircle`, `RadioButtonGroup`, `Polygon` as local leaf components) |
-| `harvesting-wins`                | ✅ Complete   | `OrchardGame` (spinner + fruit tiles + localStorage), `OrchardGameSimulation` (rAF loop), `OrchardGameHeatData` (D3 heat map + sliders)                                |
-| `mind-the-gerrymandered-gap`     | ✅ Complete   | `IsoperimetricExplorer` + `data.ts`; `SampleGerrymander` (flood-fill BFS, localStorage, `GerrymanderGrid` + `InteractiveGrid` + `DistrictStatus`), `EfficiencyGapTable`, `GerrymanderPlayground` (shared-state wrapper replacing Redux); `GerrymanderHistoricalMap` (USMap + BarGraph, dual sliders, election data) |
-| `strength-in-numbers`            | ✅ Complete   | `VotingTable`, `VotingPollWorkerAge`, `VotingBarChart` (voters/party variants), `VotingLineChart` (voters/workers), `VotingMap` (voters/workers); variant prop replaces function props across MDX boundary; `motion.circle` unavailable in framer-motion v12 jsdom — use plain `<circle>` |
-| `keeping-distances`              | ✅ Complete   | K1: `DistanceExplorer` (+ `useDragState`), `ManhattanCircle`, `ManhattanPaths`. K2: `StringDistanceExplorer`, `FunctionDistanceExplorer`, `PAdicCalculator`. K3: `PAdicHeatChart` (p-adic distance grid), `PAdicFractalDistance` (`react-move/NodeGroup` → framer-motion `AnimatePresence`); `HeatChart` promoted to shared. `DraggableCircle` + `ToggleSwitch` + `Latex` promoted to shared. |
 
 ---
 
@@ -157,26 +72,74 @@ Stories not yet in the module map display a "Coming soon" message. Their MDX fil
 
 All in `components/story/shared/`:
 
-| Component                                                                                | Notes                                                                                                                                                                                                 |
-| ---------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `Sidebar`                                                                                | Margin note, `direction="left"\|"right"`. Uses `position: absolute` anchored to nearest `relative` ancestor. The content wrapper in `app/stories/[slug]/page.tsx` has `relative` set for this reason. |
-| `ClippedSVG`                                                                             | Responsive SVG wrapper with clip path; takes `id`, `width`, `height`, `padding`                                                                                                                       |
-| `FlexContainer`                                                                          | Flex layout helper with `column`, `main`, `cross`, `shouldWrap` props                                                                                                                                 |
-| `NarrowContainer`                                                                        | Width-constrained div, `width` as string, `fullWidthAt` breakpoint                                                                                                                                    |
-| `SliderGroup`                                                                            | Renders an array of labeled sliders; takes `data: SliderData[]`                                                                                                                                       |
-| `HorizontalBar`                                                                          | Animated proportional bar chart; takes `data: { size, color, tooltipText }[]`                                                                                                                         |
-| `Legend`, `Caption`, `ColoredSpan`                                                       | Simple presentational                                                                                                                                                                                 |
-| `GamingRelationships`                                                                    | ODE-based relationship visualizer; takes `visData` (includes diff eq functions — not serializable), `caption`, `min/max/step`. Use a story-specific `"use client"` wrapper to expose only `idx` to MDX. |
-| `Scatterplot`, `BarGraph`, `HorizontalBarGraph`, `MultiBarGraph`, `LinePlot`, `PieChart` | D3-backed chart components                                                                                                                                                                            |
-| `USMap`                                                                                  | Choropleth US map with tooltip support                                                                                                                                                                |
-| `Tooltip` / `useTooltip`                                                                 | Tooltip hook + component                                                                                                                                                                              |
-| `Select`                                                                                 | Styled dropdown                                                                                                                                                                                       |
-| `Axis`, `AxisLabel`, `ClippedSVG`                                                        | SVG utilities                                                                                                                                                                                         |
+| Component                                                                                | Notes                                                                                                                                                                                                                                                                                                                                            |
+| ---------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `Sidebar`                                                                                | Margin note, `direction="left"\|"right"`. Uses `position: absolute` anchored to nearest `relative` ancestor. The content wrapper in `app/stories/[slug]/page.tsx` has `relative` set for this reason.                                                                                                                                            |
+| `ClippedSVG`                                                                             | Responsive SVG wrapper with clip path; takes `id`, `width`, `height`, `padding`                                                                                                                                                                                                                                                                  |
+| `FlexContainer`                                                                          | Flex layout helper with `column`, `main`, `cross`, `shouldWrap` props                                                                                                                                                                                                                                                                            |
+| `NarrowContainer`                                                                        | Width-constrained div, `width` as string, `fullWidthAt` breakpoint                                                                                                                                                                                                                                                                               |
+| `SliderGroup`                                                                            | Renders an array of labeled sliders; takes `data: SliderData[]`                                                                                                                                                                                                                                                                                  |
+| `HorizontalBar`                                                                          | Animated proportional bar chart; takes `data: { size, color, tooltipText }[]`                                                                                                                                                                                                                                                                    |
+| `Legend`, `Caption`, `ColoredSpan`                                                       | Simple presentational                                                                                                                                                                                                                                                                                                                            |
+| `GamingRelationships`                                                                    | ODE-based relationship visualizer; takes `visData` (includes diff eq functions — not serializable), `caption`, `min/max/step`. Use a story-specific `"use client"` wrapper to expose only `idx` to MDX.                                                                                                                                          |
+| `Graph`                                                                                  | SVG chart canvas; provides `ChartContext`. See composable chart pattern below.                                                                                                                                                                                                                                                                   |
+| `Scatterplot`, `BarGraph`, `HorizontalBarGraph`, `MultiBarGraph`, `LinePlot`, `PieChart` | D3-backed chart components                                                                                                                                                                                                                                                                                                                       |
+| `USMap`                                                                                  | Choropleth US map with tooltip support                                                                                                                                                                                                                                                                                                           |
+| `Tooltip` / `useTooltip`                                                                 | Tooltip hook + component                                                                                                                                                                                                                                                                                                                         |
+| `Select`                                                                                 | Styled dropdown                                                                                                                                                                                                                                                                                                                                  |
+| `Axis`, `AxisLabel`, `ClippedSVG`                                                        | SVG utilities                                                                                                                                                                                                                                                                                                                                    |
 | `DraggableCircle`                                                                        | Pointer-event draggable SVG circle; props: `id`, `cx`, `cy`, `r` (default 8), `fill`, `stroke?`, `strokeWidth?`, `onDrag(id, {x,y})`. Reports SVG-pixel coords. Grows by 4px on hover/drag (CSS `r` transition). To clamp so the circle edge never leaves the SVG, wrap `onDrag` in the story and pre-clamp coords to `[2r, W−2r] × [2r, H−2r]`. |
-| `HeatChart`                                                                              | Generic 2D heat map; props: `data: (T\|null)[][]`, `accessor`, `getTooltipBody(d,x,y)`, `colorDomain`, `colorRange`, `xAxisLabel`, `yAxisLabel`, `axes?` (default `true`), `paddingScale?` (default `0.075`). Pass `axes={false}` and a small `paddingScale` (e.g. `0.02`) when tick marks would be misleading. |
-| `StyledTable`                                                                            | Styled table; accepts `headers`/`rows` (typed) or `data` (simple `string[][]` where first row is headers — use this for static tables)                                                               |
-| `ToggleSwitch`                                                                           | Two-label toggle; props: `leftText`, `rightText`, `leftColor`, `rightColor`, `handleSwitchChange(checked: boolean)`. Manages its own checked state internally.                                        |
-| `Latex`                                                                                  | Renders a LaTeX string via katex; props: `str`, `displayMode?` (default false). Requires `katex` in deps. Mock `katex` and `katex/dist/katex.min.css` in test files that import it.                  |
+| `HeatChart`                                                                              | Generic 2D heat map; props: `data: (T\|null)[][]`, `accessor`, `getTooltipBody(d,x,y)`, `colorDomain`, `colorRange`, `xAxisLabel`, `yAxisLabel`, `axes?` (default `true`), `paddingScale?` (default `0.075`). Pass `axes={false}` and a small `paddingScale` (e.g. `0.02`) when tick marks would be misleading.                                  |
+| `StyledTable`                                                                            | Styled table; accepts `headers`/`rows` (typed) or `data` (simple `string[][]` where first row is headers — use this for static tables)                                                                                                                                                                                                           |
+| `ToggleSwitch`                                                                           | Two-label toggle; props: `leftText`, `rightText`, `leftColor`, `rightColor`, `handleSwitchChange(checked: boolean)`. Manages its own checked state internally.                                                                                                                                                                                   |
+| `Latex`                                                                                  | Renders a LaTeX string via katex; props: `str`, `displayMode?` (default false). Requires `katex` in deps. Mock `katex` and `katex/dist/katex.min.css` in test files that import it.                                                                                                                                                              |
+
+---
+
+## Composable Chart Pattern (ChartContext)
+
+`Graph` provides a `ChartContext` (at `context/ChartContext.tsx`) to all its descendants. This enables child components to self-configure from chart geometry and axis style defaults without being passed every prop explicitly.
+
+### What ChartContext carries
+
+```ts
+{
+  xScale, yScale,          // the chart's d3 scales
+  width, height, padding,  // SVG dimensions
+  gridlinesHorizontal, gridlinesVertical,
+  xAxisStyle: { rotateLabels, textAnchor, labelPosition },  // default styling for a composed x-axis
+  yAxisStyle: { rotateLabels, textAnchor, labelPosition },  // default styling for a composed y-axis
+}
+```
+
+`xAxisStyle` and `yAxisStyle` reflect the styling Graph would apply to its own internal axes — derived from `yLabelSide` on the y-axis. When you compose `<Axis>` as children, you get these defaults for free.
+
+### When to use `axes={false}`
+
+Pass `axes={false}` to `Graph` to opt out of its internal `<Axis>` rendering. Use this when you need to control axis paint order (e.g., interleave axes between child layers) or render an axis only in certain conditions. ChartContext is still provided — composed `<Axis>` children will self-position and self-style from it.
+
+```tsx
+<Graph axes={false} xScale={...} yScale={...} ...>
+  <MyBars />
+  {/* x-axis renders on top of bars */}
+  <Axis direction="x" tickFormat="," />
+</Graph>
+```
+
+### How Axis self-configures from context
+
+Both geometry and styling fall back to context when props are absent — explicit props always win:
+
+- **Geometry** (`xShift`, `yShift`, `tickSize`, `tickShift`): derived from `padding`, `width`, `height`, `gridlinesHorizontal/Vertical`
+- **Styling** (`rotateLabels`, `textAnchor`, `labelPosition`): derived from `xAxisStyle`/`yAxisStyle` based on `direction`
+
+The fallback chain for each prop: `explicit prop → context default → hardcoded fallback`.
+
+**These optional props are permanent, not a migration stepping stone.** They allow `Axis` to be used outside any `Graph` context (e.g. `HeatChart` uses `Axis` and `ClippedSVG` directly with no `ChartContext` at all — it passes geometry explicitly).
+
+### LinePlot scales are optional
+
+`LinePlot` accepts `xScale` and `yScale` as optional props; when absent it reads them from `ChartContext`. This is also permanent API — it allows `LinePlot` to be used standalone outside a `Graph`.
 
 ---
 
@@ -186,16 +149,19 @@ All in `components/story/shared/`:
 
 Before writing any new component, check two places:
 
-1. **Other stories' `components/` folders** — if the component already exists in a ported story (e.g. `fairest-of-them-all/components/CoinFlipBayesianModel/`), promote it to `components/story/shared/` rather than duplicating it.
+1. **Other stories' `components/` folders** — if the component already exists in a ported story, promote it to `components/story/shared/` rather than duplicating it.
 2. **`src/story_components/atoms/` and `src/story_components/molecules/`** — these are the original shared library from the Gatsby stack. Any component that lived there is a strong candidate for `components/story/shared/` in the new stack.
 
-**Decision rule:** if a component is used in 2+ stories — even if currently local to one — promote it to shared before shipping. The cost of the cross-story duplication compounds quickly.
+**Decision rule:** if a component is used in 2+ stories — even if currently local to one — promote it to shared before shipping.
 
 When promoting a component to shared:
+
 - Move the source file to `components/story/shared/<ComponentName>/index.tsx`
 - Move or recreate its test at `components/story/shared/<ComponentName>/<ComponentName>.test.tsx` with `import from "."`
 - Update all story imports to the new shared path
 - Delete the old local copies
+
+**Implementation details stay local.** `BarItem` is a private implementation detail of `BarGraph` and lives in `components/story/shared/BarGraph/BarItem.tsx` alongside `BarGraph.test.tsx`. Only components used by multiple stories belong in their own `shared/<ComponentName>/` directory.
 
 ### Pure helpers belong in their own file
 
@@ -213,21 +179,15 @@ Prefix with `_` (e.g., `(_: number) => 'red'`).
 
 ### `"use client"` directive
 
-Any component using hooks, refs, event handlers, or framer-motion must have `"use client"` at the top. The `HarassmentNodeGroup` component (D3 + `useRef`) is a good reference.
+Any component using hooks, refs, event handlers, or framer-motion must have `"use client"` at the top.
 
-### No server component shells needed
+### MDX / server-client boundary
 
-With `@next/mdx`, you can import a `"use client"` component directly from MDX and all props flow correctly. The old pattern of a thin server wrapper (`index.tsx`) importing a `"use client"` inner component is no longer needed — put everything in one file with `"use client"` at the top.
+MDX files are server components. Any component used directly in MDX can only receive **serializable props** (strings, numbers, booleans, plain objects, arrays). Functions cannot cross this boundary — Next.js will throw at runtime, and TypeScript will not catch it.
 
-### Legacy component location
+If a component needs a function prop (e.g. `getTooltipData`), wrap it in a `"use client"` component that defines the function internally. The MDX calls the wrapper with only serializable props. `BaMultiBarGraph` is the reference example.
 
-Legacy JavaScript source for each story lives alongside the MDX in `content/stories/<slug>/components/`. These are the reference implementations when porting. The ported TypeScript versions live in the same directory.
-
-The full legacy Gatsby implementation also lives in `src/_legacy_pages/`. This is the authoritative reference when there is any ambiguity about how a story or component was supposed to work:
-
-- `src/_legacy_pages/articles/<slug>.mdx` — the original MDX for each story (Gatsby-style imports, frontmatter, etc.)
-- `src/story_components/` — the shared legacy component library (the source of truth for any component that existed before the migration)
-- `src/layouts/`, `src/templates/`, `src/utils/` — supporting legacy utilities
+**ODE / diff-eq stories follow the same pattern.** The `visData` objects in gaming-relationships stories contain `diffEqs: DiffEq[]` (functions). The solution is a thin `"use client"` wrapper per story (e.g. `LinearGamingRelationships`) that imports its data file internally and accepts only a serializable `idx: number` from MDX.
 
 ### Component decomposition
 
@@ -242,8 +202,6 @@ components/OrchardGame/
   FruitContainer.test.tsx
   ScreenOverlay.tsx     ← leaf component
   ScreenOverlay.test.tsx
-  Spinner.tsx           ← leaf component
-  Spinner.test.tsx
   index.tsx             ← orchestrator: state + layout only, imports siblings
   OrchardGame.test.tsx  ← tests for the orchestrator
 ```
@@ -255,10 +213,11 @@ components/OrchardGame/
 **Every file that exports a component must have a co-located test file** — including `index.tsx` orchestrators. "I tested the leaves" is not sufficient; the orchestrator wires things together and that wiring needs tests too.
 
 What to test:
+
 - **Initial render**: the component mounts without crashing and the expected elements are present
 - **User interactions**: clicks, selects, slider changes — assert the resulting state or DOM change
 - **State transitions**: play → pause → reset, overlay hidden → shown, etc.
-- **Props**: verify that optional/custom props (e.g. `fruitCounts`, `ravenCount`) are accepted without crashing
+- **Props**: verify that optional/custom props are accepted without crashing
 - **Persistence**: `localStorage` reads on mount and writes on interaction, clear behavior
 
 What not to test: implementation details, internal state variable names, class names.
@@ -268,6 +227,7 @@ What not to test: implementation details, internal state variable names, class n
 These are required in specific situations — copy them exactly:
 
 **`ResizeObserver` (any component that renders `ClippedSVG`):**
+
 ```ts
 global.ResizeObserver = vi.fn().mockImplementation(() => ({
   observe: vi.fn(),
@@ -275,39 +235,51 @@ global.ResizeObserver = vi.fn().mockImplementation(() => ({
   disconnect: vi.fn(),
 }));
 ```
+
 Place this at module scope (outside `describe`).
 
 **`framer-motion animate()` (any component that calls `animate()` imperatively on user interaction):**
+
 ```ts
-vi.mock("framer-motion", async (importOriginal) => {
+vi.mock("framer-motion", async importOriginal => {
   const actual = await importOriginal<typeof import("framer-motion")>();
   return { ...actual, animate: vi.fn() };
 });
 ```
+
 Without this, clicking a button that triggers `animate()` will throw an async error in jsdom.
 
 **Pointer-event drag (any component using `onPointerDown/Move/Up` + `setPointerCapture`):**
+
 ```ts
 beforeEach(() => {
   Element.prototype.setPointerCapture = vi.fn();
   Element.prototype.releasePointerCapture = vi.fn();
-  SVGSVGElement.prototype.getScreenCTM = vi.fn().mockReturnValue({ a: 1, d: 1, e: 0, f: 0 });
+  SVGSVGElement.prototype.getScreenCTM = vi
+    .fn()
+    .mockReturnValue({ a: 1, d: 1, e: 0, f: 0 });
 });
 ```
+
 jsdom doesn't implement `setPointerCapture` or `getScreenCTM`. The identity CTM (`a=1, d=1, e=0, f=0`) means clientX/Y maps directly to SVG coordinates in tests.
 
 **`localStorage` (any component that reads/writes localStorage):**
+
 ```ts
 beforeEach(() => {
   localStorage.clear();
 });
 ```
+
 Without this, tests bleed state into each other.
 
 **Color assertions (jsdom normalizes hex to rgb/rgba):**
 jsdom converts `#rrggbbaa` hex values to `rgba(r, g, b, a)` format. Never assert an exact hex string — use:
+
 ```ts
-expect(element).toHaveStyle({ backgroundColor: expect.stringMatching(/rgba?\(/) });
+expect(element).toHaveStyle({
+  backgroundColor: expect.stringMatching(/rgba?\(/),
+});
 // or
 expect(getComputedStyle(element).backgroundColor).toMatch(/rgba?\(/);
 ```
@@ -334,17 +306,9 @@ Never apply `transition-all` (or any position/geometry transition) to elements w
 
 `LabeledSlider` defaults `step` to `(max - min) / 100` when no step is provided, matching legacy behavior. Only set an explicit `step` in slider data when you need integer increments (e.g. `step: 1` for a carrying-capacity slider over `[1, 100]`). Float-range sliders (0–5, 0–10, etc.) should omit `step` and rely on this default.
 
-### Legacy Gatsby syntax in MDX
+### MDX / server-client boundary (detail)
 
 When removing frontmatter from an MDX file, also scan for Gatsby-era attribute syntax like `{.classname}` on images (e.g. `![alt](img.png){.w-80}`). The Next.js MDX compiler (swc) parses `{...}` as a JSX expression and will throw a build error. Strip these attributes.
-
-### MDX / server-client boundary
-
-MDX files are server components. Any component used directly in MDX can only receive **serializable props** (strings, numbers, booleans, plain objects, arrays). Functions cannot cross this boundary — Next.js will throw at runtime, and TypeScript will not catch it.
-
-If a component needs a function prop (e.g. `getTooltipData`), wrap it in a `"use client"` component that defines the function internally. The MDX calls the wrapper with only serializable props. `BaMultiBarGraph` is the reference example: it owns `generateTooltipData` and `colors` internally, and exposes only a `dataType` string to the MDX call site.
-
-**ODE / diff-eq stories follow the same pattern.** The `visData` objects in gaming-relationships stories contain `diffEqs: DiffEq[]` (functions). The solution is a thin `"use client"` wrapper per story (e.g. `LinearGamingRelationships`) that imports its data file internally and accepts only a serializable `idx: number` from MDX. The base rendering component (`GamingRelationships` in `components/story/shared/`) receives the full `visData` object (functions included) — that's fine because the handoff stays entirely within client components.
 
 ### ODE solver error handling
 
@@ -372,7 +336,7 @@ Untyped packages (`d3-force-bounce`, `d3-force-surface`) get hand-rolled ambient
 
 ### Static table data belongs in `data.ts`
 
-Story-specific `StyledTable` data (the `string[][]` arrays) lives in `content/stories/<slug>/data.ts` alongside strategies and other story data — not inline in the MDX. Export each table as a named `const` (e.g. `firstOrchardTable`, `orchardGameTable`), import it in the MDX, and pass it as `<StyledTable data={myTable} />`. See `dishing-on-petrie/data.ts` and `harvesting-wins/data.ts` for examples.
+Story-specific `StyledTable` data (the `string[][]` arrays) lives in `content/stories/<slug>/data.ts` alongside strategies and other story data — not inline in the MDX. Export each table as a named `const` (e.g. `firstOrchardTable`, `orchardGameTable`), import it in the MDX, and pass it as `<StyledTable data={myTable} />`.
 
 ### Markdown tables do not render in MDX
 
@@ -397,12 +361,6 @@ For one-shot imperative animations (e.g. spinning a needle to a random angle), u
 ### Never change defaults in shared components
 
 **Do not change the default props of any shared component** (`BarGraph`, `Graph`, `Axis`, `LinePlot`, etc.). Story-specific behavior must be set explicitly at the call site. If a story needs non-standard behavior (e.g. no vertical gridlines, right-aligned labels), pass those values as explicit props — never make them the new default. Changing defaults silently breaks every other story that relies on the original behavior.
-
-### Future: rearchitect the BarGraph / Graph / Axis prop chain
-
-The current `BarGraph → Graph → Axis` stack has too many pass-through props. Adding story-specific behavior (e.g. x-axis font size, label dy offset) requires touching three files and threading props through two intermediate components. This is a sign the abstraction is at the wrong level.
-
-**Preferred direction:** shared components (`Graph`, `Axis`, `ClippedSVG`, `BarItem`) provide building blocks. Stories that need standard behavior use `BarGraph` as a convenience. Stories that need deep customization (like `SelectableHistogram`, `SelectableScatterplot`) compose `Graph` and the bar/point rendering directly, bypassing `BarGraph` entirely — the same way MDX story components compose `SliderProvider` + `LinePlot` directly instead of going through a wrapper. No work needed until a story makes the current approach genuinely painful.
 
 ### React keys required when SVG children change position
 
