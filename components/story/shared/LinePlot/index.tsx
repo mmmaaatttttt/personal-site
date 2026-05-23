@@ -1,6 +1,7 @@
 import type { AxisScale } from "d3-axis";
 import { curveLinear, curveNatural, line } from "d3-shape";
 import type { FC } from "react";
+import { useChart } from "@/context/ChartContext";
 import COLORS from "@/utils/styles";
 
 interface Point {
@@ -14,8 +15,10 @@ interface LinePlotProps {
   opacity?: number | string;
   stroke?: string;
   strokeWidth?: number;
-  xScale: AxisScale<number>;
-  yScale: AxisScale<number>;
+  /** Falls back to ChartContext xScale when omitted. */
+  xScale?: AxisScale<number>;
+  /** Falls back to ChartContext yScale when omitted. */
+  yScale?: AxisScale<number>;
 }
 
 const curves = { curveNatural, curveLinear };
@@ -29,22 +32,27 @@ const LinePlot: FC<LinePlotProps> = ({
   xScale,
   yScale,
 }) => {
+  const chart = useChart();
+  const resolvedXScale = xScale ?? chart?.xScale;
+  const resolvedYScale = yScale ?? chart?.yScale;
+
+  if (!graphData.length) return null;
+  if (!resolvedXScale || !resolvedYScale) return null;
+
   const linePath = line<Point>()
-    .x((d) => xScale(d.x) ?? 0)
-    .y((d) => yScale(d.y) ?? 0)
+    .x((d) => resolvedXScale(d.x) ?? 0)
+    .y((d) => resolvedYScale(d.y) ?? 0)
     .curve(curves[curve]);
 
   const truncateData = () =>
     graphData.map((d) => {
       let newY = d.y;
-      const yDomain = yScale.domain();
+      const yDomain = resolvedYScale.domain();
       // Add a small buffer to prevent paths from being completely cut off if they just touch the edge
       if (newY > yDomain[1]) newY = yDomain[1] * 1.05;
       if (newY < yDomain[0]) newY = yDomain[0] * 1.05;
       return { ...d, y: newY };
     });
-
-  if (!graphData.length) return null;
 
   return (
     <path

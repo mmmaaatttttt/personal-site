@@ -2,6 +2,7 @@ import { render } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
 import "@testing-library/jest-dom/vitest";
 import { scaleLinear } from "d3-scale";
+import { ChartContext } from "@/context/ChartContext";
 import LinePlot from ".";
 
 describe("LinePlot Component", () => {
@@ -63,6 +64,42 @@ describe("LinePlot Component", () => {
     const naturalPath = container.querySelector("path")?.getAttribute("d");
 
     expect(linearPath).not.toBe(naturalPath);
+  });
+
+  it("reads scales from ChartContext when xScale/yScale props are omitted", () => {
+    const ctxXScale = scaleLinear().domain([0, 100]).range([0, 600]);
+    const ctxYScale = scaleLinear().domain([0, 100]).range([400, 0]);
+    const contextValue = {
+      xScale: ctxXScale,
+      yScale: ctxYScale,
+      width: 600,
+      height: 400,
+      padding: { top: 0, bottom: 0, left: 0, right: 0 },
+      gridlinesHorizontal: true,
+      gridlinesVertical: true,
+    };
+
+    const { container } = render(
+      <ChartContext.Provider value={contextValue}>
+        <svg role="img" aria-label="test">
+          <LinePlot graphData={mockData} stroke="blue" />
+        </svg>
+      </ChartContext.Provider>,
+    );
+
+    const path = container.querySelector("path");
+    expect(path).toBeInTheDocument();
+    expect(path).toHaveAttribute("stroke", "blue");
+    expect(path?.getAttribute("d")).not.toBe("");
+  });
+
+  it("returns null when no scales are available (no props, no context)", () => {
+    const { container } = render(
+      <svg role="img" aria-label="test">
+        <LinePlot graphData={mockData} />
+      </svg>,
+    );
+    expect(container.querySelector("path")).toBeNull();
   });
 
   it("applies truncateData logic to values outside domain", () => {
