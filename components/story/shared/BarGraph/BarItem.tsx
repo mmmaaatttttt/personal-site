@@ -3,7 +3,7 @@
 import { motion } from "framer-motion";
 import { memo } from "react";
 
-interface BarData {
+export interface BarData {
   key: string | number;
   height: number;
   color?: string;
@@ -19,8 +19,6 @@ interface BarItemProps {
   width: number;
   height: number;
   color: string;
-  graphHeight: number;
-  paddingBottom: number;
   barLabel?: (d: BarData) => string | number;
   fontSize: string;
   labelDy?: number;
@@ -37,8 +35,6 @@ const BarItem = memo<BarItemProps>(
     width,
     height,
     color,
-    graphHeight: _graphHeight,
-    paddingBottom: _paddingBottom,
     barLabel,
     fontSize,
     labelDy = -12,
