@@ -32,9 +32,9 @@ describe("NarrowContainer Component", () => {
     const { rerender } = render(
       <NarrowContainer fullWidthAt="md">Content</NarrowContainer>,
     );
-    expect(screen.getByText("Content")).toHaveClass("max-md:w-full");
+    expect(screen.getByText("Content")).toHaveClass("max-md:!w-full");
 
     rerender(<NarrowContainer fullWidthAt="lg">Content</NarrowContainer>);
-    expect(screen.getByText("Content")).toHaveClass("max-lg:w-full");
+    expect(screen.getByText("Content")).toHaveClass("max-lg:!w-full");
   });
 });
