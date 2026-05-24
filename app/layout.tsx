@@ -32,6 +32,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         <Script
           src="https://cloud.umami.is/script.js"
           data-website-id={UMAMI_WEBSITE_ID}
+          data-domains="mattlane.us"
           strategy="afterInteractive"
         />
       </body>
