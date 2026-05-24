@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Domine, Open_Sans } from "next/font/google";
+import Script from "next/script";
 import type { ReactNode } from "react";
 import "./globals.css";
 
@@ -14,6 +15,8 @@ const domine = Domine({
   subsets: ["latin"],
 });
 
+const UMAMI_WEBSITE_ID = "a3606268-35c5-4d92-a5b9-bee9810db0e4";
+
 export const metadata: Metadata = {
   metadataBase: new URL("https://mattlane.us"),
   title: "Matt Lane",
@@ -26,6 +29,11 @@ export default function RootLayout({ children }: { children: ReactNode }) {
     <html lang="en" className={`${openSans.variable} ${domine.variable}`}>
       <body className="font-sans antialiased text-[#1a1a1a] bg-white">
         {children}
+        <Script
+          src="https://cloud.umami.is/script.js"
+          data-website-id={UMAMI_WEBSITE_ID}
+          strategy="afterInteractive"
+        />
       </body>
     </html>
   );
