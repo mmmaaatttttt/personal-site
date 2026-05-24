@@ -1,8 +1,8 @@
 import Image from "next/image";
 import { notFound } from "next/navigation";
 import type { ComponentType } from "react";
-import BlueskyIcon from "@/components/icons/BlueskyIcon";
 import MainLayout from "@/components/layout/MainLayout";
+import StoryActions from "@/components/layout/StoryActions";
 import StoryCard from "@/components/layout/StoryCard";
 import placeholders from "@/lib/imagePlaceholders.json";
 import {
@@ -168,25 +168,10 @@ export default async function ArticlePage({ params }: PageProps) {
               </div>
             )}
           </div>
-          <div className="flex justify-between items-center pb-12 not-prose">
-            <a
-              href={githubUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-sm italic text-link hover:opacity-80"
-            >
-              Edit this story on GitHub
-            </a>
-            <a
-              href={`https://bsky.app/intent/compose?text=${encodeURIComponent(`${frontmatter.title} https://mattlane.us/stories/${slug}`)}`}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 text-link hover:opacity-80 text-sm"
-            >
-              <BlueskyIcon size={20} />
-              Post this story on Bluesky
-            </a>
-          </div>
+          <StoryActions
+            githubUrl={githubUrl}
+            blueskyUrl={`https://bsky.app/intent/compose?text=${encodeURIComponent(`${frontmatter.title} https://mattlane.us/stories/${slug}`)}`}
+          />
           {relatedArticles.length > 0 && (
             <div className="not-prose pb-20">
               <h3 className="font-serif text-xl font-bold mb-4">
