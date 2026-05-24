@@ -1,3 +1,7 @@
 STAGED=$(git diff --name-only --cached --diff-filter=ACMR)
-echo "$STAGED" | xargs npx biome check --write --unsafe
-echo "$STAGED" | xargs git add
+BIOME_FILES=$(echo "$STAGED" | grep -E '\.(js|cjs|mjs|jsx|ts|cts|mts|tsx|json|jsonc|css|graphql)$' || true)
+
+if [ -n "$BIOME_FILES" ]; then
+  echo "$BIOME_FILES" | xargs npx biome check --write --unsafe
+  echo "$BIOME_FILES" | xargs git add
+fi
