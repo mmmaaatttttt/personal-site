@@ -21,27 +21,32 @@ npm run test:watch # watch mode
 
 Component tests live colocated with their source files (`*.test.tsx`).
 
-### Visual regression tests (Playwright)
+### Visual regression tests (Playwright + Percy)
 
-Screenshot-based tests for four pages: home, about, stories list, and beautiful-analysis. Baselines are local only (gitignored) — they must be established after a fresh clone.
+Playwright drives the browser; Percy captures and diffs snapshots in the cloud. All story pages are covered.
 
 ```bash
-# First time on a fresh clone — establish local baselines
-npm run test:e2e -- --update-snapshots
-
-# Check for regressions
+# Check for regressions (also runs in CI)
 npm run test:e2e
 
-# Intentionally accept a formatting change and update baselines
+# Intentionally accept visual changes — only after confirming the diff is correct in Percy
 npm run test:e2e -- --update-snapshots
 ```
 
-Tests require a running dev server. If none is running on port 3000, Playwright starts one automatically. These tests are not wired into CI — run them locally before pushing formatting changes.
+Tests spin up a production build on port 3001 automatically. Percy uploads snapshots on every run when `PERCY_TOKEN` is set.
+
+Local Playwright snapshots (`.spec.ts-snapshots/`) are gitignored and must be established after a fresh clone:
+
+```bash
+npm run test:e2e -- --update-snapshots
+```
 
 ## Deploying
 
-```bash
-npm run deploy -- --distribution_id=<cloudfront-id>
-```
+Deploys are automated via GitHub Actions. Merging to `main` triggers CI (lint, unit tests, E2E), and on success automatically builds and deploys to S3 + CloudFront.
 
-Builds, uploads to S3, and invalidates the CloudFront cache.
+To test a production build locally before merging:
+
+```bash
+NEXT_PUBLIC_BASE_URL='https://mattlane.us' npm run build && npx serve out -p 3001
+```
