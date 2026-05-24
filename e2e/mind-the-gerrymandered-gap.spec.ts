@@ -1,4 +1,5 @@
-import { expect, test } from "@playwright/test";
+import percySnapshot from "@percy/playwright";
+import { test } from "@playwright/test";
 
 test("mind-the-gerrymandered-gap story page", async ({ page }) => {
   // Clear localStorage so SampleGerrymander renders in its default state
@@ -6,8 +7,5 @@ test("mind-the-gerrymandered-gap story page", async ({ page }) => {
   await page.goto("/stories/mind-the-gerrymandered-gap");
   await page.getByRole("heading", { level: 1 }).waitFor({ state: "visible" });
   await page.waitForLoadState("networkidle");
-  await expect(page).toHaveScreenshot("mind-the-gerrymandered-gap.png", {
-    fullPage: true,
-    animations: "disabled",
-  });
+  await percySnapshot(page, "Mind the Gerrymandered Gap");
 });

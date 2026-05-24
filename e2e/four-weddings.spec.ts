@@ -1,4 +1,5 @@
-import { expect, test } from "@playwright/test";
+import percySnapshot from "@percy/playwright";
+import { test } from "@playwright/test";
 
 test("four-weddings story page", async ({ page }) => {
   await page.goto("/stories/four-weddings");
@@ -6,8 +7,5 @@ test("four-weddings story page", async ({ page }) => {
   await page.waitForLoadState("networkidle");
   // useIsMounted causes a skeleton → chart flip; wait for all four interactives to settle
   await page.waitForTimeout(1000);
-  await expect(page).toHaveScreenshot("four-weddings.png", {
-    fullPage: true,
-    animations: "disabled",
-  });
+  await percySnapshot(page, "Four Weddings");
 });

@@ -1,4 +1,5 @@
-import { expect, test } from "@playwright/test";
+import percySnapshot from "@percy/playwright";
+import { test } from "@playwright/test";
 
 test("harvesting-wins story page", async ({ page }) => {
   await page.goto("/stories/harvesting-wins");
@@ -6,8 +7,5 @@ test("harvesting-wins story page", async ({ page }) => {
     .getByRole("heading", { name: "Harvesting Wins" })
     .waitFor({ state: "visible" });
   await page.waitForLoadState("networkidle");
-  await expect(page).toHaveScreenshot("harvesting-wins.png", {
-    fullPage: true,
-    animations: "disabled",
-  });
+  await percySnapshot(page, "Harvesting Wins");
 });
