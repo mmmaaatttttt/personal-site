@@ -3,6 +3,8 @@ import { type AxisDomain, type AxisScale, axisBottom, axisLeft } from "d3-axis";
 import { format } from "d3-format";
 import { select } from "d3-selection";
 import { useEffect, useRef } from "react";
+import type { ChartContextValue } from "@/context/ChartContext";
+import { useChart } from "@/context/ChartContext";
 
 interface AxisProps<Domain extends AxisDomain> {
   direction: "x" | "y";
@@ -25,22 +27,57 @@ interface AxisProps<Domain extends AxisDomain> {
   yShift?: number;
 }
 
+function contextTickSize(
+  chart: ChartContextValue,
+  direction: "x" | "y",
+): number {
+  if (direction === "x") {
+    return chart.gridlinesVertical
+      ? -(chart.height - chart.padding.top - chart.padding.bottom)
+      : 0;
+  }
+  return chart.gridlinesHorizontal
+    ? -(chart.width - chart.padding.left - chart.padding.right)
+    : 0;
+}
+
 const Axis = <Domain extends AxisDomain>({
   direction,
   fontSize = "0.8rem",
-  labelPosition = { x: "0", y: "0", dx: "0", dy: "0" },
+  labelPosition,
   scale,
-  textAnchor = "middle",
+  textAnchor,
   tickColor = "#ccc",
   tickSize,
-  tickShift = 0,
+  tickShift,
   tickStep,
   tickFormat,
-  rotateLabels = false,
-  xShift = 0,
-  yShift = 0,
+  rotateLabels,
+  xShift,
+  yShift,
 }: AxisProps<Domain>) => {
   const axisRef = useRef<SVGGElement>(null);
+  const chart = useChart();
+
+  // Geometry props derive from ChartContext when absent — explicit props always win.
+  const resolvedXShift =
+    xShift ?? (chart && direction === "y" ? chart.padding.left : 0);
+  const resolvedYShift =
+    yShift ??
+    (chart && direction === "x" ? chart.height - chart.padding.bottom : 0);
+  const resolvedTickShift = tickShift ?? 0;
+  const resolvedTickSize =
+    tickSize ?? (chart ? contextTickSize(chart, direction) : undefined);
+
+  // Styling props derive from ChartContext axis style defaults when absent — explicit props always win.
+  // Falls back to hardcoded defaults when there is no context (e.g. HeatChart uses Axis standalone).
+  const contextStyle =
+    direction === "x" ? chart?.xAxisStyle : chart?.yAxisStyle;
+  const resolvedRotateLabels =
+    rotateLabels ?? contextStyle?.rotateLabels ?? false;
+  const resolvedTextAnchor = textAnchor ?? contextStyle?.textAnchor ?? "middle";
+  const resolvedLabelPosition = labelPosition ??
+    contextStyle?.labelPosition ?? { x: "0", y: "0", dx: "0", dy: "0" };
 
   useEffect(() => {
     if (!axisRef.current) return;
@@ -59,8 +96,8 @@ const Axis = <Domain extends AxisDomain>({
       axisObj.tickFormat(() => "");
     }
 
-    if (tickSize !== undefined) {
-      axisObj.tickSize(tickSize).tickSizeOuter(0);
+    if (resolvedTickSize !== undefined) {
+      axisObj.tickSize(resolvedTickSize).tickSizeOuter(0);
     }
 
     if (tickStep !== undefined) {
@@ -79,11 +116,14 @@ const Axis = <Domain extends AxisDomain>({
 
     const transform =
       direction === "y"
-        ? `translate(${tickShift}, 0)`
-        : `translate(0, ${tickShift})`;
+        ? `translate(${resolvedTickShift}, 0)`
+        : `translate(0, ${resolvedTickShift})`;
 
     const g = select(axisRef.current);
-    g.attr("transform", `translate(${xShift - 0.5}, ${yShift - 0.5})`)
+    g.attr(
+      "transform",
+      `translate(${resolvedXShift - 0.5}, ${resolvedYShift - 0.5})`,
+    )
       .call(axisObj)
       .selectAll(".tick line")
       .attr("transform", transform)
@@ -93,31 +133,33 @@ const Axis = <Domain extends AxisDomain>({
 
     if (tickFormat !== undefined) {
       const labels = g.selectAll<SVGTextElement, Domain>(".tick text");
-      labels.style("text-anchor", textAnchor).style("font-size", fontSize);
+      labels
+        .style("text-anchor", resolvedTextAnchor)
+        .style("font-size", fontSize);
 
-      if (rotateLabels) {
+      if (resolvedRotateLabels) {
         labels.attr("transform", "rotate(90)");
       }
 
       // fine-tune text label position
-      Object.entries(labelPosition).forEach(([attr, val]) => {
+      Object.entries(resolvedLabelPosition).forEach(([attr, val]) => {
         labels.attr(attr, val);
       });
     }
   }, [
     direction,
     fontSize,
-    labelPosition,
+    resolvedLabelPosition,
     scale,
-    textAnchor,
+    resolvedTextAnchor,
     tickColor,
-    tickSize,
-    tickShift,
+    resolvedTickSize,
+    resolvedTickShift,
     tickStep,
     tickFormat,
-    rotateLabels,
-    xShift,
-    yShift,
+    resolvedRotateLabels,
+    resolvedXShift,
+    resolvedYShift,
   ]);
 
   return <g ref={axisRef} className="axis-group" />;

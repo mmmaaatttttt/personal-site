@@ -1,5 +1,6 @@
 import type { AxisDomain, AxisScale } from "d3-axis";
 import type { ReactNode } from "react";
+import { ChartContext } from "@/context/ChartContext";
 import { paddingObj } from "@/utils/styles";
 import Axis from "../Axis";
 import AxisLabel from "../AxisLabel";
@@ -37,6 +38,9 @@ interface GraphProps<XDomain extends AxisDomain, YDomain extends AxisDomain> {
   /** When true, the y-axis is rendered after {children} in SVG order, so labels
    *  paint on top of bars. Default false (y-axis renders before children). */
   yAxisOnTop?: boolean;
+  /** When false, Graph does not render its own Axis components — compose <Axis> as
+   *  children instead. They will self-position using ChartContext. Default true. */
+  axes?: boolean;
   xLabel?: string;
   xScale: AxisScale<XDomain>;
   yLabel?: string;
@@ -65,6 +69,7 @@ const Graph = <XDomain extends AxisDomain, YDomain extends AxisDomain>({
   yAxisPosition = "left",
   yLabelSide = "left",
   yAxisOnTop = false,
+  axes = true,
   xLabel = "",
   xScale,
   yLabel = "",
@@ -85,93 +90,118 @@ const Graph = <XDomain extends AxisDomain, YDomain extends AxisDomain>({
   const xOptions = options.x[xAxisPosition];
   const yOptions = options.y[yAxisPosition];
 
-  // Type-safe tick step calculation
-  const calculatedTickStepY = tickStepY
-    ? tickStepY(yScale)
-    : tickStep
-      ? tickStep(yScale as AxisScale<XDomain | YDomain>)
-      : undefined;
-  const calculatedTickStepX = tickStepX
-    ? tickStepX(xScale)
-    : tickStep
-      ? tickStep(xScale as AxisScale<XDomain | YDomain>)
-      : undefined;
+  let calculatedTickStepY: number | undefined;
+  if (tickStepY) calculatedTickStepY = tickStepY(yScale);
+  else if (tickStep)
+    calculatedTickStepY = tickStep(yScale as AxisScale<XDomain | YDomain>);
+
+  let calculatedTickStepX: number | undefined;
+  if (tickStepX) calculatedTickStepX = tickStepX(xScale);
+  else if (tickStep)
+    calculatedTickStepX = tickStep(xScale as AxisScale<XDomain | YDomain>);
+
+  const yAxisRight = yLabelSide === "right";
+  const yAxisTextAnchor = yAxisRight ? "start" : "end";
+  const yAxisLabelPosition = yAxisRight
+    ? { x: "4", dy: "12" }
+    : { x: "-3", dy: "0.32em" };
+
+  const chartContextValue = {
+    xScale: xScale as unknown as AxisScale<number>,
+    yScale: yScale as unknown as AxisScale<number>,
+    width,
+    height,
+    padding: gPadding,
+    gridlinesHorizontal,
+    gridlinesVertical,
+    xAxisStyle: {
+      rotateLabels: true,
+      textAnchor: "start" as const,
+      labelPosition: { y: "0.35em", x: "9", dy: "0" },
+    },
+    yAxisStyle: {
+      rotateLabels: false,
+      textAnchor: yAxisTextAnchor as "start" | "end",
+      labelPosition: yAxisLabelPosition,
+    },
+  };
 
   return (
-    <NarrowContainer width="100%" className={className}>
-      <ClippedSVG id={svgId} width={width} height={height} padding={svgPadding}>
-        {!yAxisOnTop && (
-          <Axis
-            key="y-axis"
-            direction="y"
-            labelPosition={
-              yLabelSide === "right"
-                ? { x: "4", dy: "12" }
-                : { x: "-3", dy: "0.32em" }
-            }
-            scale={yScale}
-            textAnchor={yLabelSide === "right" ? "start" : "end"}
-            tickSize={yOptions.tickSize}
-            tickShift={yOptions.tickShift}
-            tickStep={calculatedTickStepY}
-            fontSize={tickFontSizeY}
-            tickFormat={tickFormatY}
-            xShift={yOptions.xShift}
+    <ChartContext.Provider value={chartContextValue}>
+      <NarrowContainer width="100%" className={className}>
+        <ClippedSVG
+          id={svgId}
+          width={width}
+          height={height}
+          padding={svgPadding}
+        >
+          {axes && !yAxisOnTop && (
+            <Axis
+              key="y-axis"
+              direction="y"
+              labelPosition={yAxisLabelPosition}
+              scale={yScale}
+              textAnchor={yAxisTextAnchor}
+              tickSize={yOptions.tickSize}
+              tickShift={yOptions.tickShift}
+              tickStep={calculatedTickStepY}
+              fontSize={tickFontSizeY}
+              tickFormat={tickFormatY}
+              xShift={yOptions.xShift}
+            />
+          )}
+          {axes && (
+            <Axis
+              key="x-axis"
+              direction="x"
+              fontSize={tickFontSizeX}
+              labelPosition={{ y: "0.35em", x: "9", dy: "0" }}
+              rotateLabels
+              scale={xScale}
+              textAnchor="start"
+              tickSize={xOptions.tickSize}
+              tickShift={xOptions.tickShift}
+              tickStep={calculatedTickStepX}
+              tickFormat={tickFormatX}
+              yShift={xOptions.yShift}
+            />
+          )}
+          <line
+            x1={yOptions.xShift}
+            x2={yOptions.xShift}
+            y1={gPadding.top}
+            y2={height - gPadding.bottom}
+            stroke="#000"
+            strokeWidth="1"
           />
-        )}
-        <Axis
-          key="x-axis"
-          direction="x"
-          fontSize={tickFontSizeX}
-          labelPosition={{ y: "0.35em", x: "9", dy: "0" }}
-          rotateLabels
-          scale={xScale}
-          textAnchor="start"
-          tickSize={xOptions.tickSize}
-          tickShift={xOptions.tickShift}
-          tickStep={calculatedTickStepX}
-          tickFormat={tickFormatX}
-          yShift={xOptions.yShift}
-        />
-        <line
-          x1={yOptions.xShift}
-          x2={yOptions.xShift}
-          y1={gPadding.top}
-          y2={height - gPadding.bottom}
-          stroke="#000"
-          strokeWidth="1"
-        />
-        {children}
-        {yAxisOnTop && (
-          <Axis
-            key="y-axis"
-            direction="y"
-            labelPosition={
-              yLabelSide === "right"
-                ? { x: "4", dy: "12" }
-                : { x: "-3", dy: "0.32em" }
-            }
-            scale={yScale}
-            textAnchor={yLabelSide === "right" ? "start" : "end"}
-            tickSize={yOptions.tickSize}
-            tickShift={yOptions.tickShift}
-            tickStep={calculatedTickStepY}
-            fontSize={tickFontSizeY}
-            tickFormat={tickFormatY}
-            xShift={yOptions.xShift}
-          />
-        )}
-        {xLabel && <AxisLabel {...xOptions.label}>{xLabel}</AxisLabel>}
-        {yLabel && (
-          <AxisLabel
-            {...yOptions.label}
-            transform={`rotate(-90 10,${height / 2})`}
-          >
-            {yLabel}
-          </AxisLabel>
-        )}
-      </ClippedSVG>
-    </NarrowContainer>
+          {children}
+          {axes && yAxisOnTop && (
+            <Axis
+              key="y-axis"
+              direction="y"
+              labelPosition={yAxisLabelPosition}
+              scale={yScale}
+              textAnchor={yAxisTextAnchor}
+              tickSize={yOptions.tickSize}
+              tickShift={yOptions.tickShift}
+              tickStep={calculatedTickStepY}
+              fontSize={tickFontSizeY}
+              tickFormat={tickFormatY}
+              xShift={yOptions.xShift}
+            />
+          )}
+          {xLabel && <AxisLabel {...xOptions.label}>{xLabel}</AxisLabel>}
+          {yLabel && (
+            <AxisLabel
+              {...yOptions.label}
+              transform={`rotate(-90 10,${height / 2})`}
+            >
+              {yLabel}
+            </AxisLabel>
+          )}
+        </ClippedSVG>
+      </NarrowContainer>
+    </ChartContext.Provider>
   );
 };
 

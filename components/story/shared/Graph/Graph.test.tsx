@@ -97,4 +97,19 @@ describe("Graph Component", () => {
     // yOptions.xShift for left is padding.left = 50
     expect(line).toHaveAttribute("x1", "50");
   });
+
+  it("does not render internal Axis components when axes={false}", () => {
+    render(<Graph {...defaultProps} axes={false} />);
+    expect(screen.queryByTestId("axis-x")).toBeNull();
+    expect(screen.queryByTestId("axis-y")).toBeNull();
+  });
+
+  it("still renders children when axes={false}", () => {
+    render(
+      <Graph {...defaultProps} axes={false}>
+        <circle cx={50} cy={50} r={5} data-testid="custom-child" />
+      </Graph>,
+    );
+    expect(screen.getByTestId("custom-child")).toBeInTheDocument();
+  });
 });

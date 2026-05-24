@@ -2,6 +2,7 @@ import { render } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
 import "@testing-library/jest-dom/vitest";
 import { scaleLinear } from "d3-scale";
+import { ChartContext } from "@/context/ChartContext";
 import Axis from ".";
 
 describe("Axis Component", () => {
@@ -85,5 +86,59 @@ describe("Axis Component", () => {
       expect(labels[0]).toHaveAttribute("dx", "10");
       expect(labels[0]).toHaveAttribute("dy", "20");
     }
+  });
+
+  it("self-positions from ChartContext when no explicit xShift/yShift", () => {
+    const xScale = scaleLinear().domain([0, 100]).range([0, 600]);
+    const yScale = scaleLinear().domain([0, 100]).range([400, 0]);
+    const contextValue = {
+      xScale,
+      yScale,
+      width: 600,
+      height: 400,
+      padding: { top: 20, bottom: 40, left: 50, right: 10 },
+      gridlinesHorizontal: true,
+      gridlinesVertical: true,
+    };
+
+    const { container } = render(
+      <ChartContext.Provider value={contextValue}>
+        <svg role="img" aria-label="test">
+          {/* x-axis should sit at height - padding.bottom = 400 - 40 = 360 */}
+          <Axis direction="x" scale={mockScale} />
+        </svg>
+      </ChartContext.Provider>,
+    );
+
+    const g = container.querySelector(".axis-group");
+    // resolvedXShift=0, resolvedYShift=360 → translate(-0.5, 359.5)
+    expect(g).toHaveAttribute("transform", "translate(-0.5, 359.5)");
+  });
+
+  it("self-positions y-axis from ChartContext", () => {
+    const xScale = scaleLinear().domain([0, 100]).range([0, 600]);
+    const yScale = scaleLinear().domain([0, 100]).range([400, 0]);
+    const contextValue = {
+      xScale,
+      yScale,
+      width: 600,
+      height: 400,
+      padding: { top: 20, bottom: 40, left: 50, right: 10 },
+      gridlinesHorizontal: true,
+      gridlinesVertical: true,
+    };
+
+    const { container } = render(
+      <ChartContext.Provider value={contextValue}>
+        <svg role="img" aria-label="test">
+          {/* y-axis should sit at padding.left = 50 */}
+          <Axis direction="y" scale={mockScale} />
+        </svg>
+      </ChartContext.Provider>,
+    );
+
+    const g = container.querySelector(".axis-group");
+    // resolvedXShift=50, resolvedYShift=0 → translate(49.5, -0.5)
+    expect(g).toHaveAttribute("transform", "translate(49.5, -0.5)");
   });
 });
