@@ -1,3 +1,3 @@
-STAGED=$(git diff --name-only --cached)
+STAGED=$(git diff --name-only --cached --diff-filter=ACMR)
 echo "$STAGED" | xargs npx biome check --write --unsafe
 echo "$STAGED" | xargs git add
