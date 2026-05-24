@@ -10,6 +10,21 @@ export default defineConfig({
     setupFiles: "./vitest.setup.tsx",
     include: ["**/*.{test,spec}.{ts,tsx}"],
     exclude: ["e2e/**", "**/node_modules/**"],
+    coverage: {
+      provider: "v8",
+      reporter: ["text", "html"],
+      exclude: [
+        "e2e/**",
+        "content/**",
+        "scripts/**",
+        "src/**",
+        "**/*.config.*",
+        "**/*.d.ts",
+        "**/node_modules/**",
+        ".next/**",
+        ".cache/**",
+      ],
+    },
   },
   resolve: {
     alias: {
