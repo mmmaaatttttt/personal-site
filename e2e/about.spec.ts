@@ -1,5 +1,5 @@
-import percySnapshot from "@percy/playwright";
 import { test } from "@playwright/test";
+import { percySnapshot } from "./percy";
 
 test("about page", async ({ page }) => {
   await page.goto("/about");
