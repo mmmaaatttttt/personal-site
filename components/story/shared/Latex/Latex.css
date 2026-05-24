@@ -1,0 +1,16 @@
+.latex-wrapper .katex,
+.latex-wrapper .katex * {
+  font-family: inherit;
+}
+
+.latex-wrapper .katex .delimsizing.mult {
+  font-family: KaTeX_Size1, serif;
+}
+
+.latex-wrapper .delimcenter {
+  font-size: 2rem;
+}
+
+.latex-wrapper .newline {
+  margin-top: 1rem;
+}

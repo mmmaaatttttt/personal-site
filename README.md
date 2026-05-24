@@ -1,38 +1,52 @@
 # mattlane.us
 
-Source code for Matt Lane's mathematical personal site.
+Matt Lane's personal site. Built with Next.js, TypeScript, Tailwind CSS, and MDX. Hosts long-form interactive stories with embedded D3 visualizations.
 
-### Live Site
+## Development
 
-[mattlane.us](https://mattlane.us)
-
-### Setup
-
-```sh
-npm install
-npm run develop
+```bash
+npm run dev      # start dev server (also runs image optimizer)
+npm run build    # production build
+npm run lint     # biome check
 ```
 
-This is a static site built with [Gatsby.js](https://www.gatsbyjs.org/). If you have trouble setting up an installation locally, try checking out their docs.
+## Testing
 
-### Writing Stories
+### Unit tests (Vitest + React Testing Library)
 
-To add a post, add a new markdown file in `src/pages/stories`. Each markdown file should begin with some YAML frontmatter with the following data:
+```bash
+npm test           # run once
+npm run test:watch # watch mode
+```
 
-* `title`
-* `date`
-* `featured_image`, which should match the filename of an image in the `src/images/featured_images` directory
-* `caption`, a short description of the story which will appear on the `/stories` index page, as well as in any shares of the story on Facebook / Twitter.
-* `featured_image_caption`, a caption for the featured image
+Component tests live colocated with their source files (`*.test.tsx`).
 
-All visualizations in stories are built using React.js. To add a visualization, you can write the root React component directly in the markdown file, using JSX syntax. All components used for visualizations in stories should live inside of `src/story_components`.
+### Visual regression tests (Playwright + Percy)
 
-The site uses [gatsby-mdx](https://github.com/christopherBiscardi/gatsby-mdx/) for processing React components within the markdown. You can import components directly within `.mdx` files.
+Playwright drives the browser; Percy captures and diffs snapshots in the cloud. All story pages are covered.
 
-### Deploying
+```bash
+# Check for regressions (also runs in CI)
+npm run test:e2e
 
-The site is deployed to S3 with some Route53 and CloudFront sprinkled on top. The setup basically mirrors [this](http://benjamincongdon.me/blog/2017/06/13/Deploying-and-Deploying-a-Static-Site-to-AWS-with-S3-and-Cloudfront) article.
+# Intentionally accept visual changes — only after confirming the diff is correct in Percy
+npm run test:e2e -- --update-snapshots
+```
 
-Because of this, the command to deploy the site `npm run deploy` is heavily dependent on this configuration. If you'd like to take this code and deploy using some other technology (e.g. GitHub Pages), you'll need to modify the `deploy` script in the `package.json`.
+Tests spin up a production build on port 3001 automatically. Percy uploads snapshots on every run when `PERCY_TOKEN` is set.
 
-Enjoy!
+Local Playwright snapshots (`.spec.ts-snapshots/`) are gitignored and must be established after a fresh clone:
+
+```bash
+npm run test:e2e -- --update-snapshots
+```
+
+## Deploying
+
+Deploys are automated via GitHub Actions. Merging to `main` triggers CI (lint, unit tests, E2E), and on success automatically builds and deploys to S3 + CloudFront.
+
+To test a production build locally before merging:
+
+```bash
+NEXT_PUBLIC_BASE_URL='https://mattlane.us' npm run build && npx serve out -p 3001
+```

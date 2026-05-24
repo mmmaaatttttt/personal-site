@@ -1,5 +1,5 @@
+import fs from "node:fs";
 import strategies from "../src/data/orchard-game.js";
-import fs from "fs";
 
 const colorCountMax = 5;
 const wildCardCountMax = 5;
@@ -13,9 +13,9 @@ let percent = 0;
 // update random strategy for dynamic programming approach
 strategies[2].fn = function random(fruitCounts) {
   const possibleNewCounts = [];
-  for (var i = 0; i < fruitCounts.length; i++) {
+  for (let i = 0; i < fruitCounts.length; i++) {
     if (fruitCounts[i] > 0) {
-      let copy = [...fruitCounts];
+      const copy = [...fruitCounts];
       copy[i]--;
       possibleNewCounts.push(copy);
     }
@@ -29,31 +29,31 @@ for (let colorCount = 1; colorCount <= colorCountMax; colorCount++) {
     wildCardCount <= wildCardCountMax;
     wildCardCount++
   ) {
-    let memo = {};
+    const memo = {};
     for (
       let fruitsPerColor = 1;
       fruitsPerColor <= fruitsPerColorMax;
       fruitsPerColor++
     ) {
       for (let ravenCount = 1; ravenCount <= ravenCountMax; ravenCount++) {
-        let datum = {
+        const datum = {
           colors: colorCount,
           fruits: fruitsPerColor,
           r: ravenCount,
           wc: wildCardCount,
-          probs: {}
+          probs: {},
         };
-        strategies.forEach(strategy => {
+        strategies.forEach((strategy) => {
           datum.probs[strategy.name] = probWin(
             Array(colorCount).fill(fruitsPerColor),
             ravenCount,
             wildCardCount,
             strategy,
-            memo
+            memo,
           );
         });
         data.push(datum);
-        let newPercent = (data.length / total * 100).toFixed(1);
+        const newPercent = ((data.length / total) * 100).toFixed(1);
         if (+newPercent > percent) {
           percent = newPercent;
           console.log(
@@ -61,7 +61,7 @@ for (let colorCount = 1; colorCount <= colorCountMax; colorCount++) {
             `colorCount: ${colorCount}`,
             `wildCardCount: ${wildCardCount}`,
             `fruitsPerColor: ${fruitsPerColor}`,
-            `ravenCount: ${ravenCount}`
+            `ravenCount: ${ravenCount}`,
           );
         }
       }
@@ -70,7 +70,7 @@ for (let colorCount = 1; colorCount <= colorCountMax; colorCount++) {
 }
 
 console.log("about to write to this file");
-fs.writeFile("static/data/orchard_game.json", JSON.stringify(data), err => {
+fs.writeFile("static/data/orchard_game.json", JSON.stringify(data), (err) => {
   if (err) throw err;
   console.log("file write complete!");
 });
@@ -78,18 +78,17 @@ fs.writeFile("static/data/orchard_game.json", JSON.stringify(data), err => {
 function probWin(fruitCounts, ravenCount, wildCardCount, strategy, memo = {}) {
   // check base cases
   if (ravenCount === 0) return 0;
-  if (fruitCounts.every(count => count === 0)) return 1;
+  if (fruitCounts.every((count) => count === 0)) return 1;
 
   // check if previously calculated
-  let countsForKey = [...fruitCounts];
+  const countsForKey = [...fruitCounts];
   if (strategy.name !== "favoriteColor") countsForKey.sort((a, b) => a - b);
-  let key =
-    ravenCount + "," + countsForKey + "," + wildCardCount + "," + strategy.name;
+  const key = `${ravenCount},${countsForKey},${wildCardCount},${strategy.name}`;
   if (memo[key]) return memo[key];
 
   // calculate
-  let fruitsLeft = fruitCounts.filter(Boolean).length;
-  let total = fruitsLeft + 2;
+  const fruitsLeft = fruitCounts.filter(Boolean).length;
+  const total = fruitsLeft + 2;
 
   // raven
   let prob = probWin(
@@ -97,17 +96,20 @@ function probWin(fruitCounts, ravenCount, wildCardCount, strategy, memo = {}) {
     ravenCount - 1,
     wildCardCount,
     strategy,
-    memo
+    memo,
   );
 
   // fruit basket
-  let strategyCopy = [...fruitCounts];
-  let fruitsRemaining = strategyCopy.reduce((total, count) => total + count, 0);
+  const strategyCopy = [...fruitCounts];
+  const fruitsRemaining = strategyCopy.reduce(
+    (total, count) => total + count,
+    0,
+  );
   let probFromFruitBasket = 0;
   if (fruitsRemaining <= wildCardCount) probFromFruitBasket = 1;
   else if (strategy.name !== "random") {
-    for (var i = 0; i < wildCardCount; i++) {
-      let idx = strategy.fn(strategyCopy);
+    for (let i = 0; i < wildCardCount; i++) {
+      const idx = strategy.fn(strategyCopy);
       strategyCopy[idx]--;
     }
     probFromFruitBasket = probWin(
@@ -115,19 +117,19 @@ function probWin(fruitCounts, ravenCount, wildCardCount, strategy, memo = {}) {
       ravenCount,
       wildCardCount,
       strategy,
-      memo
+      memo,
     );
   } else {
     // for random strategy, check all possible outcomes
     let possibleNewCounts = [strategyCopy];
-    for (var i = 0; i < wildCardCount; i++) {
+    for (let i = 0; i < wildCardCount; i++) {
       let newCounts = [];
-      possibleNewCounts.forEach(countsArr => {
+      possibleNewCounts.forEach((countsArr) => {
         newCounts = newCounts.concat(strategy.fn(countsArr));
       });
       possibleNewCounts = newCounts;
     }
-    possibleNewCounts.forEach(countsArr => {
+    possibleNewCounts.forEach((countsArr) => {
       probFromFruitBasket +=
         probWin(countsArr, ravenCount, wildCardCount, strategy, memo) /
         possibleNewCounts.length;
@@ -138,9 +140,9 @@ function probWin(fruitCounts, ravenCount, wildCardCount, strategy, memo = {}) {
   // remaining fruits
   fruitCounts.forEach((fruitCount, idx) => {
     if (fruitCount === 0) return;
-    let fruitCopy = [...fruitCounts];
+    const fruitCopy = [...fruitCounts];
     fruitCopy[idx] = fruitCount - 1;
-    let multiplier = 1;
+    const _multiplier = 1;
     prob += probWin(fruitCopy, ravenCount, wildCardCount, strategy, memo);
   });
   memo[key] = prob / total;

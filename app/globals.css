@@ -1,0 +1,185 @@
+@import "tailwindcss";
+@plugin "@tailwindcss/typography";
+
+/* ============================================================
+   Design Tokens
+   Colors match the original style palette from utils/styles.js
+   ============================================================ */
+@theme {
+  /* Brand colors */
+  --color-link: #ff5700;
+  --color-nav: #f9f9f9;
+
+  /* Data-vis palette */
+  --color-blue: #5ecfff;
+  --color-dark-blue: #2227ff;
+  --color-green: #52a081;
+  --color-dark-green: #00802b;
+  --color-orange: #ff8f34;
+  --color-purple: #e15bff;
+  --color-red: #ff3c23;
+  --color-yellow: #ffec28;
+  --color-maroon: #a05e52;
+
+  /* Neutral scale */
+  --color-dark-gray: #555555;
+  --color-gray: #bbbbbb;
+  --color-input-gray: #cccccc;
+  --color-light-gray: #eeeeee;
+
+  /* Content width */
+  --max-w-content: 768px;
+
+  /* Typography: Open Sans (body) + Domine (headers) */
+  --font-sans: var(--font-open-sans);
+  --font-serif: var(--font-domine);
+}
+
+/* ============================================================
+   Base styles
+   ============================================================ */
+html {
+  color: #1a1a1a;
+  background-color: #ffffff;
+  font-size: 16px;
+  line-height: 1.8;
+}
+
+@media (min-width: 640px) {
+  html {
+    font-size: 20px;
+  }
+}
+
+/* Ensure MDX article headers use the serif font to match original aesthetic */
+.prose :is(h1, h2, h3, h4, h5, h6) {
+  font-family: var(--font-serif);
+}
+
+/* Scale prose headings down on mobile. The typography plugin never reduces
+   heading sizes responsively; the legacy site (typography.js alton theme)
+   did so aggressively below 600px. Without this, h2/h3 look too large on
+   narrow viewports relative to body text. */
+@media (max-width: 639px) {
+  .prose :is(h2) {
+    font-size: 1.2rem;
+  }
+  .prose :is(h3) {
+    font-size: 1.1rem;
+  }
+  .prose :is(h4) {
+    font-size: 1rem;
+  }
+}
+
+.prose a {
+  color: var(--color-link);
+}
+
+.prose a:hover {
+  opacity: 0.8;
+}
+
+/* Suppress prose's default paragraph top margin — our p component handles
+   bottom spacing via mb-6, and the double-stack creates excessive gaps. */
+.prose p {
+  margin-top: 0;
+}
+
+/* Typography plugin sets hr margins to ~57px each side — way too much. */
+.prose hr {
+  margin-top: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+/* Typography plugin sets table margin-top/bottom to 2em, which lands on the
+   inner <table> inside StyledTable's outer <div>, bypassing our utility classes. */
+.prose table[data-styled-table] {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+/* Typography plugin sets th { vertical-align: bottom } — override for centered header content. */
+.prose table[data-styled-table] th {
+  vertical-align: middle;
+}
+
+/* Typography plugin uses gray for list bullets — match body text color. */
+.prose ul > li::marker {
+  color: #1a1a1a;
+}
+
+/* No leading gap inside blockquotes */
+.prose blockquote > p:first-child {
+  margin-top: 0;
+}
+.prose blockquote > p:last-child {
+  margin-bottom: 0;
+}
+
+/* Hero title fade-in — starts invisible, animates in after 0.5s delay */
+.hero-title-fade {
+  opacity: 0;
+  animation: fade-in 1.5s 0.5s forwards;
+}
+
+/* Smooth fade-in for page content */
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.fade-in {
+  animation: fade-in 0.4s ease-out forwards;
+}
+
+/* Story card entrance animations (mirrors animate.css bounceInLeft/Right) */
+@keyframes bounceInLeft {
+  0% {
+    opacity: 0;
+    transform: translateX(-80px);
+    animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
+  }
+  60% {
+    opacity: 1;
+    transform: translateX(10px);
+    animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
+  }
+  80% {
+    transform: translateX(-5px);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+@keyframes bounceInRight {
+  0% {
+    opacity: 0;
+    transform: translateX(80px);
+    animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
+  }
+  60% {
+    opacity: 1;
+    transform: translateX(-10px);
+    animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
+  }
+  80% {
+    transform: translateX(5px);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+.bounce-in-left {
+  animation: bounceInLeft 0.75s both;
+}
+
+.bounce-in-right {
+  animation: bounceInRight 0.75s both;
+}

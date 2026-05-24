@@ -2,10 +2,27 @@ name: CI
 on:
   push:
     branches: [main]
+    paths-ignore:
+      - "**.md"
+      - ".gitignore"
   pull_request:
     branches: [main]
+    paths-ignore:
+      - "**.md"
+      - ".gitignore"
 
 jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci
+      - run: npm run lint
+
   test:
     runs-on: ubuntu-latest
     steps:
@@ -16,7 +33,6 @@ jobs:
           cache: npm
       - run: npm ci
       - run: npm test
-      - run: npm run lint
 
   e2e:
     runs-on: ubuntu-latest
@@ -27,7 +43,21 @@ jobs:
           node-version: 24
           cache: npm
       - run: npm ci
+      - name: Cache Playwright browsers
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/ms-playwright
+          key: playwright-${{ runner.os }}-${{ hashFiles('package-lock.json') }}
       - run: npx playwright install --with-deps chromium
-      - run: npm run test:e2e
+      - name: Cache Next.js build
+        uses: actions/cache@v4
+        with:
+          path: |
+            .next/cache
+            out
+          key: nextjs-${{ runner.os }}-${{ hashFiles('package-lock.json', 'next.config.ts') }}-${{ hashFiles('app/**', 'components/**', 'content/**') }}
+          restore-keys: |
+            nextjs-${{ runner.os }}-${{ hashFiles('package-lock.json', 'next.config.ts') }}-
+      - run: npm run test:e2e -- --project=chromium
         env:
           PERCY_TOKEN: ${{ secrets.PERCY_TOKEN }}
