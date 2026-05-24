@@ -32,7 +32,7 @@ jobs:
           node-version: 24
           cache: npm
       - run: npm ci
-      - run: npm test
+      - run: npm run test:coverage
 
   e2e:
     runs-on: ubuntu-latest
@@ -44,13 +44,13 @@ jobs:
           cache: npm
       - run: npm ci
       - name: Cache Playwright browsers
-        uses: actions/cache@v4
+        uses: actions/cache@v6
         with:
           path: ~/.cache/ms-playwright
           key: playwright-${{ runner.os }}-${{ hashFiles('package-lock.json') }}
       - run: npx playwright install --with-deps chromium
       - name: Cache Next.js build
-        uses: actions/cache@v4
+        uses: actions/cache@v6
         with:
           path: |
             .next/cache
