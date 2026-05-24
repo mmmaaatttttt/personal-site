@@ -101,10 +101,6 @@ const Graph = <XDomain extends AxisDomain, YDomain extends AxisDomain>({
     calculatedTickStepX = tickStep(xScale as AxisScale<XDomain | YDomain>);
 
   const yAxisRight = yLabelSide === "right";
-  const yAxisTextAnchor = yAxisRight ? "start" : "end";
-  const yAxisLabelPosition = yAxisRight
-    ? { x: "4", dy: "12" }
-    : { x: "-3", dy: "0.32em" };
 
   const chartContextValue = {
     xScale: xScale as unknown as AxisScale<number>,
@@ -121,8 +117,10 @@ const Graph = <XDomain extends AxisDomain, YDomain extends AxisDomain>({
     },
     yAxisStyle: {
       rotateLabels: false,
-      textAnchor: yAxisTextAnchor as "start" | "end",
-      labelPosition: yAxisLabelPosition,
+      textAnchor: (yAxisRight ? "start" : "end") as "start" | "end",
+      labelPosition: yAxisRight
+        ? { x: "4", dy: "12" }
+        : { x: "-3", dy: "0.32em" },
     },
   };
 
@@ -139,9 +137,7 @@ const Graph = <XDomain extends AxisDomain, YDomain extends AxisDomain>({
             <Axis
               key="y-axis"
               direction="y"
-              labelPosition={yAxisLabelPosition}
               scale={yScale}
-              textAnchor={yAxisTextAnchor}
               tickSize={yOptions.tickSize}
               tickShift={yOptions.tickShift}
               tickStep={calculatedTickStepY}
@@ -155,10 +151,7 @@ const Graph = <XDomain extends AxisDomain, YDomain extends AxisDomain>({
               key="x-axis"
               direction="x"
               fontSize={tickFontSizeX}
-              labelPosition={{ y: "0.35em", x: "9", dy: "0" }}
-              rotateLabels
               scale={xScale}
-              textAnchor="start"
               tickSize={xOptions.tickSize}
               tickShift={xOptions.tickShift}
               tickStep={calculatedTickStepX}
@@ -179,9 +172,7 @@ const Graph = <XDomain extends AxisDomain, YDomain extends AxisDomain>({
             <Axis
               key="y-axis"
               direction="y"
-              labelPosition={yAxisLabelPosition}
               scale={yScale}
-              textAnchor={yAxisTextAnchor}
               tickSize={yOptions.tickSize}
               tickShift={yOptions.tickShift}
               tickStep={calculatedTickStepY}
