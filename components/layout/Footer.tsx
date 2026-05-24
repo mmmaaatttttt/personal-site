@@ -1,6 +1,5 @@
 import { BookOpen, Github, Rss } from "lucide-react";
 import Image from "next/image";
-import Link from "next/link";
 import type { FC } from "react";
 import BlueskyIcon from "@/components/icons/BlueskyIcon";
 
@@ -8,10 +7,6 @@ const Footer: FC = () => {
   return (
     <footer className="relative z-10 border-t border-gray bg-nav py-4 px-8 text-sm text-gray-600">
       <div className="flex flex-col items-center justify-between gap-4 sm:flex-row sm:gap-6">
-        <Link href="/terms" className="hover:text-link">
-          Terms & Privacy
-        </Link>
-
         <div className="flex flex-col items-center gap-2 sm:flex-row sm:gap-4">
           <a
             rel="license"
