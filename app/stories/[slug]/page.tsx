@@ -154,7 +154,7 @@ export default async function ArticlePage({ params }: PageProps) {
         )}
 
         {/* Constrained Markdown Content */}
-        <div className="relative mx-auto w-full max-w-[var(--max-w-content)] px-4 sm:px-0">
+        <div className="relative mx-auto w-full max-w-[var(--max-w-content)] px-4 sm:px-8 md:px-0">
           <div className="prose max-w-none text-[#1a1a1a] pb-4">
             {StoryContent ? (
               <StoryContent />
