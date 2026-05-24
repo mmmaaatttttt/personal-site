@@ -43,4 +43,14 @@ describe("lightenHex", () => {
   it("lightens pure red by 50% (HSL: L=50%→100%) to white", () => {
     expect(lightenHex("#ff0000", 0.5)).toBe("#ffffff");
   });
+
+  it("lightens a green-dominant color (max===g hue branch)", () => {
+    // #00ff80: h=150°, s=100%, l=50% → lighten 10% → l=60% → #33ff99
+    expect(lightenHex("#00ff80", 0.1)).toBe("#33ff99");
+  });
+
+  it("lightens a red-dominant color where blue > green (g<b hue branch)", () => {
+    // #ff0080: h≈330°, s=100%, l=50% → lighten 10% → l=60% → #ff3399
+    expect(lightenHex("#ff0080", 0.1)).toBe("#ff3399");
+  });
 });
