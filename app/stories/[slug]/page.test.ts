@@ -1,12 +1,16 @@
 import { describe, expect, it, vi } from "vitest";
 
+const mockPlaceholders = vi.hoisted(() => ({}) as Record<string, string>);
+
 vi.mock("next/image", () => ({ default: () => null }));
 vi.mock("next/navigation", () => ({ notFound: vi.fn() }));
 vi.mock("@/components/layout/MainLayout", () => ({ default: () => null }));
 vi.mock("@/components/layout/StoryCard", () => ({ default: () => null }));
 vi.mock("@/components/layout/StoryActions", () => ({ default: () => null }));
 vi.mock("@/components/icons/BlueskyIcon", () => ({ default: () => null }));
-vi.mock("@/lib/imagePlaceholders.json", () => ({ default: {} }));
+vi.mock("@/lib/imagePlaceholders.json", () => ({
+  default: mockPlaceholders,
+}));
 vi.mock("@/utils/stringHelpers", () => ({
   normalizeImagePath: (path: string) => path.replace(/^(\.\.\/)+/, "/"),
 }));
@@ -19,9 +23,47 @@ vi.mock("@/utils/content", () => ({
 vi.mock("@/content/stories/beautiful-analysis/index.mdx", () => ({
   default: () => null,
 }));
+vi.mock("@/content/stories/dishing-on-petrie/index.mdx", () => ({
+  default: () => null,
+}));
+vi.mock("@/content/stories/four-weddings/index.mdx", () => ({
+  default: () => null,
+}));
+vi.mock("@/content/stories/warming-dots/index.mdx", () => ({
+  default: () => null,
+}));
+vi.mock("@/content/stories/gaming-relationships-linear/index.mdx", () => ({
+  default: () => null,
+}));
+vi.mock("@/content/stories/gaming-relationships-nonlinear/index.mdx", () => ({
+  default: () => null,
+}));
+vi.mock("@/content/stories/income-inequality/index.mdx", () => ({
+  default: () => null,
+}));
+vi.mock("@/content/stories/harvesting-wins/index.mdx", () => ({
+  default: () => null,
+}));
+vi.mock("@/content/stories/fairest-of-them-all/index.mdx", () => ({
+  default: () => null,
+}));
+vi.mock("@/content/stories/mind-the-gerrymandered-gap/index.mdx", () => ({
+  default: () => null,
+}));
+vi.mock("@/content/stories/strength-in-numbers/index.mdx", () => ({
+  default: () => null,
+}));
+vi.mock("@/content/stories/keeping-distances/index.mdx", () => ({
+  default: () => null,
+}));
 
 import { notFound } from "next/navigation";
-import { getArticle, getArticleSlugs } from "@/utils/content";
+import {
+  getAllArticles,
+  getArticle,
+  getArticleSlugs,
+  jaccardDistance,
+} from "@/utils/content";
 import ArticlePage, { generateMetadata, generateStaticParams } from "./page";
 
 const mockFrontmatter = {
@@ -102,15 +144,126 @@ describe("ArticlePage", () => {
     expect(result).toBeTruthy();
   });
 
-  it("renders without crashing for a slug with a story module", async () => {
+  const allStoryModuleSlugs = [
+    "beautiful-analysis",
+    "dishing-on-petrie",
+    "four-weddings",
+    "warming-dots",
+    "gaming-relationships-linear",
+    "gaming-relationships-nonlinear",
+    "income-inequality",
+    "harvesting-wins",
+    "fairest-of-them-all",
+    "mind-the-gerrymandered-gap",
+    "strength-in-numbers",
+    "keeping-distances",
+  ];
+
+  it.each(
+    allStoryModuleSlugs,
+  )("renders without crashing for story module: %s", async (slug) => {
     vi.mocked(getArticle).mockReturnValue({
       frontmatter: mockFrontmatter,
-      slug: "beautiful-analysis",
+      slug,
+    });
+    const result = await ArticlePage({ params: Promise.resolve({ slug }) });
+    expect(result).toBeTruthy();
+  });
+
+  it("renders without a featured_image_caption (falsy caption branch)", async () => {
+    vi.mocked(getArticle).mockReturnValue({
+      frontmatter: {
+        ...mockFrontmatter,
+        featured_image_caption: undefined as unknown as string,
+      },
+      slug: "unported-story",
     });
 
     const result = await ArticlePage({
-      params: Promise.resolve({ slug: "beautiful-analysis" }),
+      params: Promise.resolve({ slug: "unported-story" }),
     });
     expect(result).toBeTruthy();
+  });
+
+  it("uses blur placeholder when blurDataURL is available", async () => {
+    mockPlaceholders["/images/featured_images/test.jpg"] =
+      "data:image/jpeg;base64,test";
+    vi.mocked(getArticle).mockReturnValue({
+      frontmatter: mockFrontmatter,
+      slug: "unported-story",
+    });
+
+    const result = await ArticlePage({
+      params: Promise.resolve({ slug: "unported-story" }),
+    });
+    expect(result).toBeTruthy();
+    delete mockPlaceholders["/images/featured_images/test.jpg"];
+  });
+
+  it("reads timeToRead from getAllArticles when the slug is present", async () => {
+    vi.mocked(getAllArticles).mockReturnValueOnce([
+      {
+        slug: "unported-story",
+        title: "Unported",
+        caption: "cap",
+        date: "2024-01-01",
+        featured_image: "/img.jpg",
+        tags: ["math"],
+        timeToRead: 7,
+      },
+    ] as unknown as ReturnType<typeof getAllArticles>);
+    vi.mocked(getArticle).mockReturnValue({
+      frontmatter: mockFrontmatter,
+      slug: "unported-story",
+    });
+
+    const result = await ArticlePage({
+      params: Promise.resolve({ slug: "unported-story" }),
+    });
+    expect(result).toBeTruthy();
+  });
+
+  it("renders related articles when jaccard distance < 1", async () => {
+    vi.mocked(jaccardDistance).mockReturnValue(0.5);
+    vi.mocked(getAllArticles).mockReturnValueOnce([
+      {
+        slug: "unported-story",
+        title: "Unported",
+        caption: "cap",
+        date: "2024-01-01",
+        featured_image: "/img.jpg",
+        tags: ["math"],
+        timeToRead: 5,
+      },
+      {
+        slug: "related-1",
+        title: "Related One",
+        caption: "cap",
+        date: "2024-02-01",
+        featured_image: "/img.jpg",
+        tags: ["math"],
+        timeToRead: 3,
+      },
+      {
+        slug: "related-2",
+        title: "Related Two",
+        caption: "cap",
+        date: "2024-03-01",
+        featured_image: "/img.jpg",
+        tags: null as unknown as string[],
+        timeToRead: 4,
+      },
+    ] as unknown as ReturnType<typeof getAllArticles>);
+    vi.mocked(getArticle).mockReturnValue({
+      frontmatter: mockFrontmatter,
+      slug: "unported-story",
+    });
+
+    const result = await ArticlePage({
+      params: Promise.resolve({ slug: "unported-story" }),
+    });
+    expect(result).toBeTruthy();
+    // reset jaccardDistance back to default
+    vi.mocked(jaccardDistance).mockReturnValue(1);
   });
 });
