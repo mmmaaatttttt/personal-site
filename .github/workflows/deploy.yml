@@ -26,7 +26,7 @@ jobs:
       - run: npm run build
         env:
           NEXT_PUBLIC_BASE_URL: https://mattlane.us
-      - run: aws s3 rm s3://mattlane.us/_next/static/chunks/ --recursive --region us-east-1
+      - run: aws s3 rm s3://mattlane.us/_next/ --recursive --region us-east-1
       - run: npx s3-deploy './out/**' --cwd './out/' --region us-east-1 --bucket mattlane.us
       - name: Invalidate CloudFront and wait
         run: |
