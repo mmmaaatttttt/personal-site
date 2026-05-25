@@ -60,4 +60,4 @@ jobs:
             nextjs-${{ runner.os }}-${{ hashFiles('package-lock.json', 'next.config.ts') }}-
       - run: npm run test:e2e -- --project=chromium
         env:
-          PERCY_TOKEN: ${{ secrets.PERCY_TOKEN }}
+          ARGOS_TOKEN: ${{ secrets.ARGOS_TOKEN }}

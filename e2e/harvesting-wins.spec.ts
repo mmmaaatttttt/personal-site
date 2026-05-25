@@ -1,5 +1,5 @@
 import { test } from "@playwright/test";
-import { percySnapshot } from "./percy";
+import { takeSnapshot } from "./argos";
 
 test("harvesting-wins story page", async ({ page }) => {
   await page.goto("/stories/harvesting-wins");
@@ -7,5 +7,5 @@ test("harvesting-wins story page", async ({ page }) => {
     .getByRole("heading", { name: "Harvesting Wins" })
     .waitFor({ state: "visible" });
   await page.waitForLoadState("networkidle");
-  await percySnapshot(page, "Harvesting Wins");
+  await takeSnapshot(page, "Harvesting Wins");
 });

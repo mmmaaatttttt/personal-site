@@ -7,7 +7,7 @@ export default defineConfig({
   retries: process.env.CI ? 1 : 0,
   workers: process.env.CI ? 1 : undefined,
   timeout: 60_000,
-  reporter: "list",
+  reporter: [["list"], ["@argos-ci/playwright/reporter"]],
   use: {
     baseURL: "http://localhost:3001",
     trace: "on-first-retry",
