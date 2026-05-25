@@ -1,5 +1,5 @@
 import { test } from "@playwright/test";
-import { percySnapshot } from "./percy";
+import { takeSnapshot } from "./argos";
 
 test("four-weddings story page", async ({ page }) => {
   await page.goto("/stories/four-weddings");
@@ -7,5 +7,5 @@ test("four-weddings story page", async ({ page }) => {
   await page.waitForLoadState("networkidle");
   // useIsMounted causes a skeleton → chart flip; wait for all four interactives to settle
   await page.waitForTimeout(1000);
-  await percySnapshot(page, "Four Weddings");
+  await takeSnapshot(page, "Four Weddings");
 });

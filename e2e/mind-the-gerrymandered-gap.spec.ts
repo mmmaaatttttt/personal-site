@@ -1,5 +1,5 @@
 import { test } from "@playwright/test";
-import { percySnapshot } from "./percy";
+import { takeSnapshot } from "./argos";
 
 test("mind-the-gerrymandered-gap story page", async ({ page }) => {
   // Clear localStorage so SampleGerrymander renders in its default state
@@ -7,5 +7,5 @@ test("mind-the-gerrymandered-gap story page", async ({ page }) => {
   await page.goto("/stories/mind-the-gerrymandered-gap");
   await page.getByRole("heading", { level: 1 }).waitFor({ state: "visible" });
   await page.waitForLoadState("networkidle");
-  await percySnapshot(page, "Mind the Gerrymandered Gap");
+  await takeSnapshot(page, "Mind the Gerrymandered Gap");
 });
