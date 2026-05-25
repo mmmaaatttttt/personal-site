@@ -1,7 +1,19 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import MainLayout from "@/components/layout/MainLayout";
+import { SITE_URL } from "@/lib/constants";
 import matt from "./matt.jpg";
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Person",
+  name: "Matt Lane",
+  url: SITE_URL,
+  sameAs: [
+    "https://bsky.app/profile/mattlane.us",
+    "https://github.com/mmmaaatttttt",
+  ],
+};
 
 export const metadata: Metadata = {
   title: "About | Matt Lane",
@@ -11,6 +23,7 @@ export const metadata: Metadata = {
 export default function AboutPage() {
   return (
     <MainLayout>
+      <script type="application/ld+json">{JSON.stringify(jsonLd)}</script>
       <div className="mx-auto w-full max-w-[var(--max-w-content)] px-4 sm:px-0 pt-10 mb-16 opacity-0 animate-[fade-in_2s_ease-out_0.5s_forwards]">
         <h1 className="mb-4 font-serif text-4xl font-bold tracking-tight text-[#1a1a1a]">
           About Matt Lane

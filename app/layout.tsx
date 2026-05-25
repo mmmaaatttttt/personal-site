@@ -23,6 +23,9 @@ export const metadata: Metadata = {
   title: "Matt Lane",
   description:
     "Inside the mind of Matt Lane. Teacher, math doctor, lover of ice cream. Stories on the intersection of math, equity, games, and whatever else piques my interest.",
+  alternates: {
+    types: { "application/rss+xml": `${SITE_URL}/feed.xml` },
+  },
 };
 
 export default function RootLayout({ children }: { children: ReactNode }) {

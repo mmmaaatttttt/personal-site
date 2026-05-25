@@ -2,6 +2,8 @@ import type { MetadataRoute } from "next";
 import { SITE_URL } from "@/lib/constants";
 import { getAllArticles } from "@/utils/content";
 
+export const dynamic = "force-static";
+
 export default function sitemap(): MetadataRoute.Sitemap {
   const stories = getAllArticles().map((article) => ({
     url: `${SITE_URL}/stories/${article.slug}/`,
