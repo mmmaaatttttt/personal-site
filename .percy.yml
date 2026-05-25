@@ -3,3 +3,5 @@ snapshot:
   widths:
     - 390
     - 1280
+browsers:
+  - chrome

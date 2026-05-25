@@ -2,6 +2,8 @@ import { render, screen } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
 import "@testing-library/jest-dom/vitest";
 
+const mockPlaceholders = vi.hoisted(() => ({}) as Record<string, string>);
+
 vi.mock("next/image", () => ({ default: () => null }));
 vi.mock("next/link", () => ({
   default: ({
@@ -17,7 +19,9 @@ vi.mock("@/components/layout/MainLayout", () => ({
     <div>{children}</div>
   ),
 }));
-vi.mock("@/lib/imagePlaceholders.json", () => ({ default: {} }));
+vi.mock("@/lib/imagePlaceholders.json", () => ({
+  default: mockPlaceholders,
+}));
 vi.mock("@/utils/storyMeta", () => ({
   storyMeta: {
     "latest-story": {
@@ -59,5 +63,14 @@ describe("NotFound", () => {
       "href",
       "/stories/latest-story",
     );
+  });
+
+  it("uses blur placeholder when blurDataURL is available", () => {
+    // The normalizeImagePath mock converts "../../images/..." to "/images/..."
+    mockPlaceholders["/images/featured_images/latest.jpg"] =
+      "data:image/jpeg;base64,test";
+    render(<NotFound />);
+    expect(screen.getByText("Latest Story")).toBeInTheDocument();
+    delete mockPlaceholders["/images/featured_images/latest.jpg"];
   });
 });
