@@ -25,10 +25,10 @@ export default defineConfig({
         ".next/**",
       ],
       thresholds: {
-        lines: 73,
-        functions: 74,
+        lines: 77,
+        functions: 79,
         branches: 85,
-        statements: 73,
+        statements: 77,
       },
     },
   },

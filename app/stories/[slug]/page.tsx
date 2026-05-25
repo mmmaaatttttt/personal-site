@@ -4,6 +4,7 @@ import type { ComponentType } from "react";
 import MainLayout from "@/components/layout/MainLayout";
 import StoryActions from "@/components/layout/StoryActions";
 import StoryCard from "@/components/layout/StoryCard";
+import { SITE_URL } from "@/lib/constants";
 import placeholders from "@/lib/imagePlaceholders.json";
 import {
   getAllArticles,
@@ -60,10 +61,16 @@ export async function generateMetadata({ params }: PageProps) {
     return {
       title: `${frontmatter.title} | Matt Lane`,
       description: frontmatter.caption,
+      authors: [{ name: "Matt Lane", url: SITE_URL }],
+      keywords: frontmatter.tags,
+      alternates: { canonical: `${SITE_URL}/stories/${slug}/` },
       openGraph: {
         title: `${frontmatter.title} | Matt Lane`,
         description: frontmatter.caption,
         images: [{ url: imagePath }],
+        type: "article",
+        publishedTime: frontmatter.date,
+        authors: ["Matt Lane"],
       },
       twitter: {
         card: "summary_large_image",
@@ -99,7 +106,10 @@ export default async function ArticlePage({ params }: PageProps) {
   const storyModule = storyModules[slug];
   const StoryContent = storyModule ? (await storyModule()).default : null;
 
-  const relatedArticles = getAllArticles()
+  const allArticles = getAllArticles();
+  const timeToRead = allArticles.find((a) => a.slug === slug)?.timeToRead ?? 5;
+
+  const relatedArticles = allArticles
     .filter((a) => a.slug !== slug)
     .map((a) => ({ ...a, distance: jaccardDistance(a.tags, frontmatter.tags) }))
     .filter((a) => a.distance < 1)
@@ -108,8 +118,42 @@ export default async function ArticlePage({ params }: PageProps) {
 
   const githubUrl = `https://github.com/mmmaaatttttt/personal-site/blob/master/content/stories/${slug}/index.mdx`;
 
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    headline: frontmatter.title,
+    description: frontmatter.caption,
+    datePublished: frontmatter.date,
+    author: { "@type": "Person", name: "Matt Lane", url: SITE_URL },
+    image: `${SITE_URL}${featuredImage}`,
+    url: `${SITE_URL}/stories/${slug}/`,
+    timeRequired: `PT${timeToRead}M`,
+  };
+
+  const breadcrumbLd = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: "Home", item: `${SITE_URL}/` },
+      {
+        "@type": "ListItem",
+        position: 2,
+        name: "Stories",
+        item: `${SITE_URL}/stories/`,
+      },
+      {
+        "@type": "ListItem",
+        position: 3,
+        name: frontmatter.title,
+        item: `${SITE_URL}/stories/${slug}/`,
+      },
+    ],
+  };
+
   return (
     <MainLayout outline={true}>
+      <script type="application/ld+json">{JSON.stringify(jsonLd)}</script>
+      <script type="application/ld+json">{JSON.stringify(breadcrumbLd)}</script>
       <article className="w-full">
         {/* Full Bleed Hero Header */}
         <header className="relative w-full aspect-video sm:aspect-auto sm:h-screen flex flex-col items-center justify-center text-center px-4 overflow-hidden mb-0">
@@ -170,7 +214,7 @@ export default async function ArticlePage({ params }: PageProps) {
           </div>
           <StoryActions
             githubUrl={githubUrl}
-            blueskyUrl={`https://bsky.app/intent/compose?text=${encodeURIComponent(`${frontmatter.title} https://mattlane.us/stories/${slug}`)}`}
+            blueskyUrl={`https://bsky.app/intent/compose?text=${encodeURIComponent(`${frontmatter.title} ${SITE_URL}/stories/${slug}`)}`}
           />
           {relatedArticles.length > 0 && (
             <div className="not-prose pb-20">

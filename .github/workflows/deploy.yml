@@ -26,5 +26,14 @@ jobs:
       - run: npm run build
         env:
           NEXT_PUBLIC_BASE_URL: https://mattlane.us
-      - run: npx s3-deploy './out/**' --cwd './out/' --region us-east-1 --bucket mattlane.us --deleteRemoved
-      - run: npx aws-cloudfront-invalidate ${{ secrets.CLOUDFRONT_DISTRIBUTION_ID }}
+      - run: npx s3-deploy './out/**' --cwd './out/' --region us-east-1 --bucket mattlane.us
+      - name: Invalidate CloudFront and wait
+        run: |
+          INVALIDATION_ID=$(aws cloudfront create-invalidation \
+            --distribution-id ${{ secrets.CLOUDFRONT_DISTRIBUTION_ID }} \
+            --paths "/*" \
+            --query 'Invalidation.Id' --output text)
+          aws cloudfront wait invalidation-completed \
+            --distribution-id ${{ secrets.CLOUDFRONT_DISTRIBUTION_ID }} \
+            --id "$INVALIDATION_ID"
+      - run: aws s3 sync out/ s3://mattlane.us/ --delete --region us-east-1
