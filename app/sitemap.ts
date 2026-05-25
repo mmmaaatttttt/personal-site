@@ -1,0 +1,31 @@
+import type { MetadataRoute } from "next";
+import { SITE_URL } from "@/lib/constants";
+import { getAllArticles } from "@/utils/content";
+
+export default function sitemap(): MetadataRoute.Sitemap {
+  const stories = getAllArticles().map((article) => ({
+    url: `${SITE_URL}/stories/${article.slug}/`,
+    lastModified: new Date(article.date),
+    changeFrequency: "monthly" as const,
+    priority: 0.8,
+  }));
+
+  return [
+    {
+      url: `${SITE_URL}/`,
+      changeFrequency: "monthly",
+      priority: 1,
+    },
+    {
+      url: `${SITE_URL}/stories/`,
+      changeFrequency: "monthly",
+      priority: 0.9,
+    },
+    {
+      url: `${SITE_URL}/about/`,
+      changeFrequency: "yearly",
+      priority: 0.5,
+    },
+    ...stories,
+  ];
+}

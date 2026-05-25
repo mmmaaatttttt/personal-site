@@ -4,6 +4,7 @@ import type { ComponentType } from "react";
 import MainLayout from "@/components/layout/MainLayout";
 import StoryActions from "@/components/layout/StoryActions";
 import StoryCard from "@/components/layout/StoryCard";
+import { SITE_URL } from "@/lib/constants";
 import placeholders from "@/lib/imagePlaceholders.json";
 import {
   getAllArticles,
@@ -60,10 +61,15 @@ export async function generateMetadata({ params }: PageProps) {
     return {
       title: `${frontmatter.title} | Matt Lane`,
       description: frontmatter.caption,
+      authors: [{ name: "Matt Lane", url: SITE_URL }],
+      alternates: { canonical: `${SITE_URL}/stories/${slug}/` },
       openGraph: {
         title: `${frontmatter.title} | Matt Lane`,
         description: frontmatter.caption,
         images: [{ url: imagePath }],
+        type: "article",
+        publishedTime: frontmatter.date,
+        authors: ["Matt Lane"],
       },
       twitter: {
         card: "summary_large_image",
@@ -108,8 +114,20 @@ export default async function ArticlePage({ params }: PageProps) {
 
   const githubUrl = `https://github.com/mmmaaatttttt/personal-site/blob/master/content/stories/${slug}/index.mdx`;
 
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    headline: frontmatter.title,
+    description: frontmatter.caption,
+    datePublished: frontmatter.date,
+    author: { "@type": "Person", name: "Matt Lane", url: SITE_URL },
+    image: `${SITE_URL}${featuredImage}`,
+    url: `${SITE_URL}/stories/${slug}/`,
+  };
+
   return (
     <MainLayout outline={true}>
+      <script type="application/ld+json">{JSON.stringify(jsonLd)}</script>
       <article className="w-full">
         {/* Full Bleed Hero Header */}
         <header className="relative w-full aspect-video sm:aspect-auto sm:h-screen flex flex-col items-center justify-center text-center px-4 overflow-hidden mb-0">
@@ -170,7 +188,7 @@ export default async function ArticlePage({ params }: PageProps) {
           </div>
           <StoryActions
             githubUrl={githubUrl}
-            blueskyUrl={`https://bsky.app/intent/compose?text=${encodeURIComponent(`${frontmatter.title} https://mattlane.us/stories/${slug}`)}`}
+            blueskyUrl={`https://bsky.app/intent/compose?text=${encodeURIComponent(`${frontmatter.title} ${SITE_URL}/stories/${slug}`)}`}
           />
           {relatedArticles.length > 0 && (
             <div className="not-prose pb-20">
