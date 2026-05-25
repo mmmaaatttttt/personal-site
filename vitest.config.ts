@@ -16,14 +16,20 @@ export default defineConfig({
       exclude: [
         "e2e/**",
         "content/**",
+        "out/**",
         "scripts/**",
-        "src/**",
+        "mdx-components.tsx",
         "**/*.config.*",
         "**/*.d.ts",
         "**/node_modules/**",
         ".next/**",
-        ".cache/**",
       ],
+      thresholds: {
+        lines: 73,
+        functions: 74,
+        branches: 85,
+        statements: 73,
+      },
     },
   },
   resolve: {
