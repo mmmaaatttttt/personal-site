@@ -1,4 +1,5 @@
 name: Deploy
+
 on:
   workflow_run:
     workflows: [CI]
@@ -7,34 +8,11 @@ on:
 
 jobs:
   deploy:
-    runs-on: ubuntu-latest
     if: github.event.workflow_run.conclusion == 'success'
-    permissions:
-      id-token: write
-      contents: read
-    steps:
-      - uses: actions/checkout@v6
-      - uses: actions/setup-node@v6
-        with:
-          node-version: 24
-          cache: npm
-      - uses: aws-actions/configure-aws-credentials@v6
-        with:
-          role-to-assume: arn:aws:iam::492635958177:role/GitHubActionsPersonalSiteDeployRole
-          aws-region: us-east-1
-      - run: npm ci
-      - run: npm run build
-        env:
-          NEXT_PUBLIC_BASE_URL: https://mattlane.us
-      - run: aws s3 rm s3://mattlane.us/ --recursive --region us-east-1
-      - run: npx s3-deploy './out/**' --cwd './out/' --region us-east-1 --bucket mattlane.us
-      - name: Invalidate CloudFront and wait
-        run: |
-          INVALIDATION_ID=$(aws cloudfront create-invalidation \
-            --distribution-id ${{ secrets.CLOUDFRONT_DISTRIBUTION_ID }} \
-            --paths "/*" \
-            --query 'Invalidation.Id' --output text)
-          aws cloudfront wait invalidation-completed \
-            --distribution-id ${{ secrets.CLOUDFRONT_DISTRIBUTION_ID }} \
-            --id "$INVALIDATION_ID"
-      - run: npx s3-deploy './out/**' --cwd './out/' --region us-east-1 --bucket mattlane.us --deleteRemoved
+    uses: ./.github/workflows/deploy-base.yml
+    with:
+      bucket: mattlane.us
+      base_url: https://mattlane.us
+      role_arn: arn:aws:iam::492635958177:role/GitHubActionsPersonalSiteDeployRole
+    secrets:
+      cloudfront_distribution_id: ${{ secrets.CLOUDFRONT_DISTRIBUTION_ID }}

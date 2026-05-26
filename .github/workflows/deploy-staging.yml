@@ -1,0 +1,18 @@
+name: Deploy Staging
+
+on:
+  pull_request:
+    branches: [main]
+    paths-ignore:
+      - "**.md"
+      - ".gitignore"
+
+jobs:
+  deploy-staging:
+    uses: ./.github/workflows/deploy-base.yml
+    with:
+      bucket: staging.mattlane.us
+      base_url: https://staging.mattlane.us
+      role_arn: arn:aws:iam::492635958177:role/GitHubActionsPersonalSiteStagingRole
+    secrets:
+      cloudfront_distribution_id: ${{ secrets.STAGING_CLOUDFRONT_DISTRIBUTION_ID }}
