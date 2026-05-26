@@ -36,8 +36,7 @@ jobs:
       - run: npm run build
         env:
           NEXT_PUBLIC_BASE_URL: ${{ inputs.base_url }}
-      - run: aws s3 rm s3://${{ inputs.bucket }}/ --recursive --region us-east-1
-      - run: npx s3-deploy './out/**' --cwd './out/' --region us-east-1 --bucket ${{ inputs.bucket }}
+      - run: aws s3 sync out/ s3://${{ inputs.bucket }}/ --region us-east-1
       - name: Invalidate CloudFront and wait
         run: |
           INVALIDATION_ID=$(aws cloudfront create-invalidation \
@@ -47,4 +46,4 @@ jobs:
           aws cloudfront wait invalidation-completed \
             --distribution-id ${{ secrets.cloudfront_distribution_id }} \
             --id "$INVALIDATION_ID"
-      - run: npx s3-deploy './out/**' --cwd './out/' --region us-east-1 --bucket ${{ inputs.bucket }} --deleteRemoved
+      - run: aws s3 sync out/ s3://${{ inputs.bucket }}/ --region us-east-1 --delete
