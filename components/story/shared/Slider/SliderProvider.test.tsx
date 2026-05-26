@@ -89,4 +89,26 @@ describe("SliderProvider", () => {
     );
     expect(container.firstChild).toBeNull();
   });
+
+  it("renders within ColumnLayout when 4 or more sliders are provided", () => {
+    const manySliders = Array.from({ length: 4 }, (_, i) => ({
+      initialValue: i * 10,
+      min: 0,
+      max: 100,
+      title: `Slider ${i + 1}`,
+      color: "#ff0000",
+    }));
+
+    render(
+      <SliderProvider
+        initialData={manySliders}
+        render={(values) => (
+          <div data-testid="render-output">{values.join(",")}</div>
+        )}
+      />,
+    );
+
+    expect(screen.getAllByRole("slider")).toHaveLength(4);
+    expect(screen.getByTestId("render-output")).toHaveTextContent("0,10,20,30");
+  });
 });
