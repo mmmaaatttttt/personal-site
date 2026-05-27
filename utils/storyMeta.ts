@@ -1,4 +1,5 @@
 import beautifulAnalysis from "@/content/stories/beautiful-analysis/meta";
+import dailemma from "@/content/stories/dailemma/meta";
 import dishingOnPetrie from "@/content/stories/dishing-on-petrie/meta";
 import fairestOfThemAll from "@/content/stories/fairest-of-them-all/meta";
 import fourWeddings from "@/content/stories/four-weddings/meta";
@@ -31,4 +32,5 @@ export const storyMeta: Record<string, ArticleFrontmatter> = {
   "mind-the-gerrymandered-gap": mindTheGerrymanderGap,
   "strength-in-numbers": strengthInNumbers,
   "keeping-distances": keepingDistances,
+  dailemma,
 };

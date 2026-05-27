@@ -18,8 +18,6 @@ interface PageProps {
   params: Promise<{ slug: string }>;
 }
 
-// Stories that have been ported to TypeScript with working imports.
-// Add a story here once its components are fully ported.
 const storyModules: Record<
   string,
   () => Promise<{ default: ComponentType<Record<string, unknown>> }>
@@ -46,6 +44,7 @@ const storyModules: Record<
     import("@/content/stories/strength-in-numbers/index.mdx"),
   "keeping-distances": () =>
     import("@/content/stories/keeping-distances/index.mdx"),
+  dailemma: () => import("@/content/stories/dailemma/index.mdx"),
 };
 
 export async function generateStaticParams() {
