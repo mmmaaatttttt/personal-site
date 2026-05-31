@@ -12,6 +12,7 @@ import {
   getArticleSlugs,
   jaccardDistance,
 } from "@/utils/content";
+import { renderMarkdownLinks } from "@/utils/renderHelpers";
 import { normalizeImagePath } from "@/utils/stringHelpers";
 
 interface PageProps {
@@ -192,7 +193,7 @@ export default async function ArticlePage({ params }: PageProps) {
         {/* Featured image caption */}
         {frontmatter.featured_image_caption && (
           <small className="flex justify-end mt-0 mb-4 px-2 italic text-[#7d7d7d]">
-            {frontmatter.featured_image_caption}
+            {renderMarkdownLinks(frontmatter.featured_image_caption)}
           </small>
         )}
 
