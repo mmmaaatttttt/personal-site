@@ -6,6 +6,9 @@ import { useEffect, useRef } from "react";
 import type { ChartContextValue } from "@/context/ChartContext";
 import { useChart } from "@/context/ChartContext";
 
+// SVG lines render sharply when centered on a half-pixel boundary
+const HALF_PX = 0.5;
+
 interface AxisProps<Domain extends AxisDomain> {
   direction: "x" | "y";
   fontSize?: string;
@@ -17,14 +20,26 @@ interface AxisProps<Domain extends AxisDomain> {
   };
   scale: AxisScale<Domain>;
   textAnchor?: "start" | "middle" | "end";
+  color?: string;
   tickColor?: string;
   tickSize?: number;
   tickShift?: number;
   tickStep?: number;
+  tickValues?: number[];
   tickFormat?: string;
   rotateLabels?: boolean;
   xShift?: number;
   yShift?: number;
+}
+
+function defaultXShift(chart: ChartContextValue, direction: "x" | "y"): number {
+  if (direction === "y") return chart.padding.left;
+  return 0;
+}
+
+function defaultYShift(chart: ChartContextValue, direction: "x" | "y"): number {
+  if (direction === "x") return chart.height - chart.padding.bottom;
+  return 0;
 }
 
 function contextTickSize(
@@ -47,10 +62,12 @@ const Axis = <Domain extends AxisDomain>({
   labelPosition,
   scale,
   textAnchor,
+  color,
   tickColor = "#ccc",
   tickSize,
   tickShift,
   tickStep,
+  tickValues,
   tickFormat,
   rotateLabels,
   xShift,
@@ -59,32 +76,28 @@ const Axis = <Domain extends AxisDomain>({
   const axisRef = useRef<SVGGElement>(null);
   const chart = useChart();
 
-  // Geometry props derive from ChartContext when absent — explicit props always win.
   const resolvedXShift =
-    xShift ?? (chart && direction === "y" ? chart.padding.left : 0);
+    xShift ?? (chart ? defaultXShift(chart, direction) : 0);
   const resolvedYShift =
-    yShift ??
-    (chart && direction === "x" ? chart.height - chart.padding.bottom : 0);
+    yShift ?? (chart ? defaultYShift(chart, direction) : 0);
   const resolvedTickShift = tickShift ?? 0;
   const resolvedTickSize =
     tickSize ?? (chart ? contextTickSize(chart, direction) : undefined);
 
-  // Styling props derive from ChartContext axis style defaults when absent — explicit props always win.
-  // Falls back to hardcoded defaults when there is no context (e.g. HeatChart uses Axis standalone).
   const contextStyle =
     direction === "x" ? chart?.xAxisStyle : chart?.yAxisStyle;
   const resolvedRotateLabels =
     rotateLabels ?? contextStyle?.rotateLabels ?? false;
   const resolvedTextAnchor = textAnchor ?? contextStyle?.textAnchor ?? "middle";
-  const resolvedLabelPosition = labelPosition ??
-    contextStyle?.labelPosition ?? { x: "0", y: "0", dx: "0", dy: "0" };
+  const resolvedLabelPosition =
+    labelPosition ?? contextStyle?.labelPosition ?? null;
 
   useEffect(() => {
     if (!axisRef.current) return;
 
     const axisObj = direction === "x" ? axisBottom(scale) : axisLeft(scale);
+
     if (tickFormat !== undefined) {
-      // Show labels using the provided d3 format string.
       const formatFn = format(tickFormat);
       axisObj.tickFormat((d: Domain) => {
         if (typeof d === "number") return formatFn(d);
@@ -92,7 +105,6 @@ const Axis = <Domain extends AxisDomain>({
         return String(d);
       });
     } else {
-      // No format provided → suppress all tick labels (show gridlines only).
       axisObj.tickFormat(() => "");
     }
 
@@ -100,9 +112,10 @@ const Axis = <Domain extends AxisDomain>({
       axisObj.tickSize(resolvedTickSize).tickSizeOuter(0);
     }
 
-    if (tickStep !== undefined) {
+    if (tickValues !== undefined) {
+      axisObj.tickValues(tickValues as unknown as Domain[]);
+    } else if (tickStep !== undefined) {
       const domain = scale.domain();
-      // Only apply tickStep if domain values are numbers
       if (typeof domain[0] === "number" && typeof domain[1] === "number") {
         axisObj.tickValues(
           range(
@@ -114,7 +127,7 @@ const Axis = <Domain extends AxisDomain>({
       }
     }
 
-    const transform =
+    const tickTransform =
       direction === "y"
         ? `translate(${resolvedTickShift}, 0)`
         : `translate(0, ${resolvedTickShift})`;
@@ -122,11 +135,11 @@ const Axis = <Domain extends AxisDomain>({
     const g = select(axisRef.current);
     g.attr(
       "transform",
-      `translate(${resolvedXShift - 0.5}, ${resolvedYShift - 0.5})`,
+      `translate(${resolvedXShift - HALF_PX}, ${resolvedYShift - HALF_PX})`,
     )
       .call(axisObj)
       .selectAll(".tick line")
-      .attr("transform", transform)
+      .attr("transform", tickTransform)
       .attr("stroke", tickColor)
       .attr("stroke-dasharray", "10, 5")
       .attr("pointer-events", "none");
@@ -141,10 +154,19 @@ const Axis = <Domain extends AxisDomain>({
         labels.attr("transform", "rotate(90)");
       }
 
-      // fine-tune text label position
-      Object.entries(resolvedLabelPosition).forEach(([attr, val]) => {
-        labels.attr(attr, val);
-      });
+      if (resolvedLabelPosition) {
+        Object.entries(resolvedLabelPosition).forEach(([attr, val]) => {
+          labels.attr(attr, val);
+        });
+      }
+
+      if (color) {
+        labels.style("fill", color);
+      }
+    }
+
+    if (color) {
+      g.select<SVGPathElement>(".domain").attr("stroke", color);
     }
   }, [
     direction,
@@ -156,10 +178,12 @@ const Axis = <Domain extends AxisDomain>({
     resolvedTickSize,
     resolvedTickShift,
     tickStep,
+    tickValues,
     tickFormat,
     resolvedRotateLabels,
     resolvedXShift,
     resolvedYShift,
+    color,
   ]);
 
   return <g ref={axisRef} className="axis-group" />;
