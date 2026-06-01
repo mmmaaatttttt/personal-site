@@ -1,6 +1,6 @@
 import { render } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
-import VerticalMarker from "./VerticalMarker";
+import VerticalMarker from ".";
 
 describe("VerticalMarker", () => {
   it("renders nothing outside ChartContext", () => {

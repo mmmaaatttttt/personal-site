@@ -3,13 +3,25 @@
 import type { FC } from "react";
 import { useChart } from "@/context/ChartContext";
 
+const LABEL_X_OFFSET = 4;
+const LABEL_Y_FROM_TOP = 14;
+const LABEL_FONT_SIZE = 11;
+const STROKE_WIDTH = 2;
+const DASH_ARRAY = "6 4";
+
 interface VerticalMarkerProps {
   x: number;
   label?: string;
+  labelYOffset?: number;
   color: string;
 }
 
-const VerticalMarker: FC<VerticalMarkerProps> = ({ x, label, color }) => {
+const VerticalMarker: FC<VerticalMarkerProps> = ({
+  x,
+  label,
+  labelYOffset = 0,
+  color,
+}) => {
   const chart = useChart();
   if (!chart) return null;
   const { xScale, height, padding } = chart;
@@ -22,15 +34,15 @@ const VerticalMarker: FC<VerticalMarkerProps> = ({ x, label, color }) => {
         y1={padding.top}
         y2={height - padding.bottom}
         stroke={color}
-        strokeWidth={2}
-        strokeDasharray="6 4"
+        strokeWidth={STROKE_WIDTH}
+        strokeDasharray={DASH_ARRAY}
       />
       {label && (
         <text
-          x={xPx + 4}
-          y={padding.top + 14}
+          x={xPx + LABEL_X_OFFSET}
+          y={padding.top + LABEL_Y_FROM_TOP + labelYOffset}
           fill={color}
-          fontSize="11"
+          fontSize={LABEL_FONT_SIZE}
           fontWeight="bold"
         >
           {label}
