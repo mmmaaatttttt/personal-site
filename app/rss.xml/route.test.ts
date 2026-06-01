@@ -16,7 +16,7 @@ vi.mock("@/utils/content", () => ({
 
 import { GET } from "./route";
 
-describe("GET /feed.xml", () => {
+describe("GET /rss.xml", () => {
   it("returns a Response with XML content type", async () => {
     const response = await GET();
     expect(response.headers.get("Content-Type")).toBe(
