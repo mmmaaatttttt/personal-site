@@ -1,0 +1,41 @@
+import { render, screen } from "@testing-library/react";
+import { describe, expect, it } from "vitest";
+import CoordinationGame from ".";
+
+describe("CoordinationGame", () => {
+  it("renders without crashing", () => {
+    render(<CoordinationGame />);
+  });
+
+  it("shows Prisoner's Dilemma label with default params (s=0.4, ell=0.6)", () => {
+    render(<CoordinationGame />);
+    expect(screen.getByText(/prisoner's dilemma/i)).toBeInTheDocument();
+  });
+
+  it("shows market outcome label in the Automate-Automate cell", () => {
+    render(<CoordinationGame />);
+    expect(screen.getByText("Where both firms end up")).toBeInTheDocument();
+  });
+
+  it("shows Better for both label in the Don't-Don't cell", () => {
+    render(<CoordinationGame />);
+    expect(screen.getByText("Better for both")).toBeInTheDocument();
+  });
+
+  it("renders four payoff cells", () => {
+    render(<CoordinationGame />);
+    expect(screen.getAllByText(/[+-]\d+\.\d+/).length).toBeGreaterThanOrEqual(
+      4,
+    );
+  });
+
+  it("accepts and renders a caption", () => {
+    render(<CoordinationGame caption="Test caption" />);
+    expect(screen.getByText("Test caption")).toBeInTheDocument();
+  });
+
+  it("renders two slider inputs", () => {
+    render(<CoordinationGame />);
+    expect(screen.getAllByRole("slider")).toHaveLength(2);
+  });
+});
