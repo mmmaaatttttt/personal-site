@@ -33,9 +33,16 @@ export const useTooltip = () => {
     [],
   );
 
+  const showTooltipAt = useCallback(
+    (title: string, body: string | string[], x: number, y: number) => {
+      setTooltip({ title, body, x, y });
+    },
+    [],
+  );
+
   const hideTooltip = useCallback(() => setTooltip(null), []);
 
-  return { tooltip, showTooltip, hideTooltip };
+  return { tooltip, showTooltip, showTooltipAt, hideTooltip };
 };
 
 interface TooltipProps {
