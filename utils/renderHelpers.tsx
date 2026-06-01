@@ -8,8 +8,14 @@ export function renderMarkdownLinks(str: string): ReactNode[] {
     const match = part.match(MARKDOWN_LINK_PARTS);
     if (match) {
       return (
-        // biome-ignore lint/suspicious/noArrayIndexKey: segments come from splitting a fixed string and never reorder
-        <a key={i} href={match[2]} target="_blank" rel="noopener noreferrer">
+        <a
+          // biome-ignore lint/suspicious/noArrayIndexKey: segments come from splitting a fixed string and never reorder
+          key={i}
+          href={match[2]}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="underline"
+        >
           {match[1]}
         </a>
       );

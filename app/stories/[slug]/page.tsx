@@ -193,7 +193,9 @@ export default async function ArticlePage({ params }: PageProps) {
         {/* Featured image caption */}
         {frontmatter.featured_image_caption && (
           <small className="flex justify-end mt-0 mb-4 px-2 italic text-[#7d7d7d]">
-            {renderMarkdownLinks(frontmatter.featured_image_caption)}
+            <span>
+              {renderMarkdownLinks(frontmatter.featured_image_caption)}
+            </span>
           </small>
         )}
 
