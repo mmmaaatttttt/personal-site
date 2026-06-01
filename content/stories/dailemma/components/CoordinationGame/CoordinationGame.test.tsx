@@ -7,12 +7,7 @@ describe("CoordinationGame", () => {
     render(<CoordinationGame />);
   });
 
-  it("shows Prisoner's Dilemma label with default params (s=0.4, ell=0.6)", () => {
-    render(<CoordinationGame />);
-    expect(screen.getByText(/prisoner's dilemma/i)).toBeInTheDocument();
-  });
-
-  it("shows market outcome label in the Automate-Automate cell", () => {
+  it("shows market outcome label in the Automate-Automate cell with default params (40%, 60%)", () => {
     render(<CoordinationGame />);
     expect(screen.getByText("Where both firms end up")).toBeInTheDocument();
   });
@@ -24,7 +19,7 @@ describe("CoordinationGame", () => {
 
   it("renders four payoff cells", () => {
     render(<CoordinationGame />);
-    expect(screen.getAllByText(/[+-]\d+\.\d+/).length).toBeGreaterThanOrEqual(
+    expect(screen.getAllByText(/[+-]?\d+\.\d+%/).length).toBeGreaterThanOrEqual(
       4,
     );
   });

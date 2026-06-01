@@ -46,7 +46,7 @@ const JOB_TICK_VALUES = [2000, 4000, 6000, 8000, 10000, 12000];
 const X_MIN = GRAPH_PADDING.left;
 const X_MAX = WIDTH - GRAPH_PADDING.right;
 
-const MarketDataExplorer = () => {
+const MarketDataExplorer = ({ caption }: { caption: string }) => {
   const { current, handleDrag } = useMarketScrubber(xScale, X_MIN, X_MAX);
   const { tooltip, showTooltip, showTooltipAt, hideTooltip } = useTooltip();
 
@@ -57,11 +57,7 @@ const MarketDataExplorer = () => {
 
   return (
     <>
-      <Caption
-        caption={
-          "Figure 1: S&P 500 and US job openings per month over time. Note the divergence around the time when ChatGPT launched."
-        }
-      >
+      <Caption caption={caption}>
         <Graph
           axes={false}
           graphPadding={GRAPH_PADDING}
