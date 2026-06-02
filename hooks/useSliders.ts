@@ -8,10 +8,10 @@ import {
   useSyncExternalStore,
 } from "react";
 import {
-  readStoredItem,
-  subscribeToKey,
-  writeStoredItem,
-} from "./useLocalStorage";
+  readMemoryItem,
+  subscribeToMemoryKey,
+  writeMemoryItem,
+} from "./useMemoryStore";
 
 export interface SliderInitialData {
   initialValue: number;
@@ -55,7 +55,7 @@ export default function useSliders(initialData: SliderInitialData[]): {
     (callback: () => void) => {
       if (storageEntries.length === 0) return () => {};
       const unsubs = storageEntries.map(({ key }) =>
-        subscribeToKey(key, callback),
+        subscribeToMemoryKey(key, callback),
       );
       return () => {
         for (const f of unsubs) f();
@@ -71,7 +71,7 @@ export default function useSliders(initialData: SliderInitialData[]): {
 
   const getStorageSnapshot = useCallback(() => {
     const next = storageEntries.map(({ key, fallback }) =>
-      readStoredItem(key, fallback),
+      readMemoryItem(key, fallback),
     );
     const prev = cachedSnapshot.current;
     if (prev.length === next.length && next.every((v, i) => v === prev[i])) {
@@ -110,7 +110,7 @@ export default function useSliders(initialData: SliderInitialData[]): {
     (idx: number, newVal: number) => {
       const entry = storageEntries.find((e) => e.idx === idx);
       if (entry) {
-        writeStoredItem(entry.key, newVal);
+        writeMemoryItem(entry.key, newVal);
       } else {
         setLocalValues((prev) => {
           const next = [...prev];

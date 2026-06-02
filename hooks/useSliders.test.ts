@@ -83,19 +83,18 @@ describe("useSliders — storageKey", () => {
     expect(result.current.values).toEqual([0.5, 0.3]);
   });
 
-  it("reads an existing localStorage value on mount", () => {
-    localStorage.setItem(STORAGE_KEY_A, JSON.stringify(0.8));
+  it("falls back to initialValue when no value has been set", () => {
     const { result } = renderHook(() => useSliders(initialData));
-    expect(result.current.values[0]).toBe(0.8);
+    expect(result.current.values[0]).toBe(0.5);
     expect(result.current.values[1]).toBe(0.3);
   });
 
-  it("writes to localStorage when handleValueChange is called", () => {
+  it("reflects an updated value after handleValueChange is called", () => {
     const { result } = renderHook(() => useSliders(initialData));
     act(() => {
       result.current.sliderData[0].handleValueChange(0.7);
     });
-    expect(JSON.parse(localStorage.getItem(STORAGE_KEY_A) ?? "null")).toBe(0.7);
+    expect(result.current.values[0]).toBe(0.7);
   });
 
   it("syncs a storage-backed value to a second hook instance", () => {

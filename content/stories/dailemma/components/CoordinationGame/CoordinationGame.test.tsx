@@ -1,10 +1,8 @@
-import { render, screen } from "@testing-library/react";
-import { beforeEach, describe, expect, it } from "vitest";
+import { act, render, screen } from "@testing-library/react";
+import { describe, expect, it } from "vitest";
+import { writeMemoryItem } from "@/hooks/useMemoryStore";
+import { DEMAND_LOSS_KEY, SAVINGS_KEY } from "../../sliderStore";
 import CoordinationGame from ".";
-
-beforeEach(() => {
-  localStorage.clear();
-});
 
 describe("CoordinationGame", () => {
   it("renders without crashing", () => {
@@ -17,8 +15,10 @@ describe("CoordinationGame", () => {
   });
 
   it("shows Better for both label in the Don't-Don't cell when in PD regime", () => {
-    localStorage.setItem("dailemma-savings", JSON.stringify(0.4));
-    localStorage.setItem("dailemma-demandLoss", JSON.stringify(0.6));
+    act(() => {
+      writeMemoryItem(SAVINGS_KEY, 0.4);
+      writeMemoryItem(DEMAND_LOSS_KEY, 0.6);
+    });
     render(<CoordinationGame />);
     expect(screen.getByText("Better for both")).toBeInTheDocument();
   });
