@@ -81,10 +81,11 @@ export default function useSliders(initialData: SliderInitialData[]): {
     return next;
   }, [storageEntries]);
 
-  const getServerSnapshot = useCallback(
+  const serverSnapshot = useMemo(
     () => storageEntries.map(({ fallback }) => fallback),
     [storageEntries],
   );
+  const getServerSnapshot = useCallback(() => serverSnapshot, [serverSnapshot]);
 
   const storedValues = useSyncExternalStore(
     subscribeAll,
