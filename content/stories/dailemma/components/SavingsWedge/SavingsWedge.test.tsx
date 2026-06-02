@@ -30,9 +30,14 @@ describe("SavingsWedge", () => {
     ).toBeInTheDocument();
   });
 
-  it("renders three slider inputs", () => {
+  it("renders three slider inputs by default", () => {
     render(<SavingsWedge />);
     expect(screen.getAllByRole("slider")).toHaveLength(3);
+  });
+
+  it("renders two slider inputs when showDifficulty is false", () => {
+    render(<SavingsWedge showDifficulty={false} />);
+    expect(screen.getAllByRole("slider")).toHaveLength(2);
   });
 
   it("accepts and renders a caption", () => {
