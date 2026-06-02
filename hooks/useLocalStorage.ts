@@ -32,6 +32,23 @@ function readItem<T>(key: string, fallback: T): T {
   }
 }
 
+export function subscribeToKey(key: string, callback: () => void): () => void {
+  if (!subscribers.has(key)) subscribers.set(key, new Set());
+  subscribers.get(key)?.add(callback);
+  return () => {
+    subscribers.get(key)?.delete(callback);
+  };
+}
+
+export function readStoredItem<T>(key: string, fallback: T): T {
+  return readItem(key, fallback);
+}
+
+export function writeStoredItem<T>(key: string, value: T): void {
+  localStorage.setItem(key, JSON.stringify(value));
+  notifyKey(key);
+}
+
 /**
  * SSR-safe localStorage hook backed by useSyncExternalStore.
  * Reads the real value on the first client render (no flash of default).

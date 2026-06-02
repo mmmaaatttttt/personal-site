@@ -1,6 +1,17 @@
 "use client";
 
-import { useCallback, useMemo, useState } from "react";
+import {
+  useCallback,
+  useMemo,
+  useRef,
+  useState,
+  useSyncExternalStore,
+} from "react";
+import {
+  readStoredItem,
+  subscribeToKey,
+  writeStoredItem,
+} from "./useLocalStorage";
 
 export interface SliderInitialData {
   initialValue: number;
@@ -11,6 +22,7 @@ export interface SliderInitialData {
   color: string;
   key?: string | number;
   tickCount?: number;
+  storageKey?: string;
 }
 
 export interface SliderData extends SliderInitialData {
@@ -22,17 +34,93 @@ export default function useSliders(initialData: SliderInitialData[]): {
   values: number[];
   sliderData: SliderData[];
 } {
-  const [values, setValues] = useState<number[]>(() =>
+  // Identify which slider indices are backed by localStorage.
+  // initialData is always a module-level const so this memo runs once.
+  const storageEntries = useMemo(
+    () =>
+      initialData
+        .map((d, i) =>
+          d.storageKey
+            ? { key: d.storageKey, idx: i, fallback: d.initialValue }
+            : null,
+        )
+        .filter(
+          (x): x is { key: string; idx: number; fallback: number } =>
+            x !== null,
+        ),
+    [initialData],
+  );
+
+  const subscribeAll = useCallback(
+    (callback: () => void) => {
+      if (storageEntries.length === 0) return () => {};
+      const unsubs = storageEntries.map(({ key }) =>
+        subscribeToKey(key, callback),
+      );
+      return () => {
+        for (const f of unsubs) f();
+      };
+    },
+    [storageEntries],
+  );
+
+  // useSyncExternalStore requires getSnapshot to return the same reference
+  // when values are unchanged — otherwise Object.is sees a new array every
+  // call and triggers an infinite re-render loop.
+  const cachedSnapshot = useRef<number[]>([]);
+
+  const getStorageSnapshot = useCallback(() => {
+    const next = storageEntries.map(({ key, fallback }) =>
+      readStoredItem(key, fallback),
+    );
+    const prev = cachedSnapshot.current;
+    if (prev.length === next.length && next.every((v, i) => v === prev[i])) {
+      return prev;
+    }
+    cachedSnapshot.current = next;
+    return next;
+  }, [storageEntries]);
+
+  const getServerSnapshot = useCallback(
+    () => storageEntries.map(({ fallback }) => fallback),
+    [storageEntries],
+  );
+
+  const storedValues = useSyncExternalStore(
+    subscribeAll,
+    getStorageSnapshot,
+    getServerSnapshot,
+  );
+
+  // Local state for non-storage sliders.
+  const [localValues, setLocalValues] = useState<number[]>(() =>
     initialData.map((d) => d.initialValue),
   );
 
-  const handleValueChange = useCallback((idx: number, newVal: number) => {
-    setValues((prev) => {
-      const next = [...prev];
-      next[idx] = newVal;
-      return next;
+  // Merge: storage-backed indices override localValues at their positions.
+  const values = useMemo(() => {
+    const result = [...localValues];
+    storageEntries.forEach(({ idx }, externalIdx) => {
+      result[idx] = storedValues[externalIdx];
     });
-  }, []);
+    return result;
+  }, [localValues, storedValues, storageEntries]);
+
+  const handleValueChange = useCallback(
+    (idx: number, newVal: number) => {
+      const entry = storageEntries.find((e) => e.idx === idx);
+      if (entry) {
+        writeStoredItem(entry.key, newVal);
+      } else {
+        setLocalValues((prev) => {
+          const next = [...prev];
+          next[idx] = newVal;
+          return next;
+        });
+      }
+    },
+    [storageEntries],
+  );
 
   const sliderData = useMemo(
     () =>
@@ -44,7 +132,5 @@ export default function useSliders(initialData: SliderInitialData[]): {
     [initialData, values, handleValueChange],
   );
 
-  // values: flat array for easy destructuring in the component body
-  // sliderData: enriched objects that SliderGroup needs (.value per item for controlled rendering)
   return { values, sliderData };
 }
