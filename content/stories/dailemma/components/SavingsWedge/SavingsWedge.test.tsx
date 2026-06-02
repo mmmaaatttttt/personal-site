@@ -1,6 +1,10 @@
 import { render, screen } from "@testing-library/react";
-import { describe, expect, it, vi } from "vitest";
+import { beforeEach, describe, expect, it, vi } from "vitest";
 import SavingsWedge from ".";
+
+beforeEach(() => {
+  localStorage.clear();
+});
 
 global.ResizeObserver = vi.fn().mockImplementation(() => ({
   observe: vi.fn(),
@@ -22,7 +26,7 @@ describe("SavingsWedge", () => {
   it("shows the over-automation callout with default params", () => {
     render(<SavingsWedge />);
     expect(
-      screen.getByText(/no collective gain from automation here/i),
+      screen.getByText(/more jobs than is collectively beneficial/i),
     ).toBeInTheDocument();
   });
 

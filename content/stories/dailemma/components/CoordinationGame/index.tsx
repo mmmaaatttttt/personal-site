@@ -5,23 +5,31 @@ import NarrowContainer from "@/components/story/shared/NarrowContainer";
 import { SliderGroup } from "@/components/story/shared/Slider";
 import useSliders from "@/hooks/useSliders";
 import COLORS, { hexToRgba } from "@/utils/styles";
+import {
+  DEFAULT_DEMAND_LOSS,
+  DEFAULT_SAVINGS,
+  DEMAND_LOSS_KEY,
+  SAVINGS_KEY,
+} from "../../sliderStore";
 import { payoffColor, useGameState } from "./useGameState";
 
 const SLIDER_CONFIG = [
   {
-    min: 5,
-    max: 95,
-    step: 1,
-    initialValue: 50,
-    title: (val: number) => `Automation savings: ${val}%`,
+    min: 0.05,
+    max: 0.95,
+    step: 0.01,
+    initialValue: DEFAULT_SAVINGS,
+    storageKey: SAVINGS_KEY,
+    title: (val: number) => `Automation savings: ${Math.round(val * 100)}%`,
     color: COLORS.ORANGE,
   },
   {
-    min: 5,
-    max: 95,
-    step: 1,
-    initialValue: 40,
-    title: (val: number) => `Consumer spending loss: ${val}%`,
+    min: 0.05,
+    max: 0.95,
+    step: 0.01,
+    initialValue: DEFAULT_DEMAND_LOSS,
+    storageKey: DEMAND_LOSS_KEY,
+    title: (val: number) => `Consumer spending loss: ${Math.round(val * 100)}%`,
     color: COLORS.BLUE,
   },
 ];
@@ -37,11 +45,8 @@ interface CoordinationGameProps {
 
 const CoordinationGame = ({ caption }: CoordinationGameProps) => {
   const { values, sliderData } = useSliders(SLIDER_CONFIG);
-  const [savingsPct, demandLossPct] = values;
-  const { cells, isNE, isParetoOptimal } = useGameState(
-    savingsPct / 100,
-    demandLossPct / 100,
-  );
+  const [savings, demandLoss] = values;
+  const { cells, isNE, isParetoOptimal } = useGameState(savings, demandLoss);
 
   return (
     <Caption caption={caption}>

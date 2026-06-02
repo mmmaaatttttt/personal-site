@@ -1,18 +1,24 @@
 import { render, screen } from "@testing-library/react";
-import { describe, expect, it } from "vitest";
+import { beforeEach, describe, expect, it } from "vitest";
 import CoordinationGame from ".";
+
+beforeEach(() => {
+  localStorage.clear();
+});
 
 describe("CoordinationGame", () => {
   it("renders without crashing", () => {
     render(<CoordinationGame />);
   });
 
-  it("shows market outcome label in the Automate-Automate cell with default params (40%, 60%)", () => {
+  it("shows market outcome label in the Automate-Automate cell with default params", () => {
     render(<CoordinationGame />);
     expect(screen.getByText("Where both firms end up")).toBeInTheDocument();
   });
 
-  it("shows Better for both label in the Don't-Don't cell", () => {
+  it("shows Better for both label in the Don't-Don't cell when in PD regime", () => {
+    localStorage.setItem("dailemma-savings", JSON.stringify(0.4));
+    localStorage.setItem("dailemma-demandLoss", JSON.stringify(0.6));
     render(<CoordinationGame />);
     expect(screen.getByText("Better for both")).toBeInTheDocument();
   });

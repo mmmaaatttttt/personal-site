@@ -1,5 +1,5 @@
 import { render, screen } from "@testing-library/react";
-import { describe, expect, it, vi } from "vitest";
+import { beforeEach, describe, expect, it, vi } from "vitest";
 import WedgeExplorer from ".";
 
 global.ResizeObserver = vi.fn().mockImplementation(() => ({
@@ -7,6 +7,10 @@ global.ResizeObserver = vi.fn().mockImplementation(() => ({
   unobserve: vi.fn(),
   disconnect: vi.fn(),
 }));
+
+beforeEach(() => {
+  localStorage.clear();
+});
 
 describe("WedgeExplorer", () => {
   it("renders without crashing", () => {

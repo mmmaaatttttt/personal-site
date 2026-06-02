@@ -9,6 +9,14 @@ import LinePlot from "@/components/story/shared/LinePlot";
 import { SliderGroup } from "@/components/story/shared/Slider";
 import useSliders from "@/hooks/useSliders";
 import COLORS, { hexToRgba } from "@/utils/styles";
+import {
+  DEFAULT_DEMAND_LOSS,
+  DEFAULT_DIFFICULTY,
+  DEFAULT_SAVINGS,
+  DEMAND_LOSS_KEY,
+  DIFFICULTY_KEY,
+  SAVINGS_KEY,
+} from "../../sliderStore";
 import VerticalMarker from "../VerticalMarker";
 import {
   DELTA_MAX,
@@ -32,23 +40,26 @@ const SLIDER_CONFIG = [
   {
     min: 0.05,
     max: 0.95,
-    initialValue: 0.4,
+    initialValue: DEFAULT_SAVINGS,
+    storageKey: SAVINGS_KEY,
     title: (val: number) =>
-      `How much automation saves per task: ${val.toFixed(2)}`,
+      `How much automation saves per task: ${Math.round(val * 100)}%`,
     color: COLORS.ORANGE,
   },
   {
     min: 0.05,
     max: 0.9,
-    initialValue: 0.6,
+    initialValue: DEFAULT_DEMAND_LOSS,
+    storageKey: DEMAND_LOSS_KEY,
     title: (val: number) =>
-      `Consumer spending lost per job cut: ${val.toFixed(2)}`,
+      `Consumer spending lost per job cut: ${Math.round(val * 100)}%`,
     color: COLORS.BLUE,
   },
   {
     min: 0.2,
     max: 3,
-    initialValue: 1.0,
+    initialValue: DEFAULT_DIFFICULTY,
+    storageKey: DIFFICULTY_KEY,
     title: (val: number) => `How hard it is to automate: ${val.toFixed(1)}`,
     color: COLORS.PURPLE,
   },
