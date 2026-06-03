@@ -36,51 +36,42 @@ const yScale = scaleLinear()
   .domain([0, 1])
   .range([HEIGHT - GRAPH_PADDING.bottom, GRAPH_PADDING.top]);
 
-const SAVINGS_SLIDER = {
-  min: 0.05,
-  max: 0.95,
-  initialValue: DEFAULT_SAVINGS,
-  storageKey: SAVINGS_KEY,
-  title: (val: number) =>
-    `How much automation saves per task: ${Math.round(val * 100)}%`,
-  color: COLORS.ORANGE,
-};
-
-const DEMAND_LOSS_SLIDER = {
-  min: 0.05,
-  max: 0.9,
-  initialValue: DEFAULT_DEMAND_LOSS,
-  storageKey: DEMAND_LOSS_KEY,
-  title: (val: number) =>
-    `Consumer spending lost per job cut: ${Math.round(val * 100)}%`,
-  color: COLORS.BLUE,
-};
-
-const DIFFICULTY_SLIDER = {
-  min: 0.2,
-  max: 3,
-  initialValue: DEFAULT_DIFFICULTY,
-  storageKey: DIFFICULTY_KEY,
-  title: (val: number) => `How hard it is to automate: ${val.toFixed(1)}`,
-  color: COLORS.PURPLE,
-};
+const SLIDER_CONFIG = [
+  {
+    min: 0.05,
+    max: 0.95,
+    initialValue: DEFAULT_SAVINGS,
+    storageKey: SAVINGS_KEY,
+    title: (val: number) =>
+      `How much automation saves per task: ${Math.round(val * 100)}%`,
+    color: COLORS.ORANGE,
+  },
+  {
+    min: 0.05,
+    max: 0.9,
+    initialValue: DEFAULT_DEMAND_LOSS,
+    storageKey: DEMAND_LOSS_KEY,
+    title: (val: number) =>
+      `Consumer spending lost per job cut: ${Math.round(val * 100)}%`,
+    color: COLORS.BLUE,
+  },
+  {
+    min: 0,
+    max: 3,
+    initialValue: DEFAULT_DIFFICULTY,
+    storageKey: DIFFICULTY_KEY,
+    title: (val: number) => `How hard it is to automate: ${val.toFixed(1)}`,
+    color: COLORS.PURPLE,
+  },
+];
 
 interface SavingsWedgeProps {
   caption?: string;
-  showDifficulty?: boolean;
 }
 
-const SavingsWedge = ({
-  caption,
-  showDifficulty = true,
-}: SavingsWedgeProps) => {
-  const sliderConfig = showDifficulty
-    ? [SAVINGS_SLIDER, DEMAND_LOSS_SLIDER, DIFFICULTY_SLIDER]
-    : [SAVINGS_SLIDER, DEMAND_LOSS_SLIDER];
-  const { values, sliderData } = useSliders(sliderConfig);
-  const savings = values[0];
-  const demandLoss = values[1];
-  const difficulty = showDifficulty ? values[2] : DEFAULT_DIFFICULTY;
+const SavingsWedge = ({ caption }: SavingsWedgeProps) => {
+  const { values, sliderData } = useSliders(SLIDER_CONFIG);
+  const [savings, demandLoss, difficulty] = values;
 
   const { neData, coData, currentNE, overPct, clampedDelta } =
     useSavingsWedgeData(savings, demandLoss, difficulty);
@@ -109,20 +100,20 @@ const SavingsWedge = ({
           >
             {overPct === null && currentNE < 0.01 && (
               <p className="text-sm text-gray-600">
-                At these settings, neither the market nor the social optimum
-                calls for any automation.
+                At these settings, neither competing firms nor coordinating
+                firms would automate.
               </p>
             )}
             {overPct === null && currentNE >= 0.01 && (
               <p className="text-sm text-gray-600">
-                No collective gain from automation here — but 2 competing firms
-                drive {Math.round(currentNE * 100)}% automation anyway.
+                Coordinating firms wouldn't automate here — but 2 competing
+                firms drive {Math.round(currentNE * 100)}% automation anyway.
               </p>
             )}
             {overPct === 0 && (
               <p className="text-sm text-gray-600">
-                With 2 firms, the market delivers exactly the socially optimal
-                level of automation.
+                With 2 firms, competition delivers the same outcome as full
+                coordination.
               </p>
             )}
             {overPct !== null && overPct > 0 && (
@@ -135,7 +126,7 @@ const SavingsWedge = ({
                 </div>
                 <p className="text-sm text-gray-600 mt-1">
                   With 2 competing firms, the industry automates {overPct}% more
-                  jobs than is collectively beneficial.
+                  jobs than if firms had coordinated.
                 </p>
               </>
             )}
@@ -145,7 +136,7 @@ const SavingsWedge = ({
           <Legend
             labels={[
               { text: "Market outcome (2 firms)", color: COLORS.ORANGE },
-              { text: "Socially optimal", color: COLORS.GREEN },
+              { text: "Coordinated outcome", color: COLORS.GREEN },
             ]}
           />
           <Graph

@@ -20,14 +20,14 @@ describe("WedgeExplorer", () => {
   it("shows the over-automation callout", () => {
     render(<WedgeExplorer />);
     expect(
-      screen.getByText(/more jobs than is collectively beneficial/i),
+      screen.getByText(/more jobs than if firms had coordinated/i),
     ).toBeInTheDocument();
   });
 
   it("shows plain-English legend entries", () => {
     render(<WedgeExplorer />);
     expect(screen.getByText(/market outcome/i)).toBeInTheDocument();
-    expect(screen.getByText(/socially optimal/i)).toBeInTheDocument();
+    expect(screen.getByText(/coordinated outcome/i)).toBeInTheDocument();
   });
 
   it("renders four slider inputs", () => {

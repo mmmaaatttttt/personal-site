@@ -23,9 +23,9 @@ describe("WelfareChart", () => {
     expect(screen.getByText(/worker income/i)).toBeInTheDocument();
   });
 
-  it("shows plain-English social optimum and market outcome labels", () => {
+  it("shows plain-English coordinated outcome and market outcome labels", () => {
     render(<WelfareChart />);
-    expect(screen.getByText(/social optimum/i)).toBeInTheDocument();
+    expect(screen.getByText(/coordinated outcome/i)).toBeInTheDocument();
     expect(
       screen.getAllByText(/market outcome/i).length,
     ).toBeGreaterThanOrEqual(1);

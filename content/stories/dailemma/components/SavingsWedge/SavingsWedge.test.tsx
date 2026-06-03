@@ -17,27 +17,22 @@ describe("SavingsWedge", () => {
     render(<SavingsWedge />);
   });
 
-  it("shows legend entries for market outcome and social optimum", () => {
+  it("shows legend entries for market outcome and coordinated outcome", () => {
     render(<SavingsWedge />);
     expect(screen.getByText(/market outcome/i)).toBeInTheDocument();
-    expect(screen.getByText(/socially optimal/i)).toBeInTheDocument();
+    expect(screen.getByText(/coordinated outcome/i)).toBeInTheDocument();
   });
 
   it("shows the over-automation callout with default params", () => {
     render(<SavingsWedge />);
     expect(
-      screen.getByText(/more jobs than is collectively beneficial/i),
+      screen.getByText(/more jobs than if firms had coordinated/i),
     ).toBeInTheDocument();
   });
 
-  it("renders three slider inputs by default", () => {
+  it("renders three slider inputs", () => {
     render(<SavingsWedge />);
     expect(screen.getAllByRole("slider")).toHaveLength(3);
-  });
-
-  it("renders two slider inputs when showDifficulty is false", () => {
-    render(<SavingsWedge showDifficulty={false} />);
-    expect(screen.getAllByRole("slider")).toHaveLength(2);
   });
 
   it("accepts and renders a caption", () => {

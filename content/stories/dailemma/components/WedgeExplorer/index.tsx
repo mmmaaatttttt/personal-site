@@ -110,14 +110,14 @@ const WedgeExplorer = ({ caption }: WedgeExplorerProps) => {
           >
             {overPct === null && (
               <p className="text-sm text-gray-600">
-                No automation is collectively beneficial here, but competition
+                Coordinating firms wouldn't automate here — but competition
                 drives {Math.round(currentNE * 100)}% automation anyway.
               </p>
             )}
             {overPct === 0 && (
               <p className="text-sm text-gray-600">
-                With {numFirms} firm{numFirms === 1 ? "" : "s"}, the market
-                delivers exactly the socially optimal level of automation.
+                With {numFirms} firm{numFirms === 1 ? "" : "s"}, competition
+                delivers the same outcome as full coordination.
               </p>
             )}
             {overPct !== null && overPct > 0 && (
@@ -130,7 +130,7 @@ const WedgeExplorer = ({ caption }: WedgeExplorerProps) => {
                 </div>
                 <p className="text-sm text-gray-600 mt-1">
                   With {numFirms} competing firms, the industry automates{" "}
-                  {overPct}% more jobs than is collectively beneficial.
+                  {overPct}% more jobs than if firms had coordinated.
                 </p>
               </>
             )}
@@ -140,7 +140,7 @@ const WedgeExplorer = ({ caption }: WedgeExplorerProps) => {
           <Legend
             labels={[
               { text: "Market outcome (uncoordinated)", color: COLORS.ORANGE },
-              { text: "Socially optimal", color: COLORS.GREEN },
+              { text: "Coordinated outcome", color: COLORS.GREEN },
             ]}
           />
           <Graph

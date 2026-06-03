@@ -148,7 +148,7 @@ const WelfareChart = ({ caption, numFirms: fixedFirms }: WelfareChartProps) => {
             labels={[
               { text: "Company profits", color: COLORS.ORANGE },
               { text: "Worker income", color: COLORS.BLUE },
-              { text: "Social optimum", color: COLORS.GREEN },
+              { text: "Coordinated outcome", color: COLORS.GREEN },
               { text: "Market outcome", color: COLORS.RED },
             ]}
           />
@@ -220,7 +220,7 @@ const WelfareChart = ({ caption, numFirms: fixedFirms }: WelfareChartProps) => {
             <VerticalMarker
               x={socialOptimum}
               color={COLORS.GREEN}
-              label="Optimum"
+              label="Coordinated"
             />
             <VerticalMarker
               x={marketOutcome}
