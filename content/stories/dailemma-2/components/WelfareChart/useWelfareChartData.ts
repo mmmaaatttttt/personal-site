@@ -4,7 +4,7 @@ import {
   linspace,
   ownerProfitChange,
   workerIncome,
-} from "../../math";
+} from "../../../dailemma/math";
 
 const ALPHA_RANGE = linspace(0, 1, 100);
 const Y_PAD_FACTOR = 0.08;

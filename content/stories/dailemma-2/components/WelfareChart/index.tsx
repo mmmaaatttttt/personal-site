@@ -9,6 +9,7 @@ import Graph from "@/components/story/shared/Graph";
 import Legend from "@/components/story/shared/Legend";
 import LinePlot from "@/components/story/shared/LinePlot";
 import { SliderGroup } from "@/components/story/shared/Slider";
+import VerticalMarker from "@/components/story/shared/VerticalMarker";
 import useSliders from "@/hooks/useSliders";
 import COLORS, { hexToRgba } from "@/utils/styles";
 import {
@@ -21,7 +22,6 @@ import {
   NUM_FIRMS_KEY,
   SAVINGS_KEY,
 } from "../../sliderStore";
-import VerticalMarker from "../VerticalMarker";
 import { useWelfareChartData } from "./useWelfareChartData";
 
 const WIDTH = 600;
