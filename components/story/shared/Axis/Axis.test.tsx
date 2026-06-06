@@ -115,7 +115,7 @@ describe("Axis Component", () => {
     expect(g).toHaveAttribute("transform", "translate(-0.5, 359.5)");
   });
 
-  it("returns 0 tickSize for x-axis when vertical gridlines are disabled (line 37)", () => {
+  it("returns 0 tickSize for x-axis when vertical gridlines are disabled", () => {
     const xScale = scaleLinear().domain([0, 100]).range([0, 600]);
     const yScale = scaleLinear().domain([0, 100]).range([400, 0]);
     const contextValue = {
@@ -137,7 +137,7 @@ describe("Axis Component", () => {
     expect(container.querySelector(".axis-group")).toBeInTheDocument();
   });
 
-  it("returns 0 tickSize for y-axis when horizontal gridlines are disabled (line 41)", () => {
+  it("returns 0 tickSize for y-axis when horizontal gridlines are disabled", () => {
     const xScale = scaleLinear().domain([0, 100]).range([0, 600]);
     const yScale = scaleLinear().domain([0, 100]).range([400, 0]);
     const contextValue = {
@@ -159,7 +159,7 @@ describe("Axis Component", () => {
     expect(container.querySelector(".axis-group")).toBeInTheDocument();
   });
 
-  it("formats Date domain values via tickFormat (line 91)", () => {
+  it("formats Date domain values via tickFormat", () => {
     const dateScale = scaleTime()
       .domain([new Date(2020, 0, 1), new Date(2021, 0, 1)])
       .range([0, 600]);
@@ -171,7 +171,7 @@ describe("Axis Component", () => {
     expect(container.querySelector(".axis-group")).toBeInTheDocument();
   });
 
-  it("formats string domain values via tickFormat (line 92)", () => {
+  it("formats string domain values via tickFormat", () => {
     const bandScale = scaleBand().domain(["A", "B", "C"]).range([0, 600]);
     const { container } = render(
       <svg role="img" aria-label="test">
