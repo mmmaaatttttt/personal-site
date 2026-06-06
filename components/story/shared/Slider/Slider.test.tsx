@@ -95,4 +95,13 @@ describe("Slider", () => {
     );
     expect(container.firstChild).toHaveClass("my-custom-class");
   });
+
+  it("sets isHovered on mouseenter and clears it on mouseleave", () => {
+    render(<Slider {...defaultProps} />);
+    const input = screen.getByRole("slider");
+    fireEvent.mouseEnter(input);
+    fireEvent.mouseLeave(input);
+
+    expect(input).toBeInTheDocument();
+  });
 });

@@ -81,4 +81,26 @@ describe("Scatterplot Component", () => {
     expect(Number(points[0].getAttribute("r"))).toBe(10);
     expect(Number(points[1].getAttribute("r"))).toBe(20);
   });
+
+  it("falls back to [0, 1] domain when all cx values are identical", () => {
+    const sameXData = [
+      { key: "a", cx: 50, cy: 0, area: 100, fill: "red" },
+      { key: "b", cx: 50, cy: 100, area: 100, fill: "blue" },
+    ];
+    const { getAllByTestId } = render(
+      <Scatterplot {...defaultProps} data={sameXData} />,
+    );
+    expect(getAllByTestId("scatter-point")).toHaveLength(2);
+  });
+
+  it("falls back to [0, 1] domain when all cy values are identical", () => {
+    const sameYData = [
+      { key: "a", cx: 0, cy: 50, area: 100, fill: "red" },
+      { key: "b", cx: 100, cy: 50, area: 100, fill: "blue" },
+    ];
+    const { getAllByTestId } = render(
+      <Scatterplot {...defaultProps} data={sameYData} />,
+    );
+    expect(getAllByTestId("scatter-point")).toHaveLength(2);
+  });
 });

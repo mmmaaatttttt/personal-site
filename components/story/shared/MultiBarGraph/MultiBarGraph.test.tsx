@@ -156,4 +156,23 @@ describe("MultiBarGraph Component", () => {
     const { container } = render(<MultiBarGraph {...defaultProps} data={[]} />);
     expect(container.firstChild).toBeNull();
   });
+
+  it("accepts numeric padding", () => {
+    const { container } = render(
+      <MultiBarGraph {...defaultProps} padding={10} />,
+    );
+    const svg = container.querySelector("svg");
+    expect(svg).toBeInTheDocument();
+  });
+
+  it("handles data items missing counts", () => {
+    const dataWithoutCounts = [
+      { meta: { id: 1, title: "Ep 1" } },
+    ] as typeof mockData;
+    const { container } = render(
+      <MultiBarGraph {...defaultProps} data={dataWithoutCounts} />,
+    );
+
+    expect(container.firstChild).toBeNull();
+  });
 });
