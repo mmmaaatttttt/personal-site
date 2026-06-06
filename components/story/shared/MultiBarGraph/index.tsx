@@ -75,9 +75,9 @@ const MultiBarGraph: FC<MultiBarGraphProps> = ({
 
   const scales = useMemo(() => {
     if (stackData.length === 0) return null;
-    const yMin = min(stackData[0], (d) => d[0]) ?? 0;
+    const yMin = min(stackData[0], (d) => d[0])!;
     const computedYMax =
-      yMax ?? max(stackData[stackData.length - 1], (d) => d[1]) ?? 1;
+      yMax ?? max(stackData[stackData.length - 1], (d) => d[1])!;
     return {
       xScale: scaleBand()
         .domain(stackData[0].map((_, i) => i.toString()))
@@ -163,7 +163,7 @@ const MultiBarGraph: FC<MultiBarGraphProps> = ({
                               x: colX,
                               y: rectY,
                               height: rectHeight,
-                              width: (xScale.step() || 0) * 0.8,
+                              width: xScale.step() * 0.8,
                             }}
                             transition={{ duration: 0.5, delay }}
                             onMouseMove={showTooltip(

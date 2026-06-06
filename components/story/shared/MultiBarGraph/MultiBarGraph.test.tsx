@@ -175,4 +175,46 @@ describe("MultiBarGraph Component", () => {
 
     expect(container.firstChild).toBeNull();
   });
+
+  it("handles data items with missing counts in mixed dataset", () => {
+    const mixedData = [
+      { meta: { id: 1, title: "Ep 1" }, counts: { Chris: 100, Caller: 50 } },
+      { meta: { id: 2, title: "Ep 2" }, counts: undefined },
+    ] as unknown as typeof mockData;
+
+    const { container } = render(
+      <MultiBarGraph {...defaultProps} data={mixedData} />,
+    );
+    const svg = container.querySelector("svg");
+    expect(svg).toBeInTheDocument();
+  });
+
+  it("returns empty tooltipData when data is not an array", () => {
+    const { container } = render(
+      <MultiBarGraph
+        {...defaultProps}
+        data={null as unknown as typeof mockData}
+      />,
+    );
+    expect(container.firstChild).toBeNull();
+  });
+
+  it("renders null when d3stack throws for malformed data", () => {
+    const throwingCounts: Record<string, number> = {};
+    Object.defineProperty(throwingCounts, "Chris", {
+      get() {
+        throw new Error("stack error");
+      },
+      enumerable: true,
+      configurable: true,
+    });
+    const data = [
+      { meta: { id: 1, title: "Ep 1" }, counts: throwingCounts },
+    ] as unknown as typeof mockData;
+
+    const { container } = render(
+      <MultiBarGraph {...defaultProps} data={data} />,
+    );
+    expect(container.firstChild).toBeNull();
+  });
 });
