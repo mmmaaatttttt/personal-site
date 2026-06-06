@@ -1,6 +1,8 @@
 "use client";
 
 import { scaleLinear } from "d3-scale";
+import Axis from "@/components/story/shared/Axis";
+import AxisLabel from "@/components/story/shared/AxisLabel";
 import Caption from "@/components/story/shared/Caption";
 import ColumnLayout from "@/components/story/shared/ColumnLayout";
 import Graph from "@/components/story/shared/Graph";
@@ -24,7 +26,8 @@ import { useWelfareChartData } from "./useWelfareChartData";
 
 const WIDTH = 600;
 const HEIGHT = 400;
-const GRAPH_PADDING = { top: 24, bottom: 50, left: 65, right: 20 };
+const GRAPH_PADDING = { top: 24, bottom: 50, left: 65, right: 80 };
+const AXIS_FONT = "11px";
 const MARKER_RADIUS = 6;
 const N_MAX = 20;
 const DEFAULT_REPLACEMENT_RATE = 0.3;
@@ -33,10 +36,14 @@ const xScale = scaleLinear()
   .domain([0, 1])
   .range([GRAPH_PADDING.left, WIDTH - GRAPH_PADDING.right]);
 
+const workerYScale = scaleLinear()
+  .domain([0, 1])
+  .range([HEIGHT - GRAPH_PADDING.bottom, GRAPH_PADDING.top]);
+
 const BASE_SLIDER_CONFIG = [
   {
-    min: 0.05,
-    max: 0.95,
+    min: 0,
+    max: 1,
     initialValue: DEFAULT_SAVINGS,
     storageKey: SAVINGS_KEY,
     title: (val: number) =>
@@ -44,8 +51,8 @@ const BASE_SLIDER_CONFIG = [
     color: COLORS.ORANGE,
   },
   {
-    min: 0.05,
-    max: 0.9,
+    min: 0,
+    max: 1,
     initialValue: DEFAULT_DEMAND_LOSS,
     storageKey: DEMAND_LOSS_KEY,
     title: (val: number) =>
@@ -113,9 +120,6 @@ const WelfareChart = ({ caption, numFirms: fixedFirms }: WelfareChartProps) => {
     neOwnerProfit,
     coWorkerIncome,
     neWorkerIncome,
-    ownerPctLost,
-    workerPctLost,
-    showComparison,
     yMin,
     yMax,
     yPad,
@@ -153,18 +157,75 @@ const WelfareChart = ({ caption, numFirms: fixedFirms }: WelfareChartProps) => {
             ]}
           />
           <Graph
+            axes={false}
             graphPadding={GRAPH_PADDING}
             height={HEIGHT}
             width={WIDTH}
             svgId="welfare-chart"
             xScale={xScale}
             yScale={yScale}
-            tickFormatX=".1f"
-            tickFormatY=".2f"
-            xLabel="Share of jobs automated"
-            yLabel="Outcome"
             gridlinesVertical={false}
           >
+            <Axis
+              key="y-axis"
+              direction="y"
+              scale={yScale}
+              tickFormat=".2f"
+              tickSize={5}
+              tickColor={COLORS.GRAY}
+              color={COLORS.ORANGE}
+              fontSize={AXIS_FONT}
+            />
+            <Axis
+              key="x-axis"
+              direction="x"
+              scale={xScale}
+              tickFormat=".1f"
+              rotateLabels={false}
+              textAnchor="middle"
+              labelPosition={{ dy: "0.71em" }}
+              tickColor={COLORS.GRAY}
+              fontSize={AXIS_FONT}
+            />
+            <Axis
+              key="y-right-axis"
+              direction="y"
+              xShift={WIDTH - GRAPH_PADDING.right}
+              scale={workerYScale}
+              tickFormat=".2f"
+              tickSize={5}
+              textAnchor="start"
+              labelPosition={{ x: "8" }}
+              tickColor={COLORS.BLUE}
+              color={COLORS.BLUE}
+              fontSize={AXIS_FONT}
+            />
+            <AxisLabel
+              x={10}
+              y={HEIGHT / 2}
+              dy={10}
+              transform={`rotate(-90 10,${HEIGHT / 2})`}
+              style={{ color: COLORS.ORANGE }}
+            >
+              Company profit change
+            </AxisLabel>
+            <AxisLabel
+              x={WIDTH - 22}
+              y={HEIGHT / 2}
+              dy={10}
+              transform={`rotate(90 ${WIDTH - 22},${HEIGHT / 2})`}
+              style={{ color: COLORS.BLUE }}
+            >
+              Worker income
+            </AxisLabel>
+            <AxisLabel
+              x={WIDTH / 2}
+              y={HEIGHT - GRAPH_PADDING.bottom}
+              dy={`${GRAPH_PADDING.bottom * 0.7}`}
+              anchor="middle"
+            >
+              Share of jobs automated
+            </AxisLabel>
             <rect
               x={trapX}
               y={trapY}
@@ -191,6 +252,7 @@ const WelfareChart = ({ caption, numFirms: fixedFirms }: WelfareChartProps) => {
               graphData={workerData}
               stroke={COLORS.BLUE}
               strokeWidth={3}
+              yScale={workerYScale}
               curve="curveLinear"
             />
             <circle
@@ -201,7 +263,7 @@ const WelfareChart = ({ caption, numFirms: fixedFirms }: WelfareChartProps) => {
             />
             <circle
               cx={xScale(socialOptimum)}
-              cy={yScale(coWorkerIncome)}
+              cy={workerYScale(coWorkerIncome)}
               r={MARKER_RADIUS}
               fill={COLORS.GREEN}
             />
@@ -213,7 +275,7 @@ const WelfareChart = ({ caption, numFirms: fixedFirms }: WelfareChartProps) => {
             />
             <circle
               cx={xScale(marketOutcome)}
-              cy={yScale(neWorkerIncome)}
+              cy={workerYScale(neWorkerIncome)}
               r={MARKER_RADIUS}
               fill={COLORS.RED}
             />
@@ -228,19 +290,6 @@ const WelfareChart = ({ caption, numFirms: fixedFirms }: WelfareChartProps) => {
               label="Market"
             />
           </Graph>
-          {showComparison && (
-            <p className="mt-4 text-sm text-center font-medium text-gray-700">
-              At the market outcome, companies earn{" "}
-              <span style={{ color: COLORS.RED }}>
-                {ownerPctLost}% less profit
-              </span>{" "}
-              and workers keep{" "}
-              <span style={{ color: COLORS.RED }}>
-                {workerPctLost}% less income
-              </span>{" "}
-              than if firms had coordinated.
-            </p>
-          )}
         </div>
       </ColumnLayout>
     </Caption>

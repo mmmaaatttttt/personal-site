@@ -8,7 +8,6 @@ import {
 
 const ALPHA_RANGE = linspace(0, 1, 100);
 const Y_PAD_FACTOR = 0.08;
-const SIGNIFICANCE_THRESHOLD = 0.001;
 
 export interface WelfareChartData {
   ownerData: { x: number; y: number }[];
@@ -19,9 +18,6 @@ export interface WelfareChartData {
   neOwnerProfit: number;
   coWorkerIncome: number;
   neWorkerIncome: number;
-  ownerPctLost: number | null;
-  workerPctLost: number | null;
-  showComparison: boolean;
   yMin: number;
   yMax: number;
   yPad: number;
@@ -61,21 +57,6 @@ export function useWelfareChartData(
   const coWorkerIncome = workerIncome(socialOptimum, replacementRate);
   const neWorkerIncome = workerIncome(marketOutcome, replacementRate);
 
-  const ownerPctLost =
-    coOwnerProfit > SIGNIFICANCE_THRESHOLD
-      ? Math.round(
-          ((coOwnerProfit - neOwnerProfit) / Math.abs(coOwnerProfit)) * 100,
-        )
-      : null;
-  const workerPctLost =
-    coWorkerIncome > SIGNIFICANCE_THRESHOLD
-      ? Math.round(((coWorkerIncome - neWorkerIncome) / coWorkerIncome) * 100)
-      : null;
-  const showComparison =
-    socialOptimum < marketOutcome - SIGNIFICANCE_THRESHOLD &&
-    ownerPctLost !== null &&
-    workerPctLost !== null;
-
   const allY = [...ownerData.map((d) => d.y), ...workerData.map((d) => d.y)];
   const yMin = Math.min(0, ...allY);
   const yMax = Math.max(1, ...allY);
@@ -90,9 +71,6 @@ export function useWelfareChartData(
     neOwnerProfit,
     coWorkerIncome,
     neWorkerIncome,
-    ownerPctLost,
-    workerPctLost,
-    showComparison,
     yMin,
     yMax,
     yPad,
