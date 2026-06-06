@@ -2,6 +2,7 @@ import { fireEvent, render, screen } from "@testing-library/react";
 import type { ReactNode } from "react";
 import { describe, expect, it, vi } from "vitest";
 import "@testing-library/jest-dom/vitest";
+import { Solver } from "odex";
 import COLORS from "@/utils/styles";
 import GamingRelationships, { type GamingVisData } from ".";
 
@@ -263,6 +264,17 @@ describe("GamingRelationships", () => {
       ],
     };
     render(<GamingRelationships visData={allParamVisData} />);
+    expect(screen.getAllByTestId("graph").length).toBeGreaterThanOrEqual(1);
+  });
+
+  it("falls back to yMax=0 when ODE produces no data points", () => {
+    vi.mocked(Solver).mockImplementationOnce(
+      () =>
+        ({ solve: vi.fn(), grid: vi.fn() }) as unknown as InstanceType<
+          typeof Solver
+        >,
+    );
+    render(<GamingRelationships visData={twoPersonVisData} />);
     expect(screen.getAllByTestId("graph").length).toBeGreaterThanOrEqual(1);
   });
 });

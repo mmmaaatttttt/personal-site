@@ -72,11 +72,16 @@ describe("HeatChart", () => {
     expect(container.querySelector("svg")).toBeInTheDocument();
   });
 
-  it("handles a column with zero rows (numRows=0 path)", () => {
+  it("handles a column with zero rows", () => {
     const emptyFirstCol: (number | null)[][] = [[], [0.5]];
     const { container } = render(
       <HeatChart {...baseProps} data={emptyFirstCol} />,
     );
+    expect(container.querySelector("svg")).toBeInTheDocument();
+  });
+
+  it("handles empty data array (numRows falls back to 0)", () => {
+    const { container } = render(<HeatChart {...baseProps} data={[]} />);
     expect(container.querySelector("svg")).toBeInTheDocument();
   });
 });
