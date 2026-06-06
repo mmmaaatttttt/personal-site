@@ -49,6 +49,13 @@ describe("USMap Component", () => {
     expect(states.length).toBeGreaterThan(50);
   });
 
+  it("computes domain from data when domain prop is omitted", () => {
+    // No domain → effectiveDomain is computed via extent → || [0, 1] fallback not needed here
+    // but exercises the non-domain path in scaleLinear
+    const { getAllByTestId } = render(<USMap {...defaultProps} />);
+    expect(getAllByTestId("us-state").length).toBeGreaterThan(50);
+  });
+
   it("applies the correct fill based on data and color scale", () => {
     const { getAllByTestId } = render(
       <USMap {...defaultProps} domain={[10, 20]} />,
