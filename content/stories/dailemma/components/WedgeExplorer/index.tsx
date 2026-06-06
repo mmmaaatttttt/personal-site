@@ -38,8 +38,8 @@ const yScale = scaleLinear()
 
 const SLIDER_CONFIG = [
   {
-    min: 0.05,
-    max: 0.95,
+    min: 0,
+    max: 1,
     initialValue: DEFAULT_SAVINGS,
     storageKey: SAVINGS_KEY,
     title: (val: number) =>
@@ -47,8 +47,8 @@ const SLIDER_CONFIG = [
     color: COLORS.ORANGE,
   },
   {
-    min: 0.05,
-    max: 0.9,
+    min: 0,
+    max: 1,
     initialValue: DEFAULT_DEMAND_LOSS,
     storageKey: DEMAND_LOSS_KEY,
     title: (val: number) =>
