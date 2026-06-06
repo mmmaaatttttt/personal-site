@@ -8,8 +8,8 @@ import DraggableCircle from "@/components/story/shared/DraggableCircle";
 import Graph from "@/components/story/shared/Graph";
 import LinePlot from "@/components/story/shared/LinePlot";
 import Tooltip, { useTooltip } from "@/components/story/shared/Tooltip";
+import VerticalMarker from "@/components/story/shared/VerticalMarker";
 import COLORS from "@/utils/styles";
-import VerticalMarker from "../VerticalMarker";
 import { formatDate, parsed, useMarketScrubber } from "./useMarketScrubber";
 
 const WIDTH = 700;
