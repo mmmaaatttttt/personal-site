@@ -26,7 +26,7 @@ import {
 
 const WIDTH = 600;
 const HEIGHT = 400;
-const GRAPH_PADDING = { top: 24, bottom: 50, left: 60, right: 20 };
+const GRAPH_PADDING = { top: 24, bottom: 90, left: 60, right: 20 };
 
 const xScale = scaleLinear()
   .domain([DELTA_MIN, DELTA_MAX])

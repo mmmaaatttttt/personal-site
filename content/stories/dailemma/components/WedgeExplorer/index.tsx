@@ -24,7 +24,7 @@ import { useWedgeData } from "./useWedgeData";
 
 const WIDTH = 600;
 const HEIGHT = 400;
-const GRAPH_PADDING = { top: 24, bottom: 50, left: 60, right: 20 };
+const GRAPH_PADDING = { top: 24, bottom: 75, left: 60, right: 20 };
 const N_MAX = 20;
 const NS = Array.from({ length: N_MAX }, (_, i) => i + 1);
 
