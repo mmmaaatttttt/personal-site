@@ -61,46 +61,22 @@ vi.mock("@/components/story/shared/LinePlot", () => ({
   ),
 }));
 
-vi.mock("@/components/story/shared/Figure", () => ({
-  default: ({
-    children,
-    caption,
-  }: {
-    children?: ReactNode;
-    caption?: string;
-  }) => (
-    <div>
-      <div data-testid="caption">{caption}</div>
-      {children}
-    </div>
-  ),
-}));
-
 describe("WarmingDots", () => {
-  it("renders the caption", () => {
-    render(
-      <WarmingDots vizIndex={0} caption="Figure 1: Exponential growth." />,
-    );
-    expect(screen.getByTestId("caption")).toHaveTextContent(
-      "Figure 1: Exponential growth.",
-    );
-  });
-
   it("renders a Graph and SliderGroup", () => {
-    render(<WarmingDots vizIndex={0} caption="Test" />);
+    render(<WarmingDots vizIndex={0} />);
     expect(screen.getByTestId("slider-group")).toBeInTheDocument();
     expect(screen.getByTestId("graph")).toBeInTheDocument();
   });
 
   it("passes correct axis labels for population-only charts (vizIndex 0)", () => {
-    render(<WarmingDots vizIndex={0} caption="Test" />);
+    render(<WarmingDots vizIndex={0} />);
     const graph = screen.getByTestId("graph");
     expect(graph).toHaveAttribute("data-xlabel", "Time");
     expect(graph).toHaveAttribute("data-ylabel", "Population");
   });
 
   it("passes correct axis labels for population+environment charts (vizIndex 2)", () => {
-    render(<WarmingDots vizIndex={2} caption="Test" />);
+    render(<WarmingDots vizIndex={2} />);
     const graph = screen.getByTestId("graph");
     expect(graph).toHaveAttribute(
       "data-ylabel",
@@ -109,24 +85,24 @@ describe("WarmingDots", () => {
   });
 
   it("renders two LinePlots for two-color charts (vizIndex 2)", () => {
-    render(<WarmingDots vizIndex={2} caption="Test" />);
+    render(<WarmingDots vizIndex={2} />);
     const plots = screen.getAllByTestId("line-plot");
     expect(plots).toHaveLength(2);
   });
 
   it("renders one LinePlot for single-color charts (vizIndex 0)", () => {
-    render(<WarmingDots vizIndex={0} caption="Test" />);
+    render(<WarmingDots vizIndex={0} />);
     const plots = screen.getAllByTestId("line-plot");
     expect(plots).toHaveLength(1);
   });
 
   it("accepts vizIndex as a string", () => {
-    render(<WarmingDots vizIndex="4" caption="Test" />);
+    render(<WarmingDots vizIndex="4" />);
     expect(screen.getByTestId("graph")).toBeInTheDocument();
   });
 
   it("defaults to vizIndex 0 when omitted", () => {
-    render(<WarmingDots caption="Test" />);
+    render(<WarmingDots />);
     const graph = screen.getByTestId("graph");
     expect(graph).toHaveAttribute("data-ylabel", "Population");
   });

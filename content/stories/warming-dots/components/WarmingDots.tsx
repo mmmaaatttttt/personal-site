@@ -5,7 +5,6 @@ import type { AxisScale } from "d3-axis";
 import { type NumberValue, scaleLinear } from "d3-scale";
 import { type FC, useMemo } from "react";
 import ColumnLayout from "@/components/story/shared/ColumnLayout";
-import Figure from "@/components/story/shared/Figure";
 import FlexContainer from "@/components/story/shared/FlexContainer";
 import Graph from "@/components/story/shared/Graph";
 import LinePlot from "@/components/story/shared/LinePlot";
@@ -18,7 +17,6 @@ import { visualizationData } from "../data/warming-dots";
 
 interface WarmingDotsProps {
   vizIndex?: number | string;
-  caption: string;
   graphPadding?: number;
   maxT?: number;
   minT?: number;
@@ -28,7 +26,6 @@ interface WarmingDotsProps {
 
 const WarmingDots: FC<WarmingDotsProps> = ({
   vizIndex = 0,
-  caption,
   graphPadding = 30,
   maxT = 10,
   minT = 0,
@@ -139,22 +136,18 @@ const WarmingDots: FC<WarmingDotsProps> = ({
     </FlexContainer>
   );
 
-  return (
-    <Figure caption={caption}>
-      {numSliders < 4 ? (
-        <NarrowContainer width="75%">
-          <SliderGroup data={sliderData} compact={compact} />
-          {chartEl}
-        </NarrowContainer>
-      ) : (
-        <ColumnLayout break="sm">
-          <div className="flex flex-col justify-center h-full">
-            <SliderGroup data={sliderData} compact={compact} />
-          </div>
-          {chartEl}
-        </ColumnLayout>
-      )}
-    </Figure>
+  return numSliders < 4 ? (
+    <NarrowContainer width="75%">
+      <SliderGroup data={sliderData} compact={compact} />
+      {chartEl}
+    </NarrowContainer>
+  ) : (
+    <ColumnLayout break="sm">
+      <div className="flex flex-col justify-center h-full">
+        <SliderGroup data={sliderData} compact={compact} />
+      </div>
+      {chartEl}
+    </ColumnLayout>
   );
 };
 

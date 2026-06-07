@@ -42,10 +42,9 @@ Closely tied to the idea of a doubling time is a constant called the **growth ra
 
 Here's an example of an exponential growth curve for a hypothetical population. You can adjust the growth rate and see how that affects the shape of the curve: more specifically, how quickly it shoots up.
 
-<WarmingDots
-  vizIndex={0}
-  caption="An exponential model of population growth."
-/>
+<Figure caption="An exponential model of population growth.">
+  <WarmingDots vizIndex={0} />
+</Figure>
 
 The problem with an exponential growth model of population is that while it may be suitable for short-term predictions, there's no way for it to be make sense longer term. In the word problem above, for instance, the bacteria will eventually be limited by the size of the Petri dish.
 
@@ -63,10 +62,9 @@ As a practical matter, determining the carrying capacity of any environment is a
 
 The logistic model of population incorporates two parameters: a growth rate for the population, and an environmental carrying capacity that effectively caps the population. Here's what the model looks like: note that the presence of the carrying capacity gives the logistic function its signature S-shape.
 
-<WarmingDots
-  vizIndex={1}
-  caption="A logistic model of population growth."
-/>
+<Figure caption="A logistic model of population growth.">
+  <WarmingDots vizIndex={1} />
+</Figure>
 
 When we include a carrying capacity in our model, population no longer grows without bound. Instead, the curve begins to bend downward once the population is half of the carrying capacity, and the population will never exceed the carrying capacity. As advertised, the carrying capacity places a hard limit on how big the population can be, which seems much more realistic.
 
@@ -121,10 +119,9 @@ In order to graph this model, we need several parameters. Some are the same as i
 
 Whew. That's a lot. But with all of this setup, we're finally ready to explore our third model. Here it is.
 
-<WarmingDots
-  vizIndex={2}
-  caption="Modeling Population along with the environment."
-/>
+<Figure caption="Modeling Population along with the environment.">
+  <WarmingDots vizIndex={2} />
+</Figure>
 
 As you made expect, conditions that seem favorable yield favorable behavior. When the carrying capacity, critical environmental threshold, and recovery rates for the environment are all high and the environmental cost of resource depletion is low, the population grows in much the same way as before, even if the overall environmental health of the system worsens (as indicated by an increasing red graph).
 
@@ -146,10 +143,9 @@ In order to do so, we need to introduce two more parameters. The first one measu
 
 What sorts of new trajectories can you create with these additional parameters?
 
-<WarmingDots
-  vizIndex={3}
-  caption="Modeling environment and population with two resources."
-/>
+<Figure caption="Modeling environment and population with two resources.">
+  <WarmingDots vizIndex={3} />
+</Figure>
 
 Note that if you wait longer before transitioning, or take too long in the transition, in nearly every case the outcome for population worsens. Also, notice that in some cases it's possible to affect the long-term shape of the curves, switching between sustainability and die-off. From this perspective, it seems like we may have some control over our destiny even if we're late to the game, provided that we can fully transition away from fossil fuels quickly.
 
@@ -165,10 +161,9 @@ For their final variation on the model, the authors included an environmental fr
 
 Now, with all nine parameters at your disposal, what sorts of population graphs can you come up with?
 
-<WarmingDots
-  vizIndex={4}
-  caption="Including an environmental fragility parameter into the model."
-/>
+<Figure caption="Including an environmental fragility parameter into the model.">
+  <WarmingDots vizIndex={4} />
+</Figure>
 
 With the potential for environmental catastrophe, this model highlights another common scenario: **collapse**. This is an even worse case than die-off: not only does the population crash, but it crashes all the way to zero. This is inevitable if the environment is too fragile and becomes damaged enough that a runaway degradation occurs.
 
