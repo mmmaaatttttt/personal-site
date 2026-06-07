@@ -10,7 +10,13 @@ import {
   jaccardDistance,
 } from "./content";
 
-vi.mock("node:fs");
+vi.mock("node:fs", () => ({
+  default: {
+    existsSync: vi.fn(),
+    readFileSync: vi.fn(),
+    readdirSync: vi.fn(),
+  },
+}));
 
 vi.mock("gray-matter", () => ({
   default: vi.fn((raw: string) => ({ data: {}, content: raw })),

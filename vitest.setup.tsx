@@ -3,6 +3,12 @@ import { cleanup } from "@testing-library/react";
 import type { ComponentPropsWithoutRef, ReactNode } from "react";
 import { afterEach, vi } from "vitest";
 
+global.ResizeObserver = vi.fn().mockImplementation(() => ({
+  observe: vi.fn(),
+  unobserve: vi.fn(),
+  disconnect: vi.fn(),
+}));
+
 // Automatically cleanup after each test to prevent memory leaks or side effects between tests
 afterEach(() => {
   cleanup();
