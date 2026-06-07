@@ -4,7 +4,7 @@ import { max } from "d3-array";
 import { scaleLinear } from "d3-scale";
 import { animate, useMotionValue, useMotionValueEvent } from "framer-motion";
 import { type FC, useEffect, useState } from "react";
-import Caption from "@/components/story/shared/Caption";
+import Figure from "@/components/story/shared/Figure";
 import FlexContainer from "@/components/story/shared/FlexContainer";
 import Graph from "@/components/story/shared/Graph";
 import LinePlot from "@/components/story/shared/LinePlot";
@@ -65,7 +65,7 @@ const CoinFlipBayesianModel: FC<CoinFlipBayesianModelProps> = ({ caption }) => {
     .range([HEIGHT - GRAPH_PADDING.bottom, GRAPH_PADDING.top]);
 
   return (
-    <Caption caption={caption}>
+    <Figure caption={caption}>
       <NarrowContainer width="65%" fullWidthAt="sm">
         <ToggleSwitch
           leftText="All probs equally likely"
@@ -120,7 +120,7 @@ const CoinFlipBayesianModel: FC<CoinFlipBayesianModelProps> = ({ caption }) => {
           />
         </Graph>
       </NarrowContainer>
-    </Caption>
+    </Figure>
   );
 };
 

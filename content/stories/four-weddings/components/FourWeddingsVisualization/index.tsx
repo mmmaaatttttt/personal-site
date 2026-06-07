@@ -1,7 +1,7 @@
 "use client";
 
 import type { FC } from "react";
-import Caption from "@/components/story/shared/Caption";
+import Figure from "@/components/story/shared/Figure";
 import {
   graphOptions,
   selectOptions,
@@ -62,7 +62,7 @@ const FourWeddingsVisualization: FC<FourWeddingsVisualizationProps> = ({
     }
   };
 
-  return <Caption caption={caption}>{renderVisualization()}</Caption>;
+  return <Figure caption={caption}>{renderVisualization()}</Figure>;
 };
 
 export default FourWeddingsVisualization;

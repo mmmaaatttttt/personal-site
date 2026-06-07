@@ -2,7 +2,7 @@
 
 import type { FC, ReactNode } from "react";
 import { useEffect, useState } from "react";
-import Caption from "@/components/story/shared/Caption";
+import Figure from "@/components/story/shared/Figure";
 import { useIsMounted } from "@/hooks/useIsMounted";
 import { choices } from "@/utils/mathHelpers";
 import baQuizData, { type QuizQuestion } from "../../data/ba-quiz";
@@ -167,7 +167,7 @@ const Quiz: FC<QuizProps> = ({
       <div className="mx-auto flex min-h-[50vh] flex-col items-center justify-center overflow-hidden rounded-lg bg-light-gray p-6 md:p-8 text-center shadow-inner">
         {panel}
       </div>
-      {caption && <Caption>{caption}</Caption>}
+      {caption && <Figure>{caption}</Figure>}
     </div>
   );
 };

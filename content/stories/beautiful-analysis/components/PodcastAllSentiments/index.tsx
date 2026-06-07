@@ -4,7 +4,7 @@ import { scaleLinear } from "d3-scale";
 import { AnimatePresence } from "framer-motion";
 import type { FC } from "react";
 import { useMemo, useState } from "react";
-import Caption from "@/components/story/shared/Caption";
+import Figure from "@/components/story/shared/Figure";
 import Graph from "@/components/story/shared/Graph";
 import Legend from "@/components/story/shared/Legend";
 import NarrowContainer from "@/components/story/shared/NarrowContainer";
@@ -132,7 +132,7 @@ const PodcastAllSentiments: FC<PodcastAllSentimentsProps> = ({
           </Graph>
         </div>
       </NarrowContainer>
-      {caption && <Caption>{caption}</Caption>}
+      {caption && <Figure>{caption}</Figure>}
     </div>
   );
 };

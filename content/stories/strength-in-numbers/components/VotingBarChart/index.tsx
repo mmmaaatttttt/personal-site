@@ -3,7 +3,7 @@
 import { scaleLinear } from "d3-scale";
 import { useState } from "react";
 import BarGraph from "@/components/story/shared/BarGraph";
-import Caption from "@/components/story/shared/Caption";
+import Figure from "@/components/story/shared/Figure";
 import NarrowContainer from "@/components/story/shared/NarrowContainer";
 import Select from "@/components/story/shared/Select";
 import { SliderGroup } from "@/components/story/shared/Slider";
@@ -84,7 +84,7 @@ const VotingBarChart = ({ data, variant, caption }: VotingBarChartProps) => {
   const hasData = barData.length > 0;
 
   return (
-    <Caption caption={caption}>
+    <Figure caption={caption}>
       <NarrowContainer width="77%" fullWidthAt="md">
         <SliderGroup data={sliderData} />
         <div className="mt-4 space-y-3">
@@ -120,7 +120,7 @@ const VotingBarChart = ({ data, variant, caption }: VotingBarChartProps) => {
           )}
         </div>
       </NarrowContainer>
-    </Caption>
+    </Figure>
   );
 };
 

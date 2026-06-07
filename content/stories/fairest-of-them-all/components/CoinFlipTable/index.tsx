@@ -1,8 +1,8 @@
 "use client";
 
 import { type FC, useState } from "react";
-import Caption from "@/components/story/shared/Caption";
 import ColoredSpan from "@/components/story/shared/ColoredSpan";
+import Figure from "@/components/story/shared/Figure";
 import LabeledSlider from "@/components/story/shared/Slider/LabeledSlider";
 import COLORS from "@/utils/styles";
 
@@ -22,7 +22,7 @@ const CoinFlipTable: FC<CoinFlipTableProps> = ({ caption }) => {
   const pairProb = headsProb * tailsProb;
 
   return (
-    <Caption caption={caption}>
+    <Figure caption={caption}>
       <LabeledSlider
         min={0.01}
         max={0.99}
@@ -75,7 +75,7 @@ const CoinFlipTable: FC<CoinFlipTableProps> = ({ caption }) => {
           </tbody>
         </table>
       </div>
-    </Caption>
+    </Figure>
   );
 };
 

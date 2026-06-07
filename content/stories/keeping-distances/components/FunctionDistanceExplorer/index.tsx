@@ -2,8 +2,8 @@
 
 import { scaleLinear } from "d3-scale";
 import { type FC, useCallback, useState } from "react";
-import Caption from "@/components/story/shared/Caption";
 import DraggableCircle from "@/components/story/shared/DraggableCircle";
+import Figure from "@/components/story/shared/Figure";
 import Graph from "@/components/story/shared/Graph";
 import NarrowContainer from "@/components/story/shared/NarrowContainer";
 import ToggleSwitch from "@/components/story/shared/ToggleSwitch";
@@ -83,7 +83,7 @@ const FunctionDistanceExplorer: FC<FunctionDistanceExplorerProps> = ({
     .join(" ");
 
   return (
-    <Caption caption={caption}>
+    <Figure caption={caption}>
       <NarrowContainer width="55%">
         <ToggleSwitch
           leftText={`Largest Diff: ${lInfDistance}`}
@@ -160,7 +160,7 @@ const FunctionDistanceExplorer: FC<FunctionDistanceExplorerProps> = ({
             ))}
         </Graph>
       </NarrowContainer>
-    </Caption>
+    </Figure>
   );
 };
 

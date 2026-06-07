@@ -5,7 +5,7 @@ import { scaleLinear } from "d3-scale";
 import { curveLinear, line as d3Line } from "d3-shape";
 import { animate } from "framer-motion";
 import { useEffect, useMemo, useRef, useState } from "react";
-import Caption from "@/components/story/shared/Caption";
+import Figure from "@/components/story/shared/Figure";
 import Graph from "@/components/story/shared/Graph";
 import NarrowContainer from "@/components/story/shared/NarrowContainer";
 import Select from "@/components/story/shared/Select";
@@ -145,7 +145,7 @@ const VotingLineChart = ({
       : "";
 
   return (
-    <Caption caption={caption}>
+    <Figure caption={caption}>
       <NarrowContainer width="77%">
         <div className="space-y-3">
           <Select
@@ -200,7 +200,7 @@ const VotingLineChart = ({
           )}
         </div>
       </NarrowContainer>
-    </Caption>
+    </Figure>
   );
 };
 

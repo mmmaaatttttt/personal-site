@@ -4,8 +4,8 @@ import { extent } from "d3-array";
 import type { AxisScale } from "d3-axis";
 import { type NumberValue, scaleLinear } from "d3-scale";
 import { useCallback, useMemo, useState } from "react";
-import Caption from "@/components/story/shared/Caption";
 import ColumnLayout from "@/components/story/shared/ColumnLayout";
+import Figure from "@/components/story/shared/Figure";
 import FlexContainer from "@/components/story/shared/FlexContainer";
 import Graph from "@/components/story/shared/Graph";
 import LinePlot from "@/components/story/shared/LinePlot";
@@ -221,5 +221,5 @@ export default function GamingRelationships({
       </FlexContainer>
     );
 
-  return <Caption caption={caption}>{content}</Caption>;
+  return <Figure caption={caption}>{content}</Figure>;
 }

@@ -2,7 +2,7 @@
 
 import { scaleLinear } from "d3-scale";
 import { type FC, useState } from "react";
-import Caption from "@/components/story/shared/Caption";
+import Figure from "@/components/story/shared/Figure";
 import Graph from "@/components/story/shared/Graph";
 import NarrowContainer from "@/components/story/shared/NarrowContainer";
 import LabeledSlider from "@/components/story/shared/Slider/LabeledSlider";
@@ -43,7 +43,7 @@ const ManhattanPaths: FC<ManhattanPathsProps> = ({ caption }) => {
   const polylinePoints = pathPoints.map((p) => `${p.x},${p.y}`).join(" ");
 
   return (
-    <Caption caption={caption}>
+    <Figure caption={caption}>
       <NarrowContainer width="55%">
         <LabeledSlider
           min={1}
@@ -106,7 +106,7 @@ const ManhattanPaths: FC<ManhattanPathsProps> = ({ caption }) => {
           />
         </Graph>
       </NarrowContainer>
-    </Caption>
+    </Figure>
   );
 };
 

@@ -1,7 +1,7 @@
 "use client";
 
 import { type ChangeEvent, type FC, useState } from "react";
-import Caption from "@/components/story/shared/Caption";
+import Figure from "@/components/story/shared/Figure";
 import Latex from "@/components/story/shared/Latex";
 import NarrowContainer from "@/components/story/shared/NarrowContainer";
 import Select from "@/components/story/shared/Select";
@@ -34,7 +34,7 @@ const PAdicCalculator: FC<PAdicCalculatorProps> = ({ caption }) => {
   const latexStr = displayIntegerDifference(num1, num2, Number(prime.value));
 
   return (
-    <Caption caption={caption}>
+    <Figure caption={caption}>
       <NarrowContainer width="46%">
         <div className="flex flex-col gap-4">
           <div className="flex flex-wrap items-center justify-center gap-6">
@@ -82,7 +82,7 @@ const PAdicCalculator: FC<PAdicCalculatorProps> = ({ caption }) => {
           </div>
         </div>
       </NarrowContainer>
-    </Caption>
+    </Figure>
   );
 };
 

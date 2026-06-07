@@ -2,7 +2,7 @@
 
 import { format } from "d3-format";
 import { type FC, useState } from "react";
-import Caption from "@/components/story/shared/Caption";
+import Figure from "@/components/story/shared/Figure";
 import NarrowContainer from "@/components/story/shared/NarrowContainer";
 import { SliderGroup } from "@/components/story/shared/Slider";
 import StyledTable from "@/components/story/shared/StyledTable";
@@ -97,7 +97,7 @@ const VotingTable: FC<VotingTableProps> = ({ tableData, caption }) => {
   ];
 
   return (
-    <Caption caption={caption}>
+    <Figure caption={caption}>
       <NarrowContainer width="58%">
         <SliderGroup data={sliderData} />
         <StyledTable
@@ -112,7 +112,7 @@ const VotingTable: FC<VotingTableProps> = ({ tableData, caption }) => {
           }))}
         />
       </NarrowContainer>
-    </Caption>
+    </Figure>
   );
 };
 

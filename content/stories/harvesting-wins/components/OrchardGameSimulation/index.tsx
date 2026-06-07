@@ -1,7 +1,7 @@
 "use client";
 
 import { type FC, useCallback, useEffect, useRef, useState } from "react";
-import Caption from "@/components/story/shared/Caption";
+import Figure from "@/components/story/shared/Figure";
 import FlexContainer from "@/components/story/shared/FlexContainer";
 import HorizontalBar from "@/components/story/shared/HorizontalBar";
 import NarrowContainer from "@/components/story/shared/NarrowContainer";
@@ -109,7 +109,7 @@ const OrchardGameSimulation: FC<OrchardGameSimulationProps> = ({
   }, []);
 
   return (
-    <Caption caption={caption}>
+    <Figure caption={caption}>
       <NarrowContainer width="100%" fullWidthAt="sm">
         <FlexContainer main="center">
           <Button variant="outline" onClick={togglePlaying} size="sm">
@@ -152,7 +152,7 @@ const OrchardGameSimulation: FC<OrchardGameSimulationProps> = ({
             })}
         </div>
       </NarrowContainer>
-    </Caption>
+    </Figure>
   );
 };
 

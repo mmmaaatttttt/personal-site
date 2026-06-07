@@ -1,7 +1,7 @@
 "use client";
 
 import { type FC, useMemo, useState } from "react";
-import Caption from "@/components/story/shared/Caption";
+import Figure from "@/components/story/shared/Figure";
 import HeatChart from "@/components/story/shared/HeatChart";
 import NarrowContainer from "@/components/story/shared/NarrowContainer";
 import Select from "@/components/story/shared/Select";
@@ -26,7 +26,7 @@ const PAdicHeatChart: FC<PAdicHeatChartProps> = ({ caption }) => {
   const gridData = useMemo(() => generateGrid(GRID_SIZE, prime), [prime]);
 
   return (
-    <Caption caption={caption}>
+    <Figure caption={caption}>
       <NarrowContainer width="55%">
         <div className="flex flex-col items-center gap-4">
           <Select
@@ -52,7 +52,7 @@ const PAdicHeatChart: FC<PAdicHeatChartProps> = ({ caption }) => {
           </div>
         </div>
       </NarrowContainer>
-    </Caption>
+    </Figure>
   );
 };
 

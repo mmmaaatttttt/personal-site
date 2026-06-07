@@ -1,7 +1,7 @@
 "use client";
 
 import { type FC, useState } from "react";
-import Caption from "@/components/story/shared/Caption";
+import Figure from "@/components/story/shared/Figure";
 import HeatChart from "@/components/story/shared/HeatChart";
 import NarrowContainer from "@/components/story/shared/NarrowContainer";
 import Select from "@/components/story/shared/Select";
@@ -59,7 +59,7 @@ const OrchardGameHeatData: FC<{ caption?: string }> = () => {
     }, []);
 
   return (
-    <Caption>
+    <Figure>
       <NarrowContainer width="55%">
         <SliderGroup data={sliderData} />
         <div className="mt-4 space-y-3">
@@ -88,7 +88,7 @@ const OrchardGameHeatData: FC<{ caption?: string }> = () => {
           />
         </div>
       </NarrowContainer>
-    </Caption>
+    </Figure>
   );
 };
 

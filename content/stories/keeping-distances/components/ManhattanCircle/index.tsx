@@ -2,7 +2,7 @@
 
 import { scaleLinear } from "d3-scale";
 import type { FC } from "react";
-import Caption from "@/components/story/shared/Caption";
+import Figure from "@/components/story/shared/Figure";
 import Graph from "@/components/story/shared/Graph";
 import NarrowContainer from "@/components/story/shared/NarrowContainer";
 import { SliderGroup } from "@/components/story/shared/Slider";
@@ -41,7 +41,7 @@ const ManhattanCircle: FC<ManhattanCircleProps> = ({ caption }) => {
   const points = generateCirclePoints(r);
 
   return (
-    <Caption caption={caption}>
+    <Figure caption={caption}>
       <NarrowContainer width="55%">
         <SliderGroup data={sliderData} />
         <Graph
@@ -64,7 +64,7 @@ const ManhattanCircle: FC<ManhattanCircleProps> = ({ caption }) => {
           ))}
         </Graph>
       </NarrowContainer>
-    </Caption>
+    </Figure>
   );
 };
 

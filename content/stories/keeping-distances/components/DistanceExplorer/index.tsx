@@ -3,8 +3,8 @@
 import { extent } from "d3-array";
 import { scaleLinear } from "d3-scale";
 import { type FC, useCallback } from "react";
-import Caption from "@/components/story/shared/Caption";
 import DraggableCircle from "@/components/story/shared/DraggableCircle";
+import Figure from "@/components/story/shared/Figure";
 import Graph from "@/components/story/shared/Graph";
 import NarrowContainer from "@/components/story/shared/NarrowContainer";
 import { average, euclideanDistance } from "@/utils/mathHelpers";
@@ -60,7 +60,7 @@ const DistanceExplorer: FC<DistanceExplorerProps> = ({ caption }) => {
   const textY = average(scaledPoints, (p) => p.y);
 
   return (
-    <Caption caption={caption}>
+    <Figure caption={caption}>
       <NarrowContainer width="55%">
         <Graph
           xAxisPosition="center"
@@ -123,7 +123,7 @@ const DistanceExplorer: FC<DistanceExplorerProps> = ({ caption }) => {
             ))}
         </Graph>
       </NarrowContainer>
-    </Caption>
+    </Figure>
   );
 };
 

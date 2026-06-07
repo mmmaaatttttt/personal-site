@@ -19,7 +19,7 @@ vi.mock("odex", () => ({
   ),
 }));
 
-vi.mock("@/components/story/shared/Caption", () => ({
+vi.mock("@/components/story/shared/Figure", () => ({
   default: ({
     children,
     caption,

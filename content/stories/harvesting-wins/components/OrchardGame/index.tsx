@@ -1,7 +1,7 @@
 "use client";
 
 import { type FC, useCallback, useState } from "react";
-import Caption from "@/components/story/shared/Caption";
+import Figure from "@/components/story/shared/Figure";
 import FlexContainer from "@/components/story/shared/FlexContainer";
 import NarrowContainer from "@/components/story/shared/NarrowContainer";
 import { Button } from "@/components/ui/Button";
@@ -84,7 +84,7 @@ const OrchardGame: FC<{ caption?: string }> = ({ caption }) => {
       : "";
 
   return (
-    <Caption caption={caption}>
+    <Figure caption={caption}>
       <NarrowContainer width="77%" fullWidthAt="sm">
         <div className="relative pb-4">
           {gameState !== "playing" && (
@@ -127,7 +127,7 @@ const OrchardGame: FC<{ caption?: string }> = ({ caption }) => {
           </FlexContainer>
         </div>
       </NarrowContainer>
-    </Caption>
+    </Figure>
   );
 };
 

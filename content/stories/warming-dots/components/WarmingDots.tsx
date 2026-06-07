@@ -4,8 +4,8 @@ import { extent, max } from "d3-array";
 import type { AxisScale } from "d3-axis";
 import { type NumberValue, scaleLinear } from "d3-scale";
 import { type FC, useMemo } from "react";
-import Caption from "@/components/story/shared/Caption";
 import ColumnLayout from "@/components/story/shared/ColumnLayout";
+import Figure from "@/components/story/shared/Figure";
 import FlexContainer from "@/components/story/shared/FlexContainer";
 import Graph from "@/components/story/shared/Graph";
 import LinePlot from "@/components/story/shared/LinePlot";
@@ -140,7 +140,7 @@ const WarmingDots: FC<WarmingDotsProps> = ({
   );
 
   return (
-    <Caption caption={caption}>
+    <Figure caption={caption}>
       {numSliders < 4 ? (
         <NarrowContainer width="75%">
           <SliderGroup data={sliderData} compact={compact} />
@@ -154,7 +154,7 @@ const WarmingDots: FC<WarmingDotsProps> = ({
           {chartEl}
         </ColumnLayout>
       )}
-    </Caption>
+    </Figure>
   );
 };
 

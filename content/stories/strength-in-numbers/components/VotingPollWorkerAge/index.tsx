@@ -2,7 +2,7 @@
 
 import { scaleOrdinal } from "d3-scale";
 import { type FC, useState } from "react";
-import Caption from "@/components/story/shared/Caption";
+import Figure from "@/components/story/shared/Figure";
 import Legend from "@/components/story/shared/Legend";
 import NarrowContainer from "@/components/story/shared/NarrowContainer";
 import PieChart from "@/components/story/shared/PieChart";
@@ -69,7 +69,7 @@ const VotingPollWorkerAge: FC<VotingPollWorkerAgeProps> = ({
     stateOptions.find((o) => o.label === selectedState) ?? stateOptions[0];
 
   return (
-    <Caption caption={caption}>
+    <Figure caption={caption}>
       <NarrowContainer width="46%" fullWidthAt="md">
         <SliderGroup data={sliderData} />
         <div className="mt-4 space-y-3">
@@ -107,7 +107,7 @@ const VotingPollWorkerAge: FC<VotingPollWorkerAgeProps> = ({
           )}
         </div>
       </NarrowContainer>
-    </Caption>
+    </Figure>
   );
 };
 

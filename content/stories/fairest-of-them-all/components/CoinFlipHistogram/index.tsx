@@ -4,7 +4,7 @@ import { max } from "d3-array";
 import { scaleLinear } from "d3-scale";
 import type { FC } from "react";
 import BarGraph from "@/components/story/shared/BarGraph";
-import Caption from "@/components/story/shared/Caption";
+import Figure from "@/components/story/shared/Figure";
 import NarrowContainer from "@/components/story/shared/NarrowContainer";
 import { SliderGroup } from "@/components/story/shared/Slider";
 import useSliders from "@/hooks/useSliders";
@@ -53,7 +53,7 @@ const CoinFlipHistogram: FC<CoinFlipHistogramProps> = ({ caption }) => {
     .range([HEIGHT - PADDING.bottom, PADDING.top]);
 
   return (
-    <Caption caption={caption}>
+    <Figure caption={caption}>
       <NarrowContainer width="70%">
         <SliderGroup data={sliderData} />
         <BarGraph
@@ -73,7 +73,7 @@ const CoinFlipHistogram: FC<CoinFlipHistogramProps> = ({ caption }) => {
           yScale={yScale}
         />
       </NarrowContainer>
-    </Caption>
+    </Figure>
   );
 };
 

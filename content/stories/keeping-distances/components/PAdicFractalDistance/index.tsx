@@ -2,8 +2,8 @@
 
 import { AnimatePresence, motion } from "framer-motion";
 import { type FC, useState } from "react";
-import Caption from "@/components/story/shared/Caption";
 import ClippedSVG from "@/components/story/shared/ClippedSVG";
+import Figure from "@/components/story/shared/Figure";
 import NarrowContainer from "@/components/story/shared/NarrowContainer";
 import Select from "@/components/story/shared/Select";
 import { SliderGroup } from "@/components/story/shared/Slider";
@@ -43,7 +43,7 @@ const PAdicFractalDistance: FC<PAdicFractalDistanceProps> = ({ caption }) => {
   const points = generatePAdicPoints(prime, level);
 
   return (
-    <Caption caption={caption}>
+    <Figure caption={caption}>
       <NarrowContainer width="58%">
         <SliderGroup data={sliderData} />
         <div className="flex flex-col items-center gap-4">
@@ -94,7 +94,7 @@ const PAdicFractalDistance: FC<PAdicFractalDistanceProps> = ({ caption }) => {
           </ClippedSVG>
         </div>
       </NarrowContainer>
-    </Caption>
+    </Figure>
   );
 };
 

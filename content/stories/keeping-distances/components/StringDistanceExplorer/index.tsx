@@ -1,7 +1,7 @@
 "use client";
 
 import { type FC, useState } from "react";
-import Caption from "@/components/story/shared/Caption";
+import Figure from "@/components/story/shared/Figure";
 import NarrowContainer from "@/components/story/shared/NarrowContainer";
 import StyledTable from "@/components/story/shared/StyledTable";
 import {
@@ -41,7 +41,7 @@ const StringDistanceExplorer: FC<StringDistanceExplorerProps> = ({
   ];
 
   return (
-    <Caption caption={caption}>
+    <Figure caption={caption}>
       <NarrowContainer width="62%">
         <div className="flex flex-wrap items-start justify-around gap-6 text-center">
           <div className="flex flex-col items-center gap-1">
@@ -76,7 +76,7 @@ const StringDistanceExplorer: FC<StringDistanceExplorerProps> = ({
           <StyledTable data={tableData} />
         </div>
       </NarrowContainer>
-    </Caption>
+    </Figure>
   );
 };
 

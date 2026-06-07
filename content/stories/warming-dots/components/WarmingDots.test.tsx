@@ -61,7 +61,7 @@ vi.mock("@/components/story/shared/LinePlot", () => ({
   ),
 }));
 
-vi.mock("@/components/story/shared/Caption", () => ({
+vi.mock("@/components/story/shared/Figure", () => ({
   default: ({
     children,
     caption,

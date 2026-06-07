@@ -3,8 +3,8 @@
 import { scaleLinear } from "d3-scale";
 import { useCallback, useMemo, useState } from "react";
 import BarGraph from "@/components/story/shared/BarGraph";
-import Caption from "@/components/story/shared/Caption";
 import ClippedSVG from "@/components/story/shared/ClippedSVG";
+import Figure from "@/components/story/shared/Figure";
 import NarrowContainer from "@/components/story/shared/NarrowContainer";
 import SliderGroup from "@/components/story/shared/Slider/SliderGroup";
 import { Button } from "@/components/ui/Button";
@@ -120,7 +120,7 @@ const EconomySimulation = ({
   ];
 
   return (
-    <Caption caption={caption}>
+    <Figure caption={caption}>
       <NarrowContainer width="55%">
         <SliderGroup data={playing ? postStartSliders : preStartSliders} />
 
@@ -197,7 +197,7 @@ const EconomySimulation = ({
           />
         </div>
       </NarrowContainer>
-    </Caption>
+    </Figure>
   );
 };
 

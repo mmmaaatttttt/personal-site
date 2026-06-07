@@ -1,9 +1,9 @@
 "use client";
 
 import { type FC, useState } from "react";
-import Caption from "@/components/story/shared/Caption";
 import ClippedSVG from "@/components/story/shared/ClippedSVG";
 import ColoredSpan from "@/components/story/shared/ColoredSpan";
+import Figure from "@/components/story/shared/Figure";
 import FlexContainer from "@/components/story/shared/FlexContainer";
 import NarrowContainer from "@/components/story/shared/NarrowContainer";
 import LabeledSlider from "@/components/story/shared/Slider/LabeledSlider";
@@ -344,7 +344,7 @@ const RentDivision: FC<RentDivisionProps> = ({ caption }) => {
   );
 
   return (
-    <Caption caption={caption} captionMarginTop="-2.8em">
+    <Figure caption={caption} captionMarginTop="-2.8em">
       {renderTopArea()}
       <NarrowContainer width="55%" fullWidthAt="sm">
         <div className="relative">
@@ -355,7 +355,7 @@ const RentDivision: FC<RentDivisionProps> = ({ caption }) => {
           <Tooltip info={tooltip} />
         </div>
       </NarrowContainer>
-    </Caption>
+    </Figure>
   );
 };
 

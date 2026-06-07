@@ -2,7 +2,7 @@
 
 import { format } from "d3-format";
 import { useState } from "react";
-import Caption from "@/components/story/shared/Caption";
+import Figure from "@/components/story/shared/Figure";
 import NarrowContainer from "@/components/story/shared/NarrowContainer";
 import Select from "@/components/story/shared/Select";
 import { SliderGroup } from "@/components/story/shared/Slider";
@@ -62,7 +62,7 @@ const VotingMap = ({ data, variant, caption }: VotingMapProps) => {
       : undefined;
 
   return (
-    <Caption caption={caption}>
+    <Figure caption={caption}>
       <NarrowContainer width="77%" fullWidthAt="md">
         <SliderGroup data={sliderData} />
         <div className="mt-4 space-y-3">
@@ -101,7 +101,7 @@ const VotingMap = ({ data, variant, caption }: VotingMapProps) => {
         </div>
       </NarrowContainer>
       <Tooltip info={tooltip} />
-    </Caption>
+    </Figure>
   );
 };
 
