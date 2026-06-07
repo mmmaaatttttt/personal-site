@@ -56,7 +56,7 @@ const LinePlot: FC<LinePlotProps> = ({
 
   return (
     <path
-      d={linePath(truncateData())!}
+      d={linePath(truncateData()) as string}
       strokeWidth={strokeWidth}
       stroke={stroke}
       fill="none"
