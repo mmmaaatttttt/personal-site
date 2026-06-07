@@ -4,6 +4,7 @@ import type { ComponentType } from "react";
 import MainLayout from "@/components/layout/MainLayout";
 import StoryActions from "@/components/layout/StoryActions";
 import StoryCard from "@/components/layout/StoryCard";
+import { FigureProvider } from "@/components/story/shared/Figure/FigureProvider";
 import { SITE_URL } from "@/lib/constants";
 import placeholders from "@/lib/imagePlaceholders.json";
 import {
@@ -201,7 +202,9 @@ export default async function ArticlePage({ params }: PageProps) {
         <div className="relative mx-auto w-full max-w-[var(--max-w-content)] px-4 sm:px-8 md:px-0">
           <div className="prose max-w-none text-[#1a1a1a] pb-4">
             {StoryContent ? (
-              <StoryContent />
+              <FigureProvider>
+                <StoryContent />
+              </FigureProvider>
             ) : (
               <div className="py-24 text-center text-gray-500">
                 <p className="text-xl font-semibold mb-2">Coming soon</p>
