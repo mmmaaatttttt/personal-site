@@ -7,12 +7,6 @@ vi.mock("./EconomyNodeGroup", () => ({
   default: () => <g data-testid="mock-node-group" />,
 }));
 
-global.ResizeObserver = vi.fn().mockImplementation(() => ({
-  observe: vi.fn(),
-  unobserve: vi.fn(),
-  disconnect: vi.fn(),
-}));
-
 describe("EconomySimulation", () => {
   it("renders the Start button before simulation begins", () => {
     render(<EconomySimulation idx={0} />);

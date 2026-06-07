@@ -6,14 +6,16 @@ import WarmingDots from "./WarmingDots";
 
 // Mock odex since it does heavy numerical integration
 vi.mock("odex", () => ({
-  Solver: vi.fn().mockImplementation((_fn: unknown, _n: number) => ({
-    solve: vi.fn(),
-    grid: vi.fn((_step: number, cb: (x: number, y: number[]) => void) => {
-      cb(0, [1, 0]);
-      cb(1, [2, 0.1]);
-      return vi.fn();
-    }),
-  })),
+  Solver: vi.fn().mockImplementation(
+    class {
+      solve = vi.fn();
+      grid = vi.fn((_step: number, cb: (x: number, y: number[]) => void) => {
+        cb(0, [1, 0]);
+        cb(1, [2, 0.1]);
+        return vi.fn();
+      });
+    } as never,
+  ),
 }));
 
 vi.mock("@/hooks/useSliders", () => ({

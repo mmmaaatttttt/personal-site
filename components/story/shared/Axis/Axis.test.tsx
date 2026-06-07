@@ -181,6 +181,22 @@ describe("Axis Component", () => {
     expect(container.querySelector(".axis-group")).toBeInTheDocument();
   });
 
+  it("skips tickValues when tickStep is set but domain is non-numeric", () => {
+    const bandScale = scaleBand().domain(["A", "B", "C"]).range([0, 600]);
+    const { container } = render(
+      <svg role="img" aria-label="test">
+        <Axis
+          direction="x"
+          scale={bandScale}
+          tickFormat=""
+          tickStep={1}
+          yShift={380}
+        />
+      </svg>,
+    );
+    expect(container.querySelector(".axis-group")).toBeInTheDocument();
+  });
+
   it("self-positions y-axis from ChartContext", () => {
     const xScale = scaleLinear().domain([0, 100]).range([0, 600]);
     const yScale = scaleLinear().domain([0, 100]).range([400, 0]);
