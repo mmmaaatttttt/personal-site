@@ -56,7 +56,7 @@ const Axis = <Domain extends AxisDomain>({
   xShift,
   yShift,
 }: AxisProps<Domain>) => {
-  const axisRef = useRef<SVGGElement>(null);
+  const axisRef = useRef<SVGGElement>(null!);
   const chart = useChart();
 
   // Geometry props derive from ChartContext when absent — explicit props always win.
@@ -80,8 +80,6 @@ const Axis = <Domain extends AxisDomain>({
     contextStyle?.labelPosition ?? { x: "0", y: "0", dx: "0", dy: "0" };
 
   useEffect(() => {
-    if (!axisRef.current) return;
-
     const axisObj = direction === "x" ? axisBottom(scale) : axisLeft(scale);
     if (tickFormat !== undefined) {
       // Show labels using the provided d3 format string.

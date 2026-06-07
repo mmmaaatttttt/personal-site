@@ -125,7 +125,7 @@ const BarGraph: FC<BarGraphProps> = ({
                 barWidth = linearScale(d.x1 ?? 0) - linearScale(d.x0 ?? 0) - 2;
               } else {
                 const bandScale = xScale as ScaleBand<string>;
-                x = bandScale(i.toString()) || 0;
+                x = bandScale(i.toString()) as number;
                 barWidth = bandScale.bandwidth();
               }
 

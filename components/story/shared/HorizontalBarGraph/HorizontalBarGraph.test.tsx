@@ -129,4 +129,12 @@ describe("HorizontalBarGraph Component", () => {
     );
     expect(bars.length).toBe(0);
   });
+
+  it("accepts numeric padding", () => {
+    const { container } = render(
+      <HorizontalBarGraph {...defaultProps} padding={10} />,
+    );
+    const svg = container.querySelector("svg");
+    expect(svg).toBeInTheDocument();
+  });
 });
