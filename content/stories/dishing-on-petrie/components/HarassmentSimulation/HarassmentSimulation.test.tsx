@@ -10,13 +10,6 @@ vi.mock("./HarassmentNodeGroup", () => ({
   ),
 }));
 
-// Mock ResizeObserver for JSDOM in ClippedSVG
-global.ResizeObserver = vi.fn().mockImplementation(() => ({
-  observe: vi.fn(),
-  unobserve: vi.fn(),
-  disconnect: vi.fn(),
-}));
-
 describe("HarassmentSimulation Component", () => {
   it("renders initial state with Start button", () => {
     render(<HarassmentSimulation idx={0} />);

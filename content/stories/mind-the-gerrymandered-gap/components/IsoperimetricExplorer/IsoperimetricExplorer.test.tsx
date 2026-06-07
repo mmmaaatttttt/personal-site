@@ -2,12 +2,6 @@ import { act, fireEvent, render, screen } from "@testing-library/react";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import IsoperimetricExplorer from ".";
 
-global.ResizeObserver = vi.fn().mockImplementation(() => ({
-  observe: vi.fn(),
-  unobserve: vi.fn(),
-  disconnect: vi.fn(),
-}));
-
 beforeEach(() => {
   SVGSVGElement.prototype.getScreenCTM = vi.fn().mockReturnValue({
     a: 1,

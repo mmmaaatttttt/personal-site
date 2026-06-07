@@ -1,14 +1,7 @@
 import { render, screen } from "@testing-library/react";
-import { describe, expect, it, vi } from "vitest";
+import { describe, expect, it } from "vitest";
 import "@testing-library/jest-dom/vitest";
 import ClippedSVG from ".";
-
-// Mock ResizeObserver for JSDOM
-global.ResizeObserver = vi.fn().mockImplementation(() => ({
-  observe: vi.fn(),
-  unobserve: vi.fn(),
-  disconnect: vi.fn(),
-}));
 
 describe("ClippedSVG Component", () => {
   const defaultProps = {
