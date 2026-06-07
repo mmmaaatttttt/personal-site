@@ -4,7 +4,6 @@ import { scaleLinear } from "d3-scale";
 import { AnimatePresence } from "framer-motion";
 import type { FC } from "react";
 import { useMemo, useState } from "react";
-import Figure from "@/components/story/shared/Figure";
 import Graph from "@/components/story/shared/Graph";
 import Legend from "@/components/story/shared/Legend";
 import NarrowContainer from "@/components/story/shared/NarrowContainer";
@@ -26,7 +25,6 @@ interface PodcastAllSentimentsProps {
   padding?: { top: number; left: number; right: number; bottom: number };
   svgId?: string;
   width?: number;
-  caption?: string;
 }
 
 const PodcastAllSentiments: FC<PodcastAllSentimentsProps> = ({
@@ -34,7 +32,6 @@ const PodcastAllSentiments: FC<PodcastAllSentimentsProps> = ({
   padding = { top: 10, left: 50, right: 20, bottom: 10 },
   svgId = "all-sentiments",
   width = 800,
-  caption,
 }) => {
   const options = baAllSentiment.map((ep, i) => ({
     value: i.toString(),
@@ -132,7 +129,6 @@ const PodcastAllSentiments: FC<PodcastAllSentimentsProps> = ({
           </Graph>
         </div>
       </NarrowContainer>
-      {caption && <Figure>{caption}</Figure>}
     </div>
   );
 };
