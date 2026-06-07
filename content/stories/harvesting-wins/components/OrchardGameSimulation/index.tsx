@@ -1,7 +1,6 @@
 "use client";
 
 import { type FC, useCallback, useEffect, useRef, useState } from "react";
-import Figure from "@/components/story/shared/Figure";
 import FlexContainer from "@/components/story/shared/FlexContainer";
 import HorizontalBar from "@/components/story/shared/HorizontalBar";
 import NarrowContainer from "@/components/story/shared/NarrowContainer";
@@ -16,14 +15,12 @@ interface PlayData {
 }
 
 interface OrchardGameSimulationProps {
-  caption?: string;
   fruitCounts?: number[];
   ravenCount?: number;
   wildCardCount?: number;
 }
 
 const OrchardGameSimulation: FC<OrchardGameSimulationProps> = ({
-  caption,
   fruitCounts: initialFruitCounts = [4, 4, 4, 4],
   ravenCount: initialRavenCount = 5,
   wildCardCount = 1,
@@ -109,50 +106,48 @@ const OrchardGameSimulation: FC<OrchardGameSimulationProps> = ({
   }, []);
 
   return (
-    <Figure caption={caption}>
-      <NarrowContainer width="100%" fullWidthAt="sm">
-        <FlexContainer main="center">
-          <Button variant="outline" onClick={togglePlaying} size="sm">
-            {playing ? "Pause" : "Play"}
+    <NarrowContainer width="100%" fullWidthAt="sm">
+      <FlexContainer main="center">
+        <Button variant="outline" onClick={togglePlaying} size="sm">
+          {playing ? "Pause" : "Play"}
+        </Button>
+        {!playing && (
+          <Button onClick={reset} className="ml-2" size="sm">
+            Reset Simulation
           </Button>
-          {!playing && (
-            <Button onClick={reset} className="ml-2" size="sm">
-              Reset Simulation
-            </Button>
-          )}
-        </FlexContainer>
-        <div className="mt-4 space-y-4">
-          {playData
-            .map((d, i) => ({ d, label: camelCaseToTitle(strategies[i].name) }))
-            .map(({ d, label }) => {
-              const pct = ((d.gamesWon / d.gamesPlayed) * 100 || 0).toFixed(1);
-              return (
-                <HorizontalBar
-                  key={label}
-                  title={`${label} Strategy: ${pct}%`}
-                  data={[
-                    {
-                      size: d.gamesWon,
-                      color: COLORS.GREEN,
-                      tooltipText: `Games Won: ${d.gamesWon.toLocaleString()}`,
-                    },
-                    {
-                      size: d.gamesPlayed - d.gamesWon,
-                      color: COLORS.RED,
-                      tooltipText: `Games Played: ${d.gamesPlayed.toLocaleString()}`,
-                    },
-                    {
-                      size: 0,
-                      color: COLORS.GRAY,
-                      tooltipText: `Win Percentage: ${pct}%`,
-                    },
-                  ]}
-                />
-              );
-            })}
-        </div>
-      </NarrowContainer>
-    </Figure>
+        )}
+      </FlexContainer>
+      <div className="mt-4 space-y-4">
+        {playData
+          .map((d, i) => ({ d, label: camelCaseToTitle(strategies[i].name) }))
+          .map(({ d, label }) => {
+            const pct = ((d.gamesWon / d.gamesPlayed) * 100 || 0).toFixed(1);
+            return (
+              <HorizontalBar
+                key={label}
+                title={`${label} Strategy: ${pct}%`}
+                data={[
+                  {
+                    size: d.gamesWon,
+                    color: COLORS.GREEN,
+                    tooltipText: `Games Won: ${d.gamesWon.toLocaleString()}`,
+                  },
+                  {
+                    size: d.gamesPlayed - d.gamesWon,
+                    color: COLORS.RED,
+                    tooltipText: `Games Played: ${d.gamesPlayed.toLocaleString()}`,
+                  },
+                  {
+                    size: 0,
+                    color: COLORS.GRAY,
+                    tooltipText: `Win Percentage: ${pct}%`,
+                  },
+                ]}
+              />
+            );
+          })}
+      </div>
+    </NarrowContainer>
   );
 };
 
