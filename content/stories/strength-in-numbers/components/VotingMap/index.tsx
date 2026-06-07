@@ -2,7 +2,6 @@
 
 import { format } from "d3-format";
 import { useState } from "react";
-import Figure from "@/components/story/shared/Figure";
 import NarrowContainer from "@/components/story/shared/NarrowContainer";
 import Select from "@/components/story/shared/Select";
 import { SliderGroup } from "@/components/story/shared/Slider";
@@ -22,7 +21,6 @@ import {
 interface VotingMapProps {
   data: VotingDataRow[];
   variant: "voters" | "workers";
-  caption?: string;
 }
 
 const SLIDER_CONFIG = [
@@ -37,7 +35,7 @@ const SLIDER_CONFIG = [
   },
 ];
 
-const VotingMap = ({ data, variant, caption }: VotingMapProps) => {
+const VotingMap = ({ data, variant }: VotingMapProps) => {
   const options =
     variant === "voters" ? VOTERS_MAP_OPTIONS : WORKERS_MAP_OPTIONS;
   const [selectedValue, setSelectedValue] = useState(options[0].value);
@@ -62,7 +60,7 @@ const VotingMap = ({ data, variant, caption }: VotingMapProps) => {
       : undefined;
 
   return (
-    <Figure caption={caption}>
+    <>
       <NarrowContainer width="77%" fullWidthAt="md">
         <SliderGroup data={sliderData} />
         <div className="mt-4 space-y-3">
@@ -101,7 +99,7 @@ const VotingMap = ({ data, variant, caption }: VotingMapProps) => {
         </div>
       </NarrowContainer>
       <Tooltip info={tooltip} />
-    </Figure>
+    </>
   );
 };
 

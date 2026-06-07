@@ -115,18 +115,6 @@ describe("VotingLineChart (voters variant)", () => {
     expect(options).toContain("Arizona");
   });
 
-  it("renders the caption when provided", () => {
-    render(
-      <VotingLineChart
-        data={mockData}
-        states={mockStates}
-        variant="voters"
-        caption="Line chart caption"
-      />,
-    );
-    expect(screen.getByText("Line chart caption")).toBeInTheDocument();
-  });
-
   it("uses the provided svgId for the clip path", () => {
     const { container } = render(
       <VotingLineChart
