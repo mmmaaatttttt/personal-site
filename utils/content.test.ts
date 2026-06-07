@@ -32,6 +32,14 @@ vi.mock("@/utils/storyMeta", () => ({
       featured_image_caption: "",
       tags: ["math", "games"],
     },
+    "older-story": {
+      title: "Older Story",
+      date: "2023-01-15",
+      featured_image: "/img/older.jpg",
+      caption: "An older test",
+      featured_image_caption: "",
+      tags: ["math"],
+    },
   },
 }));
 
@@ -153,6 +161,15 @@ describe("getAllArticles", () => {
       tags: ["math", "games"],
       timeToRead: expect.any(Number),
     });
+  });
+
+  it("sorts articles by date descending", () => {
+    vi.mocked(fs.readdirSync).mockReturnValueOnce(
+      asDirents([mockDirent("older-story"), mockDirent("test-story")]),
+    );
+    const articles = getAllArticles();
+    expect(articles[0].slug).toBe("test-story");
+    expect(articles[1].slug).toBe("older-story");
   });
 });
 

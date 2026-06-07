@@ -81,10 +81,6 @@ export function getAllArticles(): ArticleMeta[] {
     };
   });
 
-  // Sort by date descending (using the original YYYY-MM-DD for sorting)
-  // Wait, I should probably keep the raw date for sorting.
-  // Let's refine this to keep frontmatter clean but provide formatted date.
-
   return articles.sort(
     (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime(),
   );

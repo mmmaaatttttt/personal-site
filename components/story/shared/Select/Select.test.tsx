@@ -41,6 +41,22 @@ describe("Select Component", () => {
     expect(handleChange).toHaveBeenCalledWith(mockOptions[1]);
   });
 
+  it("does not call onChange when value matches no option", () => {
+    const handleChange = vi.fn();
+    render(
+      <Select
+        name="test-select"
+        value="opt1"
+        onChange={handleChange}
+        options={mockOptions}
+      />,
+    );
+    fireEvent.change(screen.getByRole("combobox"), {
+      target: { value: "nonexistent" },
+    });
+    expect(handleChange).not.toHaveBeenCalled();
+  });
+
   it("renders placeholder if provided", () => {
     render(
       <Select

@@ -31,9 +31,7 @@ const PieChart: FC<PieChartProps> = ({
   const radius = width / 2 - padding;
 
   const arcs = useMemo(() => {
-    return pie<number>()
-      .sortValues((a, b) => values.indexOf(a) - values.indexOf(b))
-      .sort(null)(values);
+    return pie<number>().sort(null)(values);
   }, [values]);
 
   const pathArc = useMemo(() => {
