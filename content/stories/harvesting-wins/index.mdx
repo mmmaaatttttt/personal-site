@@ -19,7 +19,7 @@ Reading about the rules is way less fun than playing the game. So below I've pro
 
 The tiles on the bottom keep track of how many fruits in each color are remaining. Similarly, the value in the black tile at the bottom right represents the number of paces until the raven reaches the orchard. When you spin, the game automatically removes the correct fruit or advances the raven, unless you land on the white portion of the spinner. This corresponds to the fruit basket wild card, and when this happens, you can click on one of the tiles below the spinner to remove a fruit of your choosing.
 
-<OrchardGame caption="Figure 1: An online orchard game." />
+<OrchardGame caption="An online orchard game." />
 
 ---
 
@@ -61,7 +61,7 @@ When you click "Play" in the simulation below, your computer will begin playing 
 
 I'd encourage you to write down guesses for how often each of these strategies will result in a win. When you're ready, watch the simulation go! (You can hover over any of the bars for more information on wins and losses.)
 
-<OrchardGameSimulation caption="Figure 2: Simulating multiple playthroughs of First Orchard." />
+<OrchardGameSimulation caption="Simulating multiple playthroughs of First Orchard." />
 
 The specific numbers you see will vary, of course, but will even out the longer you let the simulation run. If you really want to know the true values of these probabilities, you can either let the simulation run for a long time, or you can take a different approach. It's hard to determine a formula for these probabilities by hand (though you're welcome to try!). But by using a strategy called [dynamic programming](https://en.wikipedia.org/wiki/Dynamic_programming), it's possible for a computer to determine these probabilities to a high degree of precision.
 
@@ -88,7 +88,7 @@ The rules of this game are nearly the same as for _First Orchard_, but there are
 How do these changes alter the probability of a win? Let's find out!
 
 <OrchardGameSimulation
-  caption="Figure 3: Simulating multiple playthroughs of Orchard."
+  caption="Simulating multiple playthroughs of Orchard."
   fruitCounts={[10, 10, 10, 10]}
   ravenCount={9}
   wildCardCount={2}

@@ -164,7 +164,7 @@ export default function FigureInner({
                   : undefined
               }
             >
-              {caption}
+              {figNum > 0 ? `Figure ${figNum}: ${caption}` : caption}
             </div>
           )}
         </div>

@@ -18,7 +18,7 @@ describe("Figure — collapsed state", () => {
     mockReplace.mockClear();
   });
 
-  it("renders children and caption", () => {
+  it("renders children and caption without prefix when no FigureProvider", () => {
     render(
       <Figure caption="Test caption">
         <div data-testid="interactive">Interactive content</div>
@@ -160,8 +160,8 @@ describe("Figure — expanded state", () => {
     expect(screen.getByTestId("content")).toBeInTheDocument();
   });
 
-  it("renders caption in expanded state", () => {
+  it("renders caption with auto-prefix in expanded state", () => {
     renderExpanded();
-    expect(screen.getByText("A caption")).toBeInTheDocument();
+    expect(screen.getByText("Figure 1: A caption")).toBeInTheDocument();
   });
 });
