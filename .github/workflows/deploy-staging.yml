@@ -17,3 +17,16 @@ jobs:
       role_arn: arn:aws:iam::492635958177:role/GitHubActionsPersonalSiteStagingRole
     secrets:
       cloudfront_distribution_id: ${{ secrets.STAGING_CLOUDFRONT_DISTRIBUTION_ID }}
+
+  all-checks:
+    needs: [deploy-staging]
+    runs-on: ubuntu-latest
+    if: always()
+    steps:
+      - name: Deploy passed or skipped
+        run: |
+          echo "deploy-staging: ${{ needs.deploy-staging.result }}"
+          result="${{ needs.deploy-staging.result }}"
+          if [[ "$result" != "success" && "$result" != "skipped" ]]; then
+            exit 1
+          fi
