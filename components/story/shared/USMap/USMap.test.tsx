@@ -56,6 +56,53 @@ describe("USMap Component", () => {
     expect(getAllByTestId("us-state").length).toBeGreaterThan(50);
   });
 
+  it("skips data items with no state field", () => {
+    const dataWithMissingState = [
+      ...mockData,
+      { value: 99 } as (typeof mockData)[0], // no state property
+    ];
+    const { getAllByTestId } = render(
+      <USMap {...defaultProps} data={dataWithMissingState} />,
+    );
+    expect(getAllByTestId("us-state").length).toBeGreaterThan(50);
+  });
+
+  it("groups multiple data items under the same state", () => {
+    const duplicateStateData = [
+      { state: "Alabama", value: 10 },
+      { state: "Alabama", value: 15 },
+      { state: "Alaska", value: 20 },
+    ];
+    const { getAllByTestId } = render(
+      <USMap {...defaultProps} data={duplicateStateData} />,
+    );
+    expect(getAllByTestId("us-state").length).toBeGreaterThan(50);
+  });
+
+  it("passes onMouseMove and onMouseLeave handlers through to states", () => {
+    const onMouseMove = vi.fn(() => vi.fn());
+    const onMouseLeave = vi.fn();
+    const { getAllByTestId } = render(
+      <USMap
+        {...defaultProps}
+        onMouseMove={onMouseMove}
+        onMouseLeave={onMouseLeave}
+      />,
+    );
+    expect(getAllByTestId("us-state").length).toBeGreaterThan(50);
+  });
+
+  it("respects custom scale and translate props", () => {
+    const { getAllByTestId } = render(
+      <USMap
+        {...defaultProps}
+        scale={1200}
+        translate={[600, 300] as [number, number]}
+      />,
+    );
+    expect(getAllByTestId("us-state").length).toBeGreaterThan(50);
+  });
+
   it("applies the correct fill based on data and color scale", () => {
     const { getAllByTestId } = render(
       <USMap {...defaultProps} domain={[10, 20]} />,
