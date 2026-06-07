@@ -78,17 +78,6 @@ describe("VotingBarChart (voters variant)", () => {
     expect(options).toHaveLength(2);
   });
 
-  it("renders the caption when provided", () => {
-    render(
-      <VotingBarChart
-        data={mockData}
-        variant="voters"
-        caption="Test caption"
-      />,
-    );
-    expect(screen.getByText("Test caption")).toBeInTheDocument();
-  });
-
   it("changes statistic when select changes", () => {
     render(<VotingBarChart data={mockData} variant="voters" />);
     const select = screen.getByRole("combobox") as HTMLSelectElement;

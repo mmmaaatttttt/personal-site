@@ -59,11 +59,6 @@ describe("PAdicFractalDistance", () => {
     expect(screen.getByText("2")).toBeInTheDocument();
   });
 
-  it("renders the optional caption", () => {
-    render(<PAdicFractalDistance caption="Fractal caption" />);
-    expect(screen.getByText("Fractal caption")).toBeInTheDocument();
-  });
-
   it("changes prime when dropdown changes", () => {
     render(<PAdicFractalDistance />);
     const select = screen.getByRole("combobox") as HTMLSelectElement;

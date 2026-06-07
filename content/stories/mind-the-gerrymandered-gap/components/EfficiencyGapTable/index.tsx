@@ -14,14 +14,7 @@ const EfficiencyGapTable: FC<EfficiencyGapTableProps> = ({
   districtCounts,
 }) => {
   if (!districtCounts) {
-    return (
-      <p>
-        <b>
-          To see a sample calculation of the efficiency gap, please finish
-          drawing your districts above.
-        </b>
-      </p>
-    );
+    return null;
   }
 
   const blueAcc = (d: [number, number]) => d[0];

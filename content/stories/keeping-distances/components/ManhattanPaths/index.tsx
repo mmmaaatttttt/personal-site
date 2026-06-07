@@ -2,7 +2,6 @@
 
 import { scaleLinear } from "d3-scale";
 import { type FC, useState } from "react";
-import Caption from "@/components/story/shared/Caption";
 import Graph from "@/components/story/shared/Graph";
 import NarrowContainer from "@/components/story/shared/NarrowContainer";
 import LabeledSlider from "@/components/story/shared/Slider/LabeledSlider";
@@ -27,11 +26,7 @@ const yScale = scaleLinear()
 
 const gridPoints = generateGridPoints(xScale, yScale);
 
-interface ManhattanPathsProps {
-  caption?: string;
-}
-
-const ManhattanPaths: FC<ManhattanPathsProps> = ({ caption }) => {
+const ManhattanPaths: FC = () => {
   const [activePoint, setActivePoint] = useState({ x: 2, y: 2 });
   const [sliderVal, setSliderVal] = useState(1);
 
@@ -43,70 +38,68 @@ const ManhattanPaths: FC<ManhattanPathsProps> = ({ caption }) => {
   const polylinePoints = pathPoints.map((p) => `${p.x},${p.y}`).join(" ");
 
   return (
-    <Caption caption={caption}>
-      <NarrowContainer width="55%">
-        <LabeledSlider
-          min={1}
-          max={paths.length}
-          step={1}
-          value={sliderVal}
-          title={`Path ${sliderVal} of ${paths.length}`}
-          handleValueChange={setSliderVal}
-          color={COLORS.DARK_GRAY}
-        />
-        <Graph
-          graphPadding={GRAPH_PADDING}
-          height={HEIGHT}
-          svgId="manhattan-paths"
-          tickStep={() => 1}
-          width={WIDTH}
-          xScale={xScale}
-          yScale={yScale}
-        >
-          {gridPoints.map((pt) => {
-            const isActive = pt.x === activePoint.x && pt.y === activePoint.y;
-            const color = isActive ? COLORS.BLACK : COLORS.LIGHT_GRAY;
-            return (
-              <circle
-                key={`${pt.x}|${pt.y}`}
-                role="menuitem"
-                tabIndex={0}
-                cx={xScale(pt.x)}
-                cy={yScale(pt.y)}
-                r={POINT_RADIUS}
-                fill={color}
-                stroke={color}
-                onClick={
-                  isActive
-                    ? undefined
-                    : () => {
+    <NarrowContainer width="55%">
+      <LabeledSlider
+        min={1}
+        max={paths.length}
+        step={1}
+        value={sliderVal}
+        title={`Path ${sliderVal} of ${paths.length}`}
+        handleValueChange={setSliderVal}
+        color={COLORS.DARK_GRAY}
+      />
+      <Graph
+        graphPadding={GRAPH_PADDING}
+        height={HEIGHT}
+        svgId="manhattan-paths"
+        tickStep={() => 1}
+        width={WIDTH}
+        xScale={xScale}
+        yScale={yScale}
+      >
+        {gridPoints.map((pt) => {
+          const isActive = pt.x === activePoint.x && pt.y === activePoint.y;
+          const color = isActive ? COLORS.BLACK : COLORS.LIGHT_GRAY;
+          return (
+            <circle
+              key={`${pt.x}|${pt.y}`}
+              role="menuitem"
+              tabIndex={0}
+              cx={xScale(pt.x)}
+              cy={yScale(pt.y)}
+              r={POINT_RADIUS}
+              fill={color}
+              stroke={color}
+              onClick={
+                isActive
+                  ? undefined
+                  : () => {
+                      setActivePoint({ x: pt.x, y: pt.y });
+                      setSliderVal(1);
+                    }
+              }
+              onKeyDown={
+                isActive
+                  ? undefined
+                  : (e) => {
+                      if (e.key === "Enter" || e.key === " ") {
                         setActivePoint({ x: pt.x, y: pt.y });
                         setSliderVal(1);
                       }
-                }
-                onKeyDown={
-                  isActive
-                    ? undefined
-                    : (e) => {
-                        if (e.key === "Enter" || e.key === " ") {
-                          setActivePoint({ x: pt.x, y: pt.y });
-                          setSliderVal(1);
-                        }
-                      }
-                }
-                className={isActive ? "cursor-default" : "cursor-pointer"}
-              />
-            );
-          })}
-          <polyline
-            points={polylinePoints}
-            fill="none"
-            stroke={COLORS.BLACK}
-            strokeWidth={POINT_RADIUS / 2}
-          />
-        </Graph>
-      </NarrowContainer>
-    </Caption>
+                    }
+              }
+              className={isActive ? "cursor-default" : "cursor-pointer"}
+            />
+          );
+        })}
+        <polyline
+          points={polylinePoints}
+          fill="none"
+          stroke={COLORS.BLACK}
+          strokeWidth={POINT_RADIUS / 2}
+        />
+      </Graph>
+    </NarrowContainer>
   );
 };
 

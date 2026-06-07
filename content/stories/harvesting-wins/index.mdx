@@ -19,7 +19,9 @@ Reading about the rules is way less fun than playing the game. So below I've pro
 
 The tiles on the bottom keep track of how many fruits in each color are remaining. Similarly, the value in the black tile at the bottom right represents the number of paces until the raven reaches the orchard. When you spin, the game automatically removes the correct fruit or advances the raven, unless you land on the white portion of the spinner. This corresponds to the fruit basket wild card, and when this happens, you can click on one of the tiles below the spinner to remove a fruit of your choosing.
 
-<OrchardGame caption="Figure 1: An online orchard game." />
+<Figure caption="An online orchard game.">
+  <OrchardGame />
+</Figure>
 
 ---
 
@@ -61,7 +63,9 @@ When you click "Play" in the simulation below, your computer will begin playing 
 
 I'd encourage you to write down guesses for how often each of these strategies will result in a win. When you're ready, watch the simulation go! (You can hover over any of the bars for more information on wins and losses.)
 
-<OrchardGameSimulation caption="Figure 2: Simulating multiple playthroughs of First Orchard." />
+<Figure caption="Simulating multiple playthroughs of First Orchard.">
+  <OrchardGameSimulation />
+</Figure>
 
 The specific numbers you see will vary, of course, but will even out the longer you let the simulation run. If you really want to know the true values of these probabilities, you can either let the simulation run for a long time, or you can take a different approach. It's hard to determine a formula for these probabilities by hand (though you're welcome to try!). But by using a strategy called [dynamic programming](https://en.wikipedia.org/wiki/Dynamic_programming), it's possible for a computer to determine these probabilities to a high degree of precision.
 
@@ -87,12 +91,9 @@ The rules of this game are nearly the same as for _First Orchard_, but there are
 
 How do these changes alter the probability of a win? Let's find out!
 
-<OrchardGameSimulation
-  caption="Figure 3: Simulating multiple playthroughs of Orchard."
-  fruitCounts={[10, 10, 10, 10]}
-  ravenCount={9}
-  wildCardCount={2}
-/>
+<Figure caption="Simulating multiple playthroughs of Orchard.">
+  <OrchardGameSimulation fruitCounts={[10, 10, 10, 10]} ravenCount={9} wildCardCount={2} />
+</Figure>
 
 Notice that the relative strength of each strategy is the same as before. The most plentiful strategy is the best choice, followed by the random strategy, and then the favorite color strategy. The strategy with the lowest probability of success, as before, is the least plentiful strategy.
 
@@ -117,7 +118,9 @@ Based on the two variations we've seen so far, there are a number of different g
 
 Here's a heat chart that lets you explore the probability of a win based on your strategy, for variants on the _Orchard Game_ based on the parameters described above. The chart itself highlights what happens to your win probability as fruits per color and the raven count increase. You can adjust the sliders to control the number of fruit colors and the strength of the wild card roll. Finally, you can change the strategy in the dropdown. You can also take a look at what combination of parameters is more likely to yield a game where strategy matters - this is measured by looking at the difference in win probability between the best strategy and the worst.
 
-<OrchardGameHeatData />
+<Figure>
+  <OrchardGameHeatData />
+</Figure>
 
 After playing around with this visualization, here are some things I noticed (I'd love to hear about your observations, too!):
 

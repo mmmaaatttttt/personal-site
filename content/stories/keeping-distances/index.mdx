@@ -45,7 +45,9 @@ Connect the points with a horizontal and a vertical line segment; these segments
 will form two sides of a right triangle. The hypotenuse of this triangle
 represents the shortest distance.
 
-<DistanceExplorer caption="Figure 1: Adjust the positions of the two points to see the shortest distance between them (orange)." />
+<Figure caption="Adjust the positions of the two points to see the shortest distance between them (orange).">
+  <DistanceExplorer />
+</Figure>
 
 When looking at a map, this shortest distance is often described by saying it's
 the distance "as the crow flies." Unfortunately, if you're anything like me, you
@@ -74,7 +76,9 @@ connect two points when using the manhattan distance. (As a bonus, can you
 figure out how many possible paths there are of minimal distance between two
 points on the grid?)
 
-<ManhattanPaths caption="Figure 2: Click on a point on the grid, then adjust the slider to see all possible shortest paths to that point." />
+<Figure caption="Click on a point on the grid, then adjust the slider to see all possible shortest paths to that point.">
+  <ManhattanPaths />
+</Figure>
 
 For another fun bit of trivia, let's explore what circles look like in this
 geometry. You can define a circle to simply be the set of points that are a
@@ -87,7 +91,9 @@ of the four points on either side of the center.
 
 Here's how a circle looks in the taxicab geometry as you increase the radius:
 
-<ManhattanCircle caption="Figure 3: Move the slider to adjust the size of a circle in the taxicab geometry. The red dot is at the center of the circle." />
+<Figure caption="Move the slider to adjust the size of a circle in the taxicab geometry. The red dot is at the center of the circle.">
+  <ManhattanCircle />
+</Figure>
 
 As you can see, circles in this geometry become closer and closer to rotated
 squares! Moreover, the circumference of any circle in this geometry is just the
@@ -173,7 +179,9 @@ Here's a demonstration for you to play around with these three notions of word
 distance. (Bonus question: what would a circle look like in the geometries
 determined by these distances?)
 
-<StringDistanceExplorer caption="Figure 4: Enter two words to compare their Hamming, Levenshtein, and Damerau-Levenshtein distances." />
+<Figure caption="Enter two words to compare their Hamming, Levenshtein, and Damerau-Levenshtein distances.">
+  <StringDistanceExplorer />
+</Figure>
 
 ---
 
@@ -211,7 +219,9 @@ this distance is 0, the functions are the same.
 Here's a demonstration where you can adjust some simple functions and see both
 of these distances change.
 
-<FunctionDistanceExplorer caption="Figure 5: Drag the control points to reshape the two functions. Toggle between the largest-difference and area measures." />
+<Figure caption="Drag the control points to reshape the two functions. Toggle between the largest-difference and area measures.">
+  <FunctionDistanceExplorer />
+</Figure>
 
 A question for you to ponder: if the largest difference distance is small, what
 (if anything) can you say about the area distance? If the area distance is
@@ -297,7 +307,9 @@ Here's a demonstration that will allow you to play around with these ideas in
 more detail. You can select a prime and then calculate the *p*-adic distance
 between any two whole numbers within the range from -1,000,000 to 1,000,000.
 
-<PAdicCalculator caption="Figure 6: Select a prime and enter two integers to see their p-adic distance." />
+<Figure caption="Select a prime and enter two integers to see their p-adic distance.">
+  <PAdicCalculator />
+</Figure>
 
 Why in the world would you want to do this? I'm afraid a historical motivation
 would take us too far afield, so if nothing else, just take it as a mathematical
@@ -309,7 +321,9 @@ distances are equal along diagonals that move up and to the right. This is
 because adding the same value to two numbers has no effect on their *p*-adic
 distance: 10 - 2 has a 2-adic distance of 0.125, just as (10 + 5) - (2 + 5) = 15 - 7 does.
 
-<PAdicHeatChart caption="Figure 7: Select a prime and hover over a cell to see the p-adic distance between two numbers from 1 to 25." />
+<Figure caption="Select a prime and hover over a cell to see the p-adic distance between two numbers from 1 to 25.">
+  <PAdicHeatChart />
+</Figure>
 
 While the chart above can show us several distance calculations at a glance, it
 also has a flaw. By putting numbers along the top and right in increasing order
@@ -321,7 +335,9 @@ distance between 1 and 25 is much smaller.
 Here's another way to visualize numbers based on their *p*-adic distance, adapted
 from [Visualizing the p-adic Integers](https://www.jstor.org/stable/2323809) and [The p-adic integers: General introduction and visual representation](http://math.uni.lu/eml/projects/reports/P-adics.pdf). In this representation, numbers form a fractal-like structure. The numbers clump together quickly, so this demonstration only supports seeing a handful of them for the primes 3, 5, and 7:
 
-<PAdicFractalDistance caption="Figure 8: Another representation of nearby numbers. Choose a prime, and then use the slider to see all numbers less than that prime (black), less then the square of that prime (black and blue), or less than the cube of that prime (black, blue, and orange). Points within a cluster are 'close' in the p-adic sense." />
+<Figure caption="Another representation of nearby numbers. Choose a prime, and then use the slider to see all numbers less than that prime (black), less then the square of that prime (black and blue), or less than the cube of that prime (black, blue, and orange). Points within a cluster are 'close' in the p-adic sense.">
+  <PAdicFractalDistance />
+</Figure>
 
 ---
 

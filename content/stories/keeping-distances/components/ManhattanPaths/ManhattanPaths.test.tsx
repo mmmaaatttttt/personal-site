@@ -23,11 +23,6 @@ describe("ManhattanPaths", () => {
     expect(slider).not.toBeNull();
   });
 
-  it("renders a caption when provided", () => {
-    render(<ManhattanPaths caption="Test caption" />);
-    expect(screen.getByText("Test caption")).toBeTruthy();
-  });
-
   it("shows correct initial path count in slider title", () => {
     render(<ManhattanPaths />);
     // default activePoint is (2,2); C(4,2) = 6 paths

@@ -89,11 +89,6 @@ describe("FunctionDistanceExplorer", () => {
     expect(strokes).toContain("#52a081");
   });
 
-  it("renders a caption when provided", () => {
-    render(<FunctionDistanceExplorer caption="Function distances" />);
-    expect(screen.getByText("Function distances")).toBeTruthy();
-  });
-
   it("distance labels update reactively — initial diff is non-zero", () => {
     render(<FunctionDistanceExplorer />);
     const text = screen.getByText(/Largest Diff:/);

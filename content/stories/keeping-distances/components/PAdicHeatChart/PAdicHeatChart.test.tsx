@@ -32,11 +32,6 @@ describe("PAdicHeatChart", () => {
     expect(rects.length).toBe(326);
   });
 
-  it("renders the optional caption", () => {
-    render(<PAdicHeatChart caption="Test caption text" />);
-    expect(screen.getByText("Test caption text")).toBeInTheDocument();
-  });
-
   it("updates the selected prime when dropdown changes", () => {
     render(<PAdicHeatChart />);
     const select = screen.getByRole("combobox") as HTMLSelectElement;

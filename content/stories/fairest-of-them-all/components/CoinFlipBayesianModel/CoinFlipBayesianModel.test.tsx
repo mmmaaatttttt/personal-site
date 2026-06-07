@@ -13,11 +13,6 @@ describe("CoinFlipBayesianModel", () => {
     expect(container).toBeTruthy();
   });
 
-  it("renders with a caption", () => {
-    render(<CoinFlipBayesianModel caption="Figure 2" />);
-    expect(screen.getByText("Figure 2")).toBeTruthy();
-  });
-
   it("renders heads and tails buttons starting at 0", () => {
     render(<CoinFlipBayesianModel />);
     expect(screen.getByText("Heads: 0")).toBeTruthy();

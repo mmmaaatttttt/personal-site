@@ -2,7 +2,6 @@
 
 import type { FC, ReactNode } from "react";
 import { useEffect, useState } from "react";
-import Caption from "@/components/story/shared/Caption";
 import { useIsMounted } from "@/hooks/useIsMounted";
 import { choices } from "@/utils/mathHelpers";
 import baQuizData, { type QuizQuestion } from "../../data/ba-quiz";
@@ -12,13 +11,11 @@ interface QuizProps {
   answerColors?: string[];
   maxQuestions?: number;
   title?: string;
-  caption?: string;
 }
 
 const Quiz: FC<QuizProps> = ({
   maxQuestions = 10,
   title = "This is a quiz.",
-  caption,
 }) => {
   const isMounted = useIsMounted();
   const [questions, setQuestions] = useState<QuizQuestion[]>([]);
@@ -167,7 +164,6 @@ const Quiz: FC<QuizProps> = ({
       <div className="mx-auto flex min-h-[50vh] flex-col items-center justify-center overflow-hidden rounded-lg bg-light-gray p-6 md:p-8 text-center shadow-inner">
         {panel}
       </div>
-      {caption && <Caption>{caption}</Caption>}
     </div>
   );
 };

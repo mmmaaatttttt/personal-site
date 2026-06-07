@@ -1,7 +1,6 @@
 "use client";
 
 import { type FC, useState } from "react";
-import Caption from "@/components/story/shared/Caption";
 import ColoredSpan from "@/components/story/shared/ColoredSpan";
 import LabeledSlider from "@/components/story/shared/Slider/LabeledSlider";
 import COLORS from "@/utils/styles";
@@ -10,19 +9,15 @@ function format(probability: number, dec = 0): string {
   return `${(probability * 100).toFixed(dec)}%`;
 }
 
-interface CoinFlipTableProps {
-  caption?: string;
-}
-
 const cellClass = "text-center py-3 px-4 border border-black/10";
 
-const CoinFlipTable: FC<CoinFlipTableProps> = ({ caption }) => {
+const CoinFlipTable: FC = () => {
   const [headsProb, setHeadsProb] = useState(0.5);
   const tailsProb = 1 - headsProb;
   const pairProb = headsProb * tailsProb;
 
   return (
-    <Caption caption={caption}>
+    <>
       <LabeledSlider
         min={0.01}
         max={0.99}
@@ -75,7 +70,7 @@ const CoinFlipTable: FC<CoinFlipTableProps> = ({ caption }) => {
           </tbody>
         </table>
       </div>
-    </Caption>
+    </>
   );
 };
 

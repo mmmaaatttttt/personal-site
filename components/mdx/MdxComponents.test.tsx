@@ -9,9 +9,9 @@ vi.mock("next/image", () => ({
 vi.mock("@/utils/stringHelpers", () => ({
   normalizeImagePath: (p: string) => `/normalized${p}`,
 }));
-vi.mock("@/components/story/shared/Caption", () => ({
+vi.mock("@/components/story/shared/Figure", () => ({
   default: ({ children }: { children?: React.ReactNode }) => (
-    <div data-testid="caption">{children}</div>
+    <div data-testid="figure">{children}</div>
   ),
 }));
 vi.mock("@/components/story/shared/ColoredSpan", () => ({
@@ -61,7 +61,7 @@ const {
   ColoredSpan,
   NarrowContainer,
   StyledTable,
-  Caption,
+  Figure,
   Legend,
   Sidebar,
   Strikethrough,
@@ -216,9 +216,9 @@ describe("MdxComponents — shared story components", () => {
     expect(screen.getByTestId("styled-table")).toBeInTheDocument();
   });
 
-  it("renders Caption", () => {
-    render(<Caption>caption text</Caption>);
-    expect(screen.getByTestId("caption")).toHaveTextContent("caption text");
+  it("renders Figure", () => {
+    render(<Figure>figure content</Figure>);
+    expect(screen.getByTestId("figure")).toHaveTextContent("figure content");
   });
 
   it("renders Legend", () => {

@@ -1,7 +1,6 @@
 "use client";
 
 import { type FC, useState } from "react";
-import Caption from "@/components/story/shared/Caption";
 import HeatChart from "@/components/story/shared/HeatChart";
 import NarrowContainer from "@/components/story/shared/NarrowContainer";
 import Select from "@/components/story/shared/Select";
@@ -15,7 +14,7 @@ import {
   selectOptions,
 } from "../../data";
 
-const OrchardGameHeatData: FC<{ caption?: string }> = () => {
+const OrchardGameHeatData: FC = () => {
   const [selectedOption, setSelectedOption] = useState(selectOptions[0]);
   const { values, sliderData } = useSliders(SLIDER_CONFIG);
   const [colorCount, wildCardCount] = values;
@@ -59,36 +58,34 @@ const OrchardGameHeatData: FC<{ caption?: string }> = () => {
     }, []);
 
   return (
-    <Caption>
-      <NarrowContainer width="55%">
-        <SliderGroup data={sliderData} />
-        <div className="mt-4 space-y-3">
-          <Select
-            name="strategy"
-            value={selectedOption.value}
-            onChange={(opt) =>
-              setSelectedOption(
-                selectOptions.find((o) => o.value === opt.value) ??
-                  selectOptions[0],
-              )
-            }
-            options={selectOptions.map(({ value, label }) => ({
-              value,
-              label,
-            }))}
-          />
-          <HeatChart
-            data={heatData}
-            accessor={accessor}
-            getTooltipBody={getTooltipBody}
-            colorDomain={colorDomain}
-            colorRange={colorRange}
-            xAxisLabel="Raven Count"
-            yAxisLabel="Fruits per Color"
-          />
-        </div>
-      </NarrowContainer>
-    </Caption>
+    <NarrowContainer width="55%">
+      <SliderGroup data={sliderData} />
+      <div className="mt-4 space-y-3">
+        <Select
+          name="strategy"
+          value={selectedOption.value}
+          onChange={(opt) =>
+            setSelectedOption(
+              selectOptions.find((o) => o.value === opt.value) ??
+                selectOptions[0],
+            )
+          }
+          options={selectOptions.map(({ value, label }) => ({
+            value,
+            label,
+          }))}
+        />
+        <HeatChart
+          data={heatData}
+          accessor={accessor}
+          getTooltipBody={getTooltipBody}
+          colorDomain={colorDomain}
+          colorRange={colorRange}
+          xAxisLabel="Raven Count"
+          yAxisLabel="Fruits per Color"
+        />
+      </div>
+    </NarrowContainer>
   );
 };
 

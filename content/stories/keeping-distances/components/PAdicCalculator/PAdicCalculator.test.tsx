@@ -27,11 +27,6 @@ describe("PAdicCalculator", () => {
     ).toBeTruthy();
   });
 
-  it("renders a caption when provided", () => {
-    render(<PAdicCalculator caption="Test caption" />);
-    expect(screen.getByText("Test caption")).toBeTruthy();
-  });
-
   it("does not clamp numbers within the valid range", () => {
     render(<PAdicCalculator />);
     const input = screen.getByLabelText("Number 1");

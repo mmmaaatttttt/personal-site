@@ -2,7 +2,6 @@
 
 import { format } from "d3-format";
 import { type FC, useState } from "react";
-import Caption from "@/components/story/shared/Caption";
 import NarrowContainer from "@/components/story/shared/NarrowContainer";
 import { SliderGroup } from "@/components/story/shared/Slider";
 import StyledTable from "@/components/story/shared/StyledTable";
@@ -15,10 +14,9 @@ const percentFormat = format(".2%");
 
 interface VotingTableProps {
   tableData: VoterStateRow[];
-  caption?: string;
 }
 
-const VotingTable: FC<VotingTableProps> = ({ tableData, caption }) => {
+const VotingTable: FC<VotingTableProps> = ({ tableData }) => {
   const [sortKey, setSortKey] = useState<SortKey>("averageTurnout");
   const [ascending, setAscending] = useState(true);
 
@@ -97,22 +95,20 @@ const VotingTable: FC<VotingTableProps> = ({ tableData, caption }) => {
   ];
 
   return (
-    <Caption caption={caption}>
-      <NarrowContainer width="58%">
-        <SliderGroup data={sliderData} />
-        <StyledTable
-          headers={headers}
-          rows={sorted.slice(0, numRows).map((d) => ({
-            key: d.state,
-            cells: [
-              { key: "state", content: d.state },
-              { key: "sat", content: percentFormat(d.averageSaturation) },
-              { key: "turnout", content: percentFormat(d.averageTurnout) },
-            ],
-          }))}
-        />
-      </NarrowContainer>
-    </Caption>
+    <NarrowContainer width="58%">
+      <SliderGroup data={sliderData} />
+      <StyledTable
+        headers={headers}
+        rows={sorted.slice(0, numRows).map((d) => ({
+          key: d.state,
+          cells: [
+            { key: "state", content: d.state },
+            { key: "sat", content: percentFormat(d.averageSaturation) },
+            { key: "turnout", content: percentFormat(d.averageTurnout) },
+          ],
+        }))}
+      />
+    </NarrowContainer>
   );
 };
 

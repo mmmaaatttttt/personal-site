@@ -4,7 +4,6 @@ import { max } from "d3-array";
 import { scaleLinear } from "d3-scale";
 import type { FC } from "react";
 import BarGraph from "@/components/story/shared/BarGraph";
-import Caption from "@/components/story/shared/Caption";
 import NarrowContainer from "@/components/story/shared/NarrowContainer";
 import { SliderGroup } from "@/components/story/shared/Slider";
 import useSliders from "@/hooks/useSliders";
@@ -34,11 +33,7 @@ const SLIDER_CONFIG = [
   },
 ];
 
-interface CoinFlipHistogramProps {
-  caption?: string;
-}
-
-const CoinFlipHistogram: FC<CoinFlipHistogramProps> = ({ caption }) => {
+const CoinFlipHistogram: FC = () => {
   const { values, sliderData } = useSliders(SLIDER_CONFIG);
   const [numTrials, headsProb] = values;
   const barData = binomialDensityValues(numTrials, headsProb).map((h, key) => ({
@@ -53,27 +48,25 @@ const CoinFlipHistogram: FC<CoinFlipHistogramProps> = ({ caption }) => {
     .range([HEIGHT - PADDING.bottom, PADDING.top]);
 
   return (
-    <Caption caption={caption}>
-      <NarrowContainer width="70%">
-        <SliderGroup data={sliderData} />
-        <BarGraph
-          animated={false}
-          barData={barData}
-          color={COLORS.GREEN}
-          gridlinesVertical={false}
-          height={HEIGHT}
-          histogram
-          padding={PADDING}
-          svgId="coinflips"
-          thresholds={barData.map((d) => d.key as number).concat(numTrials + 1)}
-          yLabelSide="right"
-          yTickFormat=".0%"
-          tickStep={0.02}
-          width={600}
-          yScale={yScale}
-        />
-      </NarrowContainer>
-    </Caption>
+    <NarrowContainer width="70%">
+      <SliderGroup data={sliderData} />
+      <BarGraph
+        animated={false}
+        barData={barData}
+        color={COLORS.GREEN}
+        gridlinesVertical={false}
+        height={HEIGHT}
+        histogram
+        padding={PADDING}
+        svgId="coinflips"
+        thresholds={barData.map((d) => d.key as number).concat(numTrials + 1)}
+        yLabelSide="right"
+        yTickFormat=".0%"
+        tickStep={0.02}
+        width={600}
+        yScale={yScale}
+      />
+    </NarrowContainer>
   );
 };
 

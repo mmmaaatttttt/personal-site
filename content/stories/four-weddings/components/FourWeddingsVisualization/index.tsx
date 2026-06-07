@@ -1,7 +1,6 @@
 "use client";
 
 import type { FC } from "react";
-import Caption from "@/components/story/shared/Caption";
 import {
   graphOptions,
   selectOptions,
@@ -16,12 +15,10 @@ import SelectableUSMap from "../SelectableUSMap";
 interface FourWeddingsVisualizationProps {
   vizIndex: string | number;
   vizType: "map" | "histogram" | "pie" | "scatter";
-  caption?: string;
 }
 
 const FourWeddingsVisualization: FC<FourWeddingsVisualizationProps> = ({
   vizType,
-  caption,
 }) => {
   const renderVisualization = () => {
     switch (vizType) {
@@ -62,7 +59,7 @@ const FourWeddingsVisualization: FC<FourWeddingsVisualizationProps> = ({
     }
   };
 
-  return <Caption caption={caption}>{renderVisualization()}</Caption>;
+  return renderVisualization();
 };
 
 export default FourWeddingsVisualization;

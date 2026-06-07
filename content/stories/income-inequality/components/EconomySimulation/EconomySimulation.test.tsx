@@ -53,9 +53,4 @@ describe("EconomySimulation", () => {
     render(<EconomySimulation idx={0} />);
     expect(screen.queryByText("Savings Rate")).not.toBeInTheDocument();
   });
-
-  it("renders the caption when provided", () => {
-    render(<EconomySimulation idx={0} caption="Figure 1: Test caption." />);
-    expect(screen.getByText("Figure 1: Test caption.")).toBeInTheDocument();
-  });
 });

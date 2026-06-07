@@ -7,13 +7,6 @@ describe("EfficiencyGapTable", () => {
     render(<EfficiencyGapTable districtCounts={null} />);
   });
 
-  it("shows placeholder text when districtCounts is null", () => {
-    render(<EfficiencyGapTable districtCounts={null} />);
-    expect(
-      screen.getByText(/please finish drawing your districts/i),
-    ).toBeInTheDocument();
-  });
-
   it("renders the table when districtCounts is provided", () => {
     // 6 districts of 9 voters each: 5 blue, 4 red
     const districtCounts: [number, number][] = Array.from({ length: 6 }, () => [

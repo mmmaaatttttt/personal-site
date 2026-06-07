@@ -86,13 +86,6 @@ describe("VotingMap (voters variant)", () => {
     );
   });
 
-  it("renders the caption when provided", () => {
-    render(
-      <VotingMap data={mockData} variant="voters" caption="Map caption" />,
-    );
-    expect(screen.getByText("Map caption")).toBeInTheDocument();
-  });
-
   it("changes statistic when select changes", () => {
     render(<VotingMap data={mockData} variant="voters" />);
     const select = screen.getByRole("combobox") as HTMLSelectElement;
