@@ -66,7 +66,10 @@ export default function FigureInner({
   // Scroll figure into view when collapsing.
   useEffect(() => {
     if (prevExpandedRef.current && !isExpanded) {
-      figureRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+      figureRef.current?.scrollIntoView({
+        behavior: "instant",
+        block: "start",
+      });
     }
     prevExpandedRef.current = isExpanded;
   }, [isExpanded]);
