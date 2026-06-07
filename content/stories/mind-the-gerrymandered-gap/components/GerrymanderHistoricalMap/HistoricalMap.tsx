@@ -4,8 +4,10 @@ import { scaleLinear } from "d3-scale";
 import type { FC } from "react";
 import BarGraph from "@/components/story/shared/BarGraph";
 import ColumnLayout from "@/components/story/shared/ColumnLayout";
-import SliderProvider from "@/components/story/shared/Slider/SliderProvider";
+import NarrowContainer from "@/components/story/shared/NarrowContainer";
+import { SliderGroup } from "@/components/story/shared/Slider";
 import USMap from "@/components/story/shared/USMap";
+import useSliders from "@/hooks/useSliders";
 import COLORS from "@/utils/styles";
 import type { ElectionRow, StateSummary } from "../../data";
 import { buildBarData, computeFillValue, formatTooltip } from "./helpers";
@@ -50,72 +52,68 @@ const HistoricalMap: FC<HistoricalMapProps> = ({
   electionData,
   stateSummaries,
 }) => {
-  return (
-    <SliderProvider
-      initialData={SLIDER_DATA}
-      width="100%"
-      render={(sliderVals) => {
-        const [currentYear, currentMinElectors] = sliderVals;
-        const barData = buildBarData(
-          currentYear,
-          currentMinElectors,
-          electionData,
-          stateSummaries,
-        );
-        const labelFontSize = `${(currentMinElectors - 1) / 10 + 1.2}rem`;
+  const { values, sliderData } = useSliders(SLIDER_DATA);
+  const [currentYear, currentMinElectors] = values;
+  const barData = buildBarData(
+    currentYear,
+    currentMinElectors,
+    electionData,
+    stateSummaries,
+  );
+  const labelFontSize = `${(currentMinElectors - 1) / 10 + 1.2}rem`;
 
-        return (
-          <ColumnLayout break="md">
-            <USMap
-              colors={MAP_COLORS}
-              data={electionData}
-              domain={MAP_DOMAIN}
-              fillAccessor={(properties) => {
-                const yearRows = (properties.values as ElectionRow[]).filter(
-                  (r) => r.year === currentYear,
-                );
-                const summary = stateSummaries.find(
-                  (s) => s.state === properties.name,
-                );
-                return computeFillValue(
-                  yearRows.length,
-                  currentMinElectors,
-                  summary?.efficiencyGaps[currentYear],
-                );
-              }}
-              getTooltipTitle={(properties) => properties.name}
-              getTooltipBody={(properties) => {
-                const yearRows = (properties.values as ElectionRow[]).filter(
-                  (r) => r.year === currentYear,
-                );
-                const summary = stateSummaries.find(
-                  (s) => s.state === properties.name,
-                );
-                return formatTooltip(
-                  yearRows.length,
-                  currentMinElectors,
-                  summary?.efficiencyGaps[currentYear],
-                  summary?.seatGaps[currentYear],
-                );
-              }}
-            />
-            <BarGraph
-              animated={false}
-              barData={barData}
-              barLabel={(bar) => bar.key}
-              color={COLORS.DARK_BLUE}
-              height={BAR_HEIGHT}
-              labelFontSize={labelFontSize}
-              padding={BAR_PADDING}
-              svgId="eg-chart"
-              tickStep={2}
-              width={BAR_WIDTH}
-              yScale={Y_SCALE}
-            />
-          </ColumnLayout>
-        );
-      }}
-    />
+  return (
+    <NarrowContainer width="100%">
+      <SliderGroup data={sliderData} />
+      <ColumnLayout break="md">
+        <USMap
+          colors={MAP_COLORS}
+          data={electionData}
+          domain={MAP_DOMAIN}
+          fillAccessor={(properties) => {
+            const yearRows = (properties.values as ElectionRow[]).filter(
+              (r) => r.year === currentYear,
+            );
+            const summary = stateSummaries.find(
+              (s) => s.state === properties.name,
+            );
+            return computeFillValue(
+              yearRows.length,
+              currentMinElectors,
+              summary?.efficiencyGaps[currentYear],
+            );
+          }}
+          getTooltipTitle={(properties) => properties.name}
+          getTooltipBody={(properties) => {
+            const yearRows = (properties.values as ElectionRow[]).filter(
+              (r) => r.year === currentYear,
+            );
+            const summary = stateSummaries.find(
+              (s) => s.state === properties.name,
+            );
+            return formatTooltip(
+              yearRows.length,
+              currentMinElectors,
+              summary?.efficiencyGaps[currentYear],
+              summary?.seatGaps[currentYear],
+            );
+          }}
+        />
+        <BarGraph
+          animated={false}
+          barData={barData}
+          barLabel={(bar) => bar.key}
+          color={COLORS.DARK_BLUE}
+          height={BAR_HEIGHT}
+          labelFontSize={labelFontSize}
+          padding={BAR_PADDING}
+          svgId="eg-chart"
+          tickStep={2}
+          width={BAR_WIDTH}
+          yScale={Y_SCALE}
+        />
+      </ColumnLayout>
+    </NarrowContainer>
   );
 };
 

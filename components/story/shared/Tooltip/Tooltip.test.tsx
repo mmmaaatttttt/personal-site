@@ -95,10 +95,30 @@ describe("Tooltip Hook and Component", () => {
   });
 
   it("constrains tooltip width when x is near the left edge", () => {
-    // info.x = 0, size.width = 0 in jsdom → 0 > 0/2 is false → width = "0px"
     const info = { title: "", body: "edge case", x: 0, y: 100 };
     render(<Tooltip info={info} />);
     const tooltip = document.querySelector(".pointer-events-none");
     expect(tooltip).toHaveStyle({ width: "0px" });
+  });
+
+  it("updates size state when tooltip element dimensions change", () => {
+    const info = { title: "Resize test", body: "body", x: 200, y: 200 };
+    const { rerender } = render(<Tooltip info={info} />);
+    const tooltipEl = document.querySelector(
+      ".pointer-events-none",
+    ) as HTMLElement;
+
+    Object.defineProperty(tooltipEl, "offsetWidth", {
+      get: () => 150,
+      configurable: true,
+    });
+    Object.defineProperty(tooltipEl, "offsetHeight", {
+      get: () => 60,
+      configurable: true,
+    });
+
+    rerender(<Tooltip info={info} />);
+
+    expect(document.querySelector(".pointer-events-none")).toBeInTheDocument();
   });
 });

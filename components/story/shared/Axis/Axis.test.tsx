@@ -1,7 +1,7 @@
 import { render } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
 import "@testing-library/jest-dom/vitest";
-import { scaleLinear } from "d3-scale";
+import { scaleBand, scaleLinear, scaleTime } from "d3-scale";
 import { ChartContext } from "@/context/ChartContext";
 import Axis from ".";
 
@@ -113,6 +113,72 @@ describe("Axis Component", () => {
     const g = container.querySelector(".axis-group");
     // resolvedXShift=0, resolvedYShift=360 → translate(-0.5, 359.5)
     expect(g).toHaveAttribute("transform", "translate(-0.5, 359.5)");
+  });
+
+  it("returns 0 tickSize for x-axis when vertical gridlines are disabled", () => {
+    const xScale = scaleLinear().domain([0, 100]).range([0, 600]);
+    const yScale = scaleLinear().domain([0, 100]).range([400, 0]);
+    const contextValue = {
+      xScale,
+      yScale,
+      width: 600,
+      height: 400,
+      padding: { top: 20, bottom: 40, left: 50, right: 10 },
+      gridlinesHorizontal: true,
+      gridlinesVertical: false,
+    };
+    const { container } = render(
+      <ChartContext.Provider value={contextValue}>
+        <svg role="img" aria-label="test">
+          <Axis direction="x" scale={xScale} />
+        </svg>
+      </ChartContext.Provider>,
+    );
+    expect(container.querySelector(".axis-group")).toBeInTheDocument();
+  });
+
+  it("returns 0 tickSize for y-axis when horizontal gridlines are disabled", () => {
+    const xScale = scaleLinear().domain([0, 100]).range([0, 600]);
+    const yScale = scaleLinear().domain([0, 100]).range([400, 0]);
+    const contextValue = {
+      xScale,
+      yScale,
+      width: 600,
+      height: 400,
+      padding: { top: 20, bottom: 40, left: 50, right: 10 },
+      gridlinesHorizontal: false,
+      gridlinesVertical: true,
+    };
+    const { container } = render(
+      <ChartContext.Provider value={contextValue}>
+        <svg role="img" aria-label="test">
+          <Axis direction="y" scale={yScale} />
+        </svg>
+      </ChartContext.Provider>,
+    );
+    expect(container.querySelector(".axis-group")).toBeInTheDocument();
+  });
+
+  it("formats Date domain values via tickFormat", () => {
+    const dateScale = scaleTime()
+      .domain([new Date(2020, 0, 1), new Date(2021, 0, 1)])
+      .range([0, 600]);
+    const { container } = render(
+      <svg role="img" aria-label="test">
+        <Axis direction="x" scale={dateScale} tickFormat=".0f" yShift={380} />
+      </svg>,
+    );
+    expect(container.querySelector(".axis-group")).toBeInTheDocument();
+  });
+
+  it("formats string domain values via tickFormat", () => {
+    const bandScale = scaleBand().domain(["A", "B", "C"]).range([0, 600]);
+    const { container } = render(
+      <svg role="img" aria-label="test">
+        <Axis direction="x" scale={bandScale} tickFormat="" yShift={380} />
+      </svg>,
+    );
+    expect(container.querySelector(".axis-group")).toBeInTheDocument();
   });
 
   it("self-positions y-axis from ChartContext", () => {

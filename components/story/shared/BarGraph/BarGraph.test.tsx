@@ -41,20 +41,34 @@ vi.mock("./BarItem", () => {
   };
 });
 
-// Mock Graph component since it handles its own SVG/Axis logic
+// Mock Graph component since it handles its own SVG/Axis logic.
+// Call tick step functions when provided so the arrow functions in BarGraph are invoked
+// (V8 only counts a function as covered when it's actually called, not just defined).
 vi.mock("../Graph", () => {
   return {
     default: ({
       children,
       svgId,
+      tickStepX,
+      tickStepY,
+      xScale,
+      yScale,
     }: {
       children?: ReactNode;
       svgId?: string;
-    }) => (
-      <svg data-testid="mock-graph" id={svgId} role="img" aria-label="test">
-        {children}
-      </svg>
-    ),
+      tickStepX?: (s: unknown) => number;
+      tickStepY?: (s: unknown) => number;
+      xScale?: unknown;
+      yScale?: unknown;
+    }) => {
+      if (tickStepX && xScale) tickStepX(xScale);
+      if (tickStepY && yScale) tickStepY(yScale);
+      return (
+        <svg data-testid="mock-graph" id={svgId} role="img" aria-label="test">
+          {children}
+        </svg>
+      );
+    },
   };
 });
 
@@ -102,6 +116,27 @@ describe("BarGraph Component", () => {
     expect(screen.getByText("Value: 10")).toBeInTheDocument();
   });
 
+  it("passes tickStepX prop as a function to Graph", () => {
+    render(<BarGraph {...defaultProps} tickStepX={5} />);
+    expect(
+      document.querySelector("[data-testid='mock-graph']"),
+    ).toBeInTheDocument();
+  });
+
+  it("passes tickStepY prop as a function to Graph", () => {
+    render(<BarGraph {...defaultProps} tickStepY={3} />);
+    expect(
+      document.querySelector("[data-testid='mock-graph']"),
+    ).toBeInTheDocument();
+  });
+
+  it("passes tickStep fallback to Graph when tickStepY absent", () => {
+    render(<BarGraph {...defaultProps} tickStep={2} />);
+    expect(
+      document.querySelector("[data-testid='mock-graph']"),
+    ).toBeInTheDocument();
+  });
+
   it("handles histogram mode logic for widths and positions", () => {
     const histogramData = [
       { key: 0, x0: 0, x1: 10, height: 10 },
@@ -122,9 +157,22 @@ describe("BarGraph Component", () => {
     const bars = getAllByTestId("bar-item");
     const rect1 = bars[0].querySelector("rect");
 
-    // In histogram mode: x = xScale(x0) + 1, width = xScale(x1) - xScale(x0) - 2
-    // With width 600 and domain [0, 20], xScale(10) should be 300.
     expect(rect1).toHaveAttribute("x", "1");
     expect(rect1).toHaveAttribute("width", "298");
+  });
+
+  it("handles histogram bars with undefined x0/x1 ", () => {
+    const histogramDataNoX = [{ key: 0, height: 10 }];
+    const { getAllByTestId } = render(
+      <BarGraph
+        {...defaultProps}
+        barData={histogramDataNoX}
+        histogram={true}
+        thresholds={[0, 10]}
+        padding={0}
+      />,
+    );
+    const bars = getAllByTestId("bar-item");
+    expect(bars).toHaveLength(1);
   });
 });

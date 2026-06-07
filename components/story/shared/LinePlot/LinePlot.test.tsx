@@ -1,7 +1,8 @@
 import { render } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
 import "@testing-library/jest-dom/vitest";
-import { scaleLinear } from "d3-scale";
+import type { AxisScale } from "d3-axis";
+import { scaleBand, scaleLinear } from "d3-scale";
 import { ChartContext } from "@/context/ChartContext";
 import LinePlot from ".";
 
@@ -100,6 +101,28 @@ describe("LinePlot Component", () => {
       </svg>,
     );
     expect(container.querySelector("path")).toBeNull();
+  });
+
+  it("falls back to 0 when scale returns undefined for a point", () => {
+    const xBand = scaleBand()
+      .domain(["A"])
+      .range([0, 600]) as unknown as AxisScale<number>;
+    const yBand = scaleBand()
+      .domain(["A"])
+      .range([400, 0]) as unknown as AxisScale<number>;
+
+    const { container } = render(
+      <svg role="img" aria-label="test">
+        <LinePlot
+          graphData={mockData}
+          xScale={xBand}
+          yScale={yBand}
+          stroke="red"
+        />
+      </svg>,
+    );
+
+    expect(container.querySelector("path")).toBeInTheDocument();
   });
 
   it("applies truncateData logic to values outside domain", () => {

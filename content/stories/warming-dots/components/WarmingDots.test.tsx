@@ -16,18 +16,19 @@ vi.mock("odex", () => ({
   })),
 }));
 
-// Mock SliderProvider — renders children with initial slider values
+vi.mock("@/hooks/useSliders", () => ({
+  default: (initialData: { initialValue: number }[]) => ({
+    values: initialData.map((d) => d.initialValue),
+    sliderData: initialData.map((d) => ({
+      ...d,
+      value: d.initialValue,
+      handleValueChange: vi.fn(),
+    })),
+  }),
+}));
+
 vi.mock("@/components/story/shared/Slider", () => ({
-  default: ({
-    initialData,
-    render,
-  }: {
-    initialData: { initialValue: number }[];
-    render: (vals: number[]) => ReactNode;
-  }) => {
-    const values = initialData.map((d) => d.initialValue);
-    return <div data-testid="slider-provider">{render(values)}</div>;
-  },
+  SliderGroup: () => <div data-testid="slider-group" />,
 }));
 
 vi.mock("@/components/story/shared/FlexContainer", () => ({
@@ -83,9 +84,9 @@ describe("WarmingDots", () => {
     );
   });
 
-  it("renders a Graph and SliderProvider", () => {
+  it("renders a Graph and SliderGroup", () => {
     render(<WarmingDots vizIndex={0} caption="Test" />);
-    expect(screen.getByTestId("slider-provider")).toBeInTheDocument();
+    expect(screen.getByTestId("slider-group")).toBeInTheDocument();
     expect(screen.getByTestId("graph")).toBeInTheDocument();
   });
 

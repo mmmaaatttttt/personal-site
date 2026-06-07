@@ -3,8 +3,10 @@
 import { format } from "d3-format";
 import { type FC, useState } from "react";
 import Caption from "@/components/story/shared/Caption";
-import SliderProvider from "@/components/story/shared/Slider/SliderProvider";
+import NarrowContainer from "@/components/story/shared/NarrowContainer";
+import { SliderGroup } from "@/components/story/shared/Slider";
 import StyledTable from "@/components/story/shared/StyledTable";
+import useSliders from "@/hooks/useSliders";
 import COLORS from "@/utils/styles";
 import type { VoterStateRow } from "../../data";
 import SortHeader, { type SortKey } from "./SortHeader";
@@ -38,7 +40,7 @@ const VotingTable: FC<VotingTableProps> = ({ tableData, caption }) => {
     return 0;
   });
 
-  const sliderData = [
+  const sliderConfig = [
     {
       min: 5,
       max: tableData.length || 51,
@@ -48,6 +50,9 @@ const VotingTable: FC<VotingTableProps> = ({ tableData, caption }) => {
       color: COLORS.DARK_GRAY,
     },
   ];
+
+  const { values, sliderData } = useSliders(sliderConfig);
+  const [numRows] = values;
 
   const headers = [
     {
@@ -93,23 +98,20 @@ const VotingTable: FC<VotingTableProps> = ({ tableData, caption }) => {
 
   return (
     <Caption caption={caption}>
-      <SliderProvider
-        initialData={sliderData}
-        width="58%"
-        render={([numRows]) => (
-          <StyledTable
-            headers={headers}
-            rows={sorted.slice(0, numRows).map((d) => ({
-              key: d.state,
-              cells: [
-                { key: "state", content: d.state },
-                { key: "sat", content: percentFormat(d.averageSaturation) },
-                { key: "turnout", content: percentFormat(d.averageTurnout) },
-              ],
-            }))}
-          />
-        )}
-      />
+      <NarrowContainer width="58%">
+        <SliderGroup data={sliderData} />
+        <StyledTable
+          headers={headers}
+          rows={sorted.slice(0, numRows).map((d) => ({
+            key: d.state,
+            cells: [
+              { key: "state", content: d.state },
+              { key: "sat", content: percentFormat(d.averageSaturation) },
+              { key: "turnout", content: percentFormat(d.averageTurnout) },
+            ],
+          }))}
+        />
+      </NarrowContainer>
     </Caption>
   );
 };

@@ -3,18 +3,22 @@
 import { type FC, useState } from "react";
 import Caption from "@/components/story/shared/Caption";
 import HeatChart from "@/components/story/shared/HeatChart";
+import NarrowContainer from "@/components/story/shared/NarrowContainer";
 import Select from "@/components/story/shared/Select";
-import SliderProvider from "@/components/story/shared/Slider/SliderProvider";
+import { SliderGroup } from "@/components/story/shared/Slider";
+import useSliders from "@/hooks/useSliders";
 import COLORS from "@/utils/styles";
 import {
   type OrchardDataPoint,
   orchardGameData,
+  sliderData as SLIDER_CONFIG,
   selectOptions,
-  sliderData,
 } from "../../data";
 
 const OrchardGameHeatData: FC<{ caption?: string }> = () => {
   const [selectedOption, setSelectedOption] = useState(selectOptions[0]);
+  const { values, sliderData } = useSliders(SLIDER_CONFIG);
+  const [colorCount, wildCardCount] = values;
 
   const getTooltipBody = (d: OrchardDataPoint): string[] => {
     const { label, accessor, value } = selectedOption;
@@ -28,71 +32,62 @@ const OrchardGameHeatData: FC<{ caption?: string }> = () => {
     ];
   };
 
+  const { value, accessor } = selectedOption;
+
+  const colorDomain =
+    value === "diff" ? [0.05, 0.25] : [0, 0.2, 0.4, 0.6, 0.8, 1];
+  const colorRange =
+    value === "diff"
+      ? [COLORS.BLUE, COLORS.DARK_BLUE]
+      : [
+          COLORS.BLACK,
+          COLORS.RED,
+          COLORS.ORANGE,
+          COLORS.YELLOW,
+          COLORS.GREEN,
+          COLORS.DARK_GREEN,
+        ];
+
+  const heatData = orchardGameData
+    .filter((d) => d.colors === colorCount && d.wildCardCount === wildCardCount)
+    .reduce<(OrchardDataPoint | null)[][]>((matrix, obj) => {
+      const x = obj.ravenCount - 1;
+      const y = obj.fruits - 1;
+      if (!matrix[x]) matrix[x] = [];
+      matrix[x][y] = obj;
+      return matrix;
+    }, []);
+
   return (
     <Caption>
-      <SliderProvider
-        initialData={sliderData}
-        width="55%"
-        render={(sliderVals) => {
-          const [colorCount, wildCardCount] = sliderVals;
-          const { value, accessor } = selectedOption;
-
-          const colorDomain =
-            value === "diff" ? [0.05, 0.25] : [0, 0.2, 0.4, 0.6, 0.8, 1];
-          const colorRange =
-            value === "diff"
-              ? [COLORS.BLUE, COLORS.DARK_BLUE]
-              : [
-                  COLORS.BLACK,
-                  COLORS.RED,
-                  COLORS.ORANGE,
-                  COLORS.YELLOW,
-                  COLORS.GREEN,
-                  COLORS.DARK_GREEN,
-                ];
-
-          const heatData = orchardGameData
-            .filter(
-              (d) =>
-                d.colors === colorCount && d.wildCardCount === wildCardCount,
-            )
-            .reduce<(OrchardDataPoint | null)[][]>((matrix, obj) => {
-              const x = obj.ravenCount - 1;
-              const y = obj.fruits - 1;
-              if (!matrix[x]) matrix[x] = [];
-              matrix[x][y] = obj;
-              return matrix;
-            }, []);
-
-          return (
-            <div className="mt-4 space-y-3">
-              <Select
-                name="strategy"
-                value={selectedOption.value}
-                onChange={(opt) =>
-                  setSelectedOption(
-                    selectOptions.find((o) => o.value === opt.value) ??
-                      selectOptions[0],
-                  )
-                }
-                options={selectOptions.map(({ value, label }) => ({
-                  value,
-                  label,
-                }))}
-              />
-              <HeatChart
-                data={heatData}
-                accessor={accessor}
-                getTooltipBody={getTooltipBody}
-                colorDomain={colorDomain}
-                colorRange={colorRange}
-                xAxisLabel="Raven Count"
-                yAxisLabel="Fruits per Color"
-              />
-            </div>
-          );
-        }}
-      />
+      <NarrowContainer width="55%">
+        <SliderGroup data={sliderData} />
+        <div className="mt-4 space-y-3">
+          <Select
+            name="strategy"
+            value={selectedOption.value}
+            onChange={(opt) =>
+              setSelectedOption(
+                selectOptions.find((o) => o.value === opt.value) ??
+                  selectOptions[0],
+              )
+            }
+            options={selectOptions.map(({ value, label }) => ({
+              value,
+              label,
+            }))}
+          />
+          <HeatChart
+            data={heatData}
+            accessor={accessor}
+            getTooltipBody={getTooltipBody}
+            colorDomain={colorDomain}
+            colorRange={colorRange}
+            xAxisLabel="Raven Count"
+            yAxisLabel="Fruits per Color"
+          />
+        </div>
+      </NarrowContainer>
     </Caption>
   );
 };

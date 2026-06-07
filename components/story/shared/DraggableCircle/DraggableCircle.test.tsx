@@ -1,6 +1,6 @@
 import { fireEvent, render } from "@testing-library/react";
 import type { ReactElement } from "react";
-import { beforeEach, describe, expect, it, vi } from "vitest";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import DraggableCircle from ".";
 
 beforeEach(() => {
@@ -12,6 +12,10 @@ beforeEach(() => {
   });
   Element.prototype.setPointerCapture = vi.fn();
   Element.prototype.releasePointerCapture = vi.fn();
+});
+
+afterEach(() => {
+  vi.restoreAllMocks();
 });
 
 function renderInSVG(ui: ReactElement) {
@@ -109,5 +113,43 @@ describe("DraggableCircle", () => {
     expect(circle.getAttribute("r")).toBe("12");
     fireEvent.pointerUp(circle, { pointerId: 1 });
     expect(circle.getAttribute("r")).toBe("8");
+  });
+
+  it("resets dragging and hovered state on pointerCancel", () => {
+    const { circle } = renderInSVG(
+      <DraggableCircle id={0} cx={50} cy={50} r={8} onDrag={vi.fn()} />,
+    );
+
+    fireEvent.pointerEnter(circle);
+    fireEvent.pointerDown(circle, { pointerId: 1 });
+    expect(circle.getAttribute("r")).toBe("12");
+
+    fireEvent.pointerCancel(circle, { pointerId: 1 });
+    expect(circle.getAttribute("r")).toBe("8");
+  });
+
+  it("skips touch-action setup when not inside an SVG", () => {
+    render(<DraggableCircle id={0} cx={50} cy={50} onDrag={vi.fn()} />);
+    expect(document.querySelector("circle")).toBeInTheDocument();
+  });
+
+  it("returns early from onPointerMove when ownerSVGElement is null", () => {
+    const onDrag = vi.fn();
+    render(<DraggableCircle id={0} cx={50} cy={50} onDrag={onDrag} />);
+    const circle = document.querySelector("circle")!;
+    fireEvent.pointerDown(circle, { pointerId: 1 });
+    fireEvent.pointerMove(circle, { clientX: 100, clientY: 100, pointerId: 1 });
+    expect(onDrag).not.toHaveBeenCalled();
+  });
+
+  it("returns early from onPointerMove when getScreenCTM is null", () => {
+    SVGSVGElement.prototype.getScreenCTM = vi.fn().mockReturnValue(null);
+    const onDrag = vi.fn();
+    const { circle } = renderInSVG(
+      <DraggableCircle id={0} cx={50} cy={50} onDrag={onDrag} />,
+    );
+    fireEvent.pointerDown(circle, { pointerId: 1 });
+    fireEvent.pointerMove(circle, { clientX: 100, clientY: 100, pointerId: 1 });
+    expect(onDrag).not.toHaveBeenCalled();
   });
 });
