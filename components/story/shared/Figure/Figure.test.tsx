@@ -106,6 +106,7 @@ describe("Figure — expanded state", () => {
   beforeEach(() => {
     mockSearchParams = new URLSearchParams("figure=1");
     mockReplace.mockClear();
+    Element.prototype.scrollIntoView = vi.fn();
   });
 
   afterEach(() => {
@@ -154,7 +155,7 @@ describe("Figure — expanded state", () => {
 
   it("calls router.replace to close on Escape key", () => {
     renderExpanded();
-    window.dispatchEvent(new KeyboardEvent("keydown", { key: "Escape" }));
+    fireEvent.keyDown(window, { key: "Escape" });
     expect(mockReplace).toHaveBeenCalledWith(
       expect.not.stringContaining("figure="),
       expect.objectContaining({ scroll: false }),
@@ -163,14 +164,14 @@ describe("Figure — expanded state", () => {
 
   it("does not close on non-Escape key", () => {
     renderExpanded();
-    window.dispatchEvent(new KeyboardEvent("keydown", { key: "Enter" }));
+    fireEvent.keyDown(window, { key: "Enter" });
     expect(mockReplace).not.toHaveBeenCalled();
   });
 
   it("Escape preserves other URL params when closing", () => {
     window.history.replaceState({}, "", "?figure=1&tab=overview");
     renderExpanded();
-    window.dispatchEvent(new KeyboardEvent("keydown", { key: "Escape" }));
+    fireEvent.keyDown(window, { key: "Escape" });
     expect(mockReplace).toHaveBeenCalledWith(
       "?tab=overview",
       expect.objectContaining({ scroll: false }),

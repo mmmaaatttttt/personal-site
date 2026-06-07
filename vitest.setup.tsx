@@ -22,23 +22,66 @@ afterEach(() => {
   cleanup();
 });
 
+// Strip framer-motion-specific props before forwarding to DOM elements.
+// Without this, props like `initial`, `animate`, and `whileInView` are spread
+// onto real DOM nodes, producing React "unrecognized prop" warnings.
+const MOTION_PROP_KEYS = new Set([
+  "initial",
+  "animate",
+  "exit",
+  "whileHover",
+  "whileTap",
+  "whileInView",
+  "whileFocus",
+  "whileDrag",
+  "transition",
+  "variants",
+  "layout",
+  "layoutId",
+  "drag",
+  "dragConstraints",
+  "dragElastic",
+  "dragMomentum",
+]);
+
+function stripMotionProps(props: Record<string, unknown>) {
+  return Object.fromEntries(
+    Object.entries(props).filter(([k]) => !MOTION_PROP_KEYS.has(k)),
+  );
+}
+
 // Minimalist passthrough mock for framer-motion to ensure JSDOM stability
 vi.mock("framer-motion", () => ({
   motion: {
-    div: ({ children, ...props }: ComponentPropsWithoutRef<"div">) => (
-      <div {...props}>{children}</div>
+    div: ({
+      children,
+      ...props
+    }: ComponentPropsWithoutRef<"div"> & Record<string, unknown>) => (
+      <div {...stripMotionProps(props)}>{children}</div>
     ),
-    rect: ({ children, ...props }: ComponentPropsWithoutRef<"rect">) => (
-      <rect {...props}>{children}</rect>
+    rect: ({
+      children,
+      ...props
+    }: ComponentPropsWithoutRef<"rect"> & Record<string, unknown>) => (
+      <rect {...stripMotionProps(props)}>{children}</rect>
     ),
-    path: ({ children, ...props }: ComponentPropsWithoutRef<"path">) => (
-      <path {...props}>{children}</path>
+    path: ({
+      children,
+      ...props
+    }: ComponentPropsWithoutRef<"path"> & Record<string, unknown>) => (
+      <path {...stripMotionProps(props)}>{children}</path>
     ),
-    text: ({ children, ...props }: ComponentPropsWithoutRef<"text">) => (
-      <text {...props}>{children}</text>
+    text: ({
+      children,
+      ...props
+    }: ComponentPropsWithoutRef<"text"> & Record<string, unknown>) => (
+      <text {...stripMotionProps(props)}>{children}</text>
     ),
-    g: ({ children, ...props }: ComponentPropsWithoutRef<"g">) => (
-      <g {...props}>{children}</g>
+    g: ({
+      children,
+      ...props
+    }: ComponentPropsWithoutRef<"g"> & Record<string, unknown>) => (
+      <g {...stripMotionProps(props)}>{children}</g>
     ),
   },
   AnimatePresence: ({ children }: { children?: ReactNode }) => <>{children}</>,

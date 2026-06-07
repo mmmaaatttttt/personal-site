@@ -2,7 +2,7 @@
 
 import { Maximize2, Minimize2 } from "lucide-react";
 import { useRouter, useSearchParams } from "next/navigation";
-import { useEffect, useId, useState } from "react";
+import { useCallback, useEffect, useId, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import { cn } from "@/lib/utils";
 import { useFigureNumber } from "./FigureProvider";
@@ -27,25 +27,48 @@ export default function FigureInner({
   const param = figNum > 0 ? String(figNum) : id;
   const searchParams = useSearchParams();
   const router = useRouter();
-  const [mounted, setMounted] = useState(false);
+  const figureRef = useRef<HTMLDivElement>(null);
+
+  // Local state drives the UI immediately on button click.
+  // useSearchParams syncs it from the URL on mount (handles direct/shared links).
+  const [isExpanded, setIsExpanded] = useState(false);
+  const prevExpandedRef = useRef(false);
+
+  const expand = useCallback(() => {
+    setIsExpanded(true);
+    const params = new URLSearchParams(searchParams.toString());
+    params.set("figure", param);
+    router.replace(`?${params.toString()}`, { scroll: false });
+  }, [searchParams, param, router]);
+
+  const collapse = useCallback(() => {
+    setIsExpanded(false);
+    const params = new URLSearchParams(window.location.search);
+    params.delete("figure");
+    const paramStr = params.toString();
+    router.replace(paramStr ? `?${paramStr}` : window.location.pathname, {
+      scroll: false,
+    });
+  }, [router]);
 
   useEffect(() => {
-    setMounted(true);
-  }, []);
-
-  const isOpen = searchParams.get("figure") === param;
-  const isExpanded = isOpen && mounted;
+    setIsExpanded(searchParams.get("figure") === param);
+  }, [searchParams, param]);
 
   // Prevent background scroll while expanded.
   useEffect(() => {
-    if (isExpanded) {
-      document.body.style.overflow = "hidden";
-    } else {
-      document.body.style.overflow = "";
-    }
+    document.body.style.overflow = isExpanded ? "hidden" : "";
     return () => {
       document.body.style.overflow = "";
     };
+  }, [isExpanded]);
+
+  // Scroll figure into view when collapsing.
+  useEffect(() => {
+    if (prevExpandedRef.current && !isExpanded) {
+      figureRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+    prevExpandedRef.current = isExpanded;
   }, [isExpanded]);
 
   // Escape key to close.
@@ -53,43 +76,22 @@ export default function FigureInner({
     if (!isExpanded) return;
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key !== "Escape") return;
-      const params = new URLSearchParams(window.location.search);
-      params.delete("figure");
-      const paramStr = params.toString();
-      router.replace(paramStr ? `?${paramStr}` : window.location.pathname, {
-        scroll: false,
-      });
+      collapse();
     };
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [isExpanded, router]);
+  }, [isExpanded, collapse]);
 
-  const handleOpen = () => {
-    const params = new URLSearchParams(searchParams.toString());
-    params.set("figure", param);
-    router.replace(`?${params.toString()}`, { scroll: false });
-  };
-
-  const handleClose = () => {
-    const params = new URLSearchParams(window.location.search);
-    params.delete("figure");
-    const paramStr = params.toString();
-    router.replace(paramStr ? `?${paramStr}` : window.location.pathname, {
-      scroll: false,
-    });
-  };
-
-  const backdrop =
-    mounted && isExpanded
-      ? createPortal(
-          <div
-            aria-hidden="true"
-            className="fixed inset-0 z-[49] bg-black/70"
-            onClick={handleClose}
-          />,
-          document.body,
-        )
-      : null;
+  const backdrop = isExpanded
+    ? createPortal(
+        <div
+          aria-hidden="true"
+          className="fixed inset-0 z-[49] bg-black/70"
+          onClick={collapse}
+        />,
+        document.body,
+      )
+    : null;
 
   return (
     <>
@@ -107,6 +109,7 @@ export default function FigureInner({
        * is always in the same relative position whether collapsed or expanded.
        */}
       <div
+        ref={figureRef}
         className={cn(
           isExpanded
             ? "fixed inset-0 z-50 overflow-y-auto bg-white"
@@ -133,7 +136,7 @@ export default function FigureInner({
           >
             <button
               type="button"
-              onClick={isExpanded ? handleClose : handleOpen}
+              onClick={isExpanded ? collapse : expand}
               className="cursor-pointer rounded-md border border-gray-200 bg-white p-1.5 text-gray-500 shadow-sm transition-colors hover:border-gray-300 hover:text-gray-800"
               aria-label={
                 isExpanded ? "Collapse interactive" : "Expand interactive"
