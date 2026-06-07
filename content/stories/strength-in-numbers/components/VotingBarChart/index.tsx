@@ -4,8 +4,10 @@ import { scaleLinear } from "d3-scale";
 import { useState } from "react";
 import BarGraph from "@/components/story/shared/BarGraph";
 import Caption from "@/components/story/shared/Caption";
+import NarrowContainer from "@/components/story/shared/NarrowContainer";
 import Select from "@/components/story/shared/Select";
-import SliderProvider from "@/components/story/shared/Slider/SliderProvider";
+import { SliderGroup } from "@/components/story/shared/Slider";
+import useSliders from "@/hooks/useSliders";
 import COLORS from "@/utils/styles";
 import type { VotingDataRow } from "../../data";
 import {
@@ -30,7 +32,7 @@ interface VotingBarChartProps {
   caption?: string;
 }
 
-const sliderData = [
+const SLIDER_CONFIG = [
   {
     min: MIN_YEAR,
     max: MAX_YEAR,
@@ -45,86 +47,79 @@ const sliderData = [
 const VotingBarChart = ({ data, variant, caption }: VotingBarChartProps) => {
   const options = variant === "voters" ? VOTERS_BAR_OPTIONS : PARTY_BAR_OPTIONS;
   const [selectedValue, setSelectedValue] = useState(options[0].value);
+  const { values, sliderData } = useSliders(SLIDER_CONFIG);
+  const [curYear] = values;
 
   const selectOptions = options.map((o) => ({
     value: o.value,
     label: o.label,
   }));
 
+  const option = options.find((o) => o.value === selectedValue) ?? options[0];
+  const allHeights = data
+    .map((d) => option.accessor(d))
+    .filter((h): h is number => h !== null && Number.isFinite(h) && h > 0);
+  const maxHeight = Math.max(...allHeights, 0);
+
+  const yScale = scaleLinear()
+    .domain([0, 1.1 * maxHeight])
+    .range([SVG_HEIGHT - PADDING.bottom, PADDING.top]);
+
+  const barData = data
+    .filter((d) => d.year === curYear)
+    .map((d) => {
+      const height = option.accessor(d);
+      return {
+        key: d.abbreviation,
+        height: height !== null && Number.isFinite(height) ? height : 0,
+        color:
+          variant === "party"
+            ? partyColorScale(d.rep_percent - d.dem_percent)
+            : option.color,
+      };
+    })
+    .filter((d) => d.height > 0)
+    .sort((a, b) => a.height - b.height);
+
+  const hasData = barData.length > 0;
+
   return (
     <Caption caption={caption}>
-      <SliderProvider
-        initialData={sliderData}
-        width="77%"
-        fullWidthAt="md"
-        render={([curYear]) => {
-          const option =
-            options.find((o) => o.value === selectedValue) ?? options[0];
-          const allHeights = data
-            .map((d) => option.accessor(d))
-            .filter(
-              (h): h is number => h !== null && Number.isFinite(h) && h > 0,
-            );
-          const maxHeight = Math.max(...allHeights, 0);
-
-          const yScale = scaleLinear()
-            .domain([0, 1.1 * maxHeight])
-            .range([SVG_HEIGHT - PADDING.bottom, PADDING.top]);
-
-          const barData = data
-            .filter((d) => d.year === curYear)
-            .map((d) => {
-              const height = option.accessor(d);
-              return {
-                key: d.abbreviation,
-                height: height !== null && Number.isFinite(height) ? height : 0,
-                color:
-                  variant === "party"
-                    ? partyColorScale(d.rep_percent - d.dem_percent)
-                    : option.color,
-              };
-            })
-            .filter((d) => d.height > 0)
-            .sort((a, b) => a.height - b.height);
-
-          const hasData = barData.length > 0;
-
-          return (
-            <div className="mt-4 space-y-3">
-              <Select
-                name="statistic"
-                value={selectedValue}
-                onChange={(opt) => setSelectedValue(opt.value)}
-                options={selectOptions}
+      <NarrowContainer width="77%" fullWidthAt="md">
+        <SliderGroup data={sliderData} />
+        <div className="mt-4 space-y-3">
+          <Select
+            name="statistic"
+            value={selectedValue}
+            onChange={(opt) => setSelectedValue(opt.value)}
+            options={selectOptions}
+          />
+          {hasData ? (
+            <div className="w-[130%] -ml-[15%] max-md:w-full max-md:ml-0">
+              <BarGraph
+                animated={false}
+                barData={barData}
+                barLabel={(d) => d.key}
+                color={option.color}
+                height={SVG_HEIGHT}
+                padding={PADDING}
+                svgId={`bar-graph-${variant}`}
+                width={SVG_WIDTH}
+                yScale={yScale}
+                yTickFormat={option.format}
+                gridlinesVertical={false}
               />
-              {hasData ? (
-                <div className="w-[130%] -ml-[15%] max-md:w-full max-md:ml-0">
-                  <BarGraph
-                    animated={false}
-                    barData={barData}
-                    barLabel={(d) => d.key}
-                    color={option.color}
-                    height={SVG_HEIGHT}
-                    padding={PADDING}
-                    svgId={`bar-graph-${variant}`}
-                    width={SVG_WIDTH}
-                    yScale={yScale}
-                    yTickFormat={option.format}
-                    gridlinesVertical={false}
-                  />
-                </div>
-              ) : (
-                <>
-                  <h4 className="text-lg font-bold">
-                    {option.label} has no data for {curYear}.
-                  </h4>
-                  <p>Please make another selection.</p>
-                </>
-              )}
             </div>
-          );
-        }}
-      />
+          ) : (
+            <>
+              <h4 className="text-lg font-bold">
+                {option.label} has no data for {curYear}.
+              </h4>
+              <p>Please make another selection.</p>
+            </>
+          )}
+        </div>
+      </NarrowContainer>
     </Caption>
   );
 };

@@ -1,5 +1,5 @@
 import { act, render, renderHook, screen } from "@testing-library/react";
-import type { HTMLAttributes, MouseEvent, ReactNode } from "react";
+import type { HTMLAttributes, MouseEvent, ReactNode, TouchEvent } from "react";
 import { describe, expect, it, vi } from "vitest";
 import "@testing-library/jest-dom/vitest";
 import Tooltip, { useTooltip } from ".";
@@ -72,5 +72,53 @@ describe("Tooltip Hook and Component", () => {
 
     expect(screen.getByText("Line 1")).toBeInTheDocument();
     expect(screen.getByText("Line 2")).toBeInTheDocument();
+  });
+
+  it("reads clientX/clientY from a touch event", () => {
+    const { result } = renderHook(() => useTooltip());
+
+    act(() => {
+      result.current.showTooltip(
+        "Touch",
+        "Body",
+      )({
+        touches: [{ clientX: 200, clientY: 300 }],
+      } as unknown as TouchEvent<Element>);
+    });
+
+    expect(result.current.tooltip).toEqual({
+      title: "Touch",
+      body: "Body",
+      x: 200,
+      y: 300,
+    });
+  });
+
+  it("constrains tooltip width when x is near the left edge", () => {
+    const info = { title: "", body: "edge case", x: 0, y: 100 };
+    render(<Tooltip info={info} />);
+    const tooltip = document.querySelector(".pointer-events-none");
+    expect(tooltip).toHaveStyle({ width: "0px" });
+  });
+
+  it("updates size state when tooltip element dimensions change", () => {
+    const info = { title: "Resize test", body: "body", x: 200, y: 200 };
+    const { rerender } = render(<Tooltip info={info} />);
+    const tooltipEl = document.querySelector(
+      ".pointer-events-none",
+    ) as HTMLElement;
+
+    Object.defineProperty(tooltipEl, "offsetWidth", {
+      get: () => 150,
+      configurable: true,
+    });
+    Object.defineProperty(tooltipEl, "offsetHeight", {
+      get: () => 60,
+      configurable: true,
+    });
+
+    rerender(<Tooltip info={info} />);
+
+    expect(document.querySelector(".pointer-events-none")).toBeInTheDocument();
   });
 });

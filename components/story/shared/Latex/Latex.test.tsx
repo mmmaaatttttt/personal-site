@@ -43,4 +43,20 @@ describe("Latex", () => {
     expect(strs).toContain("a");
     expect(strs).toContain("b");
   });
+
+  it("patches top style on any .delimcenter elements injected by katex", () => {
+    vi.mocked(katex.render).mockImplementationOnce(
+      (_str: string, el: Element) => {
+        const span = document.createElement("span");
+        span.className = "delimcenter";
+        el.appendChild(span);
+      },
+    );
+    const { container } = render(<Latex str="\\left( x \\right)" />);
+    const delimcenter = container.querySelector(
+      ".delimcenter",
+    ) as HTMLElement | null;
+    expect(delimcenter).not.toBeNull();
+    expect(delimcenter?.style.top).toBe("0.1em");
+  });
 });

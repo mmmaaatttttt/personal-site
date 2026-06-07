@@ -71,4 +71,22 @@ describe("StyledTable Component", () => {
 
     expect(screen.getByText("Footer Content")).toBeInTheDocument();
   });
+
+  it("applies inline margin style when margin prop is provided", () => {
+    const { container } = render(<StyledTable margin="auto" />);
+    const wrapper = container.firstChild as HTMLElement;
+    expect(wrapper).toHaveStyle({ margin: "auto" });
+  });
+
+  it("renders string[][] data via the data prop", () => {
+    const tableData = [
+      ["Name", "Score"],
+      ["Alice", "95"],
+      ["Bob", "87"],
+    ];
+    render(<StyledTable data={tableData} />);
+    expect(screen.getByText("Name")).toBeInTheDocument();
+    expect(screen.getByText("Alice")).toBeInTheDocument();
+    expect(screen.getByText("87")).toBeInTheDocument();
+  });
 });

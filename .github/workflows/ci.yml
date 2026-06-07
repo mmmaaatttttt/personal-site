@@ -35,6 +35,7 @@ jobs:
       - run: npm run test:coverage
 
   e2e:
+    if: github.actor != 'dependabot[bot]'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6

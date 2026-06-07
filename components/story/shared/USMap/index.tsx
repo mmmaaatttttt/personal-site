@@ -87,7 +87,7 @@ const USMap = <T extends { state?: string }>({
 
   const colorScale = useMemo(() => {
     const dataWithValues = geoData.filter(
-      (d) => d.properties.values && d.properties.values.length > 0,
+      (d) => d.properties.values.length > 0,
     );
     const effectiveDomain =
       domain ||
@@ -96,9 +96,7 @@ const USMap = <T extends { state?: string }>({
         number,
       ]);
 
-    return scaleLinear<string>()
-      .domain(effectiveDomain || [0, 1])
-      .range(colors);
+    return scaleLinear<string>().domain(effectiveDomain).range(colors);
   }, [geoData, domain, colors, fillAccessor]);
 
   return (
@@ -108,19 +106,15 @@ const USMap = <T extends { state?: string }>({
           <AnimatePresence>
             {geoData.map((d, i) => {
               const val = fillAccessor(d.properties);
-              const hasData =
-                d.properties.values &&
-                d.properties.values.length > 0 &&
-                val !== null;
-              const fill =
-                hasData && val !== null ? colorScale(val) : "#eeeeee";
+              const hasData = d.properties.values.length > 0 && val !== null;
+              const fill = hasData ? colorScale(val as number) : "#eeeeee";
               const title = getTooltipTitle(d.properties);
               const body = getTooltipBody(d.properties);
 
               return (
                 <USState
-                  key={d.id || i}
-                  d={pathGenerator(d) || ""}
+                  key={String(d.id)}
+                  d={pathGenerator(d) as string}
                   fill={fill}
                   index={i}
                   title={title}

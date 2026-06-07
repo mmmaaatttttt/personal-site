@@ -1,8 +1,10 @@
 "use client";
 
 import ColoredSpan from "@/components/story/shared/ColoredSpan";
-import SliderProvider from "@/components/story/shared/Slider";
+import NarrowContainer from "@/components/story/shared/NarrowContainer";
+import { SliderGroup } from "@/components/story/shared/Slider";
 import StyledTable from "@/components/story/shared/StyledTable";
+import useSliders from "@/hooks/useSliders";
 import baCommonPhrases, {
   type CommonPhraseEntry,
   type SpeakerPhrases,
@@ -23,71 +25,69 @@ export default function CommonPhrasesInteractive() {
     },
   ];
 
-  return (
-    <div className="w-full" data-testid="common-phrases-interactive-container">
-      <SliderProvider
-        initialData={initialData}
-        render={([phraseCount]) => {
-          const entry = dataset.find((d) => d.phrase_count === phraseCount);
-          if (!entry) return null;
+  const { values, sliderData } = useSliders(initialData);
+  const [phraseCount] = values;
 
-          const { speakers } = entry;
-          const numRows = Math.max(
-            speakers.Chris.length,
-            speakers.Caller.length,
-          );
+  const entry = dataset.find((d) => d.phrase_count === phraseCount);
 
-          const headers = (
-            Object.keys(speakers) as (keyof SpeakerPhrases)[]
-          ).map((speaker) => ({
-            key: `header-${speaker}`,
-            content: (
-              <ColoredSpan
-                bold
-                color={colorMap[speaker as keyof typeof colorMap]}
-              >
-                {speaker}
-              </ColoredSpan>
-            ),
-          }));
+  const tableContent = (() => {
+    if (!entry) return null;
 
-          const rows = Array.from({ length: numRows }, (_, i) => {
-            const rowKey = (Object.keys(speakers) as (keyof SpeakerPhrases)[])
-              .map((s) => speakers[s][i]?.[0] || "--")
-              .join("-");
+    const { speakers } = entry;
+    const numRows = Math.max(speakers.Chris.length, speakers.Caller.length);
 
+    const headers = (Object.keys(speakers) as (keyof SpeakerPhrases)[]).map(
+      (speaker) => ({
+        key: `header-${speaker}`,
+        content: (
+          <ColoredSpan bold color={colorMap[speaker as keyof typeof colorMap]}>
+            {speaker}
+          </ColoredSpan>
+        ),
+      }),
+    );
+
+    const rows = Array.from({ length: numRows }, (_, i) => {
+      const rowKey = (Object.keys(speakers) as (keyof SpeakerPhrases)[])
+        .map((s) => speakers[s][i]?.[0] || "--")
+        .join("-");
+
+      return {
+        key: rowKey,
+        cells: (Object.keys(speakers) as (keyof SpeakerPhrases)[]).map(
+          (speaker) => {
+            const speakerPhrases = speakers[speaker][i];
             return {
-              key: rowKey,
-              cells: (Object.keys(speakers) as (keyof SpeakerPhrases)[]).map(
-                (speaker) => {
-                  const speakerPhrases = speakers[speaker][i];
-                  return {
-                    key: `cell-${speaker}`,
-                    content: (
-                      <ColoredSpan
-                        color={colorMap[speaker as keyof typeof colorMap]}
-                      >
-                        {speakerPhrases
-                          ? `${speakerPhrases[0]} (said ${speakerPhrases[1]} times)`
-                          : "--"}
-                      </ColoredSpan>
-                    ),
-                  };
-                },
+              key: `cell-${speaker}`,
+              content: (
+                <ColoredSpan color={colorMap[speaker as keyof typeof colorMap]}>
+                  {speakerPhrases
+                    ? `${speakerPhrases[0]} (said ${speakerPhrases[1]} times)`
+                    : "--"}
+                </ColoredSpan>
               ),
             };
-          });
+          },
+        ),
+      };
+    });
 
-          return (
-            <StyledTable
-              padding="0.5rem 0.1rem"
-              headers={headers}
-              rows={rows}
-              margin="0.75rem 0 0"
-            />
-          );
-        }}
+    return (
+      <StyledTable
+        padding="0.5rem 0.1rem"
+        headers={headers}
+        rows={rows}
+        margin="0.75rem 0 0"
       />
+    );
+  })();
+
+  return (
+    <div className="w-full" data-testid="common-phrases-interactive-container">
+      <NarrowContainer>
+        <SliderGroup data={sliderData} />
+        {tableContent}
+      </NarrowContainer>
     </div>
   );
 }

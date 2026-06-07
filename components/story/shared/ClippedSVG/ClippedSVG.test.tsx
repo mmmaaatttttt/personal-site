@@ -71,4 +71,20 @@ describe("ClippedSVG Component", () => {
     const g = container.querySelector("svg > g");
     expect(g).not.toHaveAttribute("clip-path");
   });
+
+  it("accepts padding as an object", () => {
+    const objectPadding = { top: 10, left: 15, right: 20, bottom: 25 };
+    const { container } = render(
+      <ClippedSVG id="obj-pad" width={600} height={400} padding={objectPadding}>
+        <g />
+      </ClippedSVG>,
+    );
+    const clipPath = container.querySelector("clipPath");
+    const rect = clipPath?.querySelector("rect");
+    // x=left=15, y=top=10, width=600-15-20=565, height=400-10-25=365
+    expect(rect).toHaveAttribute("x", "15");
+    expect(rect).toHaveAttribute("y", "10");
+    expect(rect).toHaveAttribute("width", "565");
+    expect(rect).toHaveAttribute("height", "365");
+  });
 });

@@ -23,5 +23,12 @@ describe("HorizontalBar Component", () => {
     expect(bars[1]).toHaveStyle({ backgroundColor: "rgb(0, 0, 255)" });
   });
 
-  // Tooltip integration is verified visually and in Tooltip.test.tsx
+  it("renders items without tooltip handlers when tooltipText is absent", () => {
+    const noTooltipData = [
+      { size: 50, color: "green", key: "g" },
+      { size: 50, color: "purple", key: "p" },
+    ];
+    const { container } = render(<HorizontalBar data={noTooltipData} />);
+    expect(container.querySelectorAll(".h-full")).toHaveLength(2);
+  });
 });

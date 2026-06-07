@@ -9,6 +9,7 @@ on:
 
 jobs:
   deploy-staging:
+    if: github.actor != 'dependabot[bot]'
     uses: ./.github/workflows/deploy-base.yml
     with:
       bucket: staging.mattlane.us

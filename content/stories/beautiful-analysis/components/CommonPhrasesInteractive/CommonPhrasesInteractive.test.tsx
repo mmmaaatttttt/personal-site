@@ -1,22 +1,17 @@
 import { render, screen } from "@testing-library/react";
-import type { ReactNode } from "react";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import "@testing-library/jest-dom/vitest";
 import CommonPhrasesInteractive from "./index";
 
-// Mock shared components
-vi.mock("@/components/story/shared/Slider/SliderProvider", () => ({
-  default: ({
-    initialData,
-    render,
-  }: {
-    initialData: { initialValue: number }[];
-    render: (vals: number[]) => ReactNode;
-  }) => (
-    <div data-testid="mock-slider-provider">
-      {render([initialData[0].initialValue])}
-    </div>
-  ),
+vi.mock("@/hooks/useSliders", () => ({
+  default: (initialData: { initialValue: number }[]) => ({
+    values: initialData.map((d) => d.initialValue),
+    sliderData: [],
+  }),
+}));
+
+vi.mock("@/components/story/shared/Slider", () => ({
+  SliderGroup: () => <div data-testid="mock-slider-group" />,
 }));
 
 vi.mock("@/components/story/shared/StyledTable", () => ({
