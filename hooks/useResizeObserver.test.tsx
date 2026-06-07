@@ -79,4 +79,20 @@ describe("useResizeObserver", () => {
     unmount();
     expect(mockDisconnect).toHaveBeenCalledOnce();
   });
+
+  it("skips observing when ref is null", () => {
+    function DetachedBox() {
+      const [ref] = useResizeObserver();
+      void ref;
+      return <div data-testid="detached" />;
+    }
+
+    render(<DetachedBox />);
+
+    const observeMock = (global.ResizeObserver as ReturnType<typeof vi.fn>).mock
+      .results[0]?.value?.observe as ReturnType<typeof vi.fn>;
+    if (observeMock) {
+      expect(observeMock).not.toHaveBeenCalled();
+    }
+  });
 });

@@ -23,35 +23,29 @@ interface SliderGroupProps {
 }
 
 const SliderGroup: FC<SliderGroupProps> = ({
-  data = [],
+  data,
   column = true,
   compact = false,
 }) => {
-  const sliders =
-    data && Array.isArray(data)
-      ? data.map((d, i) => {
-          const title =
-            typeof d.title === "function" ? d.title(d.value) : d.title || "";
-          return (
-            <div
-              key={d.key ?? i}
-              className={`${compact ? "my-0" : "m-1"} flex-1`}
-            >
-              <LabeledSlider
-                min={d.min}
-                max={d.max}
-                step={d.step}
-                value={d.value}
-                handleValueChange={d.handleValueChange}
-                title={title}
-                color={d.color}
-                tickCount={d.tickCount}
-                compact={compact}
-              />
-            </div>
-          );
-        })
-      : [];
+  const sliders = data.map((d, i) => {
+    const title =
+      typeof d.title === "function" ? d.title(d.value) : d.title || "";
+    return (
+      <div key={d.key ?? i} className={`${compact ? "my-0" : "m-1"} flex-1`}>
+        <LabeledSlider
+          min={d.min}
+          max={d.max}
+          step={d.step}
+          value={d.value}
+          handleValueChange={d.handleValueChange}
+          title={title}
+          color={d.color}
+          tickCount={d.tickCount}
+          compact={compact}
+        />
+      </div>
+    );
+  });
 
   return (
     <FlexContainer column={column} cross="center" flex={data.length}>

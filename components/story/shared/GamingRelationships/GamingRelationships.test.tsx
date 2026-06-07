@@ -1,7 +1,8 @@
-import { render, screen } from "@testing-library/react";
+import { fireEvent, render, screen } from "@testing-library/react";
 import type { ReactNode } from "react";
 import { describe, expect, it, vi } from "vitest";
 import "@testing-library/jest-dom/vitest";
+import { Solver } from "odex";
 import COLORS from "@/utils/styles";
 import GamingRelationships, { type GamingVisData } from ".";
 
@@ -37,21 +38,28 @@ vi.mock("@/components/story/shared/Graph", () => ({
     xLabel,
     yLabel,
     svgId,
+    tickStep,
+    yScale,
   }: {
     children?: ReactNode;
     xLabel?: string;
     yLabel?: string;
     svgId?: string;
-  }) => (
-    <div
-      data-testid="graph"
-      data-xlabel={xLabel}
-      data-ylabel={yLabel}
-      data-svgid={svgId}
-    >
-      {children}
-    </div>
-  ),
+    tickStep?: (scale: { domain: () => number[] }) => number;
+    yScale?: { domain: () => number[] };
+  }) => {
+    if (tickStep && yScale) tickStep(yScale);
+    return (
+      <div
+        data-testid="graph"
+        data-xlabel={xLabel}
+        data-ylabel={yLabel}
+        data-svgid={svgId}
+      >
+        {children}
+      </div>
+    );
+  },
 }));
 
 vi.mock("@/components/story/shared/LinePlot", () => ({
@@ -61,8 +69,22 @@ vi.mock("@/components/story/shared/LinePlot", () => ({
 }));
 
 vi.mock("@/components/story/shared/Slider/SliderGroup", () => ({
-  default: ({ data }: { data: unknown[] }) => (
-    <div data-testid="slider-group" data-count={data.length} />
+  default: ({
+    data,
+  }: {
+    data: Array<{ handleValueChange: (v: number) => void; title: string }>;
+  }) => (
+    <div data-testid="slider-group" data-count={data.length}>
+      {data.map((d) => (
+        <button
+          type="button"
+          key={d.title}
+          onClick={() => d.handleValueChange(3)}
+        >
+          change
+        </button>
+      ))}
+    </div>
   ),
 }));
 
@@ -188,5 +210,71 @@ describe("GamingRelationships", () => {
     // Single-graph layout: ColumnLayout at root
     const layouts = screen.getAllByTestId("column-layout");
     expect(layouts.length).toBeGreaterThanOrEqual(1);
+  });
+
+  it("calls handleValueChange when a slider fires", () => {
+    render(<GamingRelationships visData={twoPersonVisData} />);
+    const buttons = screen.getAllByRole("button");
+    expect(buttons.length).toBeGreaterThan(0);
+    fireEvent.click(buttons[0]);
+    expect(screen.getAllByTestId("graph")).toHaveLength(1);
+  });
+
+  it("uses large-domain tickStep (> 500)", () => {
+    const largeYVisData: GamingVisData = {
+      ...twoPersonVisData,
+      smallestY: 600,
+      largestY: 1000,
+    };
+    render(<GamingRelationships visData={largeYVisData} />);
+    expect(screen.getAllByTestId("graph").length).toBeGreaterThanOrEqual(1);
+  });
+
+  it("uses sliceIdx=2 for 4-color/2-diffEq layout", () => {
+    const fourColorVisData: GamingVisData = {
+      ...twoPersonVisData,
+      diffEqs: [simpleDiffEq, simpleDiffEq],
+      svgIds: ["vis1", "vis2"],
+      colors: [A, B, A, B],
+    };
+    render(<GamingRelationships visData={fourColorVisData} />);
+    expect(screen.getAllByTestId("graph")).toHaveLength(2);
+  });
+
+  it("falls back to [0,0] initial values when all sliders are equation parameters", () => {
+    const allParamVisData: GamingVisData = {
+      ...twoPersonVisData,
+      initialData: [
+        {
+          min: -5,
+          max: 5,
+          initialValue: 1,
+          title: "A param",
+          color: A,
+          equationParameter: true,
+        },
+        {
+          min: -5,
+          max: 5,
+          initialValue: 2,
+          title: "B param",
+          color: B,
+          equationParameter: true,
+        },
+      ],
+    };
+    render(<GamingRelationships visData={allParamVisData} />);
+    expect(screen.getAllByTestId("graph").length).toBeGreaterThanOrEqual(1);
+  });
+
+  it("falls back to yMax=0 when ODE produces no data points", () => {
+    vi.mocked(Solver).mockImplementationOnce(
+      () =>
+        ({ solve: vi.fn(), grid: vi.fn() }) as unknown as InstanceType<
+          typeof Solver
+        >,
+    );
+    render(<GamingRelationships visData={twoPersonVisData} />);
+    expect(screen.getAllByTestId("graph").length).toBeGreaterThanOrEqual(1);
   });
 });

@@ -96,7 +96,7 @@ const PieSlice: FC<PieSliceProps> = ({
         endAngle: ea,
         innerRadius: 0,
         outerRadius: 0,
-      }) || "",
+      }) as string,
   );
 
   const labelX = useTransform([startAngle, endAngle], ([sa, ea]: number[]) => {
