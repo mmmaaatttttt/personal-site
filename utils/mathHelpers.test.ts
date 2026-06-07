@@ -14,20 +14,29 @@ import {
 } from "./mathHelpers";
 
 vi.mock("odex", () => ({
-  Solver: vi.fn().mockImplementation((_fn: unknown, count: number) => ({
-    grid: vi.fn((_step: number, cb: (x: number, y: number[]) => void) => {
-      cb(
-        0,
-        Array.from({ length: count }, (_, i) => i),
-      );
-      cb(
-        1,
-        Array.from({ length: count }, (_, i) => i + 1),
-      );
-      return "grid-result";
-    }),
-    solve: vi.fn(),
-  })),
+  Solver: vi.fn().mockImplementation(
+    class {
+      grid: ReturnType<typeof vi.fn>;
+      solve: ReturnType<typeof vi.fn>;
+
+      constructor(_fn: unknown, count: number) {
+        this.grid = vi.fn(
+          (_step: number, cb: (x: number, y: number[]) => void) => {
+            cb(
+              0,
+              Array.from({ length: count }, (_, i) => i),
+            );
+            cb(
+              1,
+              Array.from({ length: count }, (_, i) => i + 1),
+            );
+            return "grid-result";
+          },
+        );
+        this.solve = vi.fn();
+      }
+    } as never,
+  ),
 }));
 
 describe("generateData", () => {
@@ -47,21 +56,27 @@ describe("generateData", () => {
   });
 
   it("returns partial data when the solver throws", () => {
-    vi.mocked(odex.Solver).mockImplementationOnce(((
-      _fn: unknown,
-      count: number,
-    ) => ({
-      grid: vi.fn((_step: number, cb: (x: number, y: number[]) => void) => {
-        cb(
-          0,
-          Array.from({ length: count }, (_, i) => i),
-        );
-        return "grid-result";
-      }),
-      solve: vi.fn(() => {
-        throw new Error("maximum allowed steps exceeded");
-      }),
-    })) as unknown as never);
+    vi.mocked(odex.Solver).mockImplementationOnce(
+      class {
+        grid: ReturnType<typeof vi.fn>;
+        solve: ReturnType<typeof vi.fn>;
+
+        constructor(_fn: unknown, count: number) {
+          this.grid = vi.fn(
+            (_step: number, cb: (x: number, y: number[]) => void) => {
+              cb(
+                0,
+                Array.from({ length: count }, (_, i) => i),
+              );
+              return "grid-result";
+            },
+          );
+          this.solve = vi.fn(() => {
+            throw new Error("maximum allowed steps exceeded");
+          });
+        }
+      } as never,
+    );
 
     const data = generateData(2, 0, 1, 0.1, [0, 0], [1, 1], diffEq);
     expect(data).toHaveLength(2);

@@ -7,14 +7,16 @@ import COLORS from "@/utils/styles";
 import GamingRelationships, { type GamingVisData } from ".";
 
 vi.mock("odex", () => ({
-  Solver: vi.fn().mockImplementation((_fn: unknown, _n: number) => ({
-    solve: vi.fn(),
-    grid: vi.fn((_step: number, cb: (x: number, y: number[]) => void) => {
-      cb(0, [1, -1]);
-      cb(1, [2, -2]);
-      return vi.fn();
-    }),
-  })),
+  Solver: vi.fn().mockImplementation(
+    class {
+      solve = vi.fn();
+      grid = vi.fn((_step: number, cb: (x: number, y: number[]) => void) => {
+        cb(0, [1, -1]);
+        cb(1, [2, -2]);
+        return vi.fn();
+      });
+    } as never,
+  ),
 }));
 
 vi.mock("@/components/story/shared/Caption", () => ({
@@ -269,10 +271,10 @@ describe("GamingRelationships", () => {
 
   it("falls back to yMax=0 when ODE produces no data points", () => {
     vi.mocked(Solver).mockImplementationOnce(
-      () =>
-        ({ solve: vi.fn(), grid: vi.fn() }) as unknown as InstanceType<
-          typeof Solver
-        >,
+      class {
+        solve = vi.fn();
+        grid = vi.fn();
+      } as never,
     );
     render(<GamingRelationships visData={twoPersonVisData} />);
     expect(screen.getAllByTestId("graph").length).toBeGreaterThanOrEqual(1);
