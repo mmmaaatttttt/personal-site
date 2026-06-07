@@ -3,6 +3,12 @@ import { cleanup } from "@testing-library/react";
 import type { ComponentPropsWithoutRef, ReactNode } from "react";
 import { afterEach, vi } from "vitest";
 
+vi.mock("next/navigation", () => ({
+  useSearchParams: () => new URLSearchParams(),
+  useRouter: () => ({ replace: vi.fn(), push: vi.fn(), back: vi.fn() }),
+  usePathname: () => "/",
+}));
+
 global.ResizeObserver = vi.fn().mockImplementation(
   class {
     observe = vi.fn();
