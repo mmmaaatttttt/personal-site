@@ -1,4 +1,4 @@
-import { fireEvent, render, screen } from "@testing-library/react";
+import { fireEvent, render } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
 import ManhattanCircle from ".";
 
@@ -17,11 +17,6 @@ describe("ManhattanCircle", () => {
       (c) => c.getAttribute("fill") === "#ff3c23",
     );
     expect(red).not.toBeUndefined();
-  });
-
-  it("renders a caption when provided", () => {
-    render(<ManhattanCircle caption="Test caption" />);
-    expect(screen.getByText("Test caption")).toBeTruthy();
   });
 
   it("shows slider for radius", () => {

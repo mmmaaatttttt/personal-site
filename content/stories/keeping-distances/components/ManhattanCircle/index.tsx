@@ -2,7 +2,6 @@
 
 import { scaleLinear } from "d3-scale";
 import type { FC } from "react";
-import Figure from "@/components/story/shared/Figure";
 import Graph from "@/components/story/shared/Graph";
 import NarrowContainer from "@/components/story/shared/NarrowContainer";
 import { SliderGroup } from "@/components/story/shared/Slider";
@@ -24,11 +23,7 @@ const SLIDER_CONFIG = [
   },
 ];
 
-interface ManhattanCircleProps {
-  caption?: string;
-}
-
-const ManhattanCircle: FC<ManhattanCircleProps> = ({ caption }) => {
+const ManhattanCircle: FC = () => {
   const { values, sliderData } = useSliders(SLIDER_CONFIG);
   const [r] = values;
   const bound = Math.max(r + 1, 10);
@@ -41,30 +36,28 @@ const ManhattanCircle: FC<ManhattanCircleProps> = ({ caption }) => {
   const points = generateCirclePoints(r);
 
   return (
-    <Figure caption={caption}>
-      <NarrowContainer width="55%">
-        <SliderGroup data={sliderData} />
-        <Graph
-          height={HEIGHT}
-          width={WIDTH}
-          svgId="manhattan-circle"
-          xAxisPosition="center"
-          xScale={xScale}
-          yAxisPosition="center"
-          yScale={yScale}
-        >
-          <circle cx={xScale(0)} cy={yScale(0)} fill={COLORS.RED} r={8} />
-          {points.map((pt) => (
-            <circle
-              cx={xScale(pt.x)}
-              cy={yScale(pt.y)}
-              r={4}
-              key={`${pt.x}|${pt.y}`}
-            />
-          ))}
-        </Graph>
-      </NarrowContainer>
-    </Figure>
+    <NarrowContainer width="55%">
+      <SliderGroup data={sliderData} />
+      <Graph
+        height={HEIGHT}
+        width={WIDTH}
+        svgId="manhattan-circle"
+        xAxisPosition="center"
+        xScale={xScale}
+        yAxisPosition="center"
+        yScale={yScale}
+      >
+        <circle cx={xScale(0)} cy={yScale(0)} fill={COLORS.RED} r={8} />
+        {points.map((pt) => (
+          <circle
+            cx={xScale(pt.x)}
+            cy={yScale(pt.y)}
+            r={4}
+            key={`${pt.x}|${pt.y}`}
+          />
+        ))}
+      </Graph>
+    </NarrowContainer>
   );
 };
 

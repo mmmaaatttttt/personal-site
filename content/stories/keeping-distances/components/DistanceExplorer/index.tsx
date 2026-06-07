@@ -4,7 +4,6 @@ import { extent } from "d3-array";
 import { scaleLinear } from "d3-scale";
 import { type FC, useCallback } from "react";
 import DraggableCircle from "@/components/story/shared/DraggableCircle";
-import Figure from "@/components/story/shared/Figure";
 import Graph from "@/components/story/shared/Graph";
 import NarrowContainer from "@/components/story/shared/NarrowContainer";
 import { average, euclideanDistance } from "@/utils/mathHelpers";
@@ -22,11 +21,7 @@ const yScale = scaleLinear()
   .domain([-10, 10])
   .range([HEIGHT - 1, 1]);
 
-interface DistanceExplorerProps {
-  caption?: string;
-}
-
-const DistanceExplorer: FC<DistanceExplorerProps> = ({ caption }) => {
+const DistanceExplorer: FC = () => {
   const [points, handleDrag] = useDragState(
     [
       { x: -2, y: -2 },
@@ -60,70 +55,68 @@ const DistanceExplorer: FC<DistanceExplorerProps> = ({ caption }) => {
   const textY = average(scaledPoints, (p) => p.y);
 
   return (
-    <Figure caption={caption}>
-      <NarrowContainer width="55%">
-        <Graph
-          xAxisPosition="center"
-          yAxisPosition="center"
-          width={WIDTH}
-          height={HEIGHT}
-          svgId="distance-explorer"
-          xScale={xScale}
-          yScale={yScale}
-          tickStep={() => 1}
+    <NarrowContainer width="55%">
+      <Graph
+        xAxisPosition="center"
+        yAxisPosition="center"
+        width={WIDTH}
+        height={HEIGHT}
+        svgId="distance-explorer"
+        xScale={xScale}
+        yScale={yScale}
+        tickStep={() => 1}
+      >
+        <g stroke="black" strokeWidth={3} strokeDasharray="3">
+          {scaledPoints[0].x === minX && (
+            <line x1={maxX} x2={maxX} y1={minY} y2={maxY} />
+          )}
+          {scaledPoints[0].x === maxX && (
+            <line x1={minX} x2={minX} y1={minY} y2={maxY} />
+          )}
+          {scaledPoints[0].y === minY && (
+            <line x1={minX} x2={maxX} y1={minY} y2={minY} />
+          )}
+          {scaledPoints[0].y === maxY && (
+            <line x1={minX} x2={maxX} y1={maxY} y2={maxY} />
+          )}
+        </g>
+        <line
+          x1={scaledPoints[0].x}
+          x2={scaledPoints[1].x}
+          y1={scaledPoints[0].y}
+          y2={scaledPoints[1].y}
+          stroke={COLORS.ORANGE}
+          strokeWidth={3}
+        />
+        <text
+          x={textX}
+          y={textY}
+          fill={COLORS.ORANGE}
+          fontWeight="bold"
+          textAnchor="middle"
+          dominantBaseline="middle"
+          transform={`rotate(${(-180 / Math.PI) * theta}, ${textX}, ${textY})`}
+          dy={-Math.sign(theta) * 20}
+          className="select-none"
         >
-          <g stroke="black" strokeWidth={3} strokeDasharray="3">
-            {scaledPoints[0].x === minX && (
-              <line x1={maxX} x2={maxX} y1={minY} y2={maxY} />
-            )}
-            {scaledPoints[0].x === maxX && (
-              <line x1={minX} x2={minX} y1={minY} y2={maxY} />
-            )}
-            {scaledPoints[0].y === minY && (
-              <line x1={minX} x2={maxX} y1={minY} y2={minY} />
-            )}
-            {scaledPoints[0].y === maxY && (
-              <line x1={minX} x2={maxX} y1={maxY} y2={maxY} />
-            )}
-          </g>
-          <line
-            x1={scaledPoints[0].x}
-            x2={scaledPoints[1].x}
-            y1={scaledPoints[0].y}
-            y2={scaledPoints[1].y}
-            stroke={COLORS.ORANGE}
-            strokeWidth={3}
-          />
-          <text
-            x={textX}
-            y={textY}
-            fill={COLORS.ORANGE}
-            fontWeight="bold"
-            textAnchor="middle"
-            dominantBaseline="middle"
-            transform={`rotate(${(-180 / Math.PI) * theta}, ${textX}, ${textY})`}
-            dy={-Math.sign(theta) * 20}
-            className="select-none"
-          >
-            {euclideanDistance(
-              points[1].x - points[0].x,
-              points[1].y - points[0].y,
-            ).toFixed(2)}
-          </text>
-          {scaledPoints
-            .map((point, idx) => ({ point, id: idx }))
-            .map(({ point, id }) => (
-              <DraggableCircle
-                key={id}
-                id={id}
-                cx={point.x}
-                cy={point.y}
-                onDrag={clampedHandleDrag}
-              />
-            ))}
-        </Graph>
-      </NarrowContainer>
-    </Figure>
+          {euclideanDistance(
+            points[1].x - points[0].x,
+            points[1].y - points[0].y,
+          ).toFixed(2)}
+        </text>
+        {scaledPoints
+          .map((point, idx) => ({ point, id: idx }))
+          .map(({ point, id }) => (
+            <DraggableCircle
+              key={id}
+              id={id}
+              cx={point.x}
+              cy={point.y}
+              onDrag={clampedHandleDrag}
+            />
+          ))}
+      </Graph>
+    </NarrowContainer>
   );
 };
 
