@@ -50,7 +50,7 @@ const Scatterplot: FC<ScatterplotProps> = ({
     if (!isMounted) return scaleLinear();
     const domain = extent(data, (d) => d.cx) as [number, number];
     return scaleLinear()
-      .domain(domain || [0, 1])
+      .domain(domain)
       .range([graphPadding, width - graphPadding]);
   }, [data, graphPadding, width, isMounted]);
 
@@ -58,7 +58,7 @@ const Scatterplot: FC<ScatterplotProps> = ({
     if (!isMounted) return scaleLinear();
     const domain = extent(data, (d) => d.cy) as [number, number];
     return scaleLinear()
-      .domain(domain || [0, 1])
+      .domain(domain)
       .range([height - graphPadding, graphPadding]);
   }, [data, graphPadding, height, isMounted]);
 

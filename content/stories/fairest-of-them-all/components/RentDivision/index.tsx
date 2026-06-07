@@ -1,7 +1,6 @@
 "use client";
 
 import { type FC, useState } from "react";
-import Caption from "@/components/story/shared/Caption";
 import ClippedSVG from "@/components/story/shared/ClippedSVG";
 import ColoredSpan from "@/components/story/shared/ColoredSpan";
 import FlexContainer from "@/components/story/shared/FlexContainer";
@@ -52,12 +51,7 @@ const DEFAULT_CORNERS = [
 const ROOM_COLORS = ["Orange", "Green", "Purple"];
 const NAMES = ["Alex", "Brett", "Cameron"];
 
-interface RentDivisionProps {
-  caption?: string;
-  captionMarginTop?: string;
-}
-
-const RentDivision: FC<RentDivisionProps> = ({ caption }) => {
+const RentDivision: FC = () => {
   const [meshLevels, setMeshLevels] = useState(INITIAL_MESH_LEVELS);
   const [points, setPoints] = useState<PointData[][]>(() =>
     generateAllPoints(INITIAL_MESH_LEVELS, DEFAULT_CORNERS, INITIAL_R, NAMES),
@@ -344,7 +338,7 @@ const RentDivision: FC<RentDivisionProps> = ({ caption }) => {
   );
 
   return (
-    <Caption caption={caption} captionMarginTop="-2.8em">
+    <>
       {renderTopArea()}
       <NarrowContainer width="55%" fullWidthAt="sm">
         <div className="relative">
@@ -355,7 +349,7 @@ const RentDivision: FC<RentDivisionProps> = ({ caption }) => {
           <Tooltip info={tooltip} />
         </div>
       </NarrowContainer>
-    </Caption>
+    </>
   );
 };
 

@@ -4,7 +4,6 @@ import { max } from "d3-array";
 import { scaleLinear } from "d3-scale";
 import { animate, useMotionValue, useMotionValueEvent } from "framer-motion";
 import { type FC, useEffect, useState } from "react";
-import Caption from "@/components/story/shared/Caption";
 import FlexContainer from "@/components/story/shared/FlexContainer";
 import Graph from "@/components/story/shared/Graph";
 import LinePlot from "@/components/story/shared/LinePlot";
@@ -19,11 +18,7 @@ const GRAPH_PADDING = { top: 0, right: 10, bottom: 100, left: 10 };
 const WIDTH = 800;
 const HEIGHT = 500;
 
-interface CoinFlipBayesianModelProps {
-  caption?: string;
-}
-
-const CoinFlipBayesianModel: FC<CoinFlipBayesianModelProps> = ({ caption }) => {
+const CoinFlipBayesianModel: FC = () => {
   const [heads, setHeads] = useState(0);
   const [tails, setTails] = useState(0);
   const [uniform, setUniform] = useState(true);
@@ -65,62 +60,60 @@ const CoinFlipBayesianModel: FC<CoinFlipBayesianModelProps> = ({ caption }) => {
     .range([HEIGHT - GRAPH_PADDING.bottom, GRAPH_PADDING.top]);
 
   return (
-    <Caption caption={caption}>
-      <NarrowContainer width="65%" fullWidthAt="sm">
-        <ToggleSwitch
-          leftText="All probs equally likely"
-          rightText="Fair coin more likely"
-          leftColor={COLORS.RED}
-          rightColor={COLORS.BLUE}
-          handleSwitchChange={(checked) => setUniform(!checked)}
-        />
-        <FlexContainer main="evenly" margin="1rem 0" className="gap-2">
-          <Button
-            size="sm"
-            variant="white"
-            onClick={() => setHeads((h) => h + 1)}
-          >
-            Heads: {heads}
-          </Button>
-          <Button
-            size="sm"
-            variant="white"
-            onClick={() => setTails((t) => t + 1)}
-          >
-            Tails: {tails}
-          </Button>
-          <Button
-            size="sm"
-            variant="white"
-            onClick={() => {
-              setHeads(0);
-              setTails(0);
-            }}
-          >
-            Reset Counts
-          </Button>
-        </FlexContainer>
-        <Graph
-          width={WIDTH}
-          height={HEIGHT}
-          svgPadding={0}
-          graphPadding={GRAPH_PADDING}
-          svgId="bayesian-graph"
-          xLabel="Coin flip distribution"
+    <NarrowContainer width="65%" fullWidthAt="sm">
+      <ToggleSwitch
+        leftText="All probs equally likely"
+        rightText="Fair coin more likely"
+        leftColor={COLORS.RED}
+        rightColor={COLORS.BLUE}
+        handleSwitchChange={(checked) => setUniform(!checked)}
+      />
+      <FlexContainer main="evenly" margin="1rem 0" className="gap-2">
+        <Button
+          size="sm"
+          variant="white"
+          onClick={() => setHeads((h) => h + 1)}
+        >
+          Heads: {heads}
+        </Button>
+        <Button
+          size="sm"
+          variant="white"
+          onClick={() => setTails((t) => t + 1)}
+        >
+          Tails: {tails}
+        </Button>
+        <Button
+          size="sm"
+          variant="white"
+          onClick={() => {
+            setHeads(0);
+            setTails(0);
+          }}
+        >
+          Reset Counts
+        </Button>
+      </FlexContainer>
+      <Graph
+        width={WIDTH}
+        height={HEIGHT}
+        svgPadding={0}
+        graphPadding={GRAPH_PADDING}
+        svgId="bayesian-graph"
+        xLabel="Coin flip distribution"
+        xScale={xScale}
+        yScale={yScale}
+        tickStep={() => 0.1}
+        tickFormatX=".0%"
+      >
+        <LinePlot
+          graphData={graphData}
+          stroke={displayColor}
           xScale={xScale}
           yScale={yScale}
-          tickStep={() => 0.1}
-          tickFormatX=".0%"
-        >
-          <LinePlot
-            graphData={graphData}
-            stroke={displayColor}
-            xScale={xScale}
-            yScale={yScale}
-          />
-        </Graph>
-      </NarrowContainer>
-    </Caption>
+        />
+      </Graph>
+    </NarrowContainer>
   );
 };
 

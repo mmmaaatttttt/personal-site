@@ -1,22 +1,11 @@
 import { fireEvent, render, screen } from "@testing-library/react";
-import { describe, expect, it, vi } from "vitest";
+import { describe, expect, it } from "vitest";
 import RentDivision from ".";
-
-global.ResizeObserver = vi.fn().mockImplementation(() => ({
-  observe: vi.fn(),
-  unobserve: vi.fn(),
-  disconnect: vi.fn(),
-}));
 
 describe("RentDivision", () => {
   it("renders without crashing", () => {
     const { container } = render(<RentDivision />);
     expect(container).toBeTruthy();
-  });
-
-  it("renders with a caption", () => {
-    render(<RentDivision caption="Figure 4" />);
-    expect(screen.getByText("Figure 4")).toBeTruthy();
   });
 
   it("shows the mesh slider and start button before starting", () => {

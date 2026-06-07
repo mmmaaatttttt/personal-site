@@ -73,7 +73,7 @@ const Axis = <Domain extends AxisDomain>({
   xShift,
   yShift,
 }: AxisProps<Domain>) => {
-  const axisRef = useRef<SVGGElement>(null);
+  const axisRef = useRef<SVGGElement>(null!);
   const chart = useChart();
 
   const resolvedXShift =
@@ -93,8 +93,6 @@ const Axis = <Domain extends AxisDomain>({
     labelPosition ?? contextStyle?.labelPosition ?? null;
 
   useEffect(() => {
-    if (!axisRef.current) return;
-
     const axisObj = direction === "x" ? axisBottom(scale) : axisLeft(scale);
 
     if (tickFormat !== undefined) {

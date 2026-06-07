@@ -1,7 +1,7 @@
 import Image from "next/image";
 import type { ComponentPropsWithoutRef, ReactNode } from "react";
-import Caption from "@/components/story/shared/Caption";
 import ColoredSpan from "@/components/story/shared/ColoredSpan";
+import Figure from "@/components/story/shared/Figure";
 import Legend from "@/components/story/shared/Legend";
 import NarrowContainer from "@/components/story/shared/NarrowContainer";
 import Sidebar from "@/components/story/shared/Sidebar";
@@ -99,8 +99,8 @@ export const MdxComponents: Record<string, unknown> = {
   StyledTable: (props: ComponentPropsWithoutRef<typeof StyledTable>) => (
     <StyledTable {...props} />
   ),
-  Caption: (props: ComponentPropsWithoutRef<typeof Caption>) => (
-    <Caption {...props} />
+  Figure: (props: ComponentPropsWithoutRef<typeof Figure>) => (
+    <Figure {...props} />
   ),
   Legend: (props: ComponentPropsWithoutRef<typeof Legend>) => (
     <Legend {...props} />

@@ -2,7 +2,6 @@
 
 import { scaleLinear } from "d3-scale";
 import { type FC, useCallback, useState } from "react";
-import Caption from "@/components/story/shared/Caption";
 import DraggableCircle from "@/components/story/shared/DraggableCircle";
 import Graph from "@/components/story/shared/Graph";
 import NarrowContainer from "@/components/story/shared/NarrowContainer";
@@ -35,13 +34,7 @@ const INITIAL_POINTS = [
   { x: X_DOMAIN[1], y: Y_DOMAIN[0] + 1 }, // f2 right
 ];
 
-interface FunctionDistanceExplorerProps {
-  caption?: string;
-}
-
-const FunctionDistanceExplorer: FC<FunctionDistanceExplorerProps> = ({
-  caption,
-}) => {
+const FunctionDistanceExplorer: FC = () => {
   const [points, handleDrag] = useDragState(INITIAL_POINTS, xScale, yScale);
   const [l1NormActive, setL1NormActive] = useState(false);
 
@@ -83,84 +76,82 @@ const FunctionDistanceExplorer: FC<FunctionDistanceExplorerProps> = ({
     .join(" ");
 
   return (
-    <Caption caption={caption}>
-      <NarrowContainer width="55%">
-        <ToggleSwitch
-          leftText={`Largest Diff: ${lInfDistance}`}
-          rightText={`Area: ${area}`}
-          leftColor={COLORS.PURPLE}
-          rightColor={COLORS.GRAY}
-          handleSwitchChange={setL1NormActive}
+    <NarrowContainer width="55%">
+      <ToggleSwitch
+        leftText={`Largest Diff: ${lInfDistance}`}
+        rightText={`Area: ${area}`}
+        leftColor={COLORS.PURPLE}
+        rightColor={COLORS.GRAY}
+        handleSwitchChange={setL1NormActive}
+      />
+      <Graph
+        graphPadding={PADDING}
+        height={HEIGHT}
+        svgId="function-distance-explorer"
+        tickStep={() => 1}
+        width={WIDTH}
+        xScale={xScale}
+        yScale={yScale}
+      >
+        {l1NormActive && (
+          <polygon
+            points={polygonPoints}
+            fill={COLORS.GRAY}
+            stroke="none"
+            opacity={0.5}
+          />
+        )}
+        {!l1NormActive && (
+          <line
+            x1={lInfSeg.x1}
+            y1={lInfSeg.y1}
+            x2={lInfSeg.x2}
+            y2={lInfSeg.y2}
+            stroke={COLORS.PURPLE}
+            strokeWidth={4}
+            strokeDasharray="8 4"
+          />
+        )}
+        <polyline
+          points={polylinePoints(graph1Pts)}
+          fill="none"
+          stroke={COLORS.ORANGE}
+          strokeWidth={3}
         />
-        <Graph
-          graphPadding={PADDING}
-          height={HEIGHT}
-          svgId="function-distance-explorer"
-          tickStep={() => 1}
-          width={WIDTH}
-          xScale={xScale}
-          yScale={yScale}
-        >
-          {l1NormActive && (
-            <polygon
-              points={polygonPoints}
-              fill={COLORS.GRAY}
-              stroke="none"
-              opacity={0.5}
+        <polyline
+          points={polylinePoints(graph2Pts)}
+          fill="none"
+          stroke={COLORS.GREEN}
+          strokeWidth={3}
+        />
+        {graph1Pts
+          .map((pt, i) => ({ pt, id: i }))
+          .map(({ pt, id }) => (
+            <DraggableCircle
+              key={id}
+              id={id}
+              cx={pt.x}
+              cy={pt.y}
+              fill={COLORS.ORANGE}
+              stroke={COLORS.ORANGE}
+              onDrag={constrainedHandleDrag}
             />
-          )}
-          {!l1NormActive && (
-            <line
-              x1={lInfSeg.x1}
-              y1={lInfSeg.y1}
-              x2={lInfSeg.x2}
-              y2={lInfSeg.y2}
-              stroke={COLORS.PURPLE}
-              strokeWidth={4}
-              strokeDasharray="8 4"
+          ))}
+        {graph2Pts
+          .map((pt, i) => ({ pt, id: i + 3 }))
+          .map(({ pt, id }) => (
+            <DraggableCircle
+              key={id}
+              id={id}
+              cx={pt.x}
+              cy={pt.y}
+              fill={COLORS.GREEN}
+              stroke={COLORS.GREEN}
+              onDrag={constrainedHandleDrag}
             />
-          )}
-          <polyline
-            points={polylinePoints(graph1Pts)}
-            fill="none"
-            stroke={COLORS.ORANGE}
-            strokeWidth={3}
-          />
-          <polyline
-            points={polylinePoints(graph2Pts)}
-            fill="none"
-            stroke={COLORS.GREEN}
-            strokeWidth={3}
-          />
-          {graph1Pts
-            .map((pt, i) => ({ pt, id: i }))
-            .map(({ pt, id }) => (
-              <DraggableCircle
-                key={id}
-                id={id}
-                cx={pt.x}
-                cy={pt.y}
-                fill={COLORS.ORANGE}
-                stroke={COLORS.ORANGE}
-                onDrag={constrainedHandleDrag}
-              />
-            ))}
-          {graph2Pts
-            .map((pt, i) => ({ pt, id: i + 3 }))
-            .map(({ pt, id }) => (
-              <DraggableCircle
-                key={id}
-                id={id}
-                cx={pt.x}
-                cy={pt.y}
-                fill={COLORS.GREEN}
-                stroke={COLORS.GREEN}
-                onDrag={constrainedHandleDrag}
-              />
-            ))}
-        </Graph>
-      </NarrowContainer>
-    </Caption>
+          ))}
+      </Graph>
+    </NarrowContainer>
   );
 };
 

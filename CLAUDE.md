@@ -8,35 +8,23 @@
 
 **Don't change things you don't understand.** If you change `justify-around` to `justify-center` without understanding why it would help, you're guessing. Stop. Read the code, understand the actual rendering model, then act.
 
-**The legacy code is the answer.** This codebase has a working Gatsby reference implementation in `src/_legacy_pages/`. When something looks wrong, check the legacy before doing anything else — it shows exactly what the intended behavior is and often reveals the fix in under a minute.
+**Never write content.** Do not write prose, labels, captions, axis titles, tooltip copy, or any other user-facing text — not even inside interactives. Use `TBD` or lorem ipsum as a placeholder. All actual content is human-written.
+
+**Linting is enforced in pre-commit hooks.** Every commit must pass the linter. If a lint error blocks a commit, fix the underlying issue — do not bypass the hook.
+
+**100% code coverage is required.** Any change to `.tsx` files must keep coverage at 100%. Write or update tests before marking a task done — a coverage drop fails the build.
 
 ---
 
 ## What This Is
 
-Matt's personal/blog site. The Gatsby/JavaScript → Next.js + TypeScript + React migration is complete — all 12 stories are ported and live. The site hosts long-form "stories" — articles with embedded interactives and D3 visualizations.
+Matt's personal/blog site built with Next.js, TypeScript, React, and D3. The site hosts long-form "stories" — articles with embedded interactives and D3 visualizations.
 
 ---
 
 ## Visual Regression Tests
 
-Playwright screenshot tests cover four pages: home, about, stories list, and beautiful-analysis (`e2e/*.spec.ts`). Baselines are gitignored and live only on the local machine.
-
-**Run after any change that touches CSS, layout components, or shared MDX components:**
-
-```bash
-npm run test:e2e
-```
-
-**NEVER run `--update-snapshots` without explicit user consent.** Always run the tests normally first and show the diff to the user. Only update baselines after the user confirms the visual changes are correct.
-
-If the user confirms the diff is correct, update the baselines:
-
-```bash
-npm run test:e2e -- --update-snapshots
-```
-
-Do not skip this step when making formatting changes. If the tests weren't run before a formatting session starts, ask the user before establishing fresh baselines (`--update-snapshots`), then make changes, then run normally to catch regressions.
+Playwright screenshot tests cover every page, and run in CI via Argos.
 
 ---
 
@@ -62,9 +50,7 @@ import { myTableData } from "./data";
 
 ### Global components (no import needed in MDX)
 
-The following shared utilities are registered in `components/mdx/MdxComponents.tsx` and are available in any MDX file without importing:
-
-`Sidebar`, `ResponsiveIFrame`, `Latex`, `ColoredSpan`, `NarrowContainer`, `StyledTable`, `Caption`, `HorizontalBarGraph`, `MultiBarGraph`, `Legend`, `RelativeContainer`, `Strikethrough`
+Shared utilities that are registered in `components/mdx/MdxComponents.tsx` are available in any MDX file without importing:
 
 ---
 
@@ -147,10 +133,7 @@ The fallback chain for each prop: `explicit prop → context default → hardcod
 
 ### Identifying shared vs story-local components
 
-Before writing any new component, check two places:
-
-1. **Other stories' `components/` folders** — if the component already exists in a ported story, promote it to `components/story/shared/` rather than duplicating it.
-2. **`src/story_components/atoms/` and `src/story_components/molecules/`** — these are the original shared library from the Gatsby stack. Any component that lived there is a strong candidate for `components/story/shared/` in the new stack.
+Before writing any new component, check other stories' `components/` folders — if the component already exists in another story, promote it to `components/story/shared/` rather than duplicating it.
 
 **Decision rule:** if a component is used in 2+ stories — even if currently local to one — promote it to shared before shipping.
 
@@ -210,6 +193,8 @@ components/OrchardGame/
 
 ### Test coverage
 
+**Coverage must stay at 100%.** The project enforces this — a drop in coverage fails the build. Write tests for every new branch and code path before marking a task done.
+
 **Every file that exports a component must have a co-located test file** — including `index.tsx` orchestrators. "I tested the leaves" is not sufficient; the orchestrator wires things together and that wiring needs tests too.
 
 What to test:
@@ -224,24 +209,18 @@ What not to test: implementation details, internal state variable names, class n
 
 ### jsdom mock patterns
 
-These are required in specific situations — copy them exactly:
+`vitest.setup.tsx` provides global mocks for `ResizeObserver` and `framer-motion`. Do not re-add these in individual test files — the globals are already in place.
 
-**`ResizeObserver` (any component that renders `ClippedSVG`):**
+**What the global setup provides:**
+- `ResizeObserver` — fully mocked globally. No per-test mock needed.
+- `framer-motion` — passthrough mock that renders `motion.div`, `motion.rect`, `motion.path`, `motion.text`, `motion.g` as plain DOM elements (stripping motion-specific props), and stubs `AnimatePresence`, `useSpring`, `useTransform`, `useMotionValue`. No per-test mock needed for these.
 
-```ts
-global.ResizeObserver = vi.fn().mockImplementation(() => ({
-  observe: vi.fn(),
-  unobserve: vi.fn(),
-  disconnect: vi.fn(),
-}));
-```
+**`framer-motion animate()` — the one exception:**
 
-Place this at module scope (outside `describe`).
-
-**`framer-motion animate()` (any component that calls `animate()` imperatively on user interaction):**
+The global mock does not stub the imperative `animate()` function. Any component that calls `animate()` on user interaction needs a per-test mock that spreads the global:
 
 ```ts
-vi.mock("framer-motion", async importOriginal => {
+vi.mock("framer-motion", async (importOriginal) => {
   const actual = await importOriginal<typeof import("framer-motion")>();
   return { ...actual, animate: vi.fn() };
 });
@@ -253,15 +232,19 @@ Without this, clicking a button that triggers `animate()` will throw an async er
 
 ```ts
 beforeEach(() => {
-  Element.prototype.setPointerCapture = vi.fn();
-  Element.prototype.releasePointerCapture = vi.fn();
   SVGSVGElement.prototype.getScreenCTM = vi
     .fn()
     .mockReturnValue({ a: 1, d: 1, e: 0, f: 0 });
+  Element.prototype.setPointerCapture = vi.fn();
+  Element.prototype.releasePointerCapture = vi.fn();
+});
+
+afterEach(() => {
+  vi.restoreAllMocks();
 });
 ```
 
-jsdom doesn't implement `setPointerCapture` or `getScreenCTM`. The identity CTM (`a=1, d=1, e=0, f=0`) means clientX/Y maps directly to SVG coordinates in tests.
+jsdom doesn't implement `setPointerCapture` or `getScreenCTM`. The identity CTM (`a=1, d=1, e=0, f=0`) means clientX/Y maps directly to SVG coordinates in tests. `vi.restoreAllMocks()` in `afterEach` resets prototype mutations between tests.
 
 **`localStorage` (any component that reads/writes localStorage):**
 
@@ -298,17 +281,9 @@ The contract: `undefined` = suppress labels; any string = format and show labels
 
 Never apply `transition-all` (or any position/geometry transition) to elements whose attributes change in response to data/slider updates. The `LinePlot` `<path d={...}>` is the canonical example — CSS path interpolation is undefined behavior and browsers animate it left-to-right, making the curve appear to "snap in" piecemeal. Same applies to anything driven by `percentage` (slider track width, thumb `left` position). Only use transitions on pure style properties like `color` or `opacity`.
 
-### SliderProvider layout
-
-`SliderProvider` wraps everything in a `NarrowContainer` (for <4 sliders) or `ColumnLayout` (≥4 sliders). `ColumnLayout` uses `React.Children.map` internally — **do not wrap its children in a Fragment** or they collapse into a single column. Pass `SliderGroup` and the render output as direct JSX siblings.
-
 ### LabeledSlider step default
 
 `LabeledSlider` defaults `step` to `(max - min) / 100` when no step is provided, matching legacy behavior. Only set an explicit `step` in slider data when you need integer increments (e.g. `step: 1` for a carrying-capacity slider over `[1, 100]`). Float-range sliders (0–5, 0–10, etc.) should omit `step` and rely on this default.
-
-### MDX / server-client boundary (detail)
-
-When removing frontmatter from an MDX file, also scan for Gatsby-era attribute syntax like `{.classname}` on images (e.g. `![alt](img.png){.w-80}`). The Next.js MDX compiler (swc) parses `{...}` as a JSX expression and will throw a build error. Strip these attributes.
 
 ### ODE solver error handling
 
@@ -330,9 +305,9 @@ When a simulation has a "Show Chart" toggle, keep both the `<ClippedSVG>` (with 
 
 Untyped packages (`d3-force-bounce`, `d3-force-surface`) get hand-rolled ambient declarations in `types/mdx.d.ts` — no `@ts-ignore` on the imports. Put `import type` statements inside each `declare module` block (not at the top level of the file), otherwise the file becomes a module and the declarations stop being ambient. The exported function should be generic over `NodeDatum extends SimulationNodeDatum` so the same declaration works for any simulation node type.
 
-### `ResponsiveIFrame` and legacy props
+### `ResponsiveIFrame` and the `heightOverWidth` prop
 
-`ResponsiveIFrame` in `MdxComponents.tsx` uses a fixed `aspect-video` class and ignores the legacy `heightOverWidth` prop. Destructure it out before spreading the rest onto `<iframe>` to avoid the React DOM prop warning.
+`ResponsiveIFrame` in `MdxComponents.tsx` uses a fixed `aspect-video` class and ignores the `heightOverWidth` prop. Destructure it out before spreading the rest onto `<iframe>` to avoid the React DOM prop warning.
 
 ### Static table data belongs in `data.ts`
 
@@ -356,7 +331,7 @@ When using d3-shape `pie` to render a color-keyed wheel (e.g. the `Spinner` in `
 
 ### framer-motion `animate()` for imperative animations
 
-For one-shot imperative animations (e.g. spinning a needle to a random angle), use framer-motion's `animate(from, to, { duration, ease, onUpdate, onComplete })`. The `ease` array `[0, 0.55, 0.45, 1]` approximates `easeQuadOut` from the legacy `d3-ease` usage in `react-move`.
+For one-shot imperative animations (e.g. spinning a needle to a random angle), use framer-motion's `animate(from, to, { duration, ease, onUpdate, onComplete })`. The `ease` array `[0, 0.55, 0.45, 1]` approximates `easeQuadOut`.
 
 ### Never change defaults in shared components
 

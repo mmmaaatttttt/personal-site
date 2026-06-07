@@ -4,13 +4,6 @@ import { describe, expect, it, vi } from "vitest";
 import "@testing-library/jest-dom/vitest";
 import MultiBarGraph from ".";
 
-// Mock ResizeObserver for JSDOM
-global.ResizeObserver = vi.fn().mockImplementation(() => ({
-  observe: vi.fn(),
-  unobserve: vi.fn(),
-  disconnect: vi.fn(),
-}));
-
 // Mock framer-motion to render static elements for tests
 vi.mock("framer-motion", async (importOriginal) => {
   const actual = await importOriginal<typeof import("framer-motion")>();
@@ -154,6 +147,67 @@ describe("MultiBarGraph Component", () => {
 
   it("handles empty data gracefully", () => {
     const { container } = render(<MultiBarGraph {...defaultProps} data={[]} />);
+    expect(container.firstChild).toBeNull();
+  });
+
+  it("accepts numeric padding", () => {
+    const { container } = render(
+      <MultiBarGraph {...defaultProps} padding={10} />,
+    );
+    const svg = container.querySelector("svg");
+    expect(svg).toBeInTheDocument();
+  });
+
+  it("handles data items missing counts", () => {
+    const dataWithoutCounts = [
+      { meta: { id: 1, title: "Ep 1" } },
+    ] as typeof mockData;
+    const { container } = render(
+      <MultiBarGraph {...defaultProps} data={dataWithoutCounts} />,
+    );
+
+    expect(container.firstChild).toBeNull();
+  });
+
+  it("handles data items with missing counts in mixed dataset", () => {
+    const mixedData = [
+      { meta: { id: 1, title: "Ep 1" }, counts: { Chris: 100, Caller: 50 } },
+      { meta: { id: 2, title: "Ep 2" }, counts: undefined },
+    ] as unknown as typeof mockData;
+
+    const { container } = render(
+      <MultiBarGraph {...defaultProps} data={mixedData} />,
+    );
+    const svg = container.querySelector("svg");
+    expect(svg).toBeInTheDocument();
+  });
+
+  it("returns empty tooltipData when data is not an array", () => {
+    const { container } = render(
+      <MultiBarGraph
+        {...defaultProps}
+        data={null as unknown as typeof mockData}
+      />,
+    );
+    expect(container.firstChild).toBeNull();
+  });
+
+  it("renders null when d3stack throws for malformed data", () => {
+    const throwingCounts: Record<string, number> = {};
+    Object.defineProperty(throwingCounts, "Chris", {
+      get() {
+        throw new Error("stack error");
+      },
+      enumerable: true,
+      configurable: true,
+    });
+    const data = [
+      { meta: { id: 1, title: "Ep 1" }, counts: throwingCounts },
+    ] as unknown as typeof mockData;
+
+    const { container } = render(
+      <MultiBarGraph {...defaultProps} data={data} />,
+    );
     expect(container.firstChild).toBeNull();
   });
 });

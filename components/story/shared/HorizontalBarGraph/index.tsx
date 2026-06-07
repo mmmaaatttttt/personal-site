@@ -53,7 +53,8 @@ const HorizontalBarGraph: FC<HorizontalBarGraphProps> = ({
               const rectX = xScale(Math.min(d.width, 0));
               const rectWidth = xScale(Math.abs(d.width)) - xScale(0);
               const rectHeight = yScale.step() * 0.9;
-              const rectY = (yScale(i.toString()) || 0) + yScale.step() * 0.1;
+              const rectY =
+                (yScale(i.toString()) as number) + yScale.step() * 0.1;
 
               return (
                 <g
@@ -91,7 +92,7 @@ const HorizontalBarGraph: FC<HorizontalBarGraphProps> = ({
                     animate={{ opacity: 1 }}
                     transition={{ delay: 0.5 + i * 0.05 }}
                     x={xScale(d.width)}
-                    y={(yScale(i.toString()) || 0) + yScale.step() * 0.1}
+                    y={(yScale(i.toString()) as number) + yScale.step() * 0.1}
                     fill="#ffffff"
                     dominantBaseline="middle"
                     dy={yScale.step() * 0.54}

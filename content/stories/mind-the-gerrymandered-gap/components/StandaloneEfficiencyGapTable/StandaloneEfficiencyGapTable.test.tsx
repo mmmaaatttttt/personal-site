@@ -16,13 +16,6 @@ describe("StandaloneEfficiencyGapTable", () => {
     expect(document.body).toBeTruthy();
   });
 
-  it("shows prompt when no district counts are available", () => {
-    render(<StandaloneEfficiencyGapTable />);
-    expect(
-      screen.getByText(/finish drawing your districts/i),
-    ).toBeInTheDocument();
-  });
-
   it("shows saved counts from localStorage on mount", () => {
     const counts: [number, number][] = [
       [5, 4],
@@ -41,7 +34,6 @@ describe("StandaloneEfficiencyGapTable", () => {
 
   it("updates when the gerrymander counts event fires", async () => {
     render(<StandaloneEfficiencyGapTable />);
-    expect(screen.getByText(/finish drawing/i)).toBeInTheDocument();
 
     const counts: [number, number][] = [
       [5, 4],
@@ -80,6 +72,8 @@ describe("StandaloneEfficiencyGapTable", () => {
       );
     });
 
-    expect(screen.getByText(/finish drawing/i)).toBeInTheDocument();
+    expect(
+      screen.queryByText(/sample efficiency gap calculation/i),
+    ).not.toBeInTheDocument();
   });
 });

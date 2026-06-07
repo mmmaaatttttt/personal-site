@@ -7,21 +7,10 @@ vi.mock("framer-motion", async (importOriginal) => {
   return { ...actual, animate: vi.fn() };
 });
 
-global.ResizeObserver = vi.fn().mockImplementation(() => ({
-  observe: vi.fn(),
-  unobserve: vi.fn(),
-  disconnect: vi.fn(),
-}));
-
 describe("CoinFlipBayesianModel", () => {
   it("renders without crashing", () => {
     const { container } = render(<CoinFlipBayesianModel />);
     expect(container).toBeTruthy();
-  });
-
-  it("renders with a caption", () => {
-    render(<CoinFlipBayesianModel caption="Figure 2" />);
-    expect(screen.getByText("Figure 2")).toBeTruthy();
   });
 
   it("renders heads and tails buttons starting at 0", () => {

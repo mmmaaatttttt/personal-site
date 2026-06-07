@@ -1,12 +1,6 @@
 import { fireEvent, render, screen } from "@testing-library/react";
-import { describe, expect, it, vi } from "vitest";
+import { describe, expect, it } from "vitest";
 import ManhattanPaths from ".";
-
-global.ResizeObserver = vi.fn().mockImplementation(() => ({
-  observe: vi.fn(),
-  unobserve: vi.fn(),
-  disconnect: vi.fn(),
-}));
 
 describe("ManhattanPaths", () => {
   it("renders without crashing", () => {
@@ -27,11 +21,6 @@ describe("ManhattanPaths", () => {
     render(<ManhattanPaths />);
     const slider = document.querySelector('input[type="range"]');
     expect(slider).not.toBeNull();
-  });
-
-  it("renders a caption when provided", () => {
-    render(<ManhattanPaths caption="Test caption" />);
-    expect(screen.getByText("Test caption")).toBeTruthy();
   });
 
   it("shows correct initial path count in slider title", () => {

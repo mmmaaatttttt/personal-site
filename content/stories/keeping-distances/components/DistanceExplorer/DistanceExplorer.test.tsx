@@ -1,12 +1,6 @@
-import { fireEvent, render, screen } from "@testing-library/react";
+import { fireEvent, render } from "@testing-library/react";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import DistanceExplorer from ".";
-
-global.ResizeObserver = vi.fn().mockImplementation(() => ({
-  observe: vi.fn(),
-  unobserve: vi.fn(),
-  disconnect: vi.fn(),
-}));
 
 beforeEach(() => {
   Element.prototype.setPointerCapture = vi.fn();
@@ -41,11 +35,6 @@ describe("DistanceExplorer", () => {
       (l) => l.getAttribute("stroke") === "#ff8f34",
     );
     expect(orange).not.toBeUndefined();
-  });
-
-  it("renders a caption when provided", () => {
-    render(<DistanceExplorer caption="Test caption" />);
-    expect(screen.getByText("Test caption")).toBeTruthy();
   });
 
   it("clamps drag so the circle edge stays inside the SVG (2r pixel offset)", () => {

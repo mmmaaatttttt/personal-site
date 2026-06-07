@@ -32,7 +32,7 @@
     "gray-matter": "^4.0.3",
     "katex": "^0.16.45",
     "lucide-react": "^0.577.0",
-    "next": "16.1.6",
+    "next": "16.2.6",
     "odex": "^3.0.0-rc.4",
     "react": "19.2.3",
     "react-dom": "19.2.3",
@@ -55,11 +55,11 @@
     "@types/topojson-client": "^3.1.5",
     "@types/topojson-specification": "^1.0.5",
     "@vitejs/plugin-react": "^4.7.0",
-    "@vitest/coverage-v8": "^3.2.4",
+    "@vitest/coverage-v8": "^4.1.8",
     "husky": "^9.1.7",
     "jsdom": "^29.0.2",
     "tailwindcss": "^4.2.1",
     "typescript": "^5.9.3",
-    "vitest": "^3.2.4"
+    "vitest": "^4.1.8"
   }
 }

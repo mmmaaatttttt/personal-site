@@ -45,15 +45,4 @@ describe("FourWeddingsVisualization Dispatcher", () => {
     );
     expect(getByTestId("mock-scatter")).toBeInTheDocument();
   });
-
-  it("renders a caption when provided", () => {
-    const { getByText } = render(
-      <FourWeddingsVisualization
-        vizType="pie"
-        vizIndex={1}
-        caption="Test Caption"
-      />,
-    );
-    expect(getByText("Test Caption")).toBeInTheDocument();
-  });
 });

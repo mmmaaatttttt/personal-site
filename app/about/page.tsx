@@ -41,8 +41,10 @@ export default function AboutPage() {
 
         <div className="space-y-8 text-[#1a1a1a]">
           <p>
-            Hi, I&apos;m Matt Lane. You may remember me from such organizations
-            as{" "}
+            Hi, I&apos;m Matt Lane. I'm a lapsed academic and currently exchange
+            my labor for money via software engineering. I've been working in
+            climate tech since 2021. Before that, you may remember me from such
+            organizations as{" "}
             <a
               href="https://www.rithmschool.com"
               target="_blank"
@@ -53,14 +55,14 @@ export default function AboutPage() {
             </a>{" "}
             (which I co-founded in 2016),{" "}
             <a
-              href="https://www.mathalicious.com"
+              href="https://www.citizenmath.com/"
               target="_blank"
               rel="noopener noreferrer"
               className="text-link hover:opacity-80"
             >
-              Mathalicious
+              Citizen Math
             </a>
-            , or from my book,{" "}
+            (née Mathalicious), or from my book,{" "}
             <a
               href="https://www.amazon.com/Power-Up-Unlocking-Hidden-Mathematics-Video/dp/0691161518"
               target="_blank"
@@ -100,6 +102,16 @@ export default function AboutPage() {
               ❤️
             </span>{" "}
             Matt
+          </p>
+          <h4 className="mb-4 font-serif text-xl font-bold tracking-tight text-[#1a1a1a]">
+            AI usage statement
+          </h4>
+          <p>
+            Unless explicitly quoted, every word you see on this site was hand
+            crafted by yours truly. I do not use AI to write anything you will
+            read here. I do, however, use it to accelerate the development of
+            some of the interactives. I do enough fighting with TypeScript in my
+            day job, I don't need to bring it home with me too.
           </p>
         </div>
       </div>

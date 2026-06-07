@@ -7,12 +7,6 @@ vi.mock("./EconomyNodeGroup", () => ({
   default: () => <g data-testid="mock-node-group" />,
 }));
 
-global.ResizeObserver = vi.fn().mockImplementation(() => ({
-  observe: vi.fn(),
-  unobserve: vi.fn(),
-  disconnect: vi.fn(),
-}));
-
 describe("EconomySimulation", () => {
   it("renders the Start button before simulation begins", () => {
     render(<EconomySimulation idx={0} />);
@@ -58,10 +52,5 @@ describe("EconomySimulation", () => {
   it("does not render savings rate slider when editSavings is false", () => {
     render(<EconomySimulation idx={0} />);
     expect(screen.queryByText("Savings Rate")).not.toBeInTheDocument();
-  });
-
-  it("renders the caption when provided", () => {
-    render(<EconomySimulation idx={0} caption="Figure 1: Test caption." />);
-    expect(screen.getByText("Figure 1: Test caption.")).toBeInTheDocument();
   });
 });

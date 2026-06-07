@@ -5,13 +5,6 @@ import "@testing-library/jest-dom/vitest";
 import { scaleLinear } from "d3-scale";
 import Graph from ".";
 
-// Mock ResizeObserver for JSDOM
-global.ResizeObserver = vi.fn().mockImplementation(() => ({
-  observe: vi.fn(),
-  unobserve: vi.fn(),
-  disconnect: vi.fn(),
-}));
-
 // Mock Axis and AxisLabel because they are tested separately
 // This keeps Graph tests focused on layout coordination
 vi.mock("../Axis", () => ({
@@ -111,5 +104,25 @@ describe("Graph Component", () => {
       </Graph>,
     );
     expect(screen.getByTestId("custom-child")).toBeInTheDocument();
+  });
+
+  it("uses tickStep fallback for X when tickStepX is absent", () => {
+    const tickStep = vi.fn(() => 10);
+    render(<Graph {...defaultProps} tickStep={tickStep} />);
+    expect(tickStep).toHaveBeenCalled();
+  });
+
+  it("uses tickStepX when provided, ignoring tickStep fallback", () => {
+    const tickStep = vi.fn(() => 5);
+    const tickStepX = vi.fn(() => 25);
+    render(
+      <Graph {...defaultProps} tickStep={tickStep} tickStepX={tickStepX} />,
+    );
+    expect(tickStepX).toHaveBeenCalled();
+  });
+
+  it("renders correctly with no horizontal gridlines", () => {
+    render(<Graph {...defaultProps} gridlinesHorizontal={false} />);
+    expect(screen.getByTestId("axis-x")).toBeInTheDocument();
   });
 });

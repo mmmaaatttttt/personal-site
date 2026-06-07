@@ -11,12 +11,6 @@ vi.mock("framer-motion", async (importOriginal) => {
 import type { VotingDataRow } from "../../data";
 import VotingLineChart from ".";
 
-global.ResizeObserver = vi.fn().mockImplementation(() => ({
-  observe: vi.fn(),
-  unobserve: vi.fn(),
-  disconnect: vi.fn(),
-}));
-
 const makeRow = (overrides: Partial<VotingDataRow>): VotingDataRow => ({
   year: 2016,
   state: "Alabama",
@@ -119,18 +113,6 @@ describe("VotingLineChart (voters variant)", () => {
     expect(options).toContain("Alabama");
     expect(options).toContain("Alaska");
     expect(options).toContain("Arizona");
-  });
-
-  it("renders the caption when provided", () => {
-    render(
-      <VotingLineChart
-        data={mockData}
-        states={mockStates}
-        variant="voters"
-        caption="Line chart caption"
-      />,
-    );
-    expect(screen.getByText("Line chart caption")).toBeInTheDocument();
   });
 
   it("uses the provided svgId for the clip path", () => {

@@ -1,12 +1,6 @@
 import { render, screen } from "@testing-library/react";
-import { beforeEach, describe, expect, it, vi } from "vitest";
+import { beforeEach, describe, expect, it } from "vitest";
 import GerrymanderPlayground from ".";
-
-global.ResizeObserver = vi.fn().mockImplementation(() => ({
-  observe: vi.fn(),
-  unobserve: vi.fn(),
-  disconnect: vi.fn(),
-}));
 
 beforeEach(() => {
   localStorage.clear();
@@ -22,11 +16,11 @@ describe("GerrymanderPlayground", () => {
     expect(screen.getByText(/D1:/)).toBeInTheDocument();
   });
 
-  it("renders the EfficiencyGapTable placeholder initially", () => {
+  it("does not render the EfficiencyGapTable initially (no district data)", () => {
     render(<GerrymanderPlayground />);
     expect(
-      screen.getByText(/please finish drawing your districts/i),
-    ).toBeInTheDocument();
+      screen.queryByText(/sample efficiency gap calculation/i),
+    ).not.toBeInTheDocument();
   });
 
   it("shows Save and Reset buttons", () => {

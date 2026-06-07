@@ -71,9 +71,4 @@ describe("StringDistanceExplorer", () => {
       expect(row.textContent).toContain("0");
     }
   });
-
-  it("renders a caption when provided", () => {
-    render(<StringDistanceExplorer caption="String distances demo" />);
-    expect(screen.getByText("String distances demo")).toBeTruthy();
-  });
 });

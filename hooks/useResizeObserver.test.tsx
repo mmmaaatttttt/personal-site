@@ -25,10 +25,21 @@ beforeEach(() => {
   mockDisconnect = vi.fn();
   capturedCallback = null;
 
-  global.ResizeObserver = vi.fn().mockImplementation((cb: ResizeCallback) => {
-    capturedCallback = cb;
-    return { observe: vi.fn(), unobserve: vi.fn(), disconnect: mockDisconnect };
-  });
+  class MockResizeObserver {
+    observe = vi.fn();
+    unobserve = vi.fn();
+    disconnect = mockDisconnect;
+
+    constructor(cb: ResizeCallback) {
+      capturedCallback = cb;
+    }
+  }
+
+  global.ResizeObserver = vi
+    .fn()
+    .mockImplementation(
+      MockResizeObserver as never,
+    ) as unknown as typeof ResizeObserver;
 });
 
 afterEach(() => {
@@ -78,5 +89,21 @@ describe("useResizeObserver", () => {
     const { unmount } = render(<TestBox />);
     unmount();
     expect(mockDisconnect).toHaveBeenCalledOnce();
+  });
+
+  it("skips observing when ref is null", () => {
+    function DetachedBox() {
+      const [ref] = useResizeObserver();
+      void ref;
+      return <div data-testid="detached" />;
+    }
+
+    render(<DetachedBox />);
+
+    const observeMock = (global.ResizeObserver as ReturnType<typeof vi.fn>).mock
+      .results[0]?.value?.observe as ReturnType<typeof vi.fn>;
+    if (observeMock) {
+      expect(observeMock).not.toHaveBeenCalled();
+    }
   });
 });

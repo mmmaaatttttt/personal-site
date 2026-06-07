@@ -2,12 +2,6 @@ import { fireEvent, render, screen } from "@testing-library/react";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import FunctionDistanceExplorer from ".";
 
-global.ResizeObserver = vi.fn().mockImplementation(() => ({
-  observe: vi.fn(),
-  unobserve: vi.fn(),
-  disconnect: vi.fn(),
-}));
-
 beforeEach(() => {
   Element.prototype.setPointerCapture = vi.fn();
   Element.prototype.releasePointerCapture = vi.fn();
@@ -93,11 +87,6 @@ describe("FunctionDistanceExplorer", () => {
     const polylines = document.querySelectorAll("polyline");
     const strokes = Array.from(polylines).map((p) => p.getAttribute("stroke"));
     expect(strokes).toContain("#52a081");
-  });
-
-  it("renders a caption when provided", () => {
-    render(<FunctionDistanceExplorer caption="Function distances" />);
-    expect(screen.getByText("Function distances")).toBeTruthy();
   });
 
   it("distance labels update reactively — initial diff is non-zero", () => {

@@ -1,13 +1,7 @@
 import { fireEvent, render, screen } from "@testing-library/react";
-import { describe, expect, it, vi } from "vitest";
+import { describe, expect, it } from "vitest";
 import "@testing-library/jest-dom/vitest";
 import PAdicHeatChart from ".";
-
-global.ResizeObserver = vi.fn().mockImplementation(() => ({
-  observe: vi.fn(),
-  unobserve: vi.fn(),
-  disconnect: vi.fn(),
-}));
 
 describe("PAdicHeatChart", () => {
   it("renders an SVG heat chart", () => {
@@ -36,11 +30,6 @@ describe("PAdicHeatChart", () => {
     const rects = container.querySelectorAll("rect");
     // 325 data rects + 1 clipPath rect
     expect(rects.length).toBe(326);
-  });
-
-  it("renders the optional caption", () => {
-    render(<PAdicHeatChart caption="Test caption text" />);
-    expect(screen.getByText("Test caption text")).toBeInTheDocument();
   });
 
   it("updates the selected prime when dropdown changes", () => {

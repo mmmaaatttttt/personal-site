@@ -1,14 +1,8 @@
 import { fireEvent, render, screen } from "@testing-library/react";
-import { describe, expect, it, vi } from "vitest";
+import { describe, expect, it } from "vitest";
 import "@testing-library/jest-dom/vitest";
 import type { VoterStateRow } from "../../data";
 import VotingTable from ".";
-
-global.ResizeObserver = vi.fn().mockImplementation(() => ({
-  observe: vi.fn(),
-  unobserve: vi.fn(),
-  disconnect: vi.fn(),
-}));
 
 const mockData: VoterStateRow[] = [
   { state: "Alabama", averageSaturation: 0.85, averageTurnout: 0.55 },

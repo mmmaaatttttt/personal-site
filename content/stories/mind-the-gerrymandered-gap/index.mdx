@@ -27,7 +27,9 @@ It turns out that it's not too hard to gerrymander districts. Let's take a look 
 
 In this scenario, how would you draw congressional lines to divide this region into six districts?
 
-<GerrymanderGrid />
+<Figure bleed={false} caption="Draw lines around the boxes to create 6 districts of 9 squares each.">
+  <GerrymanderGrid />
+</Figure>
 
 Typically gerrymandering is achieved by combining two strategies: **packing** and **cracking**. Packing refers to consolidating large numbers of one party into a small number of districts. Cracking is the opposite: diluting the voting power of a large bloc of voters in one party by splitting them up so that they form minorities in multiple districts.
 
@@ -47,7 +49,9 @@ But while compactness has a precise [mathematical definition](https://blogs.scie
 
 You can explore this idea yourself with the following interactive. It allows you to explore this inequality by comparing the area of a polygon to the area of a circle with the same boundary length. Use the slider to choose the number of sides of the polygon. You can then drag the edges of the polygon to adjust its area and perimeter (the circle will adjust accordingly).
 
-<IsoperimetricExplorer />
+<Figure bleed={false} caption="Drag the sides of the polygon to compare the area of the polygon to the area of the circle.">
+  <IsoperimetricExplorer />
+</Figure>
 
 As you can see, it's impossible to make a ratio that exceeds 1; that's the isoperimetric inequality in action. This doesn't _prove_ the isoperimetric inequality, of course, but it should make for a convincing demonstration.
 
@@ -99,7 +103,9 @@ The **efficiency gap** is a gerrymandering metric that takes these observations 
 
 This gap is calculated by counting the number of votes each party has wasted in each district. Once the total number of wasted votes has been found, we take the difference, and divide it by the total number of votes cast.
 
-<StandaloneEfficiencyGapTable />
+<Figure bleed={false} caption="A sample efficiency gap calculation. If no calculation is showing up, please finish drawing your districts above.">
+  <StandaloneEfficiencyGapTable />
+</Figure>
 
 This calculation has nothing to do with the shape of the districts, and everything to do with the resulting election outcome. When a collection of districts yield a high efficiency gap, does this mean that something sinister is going on with redistricting? In order to answer this question more fully, we need to take a look at how this metric fares against actual election data.
 
@@ -117,7 +123,9 @@ To the right of the map, there is bar chart of how the efficiency gap for each s
 
 Take your time exploring the electoral landscape over time. What do you notice, and what questions come to mind?
 
-<GerrymanderHistoricalMap />
+<Figure bleed={false} caption="An exploration of expected advantage due to gerrymandering by state and year.">
+  <GerrymanderHistoricalMap />
+</Figure>
 
 As you can see, states that have surpassed the two-seat threshold have almost exclusively benefitted Republican representation in congress. Moreover, since the last round of redistricting after the 2010 census, three states have have at least a two-seat Republican edge in the 2012, 2014, and 2016 elections: Pennsylvania, North Carolina, and Michigan. From this perspective, it's less surprising that the Pennsylvania state supreme court tossed out the congressional map earlier this year.
 

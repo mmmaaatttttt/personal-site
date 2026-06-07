@@ -3,7 +3,6 @@
 import { scaleLinear } from "d3-scale";
 import { useState } from "react";
 import BarGraph from "@/components/story/shared/BarGraph";
-import Caption from "@/components/story/shared/Caption";
 import NarrowContainer from "@/components/story/shared/NarrowContainer";
 import Select from "@/components/story/shared/Select";
 import { SliderGroup } from "@/components/story/shared/Slider";
@@ -29,7 +28,6 @@ const partyColorScale = scaleLinear<string>()
 interface VotingBarChartProps {
   data: VotingDataRow[];
   variant: "voters" | "party";
-  caption?: string;
 }
 
 const SLIDER_CONFIG = [
@@ -44,7 +42,7 @@ const SLIDER_CONFIG = [
   },
 ];
 
-const VotingBarChart = ({ data, variant, caption }: VotingBarChartProps) => {
+const VotingBarChart = ({ data, variant }: VotingBarChartProps) => {
   const options = variant === "voters" ? VOTERS_BAR_OPTIONS : PARTY_BAR_OPTIONS;
   const [selectedValue, setSelectedValue] = useState(options[0].value);
   const { values, sliderData } = useSliders(SLIDER_CONFIG);
@@ -84,43 +82,41 @@ const VotingBarChart = ({ data, variant, caption }: VotingBarChartProps) => {
   const hasData = barData.length > 0;
 
   return (
-    <Caption caption={caption}>
-      <NarrowContainer width="77%" fullWidthAt="md">
-        <SliderGroup data={sliderData} />
-        <div className="mt-4 space-y-3">
-          <Select
-            name="statistic"
-            value={selectedValue}
-            onChange={(opt) => setSelectedValue(opt.value)}
-            options={selectOptions}
-          />
-          {hasData ? (
-            <div className="w-[130%] -ml-[15%] max-md:w-full max-md:ml-0">
-              <BarGraph
-                animated={false}
-                barData={barData}
-                barLabel={(d) => d.key}
-                color={option.color}
-                height={SVG_HEIGHT}
-                padding={PADDING}
-                svgId={`bar-graph-${variant}`}
-                width={SVG_WIDTH}
-                yScale={yScale}
-                yTickFormat={option.format}
-                gridlinesVertical={false}
-              />
-            </div>
-          ) : (
-            <>
-              <h4 className="text-lg font-bold">
-                {option.label} has no data for {curYear}.
-              </h4>
-              <p>Please make another selection.</p>
-            </>
-          )}
-        </div>
-      </NarrowContainer>
-    </Caption>
+    <NarrowContainer width="77%" fullWidthAt="md">
+      <SliderGroup data={sliderData} />
+      <div className="mt-4 space-y-3">
+        <Select
+          name="statistic"
+          value={selectedValue}
+          onChange={(opt) => setSelectedValue(opt.value)}
+          options={selectOptions}
+        />
+        {hasData ? (
+          <div className="w-[130%] -ml-[15%] max-md:w-full max-md:ml-0">
+            <BarGraph
+              animated={false}
+              barData={barData}
+              barLabel={(d) => d.key}
+              color={option.color}
+              height={SVG_HEIGHT}
+              padding={PADDING}
+              svgId={`bar-graph-${variant}`}
+              width={SVG_WIDTH}
+              yScale={yScale}
+              yTickFormat={option.format}
+              gridlinesVertical={false}
+            />
+          </div>
+        ) : (
+          <>
+            <h4 className="text-lg font-bold">
+              {option.label} has no data for {curYear}.
+            </h4>
+            <p>Please make another selection.</p>
+          </>
+        )}
+      </div>
+    </NarrowContainer>
   );
 };
 

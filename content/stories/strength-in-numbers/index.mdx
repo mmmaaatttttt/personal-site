@@ -85,21 +85,16 @@ and the 2014 Alabama data is from [here](https://www.sos.alabama.gov/sites/defau
 Here's how the country has looked through the lens of each of these statistics
 since 2008:
 
-<VotingMap
-  data={rawVotingData}
-  variant="voters"
-  caption="Figure 1: Map visualization of population data by year and state."
-/>
+<Figure caption="Map visualization of population data by year and state.">
+  <VotingMap data={rawVotingData} variant="voters" />
+</Figure>
 
 For a clearer picture of the trend across years within a state, here's a second
 representation of the same data:
 
-<VotingLineChart
-  data={rawVotingData}
-  states={allStates}
-  variant="voters"
-  caption="Figure 2: Line representation of population data by year for a fixed state."
-/>
+<Figure caption="Line representation of population data by year for a fixed state.">
+  <VotingLineChart data={rawVotingData} states={allStates} variant="voters" />
+</Figure>
 
 A few observations:
 
@@ -119,7 +114,9 @@ A few observations:
   North Dakota has no data on registered voters dating back to 2008, which is
   why their saturation number is 0%.
 
-<VotingTable tableData={voterTableData} caption="Table 1: Average registration and turnout percentages by state." />
+<Figure caption="Table 1: Average registration and turnout percentages by state.">
+  <VotingTable tableData={voterTableData} />
+</Figure>
 
 - Among recent elections, states have had a difficult time surpassing their 2008
 turnout. In fact, 34 states recorded their highest turnout during that election,
@@ -129,11 +126,9 @@ For more on the percentages, here are histograms highlighting the distrubtion of
 registration saturation and turnout by year. Note, once again, the impact of a
 presidential election:
 
-<VotingBarChart
-  data={rawVotingData}
-  variant="voters"
-  caption="Figure 3: Bar graph of registration and turnout by state."
-/>
+<Figure caption="Bar graph of registration and turnout by state.">
+  <VotingBarChart data={rawVotingData} variant="voters" />
+</Figure>
 
 (The careful reader may have noticed that some states on both sides of the
 political spectrum have higher registration numbers than estimated eligible
@@ -187,21 +182,15 @@ explore are:
 
 By each of these metrics, here's how the country has changed over time:
 
-<VotingMap
-  data={rawVotingData}
-  variant="workers"
-  caption="Figure 4: Map visualization of poll worker data by year and state."
-/>
+<Figure caption="Map visualization of poll worker data by year and state.">
+  <VotingMap data={rawVotingData} variant="workers" />
+</Figure>
 
 Just like before, we can also dig into trends across years for a single state:
 
-<VotingLineChart
-  data={rawVotingData}
-  states={allStates}
-  variant="workers"
-  svgId="state-line-graph-2"
-  caption="Figure 5: Line representation of poll worker data by year for a fixed state."
-/>
+<Figure caption="Line representation of poll worker data by year for a fixed state.">
+  <VotingLineChart data={rawVotingData} states={allStates} variant="workers" svgId="state-line-graph-2" />
+</Figure>
 
 What do you notice by exploring these graphs? Here are some things I noticed:
 
@@ -238,7 +227,9 @@ finding them, some jurisdictions also report statistics on the age distribution
 of poll workers. Below is a breakdown of those age groups by state and year.
 (Note that no states reported this information for 2008.)
 
-<VotingPollWorkerAge data={pollWorkerAgeData} states={allStates} caption="Figure 6: Pie chart of poll worker ages, by state and year." />
+<Figure caption="Pie chart of poll worker ages, by state and year.">
+  <VotingPollWorkerAge data={pollWorkerAgeData} states={allStates} />
+</Figure>
 
 In the aggregate, distribution of poll worker ages has been relatively steady
 across elections. In terms of youth participation, some states do better than
@@ -270,11 +261,9 @@ the more red the bar, the more Republican. You can adjust the election year as
 well as select one of several statistics to see how party affiliation does (or
 doesn't) play a role.
 
-<VotingBarChart
-  data={rawVotingData}
-  variant="party"
-  caption="Figure 7: Exploring the influence of party affiliation on other statistics."
-/>
+<Figure caption="Exploring the influence of party affiliation on other statistics.">
+  <VotingBarChart data={rawVotingData} variant="party" />
+</Figure>
 
 Here are some observations:
 
