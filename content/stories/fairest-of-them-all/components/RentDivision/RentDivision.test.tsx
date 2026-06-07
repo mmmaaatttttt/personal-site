@@ -8,11 +8,6 @@ describe("RentDivision", () => {
     expect(container).toBeTruthy();
   });
 
-  it("renders with a caption", () => {
-    render(<RentDivision caption="Figure 4" />);
-    expect(screen.getByText("Figure 4")).toBeTruthy();
-  });
-
   it("shows the mesh slider and start button before starting", () => {
     render(<RentDivision />);
     expect(screen.getByText("Start Demonstration")).toBeTruthy();

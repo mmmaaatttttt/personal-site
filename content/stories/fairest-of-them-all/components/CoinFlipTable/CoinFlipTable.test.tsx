@@ -8,11 +8,6 @@ describe("CoinFlipTable", () => {
     expect(container).toBeTruthy();
   });
 
-  it("renders with a caption", () => {
-    render(<CoinFlipTable caption="Figure 3" />);
-    expect(screen.getByText("Figure 3")).toBeTruthy();
-  });
-
   it("renders the table headers", () => {
     render(<CoinFlipTable />);
     expect(screen.getByText("Prob. of H")).toBeTruthy();

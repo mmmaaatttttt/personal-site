@@ -67,8 +67,9 @@ probability that a coin lands on heads, and then model how many times you'd like
 to flip a coin. The histogram will adjust accordingly, and show you how likely
 it to have a certain number of coin flips land heads up.
 
-<CoinFlipHistogram caption="An interactive probability distribution
-for flipping coins."/>
+<Figure caption="An interactive probability distribution for flipping coins.">
+  <CoinFlipHistogram />
+</Figure>
 
 Note that as the number of coin flips increases, the probability distribution
 begins to center around the true probability of getting heads. For example,
@@ -114,7 +115,9 @@ many coin flips as you want. A nice bell shape around 50% represents a coin
 that's likely to be fair, while a curve that's biased towards either side
 suggests that the coin isn't balanced.
 
-<CoinFlipBayesianModel caption="Modeling the likelihood that a coin is fair, given two possible priors." />
+<Figure caption="Modeling the likelihood that a coin is fair, given two possible priors.">
+  <CoinFlipBayesianModel />
+</Figure>
 
 Both approaches—frequentist and Bayesian—have their tradeoffs. If you're
 interested in learning more about these approaches, there's a nice article
@@ -156,7 +159,9 @@ flips are independent—that is, because the outcome of the second flip doesn't
 depend on the outcome of the first—the probabilities of these two events are
 the same!
 
-<CoinFlipTable caption="Examining the likelihood of TH and HT outcomes for different probabilities." />
+<Figure caption="Examining the likelihood of TH and HT outcomes for different probabilities.">
+  <CoinFlipTable />
+</Figure>
 
 The takeaway here is that it's not hard to take rules which seem fair and skew
 them so that the game is unfair. In order to ensure agreement between the rules
@@ -232,7 +237,9 @@ example of the algorithm in action, with three roommates deciding between three
 rooms: a green one, an orange one, and a purple one. (You can mouse over any
 point to see the room prices at that point.)
 
-<RentDivision caption="Determining a fair division of rent for three roommates." />
+<Figure caption="Determining a fair division of rent for three roommates." captionMarginTop="-2.8em">
+  <RentDivision />
+</Figure>
 
 Here are some questions people typically ask after playing around with this
 algorithm:

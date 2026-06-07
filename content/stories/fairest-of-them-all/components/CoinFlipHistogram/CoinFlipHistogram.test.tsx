@@ -13,11 +13,6 @@ describe("CoinFlipHistogram", () => {
     expect(container).toBeTruthy();
   });
 
-  it("renders with a caption", () => {
-    render(<CoinFlipHistogram caption="Test caption" />);
-    expect(screen.getByText("Test caption")).toBeTruthy();
-  });
-
   it("renders the slider labels", () => {
     render(<CoinFlipHistogram />);
     expect(screen.getByText(/Number of coin flips/)).toBeTruthy();
