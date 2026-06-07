@@ -5,13 +5,6 @@ import "@testing-library/jest-dom/vitest";
 import { scaleLinear } from "d3-scale";
 import Graph from ".";
 
-// Mock ResizeObserver for JSDOM
-global.ResizeObserver = vi.fn().mockImplementation(() => ({
-  observe: vi.fn(),
-  unobserve: vi.fn(),
-  disconnect: vi.fn(),
-}));
-
 // Mock Axis and AxisLabel because they are tested separately
 // This keeps Graph tests focused on layout coordination
 vi.mock("../Axis", () => ({

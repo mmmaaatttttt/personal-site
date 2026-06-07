@@ -1,13 +1,7 @@
 import { act, fireEvent, render, screen } from "@testing-library/react";
-import { describe, expect, it, vi } from "vitest";
+import { describe, expect, it } from "vitest";
 import "@testing-library/jest-dom/vitest";
 import PAdicFractalDistance from ".";
-
-global.ResizeObserver = vi.fn().mockImplementation(() => ({
-  observe: vi.fn(),
-  unobserve: vi.fn(),
-  disconnect: vi.fn(),
-}));
 
 describe("PAdicFractalDistance", () => {
   it("renders an SVG", () => {

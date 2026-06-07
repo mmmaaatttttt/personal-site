@@ -7,12 +7,6 @@ vi.mock("framer-motion", async (importOriginal) => {
   return { ...actual, animate: vi.fn() };
 });
 
-global.ResizeObserver = vi.fn().mockImplementation(() => ({
-  observe: vi.fn(),
-  unobserve: vi.fn(),
-  disconnect: vi.fn(),
-}));
-
 describe("CoinFlipHistogram", () => {
   it("renders without crashing", () => {
     const { container } = render(<CoinFlipHistogram />);

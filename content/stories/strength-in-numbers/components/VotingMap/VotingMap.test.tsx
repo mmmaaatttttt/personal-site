@@ -4,12 +4,6 @@ import "@testing-library/jest-dom/vitest";
 import type { VotingDataRow } from "../../data";
 import VotingMap from ".";
 
-global.ResizeObserver = vi.fn().mockImplementation(() => ({
-  observe: vi.fn(),
-  unobserve: vi.fn(),
-  disconnect: vi.fn(),
-}));
-
 vi.mock("@/components/story/shared/USMap", () => ({
   default: ({ data, id }: { data: VotingDataRow[]; id: string }) => (
     <div data-testid="us-map" data-id={id} data-count={data.length} />

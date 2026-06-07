@@ -49,6 +49,8 @@ jobs:
         with:
           path: ~/.cache/ms-playwright
           key: playwright-${{ runner.os }}-${{ hashFiles('package-lock.json') }}
+          restore-keys: |
+            playwright-${{ runner.os }}-
       - run: npx playwright install --with-deps chromium
       - name: Cache Next.js build
         uses: actions/cache@v5
@@ -62,3 +64,19 @@ jobs:
       - run: npm run test:e2e -- --project=chromium
         env:
           ARGOS_TOKEN: ${{ secrets.ARGOS_TOKEN }}
+
+  all-checks:
+    needs: [lint, test, e2e]
+    runs-on: ubuntu-latest
+    if: always()
+    steps:
+      - name: All checks passed or skipped
+        run: |
+          echo "lint:  ${{ needs.lint.result }}"
+          echo "test:  ${{ needs.test.result }}"
+          echo "e2e:   ${{ needs.e2e.result }}"
+          for result in "${{ needs.lint.result }}" "${{ needs.test.result }}" "${{ needs.e2e.result }}"; do
+            if [[ "$result" != "success" && "$result" != "skipped" ]]; then
+              exit 1
+            fi
+          done

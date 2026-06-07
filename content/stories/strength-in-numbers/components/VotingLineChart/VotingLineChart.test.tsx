@@ -11,12 +11,6 @@ vi.mock("framer-motion", async (importOriginal) => {
 import type { VotingDataRow } from "../../data";
 import VotingLineChart from ".";
 
-global.ResizeObserver = vi.fn().mockImplementation(() => ({
-  observe: vi.fn(),
-  unobserve: vi.fn(),
-  disconnect: vi.fn(),
-}));
-
 const makeRow = (overrides: Partial<VotingDataRow>): VotingDataRow => ({
   year: 2016,
   state: "Alabama",

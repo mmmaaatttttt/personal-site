@@ -25,10 +25,21 @@ beforeEach(() => {
   mockDisconnect = vi.fn();
   capturedCallback = null;
 
-  global.ResizeObserver = vi.fn().mockImplementation((cb: ResizeCallback) => {
-    capturedCallback = cb;
-    return { observe: vi.fn(), unobserve: vi.fn(), disconnect: mockDisconnect };
-  });
+  class MockResizeObserver {
+    observe = vi.fn();
+    unobserve = vi.fn();
+    disconnect = mockDisconnect;
+
+    constructor(cb: ResizeCallback) {
+      capturedCallback = cb;
+    }
+  }
+
+  global.ResizeObserver = vi
+    .fn()
+    .mockImplementation(
+      MockResizeObserver as never,
+    ) as unknown as typeof ResizeObserver;
 });
 
 afterEach(() => {

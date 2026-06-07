@@ -1,13 +1,7 @@
 import { fireEvent, render, screen } from "@testing-library/react";
-import { describe, expect, it, vi } from "vitest";
+import { describe, expect, it } from "vitest";
 import "@testing-library/jest-dom/vitest";
 import OrchardGameHeatData from ".";
-
-global.ResizeObserver = vi.fn().mockImplementation(() => ({
-  observe: vi.fn(),
-  unobserve: vi.fn(),
-  disconnect: vi.fn(),
-}));
 
 describe("OrchardGameHeatData", () => {
   it("renders a strategy select dropdown", () => {

@@ -4,12 +4,6 @@ import "@testing-library/jest-dom/vitest";
 import type { PollWorkerAgeRow } from "../../data";
 import VotingPollWorkerAge from ".";
 
-global.ResizeObserver = vi.fn().mockImplementation(() => ({
-  observe: vi.fn(),
-  unobserve: vi.fn(),
-  disconnect: vi.fn(),
-}));
-
 vi.mock("@/components/story/shared/PieChart", () => ({
   default: ({ values }: { values: number[] }) => (
     <div data-testid="pie-chart" data-values={JSON.stringify(values)} />
