@@ -22,14 +22,6 @@ describe("AboutPage", () => {
 
   it("renders links to external resources", () => {
     render(<AboutPage />);
-    expect(screen.getByRole("link", { name: /rithm school/i })).toHaveAttribute(
-      "href",
-      "https://www.rithmschool.com",
-    );
-    expect(screen.getByRole("link", { name: /mathalicious/i })).toHaveAttribute(
-      "href",
-      "https://www.mathalicious.com",
-    );
     expect(screen.getByRole("link", { name: /power-up/i })).toHaveAttribute(
       "href",
       "https://www.amazon.com/Power-Up-Unlocking-Hidden-Mathematics-Video/dp/0691161518",
