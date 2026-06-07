@@ -19,21 +19,6 @@ vi.mock("odex", () => ({
   ),
 }));
 
-vi.mock("@/components/story/shared/Figure", () => ({
-  default: ({
-    children,
-    caption,
-  }: {
-    children?: ReactNode;
-    caption?: string;
-  }) => (
-    <div>
-      <div data-testid="caption">{caption}</div>
-      {children}
-    </div>
-  ),
-}));
-
 vi.mock("@/components/story/shared/Graph", () => ({
   default: ({
     children,
@@ -163,23 +148,6 @@ const twoGraphVisData: GamingVisData = {
 };
 
 describe("GamingRelationships", () => {
-  it("renders the caption", () => {
-    render(
-      <GamingRelationships
-        visData={twoPersonVisData}
-        caption="Figure 1: Test caption."
-      />,
-    );
-    expect(screen.getByTestId("caption")).toHaveTextContent(
-      "Figure 1: Test caption.",
-    );
-  });
-
-  it("renders without a caption", () => {
-    render(<GamingRelationships visData={twoPersonVisData} />);
-    expect(screen.getByTestId("caption")).toBeEmptyDOMElement();
-  });
-
   it("renders one graph for a single diffEq", () => {
     render(<GamingRelationships visData={twoPersonVisData} />);
     expect(screen.getAllByTestId("graph")).toHaveLength(1);

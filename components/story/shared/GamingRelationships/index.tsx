@@ -5,7 +5,6 @@ import type { AxisScale } from "d3-axis";
 import { type NumberValue, scaleLinear } from "d3-scale";
 import { useCallback, useMemo, useState } from "react";
 import ColumnLayout from "@/components/story/shared/ColumnLayout";
-import Figure from "@/components/story/shared/Figure";
 import FlexContainer from "@/components/story/shared/FlexContainer";
 import Graph from "@/components/story/shared/Graph";
 import LinePlot from "@/components/story/shared/LinePlot";
@@ -57,7 +56,6 @@ export interface GamingVisData {
 
 interface GamingRelationshipsProps {
   visData: GamingVisData;
-  caption?: string;
   compact?: boolean;
   min?: number;
   max?: number;
@@ -68,7 +66,6 @@ interface GamingRelationshipsProps {
 
 export default function GamingRelationships({
   visData,
-  caption,
   compact = false,
   min = 0,
   max = 20,
@@ -221,5 +218,5 @@ export default function GamingRelationships({
       </FlexContainer>
     );
 
-  return <Figure caption={caption}>{content}</Figure>;
+  return content;
 }
