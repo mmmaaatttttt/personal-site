@@ -88,6 +88,17 @@ describe("Figure — collapsed state", () => {
     );
     expect(container.firstChild).toHaveClass("custom-class");
   });
+
+  it("applies captionMarginTop style to caption", () => {
+    render(
+      <Figure caption="Offset caption" captionMarginTop="-2em">
+        <div>Content</div>
+      </Figure>,
+    );
+    expect(screen.getByText("Offset caption")).toHaveStyle({
+      marginTop: "-2em",
+    });
+  });
 });
 
 // Wrap in FigureProvider so figNum=1 (predictable), then set ?figure=1 in searchParams.
@@ -99,6 +110,7 @@ describe("Figure — expanded state", () => {
 
   afterEach(() => {
     document.body.style.overflow = "";
+    window.history.replaceState({}, "", "/");
   });
 
   function renderExpanded() {
@@ -153,6 +165,28 @@ describe("Figure — expanded state", () => {
     renderExpanded();
     window.dispatchEvent(new KeyboardEvent("keydown", { key: "Enter" }));
     expect(mockReplace).not.toHaveBeenCalled();
+  });
+
+  it("Escape preserves other URL params when closing", () => {
+    window.history.replaceState({}, "", "?figure=1&tab=overview");
+    renderExpanded();
+    window.dispatchEvent(new KeyboardEvent("keydown", { key: "Escape" }));
+    expect(mockReplace).toHaveBeenCalledWith(
+      "?tab=overview",
+      expect.objectContaining({ scroll: false }),
+    );
+  });
+
+  it("collapse button preserves other URL params when closing", () => {
+    window.history.replaceState({}, "", "?figure=1&tab=overview");
+    renderExpanded();
+    fireEvent.click(
+      screen.getByRole("button", { name: "Collapse interactive" }),
+    );
+    expect(mockReplace).toHaveBeenCalledWith(
+      "?tab=overview",
+      expect.objectContaining({ scroll: false }),
+    );
   });
 
   it("renders children in expanded state", () => {
