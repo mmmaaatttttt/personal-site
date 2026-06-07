@@ -1,7 +1,6 @@
 "use client";
 
 import { scaleLinear } from "d3-scale";
-import Caption from "@/components/story/shared/Caption";
 import ColumnLayout from "@/components/story/shared/ColumnLayout";
 import Graph from "@/components/story/shared/Graph";
 import Legend from "@/components/story/shared/Legend";
@@ -97,90 +96,88 @@ const WedgeExplorer = ({ caption }: WedgeExplorerProps) => {
   ].join(" ");
 
   return (
-    <Caption caption={caption}>
-      <ColumnLayout break="sm">
-        <div className="flex flex-col justify-center gap-4 py-4">
-          <SliderGroup data={sliderData} />
-          <div
-            className="rounded-lg p-4 text-center"
-            style={{
-              backgroundColor: hexToRgba(COLORS.ORANGE, 0.08),
-              border: `1px solid ${hexToRgba(COLORS.ORANGE, 0.4)}`,
-            }}
-          >
-            {overPct === null && (
-              <p className="text-sm text-gray-600">
-                Coordinating firms wouldn't automate here — but competition
-                drives {Math.round(currentNE * 100)}% automation anyway.
+    <ColumnLayout break="sm">
+      <div className="flex flex-col justify-center gap-4 py-4">
+        <SliderGroup data={sliderData} />
+        <div
+          className="rounded-lg p-4 text-center"
+          style={{
+            backgroundColor: hexToRgba(COLORS.ORANGE, 0.08),
+            border: `1px solid ${hexToRgba(COLORS.ORANGE, 0.4)}`,
+          }}
+        >
+          {overPct === null && (
+            <p className="text-sm text-gray-600">
+              Coordinating firms wouldn't automate here — but competition drives{" "}
+              {Math.round(currentNE * 100)}% automation anyway.
+            </p>
+          )}
+          {overPct === 0 && (
+            <p className="text-sm text-gray-600">
+              With {numFirms} firm{numFirms === 1 ? "" : "s"}, competition
+              delivers the same outcome as full coordination.
+            </p>
+          )}
+          {overPct !== null && overPct > 0 && (
+            <>
+              <div
+                className="text-4xl font-bold"
+                style={{ color: COLORS.ORANGE }}
+              >
+                +{overPct}%
+              </div>
+              <p className="text-sm text-gray-600 mt-1">
+                With {numFirms} competing firms, the industry automates{" "}
+                {overPct}% more jobs than if firms had coordinated.
               </p>
-            )}
-            {overPct === 0 && (
-              <p className="text-sm text-gray-600">
-                With {numFirms} firm{numFirms === 1 ? "" : "s"}, competition
-                delivers the same outcome as full coordination.
-              </p>
-            )}
-            {overPct !== null && overPct > 0 && (
-              <>
-                <div
-                  className="text-4xl font-bold"
-                  style={{ color: COLORS.ORANGE }}
-                >
-                  +{overPct}%
-                </div>
-                <p className="text-sm text-gray-600 mt-1">
-                  With {numFirms} competing firms, the industry automates{" "}
-                  {overPct}% more jobs than if firms had coordinated.
-                </p>
-              </>
-            )}
-          </div>
+            </>
+          )}
         </div>
-        <div>
-          <Legend
-            labels={[
-              { text: "Market outcome (uncoordinated)", color: COLORS.ORANGE },
-              { text: "Coordinated outcome", color: COLORS.GREEN },
-            ]}
+      </div>
+      <div>
+        <Legend
+          labels={[
+            { text: "Market outcome (uncoordinated)", color: COLORS.ORANGE },
+            { text: "Coordinated outcome", color: COLORS.GREEN },
+          ]}
+        />
+        <Graph
+          graphPadding={GRAPH_PADDING}
+          height={HEIGHT}
+          width={WIDTH}
+          svgId="wedge-explorer"
+          xScale={xScale}
+          yScale={yScale}
+          tickFormatX=","
+          tickFormatY=".1f"
+          xLabel="Number of competing firms"
+          yLabel="Share of jobs automated"
+        >
+          <polygon
+            points={polygonPoints}
+            fill={hexToRgba(COLORS.ORANGE, 0.15)}
+            stroke="none"
           />
-          <Graph
-            graphPadding={GRAPH_PADDING}
-            height={HEIGHT}
-            width={WIDTH}
-            svgId="wedge-explorer"
-            xScale={xScale}
-            yScale={yScale}
-            tickFormatX=","
-            tickFormatY=".1f"
-            xLabel="Number of competing firms"
-            yLabel="Share of jobs automated"
-          >
-            <polygon
-              points={polygonPoints}
-              fill={hexToRgba(COLORS.ORANGE, 0.15)}
-              stroke="none"
-            />
-            <LinePlot
-              graphData={neData}
-              stroke={COLORS.ORANGE}
-              strokeWidth={3}
-              curve="curveLinear"
-            />
-            <LinePlot
-              graphData={coData}
-              stroke={COLORS.GREEN}
-              strokeWidth={3}
-              curve="curveLinear"
-            />
-            <VerticalMarker
-              x={numFirms}
-              color={COLORS.DARK_GRAY}
-              label={`${numFirms}`}
-            />
-          </Graph>
-        </div>
-      </ColumnLayout>
-    </Caption>
+          <LinePlot
+            graphData={neData}
+            stroke={COLORS.ORANGE}
+            strokeWidth={3}
+            curve="curveLinear"
+          />
+          <LinePlot
+            graphData={coData}
+            stroke={COLORS.GREEN}
+            strokeWidth={3}
+            curve="curveLinear"
+          />
+          <VerticalMarker
+            x={numFirms}
+            color={COLORS.DARK_GRAY}
+            label={`${numFirms}`}
+          />
+        </Graph>
+      </div>
+    </ColumnLayout>
   );
 };
 

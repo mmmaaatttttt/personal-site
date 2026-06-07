@@ -18,7 +18,9 @@ Against this backdrop, the stock market (unpopular wars notwithstanding) continu
 
 One chart making the rounds tells a compelling tale. Take a look at the diagram below. It charts the S&P 500 (blue) every month since 2001. It also charts the number of job openings (red) over the same time period. For a long time, these two economic indicators moved roughly in the same direction. But for the past three years, since conversational AI tools like ChatGPT launched, these two lines have become completely untethered from one another.
 
-<MarketDataExplorer caption="Figure 1: S&P 500 and US job openings per month over time. Note the divergence around the time when ChatGPT launched." />
+<Figure caption="S&P 500 and US job openings per month over time. Note the divergence around the time when ChatGPT launched.">
+  <MarketDataExplorer />
+</Figure>
 
 As you can see, while the stock market is going like gangbusters, the job market is going like, well, whatever the opposite of gangbusters is. (Lonermakers?)
 
@@ -40,7 +42,9 @@ At the same time, automation is likely to result in layoffs, which will impact t
 
 For better or for worse, if the gains from automation outweigh the hit from consumer demand, both companies are incentivized to pursue automation. However, something interesting happens if the demand loss exceeds the automation savings. You can explore it for yourself:
 
-<CoordinationGame caption="Figure 2: A potential dilemma is exposed when companies are deciding whether or not to automate." />
+<Figure caption="A potential dilemma is exposed when companies are deciding whether or not to automate.">
+  <CoordinationGame />
+</Figure>
 
 For example, look at what happens if the savings due to automation drops to 40% and the expected consumer spending loss rises to 60%. When firm A is trying to decide whether or not to automate, it's very likely to consider its competition, firm B. If both firms decide to automate, then they both gain a 40% savings from the automation, but lose 60% to the resulting layoffs and reduced consumer demand, meaning both are worse off than they started.
 
@@ -66,7 +70,9 @@ The question then becomes: given the expected savings from automation, the expec
 
 Just like in the simpler case of the sometimes-Prisoner's-Dilemma, the answer here depends on whether the firms are capable of coordinating or not. In either case, with a little bit of calculus (details in the appendix), you can derive the answer. But if you'd rather just explore some pretty pictures, you can play around with the interactive below. The orange line represents what happens if each firm assumes the other firm's automation rate is a variable it can't control, while the green line represents what happens if the firms are able to agree on the same rate of automation.
 
-<SavingsWedge caption="Figure 3: Share of jobs automated vs. the total gain from automation. Adjust the sliders to explore different outcomes." />
+<Figure caption="Share of jobs automated vs. the total gain from automation. Adjust the sliders to explore different outcomes.">
+  <SavingsWedge />
+</Figure>
 
 The most striking feature of the graphs here is the fact that the orange line never dips below the green line. In other words, companies acting in their own self-interest will always automate away more jobs than they would have if they coordinated. 
 
@@ -80,7 +86,9 @@ According to this model, no. More companies make the problem worse.
 
 Below, you can explore what happens to automation as the number of firms increases. As with the previous interactive, note that there's never a case where a free-market outcome is better than a coordinated one. Even more troubling is the fact that the more firms we drop into this model, the larger the gap between the expected amount of automation (and therefore job loss) and the ideal amount of automation under a coordinated approach.
 
-<WedgeExplorer caption="Figure 4: Share of jobs automated vs. number of firms. As the number of firms increases, so too does the amount of excessive automation." />
+<Figure caption="Share of jobs automated vs. number of firms. As the number of firms increases, so too does the amount of excessive automation.">
+  <WedgeExplorer />
+</Figure>
 
 As before, you can head down to the appendix if you want to dig into the details of how this happens. The key insight is that when firms cooperate, they are willing to factor the full weight of the consumer demand loss into their calculations and pump the brakes on automation for the sake of their collective profit. Collaboration enables them to temper their AI ambitions for the betterment of everyone.
 

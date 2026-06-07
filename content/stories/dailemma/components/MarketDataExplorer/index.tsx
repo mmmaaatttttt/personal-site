@@ -3,7 +3,6 @@
 import { scaleLinear } from "d3-scale";
 import Axis from "@/components/story/shared/Axis";
 import AxisLabel from "@/components/story/shared/AxisLabel";
-import Caption from "@/components/story/shared/Caption";
 import DraggableCircle from "@/components/story/shared/DraggableCircle";
 import Graph from "@/components/story/shared/Graph";
 import LinePlot from "@/components/story/shared/LinePlot";
@@ -57,160 +56,158 @@ const MarketDataExplorer = ({ caption }: { caption: string }) => {
 
   return (
     <>
-      <Caption caption={caption}>
-        <Graph
-          axes={false}
-          graphPadding={GRAPH_PADDING}
-          height={HEIGHT}
-          width={WIDTH}
-          svgId="market-data-explorer"
-          xScale={xScale}
-          yScale={sp500Scale}
-          gridlinesHorizontal
-          gridlinesVertical={false}
+      <Graph
+        axes={false}
+        graphPadding={GRAPH_PADDING}
+        height={HEIGHT}
+        width={WIDTH}
+        svgId="market-data-explorer"
+        xScale={xScale}
+        yScale={sp500Scale}
+        gridlinesHorizontal
+        gridlinesVertical={false}
+      >
+        <Axis
+          key="y-axis"
+          direction="y"
+          scale={sp500Scale}
+          tickFormat=","
+          tickColor={COLORS.GRAY}
+          color={COLORS.BLUE}
+          fontSize={AXIS_FONT}
+        />
+        <Axis
+          key="x-axis"
+          direction="x"
+          scale={xScale}
+          tickFormat=".0f"
+          rotateLabels={false}
+          textAnchor="middle"
+          labelPosition={{ dy: "0.71em" }}
+          tickColor={COLORS.GRAY}
+          fontSize={AXIS_FONT}
+        />
+        <Axis
+          key="y-right-axis"
+          direction="y"
+          xShift={WIDTH - GRAPH_PADDING.right}
+          scale={jobScale}
+          tickFormat=","
+          tickValues={JOB_TICK_VALUES}
+          tickSize={5}
+          textAnchor="start"
+          labelPosition={{ x: "8" }}
+          tickColor={COLORS.RED}
+          color={COLORS.RED}
+          fontSize={AXIS_FONT}
+        />
+        <AxisLabel
+          x={10}
+          y={HEIGHT / 2}
+          dy={10}
+          transform={`rotate(-90 10,${HEIGHT / 2})`}
+          style={{ color: COLORS.BLUE }}
         >
-          <Axis
-            key="y-axis"
-            direction="y"
-            scale={sp500Scale}
-            tickFormat=","
-            tickColor={COLORS.GRAY}
-            color={COLORS.BLUE}
-            fontSize={AXIS_FONT}
+          S&amp;P 500
+        </AxisLabel>
+        <AxisLabel
+          x={WIDTH - 22}
+          y={HEIGHT / 2}
+          dy={10}
+          transform={`rotate(90 ${WIDTH - 22},${HEIGHT / 2})`}
+          style={{ color: COLORS.RED }}
+        >
+          Job Openings (thousands)
+        </AxisLabel>
+        <LinePlot
+          graphData={jobData}
+          stroke={COLORS.RED}
+          strokeWidth={2}
+          yScale={jobScale}
+          curve="curveLinear"
+        />
+        <LinePlot
+          graphData={sp500Data}
+          stroke={COLORS.BLUE}
+          strokeWidth={2}
+          curve="curveLinear"
+        />
+        {EVENTS.map((e) => (
+          <VerticalMarker
+            key={e.label}
+            x={e.x}
+            color={COLORS.DARK_GRAY}
+            label={e.label}
+            labelYOffset={e.labelYOffset}
           />
-          <Axis
-            key="x-axis"
-            direction="x"
-            scale={xScale}
-            tickFormat=".0f"
-            rotateLabels={false}
-            textAnchor="middle"
-            labelPosition={{ dy: "0.71em" }}
-            tickColor={COLORS.GRAY}
-            fontSize={AXIS_FONT}
-          />
-          <Axis
-            key="y-right-axis"
-            direction="y"
-            xShift={WIDTH - GRAPH_PADDING.right}
-            scale={jobScale}
-            tickFormat=","
-            tickValues={JOB_TICK_VALUES}
-            tickSize={5}
-            textAnchor="start"
-            labelPosition={{ x: "8" }}
-            tickColor={COLORS.RED}
-            color={COLORS.RED}
-            fontSize={AXIS_FONT}
-          />
-          <AxisLabel
-            x={10}
-            y={HEIGHT / 2}
-            dy={10}
-            transform={`rotate(-90 10,${HEIGHT / 2})`}
-            style={{ color: COLORS.BLUE }}
-          >
-            S&amp;P 500
-          </AxisLabel>
-          <AxisLabel
-            x={WIDTH - 22}
-            y={HEIGHT / 2}
-            dy={10}
-            transform={`rotate(90 ${WIDTH - 22},${HEIGHT / 2})`}
-            style={{ color: COLORS.RED }}
-          >
-            Job Openings (thousands)
-          </AxisLabel>
-          <LinePlot
-            graphData={jobData}
-            stroke={COLORS.RED}
-            strokeWidth={2}
-            yScale={jobScale}
-            curve="curveLinear"
-          />
-          <LinePlot
-            graphData={sp500Data}
-            stroke={COLORS.BLUE}
-            strokeWidth={2}
-            curve="curveLinear"
-          />
-          {EVENTS.map((e) => (
-            <VerticalMarker
-              key={e.label}
-              x={e.x}
-              color={COLORS.DARK_GRAY}
-              label={e.label}
-              labelYOffset={e.labelYOffset}
-            />
-          ))}
-          <VerticalMarker x={current.x} color={COLORS.DARK_GRAY} />
-          {/* biome-ignore lint/a11y/useSemanticElements: SVG circle cannot be replaced with <button> */}
-          <circle
-            cx={scrubberX}
-            cy={sp500Y}
-            r={DOT_RADIUS}
-            fill={COLORS.BLUE}
-            className="cursor-default"
-            role="button"
-            tabIndex={0}
-            aria-label={`S&P 500 at ${dateLabel}: ${Math.round(current.sp500).toLocaleString()}`}
-            onMouseEnter={showTooltip(
+        ))}
+        <VerticalMarker x={current.x} color={COLORS.DARK_GRAY} />
+        {/* biome-ignore lint/a11y/useSemanticElements: SVG circle cannot be replaced with <button> */}
+        <circle
+          cx={scrubberX}
+          cy={sp500Y}
+          r={DOT_RADIUS}
+          fill={COLORS.BLUE}
+          className="cursor-default"
+          role="button"
+          tabIndex={0}
+          aria-label={`S&P 500 at ${dateLabel}: ${Math.round(current.sp500).toLocaleString()}`}
+          onMouseEnter={showTooltip(
+            dateLabel,
+            `S&P 500: ${Math.round(current.sp500).toLocaleString()}`,
+          )}
+          onMouseLeave={hideTooltip}
+          onFocus={(e) => {
+            const rect = e.currentTarget.getBoundingClientRect();
+            showTooltipAt(
               dateLabel,
               `S&P 500: ${Math.round(current.sp500).toLocaleString()}`,
-            )}
-            onMouseLeave={hideTooltip}
-            onFocus={(e) => {
-              const rect = e.currentTarget.getBoundingClientRect();
-              showTooltipAt(
-                dateLabel,
-                `S&P 500: ${Math.round(current.sp500).toLocaleString()}`,
-                rect.left + rect.width / 2,
-                rect.top,
-              );
-            }}
-            onBlur={hideTooltip}
-          />
-          {/* biome-ignore lint/a11y/useSemanticElements: SVG circle cannot be replaced with <button> */}
-          <circle
-            cx={scrubberX}
-            cy={jobY}
-            r={DOT_RADIUS}
-            fill={COLORS.RED}
-            className="cursor-default"
-            role="button"
-            tabIndex={0}
-            aria-label={`Job openings at ${dateLabel}: ${current.jobOpenings.toLocaleString()}k`}
-            onMouseEnter={showTooltip(
+              rect.left + rect.width / 2,
+              rect.top,
+            );
+          }}
+          onBlur={hideTooltip}
+        />
+        {/* biome-ignore lint/a11y/useSemanticElements: SVG circle cannot be replaced with <button> */}
+        <circle
+          cx={scrubberX}
+          cy={jobY}
+          r={DOT_RADIUS}
+          fill={COLORS.RED}
+          className="cursor-default"
+          role="button"
+          tabIndex={0}
+          aria-label={`Job openings at ${dateLabel}: ${current.jobOpenings.toLocaleString()}k`}
+          onMouseEnter={showTooltip(
+            dateLabel,
+            `Job openings: ${current.jobOpenings.toLocaleString()}k`,
+          )}
+          onMouseLeave={hideTooltip}
+          onFocus={(e) => {
+            const rect = e.currentTarget.getBoundingClientRect();
+            showTooltipAt(
               dateLabel,
               `Job openings: ${current.jobOpenings.toLocaleString()}k`,
-            )}
-            onMouseLeave={hideTooltip}
-            onFocus={(e) => {
-              const rect = e.currentTarget.getBoundingClientRect();
-              showTooltipAt(
-                dateLabel,
-                `Job openings: ${current.jobOpenings.toLocaleString()}k`,
-                rect.left + rect.width / 2,
-                rect.top,
-              );
-            }}
-            onBlur={hideTooltip}
-          />
-          <DraggableCircle
-            id={0}
-            cx={scrubberX}
-            cy={HEIGHT - GRAPH_PADDING.bottom}
-            r={SCRUBBER_RADIUS}
-            fill={COLORS.DARK_GRAY}
-            stroke="white"
-            strokeWidth={2}
-            onDrag={(id, coords) => {
-              hideTooltip();
-              handleDrag(id, coords);
-            }}
-          />
-        </Graph>
-      </Caption>
+              rect.left + rect.width / 2,
+              rect.top,
+            );
+          }}
+          onBlur={hideTooltip}
+        />
+        <DraggableCircle
+          id={0}
+          cx={scrubberX}
+          cy={HEIGHT - GRAPH_PADDING.bottom}
+          r={SCRUBBER_RADIUS}
+          fill={COLORS.DARK_GRAY}
+          stroke="white"
+          strokeWidth={2}
+          onDrag={(id, coords) => {
+            hideTooltip();
+            handleDrag(id, coords);
+          }}
+        />
+      </Graph>
       <Tooltip info={tooltip} />
     </>
   );

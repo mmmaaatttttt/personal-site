@@ -3,7 +3,6 @@
 import { scaleLinear } from "d3-scale";
 import Axis from "@/components/story/shared/Axis";
 import AxisLabel from "@/components/story/shared/AxisLabel";
-import Caption from "@/components/story/shared/Caption";
 import ColumnLayout from "@/components/story/shared/ColumnLayout";
 import Graph from "@/components/story/shared/Graph";
 import Legend from "@/components/story/shared/Legend";
@@ -142,157 +141,151 @@ const WelfareChart = ({ caption, numFirms: fixedFirms }: WelfareChartProps) => {
   const trapHeight = HEIGHT - GRAPH_PADDING.top - GRAPH_PADDING.bottom;
 
   return (
-    <Caption caption={caption}>
-      <ColumnLayout break="sm">
-        <div className="flex flex-col justify-center h-full">
-          <SliderGroup data={sliderData} />
-        </div>
-        <div>
-          <Legend
-            labels={[
-              { text: "Company profits", color: COLORS.ORANGE },
-              { text: "Worker income", color: COLORS.BLUE },
-              { text: "Coordinated outcome", color: COLORS.GREEN },
-              { text: "Market outcome", color: COLORS.RED },
-            ]}
+    <ColumnLayout break="sm">
+      <div className="flex flex-col justify-center h-full">
+        <SliderGroup data={sliderData} />
+      </div>
+      <div>
+        <Legend
+          labels={[
+            { text: "Company profits", color: COLORS.ORANGE },
+            { text: "Worker income", color: COLORS.BLUE },
+            { text: "Coordinated outcome", color: COLORS.GREEN },
+            { text: "Market outcome", color: COLORS.RED },
+          ]}
+        />
+        <Graph
+          axes={false}
+          graphPadding={GRAPH_PADDING}
+          height={HEIGHT}
+          width={WIDTH}
+          svgId="welfare-chart"
+          xScale={xScale}
+          yScale={yScale}
+          gridlinesVertical={false}
+        >
+          <Axis
+            key="y-axis"
+            direction="y"
+            scale={yScale}
+            tickFormat=".2f"
+            tickSize={5}
+            tickColor={COLORS.GRAY}
+            color={COLORS.ORANGE}
+            fontSize={AXIS_FONT}
           />
-          <Graph
-            axes={false}
-            graphPadding={GRAPH_PADDING}
-            height={HEIGHT}
-            width={WIDTH}
-            svgId="welfare-chart"
-            xScale={xScale}
-            yScale={yScale}
-            gridlinesVertical={false}
+          <Axis
+            key="x-axis"
+            direction="x"
+            scale={xScale}
+            tickFormat=".1f"
+            rotateLabels={false}
+            textAnchor="middle"
+            labelPosition={{ dy: "0.71em" }}
+            tickColor={COLORS.GRAY}
+            fontSize={AXIS_FONT}
+          />
+          <Axis
+            key="y-right-axis"
+            direction="y"
+            xShift={WIDTH - GRAPH_PADDING.right}
+            scale={workerYScale}
+            tickFormat=".2f"
+            tickSize={5}
+            textAnchor="start"
+            labelPosition={{ x: "8" }}
+            tickColor={COLORS.BLUE}
+            color={COLORS.BLUE}
+            fontSize={AXIS_FONT}
+          />
+          <AxisLabel
+            x={10}
+            y={HEIGHT / 2}
+            dy={10}
+            transform={`rotate(-90 10,${HEIGHT / 2})`}
+            style={{ color: COLORS.ORANGE }}
           >
-            <Axis
-              key="y-axis"
-              direction="y"
-              scale={yScale}
-              tickFormat=".2f"
-              tickSize={5}
-              tickColor={COLORS.GRAY}
-              color={COLORS.ORANGE}
-              fontSize={AXIS_FONT}
-            />
-            <Axis
-              key="x-axis"
-              direction="x"
-              scale={xScale}
-              tickFormat=".1f"
-              rotateLabels={false}
-              textAnchor="middle"
-              labelPosition={{ dy: "0.71em" }}
-              tickColor={COLORS.GRAY}
-              fontSize={AXIS_FONT}
-            />
-            <Axis
-              key="y-right-axis"
-              direction="y"
-              xShift={WIDTH - GRAPH_PADDING.right}
-              scale={workerYScale}
-              tickFormat=".2f"
-              tickSize={5}
-              textAnchor="start"
-              labelPosition={{ x: "8" }}
-              tickColor={COLORS.BLUE}
-              color={COLORS.BLUE}
-              fontSize={AXIS_FONT}
-            />
-            <AxisLabel
-              x={10}
-              y={HEIGHT / 2}
-              dy={10}
-              transform={`rotate(-90 10,${HEIGHT / 2})`}
-              style={{ color: COLORS.ORANGE }}
-            >
-              Company profit change
-            </AxisLabel>
-            <AxisLabel
-              x={WIDTH - 22}
-              y={HEIGHT / 2}
-              dy={10}
-              transform={`rotate(90 ${WIDTH - 22},${HEIGHT / 2})`}
-              style={{ color: COLORS.BLUE }}
-            >
-              Worker income
-            </AxisLabel>
-            <AxisLabel
-              x={WIDTH / 2}
-              y={HEIGHT - GRAPH_PADDING.bottom}
-              dy={`${GRAPH_PADDING.bottom * 0.7}`}
-              anchor="middle"
-            >
-              Share of jobs automated
-            </AxisLabel>
-            <rect
-              x={trapX}
-              y={trapY}
-              width={trapWidth}
-              height={trapHeight}
-              fill={hexToRgba(COLORS.RED, 0.06)}
-            />
-            <line
-              x1={GRAPH_PADDING.left}
-              x2={WIDTH - GRAPH_PADDING.right}
-              y1={zeroY}
-              y2={zeroY}
-              stroke={COLORS.GRAY}
-              strokeWidth={1}
-              strokeDasharray="4 2"
-            />
-            <LinePlot
-              graphData={ownerData}
-              stroke={COLORS.ORANGE}
-              strokeWidth={3}
-              curve="curveLinear"
-            />
-            <LinePlot
-              graphData={workerData}
-              stroke={COLORS.BLUE}
-              strokeWidth={3}
-              yScale={workerYScale}
-              curve="curveLinear"
-            />
-            <circle
-              cx={xScale(socialOptimum)}
-              cy={yScale(coOwnerProfit)}
-              r={MARKER_RADIUS}
-              fill={COLORS.GREEN}
-            />
-            <circle
-              cx={xScale(socialOptimum)}
-              cy={workerYScale(coWorkerIncome)}
-              r={MARKER_RADIUS}
-              fill={COLORS.GREEN}
-            />
-            <circle
-              cx={xScale(marketOutcome)}
-              cy={yScale(neOwnerProfit)}
-              r={MARKER_RADIUS}
-              fill={COLORS.RED}
-            />
-            <circle
-              cx={xScale(marketOutcome)}
-              cy={workerYScale(neWorkerIncome)}
-              r={MARKER_RADIUS}
-              fill={COLORS.RED}
-            />
-            <VerticalMarker
-              x={socialOptimum}
-              color={COLORS.GREEN}
-              label="Coordinated"
-            />
-            <VerticalMarker
-              x={marketOutcome}
-              color={COLORS.RED}
-              label="Market"
-            />
-          </Graph>
-        </div>
-      </ColumnLayout>
-    </Caption>
+            Company profit change
+          </AxisLabel>
+          <AxisLabel
+            x={WIDTH - 22}
+            y={HEIGHT / 2}
+            dy={10}
+            transform={`rotate(90 ${WIDTH - 22},${HEIGHT / 2})`}
+            style={{ color: COLORS.BLUE }}
+          >
+            Worker income
+          </AxisLabel>
+          <AxisLabel
+            x={WIDTH / 2}
+            y={HEIGHT - GRAPH_PADDING.bottom}
+            dy={`${GRAPH_PADDING.bottom * 0.7}`}
+            anchor="middle"
+          >
+            Share of jobs automated
+          </AxisLabel>
+          <rect
+            x={trapX}
+            y={trapY}
+            width={trapWidth}
+            height={trapHeight}
+            fill={hexToRgba(COLORS.RED, 0.06)}
+          />
+          <line
+            x1={GRAPH_PADDING.left}
+            x2={WIDTH - GRAPH_PADDING.right}
+            y1={zeroY}
+            y2={zeroY}
+            stroke={COLORS.GRAY}
+            strokeWidth={1}
+            strokeDasharray="4 2"
+          />
+          <LinePlot
+            graphData={ownerData}
+            stroke={COLORS.ORANGE}
+            strokeWidth={3}
+            curve="curveLinear"
+          />
+          <LinePlot
+            graphData={workerData}
+            stroke={COLORS.BLUE}
+            strokeWidth={3}
+            yScale={workerYScale}
+            curve="curveLinear"
+          />
+          <circle
+            cx={xScale(socialOptimum)}
+            cy={yScale(coOwnerProfit)}
+            r={MARKER_RADIUS}
+            fill={COLORS.GREEN}
+          />
+          <circle
+            cx={xScale(socialOptimum)}
+            cy={workerYScale(coWorkerIncome)}
+            r={MARKER_RADIUS}
+            fill={COLORS.GREEN}
+          />
+          <circle
+            cx={xScale(marketOutcome)}
+            cy={yScale(neOwnerProfit)}
+            r={MARKER_RADIUS}
+            fill={COLORS.RED}
+          />
+          <circle
+            cx={xScale(marketOutcome)}
+            cy={workerYScale(neWorkerIncome)}
+            r={MARKER_RADIUS}
+            fill={COLORS.RED}
+          />
+          <VerticalMarker
+            x={socialOptimum}
+            color={COLORS.GREEN}
+            label="Coordinated"
+          />
+          <VerticalMarker x={marketOutcome} color={COLORS.RED} label="Market" />
+        </Graph>
+      </div>
+    </ColumnLayout>
   );
 };
 

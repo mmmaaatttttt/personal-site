@@ -1,7 +1,6 @@
 "use client";
 
 import { scaleLinear } from "d3-scale";
-import Caption from "@/components/story/shared/Caption";
 import ColumnLayout from "@/components/story/shared/ColumnLayout";
 import Graph from "@/components/story/shared/Graph";
 import Legend from "@/components/story/shared/Legend";
@@ -87,105 +86,103 @@ const SavingsWedge = ({ caption }: SavingsWedgeProps) => {
   const zeroX = xScale(0);
 
   return (
-    <Caption caption={caption}>
-      <ColumnLayout break="sm">
-        <div className="flex flex-col justify-center gap-4 py-4">
-          <SliderGroup data={sliderData} />
-          <div
-            className="rounded-lg p-4 text-center"
-            style={{
-              backgroundColor: hexToRgba(COLORS.ORANGE, 0.08),
-              border: `1px solid ${hexToRgba(COLORS.ORANGE, 0.4)}`,
-            }}
-          >
-            {overPct === null && currentNE < 0.01 && (
-              <p className="text-sm text-gray-600">
-                At these settings, neither competing firms nor coordinating
-                firms would automate.
+    <ColumnLayout break="sm">
+      <div className="flex flex-col justify-center gap-4 py-4">
+        <SliderGroup data={sliderData} />
+        <div
+          className="rounded-lg p-4 text-center"
+          style={{
+            backgroundColor: hexToRgba(COLORS.ORANGE, 0.08),
+            border: `1px solid ${hexToRgba(COLORS.ORANGE, 0.4)}`,
+          }}
+        >
+          {overPct === null && currentNE < 0.01 && (
+            <p className="text-sm text-gray-600">
+              At these settings, neither competing firms nor coordinating firms
+              would automate.
+            </p>
+          )}
+          {overPct === null && currentNE >= 0.01 && (
+            <p className="text-sm text-gray-600">
+              Coordinating firms wouldn't automate here — but 2 competing firms
+              drive {Math.round(currentNE * 100)}% automation anyway.
+            </p>
+          )}
+          {overPct === 0 && (
+            <p className="text-sm text-gray-600">
+              With 2 firms, competition delivers the same outcome as full
+              coordination.
+            </p>
+          )}
+          {overPct !== null && overPct > 0 && (
+            <>
+              <div
+                className="text-4xl font-bold"
+                style={{ color: COLORS.ORANGE }}
+              >
+                +{overPct}%
+              </div>
+              <p className="text-sm text-gray-600 mt-1">
+                With 2 competing firms, the industry automates {overPct}% more
+                jobs than if firms had coordinated.
               </p>
-            )}
-            {overPct === null && currentNE >= 0.01 && (
-              <p className="text-sm text-gray-600">
-                Coordinating firms wouldn't automate here — but 2 competing
-                firms drive {Math.round(currentNE * 100)}% automation anyway.
-              </p>
-            )}
-            {overPct === 0 && (
-              <p className="text-sm text-gray-600">
-                With 2 firms, competition delivers the same outcome as full
-                coordination.
-              </p>
-            )}
-            {overPct !== null && overPct > 0 && (
-              <>
-                <div
-                  className="text-4xl font-bold"
-                  style={{ color: COLORS.ORANGE }}
-                >
-                  +{overPct}%
-                </div>
-                <p className="text-sm text-gray-600 mt-1">
-                  With 2 competing firms, the industry automates {overPct}% more
-                  jobs than if firms had coordinated.
-                </p>
-              </>
-            )}
-          </div>
+            </>
+          )}
         </div>
-        <div>
-          <Legend
-            labels={[
-              { text: "Market outcome (2 firms)", color: COLORS.ORANGE },
-              { text: "Coordinated outcome", color: COLORS.GREEN },
-            ]}
+      </div>
+      <div>
+        <Legend
+          labels={[
+            { text: "Market outcome (2 firms)", color: COLORS.ORANGE },
+            { text: "Coordinated outcome", color: COLORS.GREEN },
+          ]}
+        />
+        <Graph
+          graphPadding={GRAPH_PADDING}
+          height={HEIGHT}
+          width={WIDTH}
+          svgId="savings-wedge"
+          xScale={xScale}
+          yScale={yScale}
+          tickFormatX=".1f"
+          tickFormatY=".1f"
+          xLabel="Collective gain from automation"
+          yLabel="Share of jobs automated"
+        >
+          <line
+            x1={zeroX}
+            x2={zeroX}
+            y1={GRAPH_PADDING.top}
+            y2={HEIGHT - GRAPH_PADDING.bottom}
+            stroke={COLORS.GRAY}
+            strokeWidth={1}
+            strokeDasharray="4 2"
           />
-          <Graph
-            graphPadding={GRAPH_PADDING}
-            height={HEIGHT}
-            width={WIDTH}
-            svgId="savings-wedge"
-            xScale={xScale}
-            yScale={yScale}
-            tickFormatX=".1f"
-            tickFormatY=".1f"
-            xLabel="Collective gain from automation"
-            yLabel="Share of jobs automated"
-          >
-            <line
-              x1={zeroX}
-              x2={zeroX}
-              y1={GRAPH_PADDING.top}
-              y2={HEIGHT - GRAPH_PADDING.bottom}
-              stroke={COLORS.GRAY}
-              strokeWidth={1}
-              strokeDasharray="4 2"
-            />
-            <polygon
-              points={polygonPoints}
-              fill={hexToRgba(COLORS.ORANGE, 0.15)}
-              stroke="none"
-            />
-            <LinePlot
-              graphData={neData}
-              stroke={COLORS.ORANGE}
-              strokeWidth={3}
-              curve="curveLinear"
-            />
-            <LinePlot
-              graphData={coData}
-              stroke={COLORS.GREEN}
-              strokeWidth={3}
-              curve="curveLinear"
-            />
-            <VerticalMarker
-              x={clampedDelta}
-              color={COLORS.DARK_GRAY}
-              label={markerLabel}
-            />
-          </Graph>
-        </div>
-      </ColumnLayout>
-    </Caption>
+          <polygon
+            points={polygonPoints}
+            fill={hexToRgba(COLORS.ORANGE, 0.15)}
+            stroke="none"
+          />
+          <LinePlot
+            graphData={neData}
+            stroke={COLORS.ORANGE}
+            strokeWidth={3}
+            curve="curveLinear"
+          />
+          <LinePlot
+            graphData={coData}
+            stroke={COLORS.GREEN}
+            strokeWidth={3}
+            curve="curveLinear"
+          />
+          <VerticalMarker
+            x={clampedDelta}
+            color={COLORS.DARK_GRAY}
+            label={markerLabel}
+          />
+        </Graph>
+      </div>
+    </ColumnLayout>
   );
 };
 
