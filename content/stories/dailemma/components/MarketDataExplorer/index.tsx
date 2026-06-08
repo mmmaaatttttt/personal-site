@@ -45,7 +45,7 @@ const JOB_TICK_VALUES = [2000, 4000, 6000, 8000, 10000, 12000];
 const X_MIN = GRAPH_PADDING.left;
 const X_MAX = WIDTH - GRAPH_PADDING.right;
 
-const MarketDataExplorer = ({ caption }: { caption: string }) => {
+const MarketDataExplorer = () => {
   const { current, handleDrag } = useMarketScrubber(xScale, X_MIN, X_MAX);
   const { tooltip, showTooltip, showTooltipAt, hideTooltip } = useTooltip();
 

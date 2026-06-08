@@ -95,20 +95,12 @@ const FULL_SLIDER_CONFIG = [
   BASE_SLIDER_CONFIG[3],
 ];
 
-interface WelfareChartProps {
-  caption?: string;
-  numFirms?: number;
-}
-
-const WelfareChart = ({ caption, numFirms: fixedFirms }: WelfareChartProps) => {
-  const { values, sliderData } = useSliders(
-    fixedFirms !== undefined ? BASE_SLIDER_CONFIG : FULL_SLIDER_CONFIG,
-  );
+const WelfareChart = () => {
+  const { values, sliderData } = useSliders(FULL_SLIDER_CONFIG);
 
   const [savings, demandLoss, difficulty] = values;
-  const numFirms =
-    fixedFirms !== undefined ? fixedFirms : Math.round(values[3]);
-  const replacementRate = fixedFirms !== undefined ? values[3] : values[4];
+  const numFirms = Math.round(values[3]);
+  const replacementRate = values[4];
 
   const {
     ownerData,

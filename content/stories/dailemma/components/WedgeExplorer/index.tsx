@@ -73,11 +73,7 @@ const SLIDER_CONFIG = [
   },
 ];
 
-interface WedgeExplorerProps {
-  caption?: string;
-}
-
-const WedgeExplorer = ({ caption }: WedgeExplorerProps) => {
+const WedgeExplorer = () => {
   const { values, sliderData } = useSliders(SLIDER_CONFIG);
   const [savings, demandLoss, difficulty] = values;
   const numFirms = Math.round(values[3]);

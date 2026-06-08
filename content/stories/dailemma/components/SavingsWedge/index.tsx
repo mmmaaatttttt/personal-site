@@ -64,11 +64,7 @@ const SLIDER_CONFIG = [
   },
 ];
 
-interface SavingsWedgeProps {
-  caption?: string;
-}
-
-const SavingsWedge = ({ caption }: SavingsWedgeProps) => {
+const SavingsWedge = () => {
   const { values, sliderData } = useSliders(SLIDER_CONFIG);
   const [savings, demandLoss, difficulty] = values;
 

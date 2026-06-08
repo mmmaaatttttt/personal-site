@@ -38,11 +38,7 @@ const fmtPayoff = (v: number) => {
   return v > 0 ? `+${pct}%` : `${pct}%`;
 };
 
-interface CoordinationGameProps {
-  caption?: string;
-}
-
-const CoordinationGame = ({ caption }: CoordinationGameProps) => {
+const CoordinationGame = () => {
   const { values, sliderData } = useSliders(SLIDER_CONFIG);
   const [savings, demandLoss] = values;
   const { cells, isNE, isParetoOptimal } = useGameState(savings, demandLoss);
