@@ -94,6 +94,21 @@ describe("Tooltip Hook and Component", () => {
     });
   });
 
+  it("showTooltipAt sets tooltip at explicit coordinates", () => {
+    const { result } = renderHook(() => useTooltip());
+
+    act(() => {
+      result.current.showTooltipAt("Direct", "body", 50, 100);
+    });
+
+    expect(result.current.tooltip).toEqual({
+      title: "Direct",
+      body: "body",
+      x: 50,
+      y: 100,
+    });
+  });
+
   it("constrains tooltip width when x is near the left edge", () => {
     const info = { title: "", body: "edge case", x: 0, y: 100 };
     render(<Tooltip info={info} />);
