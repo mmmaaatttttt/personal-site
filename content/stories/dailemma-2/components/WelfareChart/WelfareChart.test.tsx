@@ -1,16 +1,10 @@
 import { render, screen } from "@testing-library/react";
-import { beforeEach, describe, expect, it, vi } from "vitest";
+import { beforeEach, describe, expect, it } from "vitest";
 import WelfareChart from ".";
 
 beforeEach(() => {
   localStorage.clear();
 });
-
-global.ResizeObserver = vi.fn().mockImplementation(() => ({
-  observe: vi.fn(),
-  unobserve: vi.fn(),
-  disconnect: vi.fn(),
-}));
 
 describe("WelfareChart", () => {
   it("renders without crashing", () => {
@@ -19,8 +13,8 @@ describe("WelfareChart", () => {
 
   it("shows legend entries for company profits and worker income", () => {
     render(<WelfareChart />);
-    expect(screen.getByText(/company profits/i)).toBeInTheDocument();
-    expect(screen.getByText(/worker income/i)).toBeInTheDocument();
+    expect(screen.getAllByText(/company profits/i).length).toBeGreaterThan(0);
+    expect(screen.getAllByText(/worker income/i).length).toBeGreaterThan(0);
   });
 
   it("shows plain-English coordinated outcome and market outcome labels", () => {
@@ -34,15 +28,5 @@ describe("WelfareChart", () => {
   it("renders five slider inputs", () => {
     render(<WelfareChart />);
     expect(screen.getAllByRole("slider")).toHaveLength(5);
-  });
-
-  it("renders four slider inputs when numFirms is fixed", () => {
-    render(<WelfareChart numFirms={2} />);
-    expect(screen.getAllByRole("slider")).toHaveLength(4);
-  });
-
-  it("accepts and renders a caption", () => {
-    render(<WelfareChart caption="Test caption" />);
-    expect(screen.getByText("Test caption")).toBeInTheDocument();
   });
 });

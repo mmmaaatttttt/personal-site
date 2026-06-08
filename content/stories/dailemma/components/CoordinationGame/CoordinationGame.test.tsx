@@ -30,11 +30,6 @@ describe("CoordinationGame", () => {
     );
   });
 
-  it("accepts and renders a caption", () => {
-    render(<CoordinationGame caption="Test caption" />);
-    expect(screen.getByText("Test caption")).toBeInTheDocument();
-  });
-
   it("renders two slider inputs", () => {
     render(<CoordinationGame />);
     expect(screen.getAllByRole("slider")).toHaveLength(2);

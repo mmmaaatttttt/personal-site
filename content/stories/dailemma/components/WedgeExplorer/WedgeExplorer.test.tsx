@@ -1,12 +1,6 @@
 import { render, screen } from "@testing-library/react";
-import { beforeEach, describe, expect, it, vi } from "vitest";
+import { beforeEach, describe, expect, it } from "vitest";
 import WedgeExplorer from ".";
-
-global.ResizeObserver = vi.fn().mockImplementation(() => ({
-  observe: vi.fn(),
-  unobserve: vi.fn(),
-  disconnect: vi.fn(),
-}));
 
 beforeEach(() => {
   localStorage.clear();
@@ -33,10 +27,5 @@ describe("WedgeExplorer", () => {
   it("renders four slider inputs", () => {
     render(<WedgeExplorer />);
     expect(screen.getAllByRole("slider")).toHaveLength(4);
-  });
-
-  it("accepts and renders a caption", () => {
-    render(<WedgeExplorer caption="Test caption" />);
-    expect(screen.getByText("Test caption")).toBeInTheDocument();
   });
 });

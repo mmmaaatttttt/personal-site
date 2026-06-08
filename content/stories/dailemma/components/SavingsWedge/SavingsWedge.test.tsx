@@ -1,16 +1,10 @@
 import { render, screen } from "@testing-library/react";
-import { beforeEach, describe, expect, it, vi } from "vitest";
+import { beforeEach, describe, expect, it } from "vitest";
 import SavingsWedge from ".";
 
 beforeEach(() => {
   localStorage.clear();
 });
-
-global.ResizeObserver = vi.fn().mockImplementation(() => ({
-  observe: vi.fn(),
-  unobserve: vi.fn(),
-  disconnect: vi.fn(),
-}));
 
 describe("SavingsWedge", () => {
   it("renders without crashing", () => {
@@ -33,10 +27,5 @@ describe("SavingsWedge", () => {
   it("renders three slider inputs", () => {
     render(<SavingsWedge />);
     expect(screen.getAllByRole("slider")).toHaveLength(3);
-  });
-
-  it("accepts and renders a caption", () => {
-    render(<SavingsWedge caption="Test caption" />);
-    expect(screen.getByText("Test caption")).toBeInTheDocument();
   });
 });

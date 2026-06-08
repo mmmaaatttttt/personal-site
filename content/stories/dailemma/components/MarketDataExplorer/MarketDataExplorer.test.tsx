@@ -1,12 +1,6 @@
 import { fireEvent, render, screen } from "@testing-library/react";
-import { beforeEach, describe, expect, it, vi } from "vitest";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import MarketDataExplorer from ".";
-
-global.ResizeObserver = vi.fn().mockImplementation(() => ({
-  observe: vi.fn(),
-  unobserve: vi.fn(),
-  disconnect: vi.fn(),
-}));
 
 beforeEach(() => {
   Element.prototype.setPointerCapture = vi.fn();
@@ -14,6 +8,10 @@ beforeEach(() => {
   SVGSVGElement.prototype.getScreenCTM = vi
     .fn()
     .mockReturnValue({ a: 1, d: 1, e: 0, f: 0 });
+});
+
+afterEach(() => {
+  vi.restoreAllMocks();
 });
 
 describe("MarketDataExplorer", () => {
