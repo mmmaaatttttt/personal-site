@@ -196,6 +196,8 @@ components/OrchardGame/
 
 **Coverage must stay at 100%.** The project enforces this — a drop in coverage fails the build. Write tests for every new branch and code path before marking a task done.
 
+**Never use coverage ignore directives.** Do not write `/* v8 ignore next */`, `/* c8 ignore next */`, or any other coverage suppression comment. If a code path is unreachable in jsdom (e.g. SSR-only server snapshots passed to `useSyncExternalStore`), write a real test using `renderToString` from `react-dom/server` to cover it. If code is structurally unreachable (dead code), delete it.
+
 **Every file that exports a component must have a co-located test file** — including `index.tsx` orchestrators. "I tested the leaves" is not sufficient; the orchestrator wires things together and that wiring needs tests too.
 
 What to test:

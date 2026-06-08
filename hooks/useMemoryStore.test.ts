@@ -1,4 +1,6 @@
 import { act, renderHook } from "@testing-library/react";
+import { createElement } from "react";
+import { renderToString } from "react-dom/server";
 import { describe, expect, it } from "vitest";
 import {
   readMemoryItem,
@@ -105,5 +107,16 @@ describe("useMemoryStore", () => {
       a.current[1](99);
     });
     expect(b.current[0]).toBe(0);
+  });
+});
+
+describe("useMemoryStore — SSR", () => {
+  it("server snapshot returns the default value during renderToString", () => {
+    function Comp() {
+      const [value] = useMemoryStore("ssr-test", 99);
+      return createElement("span", null, String(value));
+    }
+    const html = renderToString(createElement(Comp));
+    expect(html).toContain("99");
   });
 });

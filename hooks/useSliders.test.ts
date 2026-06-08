@@ -1,4 +1,6 @@
 import { act, renderHook } from "@testing-library/react";
+import { createElement } from "react";
+import { renderToString } from "react-dom/server";
 import { beforeEach, describe, expect, it } from "vitest";
 import useSliders from "./useSliders";
 
@@ -147,5 +149,26 @@ describe("useSliders — storageKey", () => {
     });
     expect(h1.current.values[1]).toBe(15);
     expect(h2.current.values[1]).toBe(7);
+  });
+});
+
+describe("useSliders — SSR", () => {
+  it("server snapshot returns initial values during renderToString", () => {
+    const config = [
+      {
+        initialValue: 0.5,
+        min: 0,
+        max: 1,
+        title: "A",
+        color: "#f00",
+        storageKey: "ssr-slider-key",
+      },
+    ];
+    function Comp() {
+      const { values } = useSliders(config);
+      return createElement("span", null, String(values[0]));
+    }
+    const html = renderToString(createElement(Comp));
+    expect(html).toContain("0.5");
   });
 });
