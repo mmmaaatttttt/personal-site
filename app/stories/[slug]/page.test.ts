@@ -5,6 +5,9 @@ const mockPlaceholders = vi.hoisted(() => ({}) as Record<string, string>);
 vi.mock("next/image", () => ({ default: () => null }));
 vi.mock("next/navigation", () => ({ notFound: vi.fn() }));
 vi.mock("@/components/layout/MainLayout", () => ({ default: () => null }));
+vi.mock("@/components/layout/ScrollProgressBar", () => ({
+  default: () => null,
+}));
 vi.mock("@/components/layout/StoryCard", () => ({ default: () => null }));
 vi.mock("@/components/layout/StoryActions", () => ({ default: () => null }));
 vi.mock("@/components/icons/BlueskyIcon", () => ({ default: () => null }));

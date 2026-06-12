@@ -7,6 +7,9 @@ vi.mock("next/image", () => ({
 vi.mock("@/components/icons/BlueskyIcon", () => ({
   default: () => <svg data-testid="bluesky-icon" />,
 }));
+vi.mock("@/components/icons/GithubIcon", () => ({
+  default: () => <svg data-testid="github-icon" />,
+}));
 
 import Footer from "./Footer";
 

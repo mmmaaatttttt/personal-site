@@ -39,7 +39,7 @@ const StoryCard: FC<StoryCardProps> = ({
         isEven ? "bounce-in-left" : "bounce-in-right",
         className,
       )}
-      style={{ animationDelay: `${index * 0.25}s` } as CSSProperties}
+      style={{ animationDelay: `${index * 0.15}s` } as CSSProperties}
     >
       <Link
         href={`/stories/${slug}`}
