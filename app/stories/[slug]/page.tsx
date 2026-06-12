@@ -2,6 +2,7 @@ import Image from "next/image";
 import { notFound } from "next/navigation";
 import type { ComponentType } from "react";
 import MainLayout from "@/components/layout/MainLayout";
+import ScrollProgressBar from "@/components/layout/ScrollProgressBar";
 import StoryActions from "@/components/layout/StoryActions";
 import StoryCard from "@/components/layout/StoryCard";
 import { FigureProvider } from "@/components/story/shared/Figure/FigureProvider";
@@ -118,6 +119,8 @@ export default async function ArticlePage({ params }: PageProps) {
     .slice(0, 3);
 
   const githubUrl = `https://github.com/mmmaaatttttt/personal-site/blob/master/content/stories/${slug}/index.mdx`;
+  const linkedinUrl = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(`${SITE_URL}/stories/${slug}`)}`;
+  const blueskyUrl = `https://bsky.app/intent/compose?text=${encodeURIComponent(`${frontmatter.title} ${SITE_URL}/stories/${slug}`)}`;
 
   const jsonLd = {
     "@context": "https://schema.org",
@@ -156,6 +159,7 @@ export default async function ArticlePage({ params }: PageProps) {
       <script type="application/ld+json">{JSON.stringify(jsonLd)}</script>
       <script type="application/ld+json">{JSON.stringify(breadcrumbLd)}</script>
       <article className="w-full">
+        <ScrollProgressBar />
         {/* Full Bleed Hero Header */}
         <header className="relative w-full aspect-video sm:aspect-auto sm:h-screen flex flex-col items-center justify-center text-center px-4 overflow-hidden mb-0">
           <Image
@@ -186,7 +190,7 @@ export default async function ArticlePage({ params }: PageProps) {
                   "2px 2px 1px #000, -1px -1px 1px #000, 1px -1px 1px #000, -1px 1px 1px #000, 1px 1px 1px #000",
               }}
             >
-              {formattedDate}
+              {formattedDate} · {timeToRead} min read
             </h2>
           </div>
         </header>
@@ -217,7 +221,8 @@ export default async function ArticlePage({ params }: PageProps) {
           </div>
           <StoryActions
             githubUrl={githubUrl}
-            blueskyUrl={`https://bsky.app/intent/compose?text=${encodeURIComponent(`${frontmatter.title} ${SITE_URL}/stories/${slug}`)}`}
+            blueskyUrl={blueskyUrl}
+            linkedinUrl={linkedinUrl}
           />
           {relatedArticles.length > 0 && (
             <div className="not-prose pb-20">
