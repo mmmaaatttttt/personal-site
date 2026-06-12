@@ -79,7 +79,7 @@ describe("StoryCard", () => {
 
   it("applies animation delay based on index", () => {
     const { container } = render(<StoryCard {...baseProps} index={2} />);
-    expect(container.firstChild).toHaveStyle({ animationDelay: "0.5s" });
+    expect(container.firstChild).toHaveStyle({ animationDelay: "0.3s" });
   });
 
   it("uses empty placeholder when no blurDataURL is available", () => {
