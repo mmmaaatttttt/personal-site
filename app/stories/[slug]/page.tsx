@@ -65,7 +65,7 @@ export async function generateMetadata({ params }: PageProps) {
       description: frontmatter.caption,
       authors: [{ name: "Matt Lane", url: SITE_URL }],
       keywords: frontmatter.tags,
-      alternates: { canonical: `${SITE_URL}/stories/${slug}/` },
+      alternates: { canonical: `${SITE_URL}/stories/${slug}` },
       openGraph: {
         title: `${frontmatter.title} | Matt Lane`,
         description: frontmatter.caption,
@@ -130,7 +130,7 @@ export default async function ArticlePage({ params }: PageProps) {
     datePublished: frontmatter.date,
     author: { "@type": "Person", name: "Matt Lane", url: SITE_URL },
     image: `${SITE_URL}${featuredImage}`,
-    url: `${SITE_URL}/stories/${slug}/`,
+    url: `${SITE_URL}/stories/${slug}`,
     timeRequired: `PT${timeToRead}M`,
   };
 
@@ -138,18 +138,18 @@ export default async function ArticlePage({ params }: PageProps) {
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
     itemListElement: [
-      { "@type": "ListItem", position: 1, name: "Home", item: `${SITE_URL}/` },
+      { "@type": "ListItem", position: 1, name: "Home", item: `${SITE_URL}` },
       {
         "@type": "ListItem",
         position: 2,
         name: "Stories",
-        item: `${SITE_URL}/stories/`,
+        item: `${SITE_URL}/stories`,
       },
       {
         "@type": "ListItem",
         position: 3,
         name: frontmatter.title,
-        item: `${SITE_URL}/stories/${slug}/`,
+        item: `${SITE_URL}/stories/${slug}`,
       },
     ],
   };

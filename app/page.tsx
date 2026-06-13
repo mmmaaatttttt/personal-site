@@ -1,7 +1,9 @@
+import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import MainLayout from "@/components/layout/MainLayout";
 import { SITE_URL } from "@/lib/constants";
+
 import placeholders from "@/lib/imagePlaceholders.json";
 import { getAllArticles } from "@/utils/content";
 import { normalizeImagePath } from "@/utils/stringHelpers";
@@ -11,6 +13,10 @@ const jsonLd = {
   "@type": "WebSite",
   name: "Matt Lane",
   url: SITE_URL,
+};
+
+export const metadata: Metadata = {
+  alternates: { canonical: SITE_URL },
 };
 
 export default function Home() {
