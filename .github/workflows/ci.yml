@@ -12,6 +12,22 @@ on:
       - ".gitignore"
 
 jobs:
+  changes:
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    outputs:
+      packages-only: ${{ steps.filter.outputs.packages-only }}
+    steps:
+      - uses: actions/checkout@v6
+      - uses: dorny/paths-filter@v3
+        id: filter
+        with:
+          predicate-quantifier: every
+          filters: |
+            packages-only:
+              - 'package.json'
+              - 'package-lock.json'
+
   lint:
     runs-on: ubuntu-latest
     steps:
@@ -35,7 +51,8 @@ jobs:
       - run: npm run test:coverage
 
   e2e:
-    if: github.actor != 'dependabot[bot]'
+    needs: [changes]
+    if: always() && (needs.changes.result == 'skipped' || needs.changes.outputs.packages-only != 'true')
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6
@@ -66,12 +83,13 @@ jobs:
           ARGOS_TOKEN: ${{ secrets.ARGOS_TOKEN }}
 
   argos-skip:
-    if: github.actor == 'dependabot[bot]'
+    needs: [changes]
+    if: always() && needs.changes.result != 'skipped' && needs.changes.outputs.packages-only == 'true'
     runs-on: ubuntu-latest
     permissions:
       statuses: write
     steps:
-      - name: Report argos as passing for Dependabot
+      - name: Report argos as passing for package-only PR
         uses: actions/github-script@v7
         with:
           script: |
@@ -81,7 +99,7 @@ jobs:
               sha: context.payload.pull_request.head.sha,
               state: 'success',
               context: 'argos',
-              description: 'Skipped for Dependabot PR',
+              description: 'Skipped: only package files changed',
             });
 
   all-checks:
