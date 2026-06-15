@@ -49,20 +49,18 @@ const OrchardGame: FC = () => {
 
   const removeAt = useCallback(
     (idx: number) => {
+      const next = [...counts];
+      next[idx] = Math.max(next[idx] - 1, 0);
       setFruitBasketEnabled(false);
-      setCounts((prev) => {
-        const next = [...prev];
-        next[idx] = Math.max(next[idx] - 1, 0);
-        if (next.slice(0, -1).every((c) => c === 0)) {
-          setGameState("win");
-          setGamesWon((w) => w + 1);
-        } else if (next[next.length - 1] === 0) {
-          setGameState("loss");
-        }
-        return next;
-      });
+      setCounts(next);
+      if (next.slice(0, -1).every((c) => c === 0)) {
+        setGameState("win");
+        setGamesWon((w) => w + 1);
+      } else if (next[next.length - 1] === 0) {
+        setGameState("loss");
+      }
     },
-    [setGamesWon],
+    [counts, setGamesWon],
   );
 
   const handleSpinEnd = useCallback(
