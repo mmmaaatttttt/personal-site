@@ -2,10 +2,12 @@ import Image from "next/image";
 import type { ComponentPropsWithoutRef, ReactNode } from "react";
 import ColoredSpan from "@/components/story/shared/ColoredSpan";
 import Figure from "@/components/story/shared/Figure";
+import HeadingAnchor from "@/components/story/shared/HeadingAnchor";
 import Legend from "@/components/story/shared/Legend";
 import NarrowContainer from "@/components/story/shared/NarrowContainer";
 import Sidebar from "@/components/story/shared/Sidebar";
 import StyledTable from "@/components/story/shared/StyledTable";
+import { extractText, slugify } from "@/utils/slugify";
 import { normalizeImagePath } from "@/utils/stringHelpers";
 
 export const MdxComponents: Record<string, unknown> = {
@@ -16,9 +18,15 @@ export const MdxComponents: Record<string, unknown> = {
   h2: (props: ComponentPropsWithoutRef<"h2">) => (
     <h2 className="mt-10 mb-4 text-2xl font-bold" {...props} />
   ),
-  h3: (props: ComponentPropsWithoutRef<"h3">) => (
-    <h3 className="mt-4 mb-4 text-xl font-bold" {...props} />
-  ),
+  h3: ({ children, ...rest }: ComponentPropsWithoutRef<"h3">) => {
+    const text = extractText(children);
+    const id = slugify(text);
+    return (
+      <h3 id={id} className="mt-4 mb-4 text-xl font-bold" {...rest}>
+        <HeadingAnchor id={id}>{children}</HeadingAnchor>
+      </h3>
+    );
+  },
   p: (props: ComponentPropsWithoutRef<"p">) => (
     <p className="mb-6 last:mb-0 leading-relaxed" {...props} />
   ),

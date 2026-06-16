@@ -35,6 +35,23 @@ vi.mock("@/components/story/shared/Sidebar", () => ({
 vi.mock("@/components/story/shared/StyledTable", () => ({
   default: () => <table data-testid="styled-table" />,
 }));
+vi.mock("@/components/story/shared/HeadingAnchor", () => ({
+  default: ({ id, children }: { id: string; children?: React.ReactNode }) => (
+    <span data-testid="heading-anchor" data-id={id}>
+      {children}
+    </span>
+  ),
+}));
+vi.mock("@/utils/slugify", () => ({
+  slugify: (text: string) =>
+    text
+      .toLowerCase()
+      .replace(/[^a-z0-9\s]/g, "")
+      .trim()
+      .replace(/\s+/g, "-"),
+  extractText: (children: unknown) =>
+    typeof children === "string" ? children : "",
+}));
 
 import { MdxComponents } from "./MdxComponents";
 
@@ -84,11 +101,17 @@ describe("MdxComponents — heading and text elements", () => {
     );
   });
 
-  it("renders h3", () => {
+  it("renders h3 with text and auto-generated id", () => {
     render(<H3>Heading 3</H3>);
-    expect(screen.getByRole("heading", { level: 3 })).toHaveTextContent(
-      "Heading 3",
-    );
+    const el = screen.getByRole("heading", { level: 3 });
+    expect(el).toHaveTextContent("Heading 3");
+    expect(el).toHaveAttribute("id", "heading-3");
+  });
+
+  it("renders h3 with a HeadingAnchor for its id", () => {
+    render(<H3>Heading 3</H3>);
+    const anchor = screen.getByTestId("heading-anchor");
+    expect(anchor).toHaveAttribute("data-id", "heading-3");
   });
 
   it("renders p", () => {

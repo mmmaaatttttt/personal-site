@@ -38,7 +38,9 @@ export default function FigureInner({
     setIsExpanded(true);
     const params = new URLSearchParams(searchParams.toString());
     params.set("figure", param);
-    router.replace(`?${params.toString()}`, { scroll: false });
+    router.replace(`?${params.toString()}${window.location.hash}`, {
+      scroll: false,
+    });
   }, [searchParams, param, router]);
 
   const collapse = useCallback(() => {
@@ -46,9 +48,11 @@ export default function FigureInner({
     const params = new URLSearchParams(window.location.search);
     params.delete("figure");
     const paramStr = params.toString();
-    router.replace(paramStr ? `?${paramStr}` : window.location.pathname, {
-      scroll: false,
-    });
+    const hash = window.location.hash;
+    router.replace(
+      paramStr ? `?${paramStr}${hash}` : `${window.location.pathname}${hash}`,
+      { scroll: false },
+    );
   }, [router]);
 
   useEffect(() => {
