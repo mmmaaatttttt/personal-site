@@ -38,6 +38,12 @@
 /* ============================================================
    Base styles
    ============================================================ */
+@layer base {
+  button {
+    cursor: pointer;
+  }
+}
+
 html {
   color: #1a1a1a;
   background-color: #ffffff;
