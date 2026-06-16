@@ -6,6 +6,7 @@ import ScrollProgressBar from "@/components/layout/ScrollProgressBar";
 import StoryActions from "@/components/layout/StoryActions";
 import StoryCard from "@/components/layout/StoryCard";
 import { FigureProvider } from "@/components/story/shared/Figure/FigureProvider";
+import TableOfContents from "@/components/story/shared/TableOfContents";
 import { SITE_URL } from "@/lib/constants";
 import placeholders from "@/lib/imagePlaceholders.json";
 import {
@@ -14,6 +15,7 @@ import {
   getArticleSlugs,
   jaccardDistance,
 } from "@/utils/content";
+import { getStoryHeadings } from "@/utils/headings";
 import { normalizeImagePath } from "@/utils/stringHelpers";
 
 interface PageProps {
@@ -106,7 +108,8 @@ export default async function ArticlePage({ params }: PageProps) {
   });
 
   const storyModule = storyModules[slug];
-  const StoryContent = storyModule ? (await storyModule()).default : null;
+  const StoryContent = (await storyModule()).default;
+  const headings = getStoryHeadings(slug);
 
   const allArticles = getAllArticles();
   const timeToRead = allArticles.find((a) => a.slug === slug)?.timeToRead ?? 5;
@@ -204,20 +207,12 @@ export default async function ArticlePage({ params }: PageProps) {
 
         {/* Constrained Markdown Content */}
         <div className="relative mx-auto w-full max-w-[var(--max-w-content)] px-4 sm:px-8 md:px-0">
+          <TableOfContents headings={headings} />
+          <span id="introduction" />
           <div className="prose max-w-none text-[#1a1a1a] pb-4">
-            {StoryContent ? (
-              <FigureProvider>
-                <StoryContent />
-              </FigureProvider>
-            ) : (
-              <div className="py-24 text-center text-gray-500">
-                <p className="text-xl font-semibold mb-2">Coming soon</p>
-                <p className="text-sm">
-                  This story&apos;s interactive components are still being
-                  modernized.
-                </p>
-              </div>
-            )}
+            <FigureProvider>
+              <StoryContent />
+            </FigureProvider>
           </div>
           <StoryActions
             githubUrl={githubUrl}
