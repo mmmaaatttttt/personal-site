@@ -19,7 +19,8 @@ const HeadingAnchor: FC<HeadingAnchorProps> = ({ id, children }) => {
   }, [copied]);
 
   function copyLink() {
-    const url = `${window.location.origin}${window.location.pathname}#${id}`;
+    const pathname = window.location.pathname.replace(/\/$/, "");
+    const url = `${window.location.origin}${pathname}#${id}`;
     navigator.clipboard.writeText(url);
     setCopied(true);
   }
