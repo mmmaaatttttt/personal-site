@@ -11,7 +11,7 @@ beforeEach(() => {
     configurable: true,
   });
   writeTextMock.mockClear();
-  window.history.replaceState({}, "", "/stories/test-story");
+  window.history.replaceState({}, "", "/stories/test-story/");
 });
 
 afterEach(() => {
@@ -37,8 +37,8 @@ describe("HeadingAnchor", () => {
     );
   });
 
-  it("builds the URL from origin + pathname (no search params or existing hash)", () => {
-    window.history.replaceState({}, "", "/stories/my-story?figure=1#old-hash");
+  it("builds the URL from origin + pathname (no trailing slash, search params, or existing hash)", () => {
+    window.history.replaceState({}, "", "/stories/my-story/?figure=1#old-hash");
     render(<HeadingAnchor id="my-section">text</HeadingAnchor>);
     fireEvent.click(
       screen.getByRole("button", { name: "Copy link to section" }),
