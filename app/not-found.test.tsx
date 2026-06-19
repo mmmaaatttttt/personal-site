@@ -61,7 +61,7 @@ describe("NotFound", () => {
     render(<NotFound />);
     expect(screen.getByRole("link")).toHaveAttribute(
       "href",
-      "/stories/latest-story",
+      "/stories/latest-story/",
     );
   });
 
