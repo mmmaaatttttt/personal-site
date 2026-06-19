@@ -28,6 +28,9 @@ export function getArticleSlugs(): string[] {
     return fs
       .readdirSync(ARTICLES_DIR, { withFileTypes: true })
       .filter((dirent) => dirent.isDirectory())
+      .filter((dirent) =>
+        fs.existsSync(path.join(ARTICLES_DIR, dirent.name, "index.mdx")),
+      )
       .map((dirent) => dirent.name);
   } catch (e) {
     console.error("Error reading articles directory:", e);

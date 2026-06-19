@@ -1,0 +1,32 @@
+import { render, screen } from "@testing-library/react";
+import { beforeEach, describe, expect, it } from "vitest";
+import WelfareChart from ".";
+
+beforeEach(() => {
+  localStorage.clear();
+});
+
+describe("WelfareChart", () => {
+  it("renders without crashing", () => {
+    render(<WelfareChart />);
+  });
+
+  it("shows legend entries for company profits and worker income", () => {
+    render(<WelfareChart />);
+    expect(screen.getAllByText(/company profits/i).length).toBeGreaterThan(0);
+    expect(screen.getAllByText(/worker income/i).length).toBeGreaterThan(0);
+  });
+
+  it("shows plain-English coordinated outcome and market outcome labels", () => {
+    render(<WelfareChart />);
+    expect(screen.getByText(/coordinated outcome/i)).toBeInTheDocument();
+    expect(
+      screen.getAllByText(/market outcome/i).length,
+    ).toBeGreaterThanOrEqual(1);
+  });
+
+  it("renders five slider inputs", () => {
+    render(<WelfareChart />);
+    expect(screen.getAllByRole("slider")).toHaveLength(5);
+  });
+});

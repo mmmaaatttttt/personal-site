@@ -113,7 +113,7 @@ describe("estimateReadingTime", () => {
 });
 
 describe("getArticleSlugs", () => {
-  it("returns directory names", () => {
+  it("returns directory names that contain index.mdx", () => {
     vi.mocked(fs.readdirSync).mockReturnValue(
       asDirents([
         mockDirent("story-one"),
@@ -122,6 +122,16 @@ describe("getArticleSlugs", () => {
       ]),
     );
     expect(getArticleSlugs()).toEqual(["story-one", "story-two"]);
+  });
+
+  it("excludes directories without index.mdx", () => {
+    vi.mocked(fs.readdirSync).mockReturnValue(
+      asDirents([mockDirent("story-one"), mockDirent("in-progress")]),
+    );
+    vi.mocked(fs.existsSync).mockImplementation((p) =>
+      String(p).includes("story-one"),
+    );
+    expect(getArticleSlugs()).toEqual(["story-one"]);
   });
 
   it("returns empty array when directory read fails", () => {

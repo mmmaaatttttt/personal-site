@@ -65,6 +65,9 @@ vi.mock("@/content/stories/strength-in-numbers/index.mdx", () => ({
 vi.mock("@/content/stories/keeping-distances/index.mdx", () => ({
   default: () => null,
 }));
+vi.mock("@/content/stories/dailemma/index.mdx", () => ({
+  default: () => null,
+}));
 
 import { notFound } from "next/navigation";
 import {
@@ -153,6 +156,7 @@ describe("ArticlePage", () => {
     "mind-the-gerrymandered-gap",
     "strength-in-numbers",
     "keeping-distances",
+    "dailemma",
   ];
 
   it.each(

@@ -39,6 +39,41 @@ describe("useLocalStorage", () => {
     expect(result.current[0]).toBe(15);
   });
 
+  it("syncs between two hook instances on the same key", () => {
+    const { result: a } = renderHook(() => useLocalStorage("shared", 0));
+    const { result: b } = renderHook(() => useLocalStorage("shared", 0));
+    act(() => {
+      a.current[1](42);
+    });
+    expect(b.current[0]).toBe(42);
+  });
+
+  it("does not sync between different keys", () => {
+    const { result: a } = renderHook(() => useLocalStorage("key-a", 0));
+    const { result: b } = renderHook(() => useLocalStorage("key-b", 0));
+    act(() => {
+      a.current[1](99);
+    });
+    expect(b.current[0]).toBe(0);
+  });
+
+  it("remove resets to defaultValue and clears localStorage", () => {
+    const { result } = renderHook(() => useLocalStorage("k", 5));
+    act(() => {
+      result.current[1](20);
+    });
+    act(() => {
+      result.current[2]();
+    });
+    expect(result.current[0]).toBe(5);
+    expect(localStorage.getItem("k")).toBeNull();
+  });
+
+  it("handles invalid JSON in localStorage by falling back to default", () => {
+    localStorage.setItem("bad", "not-json{{{");
+    const { result } = renderHook(() => useLocalStorage("bad", 0));
+    expect(result.current[0]).toBe(0);
+  });
   it("removes the key and resets to default", () => {
     localStorage.setItem("test-key", JSON.stringify(99));
     const { result } = renderHook(() => useLocalStorage("test-key", 0));

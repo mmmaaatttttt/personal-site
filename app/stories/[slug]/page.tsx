@@ -16,14 +16,13 @@ import {
   jaccardDistance,
 } from "@/utils/content";
 import { getStoryHeadings } from "@/utils/headings";
+import { renderMarkdownLinks } from "@/utils/renderHelpers";
 import { normalizeImagePath } from "@/utils/stringHelpers";
 
 interface PageProps {
   params: Promise<{ slug: string }>;
 }
 
-// Stories that have been ported to TypeScript with working imports.
-// Add a story here once its components are fully ported.
 const storyModules: Record<
   string,
   () => Promise<{ default: ComponentType<Record<string, unknown>> }>
@@ -50,6 +49,7 @@ const storyModules: Record<
     import("@/content/stories/strength-in-numbers/index.mdx"),
   "keeping-distances": () =>
     import("@/content/stories/keeping-distances/index.mdx"),
+  dailemma: () => import("@/content/stories/dailemma/index.mdx"),
 };
 
 export async function generateStaticParams() {
@@ -201,7 +201,9 @@ export default async function ArticlePage({ params }: PageProps) {
         {/* Featured image caption */}
         {frontmatter.featured_image_caption && (
           <small className="flex justify-end mt-0 mb-4 px-2 italic text-[#7d7d7d]">
-            {frontmatter.featured_image_caption}
+            <span>
+              {renderMarkdownLinks(frontmatter.featured_image_caption)}
+            </span>
           </small>
         )}
 

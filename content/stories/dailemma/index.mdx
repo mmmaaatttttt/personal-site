@@ -1,0 +1,210 @@
+import CoordinationGame from "./components/CoordinationGame";
+import MarketDataExplorer from "./components/MarketDataExplorer";
+import SavingsWedge from "./components/SavingsWedge";
+import WedgeExplorer from "./components/WedgeExplorer";
+import Latex from "@/components/story/shared/Latex";
+
+They say that misery loves company. As a mostly non-miserable person, I can't corroborate this claim. But I am an anxious person. And increasingly, it feels like anxiety loves company too.
+
+Maybe "loves" is too strong a word. But _anxiety is surrounded by company, whether it likes it or not_ doesn't have quite the same ring to it.
+
+If you're an American feeling anxious in 2026, you're not alone. Self-reporting on anxiety is [increasing](https://www.psychiatry.org/news-room/news-releases/annual-poll-adults-express-increasing-anxiousness). Among all causes of anxiety, economic fears are at the forefront. According to the American Psychiatric Association, nearly [60%](https://www.psychiatry.org/news-room/news-releases/more-americans-plan-mental-health-resolutions-2026) of Americans entered the year carrying some amount of anxiety related to their personal finances.
+
+Against this backdrop, the stock market (unpopular wars notwithstanding) continues to perform well. The S&P 500, for example, is the highest it's ever been. The economy itself appears strong, but Americans are struggling financially more than ever. What gives?
+
+---
+
+### Putting the AI in Anxiety
+
+One chart making the rounds tells a compelling tale. Take a look at the diagram below. It charts the S&P 500 (blue) every month since 2001. It also charts the number of job openings (red) over the same time period. For a long time, these two economic indicators moved roughly in the same direction. But for the past three years, since conversational AI tools like ChatGPT launched, these two lines have become completely untethered from one another.
+
+<Figure caption="S&P 500 and US job openings per month over time. Note the divergence around the time when ChatGPT launched.">
+  <MarketDataExplorer />
+</Figure>
+
+As you can see, while the stock market is going like gangbusters, the job market is going like, well, whatever the opposite of gangbusters is. (Lonermakers?)
+
+From this lens, it's no wonder people are feeling more anxiety. It's increasingly difficult to believe we're not barrelling towards a Hunger Games-style dystopia. Anecdotally, this dichotomy feels very pronounced in my hometown of San Francisco. Billboards advertising AI jargon fill the skyline while tech companies shed employees like dry skin. Nationwide, well over [150,000](https://www.trueup.io/layoffs) tech workers have been laid off since the start of 2026.
+
+Economic anxiety isn't just being carried by individuals. Oftentimes it seems like companies themselves are reacting from a place of anxiety. (Perhaps this shouldn't be surprising; after all, as we all learned from Mitt Romney, corporations are people too.) The drive for AI automation stems from a desire for efficiency, sure, but it also happens because of FOMO. There is a common fear that companies who do not deploy these technologies quickly enough will be left behind by companies that do.
+
+However, this race for efficiency doesn't happen in a vacuum. If I use AI to totally automate my widget factory, and lay off all of my employees, those employees are hindered in their ability to actively participate in the economy. If too many other companies follow suit, then where will the demand for all of our widgets come from? A collective of the unemployed and over-anxious? This seems unlikely.
+
+---
+
+### Imprisoned by Automation
+
+Researchers Brett Hemenway Falk and Gerry Tsoukalas have explored some of these ideas in a more rigorous way in their paper [_The AI Layoff Trap_](https://arxiv.org/pdf/2603.20617). Here we'll unpack some of what they've demonstrated there. In this story I'll focus on sketching out the model they developed; in the next one, we'll look at potential ways to remediate what often feels like a [tokenmaxxed](https://en.wikipedia.org/wiki/Token_maxxing) race to the bottom.
+
+To make this concrete, let's consider the case of two companies who are in competition with each other. Both are considering AI adoption to cut costs via automation. Suppose the true savings either company can achieve with such an adoption is somewhere between a pessimistic 0% and an optimistic 100%. 
+
+At the same time, automation is likely to result in layoffs, which will impact the ability of consumers to spend money on a firm's products and services. Let's suppose here, too, that the losses to the companies resulting from AI-induced layoffs fall somewhere between 0% and 100%.
+
+For better or for worse, if the gains from automation outweigh the hit from consumer demand, both companies are incentivized to pursue automation. However, something interesting happens if the demand loss exceeds the automation savings. You can explore it for yourself:
+
+<Figure caption="A potential dilemma is exposed when companies are deciding whether or not to automate.">
+  <CoordinationGame />
+</Figure>
+
+For example, look at what happens if the savings due to automation drops to 40% and the expected consumer spending loss rises to 60%. When firm A is trying to decide whether or not to automate, it's very likely to consider its competition, firm B. If both firms decide to automate, then they both gain a 40% savings from the automation, but lose 60% to the resulting layoffs and reduced consumer demand, meaning both are worse off than they started.
+
+But even worse for firm A is if it decides _not_ to automate and firm B does. If this happens, B's decision to automate means that it sees the 40% savings from automation while firm A reaps no benefit. On the cost side, because only firm B automates, only firm B executes layoffs. In other words, the consumer demand loss will only be 30% (that is, half of 60%). This model assumes, of course, that both firms are comparable in size and so have an equal ability to impact demand through layoffs. It also assumes that the loss impacts both firms equally. Put together, this means that automation provides firm B a cushion, and it still comes out 40% - 30% = 10% ahead of where it was before it began automating. Firm A, though, has no such luck, and with an automation savings of 0%, it will feel the full weight of the 30% loss in consumer demand.
+
+In particular, firm A has the worst outcome if it avoids automation and firm B does not. Because of the symmetry in the model, the same is true for firm B. And here's where the FOMO sets in: both firms, if trying to minimize their possible losses, will choose to automate, even though in this scenario they are _both_ worse off with the automation than they would be if they both decided to not play the automation game at all. 
+
+What we have here is a classic [Prisoner's Dilemma](https://en.wikipedia.org/wiki/Prisoner%27s_dilemma). Both firms would be better off by cooperating and opting out of automation, but as soon as one firm decides not to automate, the other firm can gain a significant advantage by going the other way. And so we have a situation where both firms are rationally motivated to automate, even if they would've been better off by mutually agreeing not to.
+
+---
+
+### Real Life Isn't Binary
+
+Of course, this model assumes that automation is an all-or-nothing game: either you flip a switch and automate as much as you can, or you don't. The real world is more complicated.
+
+Here are two refinements we can make. The first is that automation isn't binary. A firm might try to automate as much as it can, or it might conclude that AI is like [Brylcream](https://www.youtube.com/watch?v=o6F4GtyRfto): a little dab'll do ya. So rather than modeling the decision as a yes or no, we can instead model the automation decision as a range between 0 (no automation) and 1 (full automation).
+
+The second refinement models the fact that not all automation efforts are the same. If you're starting from zero automation, there are likely to be some low-hanging tasks that can be handed over to an LLM with relatively little effort. But the more you automate, the more the incremental cost of automation increases, because you're left with tasks that are increasingly complex.
+
+The savings due to automation is now weighed against two negative forces: the consumer demand loss due to automation, combined with the incremental cost increase of more automation. Let's suppose that this marginal cost of automation is proportional to a fixed constant, which roughly measures how hard it is to automate the low-hanging fruit. The larger this constant, the more difficult automation is.
+
+The question then becomes: given the expected savings from automation, the expected loss in consumer demand from automation, and this measurement of automation difficulty, what's the optimal fraction of automation each firm should pursue?
+
+Just like in the simpler case of the sometimes-Prisoner's-Dilemma, the answer here depends on whether the firms are capable of coordinating or not. In either case, with a little bit of calculus (details in the appendix), you can derive the answer. But if you'd rather just explore some pretty pictures, you can play around with the interactive below. The orange line represents what happens if each firm assumes the other firm's automation rate is a variable it can't control, while the green line represents what happens if the firms are able to agree on the same rate of automation.
+
+<Figure caption="Share of jobs automated vs. the total gain from automation. Adjust the sliders to explore different outcomes.">
+  <SavingsWedge />
+</Figure>
+
+The most striking feature of the graphs here is the fact that the orange line never dips below the green line. In other words, companies acting in their own self-interest will always automate away more jobs than they would have if they coordinated. 
+
+---
+
+### The Invisible Robotic Hand
+
+So two companies, left to their own devices, may very well shoot past their best interests when it comes to automation. But we live in a capitalist society, and competition is king, right? In the free market with more competition and more firms, won't the invisible hand tip the scales of automation in a positive direction?
+
+According to this model, no. More companies make the problem worse.
+
+Below, you can explore what happens to automation as the number of firms increases. As with the previous interactive, note that there's never a case where a free-market outcome is better than a coordinated one. Even more troubling is the fact that the more firms we drop into this model, the larger the gap between the expected amount of automation (and therefore job loss) and the ideal amount of automation under a coordinated approach.
+
+<Figure caption="Share of jobs automated vs. number of firms. As the number of firms increases, so too does the amount of excessive automation.">
+  <WedgeExplorer />
+</Figure>
+
+As before, you can head down to the appendix if you want to dig into the details of how this happens. The key insight is that when firms cooperate, they are willing to factor the full weight of the consumer demand loss into their calculations and pump the brakes on automation for the sake of their collective profit. Collaboration enables them to temper their AI ambitions for the betterment of everyone.
+
+Put another way, when firms don't coordinate, they only account for the fraction of the consumer demand loss that they know they will be responsible for. By failing to account for the demand loss coming from the decisions of other companies, firms will systematically underestimate the impact of layoffs, to the detriment of everyone. In fact, even knowing this, without a formal agreement to collaborate, it still makes rational sense for every firm to optimize in this way. This is the Prisoner's Dilemma on a more complex scale.
+
+---
+
+### Prison Break?
+
+According to this model, in a free market, competing firms will always automate past the level that is in their own best interest and that of the larger population. Concerned they will not be able to reap the gains of automation if they show restraint, firms will effectively underestimate the impact of consumer demand loss, and as a result, everyone will be worse off.
+
+So what can be done about this? In the conversations around AI and how it will impact society, a number of proposals have emerged with the goal of helping people who feel like they're being left (or pushed) behind. In some countries, courts have said [it is illegal to replace people with AI](https://www.npr.org/2026/05/01/nx-s1-5807131/tech-worker-china-ai). Here in the states, universal basic income is often touted as a solution to the decreased demand for human labor. Others have called for strengthening the power of our unions and using our labor as a way to force some of the changes most people would like to see.
+
+Just as with the problem itself, the authors of _The AI Layoff Trap_ have explored the impact of some of these solutions as well. Which ones may actually impact a company's choices, and which ones don't really move the needle?
+
+If you can't wait to find out what impact these solutions might (or might not) have on the model, I'd encourage you to skim through the paper yourself. Next time, I'll dig into the details here, and give you more interactives to explore how effective different proposed solutions might be. Spoiler alert: as with so much when it comes to AI and economic anxiety, things look kinda grim. But as my boy Sun Tzu always said, the first step is to know thine enemy. And when it comes to the forces contributing to our collective anxiety, I'd like to invite us all to know them well.
+
+Okay, see you next time ❤️!
+
+### Appendix
+
+Here we'll derive the profit maximization that lies at the heart of the charts you've explored above. We'll need to break out just a touch of calculus here; if that's not your bag, feel free to scroll past or just skip to the juicy bits.
+
+To begin, we need some notation to represent the sliders and variables we've used above. Here's the notation I'll be using.
+
+- Let _N_ denote the **N**umber of firms (for most of the above conversation, we fixed _N_ = 2).
+- Let _S_ denote the **S**avings rate expected from automation (this is what we modeled with the orange slider above)
+- Let _L_ denote the consumer spending **L**oss that comes from automation (this is what we modeled with the blue slider above)
+- Let _D_ measure the **D**ifficulty of automation (this is what we modeled with the purple slider above)
+
+Because we have **N** firms, each firm has a choice to make: what fraction of work should we automate? Let's denote this by:
+
+<Latex displayMode str={"a_{i}, 1 \\leq i \\leq N."} />
+
+With all of this notation set up, we can now express an individual firm's expected change in profit in terms of these parameters: it will be the automation rate times the expected savings, less the demand loss from every firm's combined automation rates, less the cost stemming from the marginal increase in difficulty as we automate more and more. Or, to put it mathematically: 
+
+<Latex
+  displayMode
+  str={
+    "\\text{Profit}_{i} = S \\times a_{i} - \\frac{L}{N} \\times \\sum_{j=1}^{N} {a_{j}} - \\frac{D}{2} \\times a_{i}^{2}"
+  }
+/>
+
+Note that the Prisoner's Dilemma we started with is the reduction to *N* = 2, where the automation values are either 0 or 1 for each firm, and the difficulty of automation is assumed to be 0 (so that the quadratic term drops out). A few other general notes on this equation:
+
+1. The sum over all firms' automation rates captures the idea that the consumer demand loss is spread across each firm's individual decision. If every firm wants to automate 100% of its tasks, then the loss from this term will be the entirety of *L*. But the smaller each firm's automation rate, the smaller the contribution from consumer demand loss.
+2. The quadratic term at the end is a standard economic modeling tool; the quadratic function appears because its derivative is linear, so it captures the idea that for each unit change in automation, the cost of that increase is captured by *D*. You can read more about the mathematics of marginal cost [here](https://en.wikipedia.org/wiki/Marginal_cost).
+
+Now that we have this equation, we can try to maximize it. And here is where coordination vs. no coordination comes into play.
+
+If firms *coordinate*, mathematically this means they collectively decide on a shared rate of automation. In other words, the model simplifies because we can assume that
+
+<Latex displayMode str={"a_{i} = a, 1 \\leq i \\leq N,"} />
+
+i.e. that every firm's automation rate is the same, and equal to some shared value which we call *a*.
+
+This then simplifies the profit equation to: 
+
+<Latex
+  displayMode
+  str={
+    "\\text{Profit} = (S - L) \\times a - \\frac{D}{2} \\times a^{2}"
+  }
+/>
+
+This is a quadratic function we can differentiate to find the optimal value. The derivative is 
+
+<Latex
+  displayMode
+  str={"\\text{Profit}' = (S - L) - D \\times a"}
+/>
+
+which equals 0 precisely when
+
+<Latex
+  displayMode
+  str={"a = \\frac{S - L}{D}."}
+/> 
+
+So this would be the shared optimization rate that every company chooses. In particular, in the case of *D* = 1, companies will choose an automation rate where the savings from automation is precisely balanced against the loss in consumer demand.
+
+Now let's consider the case where firms do not cooperate. What this means for the model is that firms cannot assume their competitors will choose the same automation rate as them. When there is no shared rate of automation, the profit function does not simplify, and in order for an individual firm to find an optimal rate of automation, they have to treat other firms' rates as unknown parameters. This means that when optimizing the equation, the best any individual firm can do is take the *partial* derivative with respect to its own automation rate:
+
+<Latex
+  displayMode
+  str={
+    "\\begin{align*}" +
+    "\\frac{\\partial \\text{Profit}_{i}}{\\partial a_{i}} &= S \\times \\frac{\\partial a_{i}}{\\partial a_{i}} - \\frac{L}{N} \\times \\sum_{j=1}^{N} \\frac{\\partial {a_{j}}}{\\partial a_{i}} - \\frac{D}{2} \\times \\frac{\\partial a_{i}^{2}}{\\partial a_{i}} \\\\" +
+    "&= S - \\frac{L}{N} - D \\times a_{i}" +
+    "\\end{align*}"
+  }
+/>
+
+which means that the optimized automation rate for firm *i* will be:
+
+<Latex
+  displayMode
+  str={"a_{i} = \\frac{S - \\frac{L}{N}}{D}."}
+/> 
+
+Note the similarities to the cooperative case. In both cases, firms will choose the same rate of automation. But here, as described above, firms *underestimate* the losses due to a drop in consumer demand. And the more firms (i.e. the larger the value of *N*), the bigger the underestimation. This falls out because in the absence of an agreement to collaborate, firms effectively treat the contributions of other firms as unknowable parameters when optimizing. But doing so means they are only willing to anticipate a small fraction of the total demand loss that is bound to happen when firms move to automate in isolation.
+
+Ok, that's all the math for now. You did it! Next time, we'll dig into potential solutions.
+
+Sources:
+
+- [The AI Layoff Trap](https://arxiv.org/pdf/2603.20617)
+
+- [S&P 500 over time](https://finance.yahoo.com/quote/%5EGSPC/history/?period1=978307200&period2=1774915200&frequency=1mo)
+
+- [Federal Reserve Bank of St. Louis job opening data](https://fred.stlouisfed.org/series/JTSJOL)
+
+- [American Adults Express Increasing Anxiousness in Annual Poll; Stress and Sleep are Key Factors Impacting Mental Health](https://www.psychiatry.org/news-room/news-releases/annual-poll-adults-express-increasing-anxiousness)
+
+- [More Americans Plan Mental Health Resolutions Heading Into 2026](https://www.psychiatry.org/news-room/news-releases/more-americans-plan-mental-health-resolutions-2026)
+
+- [Marginal Cost](https://en.wikipedia.org/wiki/Marginal_cost)
+
+- [Tech Layoffs Tracker](https://www.trueup.io/layoffs)
