@@ -5,6 +5,9 @@ const mockPlaceholders = vi.hoisted(() => ({}) as Record<string, string>);
 vi.mock("next/image", () => ({ default: () => null }));
 vi.mock("next/navigation", () => ({ notFound: vi.fn() }));
 vi.mock("@/components/layout/MainLayout", () => ({ default: () => null }));
+vi.mock("@/components/layout/ScrollProgressBar", () => ({
+  default: () => null,
+}));
 vi.mock("@/components/layout/StoryCard", () => ({ default: () => null }));
 vi.mock("@/components/layout/StoryActions", () => ({ default: () => null }));
 vi.mock("@/components/icons/BlueskyIcon", () => ({ default: () => null }));
@@ -19,6 +22,12 @@ vi.mock("@/utils/content", () => ({
   getArticle: vi.fn(),
   getArticleSlugs: vi.fn().mockReturnValue([]),
   jaccardDistance: vi.fn().mockReturnValue(1),
+}));
+vi.mock("@/utils/headings", () => ({
+  getStoryHeadings: vi.fn().mockReturnValue([]),
+}));
+vi.mock("@/components/story/shared/TableOfContents", () => ({
+  default: () => null,
 }));
 vi.mock("@/content/stories/beautiful-analysis/index.mdx", () => ({
   default: () => null,
@@ -134,19 +143,6 @@ describe("ArticlePage", () => {
     expect(notFound).toHaveBeenCalled();
   });
 
-  it("renders without crashing for a slug with no story module (coming soon)", async () => {
-    vi.mocked(notFound).mockReset();
-    vi.mocked(getArticle).mockReturnValue({
-      frontmatter: mockFrontmatter,
-      slug: "unported-story",
-    });
-
-    const result = await ArticlePage({
-      params: Promise.resolve({ slug: "unported-story" }),
-    });
-    expect(result).toBeTruthy();
-  });
-
   const allStoryModuleSlugs = [
     "beautiful-analysis",
     "dishing-on-petrie",
@@ -180,11 +176,11 @@ describe("ArticlePage", () => {
         ...mockFrontmatter,
         featured_image_caption: undefined as unknown as string,
       },
-      slug: "unported-story",
+      slug: "beautiful-analysis",
     });
 
     const result = await ArticlePage({
-      params: Promise.resolve({ slug: "unported-story" }),
+      params: Promise.resolve({ slug: "beautiful-analysis" }),
     });
     expect(result).toBeTruthy();
   });
@@ -194,11 +190,11 @@ describe("ArticlePage", () => {
       "data:image/jpeg;base64,test";
     vi.mocked(getArticle).mockReturnValue({
       frontmatter: mockFrontmatter,
-      slug: "unported-story",
+      slug: "beautiful-analysis",
     });
 
     const result = await ArticlePage({
-      params: Promise.resolve({ slug: "unported-story" }),
+      params: Promise.resolve({ slug: "beautiful-analysis" }),
     });
     expect(result).toBeTruthy();
     delete mockPlaceholders["/images/featured_images/test.jpg"];
@@ -207,7 +203,7 @@ describe("ArticlePage", () => {
   it("reads timeToRead from getAllArticles when the slug is present", async () => {
     vi.mocked(getAllArticles).mockReturnValueOnce([
       {
-        slug: "unported-story",
+        slug: "beautiful-analysis",
         title: "Unported",
         caption: "cap",
         date: "2024-01-01",
@@ -218,11 +214,11 @@ describe("ArticlePage", () => {
     ] as unknown as ReturnType<typeof getAllArticles>);
     vi.mocked(getArticle).mockReturnValue({
       frontmatter: mockFrontmatter,
-      slug: "unported-story",
+      slug: "beautiful-analysis",
     });
 
     const result = await ArticlePage({
-      params: Promise.resolve({ slug: "unported-story" }),
+      params: Promise.resolve({ slug: "beautiful-analysis" }),
     });
     expect(result).toBeTruthy();
   });
@@ -231,7 +227,7 @@ describe("ArticlePage", () => {
     vi.mocked(jaccardDistance).mockReturnValue(0.5);
     vi.mocked(getAllArticles).mockReturnValueOnce([
       {
-        slug: "unported-story",
+        slug: "beautiful-analysis",
         title: "Unported",
         caption: "cap",
         date: "2024-01-01",
@@ -260,11 +256,11 @@ describe("ArticlePage", () => {
     ] as unknown as ReturnType<typeof getAllArticles>);
     vi.mocked(getArticle).mockReturnValue({
       frontmatter: mockFrontmatter,
-      slug: "unported-story",
+      slug: "beautiful-analysis",
     });
 
     const result = await ArticlePage({
-      params: Promise.resolve({ slug: "unported-story" }),
+      params: Promise.resolve({ slug: "beautiful-analysis" }),
     });
     expect(result).toBeTruthy();
     // reset jaccardDistance back to default

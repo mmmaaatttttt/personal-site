@@ -52,6 +52,21 @@ describe("Figure — collapsed state", () => {
     );
   });
 
+  it("preserves URL hash when expanding", () => {
+    window.history.replaceState({}, "", "#section-one");
+    render(
+      <Figure>
+        <div>Content</div>
+      </Figure>,
+    );
+    fireEvent.click(screen.getByRole("button", { name: "Expand interactive" }));
+    expect(mockReplace).toHaveBeenCalledWith(
+      expect.stringContaining("#section-one"),
+      expect.objectContaining({ scroll: false }),
+    );
+    window.history.replaceState({}, "", "/");
+  });
+
   it("renders without caption when none provided", () => {
     render(
       <Figure>
@@ -186,6 +201,28 @@ describe("Figure — expanded state", () => {
     );
     expect(mockReplace).toHaveBeenCalledWith(
       "?tab=overview",
+      expect.objectContaining({ scroll: false }),
+    );
+  });
+
+  it("preserves URL hash when collapsing via button", () => {
+    window.history.replaceState({}, "", "?figure=1#section-one");
+    renderExpanded();
+    fireEvent.click(
+      screen.getByRole("button", { name: "Collapse interactive" }),
+    );
+    expect(mockReplace).toHaveBeenCalledWith(
+      expect.stringContaining("#section-one"),
+      expect.objectContaining({ scroll: false }),
+    );
+  });
+
+  it("preserves URL hash when collapsing via Escape", () => {
+    window.history.replaceState({}, "", "?figure=1#section-one");
+    renderExpanded();
+    fireEvent.keyDown(window, { key: "Escape" });
+    expect(mockReplace).toHaveBeenCalledWith(
+      expect.stringContaining("#section-one"),
       expect.objectContaining({ scroll: false }),
     );
   });

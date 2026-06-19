@@ -18,6 +18,7 @@ const jsonLd = {
 export const metadata: Metadata = {
   title: "About | Matt Lane",
   description: "About Matt Lane. Teacher, math doctor, lover of ice cream.",
+  alternates: { canonical: `${SITE_URL}/about` },
 };
 
 export default function AboutPage() {

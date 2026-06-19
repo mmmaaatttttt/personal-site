@@ -1,7 +1,8 @@
-import { BookOpen, Github, Rss } from "lucide-react";
+import { BookOpen, Rss } from "lucide-react";
 import Image from "next/image";
 import type { FC } from "react";
 import BlueskyIcon from "@/components/icons/BlueskyIcon";
+import GithubIcon from "@/components/icons/GithubIcon";
 
 const Footer: FC = () => {
   return (
@@ -38,7 +39,7 @@ const Footer: FC = () => {
             className="hover:opacity-80"
             aria-label="GitHub"
           >
-            <Github strokeWidth={1.5} size={28} />
+            <GithubIcon strokeWidth={1.5} size={28} />
           </a>
           <a
             href="https://www.amazon.com/Power-Up-Unlocking-Hidden-Mathematics-Video/dp/0691161518"

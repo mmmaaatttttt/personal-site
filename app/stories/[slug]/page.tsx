@@ -2,9 +2,11 @@ import Image from "next/image";
 import { notFound } from "next/navigation";
 import type { ComponentType } from "react";
 import MainLayout from "@/components/layout/MainLayout";
+import ScrollProgressBar from "@/components/layout/ScrollProgressBar";
 import StoryActions from "@/components/layout/StoryActions";
 import StoryCard from "@/components/layout/StoryCard";
 import { FigureProvider } from "@/components/story/shared/Figure/FigureProvider";
+import TableOfContents from "@/components/story/shared/TableOfContents";
 import { SITE_URL } from "@/lib/constants";
 import placeholders from "@/lib/imagePlaceholders.json";
 import {
@@ -13,6 +15,7 @@ import {
   getArticleSlugs,
   jaccardDistance,
 } from "@/utils/content";
+import { getStoryHeadings } from "@/utils/headings";
 import { renderMarkdownLinks } from "@/utils/renderHelpers";
 import { normalizeImagePath } from "@/utils/stringHelpers";
 
@@ -64,7 +67,7 @@ export async function generateMetadata({ params }: PageProps) {
       description: frontmatter.caption,
       authors: [{ name: "Matt Lane", url: SITE_URL }],
       keywords: frontmatter.tags,
-      alternates: { canonical: `${SITE_URL}/stories/${slug}/` },
+      alternates: { canonical: `${SITE_URL}/stories/${slug}` },
       openGraph: {
         title: `${frontmatter.title} | Matt Lane`,
         description: frontmatter.caption,
@@ -105,7 +108,8 @@ export default async function ArticlePage({ params }: PageProps) {
   });
 
   const storyModule = storyModules[slug];
-  const StoryContent = storyModule ? (await storyModule()).default : null;
+  const StoryContent = (await storyModule()).default;
+  const headings = getStoryHeadings(slug);
 
   const allArticles = getAllArticles();
   const timeToRead = allArticles.find((a) => a.slug === slug)?.timeToRead ?? 5;
@@ -118,6 +122,8 @@ export default async function ArticlePage({ params }: PageProps) {
     .slice(0, 3);
 
   const githubUrl = `https://github.com/mmmaaatttttt/personal-site/blob/master/content/stories/${slug}/index.mdx`;
+  const linkedinUrl = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(`${SITE_URL}/stories/${slug}`)}`;
+  const blueskyUrl = `https://bsky.app/intent/compose?text=${encodeURIComponent(`${frontmatter.title} ${SITE_URL}/stories/${slug}`)}`;
 
   const jsonLd = {
     "@context": "https://schema.org",
@@ -127,7 +133,7 @@ export default async function ArticlePage({ params }: PageProps) {
     datePublished: frontmatter.date,
     author: { "@type": "Person", name: "Matt Lane", url: SITE_URL },
     image: `${SITE_URL}${featuredImage}`,
-    url: `${SITE_URL}/stories/${slug}/`,
+    url: `${SITE_URL}/stories/${slug}`,
     timeRequired: `PT${timeToRead}M`,
   };
 
@@ -135,18 +141,18 @@ export default async function ArticlePage({ params }: PageProps) {
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
     itemListElement: [
-      { "@type": "ListItem", position: 1, name: "Home", item: `${SITE_URL}/` },
+      { "@type": "ListItem", position: 1, name: "Home", item: `${SITE_URL}` },
       {
         "@type": "ListItem",
         position: 2,
         name: "Stories",
-        item: `${SITE_URL}/stories/`,
+        item: `${SITE_URL}/stories`,
       },
       {
         "@type": "ListItem",
         position: 3,
         name: frontmatter.title,
-        item: `${SITE_URL}/stories/${slug}/`,
+        item: `${SITE_URL}/stories/${slug}`,
       },
     ],
   };
@@ -156,6 +162,7 @@ export default async function ArticlePage({ params }: PageProps) {
       <script type="application/ld+json">{JSON.stringify(jsonLd)}</script>
       <script type="application/ld+json">{JSON.stringify(breadcrumbLd)}</script>
       <article className="w-full">
+        <ScrollProgressBar />
         {/* Full Bleed Hero Header */}
         <header className="relative w-full aspect-video sm:aspect-auto sm:h-screen flex flex-col items-center justify-center text-center px-4 overflow-hidden mb-0">
           <Image
@@ -186,7 +193,7 @@ export default async function ArticlePage({ params }: PageProps) {
                   "2px 2px 1px #000, -1px -1px 1px #000, 1px -1px 1px #000, -1px 1px 1px #000, 1px 1px 1px #000",
               }}
             >
-              {formattedDate}
+              {formattedDate} · {timeToRead} min read
             </h2>
           </div>
         </header>
@@ -202,24 +209,17 @@ export default async function ArticlePage({ params }: PageProps) {
 
         {/* Constrained Markdown Content */}
         <div className="relative mx-auto w-full max-w-[var(--max-w-content)] px-4 sm:px-8 md:px-0">
+          <TableOfContents headings={headings} />
+          <span id="introduction" />
           <div className="prose max-w-none text-[#1a1a1a] pb-4">
-            {StoryContent ? (
-              <FigureProvider>
-                <StoryContent />
-              </FigureProvider>
-            ) : (
-              <div className="py-24 text-center text-gray-500">
-                <p className="text-xl font-semibold mb-2">Coming soon</p>
-                <p className="text-sm">
-                  This story&apos;s interactive components are still being
-                  modernized.
-                </p>
-              </div>
-            )}
+            <FigureProvider>
+              <StoryContent />
+            </FigureProvider>
           </div>
           <StoryActions
             githubUrl={githubUrl}
-            blueskyUrl={`https://bsky.app/intent/compose?text=${encodeURIComponent(`${frontmatter.title} ${SITE_URL}/stories/${slug}`)}`}
+            blueskyUrl={blueskyUrl}
+            linkedinUrl={linkedinUrl}
           />
           {relatedArticles.length > 0 && (
             <div className="not-prose pb-20">
