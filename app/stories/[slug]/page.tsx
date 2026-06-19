@@ -121,7 +121,7 @@ export default async function ArticlePage({ params }: PageProps) {
     .sort((a, b) => a.distance - b.distance)
     .slice(0, 3);
 
-  const githubUrl = `https://github.com/mmmaaatttttt/personal-site/blob/master/content/stories/${slug}/index.mdx`;
+  const githubUrl = `https://github.com/mmmaaatttttt/personal-site/blob/main/content/stories/${slug}/index.mdx`;
   const linkedinUrl = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(`${SITE_URL}/stories/${slug}`)}`;
   const blueskyUrl = `https://bsky.app/intent/compose?text=${encodeURIComponent(`${frontmatter.title} ${SITE_URL}/stories/${slug}`)}`;
 
