@@ -21,7 +21,7 @@ import StoryActions from "./StoryActions";
 
 const props = {
   githubUrl:
-    "https://github.com/mmmaaatttttt/personal-site/blob/master/content/stories/test/index.mdx",
+    "https://github.com/mmmaaatttttt/personal-site/blob/main/content/stories/test/index.mdx",
   blueskyUrl:
     "https://bsky.app/intent/compose?text=Test+Story+https%3A%2F%2Fmattlane.us%2Fstories%2Ftest",
   linkedinUrl:
