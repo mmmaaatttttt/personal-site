@@ -1,7 +1,7 @@
 import { describe, expect, it, vi } from "vitest";
 
 vi.mock("@/utils/content", () => ({
-  getAllArticles: vi.fn().mockReturnValue([
+  getAllArticles: vi.fn().mockResolvedValue([
     {
       slug: "test-story",
       title: "Test Story",

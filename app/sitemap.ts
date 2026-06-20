@@ -4,8 +4,8 @@ import { getAllArticles } from "@/utils/content";
 
 export const dynamic = "force-static";
 
-export default function sitemap(): MetadataRoute.Sitemap {
-  const stories = getAllArticles().map((article) => ({
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
+  const stories = (await getAllArticles()).map((article) => ({
     url: `${SITE_URL}/stories/${article.slug}/`,
     lastModified: new Date(article.date),
     changeFrequency: "monthly" as const,

@@ -8,7 +8,7 @@ vi.mock("@/components/layout/MainLayout", () => ({
   ),
 }));
 vi.mock("@/utils/content", () => ({
-  getAllArticles: vi.fn().mockReturnValue([]),
+  getAllArticles: vi.fn().mockResolvedValue([]),
   getMetadataOptions: vi.fn().mockReturnValue({ years: [], tags: [] }),
 }));
 vi.mock("./ArticlesContent", () => ({
