@@ -6,6 +6,7 @@ import {
   getAllArticles,
   getArticle,
   getArticleSlugs,
+  getLatestStory,
   getMetadataOptions,
   jaccardDistance,
 } from "./content";
@@ -22,25 +23,30 @@ vi.mock("gray-matter", () => ({
   default: vi.fn((raw: string) => ({ data: {}, content: raw })),
 }));
 
-vi.mock("@/utils/storyMeta", () => ({
-  storyMeta: {
-    "test-story": {
-      title: "Test Story",
-      date: "2024-03-01",
-      featured_image: "/img/test.jpg",
-      caption: "A test",
-      featured_image_caption: "",
-      tags: ["math", "games"],
-    },
-    "older-story": {
-      title: "Older Story",
-      date: "2023-01-15",
-      featured_image: "/img/older.jpg",
-      caption: "An older test",
-      featured_image_caption: "",
-      tags: ["math"],
-    },
+const mockMetas: Record<string, import("./content").ArticleFrontmatter> = {
+  "test-story": {
+    title: "Test Story",
+    date: "2024-03-01",
+    featured_image: "/img/test.jpg",
+    caption: "A test",
+    featured_image_caption: "",
+    tags: ["math", "games"],
   },
+  "older-story": {
+    title: "Older Story",
+    date: "2023-01-15",
+    featured_image: "/img/older.jpg",
+    caption: "An older test",
+    featured_image_caption: "",
+    tags: ["math"],
+  },
+};
+
+vi.mock("./loadMeta", () => ({
+  loadMeta: vi.fn().mockImplementation(async (slug: string) => {
+    if (mockMetas[slug]) return mockMetas[slug];
+    throw new Error("Module not found");
+  }),
 }));
 
 const mockDirent = (name: string, isDir = true) =>
@@ -143,27 +149,29 @@ describe("getArticleSlugs", () => {
 });
 
 describe("getArticle", () => {
-  it("returns frontmatter from storyMeta when available", () => {
-    const { frontmatter } = getArticle("test-story");
+  it("returns frontmatter from meta.ts when available", async () => {
+    const { frontmatter } = await getArticle("test-story");
     expect(frontmatter.title).toBe("Test Story");
   });
 
-  it("falls back to gray-matter when slug not in storyMeta", () => {
+  it("falls back to gray-matter when no meta.ts exists", async () => {
     vi.mocked(fs.existsSync).mockReturnValue(true);
-    const { frontmatter, slug } = getArticle("unknown-story");
+    const { frontmatter, slug } = await getArticle("unknown-story");
     expect(slug).toBe("unknown-story");
     expect(frontmatter).toBeDefined();
   });
 
-  it("throws when the MDX file does not exist", () => {
+  it("throws when the MDX file does not exist", async () => {
     vi.mocked(fs.existsSync).mockReturnValue(false);
-    expect(() => getArticle("missing-story")).toThrow("Article not found");
+    await expect(getArticle("missing-story")).rejects.toThrow(
+      "Article not found",
+    );
   });
 });
 
 describe("getAllArticles", () => {
-  it("returns an array of articles with the expected shape", () => {
-    const articles = getAllArticles();
+  it("returns an array of articles with the expected shape", async () => {
+    const articles = await getAllArticles();
     expect(articles).toHaveLength(1);
     expect(articles[0]).toMatchObject({
       slug: "test-story",
@@ -173,13 +181,20 @@ describe("getAllArticles", () => {
     });
   });
 
-  it("sorts articles by date descending", () => {
+  it("sorts articles by date descending", async () => {
     vi.mocked(fs.readdirSync).mockReturnValueOnce(
       asDirents([mockDirent("older-story"), mockDirent("test-story")]),
     );
-    const articles = getAllArticles();
+    const articles = await getAllArticles();
     expect(articles[0].slug).toBe("test-story");
     expect(articles[1].slug).toBe("older-story");
+  });
+});
+
+describe("getLatestStory", () => {
+  it("returns the first article from getAllArticles", async () => {
+    const latest = await getLatestStory();
+    expect(latest.slug).toBe("test-story");
   });
 });
 
