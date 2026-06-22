@@ -17,18 +17,22 @@ global.ResizeObserver = vi.fn().mockImplementation(
   } as never,
 );
 
-global.IntersectionObserver = vi
-  .fn()
-  .mockImplementation((cb: IntersectionObserverCallback) => ({
-    observe: vi.fn((el: Element) => {
-      cb(
+global.IntersectionObserver = vi.fn().mockImplementation(
+  class {
+    private cb: IntersectionObserverCallback;
+    constructor(cb: IntersectionObserverCallback) {
+      this.cb = cb;
+    }
+    observe = vi.fn((el: Element) => {
+      this.cb(
         [{ isIntersecting: true, target: el } as IntersectionObserverEntry],
-        {} as IntersectionObserver,
+        this as unknown as IntersectionObserver,
       );
-    }),
-    unobserve: vi.fn(),
-    disconnect: vi.fn(),
-  })) as unknown as typeof IntersectionObserver;
+    });
+    unobserve = vi.fn();
+    disconnect = vi.fn();
+  } as never,
+);
 
 // Automatically cleanup after each test to prevent memory leaks or side effects between tests
 afterEach(() => {
