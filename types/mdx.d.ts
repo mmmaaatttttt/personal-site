@@ -2,7 +2,11 @@ interface Window {
   turnstile: {
     render(
       container: HTMLElement,
-      options: { sitekey: string; callback: (token: string) => void },
+      options: {
+        sitekey: string;
+        callback: (token: string) => void;
+        appearance?: "always" | "execute" | "interaction-only";
+      },
     ): string;
     reset(widgetId: string): void;
   };

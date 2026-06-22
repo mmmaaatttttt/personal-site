@@ -86,7 +86,7 @@ export default {
       return json({ error: message }, res.status);
     }
 
-    await fetch("https://api.resend.com/emails", {
+    const welcomeRes = await fetch("https://api.resend.com/emails", {
       method: "POST",
       headers: {
         Authorization: `Bearer ${env.RESEND_API_KEY}`,
@@ -96,9 +96,13 @@ export default {
         from: "Matt Lane <yo@mattlane.us>",
         to: email,
         subject: "Matt Lane says hi!",
-        template_id: WELCOME_EMAIL_TEMPLATE_ID,
+        template: { id: WELCOME_EMAIL_TEMPLATE_ID },
       }),
     });
+    if (!welcomeRes.ok) {
+      const err = await welcomeRes.json().catch(() => ({}));
+      console.error("Welcome email failed:", welcomeRes.status, err);
+    }
 
     return json({ success: true });
   },
