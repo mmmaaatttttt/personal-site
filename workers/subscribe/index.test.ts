@@ -174,6 +174,30 @@ describe("subscribe worker", () => {
     );
   });
 
+  it("logs error but still returns 200 when welcome email send fails", async () => {
+    const consoleSpy = vi.spyOn(console, "error").mockImplementation(() => {});
+    mockTurnstileSuccess();
+    vi.mocked(fetch).mockResolvedValueOnce(
+      new Response(JSON.stringify({ id: "contact-id" }), { status: 200 }),
+    );
+    vi.mocked(fetch).mockResolvedValueOnce(
+      new Response(JSON.stringify({ message: "template not found" }), {
+        status: 422,
+      }),
+    );
+    const res = await handler.fetch(
+      postRequest({ email: "test@example.com", turnstileToken: "token" }),
+      env,
+    );
+    expect(res.status).toBe(200);
+    expect(consoleSpy).toHaveBeenCalledWith(
+      "Welcome email failed:",
+      422,
+      expect.anything(),
+    );
+    consoleSpy.mockRestore();
+  });
+
   it("returns 200 and sends welcome email on successful subscription", async () => {
     mockTurnstileSuccess();
     mockResendSuccess();
