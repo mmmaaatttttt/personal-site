@@ -15,6 +15,7 @@ jobs:
       bucket: staging.mattlane.us
       base_url: https://staging.mattlane.us
       role_arn: arn:aws:iam::492635958177:role/GitHubActionsPersonalSiteStagingRole
+      turnstile_site_key: ${{ secrets.NEXT_PUBLIC_TURNSTILE_SITE_KEY }}
     secrets:
       cloudfront_distribution_id: ${{ secrets.STAGING_CLOUDFRONT_DISTRIBUTION_ID }}
 

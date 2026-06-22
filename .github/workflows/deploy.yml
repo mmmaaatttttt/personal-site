@@ -14,5 +14,6 @@ jobs:
       bucket: mattlane.us
       base_url: https://mattlane.us
       role_arn: arn:aws:iam::492635958177:role/GitHubActionsPersonalSiteDeployRole
+      turnstile_site_key: ${{ secrets.NEXT_PUBLIC_TURNSTILE_SITE_KEY }}
     secrets:
       cloudfront_distribution_id: ${{ secrets.CLOUDFRONT_DISTRIBUTION_ID }}
