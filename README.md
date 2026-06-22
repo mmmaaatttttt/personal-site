@@ -41,6 +41,64 @@ Local Playwright snapshots (`.spec.ts-snapshots/`) are gitignored and must be es
 npm run test:e2e -- --update-snapshots
 ```
 
+## Email subscriptions
+
+The site uses [Resend](https://resend.com) for email and [Cloudflare Workers](https://workers.cloudflare.com) for the subscribe endpoint and welcome email, with [Cloudflare Turnstile](https://www.cloudflare.com/products/turnstile/) for bot protection.
+
+### Services to set up
+
+1. **Resend** — create an account, verify your sending domain, create an audience, and create a segment within it. Note the audience ID and segment ID.
+2. **Cloudflare** — create an account and create a Turnstile site (Managed type) for your domain. Note the site key and secret key.
+
+### Environment variables
+
+Copy `.env.example` to `.env.local` and fill in the values:
+
+```bash
+cp .env.example .env.local
+```
+
+| Variable | Where | Description |
+|---|---|---|
+| `NEXT_PUBLIC_TURNSTILE_SITE_KEY` | `.env.local` + GitHub Actions secret | Turnstile site key (public) |
+| `TURNSTILE_SECRET_KEY` | Cloudflare Worker secret | Turnstile secret key |
+| `RESEND_API_KEY` (worker) | Cloudflare Worker secret | Resend API key with Full Access |
+| `RESEND_SEGMENT_ID` | Cloudflare Worker secret + GitHub Actions secret | Resend segment ID |
+| `RESEND_API_KEY` (broadcast) | GitHub Actions secret | Resend API key with Send Access |
+
+### Cloudflare Worker
+
+The subscribe worker lives in `workers/subscribe/`. Deploy it with:
+
+```bash
+npm run deploy:worker
+```
+
+Set worker secrets from the `workers/subscribe/` directory:
+
+```bash
+npx wrangler secret put RESEND_API_KEY
+npx wrangler secret put RESEND_SEGMENT_ID
+npx wrangler secret put TURNSTILE_SECRET_KEY
+```
+
+### Email templates
+
+Email templates live in `emails/`. Preview them locally with:
+
+```bash
+npm run dev:email
+```
+
+Templates are built with [React Email](https://react.email). After editing, sync them to Resend via the React Email dev server's built-in Resend integration (`npx react-email resend setup`).
+
+### Newsletter broadcast
+
+When a new story is published (a new `content/stories/*/meta.ts` is added in a merge to `main`), the `Send Newsletter` GitHub Actions workflow automatically sends a broadcast to your Resend segment. The workflow uses:
+
+- `RESEND_API_KEY` — GitHub Actions secret
+- `RESEND_SEGMENT_ID` — GitHub Actions secret
+
 ## Deploying
 
 Deploys are automated via GitHub Actions. Merging to `main` triggers CI (lint, unit tests, E2E), and on success automatically builds and deploys to S3 + CloudFront.

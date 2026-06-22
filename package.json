@@ -9,19 +9,22 @@
   },
   "license": "MIT",
   "scripts": {
-    "dev": "node scripts/optimize-images.js && next dev",
     "build": "node scripts/optimize-images.js && next build",
-    "start": "next start",
+    "deploy:worker": "wrangler deploy --config workers/subscribe/wrangler.toml",
+    "dev": "node scripts/optimize-images.js && next dev",
+    "dev:email": "email dev --dir emails",
     "lint": "biome check",
     "lint:write": "biome check --write --unsafe",
+    "prepare": "husky",
+    "start": "next start",
     "test": "vitest run",
     "test:coverage": "vitest run --coverage",
-    "test:watch": "vitest",
     "test:e2e": "playwright test",
-    "prepare": "husky"
+    "test:watch": "vitest"
   },
   "dependencies": {
     "@next/mdx": "^16.2.9",
+    "@react-email/render": "^2.0.9",
     "@tailwindcss/typography": "^0.5.20",
     "@types/katex": "^0.16.8",
     "clsx": "^2.1.1",
@@ -36,6 +39,7 @@
     "odex": "^3.0.0-rc.4",
     "react": "19.2.3",
     "react-dom": "19.2.3",
+    "react-email": "^6.6.3",
     "react-select": "^5.10.2",
     "tailwind-merge": "^3.5.0",
     "topojson-client": "^3.1.0"
@@ -44,6 +48,7 @@
     "@argos-ci/playwright": "^7.0.6",
     "@biomejs/biome": "2.5.0",
     "@playwright/test": "^1.59.1",
+    "@react-email/ui": "^6.6.3",
     "@tailwindcss/postcss": "^4.3.1",
     "@testing-library/jest-dom": "^6.9.1",
     "@testing-library/react": "^16.3.2",
@@ -59,7 +64,9 @@
     "husky": "^9.1.7",
     "jsdom": "^29.0.2",
     "tailwindcss": "^4.2.1",
+    "tsx": "^4.22.4",
     "typescript": "^5.9.3",
-    "vitest": "^4.1.8"
+    "vitest": "^4.1.8",
+    "wrangler": "^4.103.0"
   }
 }

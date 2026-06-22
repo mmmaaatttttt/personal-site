@@ -1,6 +1,7 @@
 import Image from "next/image";
 import { notFound } from "next/navigation";
 import type { ComponentType } from "react";
+import EmailSignup from "@/components/layout/EmailSignup";
 import MainLayout from "@/components/layout/MainLayout";
 import ScrollProgressBar from "@/components/layout/ScrollProgressBar";
 import StoryActions from "@/components/layout/StoryActions";
@@ -221,6 +222,7 @@ export default async function ArticlePage({ params }: PageProps) {
             blueskyUrl={blueskyUrl}
             linkedinUrl={linkedinUrl}
           />
+          <EmailSignup />
           {relatedArticles.length > 0 && (
             <div className="not-prose pb-20">
               <h3 className="font-serif text-xl font-bold mb-4">
