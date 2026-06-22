@@ -1,0 +1,8 @@
+name = "subscribe"
+main = "index.ts"
+compatibility_date = "2025-01-01"
+
+# Deploy: npm run deploy:worker
+# Set secrets: wrangler secret put RESEND_API_KEY
+#              wrangler secret put RESEND_SEGMENT_ID
+#              wrangler secret put TURNSTILE_SECRET_KEY
