@@ -25,21 +25,34 @@ const EmailSignup: FC = () => {
       });
     };
 
-    if (window.turnstile) {
-      renderWidget();
-      return;
+    const initWidget = () => {
+      if (window.turnstile) {
+        renderWidget();
+        return;
+      }
+      const script = document.createElement("script");
+      script.src =
+        "https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit";
+      script.async = true;
+      script.onload = renderWidget;
+      document.head.appendChild(script);
+    };
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting) {
+          observer.disconnect();
+          initWidget();
+        }
+      },
+      { threshold: 0.1 },
+    );
+
+    if (turnstileRef.current) {
+      observer.observe(turnstileRef.current);
     }
 
-    const script = document.createElement("script");
-    script.src =
-      "https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit";
-    script.async = true;
-    script.onload = renderWidget;
-    document.head.appendChild(script);
-
-    return () => {
-      document.head.removeChild(script);
-    };
+    return () => observer.disconnect();
   }, []);
 
   const handleSubmit = async (e: { preventDefault(): void }) => {
