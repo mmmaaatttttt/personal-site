@@ -8,6 +8,9 @@ export default defineConfig({
     globals: true,
     environment: "jsdom",
     setupFiles: "./vitest.setup.tsx",
+    env: {
+      NEXT_PUBLIC_TURNSTILE_SITE_KEY: "test-site-key",
+    },
     include: ["**/*.{test,spec}.{ts,tsx}"],
     exclude: ["e2e/**", "**/node_modules/**"],
     coverage: {
