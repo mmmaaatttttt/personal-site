@@ -3,7 +3,7 @@ import NewStoryEmail from "../emails/NewStory";
 
 const meta = JSON.parse(process.env.META ?? "{}");
 const slug = process.env.SLUG ?? "";
-const url = `https://mattlane.us/stories/${slug}/`;
+const url = `https://mattlane.us/stories/${slug}`;
 const featuredImageUrl = `https://mattlane.us${meta.featured_image.replace(/^(\.\.\/)+images\//, "/images/")}`;
 
 const html = await render(
