@@ -26,6 +26,7 @@ const EmailSignup: FC = () => {
     };
 
     const initWidget = () => {
+      if (!TURNSTILE_SITE_KEY) return;
       if (window.turnstile) {
         renderWidget();
         return;

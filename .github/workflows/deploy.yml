@@ -16,3 +16,4 @@ jobs:
       role_arn: arn:aws:iam::492635958177:role/GitHubActionsPersonalSiteDeployRole
     secrets:
       cloudfront_distribution_id: ${{ secrets.CLOUDFRONT_DISTRIBUTION_ID }}
+      turnstile_site_key: ${{ secrets.NEXT_PUBLIC_TURNSTILE_SITE_KEY }}
