@@ -174,7 +174,7 @@ describe("subscribe worker", () => {
     );
   });
 
-  it("logs error but still returns 200 when welcome email send fails", async () => {
+  it("logs error but still returns 200 when welcome email send fails with JSON", async () => {
     const consoleSpy = vi.spyOn(console, "error").mockImplementation(() => {});
     mockTurnstileSuccess();
     vi.mocked(fetch).mockResolvedValueOnce(
@@ -193,6 +193,28 @@ describe("subscribe worker", () => {
     expect(consoleSpy).toHaveBeenCalledWith(
       "Welcome email failed:",
       422,
+      expect.anything(),
+    );
+    consoleSpy.mockRestore();
+  });
+
+  it("logs error but still returns 200 when welcome email send fails with non-JSON", async () => {
+    const consoleSpy = vi.spyOn(console, "error").mockImplementation(() => {});
+    mockTurnstileSuccess();
+    vi.mocked(fetch).mockResolvedValueOnce(
+      new Response(JSON.stringify({ id: "contact-id" }), { status: 200 }),
+    );
+    vi.mocked(fetch).mockResolvedValueOnce(
+      new Response("bad gateway", { status: 502 }),
+    );
+    const res = await handler.fetch(
+      postRequest({ email: "test@example.com", turnstileToken: "token" }),
+      env,
+    );
+    expect(res.status).toBe(200);
+    expect(consoleSpy).toHaveBeenCalledWith(
+      "Welcome email failed:",
+      502,
       expect.anything(),
     );
     consoleSpy.mockRestore();
