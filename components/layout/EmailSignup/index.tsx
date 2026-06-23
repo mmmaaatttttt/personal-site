@@ -22,6 +22,7 @@ const EmailSignup: FC = () => {
       widgetIdRef.current = window.turnstile.render(turnstileRef.current, {
         sitekey: TURNSTILE_SITE_KEY,
         callback: (token) => setTurnstileToken(token),
+        appearance: "interaction-only",
       });
     };
 
