@@ -8,7 +8,12 @@ vi.mock("@/hooks/useIsMounted", () => ({
   useIsMounted: vi.fn(),
 }));
 vi.mock("./Footer", () => ({
-  default: () => <div data-testid="footer" />,
+  default: ({ showEmailSignup }: { showEmailSignup?: boolean }) => (
+    <div
+      data-testid="footer"
+      data-show-email-signup={String(showEmailSignup)}
+    />
+  ),
 }));
 vi.mock("./Navbar", () => ({
   default: ({
@@ -96,6 +101,56 @@ describe("MainLayout", () => {
     expect(screen.getByTestId("navbar")).not.toHaveAttribute(
       "data-hide",
       "true",
+    );
+  });
+
+  it("shows the footer email signup on non-story, non-home pages", () => {
+    vi.mocked(usePathname).mockReturnValue("/about");
+    vi.mocked(useIsMounted).mockReturnValue(true);
+    render(<MainLayout>Content</MainLayout>);
+    expect(screen.getByTestId("footer")).toHaveAttribute(
+      "data-show-email-signup",
+      "true",
+    );
+  });
+
+  it("hides the footer email signup on the home page", () => {
+    vi.mocked(usePathname).mockReturnValue("/");
+    vi.mocked(useIsMounted).mockReturnValue(true);
+    render(<MainLayout>Content</MainLayout>);
+    expect(screen.getByTestId("footer")).toHaveAttribute(
+      "data-show-email-signup",
+      "false",
+    );
+  });
+
+  it("hides the footer email signup on individual story pages", () => {
+    vi.mocked(usePathname).mockReturnValue("/stories/my-story");
+    vi.mocked(useIsMounted).mockReturnValue(true);
+    render(<MainLayout>Content</MainLayout>);
+    expect(screen.getByTestId("footer")).toHaveAttribute(
+      "data-show-email-signup",
+      "false",
+    );
+  });
+
+  it("shows the footer email signup on the stories list page", () => {
+    vi.mocked(usePathname).mockReturnValue("/stories/");
+    vi.mocked(useIsMounted).mockReturnValue(true);
+    render(<MainLayout>Content</MainLayout>);
+    expect(screen.getByTestId("footer")).toHaveAttribute(
+      "data-show-email-signup",
+      "true",
+    );
+  });
+
+  it("hides the footer email signup when hideFooterSignup is passed", () => {
+    vi.mocked(usePathname).mockReturnValue("/about");
+    vi.mocked(useIsMounted).mockReturnValue(true);
+    render(<MainLayout hideFooterSignup>Content</MainLayout>);
+    expect(screen.getByTestId("footer")).toHaveAttribute(
+      "data-show-email-signup",
+      "false",
     );
   });
 });

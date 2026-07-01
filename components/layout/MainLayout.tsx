@@ -9,15 +9,22 @@ import Navbar from "./Navbar";
 interface MainLayoutProps {
   children: ReactNode;
   outline?: boolean;
+  hideFooterSignup?: boolean;
 }
 
-const MainLayout: FC<MainLayoutProps> = ({ children, outline = false }) => {
+const MainLayout: FC<MainLayoutProps> = ({
+  children,
+  outline = false,
+  hideFooterSignup = false,
+}) => {
   const pathname = usePathname();
   const mounted = useIsMounted();
 
   // Determine if it's a story page
   const isArticlePage =
     pathname?.startsWith("/stories/") && pathname !== "/stories/";
+  const isHomePage = pathname === "/";
+  const showFooterSignup = !hideFooterSignup && !isArticlePage && !isHomePage;
 
   return (
     <div
@@ -29,7 +36,7 @@ const MainLayout: FC<MainLayoutProps> = ({ children, outline = false }) => {
       <main className="flex flex-1 justify-center">
         <div className="w-full flex flex-col">{children}</div>
       </main>
-      <Footer />
+      <Footer showEmailSignup={showFooterSignup} />
     </div>
   );
 };

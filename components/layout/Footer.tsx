@@ -3,10 +3,20 @@ import Image from "next/image";
 import type { FC } from "react";
 import BlueskyIcon from "@/components/icons/BlueskyIcon";
 import GithubIcon from "@/components/icons/GithubIcon";
+import EmailSignup from "@/components/layout/EmailSignup";
 
-const Footer: FC = () => {
+interface FooterProps {
+  showEmailSignup?: boolean;
+}
+
+const Footer: FC<FooterProps> = ({ showEmailSignup = false }) => {
   return (
     <footer className="relative z-10 border-t border-gray bg-nav py-4 px-8 text-sm text-gray-600">
+      {showEmailSignup && (
+        <div className="mx-auto mb-4 w-full max-w-md">
+          <EmailSignup />
+        </div>
+      )}
       <div className="flex flex-col items-center justify-between gap-4 sm:flex-row sm:gap-6">
         <div className="flex flex-col items-center gap-2 sm:flex-row sm:gap-4">
           <a

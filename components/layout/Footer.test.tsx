@@ -1,5 +1,5 @@
 import { render, screen } from "@testing-library/react";
-import { describe, expect, it, vi } from "vitest";
+import { beforeEach, describe, expect, it, vi } from "vitest";
 
 vi.mock("next/image", () => ({
   default: ({ alt }: { alt: string }) => <img alt={alt} />,
@@ -14,6 +14,10 @@ vi.mock("@/components/icons/GithubIcon", () => ({
 import Footer from "./Footer";
 
 describe("Footer", () => {
+  beforeEach(() => {
+    localStorage.clear();
+  });
+
   it("renders all social links", () => {
     render(<Footer />);
     expect(screen.getByRole("link", { name: /bluesky/i })).toHaveAttribute(
@@ -44,5 +48,17 @@ describe("Footer", () => {
   it("renders the CC license image", () => {
     render(<Footer />);
     expect(screen.getByAltText("Creative Commons License")).toBeInTheDocument();
+  });
+
+  it("does not render the email signup by default", () => {
+    render(<Footer />);
+    expect(screen.queryByRole("form")).not.toBeInTheDocument();
+  });
+
+  it("renders the email signup when showEmailSignup is true", () => {
+    render(<Footer showEmailSignup />);
+    expect(
+      screen.getByRole("form", { name: /email signup/i }),
+    ).toBeInTheDocument();
   });
 });

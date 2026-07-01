@@ -19,7 +19,7 @@ export default function NotFound() {
   const blurDataURL = (placeholders as Record<string, string>)[imagePath];
 
   return (
-    <MainLayout>
+    <MainLayout hideFooterSignup>
       <div className="flex flex-col items-center px-4 py-16 text-center sm:py-24">
         <h1 className="mb-4 font-serif text-6xl font-black tracking-tighter sm:text-8xl">
           Oh no!{" "}
