@@ -2,6 +2,14 @@
 
 import { Mail } from "lucide-react";
 import { type FC, useEffect, useRef, useState } from "react";
+import { useLocalStorage } from "@/hooks/useLocalStorage";
+import { trackEvent } from "@/lib/analytics";
+import {
+  EMAIL_SIGNUP_SUBMIT_ERROR_EVENT,
+  EMAIL_SIGNUP_SUBMIT_SUCCESS_EVENT,
+  EMAIL_SIGNUP_VIEW_EVENT,
+  EMAIL_SUBSCRIBED_STORAGE_KEY,
+} from "@/lib/constants";
 
 const SUBSCRIBE_URL = "https://subscribe.mattlane.workers.dev";
 const TURNSTILE_SITE_KEY = process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY ?? "";
@@ -13,6 +21,10 @@ const EmailSignup: FC = () => {
   const [status, setStatus] = useState<SubmitStatus>("idle");
   const [errorMessage, setErrorMessage] = useState("");
   const [turnstileToken, setTurnstileToken] = useState("");
+  const [isSubscribed, setIsSubscribed] = useLocalStorage(
+    EMAIL_SUBSCRIBED_STORAGE_KEY,
+    false,
+  );
   const turnstileRef = useRef<HTMLDivElement>(null);
   const widgetIdRef = useRef<string>("");
 
@@ -45,6 +57,7 @@ const EmailSignup: FC = () => {
         if (entries[0].isIntersecting) {
           observer.disconnect();
           initWidget();
+          trackEvent(EMAIL_SIGNUP_VIEW_EVENT);
         }
       },
       { threshold: 0.1 },
@@ -70,6 +83,8 @@ const EmailSignup: FC = () => {
 
       if (res.ok) {
         setStatus("success");
+        setIsSubscribed(true);
+        trackEvent(EMAIL_SIGNUP_SUBMIT_SUCCESS_EVENT);
         return;
       }
 
@@ -84,6 +99,7 @@ const EmailSignup: FC = () => {
       }
       setErrorMessage(message);
       setStatus("error");
+      trackEvent(EMAIL_SIGNUP_SUBMIT_ERROR_EVENT, { message });
       if (widgetIdRef.current) {
         window.turnstile.reset(widgetIdRef.current);
         setTurnstileToken("");
@@ -91,15 +107,20 @@ const EmailSignup: FC = () => {
     } catch {
       setErrorMessage("Oops, sorry, something went wrong");
       setStatus("error");
+      trackEvent(EMAIL_SIGNUP_SUBMIT_ERROR_EVENT, {
+        message: "network error",
+      });
     }
   };
 
+  if (isSubscribed && status === "idle") return null;
+
   if (status === "success") {
-    return <p className="not-prose mb-8 text-sm text-gray-600">You're in!</p>;
+    return <p className="not-prose text-sm text-gray-600">You're in!</p>;
   }
 
   return (
-    <div className="not-prose mb-8">
+    <div className="not-prose">
       <p className="mb-2 text-sm font-semibold text-[#1a1a1a]">
         Never miss a story. No AI slop. Just sweet, sweet math.
       </p>
