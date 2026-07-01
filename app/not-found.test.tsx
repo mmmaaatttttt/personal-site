@@ -15,14 +15,8 @@ vi.mock("next/link", () => ({
   }) => <a href={href}>{children}</a>,
 }));
 vi.mock("@/components/layout/MainLayout", () => ({
-  default: ({
-    children,
-    hideFooterSignup,
-  }: {
-    children: React.ReactNode;
-    hideFooterSignup?: boolean;
-  }) => (
-    <div data-hide-footer-signup={String(hideFooterSignup)}>{children}</div>
+  default: ({ children }: { children: React.ReactNode }) => (
+    <div>{children}</div>
   ),
 }));
 vi.mock("@/lib/imagePlaceholders.json", () => ({
@@ -78,13 +72,5 @@ describe("NotFound", () => {
     render(<NotFound />);
     expect(screen.getByText("Latest Story")).toBeInTheDocument();
     delete mockPlaceholders["/images/featured_images/latest.jpg"];
-  });
-
-  it("hides the footer email signup", () => {
-    const { container } = render(<NotFound />);
-    expect(container.firstChild).toHaveAttribute(
-      "data-hide-footer-signup",
-      "true",
-    );
   });
 });

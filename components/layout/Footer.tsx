@@ -1,22 +1,14 @@
-import { BookOpen, Rss } from "lucide-react";
+import { BookOpen, Mail, Rss } from "lucide-react";
 import Image from "next/image";
+import Link from "next/link";
 import type { FC } from "react";
 import BlueskyIcon from "@/components/icons/BlueskyIcon";
 import GithubIcon from "@/components/icons/GithubIcon";
-import EmailSignup from "@/components/layout/EmailSignup";
+import { EMAIL_SIGNUP_MODAL_QUERY_PARAM } from "@/lib/constants";
 
-interface FooterProps {
-  showEmailSignup?: boolean;
-}
-
-const Footer: FC<FooterProps> = ({ showEmailSignup = false }) => {
+const Footer: FC = () => {
   return (
     <footer className="relative z-10 border-t border-gray bg-nav py-4 px-8 text-sm text-gray-600">
-      {showEmailSignup && (
-        <div className="mx-auto mb-4 w-full max-w-md">
-          <EmailSignup />
-        </div>
-      )}
       <div className="flex flex-col items-center justify-between gap-4 sm:flex-row sm:gap-6">
         <div className="flex flex-col items-center gap-2 sm:flex-row sm:gap-4">
           <a
@@ -37,6 +29,14 @@ const Footer: FC<FooterProps> = ({ showEmailSignup = false }) => {
         </div>
 
         <div className="flex gap-6 text-link flex-wrap justify-center">
+          <Link
+            href={`?${EMAIL_SIGNUP_MODAL_QUERY_PARAM}=1`}
+            scroll={false}
+            className="hover:opacity-80"
+            aria-label="Join the mailing list"
+          >
+            <Mail strokeWidth={1.5} size={28} />
+          </Link>
           <a
             href="https://bsky.app/profile/mattlane.us"
             className="hover:opacity-80"
