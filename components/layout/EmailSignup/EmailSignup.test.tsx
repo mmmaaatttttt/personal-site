@@ -1,5 +1,11 @@
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
+import {
+  EMAIL_SIGNUP_SUBMIT_ERROR_EVENT,
+  EMAIL_SIGNUP_SUBMIT_SUCCESS_EVENT,
+  EMAIL_SIGNUP_VIEW_EVENT,
+  EMAIL_SUBSCRIBED_STORAGE_KEY,
+} from "@/lib/constants";
 import EmailSignup from ".";
 
 function fillAndSubmit(email = "test@example.com") {
@@ -11,6 +17,7 @@ function fillAndSubmit(email = "test@example.com") {
 
 describe("EmailSignup", () => {
   beforeEach(() => {
+    localStorage.clear();
     vi.stubGlobal("fetch", vi.fn());
     vi.stubGlobal("turnstile", {
       render: vi.fn(
@@ -21,10 +28,13 @@ describe("EmailSignup", () => {
       ),
       reset: vi.fn(),
     });
+    window.umami = { track: vi.fn() };
   });
 
   afterEach(() => {
     vi.unstubAllGlobals();
+    localStorage.clear();
+    window.umami = undefined;
   });
 
   it("renders the email input and submit button", () => {
@@ -131,6 +141,70 @@ describe("EmailSignup", () => {
     fillAndSubmit();
     await waitFor(() => {
       expect(screen.getByRole("alert")).toBeInTheDocument();
+    });
+  });
+
+  it("renders nothing for a reader who has already subscribed", () => {
+    localStorage.setItem(EMAIL_SUBSCRIBED_STORAGE_KEY, JSON.stringify(true));
+    const { container } = render(<EmailSignup />);
+    expect(container).toBeEmptyDOMElement();
+  });
+
+  it("persists the subscribed flag to localStorage on successful signup", async () => {
+    vi.mocked(fetch).mockResolvedValue(new Response(null, { status: 200 }));
+    render(<EmailSignup />);
+    fillAndSubmit();
+    await waitFor(() => {
+      expect(localStorage.getItem(EMAIL_SUBSCRIBED_STORAGE_KEY)).toBe("true");
+    });
+  });
+
+  it("tracks a view event once the form scrolls into view", () => {
+    render(<EmailSignup />);
+    expect(window.umami?.track).toHaveBeenCalledWith(
+      EMAIL_SIGNUP_VIEW_EVENT,
+      undefined,
+    );
+  });
+
+  it("tracks a submit-success event on successful signup", async () => {
+    vi.mocked(fetch).mockResolvedValue(new Response(null, { status: 200 }));
+    render(<EmailSignup />);
+    fillAndSubmit();
+    await waitFor(() => {
+      expect(window.umami?.track).toHaveBeenCalledWith(
+        EMAIL_SIGNUP_SUBMIT_SUCCESS_EVENT,
+        undefined,
+      );
+    });
+  });
+
+  it("tracks a submit-error event on a non-ok API response", async () => {
+    vi.mocked(fetch).mockResolvedValue(
+      new Response(JSON.stringify({ error: "Bot verification failed" }), {
+        status: 403,
+        headers: { "Content-Type": "application/json" },
+      }),
+    );
+    render(<EmailSignup />);
+    fillAndSubmit();
+    await waitFor(() => {
+      expect(window.umami?.track).toHaveBeenCalledWith(
+        EMAIL_SIGNUP_SUBMIT_ERROR_EVENT,
+        { message: "Bot verification failed" },
+      );
+    });
+  });
+
+  it("tracks a submit-error event when fetch throws", async () => {
+    vi.mocked(fetch).mockRejectedValue(new Error("network error"));
+    render(<EmailSignup />);
+    fillAndSubmit();
+    await waitFor(() => {
+      expect(window.umami?.track).toHaveBeenCalledWith(
+        EMAIL_SIGNUP_SUBMIT_ERROR_EVENT,
+        { message: "network error" },
+      );
     });
   });
 });

@@ -10,6 +10,9 @@ vi.mock("@/hooks/useIsMounted", () => ({
 vi.mock("./Footer", () => ({
   default: () => <div data-testid="footer" />,
 }));
+vi.mock("./EmailSignupModal", () => ({
+  default: () => <div data-testid="email-signup-modal" />,
+}));
 vi.mock("./Navbar", () => ({
   default: ({
     hide,
@@ -34,13 +37,14 @@ import { useIsMounted } from "@/hooks/useIsMounted";
 import MainLayout from "./MainLayout";
 
 describe("MainLayout", () => {
-  it("renders children, navbar, and footer", () => {
+  it("renders children, navbar, footer, and the email signup modal", () => {
     vi.mocked(usePathname).mockReturnValue("/about");
     vi.mocked(useIsMounted).mockReturnValue(true);
     render(<MainLayout>Hello</MainLayout>);
     expect(screen.getByText("Hello")).toBeInTheDocument();
     expect(screen.getByTestId("navbar")).toBeInTheDocument();
     expect(screen.getByTestId("footer")).toBeInTheDocument();
+    expect(screen.getByTestId("email-signup-modal")).toBeInTheDocument();
   });
 
   it("applies opacity-0 class when not mounted", () => {

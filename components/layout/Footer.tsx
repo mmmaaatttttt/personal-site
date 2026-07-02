@@ -1,8 +1,10 @@
-import { BookOpen, Rss } from "lucide-react";
+import { BookOpen, Mail, Rss } from "lucide-react";
 import Image from "next/image";
+import Link from "next/link";
 import type { FC } from "react";
 import BlueskyIcon from "@/components/icons/BlueskyIcon";
 import GithubIcon from "@/components/icons/GithubIcon";
+import { EMAIL_SIGNUP_MODAL_QUERY_PARAM } from "@/lib/constants";
 
 const Footer: FC = () => {
   return (
@@ -27,6 +29,14 @@ const Footer: FC = () => {
         </div>
 
         <div className="flex gap-6 text-link flex-wrap justify-center">
+          <Link
+            href={`?${EMAIL_SIGNUP_MODAL_QUERY_PARAM}`}
+            scroll={false}
+            className="hover:opacity-80"
+            aria-label="Join the mailing list"
+          >
+            <Mail strokeWidth={1.5} size={28} />
+          </Link>
           <a
             href="https://bsky.app/profile/mattlane.us"
             className="hover:opacity-80"

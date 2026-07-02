@@ -4,6 +4,20 @@ import { describe, expect, it, vi } from "vitest";
 vi.mock("next/image", () => ({
   default: ({ alt }: { alt: string }) => <img alt={alt} />,
 }));
+vi.mock("next/link", () => ({
+  default: ({
+    children,
+    href,
+    ...props
+  }: {
+    children: React.ReactNode;
+    href: string;
+  }) => (
+    <a href={href} {...props}>
+      {children}
+    </a>
+  ),
+}));
 vi.mock("@/components/icons/BlueskyIcon", () => ({
   default: () => <svg data-testid="bluesky-icon" />,
 }));
@@ -11,6 +25,7 @@ vi.mock("@/components/icons/GithubIcon", () => ({
   default: () => <svg data-testid="github-icon" />,
 }));
 
+import { EMAIL_SIGNUP_MODAL_QUERY_PARAM } from "@/lib/constants";
 import Footer from "./Footer";
 
 describe("Footer", () => {
@@ -44,5 +59,12 @@ describe("Footer", () => {
   it("renders the CC license image", () => {
     render(<Footer />);
     expect(screen.getByAltText("Creative Commons License")).toBeInTheDocument();
+  });
+
+  it("links the mailing list icon to the signup modal query param", () => {
+    render(<Footer />);
+    expect(
+      screen.getByRole("link", { name: /join the mailing list/i }),
+    ).toHaveAttribute("href", `?${EMAIL_SIGNUP_MODAL_QUERY_PARAM}`);
   });
 });

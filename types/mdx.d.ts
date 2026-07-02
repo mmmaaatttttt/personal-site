@@ -10,6 +10,9 @@ interface Window {
     ): string;
     reset(widgetId: string): void;
   };
+  umami?: {
+    track(eventName: string, eventData?: Record<string, unknown>): void;
+  };
 }
 
 declare module "d3-force-bounce" {
