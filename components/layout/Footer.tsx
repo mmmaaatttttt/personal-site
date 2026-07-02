@@ -30,7 +30,7 @@ const Footer: FC = () => {
 
         <div className="flex gap-6 text-link flex-wrap justify-center">
           <Link
-            href={`?${EMAIL_SIGNUP_MODAL_QUERY_PARAM}=1`}
+            href={`?${EMAIL_SIGNUP_MODAL_QUERY_PARAM}`}
             scroll={false}
             className="hover:opacity-80"
             aria-label="Join the mailing list"

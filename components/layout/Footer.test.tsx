@@ -65,6 +65,6 @@ describe("Footer", () => {
     render(<Footer />);
     expect(
       screen.getByRole("link", { name: /join the mailing list/i }),
-    ).toHaveAttribute("href", `?${EMAIL_SIGNUP_MODAL_QUERY_PARAM}=1`);
+    ).toHaveAttribute("href", `?${EMAIL_SIGNUP_MODAL_QUERY_PARAM}`);
   });
 });

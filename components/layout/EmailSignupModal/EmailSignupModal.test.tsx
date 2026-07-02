@@ -26,9 +26,7 @@ describe("EmailSignupModal — closed state", () => {
 
 describe("EmailSignupModal — open state", () => {
   beforeEach(() => {
-    mockSearchParams = new URLSearchParams(
-      `${EMAIL_SIGNUP_MODAL_QUERY_PARAM}=1`,
-    );
+    mockSearchParams = new URLSearchParams(`${EMAIL_SIGNUP_MODAL_QUERY_PARAM}`);
     mockReplace.mockClear();
   });
 
@@ -100,7 +98,7 @@ describe("EmailSignupModal — open state", () => {
     window.history.replaceState(
       {},
       "",
-      `?${EMAIL_SIGNUP_MODAL_QUERY_PARAM}=1&tab=overview`,
+      `?${EMAIL_SIGNUP_MODAL_QUERY_PARAM}&tab=overview`,
     );
     render(<EmailSignupModal />);
     fireEvent.click(screen.getByRole("button", { name: /close/i }));
@@ -110,11 +108,25 @@ describe("EmailSignupModal — open state", () => {
     );
   });
 
+  it("leaves the pathname exactly as-is when closing with no other params", () => {
+    window.history.replaceState(
+      {},
+      "",
+      `/stories/dailemma?${EMAIL_SIGNUP_MODAL_QUERY_PARAM}`,
+    );
+    render(<EmailSignupModal />);
+    fireEvent.click(screen.getByRole("button", { name: /close/i }));
+    expect(mockReplace).toHaveBeenCalledWith(
+      "/stories/dailemma",
+      expect.objectContaining({ scroll: false }),
+    );
+  });
+
   it("preserves URL hash when closing", () => {
     window.history.replaceState(
       {},
       "",
-      `?${EMAIL_SIGNUP_MODAL_QUERY_PARAM}=1#section-one`,
+      `?${EMAIL_SIGNUP_MODAL_QUERY_PARAM}#section-one`,
     );
     render(<EmailSignupModal />);
     fireEvent.click(screen.getByRole("button", { name: /close/i }));

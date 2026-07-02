@@ -28,7 +28,7 @@ const EmailSignupModalInner: FC = () => {
   }, [router]);
 
   useEffect(() => {
-    setIsOpen(searchParams.get(EMAIL_SIGNUP_MODAL_QUERY_PARAM) === "1");
+    setIsOpen(searchParams.has(EMAIL_SIGNUP_MODAL_QUERY_PARAM));
   }, [searchParams]);
 
   // Prevent background scroll while open.
