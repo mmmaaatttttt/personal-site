@@ -23,7 +23,7 @@
     "test:watch": "vitest"
   },
   "dependencies": {
-    "@next/mdx": "^16.2.9",
+    "@next/mdx": "^16.2.10",
     "@react-email/render": "^2.0.9",
     "@tailwindcss/typography": "^0.5.20",
     "@types/katex": "^0.16.8",
