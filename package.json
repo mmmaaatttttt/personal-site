@@ -65,7 +65,7 @@
     "jsdom": "^29.0.2",
     "tailwindcss": "^4.2.1",
     "tsx": "^4.22.4",
-    "typescript": "^5.9.3",
+    "typescript": "^6.0.3",
     "vitest": "^4.1.8",
     "wrangler": "^4.103.0"
   }
