@@ -33,7 +33,7 @@
     "d3-force-surface": "^1.0.2",
     "framer-motion": "^12.40.0",
     "gray-matter": "^4.0.3",
-    "katex": "^0.16.45",
+    "katex": "^0.17.0",
     "lucide-react": "^1.21.0",
     "next": "16.2.9",
     "odex": "^3.0.0-rc.4",
