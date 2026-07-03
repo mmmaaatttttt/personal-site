@@ -15,8 +15,13 @@ const SUBSCRIBE_URL = "https://subscribe.mattlane.workers.dev";
 const TURNSTILE_SITE_KEY = process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY ?? "";
 
 type SubmitStatus = "idle" | "loading" | "success" | "error";
+type Source = "modal" | "slideIn";
 
-const EmailSignup: FC = () => {
+interface EmailSignupProps {
+  source: Source;
+}
+
+const EmailSignup: FC<EmailSignupProps> = ({ source }) => {
   const [email, setEmail] = useState("");
   const [status, setStatus] = useState<SubmitStatus>("idle");
   const [errorMessage, setErrorMessage] = useState("");
@@ -57,7 +62,7 @@ const EmailSignup: FC = () => {
         if (entries[0].isIntersecting) {
           observer.disconnect();
           initWidget();
-          trackEvent(EMAIL_SIGNUP_VIEW_EVENT);
+          trackEvent(EMAIL_SIGNUP_VIEW_EVENT, { source });
         }
       },
       { threshold: 0.1 },
@@ -68,7 +73,7 @@ const EmailSignup: FC = () => {
     }
 
     return () => observer.disconnect();
-  }, []);
+  }, [source]);
 
   const handleSubmit = async (e: { preventDefault(): void }) => {
     e.preventDefault();
@@ -84,7 +89,7 @@ const EmailSignup: FC = () => {
       if (res.ok) {
         setStatus("success");
         setIsSubscribed(true);
-        trackEvent(EMAIL_SIGNUP_SUBMIT_SUCCESS_EVENT);
+        trackEvent(EMAIL_SIGNUP_SUBMIT_SUCCESS_EVENT, { source });
         return;
       }
 
@@ -99,7 +104,7 @@ const EmailSignup: FC = () => {
       }
       setErrorMessage(message);
       setStatus("error");
-      trackEvent(EMAIL_SIGNUP_SUBMIT_ERROR_EVENT, { message });
+      trackEvent(EMAIL_SIGNUP_SUBMIT_ERROR_EVENT, { source, message });
       if (widgetIdRef.current) {
         window.turnstile.reset(widgetIdRef.current);
         setTurnstileToken("");
@@ -108,6 +113,7 @@ const EmailSignup: FC = () => {
       setErrorMessage("Oops, sorry, something went wrong");
       setStatus("error");
       trackEvent(EMAIL_SIGNUP_SUBMIT_ERROR_EVENT, {
+        source,
         message: "network error",
       });
     }

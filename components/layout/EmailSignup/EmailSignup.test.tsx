@@ -38,7 +38,7 @@ describe("EmailSignup", () => {
   });
 
   it("renders the email input and submit button", () => {
-    render(<EmailSignup />);
+    render(<EmailSignup source="modal" />);
     expect(
       screen.getByPlaceholderText("you-are@super.cool"),
     ).toBeInTheDocument();
@@ -47,7 +47,7 @@ describe("EmailSignup", () => {
 
   it("disables the button while loading", async () => {
     vi.mocked(fetch).mockReturnValue(new Promise(() => {}));
-    render(<EmailSignup />);
+    render(<EmailSignup source="modal" />);
     fillAndSubmit();
     await waitFor(() => {
       expect(screen.getByRole("button")).toBeDisabled();
@@ -56,7 +56,7 @@ describe("EmailSignup", () => {
 
   it("hides the form on ok response", async () => {
     vi.mocked(fetch).mockResolvedValue(new Response(null, { status: 200 }));
-    render(<EmailSignup />);
+    render(<EmailSignup source="modal" />);
     fillAndSubmit();
     await waitFor(() => {
       expect(screen.queryByRole("form")).not.toBeInTheDocument();
@@ -65,7 +65,7 @@ describe("EmailSignup", () => {
 
   it("sends the turnstile token with the request", async () => {
     vi.mocked(fetch).mockResolvedValue(new Response(null, { status: 200 }));
-    render(<EmailSignup />);
+    render(<EmailSignup source="modal" />);
     fillAndSubmit();
     await waitFor(() => {
       const body = JSON.parse(
@@ -85,7 +85,7 @@ describe("EmailSignup", () => {
         },
       ),
     );
-    render(<EmailSignup />);
+    render(<EmailSignup source="modal" />);
     fillAndSubmit();
     await waitFor(() => {
       expect(screen.getByRole("alert")).toHaveTextContent(
@@ -101,7 +101,7 @@ describe("EmailSignup", () => {
         headers: { "Content-Type": "application/json" },
       }),
     );
-    render(<EmailSignup />);
+    render(<EmailSignup source="modal" />);
     fillAndSubmit();
     await waitFor(() => {
       expect(window.turnstile.reset).toHaveBeenCalledWith("widget-id");
@@ -115,7 +115,7 @@ describe("EmailSignup", () => {
         headers: { "Content-Type": "application/json" },
       }),
     );
-    render(<EmailSignup />);
+    render(<EmailSignup source="modal" />);
     fillAndSubmit();
     await waitFor(() => {
       expect(screen.getByRole("alert")).toBeInTheDocument();
@@ -128,7 +128,7 @@ describe("EmailSignup", () => {
       json: vi.fn().mockRejectedValue(new Error("parse error")),
     };
     vi.mocked(fetch).mockResolvedValue(mockResponse as unknown as Response);
-    render(<EmailSignup />);
+    render(<EmailSignup source="modal" />);
     fillAndSubmit();
     await waitFor(() => {
       expect(screen.getByRole("alert")).toBeInTheDocument();
@@ -137,7 +137,7 @@ describe("EmailSignup", () => {
 
   it("shows fallback error when fetch throws", async () => {
     vi.mocked(fetch).mockRejectedValue(new Error("network error"));
-    render(<EmailSignup />);
+    render(<EmailSignup source="modal" />);
     fillAndSubmit();
     await waitFor(() => {
       expect(screen.getByRole("alert")).toBeInTheDocument();
@@ -146,13 +146,13 @@ describe("EmailSignup", () => {
 
   it("renders nothing for a reader who has already subscribed", () => {
     localStorage.setItem(EMAIL_SUBSCRIBED_STORAGE_KEY, JSON.stringify(true));
-    const { container } = render(<EmailSignup />);
+    const { container } = render(<EmailSignup source="modal" />);
     expect(container).toBeEmptyDOMElement();
   });
 
   it("persists the subscribed flag to localStorage on successful signup", async () => {
     vi.mocked(fetch).mockResolvedValue(new Response(null, { status: 200 }));
-    render(<EmailSignup />);
+    render(<EmailSignup source="modal" />);
     fillAndSubmit();
     await waitFor(() => {
       expect(localStorage.getItem(EMAIL_SUBSCRIBED_STORAGE_KEY)).toBe("true");
@@ -160,21 +160,27 @@ describe("EmailSignup", () => {
   });
 
   it("tracks a view event once the form scrolls into view", () => {
-    render(<EmailSignup />);
-    expect(window.umami?.track).toHaveBeenCalledWith(
-      EMAIL_SIGNUP_VIEW_EVENT,
-      undefined,
-    );
+    render(<EmailSignup source="modal" />);
+    expect(window.umami?.track).toHaveBeenCalledWith(EMAIL_SIGNUP_VIEW_EVENT, {
+      source: "modal",
+    });
+  });
+
+  it("tags the view event with the slideIn source", () => {
+    render(<EmailSignup source="slideIn" />);
+    expect(window.umami?.track).toHaveBeenCalledWith(EMAIL_SIGNUP_VIEW_EVENT, {
+      source: "slideIn",
+    });
   });
 
   it("tracks a submit-success event on successful signup", async () => {
     vi.mocked(fetch).mockResolvedValue(new Response(null, { status: 200 }));
-    render(<EmailSignup />);
+    render(<EmailSignup source="modal" />);
     fillAndSubmit();
     await waitFor(() => {
       expect(window.umami?.track).toHaveBeenCalledWith(
         EMAIL_SIGNUP_SUBMIT_SUCCESS_EVENT,
-        undefined,
+        { source: "modal" },
       );
     });
   });
@@ -186,24 +192,24 @@ describe("EmailSignup", () => {
         headers: { "Content-Type": "application/json" },
       }),
     );
-    render(<EmailSignup />);
+    render(<EmailSignup source="modal" />);
     fillAndSubmit();
     await waitFor(() => {
       expect(window.umami?.track).toHaveBeenCalledWith(
         EMAIL_SIGNUP_SUBMIT_ERROR_EVENT,
-        { message: "Bot verification failed" },
+        { source: "modal", message: "Bot verification failed" },
       );
     });
   });
 
   it("tracks a submit-error event when fetch throws", async () => {
     vi.mocked(fetch).mockRejectedValue(new Error("network error"));
-    render(<EmailSignup />);
+    render(<EmailSignup source="modal" />);
     fillAndSubmit();
     await waitFor(() => {
       expect(window.umami?.track).toHaveBeenCalledWith(
         EMAIL_SIGNUP_SUBMIT_ERROR_EVENT,
-        { message: "network error" },
+        { source: "modal", message: "network error" },
       );
     });
   });
