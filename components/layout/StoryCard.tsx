@@ -42,7 +42,7 @@ const StoryCard: FC<StoryCardProps> = ({
       style={{ animationDelay: `${index * 0.15}s` } as CSSProperties}
     >
       <Link
-        href={`/stories/${slug}/`}
+        href={`/stories/${slug}`}
         className="flex flex-col gap-6 sm:flex-row"
       >
         <div className="w-full self-start shrink-0 overflow-hidden rounded-lg sm:w-[216px]">
