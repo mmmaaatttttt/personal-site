@@ -15,6 +15,8 @@ on:
     secrets:
       cloudfront_distribution_id:
         required: true
+      turnstile_site_key:
+        required: true
 
 jobs:
   deploy:
@@ -36,6 +38,7 @@ jobs:
       - run: npm run build
         env:
           NEXT_PUBLIC_BASE_URL: ${{ inputs.base_url }}
+          NEXT_PUBLIC_TURNSTILE_SITE_KEY: ${{ secrets.turnstile_site_key }}
       - run: aws s3 sync out/ s3://${{ inputs.bucket }}/ --region us-east-1
       - name: Invalidate CloudFront and wait
         run: |

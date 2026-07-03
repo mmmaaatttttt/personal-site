@@ -1,3 +1,20 @@
+interface Window {
+  turnstile: {
+    render(
+      container: HTMLElement,
+      options: {
+        sitekey: string;
+        callback: (token: string) => void;
+        appearance?: "always" | "execute" | "interaction-only";
+      },
+    ): string;
+    reset(widgetId: string): void;
+  };
+  umami?: {
+    track(eventName: string, eventData?: Record<string, unknown>): void;
+  };
+}
+
 declare module "d3-force-bounce" {
   import type { Force, SimulationNodeDatum } from "d3-force";
 

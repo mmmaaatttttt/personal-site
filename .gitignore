@@ -47,3 +47,13 @@ yarn-error.log*
 next-env.d.ts
 
 todo.txt
+
+# OpenNext
+.open-next
+
+# wrangler files
+.wrangler
+.dev.vars*
+!.dev.vars.example
+
+!.env.example

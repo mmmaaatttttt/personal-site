@@ -1,0 +1,45 @@
+name: Send Newsletter
+
+on:
+  workflow_run:
+    workflows: [Deploy]
+    types: [completed]
+    branches: [main]
+
+jobs:
+  send:
+    if: github.event.workflow_run.conclusion == 'success'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          fetch-depth: 2
+
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 24
+
+      - name: Detect new story
+        id: story
+        run: |
+          NEW_META=$(git diff --name-only --diff-filter=A HEAD~1 HEAD -- 'content/stories/*/meta.ts' | head -1)
+          if [ -z "$NEW_META" ]; then
+            echo "skip=true" >> $GITHUB_OUTPUT
+            exit 0
+          fi
+          SLUG=$(echo "$NEW_META" | sed 's|content/stories/\(.*\)/meta.ts|\1|')
+          META_JSON=$(npx tsx scripts/extract-story-meta.ts "$NEW_META")
+          echo "slug=$SLUG" >> $GITHUB_OUTPUT
+          echo "meta=$META_JSON" >> $GITHUB_OUTPUT
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Send broadcast
+        if: steps.story.outputs.skip != 'true'
+        env:
+          RESEND_API_KEY: ${{ secrets.RESEND_API_KEY }}
+          RESEND_SEGMENT_ID: ${{ secrets.RESEND_SEGMENT_ID }}
+          SLUG: ${{ steps.story.outputs.slug }}
+          META: ${{ steps.story.outputs.meta }}
+        run: npx tsx scripts/send-newsletter.tsx

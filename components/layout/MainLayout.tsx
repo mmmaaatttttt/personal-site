@@ -3,6 +3,7 @@
 import { usePathname } from "next/navigation";
 import type { FC, ReactNode } from "react";
 import { useIsMounted } from "@/hooks/useIsMounted";
+import EmailSignupModal from "./EmailSignupModal";
 import Footer from "./Footer";
 import Navbar from "./Navbar";
 
@@ -30,6 +31,7 @@ const MainLayout: FC<MainLayoutProps> = ({ children, outline = false }) => {
         <div className="w-full flex flex-col">{children}</div>
       </main>
       <Footer />
+      <EmailSignupModal />
     </div>
   );
 };
