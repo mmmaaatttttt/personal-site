@@ -1,7 +1,11 @@
 import { fireEvent, render, screen } from "@testing-library/react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import "@testing-library/jest-dom/vitest";
-import { EMAIL_SIGNUP_MODAL_QUERY_PARAM } from "@/lib/constants";
+import {
+  EMAIL_SIGNUP_DISMISSED_EVENT,
+  EMAIL_SIGNUP_MODAL_QUERY_PARAM,
+  EMAIL_SUBSCRIBED_STORAGE_KEY,
+} from "@/lib/constants";
 import EmailSignupModal from ".";
 
 const mockReplace = vi.fn();
@@ -28,11 +32,15 @@ describe("EmailSignupModal — open state", () => {
   beforeEach(() => {
     mockSearchParams = new URLSearchParams(`${EMAIL_SIGNUP_MODAL_QUERY_PARAM}`);
     mockReplace.mockClear();
+    localStorage.clear();
+    window.umami = { track: vi.fn() };
   });
 
   afterEach(() => {
     document.body.style.overflow = "";
     window.history.replaceState({}, "", "/");
+    localStorage.clear();
+    window.umami = undefined;
   });
 
   it("opens when the query param is present on mount", () => {
@@ -133,6 +141,44 @@ describe("EmailSignupModal — open state", () => {
     expect(mockReplace).toHaveBeenCalledWith(
       expect.stringContaining("#section-one"),
       expect.objectContaining({ scroll: false }),
+    );
+  });
+
+  it("tracks a dismiss event when the close button is clicked", () => {
+    render(<EmailSignupModal />);
+    fireEvent.click(screen.getByRole("button", { name: /close/i }));
+    expect(window.umami?.track).toHaveBeenCalledWith(
+      EMAIL_SIGNUP_DISMISSED_EVENT,
+      { source: "modal" },
+    );
+  });
+
+  it("tracks a dismiss event when the backdrop is clicked", () => {
+    render(<EmailSignupModal />);
+    const backdrop = document.querySelector('[aria-hidden="true"]');
+    fireEvent.click(backdrop as HTMLElement);
+    expect(window.umami?.track).toHaveBeenCalledWith(
+      EMAIL_SIGNUP_DISMISSED_EVENT,
+      { source: "modal" },
+    );
+  });
+
+  it("tracks a dismiss event on Escape key close", () => {
+    render(<EmailSignupModal />);
+    fireEvent.keyDown(window, { key: "Escape" });
+    expect(window.umami?.track).toHaveBeenCalledWith(
+      EMAIL_SIGNUP_DISMISSED_EVENT,
+      { source: "modal" },
+    );
+  });
+
+  it("does not track a dismiss event when closing after a successful signup", () => {
+    localStorage.setItem(EMAIL_SUBSCRIBED_STORAGE_KEY, JSON.stringify(true));
+    render(<EmailSignupModal />);
+    fireEvent.click(screen.getByRole("button", { name: /close/i }));
+    expect(window.umami?.track).not.toHaveBeenCalledWith(
+      EMAIL_SIGNUP_DISMISSED_EVENT,
+      expect.anything(),
     );
   });
 });
