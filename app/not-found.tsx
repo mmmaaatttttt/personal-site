@@ -36,7 +36,7 @@ export default function NotFound() {
         </p>
 
         <Link
-          href={`/stories/${slug}/`}
+          href={`/stories/${slug}`}
           className="group w-full max-w-sm text-center"
         >
           <h3 className="mb-4 font-serif text-2xl font-bold group-hover:text-link transition-colors duration-200">
