@@ -19,7 +19,6 @@ const HEIGHT = 400;
 const GRAPH_PADDING = { top: 24, bottom: 50, left: 65, right: 80 };
 const AXIS_FONT = "11px";
 const MARKER_RADIUS = 6;
-const _N_MAX = 20;
 const DEFAULT_REPLACEMENT_RATE = 0.3;
 
 const xScale = scaleLinear()
@@ -76,8 +75,8 @@ const WelfareChart = () => {
     .range([HEIGHT - GRAPH_PADDING.bottom, GRAPH_PADDING.top]);
 
   const zeroY = yScale(0);
-  const trapX = xScale(socialOptimum);
-  const trapWidth = Math.max(0, xScale(marketOutcome) - xScale(socialOptimum));
+  const trapX = xScale(Math.min(socialOptimum, marketOutcome));
+  const trapWidth = Math.abs(xScale(marketOutcome) - xScale(socialOptimum));
   const trapY = GRAPH_PADDING.top;
   const trapHeight = HEIGHT - GRAPH_PADDING.top - GRAPH_PADDING.bottom;
 
@@ -91,8 +90,6 @@ const WelfareChart = () => {
           labels={[
             { text: "Company profits", color: COLORS.ORANGE },
             { text: "Worker income", color: COLORS.BLUE },
-            { text: "Coordinated outcome", color: COLORS.GREEN },
-            { text: "Market outcome", color: COLORS.RED },
           ]}
         />
         <Graph
@@ -111,8 +108,8 @@ const WelfareChart = () => {
             scale={yScale}
             tickFormat=".2f"
             tickSize={5}
-            tickColor={COLORS.GRAY}
-            color={COLORS.ORANGE}
+            tickColor={COLORS.RED}
+            color={COLORS.RED}
             fontSize={AXIS_FONT}
           />
           <Axis
@@ -135,8 +132,8 @@ const WelfareChart = () => {
             tickSize={5}
             textAnchor="start"
             labelPosition={{ x: "8" }}
-            tickColor={COLORS.BLUE}
-            color={COLORS.BLUE}
+            tickColor={COLORS.DARK_GREEN}
+            color={COLORS.DARK_GREEN}
             fontSize={AXIS_FONT}
           />
           <AxisLabel
@@ -144,7 +141,7 @@ const WelfareChart = () => {
             y={HEIGHT / 2}
             dy={10}
             transform={`rotate(-90 10,${HEIGHT / 2})`}
-            style={{ color: COLORS.ORANGE }}
+            style={{ color: COLORS.RED }}
           >
             Company profit change
           </AxisLabel>
@@ -153,7 +150,7 @@ const WelfareChart = () => {
             y={HEIGHT / 2}
             dy={10}
             transform={`rotate(90 ${WIDTH - 22},${HEIGHT / 2})`}
-            style={{ color: COLORS.BLUE }}
+            style={{ color: COLORS.DARK_GREEN }}
           >
             Worker income
           </AxisLabel>
@@ -183,13 +180,13 @@ const WelfareChart = () => {
           />
           <LinePlot
             graphData={ownerData}
-            stroke={COLORS.ORANGE}
+            stroke={COLORS.RED}
             strokeWidth={3}
             curve="curveLinear"
           />
           <LinePlot
             graphData={workerData}
-            stroke={COLORS.BLUE}
+            stroke={COLORS.DARK_GREEN}
             strokeWidth={3}
             yScale={workerYScale}
             curve="curveLinear"
@@ -198,32 +195,36 @@ const WelfareChart = () => {
             cx={xScale(socialOptimum)}
             cy={yScale(coOwnerProfit)}
             r={MARKER_RADIUS}
-            fill={COLORS.GREEN}
+            fill={COLORS.DARK_GRAY}
           />
           <circle
             cx={xScale(socialOptimum)}
             cy={workerYScale(coWorkerIncome)}
             r={MARKER_RADIUS}
-            fill={COLORS.GREEN}
+            fill={COLORS.DARK_GRAY}
           />
           <circle
             cx={xScale(marketOutcome)}
             cy={yScale(neOwnerProfit)}
             r={MARKER_RADIUS}
-            fill={COLORS.RED}
+            fill={COLORS.DARK_GRAY}
           />
           <circle
             cx={xScale(marketOutcome)}
             cy={workerYScale(neWorkerIncome)}
             r={MARKER_RADIUS}
-            fill={COLORS.RED}
+            fill={COLORS.DARK_GRAY}
           />
           <VerticalMarker
             x={socialOptimum}
-            color={COLORS.GREEN}
+            color={COLORS.DARK_GRAY}
             label="Coordinated"
           />
-          <VerticalMarker x={marketOutcome} color={COLORS.RED} label="Market" />
+          <VerticalMarker
+            x={marketOutcome}
+            color={COLORS.DARK_GRAY}
+            label="Market"
+          />
         </Graph>
       </div>
     </ColumnLayout>
