@@ -21,6 +21,9 @@ export interface WelfareChartData {
   yMin: number;
   yMax: number;
   yPad: number;
+  workerYMin: number;
+  workerYMax: number;
+  workerYPad: number;
 }
 
 export function useWelfareChartData(
@@ -30,37 +33,51 @@ export function useWelfareChartData(
   replacementRate: number,
   numFirms: number,
 ): WelfareChartData {
+  // Retraining/reemployment replaces a share of displaced workers' income,
+  // so it shrinks the demand loss itself, not just the income hit.
+  const effectiveDemandLoss = demandLoss * (1 - replacementRate);
+
   const ownerData = ALPHA_RANGE.map((a) => ({
     x: a,
-    y: ownerProfitChange(a, savings, demandLoss, difficulty),
+    y: ownerProfitChange(a, savings, effectiveDemandLoss, difficulty),
   }));
   const workerData = ALPHA_RANGE.map((a) => ({
     x: a,
     y: workerIncome(a, replacementRate),
   }));
 
-  const socialOptimum = alphaCO(savings, demandLoss, difficulty);
-  const marketOutcome = alphaNE(savings, demandLoss, numFirms, difficulty);
+  const socialOptimum = alphaCO(savings, effectiveDemandLoss, difficulty);
+  const marketOutcome = alphaNE(
+    savings,
+    effectiveDemandLoss,
+    numFirms,
+    difficulty,
+  );
 
   const coOwnerProfit = ownerProfitChange(
     socialOptimum,
     savings,
-    demandLoss,
+    effectiveDemandLoss,
     difficulty,
   );
   const neOwnerProfit = ownerProfitChange(
     marketOutcome,
     savings,
-    demandLoss,
+    effectiveDemandLoss,
     difficulty,
   );
   const coWorkerIncome = workerIncome(socialOptimum, replacementRate);
   const neWorkerIncome = workerIncome(marketOutcome, replacementRate);
 
-  const allY = [...ownerData.map((d) => d.y), ...workerData.map((d) => d.y)];
-  const yMin = Math.min(0, ...allY);
-  const yMax = Math.max(1, ...allY);
+  const ownerY = ownerData.map((d) => d.y);
+  const yMin = Math.min(0, ...ownerY);
+  const yMax = Math.max(1, ...ownerY);
   const yPad = (yMax - yMin) * Y_PAD_FACTOR;
+
+  const workerY = workerData.map((d) => d.y);
+  const workerYMin = Math.min(0, ...workerY);
+  const workerYMax = Math.max(1, ...workerY);
+  const workerYPad = (workerYMax - workerYMin) * Y_PAD_FACTOR;
 
   return {
     ownerData,
@@ -74,5 +91,8 @@ export function useWelfareChartData(
     yMin,
     yMax,
     yPad,
+    workerYMin,
+    workerYMax,
+    workerYPad,
   };
 }
