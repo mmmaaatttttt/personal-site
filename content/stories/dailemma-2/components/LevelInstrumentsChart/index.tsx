@@ -1,14 +1,13 @@
 "use client";
 
 import { scaleLinear } from "d3-scale";
-import { useState } from "react";
 import Axis from "@/components/story/shared/Axis";
 import AxisLabel from "@/components/story/shared/AxisLabel";
 import ColumnLayout from "@/components/story/shared/ColumnLayout";
 import Graph from "@/components/story/shared/Graph";
 import Legend from "@/components/story/shared/Legend";
 import LinePlot from "@/components/story/shared/LinePlot";
-import { LabeledSlider, SliderGroup } from "@/components/story/shared/Slider";
+import { SliderGroup } from "@/components/story/shared/Slider";
 import VerticalMarker from "@/components/story/shared/VerticalMarker";
 import useSliders from "@/hooks/useSliders";
 import COLORS from "@/utils/styles";
@@ -27,15 +26,34 @@ const xScale = scaleLinear()
   .domain([0, 1])
   .range([GRAPH_PADDING.left, WIDTH - GRAPH_PADDING.right]);
 
+const UBI_SLIDER = {
+  min: 0,
+  max: 1,
+  initialValue: DEFAULT_UBI_BENEFIT,
+  title: (val: number) => `UBI benefit: ${Math.round(val * 100)}%`,
+  color: COLORS.RED,
+};
+
+const CAPITAL_TAX_SLIDER = {
+  min: 0,
+  max: 1,
+  initialValue: DEFAULT_CAPITAL_TAX_RATE,
+  title: (val: number) => `Capital tax rate: ${Math.round(val * 100)}%`,
+  color: COLORS.DARK_GREEN,
+};
+
+const FULL_SLIDER_CONFIG = [
+  ...BASE_SLIDER_CONFIG,
+  UBI_SLIDER,
+  CAPITAL_TAX_SLIDER,
+];
+
 const LevelInstrumentsChart = () => {
-  const { values, sliderData } = useSliders(BASE_SLIDER_CONFIG);
+  const { values, sliderData } = useSliders(FULL_SLIDER_CONFIG);
   const [savings, demandLoss, difficulty] = values;
   const numFirms = Math.round(values[3]);
-
-  const [ubiBenefit, setUbiBenefit] = useState(DEFAULT_UBI_BENEFIT);
-  const [capitalTaxRate, setCapitalTaxRate] = useState(
-    DEFAULT_CAPITAL_TAX_RATE,
-  );
+  const ubiBenefit = values[4];
+  const capitalTaxRate = values[5];
 
   const {
     baselineData,
@@ -69,22 +87,6 @@ const LevelInstrumentsChart = () => {
     <ColumnLayout break="sm">
       <div className="flex h-full flex-col justify-center gap-4">
         <SliderGroup data={sliderData} />
-        <LabeledSlider
-          min={0}
-          max={1}
-          value={ubiBenefit}
-          handleValueChange={setUbiBenefit}
-          title={`UBI benefit: ${Math.round(ubiBenefit * 100)}%`}
-          color={COLORS.RED}
-        />
-        <LabeledSlider
-          min={0}
-          max={1}
-          value={capitalTaxRate}
-          handleValueChange={setCapitalTaxRate}
-          title={`Capital tax rate: ${Math.round(capitalTaxRate * 100)}%`}
-          color={COLORS.DARK_GREEN}
-        />
       </div>
       <div>
         <Legend
