@@ -21,9 +21,14 @@ describe("nashFormulaLatex", () => {
     expect(str).toContain("= 0.44");
   });
 
-  it("clamps the rate to 0 when savings are below the per-firm demand loss", () => {
+  it("shows the raw value and an arrow to the clamped rate when savings are below the per-firm demand loss", () => {
     const str = nashFormulaLatex(0.1, 0.4, 1, 2);
-    expect(str).toContain("= 0.00");
+    expect(str).toContain("= -0.10 \\rightarrow 0.00");
+  });
+
+  it("shows the raw value and an arrow to the clamped rate when the raw value exceeds 1", () => {
+    const str = nashFormulaLatex(1, 0, 0.1, 7);
+    expect(str).toContain("= 10.00 \\rightarrow 1.00");
   });
 });
 
@@ -45,8 +50,13 @@ describe("cooperativeFormulaLatex", () => {
     expect(str).toContain("= 0.10");
   });
 
-  it("clamps the rate to 0 when savings do not exceed the demand loss", () => {
+  it("shows the raw value and an arrow to the clamped rate when savings do not exceed the demand loss", () => {
     const str = cooperativeFormulaLatex(0.3, 0.4, 1);
-    expect(str).toContain("= 0.00");
+    expect(str).toContain("= -0.10 \\rightarrow 0.00");
+  });
+
+  it("shows the raw value and an arrow to the clamped rate when the raw value exceeds 1", () => {
+    const str = cooperativeFormulaLatex(1, 0, 0.1);
+    expect(str).toContain("= 10.00 \\rightarrow 1.00");
   });
 });
