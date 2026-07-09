@@ -2,7 +2,7 @@ import type { ArticleFrontmatter } from "@/utils/content";
 
 const meta: ArticleFrontmatter = {
   title: "d-AI-lemma (Part 2)",
-  date: "2026-07-18",
+  date: "2026-07-13",
   featured_image: "../../images/featured_images/dailemma-2.jpg",
   caption:
     "What happens when we take collective action towards avoiding the worst impacts of AI? The answer may depress you.",
