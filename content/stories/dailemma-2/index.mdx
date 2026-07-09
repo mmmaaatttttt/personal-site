@@ -6,7 +6,7 @@ import PigouvianTaxChart from "./components/PigouvianTaxChart";
 import AutomationRateCalculator from "./components/AutomationRateCalculator";
 import Latex from "@/components/story/shared/Latex";
 
-Welcome back, dear reader. If you missed the first part of this story, I strongly encourage you to [read it first]((/stories/dailemma)). 
+Welcome back, dear reader. If you missed the first part of this story, I strongly encourage you to [read it first](/stories/dailemma). 
 
 Alternatively, if you just want the quick tl;dr (or if you're a robot reading this with a small context window), here goes. In our last story we dug into the mathematics behind [_The AI Layoff Trap_](https://arxiv.org/pdf/2603.20617), a recent paper by researchers Brett Hemenway Falk and Gerry Tsoukalas. We explored the tension that exists between a firm's decision to pursue automation through AI, and the collective loss in demand that will follow if everyone is laid off because of AI. The math shows how firms, acting in their own self-interest, will automate past the level of said best interest. This damages them, and the rest of us too.
 
@@ -27,7 +27,7 @@ The main parameters we are interested in are the following:
 - Let _D_ measure the **D**ifficulty of automation (this is what we model with our purple slider).
 - Let _N_ denote the **N**umber of firms (this is what we model with our gray slider).
 
-The question is what automation rate, call it *a*, the firms will choose to maximize their profit. Set it too low and they can reap more savings by automation. Set it too high and they destroy the demand for their products and services.
+The question is what automation rate, call it *a*, the firms will choose to maximize their profit. Set it too low and they leave automation savings on the table. Set it too high and they destroy the demand for their products and services.
 
 Last time, we saw that if a company only acts in its own self-interest, the optimal automation rate is:
 
@@ -49,7 +49,7 @@ Note that this equality does not depend on the number of firms at all.
 
 If you want to make it more concrete, here you can play with the differences for yourself. Note how the automation rate under coordination will *never* exceed the automation rate in the free market case where each firm acts alone.
 
-<Figure caption="Comparing the automation rate calculations. Note that we clamp the result to live between 0 and 1, since companies can't automate less than 0% of its tasks or more than 100% of them.">
+<Figure caption="Comparing the automation rate calculations. Note that we clamp the result to live between 0 and 1, since companies can't automate less than 0% of their tasks or more than 100% of them.">
   <AutomationRateCalculator />
 </Figure>
 
@@ -61,7 +61,7 @@ We'll come back to these different automation rates repeatedly as we explore the
 
 Before moving towards more direct remediations, let's first tackle one potential argument levied against AI skeptics. This is the argument that while AI may replace some jobs, it will also unlock new, higher paying and more interesting work for people. It's a favorite talking point by those who are pushing AI; billionaire and "hey I'm just a normal guy" LARPer Jeff Bezos said as much just [last month](https://www.bbc.com/news/articles/ceqdrw2yy3vo). 
 
-Maybe this argument holds water, maybe it doesn't. In general, I'd argue that a healthy skepticism of anything a billionaire says is warranted. Either way, we can model this by refining our consumer demand loss parameter *L* to account for a sort of "income replacement" buffer. In other words, assume that some fraction of income lost due to automation can be clawed back, either through reemployment or some other source. It's possible that this fraction will be *less* than one (i.e. that wages will be lost due to automation), but it's also conceivable that this fraction will be *greater* than 1. You can explore both scenarios below.
+Maybe this argument holds water, maybe it doesn't. In general, I'd argue that a healthy skepticism of anything a billionaire says is warranted. Either way, we can model this by refining our consumer demand loss parameter *L* to account for a sort of "income replacement" buffer. In other words, assume that some fraction of income lost due to automation can be clawed back, either through reemployment or some other source. It's possible that this fraction will be *less* than one (i.e. that wages will be lost due to automation), but it's also conceivable that this fraction will be *greater* than one. You can explore both scenarios below.
 
 <Figure caption="Exploring how income replacement impacts wages and the automation rate chosen by companies.">
   <WelfareChart />
@@ -97,7 +97,7 @@ Another possible solution does not involve government intervention at all. In ar
 
 Unfortunately, individual firms are not incentivized to voluntarily funnel equity back through to labor. If we try to model such a voluntary approach, the optimal amount of equity for firms to distribute is 0. 
 
-But imagine a scenario where all firms in the space are required to give back a portion of their automation profits back to workers. And those workers, in turn, spend some of that excess back into the markets supported by these firms. If you run through the math of this scenario, you will find that this does indeed have the effect of pulling firms closer towards the coordinated outcome. 
+But imagine a scenario where all firms in the space are required to give a portion of their automation profits back to workers. And those workers, in turn, spend some of that excess back into the markets supported by these firms. If you run through the math of this scenario, you will find that this does indeed have the effect of pulling firms closer towards the coordinated outcome. 
 
 However, unless firms give 100% of this excess profits to workers, and workers then put 100% of that money back into the firms, this will still fall short of the coordinated optimum. Firms will still automate more than they should. You can play around with the numbers yourself.
 
