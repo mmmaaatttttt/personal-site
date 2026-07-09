@@ -33,8 +33,9 @@ export const BASE_SLIDER_CONFIG: SliderInitialData[] = [
     color: COLORS.BLUE,
   },
   {
-    min: 0.2,
+    min: 0.1,
     max: 3,
+    step: 0.1,
     initialValue: DEFAULT_DIFFICULTY,
     storageKey: DIFFICULTY_KEY,
     title: (val: number) => `How hard it is to automate: ${val.toFixed(1)}`,
