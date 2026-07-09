@@ -39,7 +39,7 @@ const EQUITY_SHARE_SLIDER = {
 };
 
 const SECTOR_SPENDING_SLIDER = {
-  min: 0.1,
+  min: 0,
   max: 1,
   initialValue: DEFAULT_SECTOR_SPENDING,
   title: (val: number) =>
