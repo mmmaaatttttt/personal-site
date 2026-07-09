@@ -10,7 +10,7 @@ import LinePlot from "@/components/story/shared/LinePlot";
 import { SliderGroup } from "@/components/story/shared/Slider";
 import VerticalMarker from "@/components/story/shared/VerticalMarker";
 import useSliders, { type SliderInitialData } from "@/hooks/useSliders";
-import COLORS from "@/utils/styles";
+import COLORS, { hexToRgba } from "@/utils/styles";
 import { BASE_SLIDER_CONFIG } from "../../sliderConfig";
 import { useCoalitionData } from "./useCoalitionData";
 
@@ -82,6 +82,21 @@ const CoalitionChart = () => {
     .domain([yMin - yPad, yMax + yPad])
     .range([HEIGHT - GRAPH_PADDING.bottom, GRAPH_PADDING.top]);
 
+  const wedgeMin = Math.min(
+    coordinatedOutcome,
+    marketOutcome,
+    coalitionOutcome,
+  );
+  const wedgeMax = Math.max(
+    coordinatedOutcome,
+    marketOutcome,
+    coalitionOutcome,
+  );
+  const trapX = xScale(wedgeMin);
+  const trapWidth = xScale(wedgeMax) - xScale(wedgeMin);
+  const trapY = GRAPH_PADDING.top;
+  const trapHeight = HEIGHT - GRAPH_PADDING.top - GRAPH_PADDING.bottom;
+
   return (
     <ColumnLayout break="sm">
       <div className="flex h-full flex-col justify-center">
@@ -134,6 +149,13 @@ const CoalitionChart = () => {
           >
             Share of jobs automated
           </AxisLabel>
+          <rect
+            x={trapX}
+            y={trapY}
+            width={trapWidth}
+            height={trapHeight}
+            fill={hexToRgba(COLORS.RED, 0.06)}
+          />
           <line
             x1={GRAPH_PADDING.left}
             x2={WIDTH - GRAPH_PADDING.right}
