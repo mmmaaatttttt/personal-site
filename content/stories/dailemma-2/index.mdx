@@ -8,7 +8,7 @@ import Latex from "@/components/story/shared/Latex";
 
 Welcome back, dear reader. If you missed the first part of this story, I strongly encourage you to check it out first. You can read the whole thing [here](/stories/dailemma). 
 
-Alternatively, if you just want the quick tl;dr (or if you're a robot reading this with a small context window), here goes. In our last story we dug into the mathematics behind [_The AI Layoff Trap_](https://arxiv.org/pdf/2603.20617), a recent paper by researchers Brett Hemenway Falk and Gerry Tsoukalas. We explored the tension that exists between a firm's decision to pursue automation through AI, and the collective loss in demand that will follow if everyone is laid off because of AI. The math shows how firms, acting in their own self interest, will automate past the level of said best interest. This damages them, and the rest of us too.
+Alternatively, if you just want the quick tl;dr (or if you're a robot reading this with a small context window), here goes. In our last story we dug into the mathematics behind [_The AI Layoff Trap_](https://arxiv.org/pdf/2603.20617), a recent paper by researchers Brett Hemenway Falk and Gerry Tsoukalas. We explored the tension that exists between a firm's decision to pursue automation through AI, and the collective loss in demand that will follow if everyone is laid off because of AI. The math shows how firms, acting in their own self-interest, will automate past the level of said best interest. This damages them, and the rest of us too.
 
 Here, I'd like to move from the problem to the solutions. Don't worry, it's not all doom and gloom. It's just mostly doom and gloom.
 
@@ -27,7 +27,7 @@ The main parameters we are interested in are the following:
 - Let _D_ measure the **D**ifficulty of automation (this is what we model with our purple slider).
 - Let _N_ denote the **N**umber of firms (this is what we model with our gray slider).
 
-The question is what automation rate, call it *a*, the firms will choose. If a company only acts in its own self interest and thinks about its own behavior, the optimal rate is:
+The question is what automation rate, call it *a*, the firms will choose. If a company only acts in its own self-interest and thinks about its own behavior, the optimal rate is:
 
 <Latex
   displayMode
@@ -57,15 +57,15 @@ We'll come back to these different automation rates repeatedly as we explore the
 
 ### Train the Machines, Retrain the People
 
-Before moving towards more direct remediations, let's first tackle one potential argument levvied against AI skeptics. This is the argument that while AI may replace some jobs, it will also unlock new, higher paying and more interesting work for human labor. It's a favorite talking point by those who are pushing AI; billionaire and "hey I'm just a normal guy" LARPer Jeff Bezos said as much just [last month](https://www.bbc.com/news/articles/ceqdrw2yy3vo). 
+Before moving towards more direct remediations, let's first tackle one potential argument levied against AI skeptics. This is the argument that while AI may replace some jobs, it will also unlock new, higher paying and more interesting work for human labor. It's a favorite talking point by those who are pushing AI; billionaire and "hey I'm just a normal guy" LARPer Jeff Bezos said as much just [last month](https://www.bbc.com/news/articles/ceqdrw2yy3vo). 
 
 Maybe this argument holds water, maybe it doesn't. Either way, we can model this by refining our consumer demand loss parameter L to account for a sort of "income replacement" buffer. In other words, assume that some fraction of income lost due to automation can be clawed back, either through reemployment or some other source. It's possible that this fraction will be *less* than one (i.e. that wages will be lost due to automation), but it's also conceivable that this fraction will be *greater* than 1. You can explore both scenarios below.
 
-<Figure caption="Exploring how incomple replacement impacts wages and the automation rate chosen by companies.">
+<Figure caption="Exploring how income replacement impacts wages and the automation rate chosen by companies.">
   <WelfareChart />
 </Figure>
 
-Regardless of whether income replacement is greater or less than the status quo, this argument does not address the main problem uncovered in the previous story. Companies that don't coordinate will still choose a sub-optimal automation rate. Consequently, workers will either lose *more* income than they should, or their increase will be *less* than it otherwise could be. This is because the income replacement buffer only affects the value of *L*. It does nothing to account for the fact that in the free market case, companies are not correctly accounting for the full cost of automation.
+Regardless of whether income replacement is greater or less than the amount lost to automation, this argument does not address the main problem uncovered in the previous story. Companies that don't coordinate will still choose a sub-optimal automation rate. Consequently, workers will either lose *more* income than they should, or their increase will be *less* than it otherwise could be. This is because the income replacement buffer only affects the value of *L*. It does nothing to account for the fact that in the free market case, companies are not correctly accounting for the full cost of automation.
 
 --- 
 
@@ -73,11 +73,11 @@ Regardless of whether income replacement is greater or less than the status quo,
 
 Another policy proposal that often comes up in conversations around AI is Universal Basic Income, or UBI. This is the idea that if we are going to automate work away, we should invest in a stronger social safety net, and pay everyone a minimum income to support their basic necessities. 
 
-A related, and perhaps more conventional, approach, is to simply tax the profits on these firms and redistribute the money to the general population. The main difference here is that UBI is a more general policy proposal. One can pay for UBI via increased taxes on corporations, not getting involved in foreign wars that nobody wanted in the first place, or through many other avenues. The capital tax on firms adopting AI is more targeted.
+A related, and perhaps more conventional approach, is to simply tax the profits on these firms and redistribute the money to the general population. The main difference here is that UBI is a more general policy proposal. One can pay for UBI via increased taxes on corporations, not getting involved in foreign wars that nobody wanted in the first place, or through many other avenues. The capital tax on firms adopting AI is more targeted.
 
-Again, while these policies may help in some ways, neither one of them move the needle at all when it comes to nudging companies to chill out on their AI adoption.
+Again, while these policies may help in some ways, neither one of them moves the needle at all when it comes to nudging companies to chill out on their AI adoption.
 
-For example, consider the case where the savings rate is 50%, the demand loss rate is 30%, and the automation difficulty is 0.5. In this scenario, as long as there are more than 2 firms in the space, companies actually *lose* money via automation at the free market rate. Had they coordinated, they would have made a profit. Moreover, while UBI increases profits by putting more money into the pockets of consumers, it doesn't shift corporate behavior at all. Neither does the tax; it reduces profits, or reduces losses, but either way does not change behavior. Neither one of these changes impacts the optimal automation rate.
+For example, consider the case where the savings rate is 50%, the demand loss rate is 30%, and the automation difficulty is 0.5. In this scenario, as long as there are more than three firms in the space, companies actually *lose* money via automation at the free market rate. Had they coordinated, they would have made a profit. Moreover, while UBI increases profits by putting more money into the pockets of consumers, it doesn't shift corporate behavior at all. Neither does the tax; it reduces profits, or reduces losses, but either way does not change behavior. Neither one of these changes impacts the optimal automation rate.
 
 Play around with the sliders for UBI and tax and see for yourself.
 
@@ -89,19 +89,19 @@ Play around with the sliders for UBI and tax and see for yourself.
 
 ### Profit to the People
 
-Another possible solution the authors consider does not involve government intervention at all. In areas where labor unions still have power, it's possible to force companies to distribute some of this profit to their workers directly. This is [already happening](https://www.ibtimes.com/samsung-ai-chip-workers-secure-massive-bonuses-after-strike-threat-south-korea-3803458); recently, workers in South Korea secured a significant windfall from Samsung. The did it by threatening to strike unless they saw a bigger piece of the AI chip pie.
+Another possible solution the authors consider does not involve government intervention at all. In areas where labor unions still have power, it's possible to force companies to distribute some of this profit to their workers directly. This is [already happening](https://www.ibtimes.com/samsung-ai-chip-workers-secure-massive-bonuses-after-strike-threat-south-korea-3803458); recently, workers in South Korea secured a significant windfall from Samsung. They did it by threatening to strike unless they saw a bigger piece of the AI chip pie.
 
-Unfortunately, individual firms are not incentivized to voluntairly funnel equity back through to labor. If we try to model such a voluntary approach, the optimal amount of equity for firms to distribute is 0. 
+Unfortunately, individual firms are not incentivized to voluntarily funnel equity back through to labor. If we try to model such a voluntary approach, the optimal amount of equity for firms to distribute is 0. 
 
 But imagine a scenario where all firms in the space are required to give back a portion of their automation profits back to workers. And those workers, in turn, spend some of that excess back into the markets supported by these firms. If you run through the math of this scenario, you will find that this does indeed have the effect of pulling firms closer towards the coordinated outcome. 
 
 However, unless firms give 100% of this excess profits to workers, and workers then put 100% of that money back into the firms, this will still fall short of the coordinated optimum. Firms will still automate more than they should. You can play around with the numbers yourself.
 
-<Figure caption="Giving workers equity back can help buffer an firm's AI aspirations, but it's not as effective as a coordinated approach.">
+<Figure caption="Giving workers equity back can help buffer a firm's AI aspirations, but it's not as effective as a coordinated approach.">
   <WorkerEquityChart />
 </Figure>
 
-You may have noticed from exploration that getting anywhere close to the coordinated outcome is not plausible. For example, even if companies give 100% equity and workers funnel 50% of that equity back into the market, the optimal automation rate is *much* closer to the free market rate than the coordinated rate. In most real-world scenarios, this structure would likely make only minimal impact to a firm's choice of automation rate.
+You may have noticed from exploration that getting anywhere close to the coordinated outcome is not plausible. For example, even if companies give 100% equity and workers spend 50% of their share back into the market (both very generous assumptions), the optimal automation rate is *much* closer to the free market rate than the coordinated rate. In most real-world scenarios, this structure would likely have only minimal impact to a firm's choice of automation rate.
 
 ---
 
@@ -111,13 +111,13 @@ Another case the authors consider is one of partial coordination. Maybe having a
 
 At first, this might appear like a useful compromise, similar to the worker equity solution described above. Here's a model for you to explore. In this scenario, given a number of firms *N*, you can choose to have a subset of them coordinate and set their optimal automation rate together. The model assumes that any firm not in this cute little oligopoly will continue to act in its own self-interest.
 
-<Figure caption="Adjust the bottom slider to form a coalition amongst the firms. Note that as the coalition size increases, the closer the automation rate gets to the fully coordinated one.">
+<Figure caption="Adjust the bottom slider to form a coalition amongst the firms. Note that as the coalition size increases, the automation rate gets closer to the fully coordinated one.">
   <CoalitionChart />
 </Figure>
 
-As you might expect, if the coalition size is equal to the number of firms, this reduces to the coordination case we've previously discussed. But this model also shows that smaller coalitions also provide a buffer from overly automating.
+As you might expect, if the coalition size is equal to the number of firms, this reduces to the coordination case we've previously discussed. But this model also shows that smaller coalitions also provide a buffer from over-automation.
 
-Finally, a moderately happy ending. Right? Well, not so fast. The downside with these coalitions is the same downside we saw in our last story with firms trying to coordinate. Any firm in a coalition, even one that includes every other firm, will always be incentivized to automate *past* the agreed upon rate. The underlying logic is the same as in the Prisoner's Dilemma example we considered [last time](stories/dailemma/#imprisoned-by-automation). 
+Finally, a moderately happy ending. Right? Well, not so fast. The downside with these coalitions is the same downside we saw in our last story with firms trying to coordinate. Any firm in a coalition, even one that includes every other firm, will always be incentivized to automate *past* the agreed upon rate. The underlying logic is the same as in the Prisoner's Dilemma example we considered [last time](/stories/dailemma#imprisoned-by-automation). 
 
 Put simply, these coalitions are brittle. Every firm will be incentivized to automate past the agreed upon rate. But if every firm does this, we degenerate back to the free market case. 
 
@@ -129,7 +129,7 @@ Earlier we saw that a tax on profits doesn't actually change the optimal automat
 
 In a world of perfect information, we know both the automation rate each firm chooses, and the optimal automation rate under a coordinated approach. For instance, let's revisit our earlier example of a 50% savings rate and a 30% demand loss rate, combined with a 0.5 automation difficulty. Under these conditions, the ideal automation rate under a coordinated strategy is 40%. But with 10 firms, the free market automation rate will reach 94%! 
 
-Imagine now that we levy a tax on any firm that automates, and that tax (call it *T*) is proportinal to the automation rate itself. This disincentivizes inflating the automation rate, because higher automation rates now cost more real dollars up front. In fact, this changes the equations of the optimal automation rates to be:
+Imagine now that we levy a tax on any firm that automates, and that tax (call it *T*) is proportional to the automation rate itself. This disincentivizes inflating the automation rate, because higher automation rates now cost more real dollars up front. In fact, this changes the equations of the optimal automation rates to be:
 
 <Latex
   displayMode
@@ -138,9 +138,9 @@ Imagine now that we levy a tax on any firm that automates, and that tax (call it
 
 in the free market case.
 
-In other words, this gives us another independent parameter to fiddle with. And we can therefore get the free market rate to exactly equal the automation rate by setting *T* = *L(1-1/N)*. Let's call this the optimal tax rate, since it is the point at which the tax rate ensures that the free market automation rate equals the coordinated automation rate.
+In other words, this gives us another independent parameter to fiddle with. And we can therefore get the free market rate to exactly equal the coordinated automation rate by setting *T* = *L(1-1/N)*. Let's call this the optimal tax rate, since it is the point at which the tax rate ensures that the free market automation rate equals the coordinated automation rate.
 
-Revisiting our earlier example, with a demand loss rate of 30% and 10 firms, this gives a tax rate of 0.3 * 0.9, or 27%. At that rate, firms should naturally choose the coordinated rate, and firms will maximize their profits. Below this rate, firms will overshoot and automate too much. Above this rate, firms will be incentivized to automate even less; this hurts their profits but also keeps the wages of labor higher.
+Revisiting our earlier example, with a demand loss rate of 30% and 10 firms, this gives a tax rate of 0.3 * 0.9, or 27%. At that rate, firms should naturally choose the coordinated rate, and firms will maximize their profits. Below this rate, firms will overshoot and automate too much. Above this rate, firms will be incentivized to automate even less; this hurts their profits but also keeps the aggregate worker income highet.
 
 You can explore these ideas below. The last slider represents what fraction of this optimal tax rate is actually levied on companies. Put another way, at 100%, you will always have the free market and coordinated rates overlap.
 
@@ -148,7 +148,7 @@ You can explore these ideas below. The last slider represents what fraction of t
   <PigouvianTaxChart />
 </Figure>
 
-This type of tax is referred to as a [Pigouvian Tax](https://en.wikipedia.org/wiki/Pigouvian_tax), named for the economist who popularized it in the literature. It often comes up in the context of pollution or other negative externalities that aren't accounted for by default in the free market. These types of taxes try to fold these externalities into the market by pricing them. In this case, overshooting the automation rate is a market inefficienty, which in principle a tax like this can help to correct.
+This type of tax is referred to as a [Pigouvian Tax](https://en.wikipedia.org/wiki/Pigouvian_tax), named for the economist who popularized it in the literature. It often comes up in the context of pollution or other negative externalities that aren't accounted for by default in the free market. These types of taxes try to fold these externalities into the market by pricing them. In this case, overshooting the automation rate is a market inefficiency, which in principle a tax like this can help to correct.
 
 ---
 
@@ -158,7 +158,7 @@ We've now arrived at the end of our journey. We've seen taxes, and redistributio
 
 But if you ask me, there's still a silver lining here. While a tax on AI may not be in the cards, AI companies themselves are effectively slowing AI adoption through their own pricing. This has less to do with tax schemes and more to do with simple supply and demand. As LLMs get more expensive, and pricing moves away from heavily subsidized flat monthly rates, adoption is slowing. Put simply, the more you have to pay for automation, the less you will automate.
 
-We're already seeing the impact of these changes across a variety of big companies. Uber recently [capped AI usage](https://techcrunch.com/2026/06/02/uber-caps-employee-ai-spending-after-blowing-through-budget-in-four-months/) to $1,500 per employee per month, after burning through its entire 2026 AI budget in four months. Tesla has introduced an [even more modest](https://electrek.co/2026/07/02/tesla-caps-employee-ai-spending-200-week/) $200 per week. And many other companies are clamping down on third party AI models, citing cost concerns.
+We're already seeing the impact of these changes across a variety of big companies. Uber recently [capped AI usage](https://techcrunch.com/2026/06/02/uber-caps-employee-ai-spending-after-blowing-through-budget-in-four-months/) to $1,500 per employee per month, after burning through its entire 2026 AI budget in four months. Tesla has introduced an [even more modest](https://electrek.co/2026/07/02/tesla-caps-employee-ai-spending-200-week/) $200 per week. And many other companies are clamping down on third-party AI models, citing cost concerns.
 
 Will AI automation be hoisted by its own economic petard? At the very minimum, one can only hope this will temper the hype train, and bring these tools down from the realm of gods to the realm of fallible but sometimes useful tools, just like every other tool that humans have developed.
 
