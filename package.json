@@ -38,7 +38,7 @@
     "next": "16.2.9",
     "odex": "^3.0.0-rc.4",
     "react": "19.2.3",
-    "react-dom": "19.2.3",
+    "react-dom": "19.2.7",
     "react-email": "^6.6.4",
     "react-select": "^5.10.2",
     "tailwind-merge": "^3.6.0",
