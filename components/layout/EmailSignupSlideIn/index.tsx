@@ -38,11 +38,12 @@ const EmailSignupSlideIn: FC = () => {
           onClick={() => setDismissedAt(Date.now())}
           aria-label="Dismiss email signup"
           data-umami-event={EMAIL_SIGNUP_DISMISSED_EVENT}
+          data-umami-event-source="slideIn"
           className="absolute right-2 top-2 text-gray-400 hover:text-gray-600"
         >
           <X size={16} />
         </button>
-        <EmailSignup />
+        <EmailSignup source="slideIn" />
       </div>
     </div>
   );

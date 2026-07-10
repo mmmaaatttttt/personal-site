@@ -47,7 +47,7 @@ describe("StoryCard", () => {
     render(<StoryCard {...baseProps} />);
     expect(screen.getByRole("link")).toHaveAttribute(
       "href",
-      "/stories/test-story/",
+      "/stories/test-story",
     );
   });
 

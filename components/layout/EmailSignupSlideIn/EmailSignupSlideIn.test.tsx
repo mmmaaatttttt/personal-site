@@ -89,10 +89,12 @@ describe("EmailSignupSlideIn", () => {
   it("tags the dismiss button with the umami tracking attribute", () => {
     render(<EmailSignupSlideIn />);
     scrollPastThreshold();
-    expect(screen.getByRole("button", { name: /dismiss/i })).toHaveAttribute(
+    const dismissButton = screen.getByRole("button", { name: /dismiss/i });
+    expect(dismissButton).toHaveAttribute(
       "data-umami-event",
       EMAIL_SIGNUP_DISMISSED_EVENT,
     );
+    expect(dismissButton).toHaveAttribute("data-umami-event-source", "slideIn");
   });
 
   it("stays hidden on a later visit within the dismiss cooldown window", () => {

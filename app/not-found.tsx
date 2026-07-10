@@ -28,7 +28,7 @@ export default async function NotFound() {
         </p>
 
         <Link
-          href={`/stories/${latest.slug}/`}
+          href={`/stories/${latest.slug}`}
           className="group w-full max-w-sm text-center"
         >
           <h3 className="mb-4 font-serif text-2xl font-bold group-hover:text-link transition-colors duration-200">
