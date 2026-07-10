@@ -5,10 +5,15 @@ on:
     workflows: [Deploy]
     types: [completed]
     branches: [main]
+  workflow_dispatch:
+    inputs:
+      slug:
+        description: "Story slug to (re-)send the newsletter for, e.g. dailemma-2"
+        required: true
 
 jobs:
   send:
-    if: github.event.workflow_run.conclusion == 'success'
+    if: github.event_name == 'workflow_dispatch' || github.event.workflow_run.conclusion == 'success'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6
@@ -22,12 +27,17 @@ jobs:
       - name: Detect new story
         id: story
         run: |
-          NEW_META=$(git diff --name-only --diff-filter=A HEAD~1 HEAD -- 'content/stories/*/meta.ts' | head -1)
-          if [ -z "$NEW_META" ]; then
-            echo "skip=true" >> $GITHUB_OUTPUT
-            exit 0
+          if [ -n "${{ github.event.inputs.slug }}" ]; then
+            SLUG="${{ github.event.inputs.slug }}"
+            NEW_META="content/stories/$SLUG/meta.ts"
+          else
+            NEW_META=$(git diff --name-only --diff-filter=A HEAD~1 HEAD -- 'content/stories/*/meta.ts' | head -1)
+            if [ -z "$NEW_META" ]; then
+              echo "skip=true" >> $GITHUB_OUTPUT
+              exit 0
+            fi
+            SLUG=$(echo "$NEW_META" | sed 's|content/stories/\(.*\)/meta.ts|\1|')
           fi
-          SLUG=$(echo "$NEW_META" | sed 's|content/stories/\(.*\)/meta.ts|\1|')
           META_JSON=$(npx tsx scripts/extract-story-meta.ts "$NEW_META")
           echo "slug=$SLUG" >> $GITHUB_OUTPUT
           echo "meta=$META_JSON" >> $GITHUB_OUTPUT
