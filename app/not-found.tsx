@@ -2,20 +2,12 @@ import Image from "next/image";
 import Link from "next/link";
 import MainLayout from "@/components/layout/MainLayout";
 import placeholders from "@/lib/imagePlaceholders.json";
-import { storyMeta } from "@/utils/storyMeta";
+import { getLatestStory } from "@/utils/content";
 import { normalizeImagePath } from "@/utils/stringHelpers";
 
-function getLatestStory() {
-  const entries = Object.entries(storyMeta);
-  const [slug, meta] = entries.sort(
-    ([, a], [, b]) => new Date(b.date).getTime() - new Date(a.date).getTime(),
-  )[0];
-  return { slug, meta };
-}
-
-export default function NotFound() {
-  const { slug, meta } = getLatestStory();
-  const imagePath = normalizeImagePath(meta.featured_image);
+export default async function NotFound() {
+  const latest = await getLatestStory();
+  const imagePath = normalizeImagePath(latest.featured_image);
   const blurDataURL = (placeholders as Record<string, string>)[imagePath];
 
   return (
@@ -36,23 +28,23 @@ export default function NotFound() {
         </p>
 
         <Link
-          href={`/stories/${slug}`}
+          href={`/stories/${latest.slug}`}
           className="group w-full max-w-sm text-center"
         >
           <h3 className="mb-4 font-serif text-2xl font-bold group-hover:text-link transition-colors duration-200">
-            {meta.title}
+            {latest.title}
           </h3>
           <div className="relative mx-auto aspect-video w-full overflow-hidden rounded-lg">
             <Image
               src={imagePath}
-              alt={meta.caption}
+              alt={latest.caption}
               fill
               className="object-cover transition-transform duration-300 group-hover:scale-105"
               placeholder={blurDataURL ? "blur" : "empty"}
               blurDataURL={blurDataURL}
             />
           </div>
-          <p className="mt-3 text-sm text-gray-500">{meta.caption}</p>
+          <p className="mt-3 text-sm text-gray-500">{latest.caption}</p>
         </Link>
       </div>
     </MainLayout>

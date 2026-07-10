@@ -17,12 +17,10 @@ describe("WelfareChart", () => {
     expect(screen.getAllByText(/worker income/i).length).toBeGreaterThan(0);
   });
 
-  it("shows plain-English coordinated outcome and market outcome labels", () => {
+  it("shows coordinated and market vertical marker labels", () => {
     render(<WelfareChart />);
-    expect(screen.getByText(/coordinated outcome/i)).toBeInTheDocument();
-    expect(
-      screen.getAllByText(/market outcome/i).length,
-    ).toBeGreaterThanOrEqual(1);
+    expect(screen.getByText("Coordinated")).toBeInTheDocument();
+    expect(screen.getByText("Market")).toBeInTheDocument();
   });
 
   it("renders five slider inputs", () => {

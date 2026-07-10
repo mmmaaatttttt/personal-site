@@ -12,84 +12,107 @@ import VerticalMarker from "@/components/story/shared/VerticalMarker";
 import useSliders from "@/hooks/useSliders";
 import COLORS, { hexToRgba } from "@/utils/styles";
 import { BASE_SLIDER_CONFIG } from "../../sliderConfig";
-import { useWelfareChartData } from "./useWelfareChartData";
+import { useWorkerEquityData } from "./useWorkerEquityData";
 
 const WIDTH = 600;
 const HEIGHT = 400;
 const GRAPH_PADDING = { top: 24, bottom: 50, left: 65, right: 80 };
 const AXIS_FONT = "11px";
 const MARKER_RADIUS = 6;
-const DEFAULT_REPLACEMENT_RATE = 0.3;
+const DEFAULT_EQUITY_SHARE = 0;
+const DEFAULT_SECTOR_SPENDING = 0;
 
 const xScale = scaleLinear()
   .domain([0, 1])
   .range([GRAPH_PADDING.left, WIDTH - GRAPH_PADDING.right]);
 
-const UPSKILLING_SLIDER = {
+const workerYScale = scaleLinear()
+  .domain([0, 1])
+  .range([HEIGHT - GRAPH_PADDING.bottom, GRAPH_PADDING.top]);
+
+const EQUITY_SHARE_SLIDER = {
   min: 0,
-  max: 2,
-  initialValue: DEFAULT_REPLACEMENT_RATE,
-  title: (val: number) =>
-    `Share of income replaced (benefits, retraining): ${Math.round(val * 100)}%`,
+  max: 1,
+  initialValue: DEFAULT_EQUITY_SHARE,
+  title: (val: number) => `Worker equity share: ${Math.round(val * 100)}%`,
   color: COLORS.BLACK,
 };
 
-const FULL_SLIDER_CONFIG = [...BASE_SLIDER_CONFIG, UPSKILLING_SLIDER];
+const SECTOR_SPENDING_SLIDER = {
+  min: 0,
+  max: 1,
+  initialValue: DEFAULT_SECTOR_SPENDING,
+  title: (val: number) =>
+    `Fraction of income spent in sector: ${Math.round(val * 100)}%`,
+  color: COLORS.BLACK,
+};
 
-const WelfareChart = () => {
+const FULL_SLIDER_CONFIG = [
+  ...BASE_SLIDER_CONFIG,
+  EQUITY_SHARE_SLIDER,
+  SECTOR_SPENDING_SLIDER,
+];
+
+const WorkerEquityChart = () => {
   const { values, sliderData } = useSliders(FULL_SLIDER_CONFIG);
-
   const [savings, demandLoss, difficulty] = values;
   const numFirms = Math.round(values[3]);
-  const replacementRate = values[4];
+  const equityShare = values[4];
+  const sectorSpending = values[5];
 
   const {
     ownerData,
     workerData,
-    socialOptimum,
-    marketOutcome,
+    coordinatedOutcome,
+    baselineMarketOutcome,
+    equityMarketOutcome,
     coOwnerProfit,
-    neOwnerProfit,
     coWorkerIncome,
-    neWorkerIncome,
+    baselineNeOwnerProfit,
+    baselineNeWorkerIncome,
+    equityNeOwnerProfit,
+    equityNeWorkerIncome,
     yMin,
     yMax,
     yPad,
-    workerYMin,
-    workerYMax,
-    workerYPad,
-  } = useWelfareChartData(
+  } = useWorkerEquityData(
     savings,
     demandLoss,
-    difficulty,
-    replacementRate,
     numFirms,
+    difficulty,
+    equityShare,
+    sectorSpending,
   );
 
   const yScale = scaleLinear()
     .domain([yMin - yPad, yMax + yPad])
     .range([HEIGHT - GRAPH_PADDING.bottom, GRAPH_PADDING.top]);
 
-  const workerYScale = scaleLinear()
-    .domain([workerYMin - workerYPad, workerYMax + workerYPad])
-    .range([HEIGHT - GRAPH_PADDING.bottom, GRAPH_PADDING.top]);
-
-  const zeroY = yScale(0);
-  const trapX = xScale(Math.min(socialOptimum, marketOutcome));
-  const trapWidth = Math.abs(xScale(marketOutcome) - xScale(socialOptimum));
+  const wedgeMin = Math.min(
+    coordinatedOutcome,
+    baselineMarketOutcome,
+    equityMarketOutcome,
+  );
+  const wedgeMax = Math.max(
+    coordinatedOutcome,
+    baselineMarketOutcome,
+    equityMarketOutcome,
+  );
+  const trapX = xScale(wedgeMin);
+  const trapWidth = xScale(wedgeMax) - xScale(wedgeMin);
   const trapY = GRAPH_PADDING.top;
   const trapHeight = HEIGHT - GRAPH_PADDING.top - GRAPH_PADDING.bottom;
 
   return (
     <ColumnLayout break="sm">
-      <div className="flex flex-col justify-center h-full">
+      <div className="flex h-full flex-col justify-center">
         <SliderGroup data={sliderData} />
       </div>
       <div>
         <Legend
           labels={[
-            { text: "Company profits", color: COLORS.ORANGE },
-            { text: "Worker income", color: COLORS.BLUE },
+            { text: "Company profits", color: COLORS.RED },
+            { text: "Worker income", color: COLORS.DARK_GREEN },
           ]}
         />
         <Graph
@@ -97,7 +120,7 @@ const WelfareChart = () => {
           graphPadding={GRAPH_PADDING}
           height={HEIGHT}
           width={WIDTH}
-          svgId="welfare-chart"
+          svgId="worker-equity-chart"
           xScale={xScale}
           yScale={yScale}
           gridlinesVertical={false}
@@ -172,8 +195,8 @@ const WelfareChart = () => {
           <line
             x1={GRAPH_PADDING.left}
             x2={WIDTH - GRAPH_PADDING.right}
-            y1={zeroY}
-            y2={zeroY}
+            y1={yScale(0)}
+            y2={yScale(0)}
             stroke={COLORS.GRAY}
             strokeWidth={1}
             strokeDasharray="4 2"
@@ -192,38 +215,56 @@ const WelfareChart = () => {
             curve="curveLinear"
           />
           <circle
-            cx={xScale(socialOptimum)}
+            cx={xScale(coordinatedOutcome)}
             cy={yScale(coOwnerProfit)}
             r={MARKER_RADIUS}
             fill={COLORS.DARK_GRAY}
           />
           <circle
-            cx={xScale(socialOptimum)}
+            cx={xScale(coordinatedOutcome)}
             cy={workerYScale(coWorkerIncome)}
             r={MARKER_RADIUS}
             fill={COLORS.DARK_GRAY}
           />
           <circle
-            cx={xScale(marketOutcome)}
-            cy={yScale(neOwnerProfit)}
+            cx={xScale(baselineMarketOutcome)}
+            cy={yScale(baselineNeOwnerProfit)}
             r={MARKER_RADIUS}
             fill={COLORS.DARK_GRAY}
           />
           <circle
-            cx={xScale(marketOutcome)}
-            cy={workerYScale(neWorkerIncome)}
+            cx={xScale(baselineMarketOutcome)}
+            cy={workerYScale(baselineNeWorkerIncome)}
+            r={MARKER_RADIUS}
+            fill={COLORS.DARK_GRAY}
+          />
+          <circle
+            cx={xScale(equityMarketOutcome)}
+            cy={yScale(equityNeOwnerProfit)}
+            r={MARKER_RADIUS}
+            fill={COLORS.DARK_GRAY}
+          />
+          <circle
+            cx={xScale(equityMarketOutcome)}
+            cy={workerYScale(equityNeWorkerIncome)}
             r={MARKER_RADIUS}
             fill={COLORS.DARK_GRAY}
           />
           <VerticalMarker
-            x={socialOptimum}
+            x={coordinatedOutcome}
             color={COLORS.DARK_GRAY}
             label="Coordinated"
           />
           <VerticalMarker
-            x={marketOutcome}
+            x={baselineMarketOutcome}
             color={COLORS.DARK_GRAY}
             label="Market"
+          />
+          <VerticalMarker
+            x={equityMarketOutcome}
+            color={COLORS.DARK_GRAY}
+            label="With equity"
+            labelYOffset={28}
           />
         </Graph>
       </div>
@@ -231,4 +272,4 @@ const WelfareChart = () => {
   );
 };
 
-export default WelfareChart;
+export default WorkerEquityChart;

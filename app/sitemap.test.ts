@@ -1,7 +1,7 @@
 import { describe, expect, it, vi } from "vitest";
 
 vi.mock("@/utils/content", () => ({
-  getAllArticles: vi.fn().mockReturnValue([
+  getAllArticles: vi.fn().mockResolvedValue([
     {
       slug: "test-story",
       date: "2024-03-15",
@@ -17,8 +17,8 @@ vi.mock("@/utils/content", () => ({
 import sitemap from "./sitemap";
 
 describe("sitemap", () => {
-  it("includes static pages with correct priorities", () => {
-    const result = sitemap();
+  it("includes static pages with correct priorities", async () => {
+    const result = await sitemap();
     expect(result[0]).toEqual(
       expect.objectContaining({ url: "https://mattlane.us", priority: 1 }),
     );
@@ -36,8 +36,8 @@ describe("sitemap", () => {
     );
   });
 
-  it("includes all articles with correct fields", () => {
-    const result = sitemap();
+  it("includes all articles with correct fields", async () => {
+    const result = await sitemap();
     const storyEntry = result.find((e) => e.url.includes("test-story"));
     expect(storyEntry).toBeDefined();
     expect(storyEntry?.url).toBe("https://mattlane.us/stories/test-story");

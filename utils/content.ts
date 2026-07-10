@@ -1,7 +1,7 @@
 import fs from "node:fs";
 import path from "node:path";
 import matter from "gray-matter";
-import { storyMeta } from "@/utils/storyMeta";
+import { loadMeta } from "@/utils/loadMeta";
 
 const ARTICLES_DIR = path.join(process.cwd(), "content", "stories");
 
@@ -42,16 +42,20 @@ export function getArticleSlugs(): string[] {
  * Read and parse a single MDX article file, returning frontmatter and raw MDX source.
  * Articles are now stored in content/articles/[slug]/index.mdx
  */
-export function getArticle(slug: string) {
+export async function getArticle(slug: string) {
   const mdxPath = path.join(ARTICLES_DIR, slug, "index.mdx");
 
   if (!fs.existsSync(mdxPath)) {
     throw new Error(`Article not found: ${slug}`);
   }
 
-  const frontmatter: ArticleFrontmatter =
-    storyMeta[slug] ??
-    (matter(fs.readFileSync(mdxPath, "utf-8")).data as ArticleFrontmatter);
+  let frontmatter: ArticleFrontmatter;
+  try {
+    frontmatter = await loadMeta(slug);
+  } catch {
+    frontmatter = matter(fs.readFileSync(mdxPath, "utf-8"))
+      .data as ArticleFrontmatter;
+  }
 
   return { frontmatter, slug };
 }
@@ -59,34 +63,40 @@ export function getArticle(slug: string) {
 /**
  * Get metadata for all articles, sorted by date descending.
  */
-export function getAllArticles(): ArticleMeta[] {
+export async function getAllArticles(): Promise<ArticleMeta[]> {
   const slugs = getArticleSlugs();
-  const articles = slugs.map((slug) => {
-    const { frontmatter } = getArticle(slug);
-    const raw = fs.readFileSync(
-      path.join(ARTICLES_DIR, slug, "index.mdx"),
-      "utf-8",
-    );
-    const timeToRead = estimateReadingTime(matter(raw).content);
+  const articles = await Promise.all(
+    slugs.map(async (slug) => {
+      const { frontmatter } = await getArticle(slug);
+      const raw = fs.readFileSync(
+        path.join(ARTICLES_DIR, slug, "index.mdx"),
+        "utf-8",
+      );
+      const timeToRead = estimateReadingTime(matter(raw).content);
 
-    // Format date to "MMMM YYYY"
-    const dateObj = new Date(frontmatter.date);
-    const formattedDate = dateObj.toLocaleDateString("en-US", {
-      month: "long",
-      year: "numeric",
-    });
+      const dateObj = new Date(frontmatter.date);
+      const formattedDate = dateObj.toLocaleDateString("en-US", {
+        month: "long",
+        year: "numeric",
+      });
 
-    return {
-      ...frontmatter,
-      date: formattedDate,
-      slug,
-      timeToRead,
-    };
-  });
+      return {
+        ...frontmatter,
+        date: formattedDate,
+        slug,
+        timeToRead,
+      };
+    }),
+  );
 
   return articles.sort(
     (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime(),
   );
+}
+
+export async function getLatestStory(): Promise<ArticleMeta> {
+  const articles = await getAllArticles();
+  return articles[0];
 }
 
 /**

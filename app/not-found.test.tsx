@@ -22,21 +22,16 @@ vi.mock("@/components/layout/MainLayout", () => ({
 vi.mock("@/lib/imagePlaceholders.json", () => ({
   default: mockPlaceholders,
 }));
-vi.mock("@/utils/storyMeta", () => ({
-  storyMeta: {
-    "latest-story": {
-      title: "Latest Story",
-      date: "2024-06-01",
-      featured_image: "../../images/featured_images/latest.jpg",
-      caption: "A caption for the latest story",
-    },
-    "older-story": {
-      title: "Older Story",
-      date: "2024-01-01",
-      featured_image: "../../images/featured_images/older.jpg",
-      caption: "A caption for the older story",
-    },
-  },
+vi.mock("@/utils/content", () => ({
+  getLatestStory: vi.fn().mockResolvedValue({
+    slug: "latest-story",
+    title: "Latest Story",
+    date: "June 2024",
+    featured_image: "../../images/featured_images/latest.jpg",
+    caption: "A caption for the latest story",
+    tags: [],
+    timeToRead: 5,
+  }),
 }));
 vi.mock("@/utils/stringHelpers", () => ({
   normalizeImagePath: (path: string) => path.replace(/^(\.\.\/)+/, "/"),
@@ -45,31 +40,30 @@ vi.mock("@/utils/stringHelpers", () => ({
 import NotFound from "./not-found";
 
 describe("NotFound", () => {
-  it("renders the not-found message", () => {
-    render(<NotFound />);
+  it("renders the not-found message", async () => {
+    render(await NotFound());
     expect(
       screen.getByText(/page you're looking for doesn't exist/i),
     ).toBeInTheDocument();
   });
 
-  it("displays the most recent story's title", () => {
-    render(<NotFound />);
+  it("displays the most recent story's title", async () => {
+    render(await NotFound());
     expect(screen.getByText("Latest Story")).toBeInTheDocument();
   });
 
-  it("links to the most recent story", () => {
-    render(<NotFound />);
+  it("links to the most recent story", async () => {
+    render(await NotFound());
     expect(screen.getByRole("link")).toHaveAttribute(
       "href",
       "/stories/latest-story",
     );
   });
 
-  it("uses blur placeholder when blurDataURL is available", () => {
-    // The normalizeImagePath mock converts "../../images/..." to "/images/..."
+  it("uses blur placeholder when blurDataURL is available", async () => {
     mockPlaceholders["/images/featured_images/latest.jpg"] =
       "data:image/jpeg;base64,test";
-    render(<NotFound />);
+    render(await NotFound());
     expect(screen.getByText("Latest Story")).toBeInTheDocument();
     delete mockPlaceholders["/images/featured_images/latest.jpg"];
   });

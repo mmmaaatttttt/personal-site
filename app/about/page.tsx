@@ -62,7 +62,7 @@ export default function AboutPage() {
               className="text-link hover:opacity-80"
             >
               Citizen Math
-            </a>
+            </a>{" "}
             (née Mathalicious), or from my book,{" "}
             <a
               href="https://www.amazon.com/Power-Up-Unlocking-Hidden-Mathematics-Video/dp/0691161518"
@@ -111,8 +111,8 @@ export default function AboutPage() {
             Unless explicitly quoted, every word you see on this site was hand
             crafted by yours truly. I do not use AI to write anything you will
             read here. I do, however, use it to accelerate the development of
-            some of the interactives. I do enough fighting with TypeScript in my
-            day job, I don't need to bring it home with me too.
+            some of the interactives. I fight enough with TypeScript in my day
+            job, I don't need to bring it home with me too.
           </p>
         </div>
       </div>

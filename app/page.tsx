@@ -5,7 +5,7 @@ import MainLayout from "@/components/layout/MainLayout";
 import { SITE_URL } from "@/lib/constants";
 
 import placeholders from "@/lib/imagePlaceholders.json";
-import { getAllArticles } from "@/utils/content";
+import { getLatestStory } from "@/utils/content";
 import { normalizeImagePath } from "@/utils/stringHelpers";
 
 const jsonLd = {
@@ -19,8 +19,8 @@ export const metadata: Metadata = {
   alternates: { canonical: SITE_URL },
 };
 
-export default function Home() {
-  const latestStory = getAllArticles()[0];
+export default async function Home() {
+  const latestStory = await getLatestStory();
   const imagePath = normalizeImagePath(latestStory.featured_image);
   const blurDataURL = (placeholders as Record<string, string>)[imagePath];
 

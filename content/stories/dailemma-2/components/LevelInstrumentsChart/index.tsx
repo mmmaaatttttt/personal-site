@@ -12,84 +12,95 @@ import VerticalMarker from "@/components/story/shared/VerticalMarker";
 import useSliders from "@/hooks/useSliders";
 import COLORS, { hexToRgba } from "@/utils/styles";
 import { BASE_SLIDER_CONFIG } from "../../sliderConfig";
-import { useWelfareChartData } from "./useWelfareChartData";
+import { useLevelInstrumentsData } from "./useLevelInstrumentsData";
 
 const WIDTH = 600;
 const HEIGHT = 400;
-const GRAPH_PADDING = { top: 24, bottom: 50, left: 65, right: 80 };
+const GRAPH_PADDING = { top: 24, bottom: 50, left: 65, right: 30 };
 const AXIS_FONT = "11px";
 const MARKER_RADIUS = 6;
-const DEFAULT_REPLACEMENT_RATE = 0.3;
+const DEFAULT_UBI_BENEFIT = 0;
+const DEFAULT_CAPITAL_TAX_RATE = 0;
 
 const xScale = scaleLinear()
   .domain([0, 1])
   .range([GRAPH_PADDING.left, WIDTH - GRAPH_PADDING.right]);
 
-const UPSKILLING_SLIDER = {
+const UBI_SLIDER = {
   min: 0,
-  max: 2,
-  initialValue: DEFAULT_REPLACEMENT_RATE,
-  title: (val: number) =>
-    `Share of income replaced (benefits, retraining): ${Math.round(val * 100)}%`,
-  color: COLORS.BLACK,
+  max: 1,
+  initialValue: DEFAULT_UBI_BENEFIT,
+  title: (val: number) => `UBI benefit: ${Math.round(val * 100)}%`,
+  color: COLORS.RED,
 };
 
-const FULL_SLIDER_CONFIG = [...BASE_SLIDER_CONFIG, UPSKILLING_SLIDER];
+const CAPITAL_TAX_SLIDER = {
+  min: 0,
+  max: 1,
+  initialValue: DEFAULT_CAPITAL_TAX_RATE,
+  title: (val: number) => `Capital tax rate: ${Math.round(val * 100)}%`,
+  color: COLORS.DARK_GREEN,
+};
 
-const WelfareChart = () => {
+const FULL_SLIDER_CONFIG = [
+  ...BASE_SLIDER_CONFIG,
+  UBI_SLIDER,
+  CAPITAL_TAX_SLIDER,
+];
+
+const LevelInstrumentsChart = () => {
   const { values, sliderData } = useSliders(FULL_SLIDER_CONFIG);
-
   const [savings, demandLoss, difficulty] = values;
   const numFirms = Math.round(values[3]);
-  const replacementRate = values[4];
+  const ubiBenefit = values[4];
+  const capitalTaxRate = values[5];
 
   const {
-    ownerData,
-    workerData,
-    socialOptimum,
+    baselineData,
+    ubiData,
+    capitalTaxData,
     marketOutcome,
-    coOwnerProfit,
-    neOwnerProfit,
-    coWorkerIncome,
-    neWorkerIncome,
+    coordinatedOutcome,
+    coBaselineProfit,
+    neBaselineProfit,
+    coUbiProfit,
+    neUbiProfit,
+    coCapitalTaxProfit,
+    neCapitalTaxProfit,
     yMin,
     yMax,
     yPad,
-    workerYMin,
-    workerYMax,
-    workerYPad,
-  } = useWelfareChartData(
+  } = useLevelInstrumentsData(
     savings,
     demandLoss,
-    difficulty,
-    replacementRate,
     numFirms,
+    difficulty,
+    ubiBenefit,
+    capitalTaxRate,
   );
 
   const yScale = scaleLinear()
     .domain([yMin - yPad, yMax + yPad])
     .range([HEIGHT - GRAPH_PADDING.bottom, GRAPH_PADDING.top]);
 
-  const workerYScale = scaleLinear()
-    .domain([workerYMin - workerYPad, workerYMax + workerYPad])
-    .range([HEIGHT - GRAPH_PADDING.bottom, GRAPH_PADDING.top]);
-
-  const zeroY = yScale(0);
-  const trapX = xScale(Math.min(socialOptimum, marketOutcome));
-  const trapWidth = Math.abs(xScale(marketOutcome) - xScale(socialOptimum));
+  const wedgeMin = Math.min(coordinatedOutcome, marketOutcome);
+  const wedgeMax = Math.max(coordinatedOutcome, marketOutcome);
+  const trapX = xScale(wedgeMin);
+  const trapWidth = xScale(wedgeMax) - xScale(wedgeMin);
   const trapY = GRAPH_PADDING.top;
   const trapHeight = HEIGHT - GRAPH_PADDING.top - GRAPH_PADDING.bottom;
 
   return (
     <ColumnLayout break="sm">
-      <div className="flex flex-col justify-center h-full">
+      <div className="flex h-full flex-col justify-center gap-4">
         <SliderGroup data={sliderData} />
       </div>
       <div>
         <Legend
           labels={[
-            { text: "Company profits", color: COLORS.ORANGE },
-            { text: "Worker income", color: COLORS.BLUE },
+            { text: "Baseline", color: COLORS.GRAY },
+            { text: "UBI", color: COLORS.RED },
+            { text: "Capital Tax", color: COLORS.DARK_GREEN },
           ]}
         />
         <Graph
@@ -97,7 +108,7 @@ const WelfareChart = () => {
           graphPadding={GRAPH_PADDING}
           height={HEIGHT}
           width={WIDTH}
-          svgId="welfare-chart"
+          svgId="level-instruments-chart"
           xScale={xScale}
           yScale={yScale}
           gridlinesVertical={false}
@@ -108,8 +119,7 @@ const WelfareChart = () => {
             scale={yScale}
             tickFormat=".2f"
             tickSize={5}
-            tickColor={COLORS.RED}
-            color={COLORS.RED}
+            tickColor={COLORS.GRAY}
             fontSize={AXIS_FONT}
           />
           <Axis
@@ -123,36 +133,13 @@ const WelfareChart = () => {
             tickColor={COLORS.GRAY}
             fontSize={AXIS_FONT}
           />
-          <Axis
-            key="y-right-axis"
-            direction="y"
-            xShift={WIDTH - GRAPH_PADDING.right}
-            scale={workerYScale}
-            tickFormat=".2f"
-            tickSize={5}
-            textAnchor="start"
-            labelPosition={{ x: "8" }}
-            tickColor={COLORS.DARK_GREEN}
-            color={COLORS.DARK_GREEN}
-            fontSize={AXIS_FONT}
-          />
           <AxisLabel
             x={10}
             y={HEIGHT / 2}
             dy={10}
             transform={`rotate(-90 10,${HEIGHT / 2})`}
-            style={{ color: COLORS.RED }}
           >
             Company profit change
-          </AxisLabel>
-          <AxisLabel
-            x={WIDTH - 22}
-            y={HEIGHT / 2}
-            dy={10}
-            transform={`rotate(90 ${WIDTH - 22},${HEIGHT / 2})`}
-            style={{ color: COLORS.DARK_GREEN }}
-          >
-            Worker income
           </AxisLabel>
           <AxisLabel
             x={WIDTH / 2}
@@ -172,51 +159,69 @@ const WelfareChart = () => {
           <line
             x1={GRAPH_PADDING.left}
             x2={WIDTH - GRAPH_PADDING.right}
-            y1={zeroY}
-            y2={zeroY}
+            y1={yScale(0)}
+            y2={yScale(0)}
             stroke={COLORS.GRAY}
             strokeWidth={1}
             strokeDasharray="4 2"
           />
           <LinePlot
-            graphData={ownerData}
+            graphData={baselineData}
+            stroke={COLORS.GRAY}
+            strokeWidth={2}
+            opacity={0.5}
+            curve="curveLinear"
+          />
+          <LinePlot
+            graphData={ubiData}
             stroke={COLORS.RED}
             strokeWidth={3}
             curve="curveLinear"
           />
           <LinePlot
-            graphData={workerData}
+            graphData={capitalTaxData}
             stroke={COLORS.DARK_GREEN}
             strokeWidth={3}
-            yScale={workerYScale}
             curve="curveLinear"
           />
           <circle
-            cx={xScale(socialOptimum)}
-            cy={yScale(coOwnerProfit)}
-            r={MARKER_RADIUS}
-            fill={COLORS.DARK_GRAY}
-          />
-          <circle
-            cx={xScale(socialOptimum)}
-            cy={workerYScale(coWorkerIncome)}
+            cx={xScale(coordinatedOutcome)}
+            cy={yScale(coBaselineProfit)}
             r={MARKER_RADIUS}
             fill={COLORS.DARK_GRAY}
           />
           <circle
             cx={xScale(marketOutcome)}
-            cy={yScale(neOwnerProfit)}
+            cy={yScale(neBaselineProfit)}
+            r={MARKER_RADIUS}
+            fill={COLORS.DARK_GRAY}
+          />
+          <circle
+            cx={xScale(coordinatedOutcome)}
+            cy={yScale(coUbiProfit)}
             r={MARKER_RADIUS}
             fill={COLORS.DARK_GRAY}
           />
           <circle
             cx={xScale(marketOutcome)}
-            cy={workerYScale(neWorkerIncome)}
+            cy={yScale(neUbiProfit)}
+            r={MARKER_RADIUS}
+            fill={COLORS.DARK_GRAY}
+          />
+          <circle
+            cx={xScale(coordinatedOutcome)}
+            cy={yScale(coCapitalTaxProfit)}
+            r={MARKER_RADIUS}
+            fill={COLORS.DARK_GRAY}
+          />
+          <circle
+            cx={xScale(marketOutcome)}
+            cy={yScale(neCapitalTaxProfit)}
             r={MARKER_RADIUS}
             fill={COLORS.DARK_GRAY}
           />
           <VerticalMarker
-            x={socialOptimum}
+            x={coordinatedOutcome}
             color={COLORS.DARK_GRAY}
             label="Coordinated"
           />
@@ -231,4 +236,4 @@ const WelfareChart = () => {
   );
 };
 
-export default WelfareChart;
+export default LevelInstrumentsChart;

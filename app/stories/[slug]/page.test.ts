@@ -18,7 +18,7 @@ vi.mock("@/utils/stringHelpers", () => ({
   normalizeImagePath: (path: string) => path.replace(/^(\.\.\/)+/, "/"),
 }));
 vi.mock("@/utils/content", () => ({
-  getAllArticles: vi.fn().mockReturnValue([]),
+  getAllArticles: vi.fn().mockResolvedValue([]),
   getArticle: vi.fn(),
   getArticleSlugs: vi.fn().mockReturnValue([]),
   jaccardDistance: vi.fn().mockReturnValue(1),
@@ -68,6 +68,9 @@ vi.mock("@/content/stories/keeping-distances/index.mdx", () => ({
 vi.mock("@/content/stories/dailemma/index.mdx", () => ({
   default: () => null,
 }));
+vi.mock("@/content/stories/dailemma-2/index.mdx", () => ({
+  default: () => null,
+}));
 
 import { notFound } from "next/navigation";
 import {
@@ -89,7 +92,7 @@ const mockFrontmatter = {
 
 describe("generateMetadata", () => {
   it("includes the story featured image in openGraph and twitter metadata", async () => {
-    vi.mocked(getArticle).mockReturnValue({
+    vi.mocked(getArticle).mockResolvedValue({
       frontmatter: mockFrontmatter,
       slug: "test-story",
     });
@@ -157,12 +160,13 @@ describe("ArticlePage", () => {
     "strength-in-numbers",
     "keeping-distances",
     "dailemma",
+    "dailemma-2",
   ];
 
   it.each(
     allStoryModuleSlugs,
   )("renders without crashing for story module: %s", async (slug) => {
-    vi.mocked(getArticle).mockReturnValue({
+    vi.mocked(getArticle).mockResolvedValue({
       frontmatter: mockFrontmatter,
       slug,
     });
@@ -171,7 +175,7 @@ describe("ArticlePage", () => {
   });
 
   it("renders without a featured_image_caption (falsy caption branch)", async () => {
-    vi.mocked(getArticle).mockReturnValue({
+    vi.mocked(getArticle).mockResolvedValue({
       frontmatter: {
         ...mockFrontmatter,
         featured_image_caption: undefined as unknown as string,
@@ -188,7 +192,7 @@ describe("ArticlePage", () => {
   it("uses blur placeholder when blurDataURL is available", async () => {
     mockPlaceholders["/images/featured_images/test.jpg"] =
       "data:image/jpeg;base64,test";
-    vi.mocked(getArticle).mockReturnValue({
+    vi.mocked(getArticle).mockResolvedValue({
       frontmatter: mockFrontmatter,
       slug: "beautiful-analysis",
     });
@@ -201,7 +205,7 @@ describe("ArticlePage", () => {
   });
 
   it("reads timeToRead from getAllArticles when the slug is present", async () => {
-    vi.mocked(getAllArticles).mockReturnValueOnce([
+    vi.mocked(getAllArticles).mockResolvedValueOnce([
       {
         slug: "beautiful-analysis",
         title: "Unported",
@@ -211,8 +215,8 @@ describe("ArticlePage", () => {
         tags: ["math"],
         timeToRead: 7,
       },
-    ] as unknown as ReturnType<typeof getAllArticles>);
-    vi.mocked(getArticle).mockReturnValue({
+    ] as unknown as Awaited<ReturnType<typeof getAllArticles>>);
+    vi.mocked(getArticle).mockResolvedValue({
       frontmatter: mockFrontmatter,
       slug: "beautiful-analysis",
     });
@@ -225,7 +229,7 @@ describe("ArticlePage", () => {
 
   it("renders related articles when jaccard distance < 1", async () => {
     vi.mocked(jaccardDistance).mockReturnValue(0.5);
-    vi.mocked(getAllArticles).mockReturnValueOnce([
+    vi.mocked(getAllArticles).mockResolvedValueOnce([
       {
         slug: "beautiful-analysis",
         title: "Unported",
@@ -253,8 +257,8 @@ describe("ArticlePage", () => {
         tags: null as unknown as string[],
         timeToRead: 4,
       },
-    ] as unknown as ReturnType<typeof getAllArticles>);
-    vi.mocked(getArticle).mockReturnValue({
+    ] as unknown as Awaited<ReturnType<typeof getAllArticles>>);
+    vi.mocked(getArticle).mockResolvedValue({
       frontmatter: mockFrontmatter,
       slug: "beautiful-analysis",
     });

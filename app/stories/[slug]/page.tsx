@@ -51,6 +51,7 @@ const storyModules: Record<
   "keeping-distances": () =>
     import("@/content/stories/keeping-distances/index.mdx"),
   dailemma: () => import("@/content/stories/dailemma/index.mdx"),
+  "dailemma-2": () => import("@/content/stories/dailemma-2/index.mdx"),
 };
 
 export async function generateStaticParams() {
@@ -61,7 +62,7 @@ export async function generateStaticParams() {
 export async function generateMetadata({ params }: PageProps) {
   const { slug } = await params;
   try {
-    const { frontmatter } = getArticle(slug);
+    const { frontmatter } = await getArticle(slug);
     const imagePath = normalizeImagePath(frontmatter.featured_image);
     return {
       title: `${frontmatter.title} | Matt Lane`,
@@ -90,9 +91,9 @@ export async function generateMetadata({ params }: PageProps) {
 export default async function ArticlePage({ params }: PageProps) {
   const { slug } = await params;
 
-  let article: ReturnType<typeof getArticle> | undefined;
+  let article: Awaited<ReturnType<typeof getArticle>> | undefined;
   try {
-    article = getArticle(slug);
+    article = await getArticle(slug);
   } catch (_e) {
     notFound();
   }
@@ -112,7 +113,7 @@ export default async function ArticlePage({ params }: PageProps) {
   const StoryContent = (await storyModule()).default;
   const headings = getStoryHeadings(slug);
 
-  const allArticles = getAllArticles();
+  const allArticles = await getAllArticles();
   const timeToRead = allArticles.find((a) => a.slug === slug)?.timeToRead ?? 5;
 
   const relatedArticles = allArticles

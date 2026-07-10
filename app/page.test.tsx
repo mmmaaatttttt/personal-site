@@ -28,54 +28,52 @@ vi.mock("@/utils/stringHelpers", () => ({
   normalizeImagePath: (p: string) => p,
 }));
 vi.mock("@/utils/content", () => ({
-  getAllArticles: vi.fn().mockReturnValue([
-    {
-      slug: "latest-story",
-      title: "The Latest Story",
-      caption: "A great caption",
-      featured_image: "/images/latest.jpg",
-      date: "2026-06-18",
-      tags: ["math"],
-      timeToRead: 5,
-    },
-  ]),
+  getLatestStory: vi.fn().mockResolvedValue({
+    slug: "latest-story",
+    title: "The Latest Story",
+    caption: "A great caption",
+    featured_image: "/images/latest.jpg",
+    date: "2026-06-18",
+    tags: ["math"],
+    timeToRead: 5,
+  }),
 }));
 
 import Home from "./page";
 
 describe("Home", () => {
-  it("renders the greeting heading", () => {
-    render(<Home />);
+  it("renders the greeting heading", async () => {
+    render(await Home());
     expect(screen.getByRole("heading", { name: "Hi!" })).toBeInTheDocument();
   });
 
-  it("renders the navigation instruction", () => {
-    render(<Home />);
+  it("renders the navigation instruction", async () => {
+    render(await Home());
     expect(screen.getByText(/use the nav bar/i)).toBeInTheDocument();
   });
 
-  it("renders a link to the latest story", () => {
-    render(<Home />);
+  it("renders a link to the latest story", async () => {
+    render(await Home());
     expect(screen.getByRole("link")).toHaveAttribute(
       "href",
       "/stories/latest-story",
     );
   });
 
-  it("renders the latest story title", () => {
-    render(<Home />);
+  it("renders the latest story title", async () => {
+    render(await Home());
     expect(screen.getByText("The Latest Story")).toBeInTheDocument();
   });
 
-  it("uses blur placeholder when blurDataURL is available", () => {
+  it("uses blur placeholder when blurDataURL is available", async () => {
     mockPlaceholders["/images/latest.jpg"] = "data:image/jpeg;base64,test";
-    render(<Home />);
+    render(await Home());
     expect(screen.getByAltText("A great caption")).toBeInTheDocument();
     delete mockPlaceholders["/images/latest.jpg"];
   });
 
-  it("uses empty placeholder when no blurDataURL is available", () => {
-    render(<Home />);
+  it("uses empty placeholder when no blurDataURL is available", async () => {
+    render(await Home());
     expect(screen.getByAltText("A great caption")).toBeInTheDocument();
   });
 });

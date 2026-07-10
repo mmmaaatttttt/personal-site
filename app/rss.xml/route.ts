@@ -4,7 +4,7 @@ import { getAllArticles } from "@/utils/content";
 export const dynamic = "force-static";
 
 export async function GET() {
-  const articles = getAllArticles();
+  const articles = await getAllArticles();
 
   const items = articles
     .map(
