@@ -42,6 +42,28 @@ export function calculatePayout(slotResult: SlotResult): number {
   return payout * multiplier;
 }
 
+export function enumerateMultisets(): SlotResult[] {
+  const symbols = Object.values(SlotValue) as SlotValue[];
+  const results: SlotResult[] = [];
+
+  function recurse(
+    slotsRemaining: number,
+    minIndex: number,
+    current: SlotValue[],
+  ) {
+    if (slotsRemaining === 0) {
+      results.push(current as SlotResult);
+      return;
+    }
+    for (let i = minIndex; i < symbols.length; i++) {
+      recurse(slotsRemaining - 1, i, [...current, symbols[i]]);
+    }
+  }
+
+  recurse(4, 0, []);
+  return results;
+}
+
 export function calculateProbability(slotResult: SlotResult): number {
   const freqMap = generateFreqMap(slotResult);
 

@@ -1,6 +1,10 @@
 import { describe, expect, it } from "vitest";
 import { type SlotResult, SlotValue } from "./data";
-import { calculatePayout, calculateProbability } from "./math";
+import {
+  calculatePayout,
+  calculateProbability,
+  enumerateMultisets,
+} from "./math";
 
 describe("calculatePayout", () => {
   it.each<[SlotResult, number]>([
@@ -153,6 +157,31 @@ describe("calculatePayout", () => {
     [[SlotValue.DOUBLE, SlotValue.CROWN, SlotValue.CROWN, SlotValue.CROWN], 0],
   ])("calculatePayout(%j) -> %i", (slotResult, expectedPayout) => {
     expect(calculatePayout(slotResult)).toBe(expectedPayout);
+  });
+});
+
+describe("enumerateMultisets", () => {
+  it("returns 330 multisets", () => {
+    expect(enumerateMultisets()).toHaveLength(330);
+  });
+
+  it("probabilities sum to 1", () => {
+    const total = enumerateMultisets().reduce(
+      (sum, m) => sum + calculateProbability(m),
+      0,
+    );
+    expect(total).toBeCloseTo(1, 10);
+  });
+
+  it("each multiset is sorted by SlotValue enum order", () => {
+    const symbols = Object.values(SlotValue);
+    for (const multiset of enumerateMultisets()) {
+      for (let i = 0; i < multiset.length - 1; i++) {
+        expect(symbols.indexOf(multiset[i])).toBeLessThanOrEqual(
+          symbols.indexOf(multiset[i + 1]),
+        );
+      }
+    }
   });
 });
 
