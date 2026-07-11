@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { type SlotResult, SlotValue } from "./data";
-import { calculatePayout } from "./math";
+import { calculatePayout, calculateProbability } from "./math";
 
 describe("calculatePayout", () => {
   it.each<[SlotResult, number]>([
@@ -153,5 +153,48 @@ describe("calculatePayout", () => {
     [[SlotValue.DOUBLE, SlotValue.CROWN, SlotValue.CROWN, SlotValue.CROWN], 0],
   ])("calculatePayout(%j) -> %i", (slotResult, expectedPayout) => {
     expect(calculatePayout(slotResult)).toBe(expectedPayout);
+  });
+});
+
+describe("calculateProbability", () => {
+  it.each<[SlotResult, number]>([
+    // 4 of same: coefficient = 1
+    [
+      [SlotValue.DASH, SlotValue.DASH, SlotValue.DASH, SlotValue.DASH],
+      0.28 ** 4,
+    ],
+    [
+      [SlotValue.COIN_1, SlotValue.COIN_1, SlotValue.COIN_1, SlotValue.COIN_1],
+      0.315 ** 4,
+    ],
+    // 3+1: coefficient = C(4,3)*C(1,1) = 4
+    [
+      [SlotValue.COIN_1, SlotValue.COIN_1, SlotValue.COIN_1, SlotValue.DASH],
+      4 * 0.315 ** 3 * 0.28,
+    ],
+    [
+      [SlotValue.SNAKE, SlotValue.SNAKE, SlotValue.SNAKE, SlotValue.NET],
+      4 * 0.1 ** 3 * 0.04,
+    ],
+    // 2+2: coefficient = C(4,2)*C(2,2) = 6
+    [
+      [SlotValue.COIN_1, SlotValue.COIN_1, SlotValue.DASH, SlotValue.DASH],
+      6 * 0.315 ** 2 * 0.28 ** 2,
+    ],
+    // 2+1+1: coefficient = C(4,2)*C(2,1)*C(1,1) = 12
+    [
+      [SlotValue.COIN_1, SlotValue.COIN_1, SlotValue.DASH, SlotValue.CROWN],
+      12 * 0.315 ** 2 * 0.28 * 0.08,
+    ],
+    // 1+1+1+1: coefficient = 4! = 24
+    [
+      [SlotValue.COIN_1, SlotValue.DASH, SlotValue.CROWN, SlotValue.NET],
+      24 * 0.315 * 0.28 * 0.08 * 0.04,
+    ],
+  ])("calculateProbability(%j) -> %f", (slotResult, expectedProbability) => {
+    expect(calculateProbability(slotResult)).toBeCloseTo(
+      expectedProbability,
+      10,
+    );
   });
 });

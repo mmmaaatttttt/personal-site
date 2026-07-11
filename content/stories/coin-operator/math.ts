@@ -1,5 +1,11 @@
 import { generateFreqMap } from "@/utils/arrayHelpers";
-import { PAYOUT_RATES, type SlotResult, SlotValue } from "./data";
+import { combinations } from "@/utils/mathHelpers";
+import {
+  PAYOUT_RATES,
+  PROBABILITY_MAP,
+  type SlotResult,
+  SlotValue,
+} from "./data";
 
 export function calculatePayout(slotResult: SlotResult): number {
   const slotFrequencies = generateFreqMap(slotResult);
@@ -36,6 +42,20 @@ export function calculatePayout(slotResult: SlotResult): number {
   return payout * multiplier;
 }
 
-export function calculateProbability(_slotResult: SlotResult): number {
-  return 0;
+export function calculateProbability(slotResult: SlotResult): number {
+  const freqMap = generateFreqMap(slotResult);
+
+  let coefficient = 1;
+  let remaining = slotResult.length;
+  for (const count of freqMap.values()) {
+    coefficient *= combinations(remaining, count);
+    remaining -= count;
+  }
+
+  let probability = coefficient;
+  for (const [symbol, count] of freqMap.entries()) {
+    probability *= PROBABILITY_MAP[symbol] ** count;
+  }
+
+  return probability;
 }
