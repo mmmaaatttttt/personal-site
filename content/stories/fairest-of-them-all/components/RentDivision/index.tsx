@@ -8,14 +8,10 @@ import NarrowContainer from "@/components/story/shared/NarrowContainer";
 import LabeledSlider from "@/components/story/shared/Slider/LabeledSlider";
 import Tooltip, { useTooltip } from "@/components/story/shared/Tooltip";
 import { Button } from "@/components/ui/Button";
+import { generateFreqMap } from "@/utils/arrayHelpers";
 import { total } from "@/utils/mathHelpers";
 import COLORS from "@/utils/styles";
-import {
-  generateAllPoints,
-  generateFreqMap,
-  mixColors,
-  type PointData,
-} from "./helpers";
+import { generateAllPoints, mixColors, type PointData } from "./helpers";
 import LabeledCircle from "./LabeledCircle";
 import Polygon from "./Polygon";
 import RadioButtonGroup from "./RadioButtonGroup";

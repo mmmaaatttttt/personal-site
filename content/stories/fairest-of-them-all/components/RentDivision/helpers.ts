@@ -153,17 +153,6 @@ export function generateAllPoints(
 }
 
 /**
- * Returns a frequency map of the array values (value → count).
- */
-export function generateFreqMap<T>(arr: T[]): Map<T, number> {
-  const map = new Map<T, number>();
-  for (const item of arr) {
-    map.set(item, (map.get(item) ?? 0) + 1);
-  }
-  return map;
-}
-
-/**
  * Blends two hex colors. fraction=1 returns color1, fraction=0 returns color2.
  * Equivalent to polished's mix(fraction, color1, color2).
  */
