@@ -31,3 +31,21 @@ export const PROBABILITY_MAP: Record<SlotValue, number> = {
   [SlotValue.NET]: 0.04,
   [SlotValue.SNAKE]: 0.1,
 } as const;
+
+const probabilityData: [string, string, number][] = [
+  ["🍀", "Clover", PROBABILITY_MAP[SlotValue.CLOVER]],
+  ["🟡", "Coin", PROBABILITY_MAP[SlotValue.COIN_1]],
+  ["💰", "3 Coins", PROBABILITY_MAP[SlotValue.COIN_3]],
+  ["👑", "Crown", PROBABILITY_MAP[SlotValue.CROWN]],
+  ["➖", "Dash", PROBABILITY_MAP[SlotValue.DASH]],
+  ["2️⃣", "Double", PROBABILITY_MAP[SlotValue.DOUBLE]],
+  ["🥅", "Net", PROBABILITY_MAP[SlotValue.NET]],
+  ["🐍", "Snake", PROBABILITY_MAP[SlotValue.SNAKE]],
+];
+
+export const probabilityTable: string[][] = [
+  ["Symbol", "Symbol Name", "Probability"],
+  ...probabilityData
+    .sort((row1, row2) => row2[2] - row1[2])
+    .map((row) => [row[0], row[1], `${(row[2] * 100).toFixed(1)}%`]),
+];
