@@ -1,0 +1,46 @@
+import { probabilityTable } from "./data";
+
+Every Wednesday night, my wife leaves the house to get a reprieve from the chaotic boy energy that swirls around her. I am very grateful for the fact that, to date, she has always returned home.
+
+In the interim, my sons and I have instituted a tradition known as "boy's night." After we've eaten dinner and put the trash bins out, we park it on the couch and play a video game together. They are big fans of [Metroidvanias](https://en.wikipedia.org/wiki/Metroidvania), but I try to throw some puzzlers in there as well.
+
+A couple of months ago, we started playing [Blue Prince](https://en.wikipedia.org/wiki/Blue_Prince). The game was met with critical acclaim when it was released last year, and it had been on my radar for a while as one the three of us could work through together.
+
+In case you don't know much about the game, the premise sounds simple. You play as a young boy whose great uncle has died. You arrive at your great uncle's large estate because it has been bequeathed to you, subject to one condition: you need to find a hidden 46th room in the 45-room mansion. Here's a short trailer if you'd like to see more.
+
+<ResponsiveIFrame
+  src="https://www.youtube.com/embed/wIrgdM6shNA"
+  heightOverWidth={315 / 560}
+/>
+
+But really, this is just the tip of the iceberg. We reached the 46th room months ago, but are still diving back in to uncover more secrets and solve more puzzles. 
+
+So as to keep things spoiler-free, that's all I'll say about the premise of the game. I'd like to focus on one room in particular, and some delightful mathematics therein. The only thing I need to reveal is the existence of a paritcular room; beyond that, you can read through this story without fear of me spoiling anything about the game.
+
+Let's go!
+
+---
+
+### Casino Night
+
+One of the rooms in the estate is a casino room. There are a couple of different games of chance you can play using the in-game currency. The one I'd like to focus on is the slot machine.
+
+The slot machine in Blue Prince has 4 slots, and there are a total of 8 images that can be drawn. Here are the rules for how the payouts work. 
+
+![Payout rules for the slot machine in Blue Prince](../../images/bp_slot_rules.png "Payout rules for the slot machine in Blue Prince. The one image missing, a dash mark, has no effect on payouts.")
+
+As with any other game of chance, a natural question arises here: if we spend a coin to play the slot machine, how much money do we expect to get back? This depends, of course, on the likelihood of each icon appearing. For example, a slot machine with a 100% probability of spitting out four crowns would be great economically, but not so great from a game design perspective.
+
+Fortunately for us, [intrepid players](https://www.reddit.com/r/BluePrince/comments/1kvhiw8/thorough_analysis_of_slot_machine_payout/) have already gathered a wealth of experimental data on this game. For purposes of today's analysis, we will assume that the probabilities of each symbol are as follows:
+
+<StyledTable data={probabilityTable} />
+
+Using these values as our source of truth, we can now properly analyze the game.
+
+---
+
+### 
+
+Sources: 
+
+- [Thorough Analysis of Slot Machine Payout](https://www.reddit.com/r/BluePrince/comments/1kvhiw8/thorough_analysis_of_slot_machine_payout/)

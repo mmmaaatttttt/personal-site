@@ -52,6 +52,7 @@ const storyModules: Record<
     import("@/content/stories/keeping-distances/index.mdx"),
   dailemma: () => import("@/content/stories/dailemma/index.mdx"),
   "dailemma-2": () => import("@/content/stories/dailemma-2/index.mdx"),
+  "coin-operator": () => import("@/content/stories/coin-operator/index.mdx"),
 };
 
 export async function generateStaticParams() {
