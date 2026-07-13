@@ -48,4 +48,16 @@ describe("ToggleSwitch", () => {
     expect(screen.getByRole("switch")).toHaveAttribute("aria-checked", "false");
     expect(handleSwitchChange).toHaveBeenCalledWith(false);
   });
+
+  it("allows labels to wrap by default", () => {
+    render(<ToggleSwitch {...defaultProps} />);
+    expect(screen.getByText("Option A")).not.toHaveClass("whitespace-nowrap");
+    expect(screen.getByText("Option B")).not.toHaveClass("whitespace-nowrap");
+  });
+
+  it("prevents labels from wrapping when noWrap is set", () => {
+    render(<ToggleSwitch {...defaultProps} noWrap />);
+    expect(screen.getByText("Option A")).toHaveClass("whitespace-nowrap");
+    expect(screen.getByText("Option B")).toHaveClass("whitespace-nowrap");
+  });
 });
