@@ -1,6 +1,7 @@
 import { generateFreqMap } from "@/utils/arrayHelpers";
-import { combinations } from "@/utils/mathHelpers";
+import { combinations, cryptoRandom } from "@/utils/mathHelpers";
 import {
+  NUM_SLOTS,
   PAYOUT_RATES,
   PROBABILITY_MAP,
   type SlotResult,
@@ -42,6 +43,27 @@ export function calculatePayout(slotResult: SlotResult): number {
   return payout * multiplier;
 }
 
+export function pickWeightedSymbol(
+  rng: () => number = cryptoRandom,
+): SlotValue {
+  const symbols = Object.values(SlotValue) as SlotValue[];
+  const roll = rng();
+
+  let cumulative = 0;
+  for (let i = 0; i < symbols.length - 1; i++) {
+    cumulative += PROBABILITY_MAP[symbols[i]];
+    if (roll < cumulative) return symbols[i];
+  }
+
+  return symbols[symbols.length - 1];
+}
+
+export function spinReels(rng: () => number = cryptoRandom): SlotResult {
+  return Array.from({ length: NUM_SLOTS }, () =>
+    pickWeightedSymbol(rng),
+  ) as SlotResult;
+}
+
 export function enumerateMultisets(): SlotResult[] {
   const symbols = Object.values(SlotValue) as SlotValue[];
   const results: SlotResult[] = [];
@@ -60,7 +82,7 @@ export function enumerateMultisets(): SlotResult[] {
     }
   }
 
-  recurse(4, 0, []);
+  recurse(NUM_SLOTS, 0, []);
   return results;
 }
 
