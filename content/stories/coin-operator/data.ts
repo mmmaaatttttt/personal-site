@@ -9,6 +9,7 @@ export enum SlotValue {
   SNAKE = "SNAKE",
 }
 
+export const NUM_SLOTS = 4;
 export type SlotResult = [SlotValue, SlotValue, SlotValue, SlotValue];
 
 export const PAYOUT_RATES: Record<string, number> = {
