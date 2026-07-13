@@ -1,5 +1,5 @@
 STAGED=$(git diff --name-only --cached --diff-filter=ACMR)
-BIOME_FILES=$(echo "$STAGED" | grep -E '\.(js|cjs|mjs|jsx|ts|cts|mts|tsx|json|jsonc|css|graphql)$' || true)
+BIOME_FILES=$(echo "$STAGED" | grep -E '\.(js|cjs|mjs|jsx|ts|cts|mts|tsx|json|jsonc|css|graphql)$' | grep -vE '^(package-lock\.json|yarn\.lock|pnpm-lock\.yaml)$' || true)
 
 if [ -n "$BIOME_FILES" ]; then
   echo "$BIOME_FILES" | xargs npx biome check --write --unsafe
