@@ -1,3 +1,4 @@
+import SlotMachine from "./components/SlotMachine";
 import { probabilityTable } from "./data";
 
 Every Wednesday night, my wife leaves the house to get a reprieve from the chaotic boy energy that swirls around her. I am very grateful for the fact that, to date, she has always returned home.
@@ -33,13 +34,20 @@ As with any other game of chance, a natural question arises here: if we spend a 
 
 Fortunately for us, [intrepid players](https://www.reddit.com/r/BluePrince/comments/1kvhiw8/thorough_analysis_of_slot_machine_payout/) have already gathered a wealth of experimental data on this game. For purposes of today's analysis, we will assume that the probabilities of each symbol are as follows:
 
-<StyledTable data={probabilityTable} />
+<StyledTable
+  data={probabilityTable}
+  className="[&_td:first-child]:text-xl"
+/>
 
 Using these values as our source of truth, we can now properly analyze the game.
 
 ---
 
-### 
+### One Armed Bandit
+
+<Figure caption="TBD">
+  <SlotMachine />
+</Figure>
 
 Sources: 
 
