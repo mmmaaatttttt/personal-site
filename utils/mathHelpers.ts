@@ -131,3 +131,16 @@ export function shuffle<T>(arr: T[]): T[] {
   }
   return arr;
 }
+
+/**
+ * Cryptographically secure replacement for Math.random(), returning a float
+ * in [0, 1). Math.random() (xorshift128+ in V8) is fine for most UI
+ * randomness but is predictable given enough prior outputs; this is a
+ * drop-in swap for code that wants a higher-quality source, e.g. simulating
+ * fair-odds games of chance.
+ */
+export function cryptoRandom(): number {
+  const buf = new Uint32Array(1);
+  crypto.getRandomValues(buf);
+  return buf[0] / (0xffffffff + 1);
+}
