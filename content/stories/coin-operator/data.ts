@@ -32,16 +32,35 @@ export const PROBABILITY_MAP: Record<SlotValue, number> = {
   [SlotValue.SNAKE]: 0.1,
 } as const;
 
-const probabilityData: [string, string, number][] = [
-  ["🍀", "Clover", PROBABILITY_MAP[SlotValue.CLOVER]],
-  ["🟡", "Coin", PROBABILITY_MAP[SlotValue.COIN_1]],
-  ["💰", "3 Coins", PROBABILITY_MAP[SlotValue.COIN_3]],
-  ["👑", "Crown", PROBABILITY_MAP[SlotValue.CROWN]],
-  ["➖", "Dash", PROBABILITY_MAP[SlotValue.DASH]],
-  ["2️⃣", "Double", PROBABILITY_MAP[SlotValue.DOUBLE]],
-  ["🥅", "Net", PROBABILITY_MAP[SlotValue.NET]],
-  ["🐍", "Snake", PROBABILITY_MAP[SlotValue.SNAKE]],
-];
+export const SYMBOL_EMOJI: Record<SlotValue, string> = {
+  [SlotValue.CLOVER]: "🍀",
+  [SlotValue.COIN_1]: "🟡",
+  [SlotValue.COIN_3]: "💰",
+  [SlotValue.CROWN]: "👑",
+  [SlotValue.DASH]: "➖",
+  [SlotValue.DOUBLE]: "2️⃣",
+  [SlotValue.NET]: "🥅",
+  [SlotValue.SNAKE]: "🐍",
+};
+
+const SYMBOL_NAME: Record<SlotValue, string> = {
+  [SlotValue.CLOVER]: "Clover",
+  [SlotValue.COIN_1]: "Coin",
+  [SlotValue.COIN_3]: "3 Coins",
+  [SlotValue.CROWN]: "Crown",
+  [SlotValue.DASH]: "Dash",
+  [SlotValue.DOUBLE]: "Double",
+  [SlotValue.NET]: "Net",
+  [SlotValue.SNAKE]: "Snake",
+};
+
+const probabilityData: [string, string, number][] = (
+  Object.values(SlotValue) as SlotValue[]
+).map((symbol) => [
+  SYMBOL_EMOJI[symbol],
+  SYMBOL_NAME[symbol],
+  PROBABILITY_MAP[symbol],
+]);
 
 export const probabilityTable: string[][] = [
   ["Symbol", "Symbol Name", "Probability"],
