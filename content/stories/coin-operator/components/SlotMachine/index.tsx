@@ -13,7 +13,7 @@ import {
   BASE_SPIN_DURATION,
   HISTORY_STORAGE_KEY,
   REEL_STAGGER,
-  type RoundRecord,
+  type RoundEntry,
   SPIN_COST,
 } from "./constants";
 import Reel from "./Reel";
@@ -29,7 +29,7 @@ const SlotMachine: FC = () => {
   const [locked, setLocked] = useState<boolean[]>(Array(NUM_SLOTS).fill(false));
   const [spinning, setSpinning] = useState(false);
   const [payout, setPayout] = useState<number | null>(null);
-  const [history, setHistory, resetHistory] = useLocalStorage<RoundRecord[]>(
+  const [history, setHistory, resetHistory] = useLocalStorage<RoundEntry[]>(
     HISTORY_STORAGE_KEY,
     [],
   );
@@ -74,18 +74,12 @@ const SlotMachine: FC = () => {
             setSpinning(false);
             setPayout(roundPayout);
             setHistory((prev) => {
-              const prevTotals = prev[prev.length - 1];
-              const revenue = (prevTotals?.revenue ?? 0) + roundPayout;
-              const cost = (prevTotals?.cost ?? 0) + SPIN_COST;
-              return [
-                ...prev,
-                {
-                  round: prev.length + 1,
-                  revenue,
-                  cost,
-                  profit: revenue - cost,
-                },
+              const [prevCost, prevRevenue] = prev[prev.length - 1] ?? [0, 0];
+              const entry: RoundEntry = [
+                prevCost + SPIN_COST,
+                prevRevenue + roundPayout,
               ];
+              return [...prev, entry];
             });
           }
         },

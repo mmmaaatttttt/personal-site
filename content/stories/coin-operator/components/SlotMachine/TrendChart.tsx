@@ -5,14 +5,15 @@ import { scaleLinear } from "d3-scale";
 import { curveLinear, line as d3Line } from "d3-shape";
 import { animate } from "framer-motion";
 import { type FC, useEffect, useMemo, useRef, useState } from "react";
+import Axis from "@/components/story/shared/Axis";
 import Graph from "@/components/story/shared/Graph";
 import Select from "@/components/story/shared/Select";
 import {
-  type RoundRecord,
+  type RoundEntry,
   SERIES_OPTIONS,
   type SeriesOption,
 } from "./constants";
-import { niceIntegerTickStep } from "./niceIntegerTickStep";
+import { niceIntegerTickValues } from "./niceIntegerTicks";
 
 const SVG_WIDTH = 700;
 const SVG_HEIGHT = 400;
@@ -28,7 +29,7 @@ interface Point {
 }
 
 interface TrendChartProps {
-  history: RoundRecord[];
+  history: RoundEntry[];
 }
 
 const TrendChart: FC<TrendChartProps> = ({ history }) => {
@@ -37,7 +38,10 @@ const TrendChart: FC<TrendChartProps> = ({ history }) => {
   const points = useMemo<Point[]>(
     () => [
       { round: 0, value: 0 },
-      ...history.map((h) => ({ round: h.round, value: h[selected.value] })),
+      ...history.map((entry, i) => ({
+        round: i + 1,
+        value: selected.accessor(entry),
+      })),
     ],
     [history, selected],
   );
@@ -88,6 +92,16 @@ const TrendChart: FC<TrendChartProps> = ({ history }) => {
       .y((d) => animYRef.current[d.round] ?? BOTTOM_Y)
       .curve(curveLinear)(points) ?? "";
 
+  const xTickValues = useMemo(
+    () => niceIntegerTickValues(0, maxRound, X_TICK_COUNT),
+    [maxRound],
+  );
+
+  const yTickValues = useMemo(() => {
+    const [min, max] = yScale.domain() as [number, number];
+    return niceIntegerTickValues(min, max, Y_TICK_COUNT);
+  }, [yScale]);
+
   return (
     <div className="space-y-3">
       <Select
@@ -104,17 +118,22 @@ const TrendChart: FC<TrendChartProps> = ({ history }) => {
         yScale={yScale}
         xLabel="Round"
         yLabel={selected.label}
-        tickFormatX=",.0f"
-        tickFormatY=",.0f"
-        tickStepX={(scale) => {
-          const [min, max] = scale.domain() as [number, number];
-          return niceIntegerTickStep(min, max, X_TICK_COUNT);
-        }}
-        tickStepY={(scale) => {
-          const [min, max] = scale.domain() as [number, number];
-          return niceIntegerTickStep(min, max, Y_TICK_COUNT);
-        }}
+        axes={false}
       >
+        <Axis
+          key="y-axis"
+          direction="y"
+          scale={yScale}
+          tickFormat=",.0f"
+          tickValues={yTickValues}
+        />
+        <Axis
+          key="x-axis"
+          direction="x"
+          scale={xScale}
+          tickFormat=",.0f"
+          tickValues={xTickValues}
+        />
         <path
           d={linePath}
           stroke={selected.color}

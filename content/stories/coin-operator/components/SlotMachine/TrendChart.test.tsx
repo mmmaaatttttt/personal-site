@@ -1,7 +1,7 @@
 import { fireEvent, render, screen } from "@testing-library/react";
 import { animate } from "framer-motion";
 import { describe, expect, it, vi } from "vitest";
-import type { RoundRecord } from "./constants";
+import type { RoundEntry } from "./constants";
 import TrendChart from "./TrendChart";
 
 // animate() is imperative and doesn't run in jsdom — mock it as a no-op by
@@ -11,12 +11,13 @@ vi.mock("framer-motion", async (importOriginal) => {
   return { ...actual, animate: vi.fn() };
 });
 
-const oneRound: RoundRecord[] = [{ round: 1, revenue: 3, cost: 1, profit: 2 }];
+// entries are cumulative [cost, revenue] through that round
+const oneRound: RoundEntry[] = [[1, 3]];
 
-const threeRounds: RoundRecord[] = [
-  { round: 1, revenue: 3, cost: 1, profit: 2 },
-  { round: 2, revenue: 3, cost: 2, profit: 1 },
-  { round: 3, revenue: 8, cost: 3, profit: 5 },
+const threeRounds: RoundEntry[] = [
+  [1, 3],
+  [2, 3],
+  [3, 8],
 ];
 
 const getXAxisTicks = () =>
@@ -52,6 +53,16 @@ describe("TrendChart", () => {
     const labels = getYAxisTickLabels();
     expect(labels.length).toBeGreaterThan(0);
     expect(new Set(labels).size).toBe(labels.length);
+  });
+
+  it("never renders a y-axis tick label beyond the domain's actual max value", () => {
+    // revenue domain is [0, 15] here — a step of 2 doesn't divide evenly,
+    // which previously produced an out-of-domain "16" tick that got clipped
+    // off the top of the chart.
+    const revenueTo15: RoundEntry[] = [[1, 15]];
+    render(<TrendChart history={revenueTo15} />);
+    const labels = getYAxisTickLabels().map(Number);
+    expect(Math.max(...labels)).toBeLessThanOrEqual(15);
   });
 
   it("switches the plotted series when a different option is selected", () => {
