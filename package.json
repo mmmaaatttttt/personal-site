@@ -9,7 +9,7 @@
   },
   "license": "MIT",
   "scripts": {
-    "build": "node scripts/optimize-images.js && next build",
+    "build": "node scripts/optimize-images.js && next build && node scripts/fix-canonical-urls.js",
     "deploy:worker": "wrangler deploy --config workers/subscribe/wrangler.toml",
     "dev": "node scripts/optimize-images.js && next dev",
     "dev:email": "email dev --dir emails",
