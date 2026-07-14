@@ -3,6 +3,8 @@ import { combinations, cryptoRandom } from "@/utils/mathHelpers";
 import {
   NUM_SLOTS,
   PAYOUT_RATES,
+  PayoutClassifications,
+  type PayoutClassificationValue,
   PROBABILITY_MAP,
   type SlotResult,
   SlotValue,
@@ -41,6 +43,82 @@ export function calculatePayout(slotResult: SlotResult): number {
   payout += (slotFrequencies.get(SlotValue.CLOVER) || 0) * PAYOUT_RATES.CLOVER;
 
   return payout * multiplier;
+}
+
+export function classifyPayout(
+  slotResult: SlotResult,
+): PayoutClassificationValue | null {
+  const slotFrequencies = generateFreqMap(slotResult);
+
+  const coin1Count = slotFrequencies.get(SlotValue.COIN_1) || 0;
+  const coin3Count = slotFrequencies.get(SlotValue.COIN_3) || 0;
+  const doubleCount = slotFrequencies.get(SlotValue.DOUBLE) || 0;
+  const cloverCount = slotFrequencies.get(SlotValue.CLOVER) || 0;
+  const snakeCount = slotFrequencies.get(SlotValue.SNAKE) || 0;
+  const netCount = slotFrequencies.get(SlotValue.NET) || 0;
+  const crownCount = slotFrequencies.get(SlotValue.CROWN) || 0;
+
+  if (coin1Count === 4) return PayoutClassifications.COIN_1_4;
+  if (coin3Count === 4) return PayoutClassifications.COIN_3_4;
+  if (crownCount === 4) return PayoutClassifications.CROWN_4;
+  if (cloverCount === 4) return PayoutClassifications.CLOVER_4;
+
+  if (coin1Count === NUM_SLOTS - 1) {
+    if (doubleCount === 1) return PayoutClassifications.COIN_1_3_DOUBLE_1;
+    if (cloverCount === 1) return PayoutClassifications.COIN_1_3_CLOVER_1;
+    if (snakeCount === 0) return PayoutClassifications.COIN_1_3;
+  }
+
+  if (coin3Count === NUM_SLOTS - 1) {
+    if (doubleCount === 1) return PayoutClassifications.COIN_3_3_DOUBLE_1;
+    if (cloverCount === 1) return PayoutClassifications.COIN_3_3_CLOVER_1;
+    if (snakeCount === 0) return PayoutClassifications.COIN_3_3;
+  }
+
+  if (snakeCount > 0 && netCount > 0) {
+    if (snakeCount === NUM_SLOTS - 1) return PayoutClassifications.SNAKE_3_NET;
+    if (snakeCount === NUM_SLOTS - 2 && doubleCount === 1)
+      return PayoutClassifications.SNAKE_2_DOUBLE_1_NET;
+    if (snakeCount === NUM_SLOTS - 2 && cloverCount === 1)
+      return PayoutClassifications.SNAKE_2_CLOVER_1_NET;
+
+    if (snakeCount === 1 && doubleCount === 2)
+      return PayoutClassifications.SNAKE_1_DOUBLE_2_NET;
+    if (snakeCount === 1 && cloverCount === 2)
+      return PayoutClassifications.SNAKE_1_CLOVER_2_NET;
+    if (snakeCount === 1 && doubleCount === 1 && cloverCount === 1)
+      return PayoutClassifications.SNAKE_1_CLOVER_1_DOUBLE_1_NET;
+
+    if (snakeCount === 1 && doubleCount === 1)
+      return PayoutClassifications.SNAKE_1_DOUBLE_1_NET;
+    if (snakeCount === 1 && cloverCount === 1)
+      return PayoutClassifications.SNAKE_1_CLOVER_1_NET;
+
+    if (snakeCount === 2) return PayoutClassifications.SNAKE_2_NET;
+
+    return PayoutClassifications.SNAKE_1_NET;
+  }
+
+  if (cloverCount > 0 && snakeCount === 0) {
+    if (cloverCount === NUM_SLOTS - 1 && doubleCount === 1)
+      return PayoutClassifications.CLOVER_3_DOUBLE_1;
+    if (cloverCount === 2 && doubleCount === 2)
+      return PayoutClassifications.CLOVER_2_DOUBLE_2;
+    if (cloverCount === 1 && doubleCount === NUM_SLOTS - 1)
+      return PayoutClassifications.CLOVER_1_DOUBLE_3;
+    if (cloverCount === NUM_SLOTS - 1) return PayoutClassifications.CLOVER_3;
+
+    if (cloverCount === 2 && doubleCount === 1)
+      return PayoutClassifications.CLOVER_2_DOUBLE_1;
+    if (cloverCount === 1 && doubleCount === 2)
+      return PayoutClassifications.CLOVER_1_DOUBLE_2;
+    if (cloverCount === 1 && doubleCount === 1)
+      return PayoutClassifications.CLOVER_1_DOUBLE_1;
+    if (cloverCount === 2) return PayoutClassifications.CLOVER_2;
+    return PayoutClassifications.CLOVER_1;
+  }
+
+  return null;
 }
 
 export function pickWeightedSymbol(
