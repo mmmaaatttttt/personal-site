@@ -3,7 +3,7 @@ import { type SlotResult, SlotValue } from "./data";
 import {
   calculatePayout,
   calculateProbability,
-  enumerateMultisets,
+  enumerateSlotResults,
   pickWeightedSymbol,
   spinReels,
 } from "./math";
@@ -162,13 +162,13 @@ describe("calculatePayout", () => {
   });
 });
 
-describe("enumerateMultisets", () => {
+describe("enumerateSlotResults", () => {
   it("returns 330 multisets", () => {
-    expect(enumerateMultisets()).toHaveLength(330);
+    expect(enumerateSlotResults()).toHaveLength(330);
   });
 
   it("probabilities sum to 1", () => {
-    const total = enumerateMultisets().reduce(
+    const total = enumerateSlotResults().reduce(
       (sum, m) => sum + calculateProbability(m),
       0,
     );
@@ -177,7 +177,7 @@ describe("enumerateMultisets", () => {
 
   it("each multiset is sorted by SlotValue enum order", () => {
     const symbols = Object.values(SlotValue);
-    for (const multiset of enumerateMultisets()) {
+    for (const multiset of enumerateSlotResults()) {
       for (let i = 0; i < multiset.length - 1; i++) {
         expect(symbols.indexOf(multiset[i])).toBeLessThanOrEqual(
           symbols.indexOf(multiset[i + 1]),

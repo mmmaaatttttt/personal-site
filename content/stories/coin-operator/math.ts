@@ -64,7 +64,7 @@ export function spinReels(rng: () => number = cryptoRandom): SlotResult {
   ) as SlotResult;
 }
 
-export function enumerateMultisets(): SlotResult[] {
+export function enumerateSlotResults(): SlotResult[] {
   const symbols = Object.values(SlotValue) as SlotValue[];
   const results: SlotResult[] = [];
 
