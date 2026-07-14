@@ -61,6 +61,7 @@ export default function StyledTable({
         <style>{`
           table[data-styled-table] th, table[data-styled-table] td {
             text-align: center;
+            vertical-align: middle;
             padding: ${padding};
             border: 1px solid rgba(0, 0, 0, 0.1);
             font-size: 0.85rem;
