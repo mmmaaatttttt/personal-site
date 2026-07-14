@@ -75,46 +75,47 @@ export function classifyPayout(
     if (snakeCount === 0) return PayoutClassifications.COIN_3_3;
   }
 
+  // Snake requires a net or the hand is dead — grouping by snake count
+  // keeps each count's own remaining-slot budget self-contained instead of
+  // interleaving cases from different snake counts in one flat check list.
   if (snakeCount > 0 && netCount > 0) {
-    if (snakeCount === NUM_SLOTS - 1) return PayoutClassifications.SNAKE_3_NET;
-    if (snakeCount === NUM_SLOTS - 2 && doubleCount === 1)
-      return PayoutClassifications.SNAKE_2_DOUBLE_1_NET;
-    if (snakeCount === NUM_SLOTS - 2 && cloverCount === 1)
-      return PayoutClassifications.SNAKE_2_CLOVER_1_NET;
+    if (snakeCount === 3) return PayoutClassifications.SNAKE_3_NET;
 
-    if (snakeCount === 1 && doubleCount === 2)
-      return PayoutClassifications.SNAKE_1_DOUBLE_2_NET;
-    if (snakeCount === 1 && cloverCount === 2)
-      return PayoutClassifications.SNAKE_1_CLOVER_2_NET;
-    if (snakeCount === 1 && doubleCount === 1 && cloverCount === 1)
+    if (snakeCount === 2) {
+      if (doubleCount === 1) return PayoutClassifications.SNAKE_2_DOUBLE_1_NET;
+      if (cloverCount === 1) return PayoutClassifications.SNAKE_2_CLOVER_1_NET;
+      return PayoutClassifications.SNAKE_2_NET;
+    }
+
+    // snakeCount === 1, two slots left over for net/double/clover/filler
+    if (doubleCount === 2) return PayoutClassifications.SNAKE_1_DOUBLE_2_NET;
+    if (cloverCount === 2) return PayoutClassifications.SNAKE_1_CLOVER_2_NET;
+    if (doubleCount === 1 && cloverCount === 1) {
       return PayoutClassifications.SNAKE_1_CLOVER_1_DOUBLE_1_NET;
-
-    if (snakeCount === 1 && doubleCount === 1)
-      return PayoutClassifications.SNAKE_1_DOUBLE_1_NET;
-    if (snakeCount === 1 && cloverCount === 1)
-      return PayoutClassifications.SNAKE_1_CLOVER_1_NET;
-
-    if (snakeCount === 2) return PayoutClassifications.SNAKE_2_NET;
-
+    }
+    if (doubleCount === 1) return PayoutClassifications.SNAKE_1_DOUBLE_1_NET;
+    if (cloverCount === 1) return PayoutClassifications.SNAKE_1_CLOVER_1_NET;
     return PayoutClassifications.SNAKE_1_NET;
   }
 
+  // Same idea for clover-only hands: grouped by clover count so each
+  // count's double-count sub-cases are self-contained.
   if (cloverCount > 0 && snakeCount === 0) {
-    if (cloverCount === NUM_SLOTS - 1 && doubleCount === 1)
-      return PayoutClassifications.CLOVER_3_DOUBLE_1;
-    if (cloverCount === 2 && doubleCount === 2)
-      return PayoutClassifications.CLOVER_2_DOUBLE_2;
-    if (cloverCount === 1 && doubleCount === NUM_SLOTS - 1)
-      return PayoutClassifications.CLOVER_1_DOUBLE_3;
-    if (cloverCount === NUM_SLOTS - 1) return PayoutClassifications.CLOVER_3;
+    if (cloverCount === 3) {
+      if (doubleCount === 1) return PayoutClassifications.CLOVER_3_DOUBLE_1;
+      return PayoutClassifications.CLOVER_3;
+    }
 
-    if (cloverCount === 2 && doubleCount === 1)
-      return PayoutClassifications.CLOVER_2_DOUBLE_1;
-    if (cloverCount === 1 && doubleCount === 2)
-      return PayoutClassifications.CLOVER_1_DOUBLE_2;
-    if (cloverCount === 1 && doubleCount === 1)
-      return PayoutClassifications.CLOVER_1_DOUBLE_1;
-    if (cloverCount === 2) return PayoutClassifications.CLOVER_2;
+    if (cloverCount === 2) {
+      if (doubleCount === 2) return PayoutClassifications.CLOVER_2_DOUBLE_2;
+      if (doubleCount === 1) return PayoutClassifications.CLOVER_2_DOUBLE_1;
+      return PayoutClassifications.CLOVER_2;
+    }
+
+    // cloverCount === 1, up to three slots left over for double/filler
+    if (doubleCount === 3) return PayoutClassifications.CLOVER_1_DOUBLE_3;
+    if (doubleCount === 2) return PayoutClassifications.CLOVER_1_DOUBLE_2;
+    if (doubleCount === 1) return PayoutClassifications.CLOVER_1_DOUBLE_1;
     return PayoutClassifications.CLOVER_1;
   }
 
