@@ -1,5 +1,5 @@
 import SlotMachine from "./components/SlotMachine";
-import { probabilityTable } from "./data";
+import { probabilityTable, payoutTable } from "./table-data";
 
 Every Wednesday night, my wife leaves the house to get a reprieve from the chaotic boy energy that swirls around her. I am very grateful for the fact that, to date, she has always returned home.
 
@@ -36,7 +36,7 @@ Fortunately for us, [intrepid players](https://www.reddit.com/r/BluePrince/comme
 
 <StyledTable
   data={probabilityTable}
-  className="[&_td:first-child]:text-xl"
+  className="[&_td:first-child]:!text-2xl"
 />
 
 Using these values as our source of truth, we can now properly analyze the game.
@@ -45,9 +45,23 @@ Using these values as our source of truth, we can now properly analyze the game.
 
 ### One Armed Bandit
 
-<Figure caption="TBD">
+Before we did into the analysis, I thought you might enjoy playing the slots for yourself. Don't worry, this version is provided completely pro bono. It does, however, track how much you would have spent had you been charged one coin per play.
+
+<Figure caption="Pull the machine as many times as you want. It'll record how much you spend and how much you earn with each round.">
   <SlotMachine />
 </Figure>
+
+Play this for a while, and you'll probably come away feeling ripped off. After 100 pulls, I had spent 100 coins but only won 52, mostly from the three single coin payouts or sometimes from a snake / net combo.
+
+But we can do better than take an experimental approach. The universe of results with payouts is actually relatively small, so we can enumerate them all, and calculate their payouts and probabilities.
+
+If you'd like to try calculating any of this own your own, be my guest. Don't scroll any further until you're ready to see the results. For the rest of you, here's a table with every possible result with a positive payout, along with its payout and likelihood.
+
+<StyledTable
+  data={payoutTable}
+  className="[&_td:first-child]:!text-2xl"
+/>
+
 
 Sources: 
 

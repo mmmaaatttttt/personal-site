@@ -55,71 +55,146 @@ export const SYMBOL_NAME: Record<SlotValue, string> = {
   [SlotValue.SNAKE]: "Snake",
 };
 
+// Joining whole emoji with a separator here (rather than gluing them into one
+// string and trying to split it apart later) sidesteps a real gotcha: some
+// emoji, like the double-symbol keycap, are multiple UTF-16 code units
+// glued together, so splitting an already-built string by character can
+// tear a single emoji apart.
+function emojiSequence(...symbols: SlotValue[]): string {
+  return symbols.map((symbol) => SYMBOL_EMOJI[symbol]).join(" ");
+}
+
 export const PayoutClassifications = {
-  COIN_1_3: SYMBOL_EMOJI[SlotValue.COIN_1].repeat(3),
-  COIN_1_4: SYMBOL_EMOJI[SlotValue.COIN_1].repeat(4),
-  COIN_1_3_DOUBLE_1:
-    SYMBOL_EMOJI[SlotValue.COIN_1].repeat(3) + SYMBOL_EMOJI[SlotValue.DOUBLE],
-  COIN_3_3: SYMBOL_EMOJI[SlotValue.COIN_3].repeat(3),
-  COIN_3_4: SYMBOL_EMOJI[SlotValue.COIN_3].repeat(4),
-  COIN_3_3_DOUBLE_1:
-    SYMBOL_EMOJI[SlotValue.COIN_3].repeat(3) + SYMBOL_EMOJI[SlotValue.DOUBLE],
-  SNAKE_1_NET: SYMBOL_EMOJI[SlotValue.SNAKE] + SYMBOL_EMOJI[SlotValue.NET],
-  SNAKE_2_NET:
-    SYMBOL_EMOJI[SlotValue.SNAKE].repeat(2) + SYMBOL_EMOJI[SlotValue.NET],
-  SNAKE_3_NET:
-    SYMBOL_EMOJI[SlotValue.SNAKE].repeat(3) + SYMBOL_EMOJI[SlotValue.NET],
-  SNAKE_1_DOUBLE_1_NET:
-    SYMBOL_EMOJI[SlotValue.SNAKE] +
-    SYMBOL_EMOJI[SlotValue.DOUBLE] +
-    SYMBOL_EMOJI[SlotValue.NET],
-  SNAKE_1_DOUBLE_2_NET:
-    SYMBOL_EMOJI[SlotValue.SNAKE] +
-    SYMBOL_EMOJI[SlotValue.DOUBLE].repeat(2) +
-    SYMBOL_EMOJI[SlotValue.NET],
-  SNAKE_2_DOUBLE_1_NET:
-    SYMBOL_EMOJI[SlotValue.SNAKE].repeat(2) +
-    SYMBOL_EMOJI[SlotValue.DOUBLE] +
-    SYMBOL_EMOJI[SlotValue.NET],
-  CROWN_4: SYMBOL_EMOJI[SlotValue.CROWN].repeat(4),
-  COIN_1_3_CLOVER_1:
-    SYMBOL_EMOJI[SlotValue.COIN_1].repeat(3) + SYMBOL_EMOJI[SlotValue.CLOVER],
-  COIN_3_3_CLOVER_1:
-    SYMBOL_EMOJI[SlotValue.COIN_3].repeat(3) + SYMBOL_EMOJI[SlotValue.CLOVER],
-  SNAKE_1_CLOVER_1_NET:
-    SYMBOL_EMOJI[SlotValue.SNAKE] +
-    SYMBOL_EMOJI[SlotValue.CLOVER] +
-    SYMBOL_EMOJI[SlotValue.NET],
-  SNAKE_1_CLOVER_2_NET:
-    SYMBOL_EMOJI[SlotValue.SNAKE] +
-    SYMBOL_EMOJI[SlotValue.CLOVER].repeat(2) +
-    SYMBOL_EMOJI[SlotValue.NET],
-  SNAKE_2_CLOVER_1_NET:
-    SYMBOL_EMOJI[SlotValue.SNAKE].repeat(2) +
-    SYMBOL_EMOJI[SlotValue.CLOVER] +
-    SYMBOL_EMOJI[SlotValue.NET],
-  SNAKE_1_CLOVER_1_DOUBLE_1_NET:
-    SYMBOL_EMOJI[SlotValue.SNAKE] +
-    SYMBOL_EMOJI[SlotValue.CLOVER] +
-    SYMBOL_EMOJI[SlotValue.DOUBLE] +
-    SYMBOL_EMOJI[SlotValue.NET],
-  CLOVER_1: SYMBOL_EMOJI[SlotValue.CLOVER],
-  CLOVER_2: SYMBOL_EMOJI[SlotValue.CLOVER].repeat(2),
-  CLOVER_3: SYMBOL_EMOJI[SlotValue.CLOVER].repeat(3),
-  CLOVER_4: SYMBOL_EMOJI[SlotValue.CLOVER].repeat(4),
-  CLOVER_1_DOUBLE_1:
-    SYMBOL_EMOJI[SlotValue.CLOVER] + SYMBOL_EMOJI[SlotValue.DOUBLE],
-  CLOVER_1_DOUBLE_2:
-    SYMBOL_EMOJI[SlotValue.CLOVER] + SYMBOL_EMOJI[SlotValue.DOUBLE].repeat(2),
-  CLOVER_1_DOUBLE_3:
-    SYMBOL_EMOJI[SlotValue.CLOVER] + SYMBOL_EMOJI[SlotValue.DOUBLE].repeat(3),
-  CLOVER_2_DOUBLE_1:
-    SYMBOL_EMOJI[SlotValue.CLOVER].repeat(2) + SYMBOL_EMOJI[SlotValue.DOUBLE],
-  CLOVER_2_DOUBLE_2:
-    SYMBOL_EMOJI[SlotValue.CLOVER].repeat(2) +
-    SYMBOL_EMOJI[SlotValue.DOUBLE].repeat(2),
-  CLOVER_3_DOUBLE_1:
-    SYMBOL_EMOJI[SlotValue.CLOVER].repeat(3) + SYMBOL_EMOJI[SlotValue.DOUBLE],
+  COIN_1_3: emojiSequence(SlotValue.COIN_1, SlotValue.COIN_1, SlotValue.COIN_1),
+  COIN_1_4: emojiSequence(
+    SlotValue.COIN_1,
+    SlotValue.COIN_1,
+    SlotValue.COIN_1,
+    SlotValue.COIN_1,
+  ),
+  COIN_1_3_DOUBLE_1: emojiSequence(
+    SlotValue.COIN_1,
+    SlotValue.COIN_1,
+    SlotValue.COIN_1,
+    SlotValue.DOUBLE,
+  ),
+  COIN_3_3: emojiSequence(SlotValue.COIN_3, SlotValue.COIN_3, SlotValue.COIN_3),
+  COIN_3_4: emojiSequence(
+    SlotValue.COIN_3,
+    SlotValue.COIN_3,
+    SlotValue.COIN_3,
+    SlotValue.COIN_3,
+  ),
+  COIN_3_3_DOUBLE_1: emojiSequence(
+    SlotValue.COIN_3,
+    SlotValue.COIN_3,
+    SlotValue.COIN_3,
+    SlotValue.DOUBLE,
+  ),
+  SNAKE_1_NET: emojiSequence(SlotValue.SNAKE, SlotValue.NET),
+  SNAKE_2_NET: emojiSequence(SlotValue.SNAKE, SlotValue.SNAKE, SlotValue.NET),
+  SNAKE_3_NET: emojiSequence(
+    SlotValue.SNAKE,
+    SlotValue.SNAKE,
+    SlotValue.SNAKE,
+    SlotValue.NET,
+  ),
+  SNAKE_1_DOUBLE_1_NET: emojiSequence(
+    SlotValue.SNAKE,
+    SlotValue.DOUBLE,
+    SlotValue.NET,
+  ),
+  SNAKE_1_DOUBLE_2_NET: emojiSequence(
+    SlotValue.SNAKE,
+    SlotValue.DOUBLE,
+    SlotValue.DOUBLE,
+    SlotValue.NET,
+  ),
+  SNAKE_2_DOUBLE_1_NET: emojiSequence(
+    SlotValue.SNAKE,
+    SlotValue.SNAKE,
+    SlotValue.DOUBLE,
+    SlotValue.NET,
+  ),
+  CROWN_4: emojiSequence(
+    SlotValue.CROWN,
+    SlotValue.CROWN,
+    SlotValue.CROWN,
+    SlotValue.CROWN,
+  ),
+  COIN_1_3_CLOVER_1: emojiSequence(
+    SlotValue.COIN_1,
+    SlotValue.COIN_1,
+    SlotValue.COIN_1,
+    SlotValue.CLOVER,
+  ),
+  COIN_3_3_CLOVER_1: emojiSequence(
+    SlotValue.COIN_3,
+    SlotValue.COIN_3,
+    SlotValue.COIN_3,
+    SlotValue.CLOVER,
+  ),
+  SNAKE_1_CLOVER_1_NET: emojiSequence(
+    SlotValue.SNAKE,
+    SlotValue.CLOVER,
+    SlotValue.NET,
+  ),
+  SNAKE_1_CLOVER_2_NET: emojiSequence(
+    SlotValue.SNAKE,
+    SlotValue.CLOVER,
+    SlotValue.CLOVER,
+    SlotValue.NET,
+  ),
+  SNAKE_2_CLOVER_1_NET: emojiSequence(
+    SlotValue.SNAKE,
+    SlotValue.SNAKE,
+    SlotValue.CLOVER,
+    SlotValue.NET,
+  ),
+  SNAKE_1_CLOVER_1_DOUBLE_1_NET: emojiSequence(
+    SlotValue.SNAKE,
+    SlotValue.CLOVER,
+    SlotValue.DOUBLE,
+    SlotValue.NET,
+  ),
+  CLOVER_1: emojiSequence(SlotValue.CLOVER),
+  CLOVER_2: emojiSequence(SlotValue.CLOVER, SlotValue.CLOVER),
+  CLOVER_3: emojiSequence(SlotValue.CLOVER, SlotValue.CLOVER, SlotValue.CLOVER),
+  CLOVER_4: emojiSequence(
+    SlotValue.CLOVER,
+    SlotValue.CLOVER,
+    SlotValue.CLOVER,
+    SlotValue.CLOVER,
+  ),
+  CLOVER_1_DOUBLE_1: emojiSequence(SlotValue.CLOVER, SlotValue.DOUBLE),
+  CLOVER_1_DOUBLE_2: emojiSequence(
+    SlotValue.CLOVER,
+    SlotValue.DOUBLE,
+    SlotValue.DOUBLE,
+  ),
+  CLOVER_1_DOUBLE_3: emojiSequence(
+    SlotValue.CLOVER,
+    SlotValue.DOUBLE,
+    SlotValue.DOUBLE,
+    SlotValue.DOUBLE,
+  ),
+  CLOVER_2_DOUBLE_1: emojiSequence(
+    SlotValue.CLOVER,
+    SlotValue.CLOVER,
+    SlotValue.DOUBLE,
+  ),
+  CLOVER_2_DOUBLE_2: emojiSequence(
+    SlotValue.CLOVER,
+    SlotValue.CLOVER,
+    SlotValue.DOUBLE,
+    SlotValue.DOUBLE,
+  ),
+  CLOVER_3_DOUBLE_1: emojiSequence(
+    SlotValue.CLOVER,
+    SlotValue.CLOVER,
+    SlotValue.CLOVER,
+    SlotValue.DOUBLE,
+  ),
 } as const;
 
 export type PayoutClassificationValue =
