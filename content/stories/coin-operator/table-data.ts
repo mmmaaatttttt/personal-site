@@ -26,7 +26,10 @@ export const probabilityTable: string[][] = [
  * four clovers, which is rare enough to need 8+ decimal places) — format
  * with enough decimals to show `sigFigs` significant digits instead.
  */
-function formatSignificantPercentage(probability: number, sigFigs = 3): string {
+export function formatSignificantPercentage(
+  probability: number,
+  sigFigs = 3,
+): string {
   const percentage = probability * 100;
   if (percentage === 0) return "0%";
   const magnitude = Math.floor(Math.log10(Math.abs(percentage)));
@@ -34,7 +37,7 @@ function formatSignificantPercentage(probability: number, sigFigs = 3): string {
   return `${percentage.toFixed(decimals)}%`;
 }
 
-interface PayoutGroup {
+export interface PayoutGroup {
   classification: string;
   payout: number;
   probability: number;
@@ -64,16 +67,11 @@ for (const slotResult of enumerateSlotResults()) {
   }
 }
 
-const payoutData: [symbols: string, payout: number, probability: number][] =
-  Array.from(payoutGroupsByClassification.values()).map((group) => [
-    group.classification,
-    group.payout,
-    group.probability,
-  ]);
+export const payoutRows: PayoutGroup[] = Array.from(
+  payoutGroupsByClassification.values(),
+).sort((a, b) => a.payout - b.payout);
 
-export const payoutTable: string[][] = [
-  ["Winning Combination", "Payout", "Probability"],
-  ...payoutData
-    .sort((row1, row2) => row1[1] - row2[1])
-    .map((row) => [row[0], `${row[1]}`, formatSignificantPercentage(row[2])]),
-];
+export const expectedValue = payoutRows.reduce(
+  (ev, row) => ev + row.payout * row.probability,
+  0,
+);

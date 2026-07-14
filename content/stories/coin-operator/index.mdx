@@ -1,5 +1,6 @@
+import PayoutTable from "./components/PayoutTable";
 import SlotMachine from "./components/SlotMachine";
-import { probabilityTable, payoutTable } from "./table-data";
+import { expectedValue, payoutRows, probabilityTable } from "./table-data";
 
 Every Wednesday night, my wife leaves the house to get a reprieve from the chaotic boy energy that swirls around her. I am very grateful for the fact that, to date, she has always returned home.
 
@@ -34,10 +35,12 @@ As with any other game of chance, a natural question arises here: if we spend a 
 
 Fortunately for us, [intrepid players](https://www.reddit.com/r/BluePrince/comments/1kvhiw8/thorough_analysis_of_slot_machine_payout/) have already gathered a wealth of experimental data on this game. For purposes of today's analysis, we will assume that the probabilities of each symbol are as follows:
 
-<StyledTable
-  data={probabilityTable}
-  className="[&_td:first-child]:!text-2xl"
-/>
+<Figure caption="Probability of each symbol in the slot machine.">
+  <StyledTable
+    data={probabilityTable}
+    className="[&_td:first-child]:!text-2xl"
+  />
+</Figure>
 
 Using these values as our source of truth, we can now properly analyze the game.
 
@@ -55,13 +58,17 @@ Play this for a while, and you'll probably come away feeling ripped off. After 1
 
 But we can do better than take an experimental approach. The universe of results with payouts is actually relatively small, so we can enumerate them all, and calculate their payouts and probabilities.
 
-If you'd like to try calculating any of this own your own, be my guest. Don't scroll any further until you're ready to see the results. For the rest of you, here's a table with every possible result with a positive payout, along with its payout and likelihood.
+If you'd like to try calculating any of this own your own, be my guest. Don't scroll any further until you're ready to see the results. For the rest of you, here's a table with every possible postiive payout along with its likelihood.
 
-<StyledTable
-  data={payoutTable}
-  className="[&_td:first-child]:!text-2xl"
-/>
+<Figure caption="Payouts and probabilities for each result with a positive payout.">
+  <PayoutTable data={payoutRows} />
+</Figure>
 
+By multiplying each payout by its associated probability and adding everything up, we find that the expected value of this machine is **{expectedValue.toFixed(3)}**. Put another way, for every 1,000 coins you put into the machine, you can expect to get only {(1000 * expectedValue).toFixed(0)} coins back, losing {(1000 * (1 - expectedValue)).toFixed(0)} coins on average. I was particularly unlucky in my experiment of 100 draws, but the odds are definitely not stacked in your favor.
+
+---
+
+### Bonus
 
 Sources: 
 
