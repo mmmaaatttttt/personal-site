@@ -1,7 +1,7 @@
 import { fireEvent, render, screen } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
 import "@testing-library/jest-dom/vitest";
-import type { PayoutGroup } from "../../table-data";
+import type { PayoutGroup } from "../../tableData";
 import PayoutTable from ".";
 
 const mockData: PayoutGroup[] = [

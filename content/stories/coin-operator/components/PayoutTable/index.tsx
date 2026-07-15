@@ -4,10 +4,7 @@ import type { FC } from "react";
 import SortHeader from "@/components/story/shared/SortHeader";
 import StyledTable from "@/components/story/shared/StyledTable";
 import useSortableTable from "@/hooks/useSortableTable";
-import {
-  formatSignificantPercentage,
-  type PayoutGroup,
-} from "../../table-data";
+import { formatSignificantPercentage, type PayoutGroup } from "../../tableData";
 
 interface PayoutTableProps {
   data: PayoutGroup[];
