@@ -1,9 +1,5 @@
 import COLORS from "@/utils/styles";
 
-/** Cost of a standard spin. Bonus per-reel re-spins (future extension) add to
- *  this on a per-round basis rather than replacing it. */
-export const SPIN_COST = 1;
-
 export const HISTORY_STORAGE_KEY = "coinOperator:history";
 
 /** Each reel locks in `STAGGER` seconds after the previous one, so they stop

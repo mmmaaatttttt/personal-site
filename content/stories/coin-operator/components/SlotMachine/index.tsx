@@ -7,14 +7,13 @@ import ToggleSwitch from "@/components/story/shared/ToggleSwitch";
 import { Button } from "@/components/ui/Button";
 import { useLocalStorage } from "@/hooks/useLocalStorage";
 import COLORS from "@/utils/styles";
-import { NUM_SLOTS, SlotValue } from "../../data";
+import { NUM_SLOTS, SlotValue, SPIN_COST } from "../../data";
 import { calculatePayout, spinReels } from "../../math";
 import {
   BASE_SPIN_DURATION,
   HISTORY_STORAGE_KEY,
   REEL_STAGGER,
   type RoundEntry,
-  SPIN_COST,
 } from "./constants";
 import Reel from "./Reel";
 import StatusPanel from "./StatusPanel";
