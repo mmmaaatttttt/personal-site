@@ -31,6 +31,7 @@ const SlotMachine: FC<SlotMachineProps> = ({ maxBonusSpins = 0 }) => {
     selectedIndex,
     showEV,
     setShowEV,
+    evToggleRevealed,
     history,
     resetHistory,
     view,
@@ -47,28 +48,14 @@ const SlotMachine: FC<SlotMachineProps> = ({ maxBonusSpins = 0 }) => {
   return (
     <div>
       <div className="flex flex-wrap items-center justify-between gap-4">
-        <div className="flex flex-wrap items-center gap-6">
-          <ToggleSwitch
-            leftText="Play Slots"
-            rightText="View History"
-            leftColor={COLORS.DARK_GRAY}
-            rightColor={COLORS.DARK_GRAY}
-            handleSwitchChange={(checked) =>
-              setView(checked ? "trend" : "spin")
-            }
-            noWrap
-          />
-          {hasBonusSpins && view === "spin" && (
-            <ToggleSwitch
-              leftText="Show Expected Value"
-              rightText="Hide Expected Value"
-              leftColor={COLORS.DARK_GRAY}
-              rightColor={COLORS.DARK_GRAY}
-              handleSwitchChange={setShowEV}
-              noWrap
-            />
-          )}
-        </div>
+        <ToggleSwitch
+          leftText="Play Slots"
+          rightText="View History"
+          leftColor={COLORS.DARK_GRAY}
+          rightColor={COLORS.DARK_GRAY}
+          handleSwitchChange={(checked) => setView(checked ? "trend" : "spin")}
+          noWrap
+        />
         <Button variant="outline" onClick={resetHistory}>
           Clear History
         </Button>
@@ -140,7 +127,15 @@ const SlotMachine: FC<SlotMachineProps> = ({ maxBonusSpins = 0 }) => {
                 disabled={!canBonusSpin}
                 className="rounded-full bg-purple-500 px-8 py-3 text-lg font-bold text-white hover:bg-purple-400"
               >
-                Bonus Spin ({bonusSpinsRemaining} remaining)
+                Bonus Spin ({bonusSpinsRemaining})
+              </Button>
+            )}
+            {hasBonusSpins && evToggleRevealed && (
+              <Button
+                onClick={() => setShowEV((prev) => !prev)}
+                className="rounded-full bg-cyan-600 px-8 py-3 text-lg font-bold text-white hover:bg-cyan-500"
+              >
+                {showEV ? "Hide" : "Show"} expected value
               </Button>
             )}
           </div>

@@ -27,6 +27,10 @@ export function useSlotMachine(maxBonusSpins: number) {
   const [bonusSpinsRemaining, setBonusSpinsRemaining] = useState(maxBonusSpins);
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
   const [showEV, setShowEV] = useState(false);
+  // Sticks true forever once the bonus round has been reached for the first
+  // time, so the EV toggle button doesn't pop in and out of existence on
+  // every spin/finalize cycle.
+  const [evToggleRevealed, setEvToggleRevealed] = useState(false);
   const [history, setHistory, resetHistory] = useLocalStorage<RoundEntry[]>(
     `${HISTORY_STORAGE_KEY}:${maxBonusSpins}`,
     [],
@@ -96,6 +100,7 @@ export function useSlotMachine(maxBonusSpins: number) {
             setMainSpinning(false);
             if (hasBonusSpins) {
               setRoundPending(true);
+              setEvToggleRevealed(true);
             } else {
               recordRound(SPIN_COST, calculatePayout(result));
             }
@@ -168,11 +173,13 @@ export function useSlotMachine(maxBonusSpins: number) {
     mainSpinning,
     bonusSpinning,
     isBusy,
+    roundPending,
     cost,
     bonusSpinsRemaining,
     selectedIndex,
     showEV,
     setShowEV,
+    evToggleRevealed,
     history,
     resetHistory,
     view,

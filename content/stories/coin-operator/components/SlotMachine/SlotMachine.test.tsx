@@ -159,7 +159,7 @@ describe("SlotMachine (maxBonusSpins > 0)", () => {
     expect(screen.getAllByText("❔")).toHaveLength(4);
     expect(getPullButton()).not.toBeDisabled();
     expect(getBonusSpinButton()).toBeDisabled();
-    expect(getBonusSpinButton()).toHaveTextContent("Bonus Spin (3 remaining)");
+    expect(getBonusSpinButton()).toHaveTextContent("Bonus Spin (3)");
   });
 
   it("disables Pull! while the main spin animation is in flight", () => {
@@ -202,7 +202,7 @@ describe("SlotMachine (maxBonusSpins > 0)", () => {
     fireEvent.click(getBonusSpinButton());
 
     expect(screen.getByText("100")).toBeInTheDocument();
-    expect(getBonusSpinButton()).toHaveTextContent("Bonus Spin (2 remaining)");
+    expect(getBonusSpinButton()).toHaveTextContent("Bonus Spin (2)");
   });
 
   it("finalizes the round into history once bonus spins are exhausted", () => {
@@ -216,7 +216,7 @@ describe("SlotMachine (maxBonusSpins > 0)", () => {
     }
 
     expect(getBonusSpinButton()).toBeDisabled();
-    expect(getBonusSpinButton()).toHaveTextContent("Bonus Spin (0 remaining)");
+    expect(getBonusSpinButton()).toHaveTextContent("Bonus Spin (0)");
 
     const stored = JSON.parse(localStorage.getItem(bonusHistoryKey) ?? "[]");
     expect(stored).toHaveLength(1);
@@ -259,10 +259,56 @@ describe("SlotMachine (maxBonusSpins > 0)", () => {
       screen.queryByText(expectedDashEV?.toFixed(1) ?? ""),
     ).not.toBeInTheDocument();
 
-    fireEvent.click(screen.getAllByRole("switch")[1]);
+    fireEvent.click(
+      screen.getByRole("button", { name: "Show expected value" }),
+    );
 
     expect(
       screen.getByText(expectedDashEV?.toFixed(1) ?? ""),
+    ).toBeInTheDocument();
+  });
+
+  it("only shows the EV toggle button after the first spin, and toggles its label", () => {
+    render(<SlotMachine maxBonusSpins={3} />);
+    expect(
+      screen.queryByRole("button", { name: /expected value/ }),
+    ).not.toBeInTheDocument();
+
+    resolveImmediately();
+    fireEvent.click(getPullButton());
+
+    const evButton = screen.getByRole("button", {
+      name: "Show expected value",
+    });
+    fireEvent.click(evButton);
+    expect(
+      screen.getByRole("button", { name: "Hide expected value" }),
+    ).toBeInTheDocument();
+  });
+
+  it("keeps the EV toggle button visible across later spins once revealed", () => {
+    resolveImmediately();
+    render(<SlotMachine maxBonusSpins={3} />);
+
+    // First spin reveals the button and lands a pending round.
+    fireEvent.click(getPullButton());
+    expect(
+      screen.getByRole("button", { name: "Show expected value" }),
+    ).toBeInTheDocument();
+
+    // Exhaust the bonus spins so the round finalizes (roundPending -> false).
+    for (let i = 0; i < 3; i++) {
+      fireEvent.click(getReelButtons()[3]);
+      fireEvent.click(getBonusSpinButton());
+    }
+    expect(
+      screen.getByRole("button", { name: "Show expected value" }),
+    ).toBeInTheDocument();
+
+    // Pulling again briefly clears roundPending too — button should stay put.
+    fireEvent.click(getPullButton());
+    expect(
+      screen.getByRole("button", { name: "Show expected value" }),
     ).toBeInTheDocument();
   });
 
