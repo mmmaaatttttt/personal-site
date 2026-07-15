@@ -1,4 +1,4 @@
-import { type SlotResult, SlotValue } from "./data";
+import { type SlotResult, SlotValue } from "../../data";
 
 /** Scenarios for the bonus-spin strategy quiz. Every entry is a distinct
  *  symbol multiset; ordered roughly easy → hard for display, though the
