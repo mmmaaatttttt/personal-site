@@ -12,6 +12,8 @@ export enum SlotValue {
 export const NUM_SLOTS = 4;
 export type SlotResult = [SlotValue, SlotValue, SlotValue, SlotValue];
 
+export const SPIN_COST = 1;
+
 export const PAYOUT_RATES: Record<string, number> = {
   CLOVER: 10,
   COINS_PER_SNAKE: 3,
