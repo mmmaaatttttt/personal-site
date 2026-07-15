@@ -1,6 +1,7 @@
 import PayoutTable from "./components/PayoutTable";
 import SlotMachine from "./components/SlotMachine";
-import { expectedValue, payoutRows, probabilityTable } from "./table-data";
+import StrategyQuiz from "./components/StrategyQuiz";
+import { expectedValue, payoutRows, probabilityTable } from "./tableData";
 
 Every Wednesday night, my wife leaves the house to get a reprieve from the chaotic boy energy that swirls around her. I am very grateful for the fact that, to date, she has always returned home.
 
@@ -64,11 +65,39 @@ If you'd like to try calculating any of this own your own, be my guest. Don't sc
   <PayoutTable data={payoutRows} />
 </Figure>
 
+Note that these are all mutually exclusive by construction. For example, the probability of getting three single coins is listed as 6.13%. This is the probability of getting exactly this outcome with a payout of 3; in other words, the fourth sybmol must be a dash, crown, three-coin (symbolized here as a money bag), or net. The other symbols would all impact the payout and are therefore represented in other rows.
+
 By multiplying each payout by its associated probability and adding everything up, we find that the expected value of this machine is **{expectedValue.toFixed(3)}**. Put another way, for every 1,000 coins you put into the machine, you can expect to get only {(1000 * expectedValue).toFixed(0)} coins back, losing {(1000 * (1 - expectedValue)).toFixed(0)} coins on average. I was particularly unlucky in my experiment of 100 draws, but the odds are definitely not stacked in your favor.
 
 ---
 
-### Bonus
+### Bonus Spins
+
+If this were all we could do in the game, the decision would be pretty clear: as in life, playing the slot machine is not a rational choice. However, the slot machines in Blue Prince have another mechanic taken from the real world. Once you've taken your first pull, if you want, you can select one of the slots to pull again in isolation. For example, if you pull three crowns and a dash, for the cost of just one additional coin you can spin again but lock in all of your crowns in the hopes of hitting it big.
+
+Most of the slot machines in the game let you take this bonus spin up to three times, at the cost of one additional coin per spin. From here, a natural question arises: how does this change the expected value of the game?
+
+A things are worth unpacking here before we try to answer this question. 
+
+First, unlike in our previous analyis, the bonus spins introduce an aspect of player choice and strategy. How do we know whether we should use a bonus spin, and how do we determine which symbol we should replace if we decide we do want to spin? Our strategy here will clearly impact the expected value: for example, if we take a bonus spin on a machine that looks like ➖ ➖ ➖ ➖, we have wasted a coin, because this sequence is more than one symbol away from a sequence with a positive payout.
+
+To simplify our analysis, let's then assume that we use an optimal strategy. In other words, we are slot machine gurus who always make the play that will maximize our expected value. Sometimes this means not taking the bonus spin at all. If we do take a bonus spin, we select the symbol that maximizes our chances of the largest return.
+
+Want to try your hand at picking the best strategy? Here are some sample scenarios. Given a single bonus spin, what is the best decision to make in each case?
+
+<Figure caption="Given one bonus spin, select the symbol that you think maximizes the expected value of the spin. You can also skip the bonus spin if you think you're unlikely to do better than what you have now.">
+  <StrategyQuiz />
+</Figure>
+
+If you thought that quiz was hard, keep in mind that things get even more complicated when you have more than one bonus spin. In general, knowing the optimal strategy is not trivial! But for now, let's assume we are all slot machine wizards.
+
+The second thing to call out is the fact that getting a closed formula for the expected value is not feasible. Fortunately, this is the kind of thing that computers are very good at. The universe of possible spin results is not actually that large (exercise for the reader: ignoring ordering, show that there are only 330 of them). So to calculate the expected value, we can start with our known expected value, then use dynamic programming techniques to calculate the expected value of any result given that you have one bonus spin remaining. From there we can use those same techniques to calculate the expected value of any result given that you have two spins remaining. And you can repeat this once more if you assume you have three spins remaining.
+
+I'll show you the results momentarily. But just in case you want to try it out for yourself, here's the same simulation with the three-bonus-spins rule tacked on.
+
+<Figure caption="This time you can play the game with up to three bonus spins. How does your strategy change? How does your profit change?">
+  <SlotMachine maxBonusSpins={3} />
+</Figure>
 
 Sources: 
 
