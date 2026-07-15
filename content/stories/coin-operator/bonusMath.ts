@@ -1,5 +1,9 @@
 import { PROBABILITY_MAP, type SlotResult, SlotValue, SPIN_COST } from "./data";
-import { calculatePayout } from "./math";
+import {
+  calculatePayout,
+  calculateProbability,
+  enumerateSlotResults,
+} from "./math";
 
 const ALL_SYMBOLS = Object.values(SlotValue) as SlotValue[];
 
@@ -75,4 +79,21 @@ export function optimalStrategy(
 
   strategyMemo.set(key, best);
   return best;
+}
+
+/**
+ * Expected value of the machine when the player may take up to
+ * `spinsRemaining` optimal bonus spins after the initial pull. This does not
+ * net out the cost of that initial pull — same framing as the plain
+ * (0-bonus-spin) expected value already used elsewhere in the article, so
+ * `machineExpectedValue(0)` is numerically identical to that figure.
+ */
+export function machineExpectedValue(spinsRemaining: number): number {
+  return enumerateSlotResults().reduce(
+    (sum, result) =>
+      sum +
+      calculateProbability(result) *
+        optimalStrategy(result, spinsRemaining).value,
+    -1,
+  );
 }

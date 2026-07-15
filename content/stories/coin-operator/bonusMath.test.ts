@@ -1,7 +1,12 @@
 import { describe, expect, it } from "vitest";
-import { evaluateActions, optimalStrategy } from "./bonusMath";
+import {
+  evaluateActions,
+  machineExpectedValue,
+  optimalStrategy,
+} from "./bonusMath";
 import { type SlotResult, SlotValue } from "./data";
 import { calculatePayout } from "./math";
+import { expectedValue } from "./tableData";
 
 describe("evaluateActions", () => {
   it("offers no spin actions when no spins remain", () => {
@@ -115,5 +120,22 @@ describe("optimalStrategy", () => {
 
     expect(one).toBeGreaterThanOrEqual(zero);
     expect(two).toBeGreaterThanOrEqual(one);
+  });
+});
+
+describe("machineExpectedValue", () => {
+  it("matches the existing 0-bonus-spin expected value", () => {
+    expect(machineExpectedValue(0)).toBeCloseTo(expectedValue, 10);
+  });
+
+  it("increases (weakly) as more bonus spins become available", () => {
+    const zero = machineExpectedValue(0);
+    const one = machineExpectedValue(1);
+    const two = machineExpectedValue(2);
+    const three = machineExpectedValue(3);
+
+    expect(one).toBeGreaterThanOrEqual(zero);
+    expect(two).toBeGreaterThanOrEqual(one);
+    expect(three).toBeGreaterThanOrEqual(two);
   });
 });
