@@ -1,102 +1,74 @@
 "use client";
 
-import { animate } from "framer-motion";
-import { type FC, useRef, useState } from "react";
+import type { FC } from "react";
 import FlexContainer from "@/components/story/shared/FlexContainer";
 import ToggleSwitch from "@/components/story/shared/ToggleSwitch";
 import { Button } from "@/components/ui/Button";
-import { useLocalStorage } from "@/hooks/useLocalStorage";
+import { cn } from "@/lib/utils";
 import COLORS from "@/utils/styles";
-import { NUM_SLOTS, SlotValue, SPIN_COST } from "../../data";
-import { calculatePayout, spinReels } from "../../math";
-import {
-  BASE_SPIN_DURATION,
-  HISTORY_STORAGE_KEY,
-  REEL_STAGGER,
-  type RoundEntry,
-} from "./constants";
 import Reel from "./Reel";
 import StatusPanel from "./StatusPanel";
 import TrendChart from "./TrendChart";
+import { useSlotMachine } from "./useSlotMachine";
 
-const CYCLE_SYMBOLS = Object.values(SlotValue) as SlotValue[];
+interface SlotMachineProps {
+  /** Bonus re-spins available per round. 0 (the default) is the plain
+   *  single-pull machine; a positive value enables the reel-select + bonus
+   *  spin mechanic and its EV toggle. */
+  maxBonusSpins?: number;
+}
 
-const SlotMachine: FC = () => {
-  const [displayValues, setDisplayValues] = useState<(SlotValue | null)[]>(
-    Array(NUM_SLOTS).fill(null),
-  );
-  const [locked, setLocked] = useState<boolean[]>(Array(NUM_SLOTS).fill(false));
-  const [spinning, setSpinning] = useState(false);
-  const [payout, setPayout] = useState<number | null>(null);
-  const [history, setHistory, resetHistory] = useLocalStorage<RoundEntry[]>(
-    HISTORY_STORAGE_KEY,
-    [],
-  );
-  const [view, setView] = useState<"spin" | "trend">("spin");
-  const lockedCountRef = useRef(0);
-
-  const handleSpin = () => {
-    const result = spinReels();
-    const roundPayout = calculatePayout(result);
-
-    lockedCountRef.current = 0;
-    setSpinning(true);
-    setPayout(null);
-    setLocked(Array(NUM_SLOTS).fill(false));
-
-    result.forEach((symbol, i) => {
-      animate(0, 1, {
-        duration: BASE_SPIN_DURATION + i * REEL_STAGGER,
-        ease: "easeOut",
-        onUpdate: (v) => {
-          setDisplayValues((prev) => {
-            const next = [...prev];
-            next[i] =
-              CYCLE_SYMBOLS[Math.floor(v * 37 + i * 3) % CYCLE_SYMBOLS.length];
-            return next;
-          });
-        },
-        onComplete: () => {
-          setDisplayValues((prev) => {
-            const next = [...prev];
-            next[i] = symbol;
-            return next;
-          });
-          setLocked((prev) => {
-            const next = [...prev];
-            next[i] = true;
-            return next;
-          });
-
-          lockedCountRef.current += 1;
-          if (lockedCountRef.current === NUM_SLOTS) {
-            setSpinning(false);
-            setPayout(roundPayout);
-            setHistory((prev) => {
-              const [prevCost, prevRevenue] = prev[prev.length - 1] ?? [0, 0];
-              const entry: RoundEntry = [
-                prevCost + SPIN_COST,
-                prevRevenue + roundPayout,
-              ];
-              return [...prev, entry];
-            });
-          }
-        },
-      });
-    });
-  };
+const SlotMachine: FC<SlotMachineProps> = ({ maxBonusSpins = 0 }) => {
+  const {
+    hasBonusSpins,
+    displayValues,
+    locked,
+    mainSpinning,
+    bonusSpinning,
+    isBusy,
+    cost,
+    bonusSpinsRemaining,
+    selectedIndex,
+    showEV,
+    setShowEV,
+    history,
+    resetHistory,
+    view,
+    setView,
+    payout,
+    actionValues,
+    canSelectReel,
+    canBonusSpin,
+    handlePull,
+    handleReelClick,
+    handleBonusSpin,
+  } = useSlotMachine(maxBonusSpins);
 
   return (
     <div>
       <div className="flex flex-wrap items-center justify-between gap-4">
-        <ToggleSwitch
-          leftText="Play Slots"
-          rightText="View History"
-          leftColor={COLORS.DARK_GRAY}
-          rightColor={COLORS.DARK_GRAY}
-          handleSwitchChange={(checked) => setView(checked ? "trend" : "spin")}
-          noWrap
-        />
+        <div className="flex flex-wrap items-center gap-6">
+          <ToggleSwitch
+            leftText="Play Slots"
+            rightText="View History"
+            leftColor={COLORS.DARK_GRAY}
+            rightColor={COLORS.DARK_GRAY}
+            handleSwitchChange={(checked) =>
+              setView(checked ? "trend" : "spin")
+            }
+            noWrap
+          />
+          {hasBonusSpins && view === "spin" && (
+            <ToggleSwitch
+              leftText="Show Expected Value"
+              rightText="Hide Expected Value"
+              leftColor={COLORS.DARK_GRAY}
+              rightColor={COLORS.DARK_GRAY}
+              handleSwitchChange={setShowEV}
+              noWrap
+            />
+          )}
+        </div>
         <Button variant="outline" onClick={resetHistory}>
           Clear History
         </Button>
@@ -105,23 +77,75 @@ const SlotMachine: FC = () => {
         <div className="mt-6 rounded-2xl border-4 border-yellow-600 bg-gradient-to-b from-neutral-800 to-black p-10 shadow-xl">
           <div className="rounded-lg border-2 border-neutral-900/60 bg-neutral-700 p-6 shadow-inner">
             <FlexContainer main="center" cross="center" className="gap-3">
-              {displayValues.map((value, i) => (
-                // biome-ignore lint/suspicious/noArrayIndexKey: reel count and order are fixed
-                <Reel key={i} value={value} active={spinning && !locked[i]} />
-              ))}
+              {displayValues.map((value, i) => {
+                if (!hasBonusSpins) {
+                  return (
+                    <Reel
+                      // biome-ignore lint/suspicious/noArrayIndexKey: reel count and order are fixed
+                      key={i}
+                      value={value}
+                      active={mainSpinning && !locked[i]}
+                    />
+                  );
+                }
+
+                const evValue =
+                  showEV && actionValues && value
+                    ? actionValues.spin[value]
+                    : undefined;
+
+                return (
+                  // biome-ignore lint/suspicious/noArrayIndexKey: reel count and order are fixed
+                  <div key={i} className="relative">
+                    <button
+                      type="button"
+                      onClick={() => handleReelClick(i)}
+                      disabled={!canSelectReel}
+                      aria-pressed={selectedIndex === i}
+                      className={cn(
+                        "rounded-md disabled:cursor-not-allowed",
+                        selectedIndex === i && "ring-4 ring-yellow-400",
+                      )}
+                    >
+                      <Reel
+                        value={value}
+                        active={
+                          mainSpinning
+                            ? !locked[i]
+                            : bonusSpinning && selectedIndex === i
+                        }
+                      />
+                    </button>
+                    {evValue !== undefined && (
+                      <span className="-bottom-2 -translate-x-1/2 absolute left-1/2 rounded-full bg-white px-2 font-mono text-black text-xs shadow">
+                        {evValue.toFixed(1)}
+                      </span>
+                    )}
+                  </div>
+                );
+              })}
             </FlexContainer>
           </div>
-          <div className="mt-8 flex justify-center">
+          <div className="mt-8 flex justify-center gap-4">
             <Button
-              onClick={handleSpin}
-              disabled={spinning}
+              onClick={handlePull}
+              disabled={isBusy}
               className="rounded-full bg-yellow-500 px-8 py-3 text-lg font-bold text-black hover:bg-yellow-400"
             >
               Pull!
             </Button>
+            {hasBonusSpins && (
+              <Button
+                onClick={handleBonusSpin}
+                disabled={!canBonusSpin}
+                className="rounded-full bg-purple-500 px-8 py-3 text-lg font-bold text-white hover:bg-purple-400"
+              >
+                Bonus Spin ({bonusSpinsRemaining} remaining)
+              </Button>
+            )}
           </div>
           <div className="mt-8">
-            <StatusPanel cost={SPIN_COST} payout={payout} />
+            <StatusPanel cost={cost} payout={payout} />
           </div>
         </div>
       ) : (

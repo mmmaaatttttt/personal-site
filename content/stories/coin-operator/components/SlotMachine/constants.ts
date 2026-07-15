@@ -1,5 +1,8 @@
 import COLORS from "@/utils/styles";
 
+/** Base key for round history in localStorage. Each `SlotMachine` instance
+ *  suffixes this with its `maxBonusSpins` prop so, e.g., the no-bonus demo
+ *  and the three-bonus-spin demo track independent history. */
 export const HISTORY_STORAGE_KEY = "coinOperator:history";
 
 /** Each reel locks in `STAGGER` seconds after the previous one, so they stop
