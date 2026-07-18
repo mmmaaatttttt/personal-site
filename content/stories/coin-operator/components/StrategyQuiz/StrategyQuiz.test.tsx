@@ -2,11 +2,11 @@ import { fireEvent, render, screen } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
 import { evaluateActions, optimalStrategy } from "../../bonusMath";
 import StrategyQuiz from ".";
-import { QUIZ_SPINS_REMAINING, quizScenarios } from "./quizData";
+import { quizScenarios } from "./quizData";
 
-function start() {
+function start(label = "1 Bonus Spin") {
   render(<StrategyQuiz />);
-  fireEvent.click(screen.getByText("Start Quiz!"));
+  fireEvent.click(screen.getByText(label));
 }
 
 function getConfirmButton() {
@@ -19,21 +19,45 @@ function answerCurrentQuestion() {
 }
 
 describe("StrategyQuiz", () => {
-  it("shows a start gate before the quiz begins", () => {
+  it("shows a start gate with one button per bonus-spin mode", () => {
     render(<StrategyQuiz />);
 
-    expect(screen.getByText("Start Quiz!")).toBeInTheDocument();
+    expect(screen.getByText("1 Bonus Spin")).toBeInTheDocument();
+    expect(screen.getByText("3 Bonus Spins")).toBeInTheDocument();
+    expect(screen.getByText("5 Bonus Spins")).toBeInTheDocument();
     expect(screen.queryByText(/Question 1 of/)).not.toBeInTheDocument();
   });
 
-  it("shows the first question after starting, with the answer not yet revealed", () => {
+  it("shows the first question after picking a mode, with the answer not yet revealed", () => {
     start();
 
     expect(
-      screen.getByText(`Question 1 of ${quizScenarios.length}`),
+      screen.getByText(`Question 1 of ${quizScenarios.length} (1 Bonus Spin)`),
     ).toBeInTheDocument();
     expect(screen.queryByText("✓")).not.toBeInTheDocument();
     expect(screen.queryByText("✗")).not.toBeInTheDocument();
+  });
+
+  it("uses the chosen mode's spin count for correctness and EV, not a fixed default", () => {
+    start("5 Bonus Spins");
+
+    expect(
+      screen.getByText(`Question 1 of ${quizScenarios.length} (5 Bonus Spins)`),
+    ).toBeInTheDocument();
+
+    const scenario = quizScenarios[0];
+    const expectedStay = evaluateActions(scenario, 5).stay;
+
+    fireEvent.click(screen.getByText("Skip Bonus Spin"));
+    fireEvent.click(getConfirmButton());
+
+    expect(
+      screen.getByText(
+        new RegExp(
+          `The expected value of this move is ${expectedStay.toFixed(3).replace(".", "\\.")}`,
+        ),
+      ),
+    ).toBeInTheDocument();
   });
 
   it("keeps the confirm button disabled until a reel or Skip Bonus Spin is selected", () => {
@@ -113,7 +137,7 @@ describe("StrategyQuiz", () => {
     start();
 
     const scenario = quizScenarios[0];
-    const expectedStay = evaluateActions(scenario, QUIZ_SPINS_REMAINING).stay;
+    const expectedStay = evaluateActions(scenario, 1).stay;
 
     fireEvent.click(screen.getByText("Skip Bonus Spin"));
     fireEvent.click(getConfirmButton());
@@ -143,7 +167,7 @@ describe("StrategyQuiz", () => {
     ).toBeInTheDocument();
   });
 
-  it("returns to question 1 after clicking Try Again", () => {
+  it("returns to the mode-select screen after clicking Try Again", () => {
     start();
 
     for (let i = 0; i < quizScenarios.length; i++) {
@@ -156,8 +180,14 @@ describe("StrategyQuiz", () => {
 
     fireEvent.click(screen.getByText("Try Again!"));
 
+    expect(screen.getByText("1 Bonus Spin")).toBeInTheDocument();
+    expect(screen.getByText("3 Bonus Spins")).toBeInTheDocument();
+    expect(screen.getByText("5 Bonus Spins")).toBeInTheDocument();
+    expect(screen.queryByText(/Question 1 of/)).not.toBeInTheDocument();
+
+    fireEvent.click(screen.getByText("3 Bonus Spins"));
     expect(
-      screen.getByText(`Question 1 of ${quizScenarios.length}`),
+      screen.getByText(`Question 1 of ${quizScenarios.length} (3 Bonus Spins)`),
     ).toBeInTheDocument();
   });
 
@@ -177,8 +207,7 @@ describe("StrategyQuiz", () => {
     }
 
     const expectedCorrect = quizScenarios.filter(
-      (scenario) =>
-        optimalStrategy(scenario, QUIZ_SPINS_REMAINING).action === "stay",
+      (scenario) => optimalStrategy(scenario, 1).action === "stay",
     ).length;
 
     expect(

@@ -7,7 +7,12 @@ import { evaluateActions, optimalStrategy } from "../../bonusMath";
 import EvPill, { type EvPillVariant } from "./EvPill";
 import FeedbackPanel from "./FeedbackPanel";
 import QuestionBoard from "./QuestionBoard";
-import { QUIZ_SPINS_REMAINING, quizScenarios } from "./quizData";
+import {
+  DEFAULT_QUIZ_SPIN_MODE,
+  QUIZ_SPIN_MODES,
+  type QuizSpinMode,
+  quizScenarios,
+} from "./quizData";
 import { type QuizAction, valueForAction } from "./quizMath";
 
 type Selection = { type: "slot"; index: number } | { type: "stay" };
@@ -21,30 +26,52 @@ const START_BUTTON_CLASSES =
 const CHOICE_BUTTON_CLASSES =
   "rounded-md border-2 border-gray-300 bg-white px-6 py-3 font-medium text-gray-700 text-sm transition-colors hover:border-gray-400 disabled:cursor-not-allowed md:text-base";
 
+function bonusSpinLabel(mode: QuizSpinMode): string {
+  return mode === 1 ? "1 Bonus Spin" : `${mode} Bonus Spins`;
+}
+
 const StrategyQuiz: FC = () => {
   const [started, setStarted] = useState(false);
+  const [spinsRemaining, setSpinsRemaining] = useState<QuizSpinMode>(
+    DEFAULT_QUIZ_SPIN_MODE,
+  );
   const [index, setIndex] = useState(0);
   const [answers, setAnswers] = useState<QuizAction[]>([]);
   const [selection, setSelection] = useState<Selection | null>(null);
   const [confirmed, setConfirmed] = useState(false);
 
   const reset = () => {
+    setStarted(false);
     setIndex(0);
     setAnswers([]);
     setSelection(null);
     setConfirmed(false);
   };
 
+  const startWithMode = (mode: QuizSpinMode) => {
+    setSpinsRemaining(mode);
+    setStarted(true);
+  };
+
   if (!started) {
     return (
       <div className={CONTAINER_CLASSES}>
-        <button
-          type="button"
-          onClick={() => setStarted(true)}
-          className={START_BUTTON_CLASSES}
-        >
-          Start Quiz!
-        </button>
+        <h3 className="text-sm font-bold uppercase tracking-widest text-gray-500">
+          Which spin, if any, is best?
+        </h3>
+        <p>Test your skill at assessing the optimal strategy.</p>
+        <div className="flex flex-wrap items-center justify-center gap-4">
+          {QUIZ_SPIN_MODES.map((mode) => (
+            <button
+              key={mode}
+              type="button"
+              onClick={() => startWithMode(mode)}
+              className={START_BUTTON_CLASSES}
+            >
+              {bonusSpinLabel(mode)}
+            </button>
+          ))}
+        </div>
       </div>
     );
   }
@@ -53,10 +80,7 @@ const StrategyQuiz: FC = () => {
     const numCorrect = answers.reduce(
       (total, answer, i) =>
         total +
-        +(
-          answer ===
-          optimalStrategy(quizScenarios[i], QUIZ_SPINS_REMAINING).action
-        ),
+        +(answer === optimalStrategy(quizScenarios[i], spinsRemaining).action),
       0,
     );
 
@@ -76,8 +100,8 @@ const StrategyQuiz: FC = () => {
   }
 
   const scenario = quizScenarios[index];
-  const strategy = optimalStrategy(scenario, QUIZ_SPINS_REMAINING);
-  const actionValues = evaluateActions(scenario, QUIZ_SPINS_REMAINING);
+  const strategy = optimalStrategy(scenario, spinsRemaining);
+  const actionValues = evaluateActions(scenario, spinsRemaining);
 
   let selectedAction: QuizAction | null = null;
   if (selection?.type === "stay") {
@@ -125,7 +149,8 @@ const StrategyQuiz: FC = () => {
   return (
     <div className={CONTAINER_CLASSES}>
       <h3 className="text-sm font-bold uppercase tracking-widest text-gray-500">
-        Question {index + 1} of {quizScenarios.length}
+        Question {index + 1} of {quizScenarios.length} (
+        {bonusSpinLabel(spinsRemaining)})
       </h3>
       <div className="flex flex-wrap items-center justify-center gap-4">
         <QuestionBoard
