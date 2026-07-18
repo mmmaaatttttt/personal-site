@@ -1,7 +1,8 @@
+import BonusSpinEvChart from "./components/BonusSpinEvChart";
 import PayoutTable from "./components/PayoutTable";
 import SlotMachine from "./components/SlotMachine";
 import StrategyQuiz from "./components/StrategyQuiz";
-import { expectedValue, payoutRows, probabilityTable } from "./tableData";
+import { expectedValue, expectedValueTable, payoutRows, probabilityTable } from "./tableData";
 
 Every Wednesday night, my wife leaves the house to get a reprieve from the chaotic boy energy that swirls around her. I am very grateful for the fact that, to date, she has always returned home.
 
@@ -73,31 +74,70 @@ By multiplying each payout by its associated probability and adding everything u
 
 ### Bonus Spins
 
-If this were all we could do in the game, the decision would be pretty clear: as in life, playing the slot machine is not a rational choice. However, the slot machines in Blue Prince have another mechanic taken from the real world. Once you've taken your first pull, if you want, you can select one of the slots to pull again in isolation. For example, if you pull three crowns and a dash, for the cost of just one additional coin you can spin again but lock in all of your crowns in the hopes of hitting it big.
+If this were all we could do in the game, the decision would be pretty clear: as in life, playing the slot machine is not a rational choice. However, the slot machines in Blue Prince have another mechanic taken from the real world. Once you've taken your first pull, if you want, you can select one of the slots to pull again in isolation. For example, if you pull three crowns and a dash, for the cost of just one additional coin you can spin again but lock in all of your crowns in the hopes of hitting that jackpot.
 
 Most of the slot machines in the game let you take this bonus spin up to three times, at the cost of one additional coin per spin. From here, a natural question arises: how does this change the expected value of the game?
 
-A things are worth unpacking here before we try to answer this question. 
+Bonus spins introduce an aspect of player choice and strategy. How do we know whether we should use a bonus spin, and how do we determine which symbol we should replace? Our strategy here impacts the expected value. For example, if we take a bonus spin on a machine that looks like ➖ ➖ ➖ ➖, we have wasted a coin, because this sequence is more than one symbol away from any sequence with a positive payout.
 
-First, unlike in our previous analyis, the bonus spins introduce an aspect of player choice and strategy. How do we know whether we should use a bonus spin, and how do we determine which symbol we should replace if we decide we do want to spin? Our strategy here will clearly impact the expected value: for example, if we take a bonus spin on a machine that looks like ➖ ➖ ➖ ➖, we have wasted a coin, because this sequence is more than one symbol away from a sequence with a positive payout.
+To simplify our analysis, for now we'll assume that we use an optimal strategy. In other words, we assume we are slot machine geniuses who always make the play that maximizes our expected value. Sometimes this means not taking the bonus spin at all. If we do take a bonus spin, we select the symbol that maximizes our chances of the largest return.
 
-To simplify our analysis, let's then assume that we use an optimal strategy. In other words, we are slot machine gurus who always make the play that will maximize our expected value. Sometimes this means not taking the bonus spin at all. If we do take a bonus spin, we select the symbol that maximizes our chances of the largest return.
+Want to try your hand at picking the best strategy? Here are some sample scenarios. Given that you have one, three, or five bonus spins, what is the best decision to make in each case? The answers get harder to reasona about the more bonus spins you have.
 
-Want to try your hand at picking the best strategy? Here are some sample scenarios. Given a single bonus spin, what is the best decision to make in each case?
-
-<Figure caption="Given one bonus spin, select the symbol that you think maximizes the expected value of the spin. You can also skip the bonus spin if you think you're unlikely to do better than what you have now.">
+<Figure caption="Select the symbol that you think maximizes the expected value given that you have one, three, or five bonus spins available. You can also skip the bonus spin if you think you're unlikely to do better than what you have now.">
   <StrategyQuiz />
 </Figure>
 
-If you thought that quiz was hard, keep in mind that things get even more complicated when you have more than one bonus spin. In general, knowing the optimal strategy is not trivial! But for now, let's assume we are all slot machine wizards.
+The strategy here gets complicated quickly. Note that several of the best choices depend on how many spins you have remaining. Question 3 is one of several examples of this; the best choice if you have one spin and the best choice if you have five spins are not the same choice!
 
-The second thing to call out is the fact that getting a closed formula for the expected value is not feasible. Fortunately, this is the kind of thing that computers are very good at. The universe of possible spin results is not actually that large (exercise for the reader: ignoring ordering, show that there are only 330 of them). So to calculate the expected value, we can start with our known expected value, then use dynamic programming techniques to calculate the expected value of any result given that you have one bonus spin remaining. From there we can use those same techniques to calculate the expected value of any result given that you have two spins remaining. And you can repeat this once more if you assume you have three spins remaining.
+Because of this complexity, getting a closed formula for the expected value is not feasible. Fortunately, this is the kind of thing that computers are very good at. The universe of possible spin results is not actually that large (exercise for the reader: ignoring ordering, show that there are only 330 of them). So to calculate the expected value, we can start with our known expected value, then use dynamic programming techniques to calculate the expected value of any four symbols given that you have one bonus spin remaining. From there we can use those same techniques to calculate the expected value of any four symbols given that you have two spins remaining. And you can repeat this once more if you assume you have three spins remaining.
 
 I'll show you the results momentarily. But just in case you want to try it out for yourself, here's the same simulation with the three-bonus-spins rule tacked on.
 
 <Figure caption="This time you can play the game with up to three bonus spins. How does your strategy change? How does your profit change?">
   <SlotMachine maxBonusSpins={3} />
 </Figure>
+
+How did you do? Were you able to earn more than in the first example? Unless your strategy is awful, or you are very unlucky, you should find that this version of the game is more forgiving. In fact, with optimal strategy, it even has a *positive* expected value! You'll never find this slot machine in Vegas, because it would bankrupt the casino.
+
+With perfect play, three bonus spins represents the tipping point where the game goes from a negative expected value to a positive one. Here's a table of the data:
+
+<Figure caption="Expected value of the slot machine as a function of the number of bonus spins. As the number of bonuses increases, so does the expected value.">
+  <StyledTable
+    data={expectedValueTable}
+  />
+</Figure>
+
+---
+
+### Stacking the Odds
+
+While the expected value of the game is positive, it's only barely so. This means that in order to eke out more coins than you put in, your game needs to be pretty close to perfect. Unless you are a huge dork like me, this may be a tall order.
+
+Fortunately, the game is even more forgiving than this. There is a way to play a slot machine that supports up to 5 bonus spins. I won't share the details of how, because unlike warm produce I do not spoil. 
+
+I will say, even with this generous number of bonus spins, I find the game to be barely profitable. Perhaps I am bad at strategy. Anecdotally, at one point in the game I needed 400 coins to purchase an item. Unfortunately, I had only 380 coins, and would stand to lose everything unless I could grind out an additional 20 coins from this 5-bonus slot machine. Eventually I was able to get there, but it took way longer than I (or my kids) would've liked. I'll take it as a win that they came away feeling like gambling is a waste of time. 
+
+Maybe you can do better than I did. Here's a final slot machine. This one gives you up to five bonus spins. How long does it take you to reach a profit of 20?
+
+<Figure caption="Slot machine on easy mode. This time you can play the game with up to five bonus spins.">
+  <SlotMachine maxBonusSpins={5} />
+</Figure>
+
+This time around, with an optimal strategy the expected value of this machine with 5 bonus spins is **0.332**. In other words, for every 1,000 coins played, you should expect to get 1,332 coins back. Put yet another way, to get 20 coins, I should've expected it to take 20 / 0.332, or around 60 spins. Assuming it takes around 15 seconds per spin, that's 15 minutes of time.
+
+I definitely spent more time than this. So maybe my strategy was bad. Though if I'm being kinder to myself, the distribution of payouts is also pretty clumpy. There are a lot of small losses, but the occasional clover can trigger substantial payouts when it comes up.
+
+---
+
+### Podoby's Nerfect
+
+As a final stop on our 
+
+<Figure caption="TBD">
+  <BonusSpinEvChart />
+</Figure>
+
 
 Sources: 
 
