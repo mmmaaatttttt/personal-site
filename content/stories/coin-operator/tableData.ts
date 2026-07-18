@@ -1,3 +1,4 @@
+import { machineExpectedValue } from "./bonusMath";
 import { PROBABILITY_MAP, SlotValue, SYMBOL_EMOJI, SYMBOL_NAME } from "./data";
 import {
   calculatePayout,
@@ -75,3 +76,11 @@ export const expectedValue = payoutRows.reduce(
   (ev, row) => ev + row.payout * row.probability,
   0,
 );
+
+export const expectedValueTable: string[][] = [
+  ["Number of Bonus Spins", "Expected Value"],
+  ...[0, 1, 2, 3].map((spinCount) => [
+    `${spinCount}`,
+    machineExpectedValue(spinCount).toFixed(3),
+  ]),
+];
