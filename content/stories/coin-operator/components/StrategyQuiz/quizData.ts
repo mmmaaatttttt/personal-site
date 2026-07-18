@@ -17,7 +17,11 @@ export const quizScenarios: SlotResult[] = [
   [SlotValue.SNAKE, SlotValue.SNAKE, SlotValue.SNAKE, SlotValue.CROWN],
 ];
 
-/** The quiz asks about the EV of taking exactly one bonus spin right now —
- *  not the full multi-spin optimal-continuation value used elsewhere in the
- *  article, which is why this is 1, not the article's 3-spin rule. */
-export const QUIZ_SPINS_REMAINING = 1;
+/** Player picks how many bonus spins are available for the round. Whichever
+ *  mode is selected, `optimalStrategy(scenario, mode)` is the same fully
+ *  recursive value the article uses elsewhere for the overall machine EV —
+ *  just evaluated at one specific board instead of averaged across all 330.
+ *  That recursion is exactly why the best first move can differ by mode. */
+export const QUIZ_SPIN_MODES = [1, 3, 5] as const;
+export type QuizSpinMode = (typeof QUIZ_SPIN_MODES)[number];
+export const DEFAULT_QUIZ_SPIN_MODE: QuizSpinMode = QUIZ_SPIN_MODES[0];
