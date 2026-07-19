@@ -9,6 +9,7 @@ interface TableCell {
 interface TableRow {
   key: string | number;
   cells: TableCell[];
+  className?: string;
 }
 
 interface TableHeader {
@@ -85,7 +86,7 @@ export default function StyledTable({
         {rows && (
           <tbody>
             {rows.map((row) => (
-              <tr key={row.key}>
+              <tr key={row.key} className={row.className}>
                 {row.cells.map((cell) => (
                   <td key={cell.key}>{cell.content}</td>
                 ))}

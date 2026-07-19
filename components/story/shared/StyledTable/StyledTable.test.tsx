@@ -78,6 +78,18 @@ describe("StyledTable Component", () => {
     expect(wrapper).toHaveStyle({ margin: "auto" });
   });
 
+  it("applies a row's className to its <tr>", () => {
+    const rowsWithClassName = [
+      { ...mockRows[0], className: "highlight-row" },
+      mockRows[1],
+    ];
+    render(<StyledTable rows={rowsWithClassName} />);
+
+    const rows = screen.getAllByRole("row");
+    expect(rows[0]).toHaveClass("highlight-row");
+    expect(rows[1].className).toBe("");
+  });
+
   it("renders string[][] data via the data prop", () => {
     const tableData = [
       ["Name", "Score"],
