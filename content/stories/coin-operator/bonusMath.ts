@@ -197,21 +197,25 @@ export function machineExpectedValueCurve(maxSpinsRemaining: number): number[] {
 }
 
 /**
- * Turns a list of action values into a single probability-weighted value
- * under a softmax ("quantal response") choice policy at the given
+ * Turns a list of action values into a probability distribution over those
+ * actions under a softmax ("quantal response") choice policy at the given
  * `temperature`: `P(action) ∝ exp(value / temperature)`. Lower temperature
- * concentrates probability on the best action (0 collapses to a hard max,
- * matching `optimalStrategy`); higher temperature spreads probability more
- * evenly across all actions (`Infinity` is a uniform average, ignoring
- * value entirely).
+ * concentrates probability on the best action (0 collapses to a hard
+ * argmax, matching `optimalStrategy`); higher temperature spreads
+ * probability more evenly across all actions (`Infinity` is uniform,
+ * ignoring value entirely).
  */
-export function softmaxWeightedValue(
+export function softmaxProbabilities(
   values: number[],
   temperature: number,
-): number {
-  if (temperature <= 0) return Math.max(...values);
+): number[] {
+  if (temperature <= 0) {
+    const maxValue = Math.max(...values);
+    const bestIndex = values.indexOf(maxValue);
+    return values.map((_, i) => (i === bestIndex ? 1 : 0));
+  }
   if (!Number.isFinite(temperature)) {
-    return values.reduce((sum, v) => sum + v, 0) / values.length;
+    return values.map(() => 1 / values.length);
   }
 
   // Subtract the max before exponentiating so large values don't overflow.
@@ -219,7 +223,19 @@ export function softmaxWeightedValue(
   const weights = values.map((v) => Math.exp((v - maxValue) / temperature));
   const totalWeight = weights.reduce((sum, w) => sum + w, 0);
 
-  return values.reduce((sum, v, i) => sum + (weights[i] / totalWeight) * v, 0);
+  return weights.map((w) => w / totalWeight);
+}
+
+/**
+ * Turns a list of action values into a single probability-weighted value,
+ * via `softmaxProbabilities` at the given `temperature`.
+ */
+export function softmaxWeightedValue(
+  values: number[],
+  temperature: number,
+): number {
+  const probabilities = softmaxProbabilities(values, temperature);
+  return values.reduce((sum, v, i) => sum + probabilities[i] * v, 0);
 }
 
 /**
@@ -256,6 +272,24 @@ function boundedRationalValue(
 
   memo.set(key, result);
   return result;
+}
+
+/**
+ * Like `evaluateActions`, but for a boundedly-rational player: every future
+ * decision (not just this one) is also assumed to follow the softmax policy
+ * at `temperature`, rather than always taking the best action. Uses its own
+ * fresh memo per call rather than sharing `optimalStrategy`'s module-level
+ * cache, since results here depend on `temperature`.
+ */
+export function boundedRationalActionValues(
+  state: SlotResult,
+  spinsRemaining: number,
+  temperature: number,
+): ActionValues {
+  const memo = new Map<number, number>();
+  return computeActionValues(state, spinsRemaining, (nextState, remaining) =>
+    boundedRationalValue(nextState, remaining, temperature, memo),
+  );
 }
 
 /**

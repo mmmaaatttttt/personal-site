@@ -1,10 +1,12 @@
 import { describe, expect, it } from "vitest";
 import {
+  boundedRationalActionValues,
   boundedRationalExpectedValueCurve,
   evaluateActions,
   machineExpectedValue,
   machineExpectedValueCurve,
   optimalStrategy,
+  softmaxProbabilities,
   softmaxWeightedValue,
 } from "./bonusMath";
 import { type SlotResult, SlotValue } from "./data";
@@ -154,6 +156,37 @@ describe("machineExpectedValueCurve", () => {
   });
 });
 
+describe("softmaxProbabilities", () => {
+  it("puts all probability on the max value at temperature 0", () => {
+    expect(softmaxProbabilities([3, 9, -2], 0)).toEqual([0, 1, 0]);
+  });
+
+  it("breaks ties at temperature 0 by taking the first max", () => {
+    expect(softmaxProbabilities([5, 5, 1], 0)).toEqual([1, 0, 0]);
+  });
+
+  it("is uniform at infinite temperature, ignoring the values", () => {
+    expect(softmaxProbabilities([3, 9, -2], Infinity)).toEqual([
+      1 / 3,
+      1 / 3,
+      1 / 3,
+    ]);
+  });
+
+  it("sums to 1 at a moderate temperature", () => {
+    const probabilities = softmaxProbabilities([10, 0], 5);
+    expect(probabilities[0] + probabilities[1]).toBeCloseTo(1, 10);
+    expect(probabilities[0]).toBeGreaterThan(probabilities[1]);
+  });
+
+  it("splits evenly when all options are tied", () => {
+    const probabilities = softmaxProbabilities([4, 4, 4], 2);
+    for (const p of probabilities) {
+      expect(p).toBeCloseTo(1 / 3, 10);
+    }
+  });
+});
+
 describe("softmaxWeightedValue", () => {
   it("collapses to the max value at temperature 0, matching a fully rational player", () => {
     expect(softmaxWeightedValue([3, 9, -2], 0)).toBe(9);
@@ -176,6 +209,62 @@ describe("softmaxWeightedValue", () => {
 
   it("returns the shared value when all options are tied", () => {
     expect(softmaxWeightedValue([4, 4, 4], 2)).toBeCloseTo(4, 10);
+  });
+});
+
+describe("boundedRationalActionValues", () => {
+  it("matches evaluateActions exactly at temperature 0", () => {
+    const state: SlotResult = [
+      SlotValue.COIN_1,
+      SlotValue.COIN_1,
+      SlotValue.COIN_3,
+      SlotValue.COIN_3,
+    ];
+
+    const optimal = evaluateActions(state, 5);
+    const bounded = boundedRationalActionValues(state, 5, 0);
+
+    expect(bounded.stay).toBe(optimal.stay);
+    expect(bounded.spin[SlotValue.COIN_1]).toBeCloseTo(
+      optimal.spin[SlotValue.COIN_1] as number,
+      9,
+    );
+    expect(bounded.spin[SlotValue.COIN_3]).toBeCloseTo(
+      optimal.spin[SlotValue.COIN_3] as number,
+      9,
+    );
+  });
+
+  it("degrades below the optimal spin value at a high temperature", () => {
+    const state: SlotResult = [
+      SlotValue.COIN_1,
+      SlotValue.COIN_1,
+      SlotValue.COIN_3,
+      SlotValue.COIN_3,
+    ];
+
+    const optimal = evaluateActions(state, 5);
+    const bounded = boundedRationalActionValues(state, 5, 1);
+
+    expect(bounded.spin[SlotValue.COIN_1] as number).toBeLessThan(
+      optimal.spin[SlotValue.COIN_1] as number,
+    );
+    expect(bounded.spin[SlotValue.COIN_3] as number).toBeLessThan(
+      optimal.spin[SlotValue.COIN_3] as number,
+    );
+  });
+
+  it("offers no spin actions when no spins remain", () => {
+    const state: SlotResult = [
+      SlotValue.DASH,
+      SlotValue.DASH,
+      SlotValue.DASH,
+      SlotValue.DASH,
+    ];
+    const result = boundedRationalActionValues(state, 0, 1);
+
+    expect(result.stay).toBe(calculatePayout(state));
+    expect(result.spin).toEqual({});
   });
 });
 
