@@ -16,6 +16,10 @@ export const BOUNDED_COLOR = COLORS.PURPLE;
 export const OPTIMAL_LABEL = "Optimal";
 export const BOUNDED_LABEL = "Suboptimal";
 
+/** Shared across BonusSpinEvChart and StrategyProbabilityTable so the two
+ *  interactives' sliders stay in sync while both are mounted on the page. */
+export const OPTIMALITY_STORAGE_KEY = "coinOperator:optimalityMeasurement";
+
 export const SLIDER_CONFIG: SliderInitialData[] = [
   {
     initialValue: 1,
@@ -24,5 +28,6 @@ export const SLIDER_CONFIG: SliderInitialData[] = [
     step: 0.05,
     title: (val: number) => `Optimality measurement: ${val.toFixed(2)}`,
     color: BOUNDED_COLOR,
+    storageKey: OPTIMALITY_STORAGE_KEY,
   },
 ];
