@@ -19,7 +19,7 @@ const SPINS_SLIDER_CONFIG: SliderInitialData = {
   min: 1,
   max: 10,
   step: 1,
-  title: (val: number) => `TBD: ${val}`,
+  title: (val: number) => `Number of bonus spins: ${val}`,
   color: COLORS.ORANGE,
 };
 
