@@ -1,11 +1,34 @@
 import { machineExpectedValue } from "./bonusMath";
-import { PROBABILITY_MAP, SlotValue, SYMBOL_EMOJI, SYMBOL_NAME } from "./data";
+import {
+  PAYOUT_RATES,
+  PayoutClassifications,
+  PROBABILITY_MAP,
+  SlotValue,
+  SYMBOL_EMOJI,
+  SYMBOL_NAME,
+} from "./data";
 import {
   calculatePayout,
   calculateProbability,
   classifyPayout,
   enumerateSlotResults,
 } from "./math";
+
+export const payoutRulesTable: string[][] = [
+  ["Symbols", "Payout"],
+  [PayoutClassifications.COIN_1_3, `${PAYOUT_RATES.COIN_1_THREE}`],
+  [PayoutClassifications.COIN_1_4, `${PAYOUT_RATES.COIN_1_FOUR}`],
+  [PayoutClassifications.COIN_3_3, `${PAYOUT_RATES.COIN_3_THREE}`],
+  [PayoutClassifications.COIN_3_4, `${PAYOUT_RATES.COIN_3_FOUR}`],
+  [SYMBOL_EMOJI[SlotValue.CLOVER], `${PAYOUT_RATES.CLOVER} each`],
+  [SYMBOL_EMOJI[SlotValue.DOUBLE], "2x amount"],
+  [SYMBOL_EMOJI[SlotValue.SNAKE], "sets total to 0"],
+  [
+    SYMBOL_EMOJI[SlotValue.NET],
+    `${PAYOUT_RATES.COINS_PER_SNAKE} for each snake`,
+  ],
+  [PayoutClassifications.CROWN_4, `${PAYOUT_RATES.CROWN_JACKPOT}`],
+];
 
 const probabilityData: [symbol: string, name: string, probability: number][] = (
   Object.values(SlotValue) as SlotValue[]
