@@ -1,6 +1,7 @@
 import BonusSpinEvChart from "./components/BonusSpinEvChart";
 import PayoutTable from "./components/PayoutTable";
 import SlotMachine from "./components/SlotMachine";
+import StrategyProbabilityTable from "./components/StrategyProbabilityTable";
 import StrategyQuiz from "./components/StrategyQuiz";
 import { expectedValue, expectedValueTable, payoutRows, probabilityTable } from "./tableData";
 
@@ -132,13 +133,48 @@ I definitely spent more time than this. So maybe my strategy was bad. Though if 
 
 ### Podoby's Nerfect
 
-As a final stop on our 
+Let's double down on this notion of optimal play. Throughout our investigation, I've tried to emphasize that these expected values only hold under the assumption that players always know the best move to make. But if you're anything like me, sometimes that choice is hard. Especially when you have a number of bonus spins remaining. How does sub-optimal play impact these expected values?
 
-<Figure caption="TBD">
+One way to model this is introduce a sliding scale that roughly maps to how good your strategy is. At one end of the scale, you play the game perfectly; this is the model we've been using the entire time. At the other end of the scale, the strategy is just random choice (i.e. not a very good stratey). 
+
+In between, without getting too lost in the mathematical weeds, the slider controls how likely we are to choose the optimal value vs making an incorrect choice. These choices are weighed by their expected value, mirroring the fact that most of the complexity comes from having to distinguish choices that both seem good. 
+
+<Figure caption="For a given number of bonus spins, this optimality slider veers between a totally optimal strategy and a totally random one.">
+  <StrategyProbabilityTable />
+</Figure>
+
+This approach has some unexpected behavior. For example, with 5 bonus spins and an optimality measurement of 0.20, you can see that the unoptimized strategy is even *less* likely to pick the optimal symbol than a random strategy is! This is because player error is baked into the model; even if someone makes the correct choice on the first bonus spin, they are less likely to make it on subsequent spins. 
+
+I'll spare you the mathematical details. If you're curious to learn more about the underlying models here, this is a [discrete choice model](https://en.wikipedia.org/wiki/Discrete_choice). More specifically, it's a conditional logit model, where our slider parameter roughly controls how likely a player is to choose the best alternative over the other available options. The options are weight such that two good options will be roughly equally likely to be chosen, while a horrible option will have a low (but nonzero) likelidhood of selection.
+
+---
+
+### Taking it to the Limit
+
+If one bonus spin is good, and three is better, and five is even better still, what happens if we have six bonus spins? 10? 100? 
+
+Using the same techniques we've already developed, we can chart the expected value of this machine as a function of how many bonus spins you have. We can do this both for the optimal strategy, and the discrete choice model outlined above. Take a look!
+
+<Figure caption="As one might expect, the worse your strategy, the smaller your expected value from the game.">
   <BonusSpinEvChart />
 </Figure>
 
+Interestingly, the expected value increases quite rapidly for every additional spin from around 20 to 60 bonus spins. After that, the increase starts to taper off; eventually it stabilizes right around an expected value of 54 coins. Conceptually, this makes some sense. In fact, if you do the math, the 8% probability of getting a crown means that after the initial roll, you should expect on average it will take 47 bonus spins to hit the jackpot. So with enough bonus spins, the dominant strategy becomes to go for the jackpot every single time.
+
+You can also adjust our optimization slider to see how the payouts look if you don't always make the optimal move. Here things get interesting in terms of the actual game: note that at an optimality of 0.75, the 3-bonus slot machine flips from having a positive expected value to a negative one. If you've played the game, this probably aligns with your experience. The 3-bonus machine requires a pretty tight strategy. 
+
+Interestingly, the 5-bonus machine doesn't provide much more latitude: it has a positive expected value when the optimization slider is at 0.70, but at 0.65 even that version of the game's expected value becomes slightly negative.
+
+But still, the fact remains: either one of these machines essentially offer an infinite money machine in Blue Prince. The only question is how much you value your time, because these machines dispense that infinite money at a pace that would make any pit boss proud.
 
 Sources: 
 
 - [Thorough Analysis of Slot Machine Payout](https://www.reddit.com/r/BluePrince/comments/1kvhiw8/thorough_analysis_of_slot_machine_payout/)
+
+- [Slot Machine Strategy](https://www.nxn.se/p/slot-machine-strategy)
+
+- [Expected Value](https://en.wikipedia.org/wiki/Expected_value)
+
+- [Discrete Choice Models](https://en.wikipedia.org/wiki/Discrete_choice)
+
+- [Discrete Choice Methods with Simulation](https://eml.berkeley.edu/books/train1201.pdf)
