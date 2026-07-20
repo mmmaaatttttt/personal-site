@@ -50,7 +50,7 @@ const PayoutTable: FC<PayoutTableProps> = ({ data }) => {
   return (
     <StyledTable
       className="[&_td:first-child]:!text-2xl"
-      padding="0.4rem 1rem"
+      padding="0.1rem 1rem"
       headers={headers}
       rows={sorted.map((row) => ({
         key: row.classification,
