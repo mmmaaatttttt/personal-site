@@ -118,6 +118,7 @@ const TrendChart: FC<TrendChartProps> = ({ history }) => {
         yScale={yScale}
         xLabel="Round"
         yLabel={selected.label}
+        labelFontSize="1rem"
         axes={false}
       >
         <Axis
@@ -126,6 +127,7 @@ const TrendChart: FC<TrendChartProps> = ({ history }) => {
           scale={yScale}
           tickFormat=",.0f"
           tickValues={yTickValues}
+          fontSize="0.6rem"
         />
         <Axis
           key="x-axis"
@@ -133,6 +135,7 @@ const TrendChart: FC<TrendChartProps> = ({ history }) => {
           scale={xScale}
           tickFormat=",.0f"
           tickValues={xTickValues}
+          fontSize="0.6rem"
         />
         <path
           d={linePath}

@@ -45,6 +45,9 @@ interface GraphProps<XDomain extends AxisDomain, YDomain extends AxisDomain> {
   xScale: AxisScale<XDomain>;
   yLabel?: string;
   yLabelOffset?: number;
+  /** Font size for the xLabel/yLabel text. Defaults to AxisLabel's own default
+   *  (1.25rem) when omitted. */
+  labelFontSize?: string;
   yScale: AxisScale<YDomain>;
   className?: string;
 }
@@ -74,6 +77,7 @@ const Graph = <XDomain extends AxisDomain, YDomain extends AxisDomain>({
   xScale,
   yLabel = "",
   yLabelOffset = 0,
+  labelFontSize,
   yScale,
   className,
 }: GraphProps<XDomain, YDomain>) => {
@@ -181,11 +185,16 @@ const Graph = <XDomain extends AxisDomain, YDomain extends AxisDomain>({
               xShift={yOptions.xShift}
             />
           )}
-          {xLabel && <AxisLabel {...xOptions.label}>{xLabel}</AxisLabel>}
+          {xLabel && (
+            <AxisLabel {...xOptions.label} fontSize={labelFontSize}>
+              {xLabel}
+            </AxisLabel>
+          )}
           {yLabel && (
             <AxisLabel
               {...yOptions.label}
               transform={`rotate(-90 10,${height / 2})`}
+              fontSize={labelFontSize}
             >
               {yLabel}
             </AxisLabel>

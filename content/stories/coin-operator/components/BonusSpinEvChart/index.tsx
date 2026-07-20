@@ -65,6 +65,7 @@ const BonusSpinEvChart: FC = () => {
           scale={yScale}
           tickFormat=",.0f"
           tickValues={yTickValues}
+          fontSize="0.6rem"
         />
         <Axis
           key="x-axis"
@@ -72,8 +73,9 @@ const BonusSpinEvChart: FC = () => {
           scale={xScale}
           tickFormat=",.0f"
           tickValues={xTickValues}
+          fontSize="0.6rem"
         />
-        <AxisLabel x={WIDTH / 2} y={HEIGHT - 10}>
+        <AxisLabel x={WIDTH / 2} y={HEIGHT - 10} fontSize="1rem">
           Number of Bonus Spins
         </AxisLabel>
         <AxisLabel
@@ -81,6 +83,7 @@ const BonusSpinEvChart: FC = () => {
           y={HEIGHT / 2}
           dy={10}
           transform={`rotate(-90 10,${HEIGHT / 2})`}
+          fontSize="1rem"
         >
           Expected Value
         </AxisLabel>
