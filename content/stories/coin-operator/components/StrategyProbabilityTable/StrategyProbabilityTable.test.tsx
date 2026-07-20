@@ -39,8 +39,8 @@ describe("StrategyProbabilityTable", () => {
       expect(screen.getByText("Unoptimized strategy")).toBeInTheDocument();
       expect(screen.getByText("Optimized strategy")).toBeInTheDocument();
       expect(screen.getByText("Stay")).toBeInTheDocument();
-      expect(screen.getByText("Spin a single coin")).toBeInTheDocument();
-      expect(screen.getByText("Spin a 3-coin")).toBeInTheDocument();
+      expect(screen.getByText("Spin 🟡")).toBeInTheDocument();
+      expect(screen.getByText("Spin 💰")).toBeInTheDocument();
     },
     SLOW_TEST_TIMEOUT,
   );
@@ -66,15 +66,15 @@ describe("StrategyProbabilityTable", () => {
     () => {
       render(<StrategyProbabilityTable />);
 
-      expect(screen.getByText("Spin a 3-coin").closest("tr")).toHaveClass(
+      expect(screen.getByText("Spin 💰").closest("tr")).toHaveClass(
         "bg-green-100",
       );
       expect(screen.getByText("Stay").closest("tr")).not.toHaveClass(
         "bg-green-100",
       );
-      expect(
-        screen.getByText("Spin a single coin").closest("tr"),
-      ).not.toHaveClass("bg-green-100");
+      expect(screen.getByText("Spin 🟡").closest("tr")).not.toHaveClass(
+        "bg-green-100",
+      );
     },
     SLOW_TEST_TIMEOUT,
   );
@@ -102,7 +102,7 @@ describe("StrategyProbabilityTable", () => {
 
       fireEvent.change(spinsSlider, { target: { value: "10" } });
 
-      expect(screen.getByText("Spin a single coin").closest("tr")).toHaveClass(
+      expect(screen.getByText("Spin 🟡").closest("tr")).toHaveClass(
         "bg-green-100",
       );
     },

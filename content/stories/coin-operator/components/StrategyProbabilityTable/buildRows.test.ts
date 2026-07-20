@@ -28,11 +28,7 @@ describe("buildRows", () => {
       SlotValue.COIN_1,
       SlotValue.COIN_3,
     ]);
-    expect(rows.map((r) => r.label)).toEqual([
-      "Stay",
-      "Spin a single coin",
-      "Spin a 3-coin",
-    ]);
+    expect(rows.map((r) => r.label)).toEqual(["Stay", "Spin 🟡", "Spin 💰"]);
   });
 
   it("reports the true-optimal expected value per row, independent of temperature", () => {
