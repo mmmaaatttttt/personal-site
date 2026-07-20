@@ -191,7 +191,7 @@ const StrategyQuiz: FC = () => {
         Confirm
       </button>
       {confirmed && selectedAction !== null && (
-        <>
+        <div className="flex flex-wrap items-center justify-center gap-4">
           <FeedbackPanel
             isCorrect={selectedAction === strategy.action}
             ev={valueForAction(selectedAction, actionValues)}
@@ -199,13 +199,13 @@ const StrategyQuiz: FC = () => {
           <button
             type="button"
             onClick={handleNext}
-            className={START_BUTTON_CLASSES}
+            className={cn(START_BUTTON_CLASSES, "mt-0")}
           >
             {index + 1 < quizScenarios.length
               ? "Next Question"
               : "Show My Results"}
           </button>
-        </>
+        </div>
       )}
     </div>
   );

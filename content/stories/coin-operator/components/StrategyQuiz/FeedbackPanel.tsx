@@ -8,7 +8,7 @@ interface FeedbackPanelProps {
 
 const FeedbackPanel: FC<FeedbackPanelProps> = ({ isCorrect, ev }) => {
   return (
-    <div className="flex flex-col items-center gap-2">
+    <div className="flex flex-row items-center gap-3">
       <span
         className={cn(
           "text-3xl font-bold",
@@ -17,7 +17,7 @@ const FeedbackPanel: FC<FeedbackPanelProps> = ({ isCorrect, ev }) => {
       >
         {isCorrect ? "✓" : "✗"}
       </span>
-      <p className="max-w-md text-center text-gray-700 text-sm">
+      <p className="max-w-md text-left text-gray-700 text-sm">
         The expected value of this move is {ev.toFixed(3)}. This is{" "}
         {isCorrect ? "" : "not"} the optimal move!
       </p>
