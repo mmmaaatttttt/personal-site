@@ -36,7 +36,7 @@ Let's go!
 
 One of the rooms in the estate is a casino. There are a couple of different games of chance you can play using the in-game currency. The one we'll discuss here is a slot machine.
 
-In Blue Prince, slot machines have 4 slots, and there are a total of 8 images that can be drawn. Here are the rules for how the payouts work. 
+In Blue Prince, slot machines have 4 slots, and there are a total of 8 images that can be drawn. Here are the rules for how the payouts work. The game has real art; I'm using the closest emoji to the actual symbols in the game's slot machine.
 
 <Figure caption="Payout rules for the slot machine in Blue Prince. The one symbol missing, a dash mark, has no effect on payouts.">
   <StyledTable
@@ -45,7 +45,7 @@ In Blue Prince, slot machines have 4 slots, and there are a total of 8 images th
   />
 </Figure>
 
-As with any other game of chance, a natural question arises here: if we spend a coin to play the slot machine, how much money do we expect to get back? This depends, of course, on the likelihood of each icon appearing. For example, a slot machine with a 100% probability of spitting out four crowns would be great economically, but not so great from a game design perspective.
+As with any other game of chance, a natural question arises here: if we spend a coin to play the slot machine, how much money do we expect to get back? This depends, of course, on the likelihood of each icon appearing. For example, a slot machine with a 100% probability of spitting out four crowns would be great economically, but not a very compelling game design.
 
 Fortunately for us, [intrepid players](https://www.reddit.com/r/BluePrince/comments/1kvhiw8/thorough_analysis_of_slot_machine_payout/) have already gathered a wealth of experimental data on this game. For purposes of today's analysis, we will assume that the probabilities of each symbol are as follows:
 
@@ -72,13 +72,13 @@ Play this for a while, and you'll probably come away feeling ripped off. After 1
 
 But we can do better than take an experimental approach. The universe of results with payouts is actually relatively small, so we can enumerate them all, and calculate their payouts and probabilities.
 
-If you'd like to try calculating any of this own your own, be my guest. Don't scroll any further until you're ready to see the results. For the rest of you, here's a table with every possible postiive payout along with its likelihood.
+If you'd like to try calculating any of this own your own, be my guest. Don't scroll any further until you're ready to see the results. For the rest of you, here's a table with every possible postiive payout along with its likelihood when you do a fresh pull.
 
 <Figure caption="Payouts and probabilities for each result with a positive payout.">
   <PayoutTable data={payoutRows} />
 </Figure>
 
-Note that these are all mutually exclusive by construction. For example, the probability of getting three single coins is listed as 6.13%. This is the probability of getting exactly this outcome with a payout of 3; in other words, the fourth sybmol must be a dash, crown, three-coin (symbolized here as a money bag), or net. The other symbols would all impact the payout and are therefore represented in other rows.
+Note that these are all mutually exclusive by construction. For example, the probability of getting three single coins is listed as 6.13%. This is the probability of getting exactly this outcome with a payout of 3; in other words, the fourth sybmol must be a dash, crown, money bag, or net. The other symbols would all impact the payout and are therefore represented in other rows.
 
 By multiplying each payout by its associated probability and adding everything up, we find that the expected value of this machine is **{expectedValue.toFixed(3)}**. Put another way, for every 1,000 coins you put into the machine, you can expect to get only {(1000 * expectedValue).toFixed(0)} coins back, losing {(1000 * (1 - expectedValue)).toFixed(0)} coins on average. I was particularly unlucky in my experiment of 100 draws, but the odds are definitely not stacked in your favor.
 
@@ -90,11 +90,11 @@ If this were all we could do in the game, the decision would be pretty clear: as
 
 Most of the slot machines in the game let you take this bonus spin up to three times, at the cost of one additional coin per spin. From here, a natural question arises: how does this change the expected value of the game?
 
-Bonus spins introduce an aspect of player choice and strategy. How do we know whether we should use a bonus spin, and how do we determine which symbol we should replace? Our strategy here impacts the expected value. For example, if we take a bonus spin on a machine that looks like ➖ ➖ ➖ ➖, we have wasted a coin, because this sequence is more than one symbol away from any sequence with a positive payout.
+Bonus spins introduce an aspect of player choice and strategy. How do we know whether we should use a bonus spin, and how do we determine which symbol we should replace? Our strategy here impacts the expected value. For example, if we take a bonus spin on a machine that looks like ➖ ➖ ➖ ➖, we most likely have wasted a coin. The only way to get a payout is with a 🍀, but these are quite rare.
 
 To simplify our analysis, for now we'll assume that we use an optimal strategy. In other words, we assume we are slot machine geniuses who always make the play that maximizes our expected value. Sometimes this means not taking the bonus spin at all. If we do take a bonus spin, we select the symbol that maximizes our chances of the largest return.
 
-Want to try your hand at picking the best strategy? Here are some sample scenarios. Given that you have one, three, or five bonus spins, what is the best decision to make in each case? The answers get harder to reasona about the more bonus spins you have.
+Want to try your hand at picking the best strategy? Here are some sample scenarios. Given that you have one, three, or five bonus spins, what is the best decision to make in each case? I find that the answers get harder to reason about the more bonus spins you have.
 
 <Figure caption="Select the symbol that you think maximizes the expected value given that you have one, three, or five bonus spins available. You can also skip the bonus spin if you think you're unlikely to do better than what you have now.">
   <StrategyQuiz />
@@ -102,7 +102,7 @@ Want to try your hand at picking the best strategy? Here are some sample scenari
 
 The strategy here gets complicated quickly. Note that several of the best choices depend on how many spins you have remaining. Question 3 is one of several examples of this; the best choice if you have one spin and the best choice if you have five spins are not the same choice!
 
-Because of this complexity, getting a closed formula for the expected value is not feasible. Fortunately, this is the kind of thing that computers are very good at. The universe of possible spin results is not actually that large (exercise for the reader: ignoring ordering, show that there are only 330 of them). So to calculate the expected value, we can start with our known expected value, then use dynamic programming techniques to calculate the expected value of any four symbols given that you have one bonus spin remaining. From there we can use those same techniques to calculate the expected value of any four symbols given that you have two spins remaining. And you can repeat this once more if you assume you have three spins remaining.
+Because of this complexity, getting a closed formula for the expected value is not feasible. Fortunately, this is the kind of thing that computers are very good at. The universe of possible spin results is not actually that large (exercise for the reader: ignoring ordering, show that there are only 330 of them). So to calculate the modified expected value, we can start with our known expected value with no bonuses, then use [dynamic programming](https://en.wikipedia.org/wiki/Dynamic_programming) techniques to calculate the expected value of any four symbols given that you have **one** bonus spin remaining. From there we can use those same techniques to calculate the expected value of any four symbols given that you have **two** spins remaining. And you can repeat this once more if you assume you have **three** spins remaining.
 
 I'll show you the results momentarily. But just in case you want to try it out for yourself, here's the same simulation with the three-bonus-spins rule tacked on.
 
@@ -124,13 +124,13 @@ With perfect play, three bonus spins represents the tipping point where the game
 
 ### Stacking the Odds
 
-While the expected value of the game is positive, it's only barely so. This means that in order to eke out more coins than you put in, your game needs to be pretty close to perfect. Unless you are a huge dork like me, this may be a tall order.
+While the expected value of the game is positive, it's only barely so. This means that in order to eke out more coins than you put in, your gameplay needs to be pretty close to perfect. 
 
-Fortunately, the game is even more forgiving than this. There is a way to play a slot machine that supports up to 5 bonus spins. I won't share the details of how, because unlike warm produce I do not spoil. 
+Fortunately, the game is even more forgiving than this. There is a way to play a slot machine that supports up to five bonus spins. I won't share the details of how, because unlike warm produce I do not spoil. 
 
 I will say, even with this generous number of bonus spins, I find the game to be barely profitable. Perhaps I am bad at strategy. Anecdotally, at one point in the game I needed 400 coins to purchase an item. Unfortunately, I had only 380 coins, and would stand to lose everything unless I could grind out an additional 20 coins from this 5-bonus slot machine. Eventually I was able to get there, but it took way longer than I (or my kids) would've liked. I'll take it as a win that they came away feeling like gambling is a waste of time. 
 
-Maybe you can do better than I did. Here's a final slot machine. This one gives you up to five bonus spins. How long does it take you to reach a profit of 20?
+Maybe you can do better than I did. Here's a final slot machine. This one gives you up to five bonus spins. How many rounds does it take you to reach a profit of 20?
 
 <Figure caption="Slot machine on easy mode. This time you can play the game with up to five bonus spins.">
   <SlotMachine maxBonusSpins={5} />
@@ -138,7 +138,7 @@ Maybe you can do better than I did. Here's a final slot machine. This one gives 
 
 This time around, with an optimal strategy the expected value of this machine with 5 bonus spins is **0.332**. In other words, for every 1,000 coins played, you should expect to get 1,332 coins back. Put yet another way, to get 20 coins, I should've expected it to take 20 / 0.332, or around 60 spins. Assuming it takes around 15 seconds per spin, that's 15 minutes of time.
 
-I definitely spent more time than this. So maybe my strategy was bad. Though if I'm being kinder to myself, the distribution of payouts is also pretty clumpy. There are a lot of small losses, but the occasional clover can trigger substantial payouts when it comes up.
+I definitely spent more time than this. So maybe my strategy was bad. Though if I'm being kinder to myself, the distribution of payouts is also pretty clumpy. There are a lot of small losses, but the occasional 🍀 or jackpot can trigger substantial payouts when it comes up.
 
 ---
 
@@ -146,9 +146,9 @@ I definitely spent more time than this. So maybe my strategy was bad. Though if 
 
 Let's double down on this notion of optimal play. Throughout our investigation, I've tried to emphasize that these expected values only hold under the assumption that players always know the best move to make. But if you're anything like me, sometimes that choice is hard. Especially when you have a number of bonus spins remaining. How does sub-optimal play impact these expected values?
 
-One way to model this is introduce a sliding scale that roughly maps to how good your strategy is. At one end of the scale, you play the game perfectly; this is the model we've been using the entire time. At the other end of the scale, the strategy is just random choice (i.e. not a very good stratey). 
+One way to model this is introduce a sliding scale that roughly maps to how good your strategy is. At one end of the scale, you play the game perfectly; this is the model we've been using the entire time. At the other end of the scale, the strategy is just random choice (i.e. not a very good strategy). 
 
-In between, without getting too lost in the mathematical weeds, the slider controls how likely we are to choose the optimal value vs making an incorrect choice. These choices are weighed by their expected value, mirroring the fact that most of the complexity comes from having to distinguish choices that both seem good. 
+In between, without getting too lost in the mathematical weeds, the slider controls how likely we are to choose the optimal value vs making an incorrect choice.The options are weighedd such that two good options will be roughly equally likely to be chosen, while a horrible option will have a low (but nonzero) likelidhood of selection.
 
 <Figure caption="For a given number of bonus spins, this optimality slider veers between a totally optimal strategy and a totally random one.">
   <StrategyProbabilityTable />
@@ -156,7 +156,7 @@ In between, without getting too lost in the mathematical weeds, the slider contr
 
 This approach has some unexpected behavior. For example, with 5 bonus spins and an optimality measurement of 0.20, you can see that the unoptimized strategy is even *less* likely to pick the optimal symbol than a random strategy is! This is because player error is baked into the model; even if someone makes the correct choice on the first bonus spin, they are less likely to make it on subsequent spins. 
 
-I'll spare you the mathematical details. If you're curious to learn more about the underlying models here, this is a [discrete choice model](https://en.wikipedia.org/wiki/Discrete_choice). More specifically, it's a conditional logit model, where our slider parameter roughly controls how likely a player is to choose the best alternative over the other available options. The options are weight such that two good options will be roughly equally likely to be chosen, while a horrible option will have a low (but nonzero) likelidhood of selection.
+I'll spare you the mathematical details. If you're curious to learn more about the underlying models here, this is a [discrete choice model](https://en.wikipedia.org/wiki/Discrete_choice). More specifically, it's a conditional logit model, where our slider parameter roughly controls how likely a player is to choose the best alternative over the other available options. 
 
 ---
 
@@ -176,7 +176,7 @@ You can also adjust our optimization slider to see how the payouts look if you d
 
 Interestingly, the 5-bonus machine doesn't provide much more latitude: it has a positive expected value when the optimization slider is at 0.70, but at 0.65 even that version of the game's expected value becomes slightly negative.
 
-But still, the fact remains: either one of these machines essentially offer an infinite money machine in Blue Prince. The only question is how much you value your time, because these machines dispense that infinite money at a pace that would make any pit boss proud.
+Still, the fact remains: either one of these machines essentially offer an infinite money machine in Blue Prince. The only question is how much you value your time, because these machines dispense that infinite money at a pace that would make any pit boss proud.
 
 Sources: 
 
@@ -185,6 +185,8 @@ Sources:
 - [Slot Machine Strategy](https://www.nxn.se/p/slot-machine-strategy)
 
 - [Expected Value](https://en.wikipedia.org/wiki/Expected_value)
+
+- [Dynamic Programming](https://en.wikipedia.org/wiki/Dynamic_programming)
 
 - [Discrete Choice Models](https://en.wikipedia.org/wiki/Discrete_choice)
 
