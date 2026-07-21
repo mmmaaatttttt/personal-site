@@ -13,7 +13,7 @@ import {
 
 Every Wednesday night, my wife leaves the house to get a reprieve from the chaotic boy energy that swirls around her. I am very grateful for the fact that, to date, she has always returned home.
 
-In the interim, my sons and I have instituted a tradition known as "boy's night." After we've eaten dinner and put the trash bins out, we park it on the couch and play a video game together. They are big fans of [Metroidvanias](https://en.wikipedia.org/wiki/Metroidvania), but I try to throw some puzzlers in there as well.
+In the interim, my sons and I have instituted a tradition known as "boys' night." After we've eaten dinner and put the trash bins out, we park it on the couch and play a video game together. They are big fans of [Metroidvanias](https://en.wikipedia.org/wiki/Metroidvania), but I try to throw some puzzlers in there as well.
 
 A couple of months ago, we started playing [Blue Prince](https://en.wikipedia.org/wiki/Blue_Prince). The game was met with critical acclaim when it was released last year, and it had been on my radar for a while as one the three of us could work through together.
 
@@ -24,7 +24,7 @@ In case you don't know much about the game, the premise sounds simple. You play 
   heightOverWidth={315 / 560}
 />
 
-The premise is just the tip of the iceberg. We reached the 46th room months ago, but are still diving back in to uncover more secrets and solve more puzzles. 
+The premise is just the tip of the iceberg. We reached the 46th room months ago, but are still diving back in to uncover more secrets and solve more puzzles.
 
 To keep things spoiler-free, that's all I'll say about the game's story. From here, I'll focus on one room in particular, and some delightful mathematics therein. The only thing I need to reveal is a description of the room; beyond that, you can read through this story without fear of me spoiling anything about the game.
 
@@ -62,7 +62,7 @@ Using these values as our source of truth, we can now properly analyze the game.
 
 ### One Armed Bandit
 
-Before we did into the analysis, I thought you might enjoy playing the slots for yourself. Don't worry, this version is provided completely pro bono. It does, however, track how much you would have spent had you been charged one coin per play.
+Before we dig into the analysis, I thought you might enjoy playing the slots for yourself. Don't worry, this version is provided completely pro bono. It does, however, track how much you would have spent had you been charged one coin per play.
 
 <Figure caption="Pull the machine as many times as you want. It'll record how much you spend and how much you earn with each round.">
   <SlotMachine />
@@ -70,15 +70,15 @@ Before we did into the analysis, I thought you might enjoy playing the slots for
 
 Play this for a while, and you'll probably come away feeling ripped off. After 100 pulls, I had spent 100 coins but only won 52, mostly from the three single coin payouts or sometimes from a snake / net combo.
 
-But we can do better than take an experimental approach. The universe of results with payouts is actually relatively small, so we can enumerate them all, and calculate their payouts and probabilities.
+But we can do better than taking an experimental approach. The universe of results with payouts is actually relatively small, so we can enumerate them all, and calculate their payouts and probabilities.
 
-If you'd like to try calculating any of this own your own, be my guest. Don't scroll any further until you're ready to see the results. For the rest of you, here's a table with every possible postiive payout along with its likelihood when you do a fresh pull.
+If you'd like to try calculating any of this on your own, be my guest. Don't scroll any further until you're ready to see the results. For the rest of you, here's a table with every possible positive payout along with its likelihood when you do a fresh pull.
 
 <Figure caption="Payouts and probabilities for each result with a positive payout.">
   <PayoutTable data={payoutRows} />
 </Figure>
 
-Note that these are all mutually exclusive by construction. For example, the probability of getting three single coins is listed as 6.13%. This is the probability of getting exactly this outcome with a payout of 3; in other words, the fourth sybmol must be a dash, crown, money bag, or net. The other symbols would all impact the payout and are therefore represented in other rows.
+Note that these are all mutually exclusive by construction. For example, the probability of getting three single coins is listed as 6.13%. This is the probability of getting exactly this outcome with a payout of 3; in other words, the fourth symbol must be a dash, crown, money bag, or net. The other symbols would all impact the payout and are therefore represented in other rows.
 
 By multiplying each payout by its associated probability and adding everything up, we find that the expected value of this machine is **{expectedValue.toFixed(3)}**. Put another way, for every 1,000 coins you put into the machine, you can expect to get only {(1000 * expectedValue).toFixed(0)} coins back, losing {(1000 * (1 - expectedValue)).toFixed(0)} coins on average. I was particularly unlucky in my experiment of 100 draws, but the odds are definitely not stacked in your favor.
 
@@ -142,13 +142,13 @@ I definitely spent more time than this. So maybe my strategy was bad. Though if 
 
 ---
 
-### Podoby's Nerfect
+### Pobody's Nerfect
 
 Let's double down on this notion of optimal play. Throughout our investigation, I've tried to emphasize that these expected values only hold under the assumption that players always know the best move to make. But if you're anything like me, sometimes that choice is hard. Especially when you have a number of bonus spins remaining. How does sub-optimal play impact these expected values?
 
-One way to model this is introduce a sliding scale that roughly maps to how good your strategy is. At one end of the scale, you play the game perfectly; this is the model we've been using the entire time. At the other end of the scale, the strategy is just random choice (i.e. not a very good strategy). 
+One way to model this is to introduce a sliding scale that roughly maps to how good your strategy is. At one end of the scale, you play the game perfectly; this is the model we've been using the entire time. At the other end of the scale, the strategy is just random choice (i.e. not a very good strategy). 
 
-In between, without getting too lost in the mathematical weeds, the slider controls how likely we are to choose the optimal value vs making an incorrect choice.The options are weighedd such that two good options will be roughly equally likely to be chosen, while a horrible option will have a low (but nonzero) likelidhood of selection.
+In between, without getting too lost in the mathematical weeds, the slider controls how likely we are to choose the optimal value vs making an incorrect choice. The options are weighted such that two good options will be roughly equally likely to be chosen, while a horrible option will have a low (but nonzero) likelihood of selection.
 
 <Figure caption="For a given number of bonus spins, this optimality slider veers between a totally optimal strategy and a totally random one.">
   <StrategyProbabilityTable />
@@ -176,7 +176,13 @@ You can also adjust our optimization slider to see how the payouts look if you d
 
 Interestingly, the 5-bonus machine doesn't provide much more latitude: it has a positive expected value when the optimization slider is at 0.70, but at 0.65 even that version of the game's expected value becomes slightly negative.
 
-Still, the fact remains: either one of these machines essentially offer an infinite money machine in Blue Prince. The only question is how much you value your time, because these machines dispense that infinite money at a pace that would make any pit boss proud.
+---
+
+### Conclusion
+
+Fortunately, the boys and I are at a point in the game where I don't foresee a need for us to grind out more coins in the casino. But if we did, I'm now more confident that it's a defensible position. Indeed, we've demonstrated here that both versions of the slot machine in Blue Prince offer what's effectively an infinite money machine. 
+
+The only question is how much you value your time, because these machines dispense that infinite money at a pace that would make any pit boss proud.
 
 Sources: 
 
