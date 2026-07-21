@@ -74,7 +74,7 @@ export default function CommonPhrasesInteractive() {
 
     return (
       <StyledTable
-        padding="0.5rem 0.1rem"
+        padding="0.1rem"
         headers={headers}
         rows={rows}
         margin="0.75rem 0 0"
