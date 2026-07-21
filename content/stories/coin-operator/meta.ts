@@ -2,7 +2,7 @@ import type { ArticleFrontmatter } from "@/utils/content";
 
 const meta: ArticleFrontmatter = {
   title: "Coin Operator",
-  date: "2026-07-20",
+  date: "2026-07-21",
   featured_image: "../../images/featured_images/coin_operator.jpg",
   caption:
     "Investigating the presence of an infinite money machine in a popular puzzle game.",
