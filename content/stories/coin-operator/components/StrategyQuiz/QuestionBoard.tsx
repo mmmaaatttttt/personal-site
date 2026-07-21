@@ -27,7 +27,7 @@ const QuestionBoard: FC<QuestionBoardProps> = ({
   optimalAction,
 }) => {
   return (
-    <FlexContainer main="center" cross="center" className="gap-3">
+    <FlexContainer main="center" cross="center" className="gap-2 sm:gap-3">
       {scenario.map((symbol, i) => {
         let pillVariant: EvPillVariant = "neutral";
         if (symbol === optimalAction) {

@@ -61,9 +61,13 @@ const SlotMachine: FC<SlotMachineProps> = ({ maxBonusSpins = 0 }) => {
         </Button>
       </div>
       {view === "spin" ? (
-        <div className="mt-6 rounded-2xl border-4 border-yellow-600 bg-gradient-to-b from-neutral-800 to-black p-10 shadow-xl">
-          <div className="rounded-lg border-2 border-neutral-900/60 bg-neutral-700 p-6 shadow-inner">
-            <FlexContainer main="center" cross="center" className="gap-3">
+        <div className="mt-6 rounded-2xl border-4 border-yellow-600 bg-gradient-to-b from-neutral-800 to-black p-3 shadow-xl sm:p-6 lg:p-10">
+          <div className="rounded-lg border-2 border-neutral-900/60 bg-neutral-700 p-2 shadow-inner sm:p-4 lg:p-6">
+            <FlexContainer
+              main="center"
+              cross="center"
+              className="gap-2 sm:gap-3"
+            >
               {displayValues.map((value, i) => {
                 if (!hasBonusSpins) {
                   return (

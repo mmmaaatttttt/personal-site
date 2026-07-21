@@ -18,7 +18,7 @@ const Reel: FC<ReelProps> = ({ value, active = false, className }) => {
     >
       <div
         className={cn(
-          "flex h-20 w-20 items-center justify-center rounded-sm border-2 border-neutral-900/40 bg-gradient-to-b from-white to-neutral-200 text-4xl shadow-inner sm:h-28 sm:w-28 sm:text-6xl",
+          "flex h-12 w-12 items-center justify-center rounded-sm border-2 border-neutral-900/40 bg-gradient-to-b from-white to-neutral-200 text-xl shadow-inner sm:h-20 sm:w-20 sm:text-4xl lg:h-28 lg:w-28 lg:text-6xl",
           active && "animate-pulse",
         )}
       >

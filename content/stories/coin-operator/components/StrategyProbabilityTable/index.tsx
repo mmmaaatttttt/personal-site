@@ -26,12 +26,29 @@ const StrategyProbabilityTable: FC = () => {
         style={{ opacity: isRecalculating ? 0.4 : 1 }}
       >
         <StyledTable
+          padding="0.5rem 0.25rem"
           headers={[
-            { key: "state", content: STATE_LABEL },
-            { key: "expectedValue", content: "Expected Value" },
+            {
+              key: "state",
+              content: (
+                <span className="!text-xs sm:!text-sm whitespace-nowrap">
+                  {STATE_LABEL}
+                </span>
+              ),
+            },
+            {
+              key: "expectedValue",
+              content: (
+                <span className="!text-[0.7rem] sm:!text-sm">
+                  Expected Value
+                </span>
+              ),
+            },
             ...COLUMN_HEADERS.map((header) => ({
               key: header,
-              content: header,
+              content: (
+                <span className="!text-[0.7rem] sm:!text-sm">{header}</span>
+              ),
             })),
           ]}
           rows={rows.map((row) => ({
