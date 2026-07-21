@@ -5,6 +5,7 @@ import {
   calculateWastedVotes,
   choices,
   combinations,
+  cryptoRandom,
   euclideanDistance,
   generateData,
   interpolate,
@@ -243,5 +244,20 @@ describe("choices", () => {
     const arr = [1, 2, 3, 4];
     choices(arr, 2);
     expect(arr).toHaveLength(4);
+  });
+});
+
+describe("cryptoRandom", () => {
+  it("returns a float in [0, 1)", () => {
+    for (let i = 0; i < 20; i++) {
+      const value = cryptoRandom();
+      expect(value).toBeGreaterThanOrEqual(0);
+      expect(value).toBeLessThan(1);
+    }
+  });
+
+  it("does not return the same value on consecutive calls", () => {
+    const values = new Set(Array.from({ length: 10 }, () => cryptoRandom()));
+    expect(values.size).toBeGreaterThan(1);
   });
 });

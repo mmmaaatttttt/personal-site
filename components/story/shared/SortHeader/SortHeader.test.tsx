@@ -1,7 +1,7 @@
 import { fireEvent, render, screen } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
 import "@testing-library/jest-dom/vitest";
-import SortHeader from "./SortHeader";
+import SortHeader from ".";
 
 describe("SortHeader", () => {
   it("renders the label", () => {

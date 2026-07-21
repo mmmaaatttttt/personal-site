@@ -1,6 +1,7 @@
 "use client";
 
 import { type FC, useState } from "react";
+import { cn } from "@/lib/utils";
 
 interface ToggleSwitchProps {
   leftText: string;
@@ -8,6 +9,9 @@ interface ToggleSwitchProps {
   leftColor: string;
   rightColor: string;
   handleSwitchChange: (checked: boolean) => void;
+  /** When true, labels never wrap to a second line. Default false preserves
+   *  existing wrap-permitted behavior for stories already relying on it. */
+  noWrap?: boolean;
 }
 
 const ToggleSwitch: FC<ToggleSwitchProps> = ({
@@ -16,6 +20,7 @@ const ToggleSwitch: FC<ToggleSwitchProps> = ({
   leftColor,
   rightColor,
   handleSwitchChange,
+  noWrap = false,
 }) => {
   const [checked, setChecked] = useState(false);
 
@@ -29,7 +34,14 @@ const ToggleSwitch: FC<ToggleSwitchProps> = ({
 
   return (
     <div className="flex items-center justify-center">
-      <span className="flex-1 text-right text-sm">{leftText}</span>
+      <span
+        className={cn(
+          "flex-1 text-right text-sm",
+          noWrap && "whitespace-nowrap",
+        )}
+      >
+        {leftText}
+      </span>
       <button
         type="button"
         role="switch"
@@ -43,7 +55,14 @@ const ToggleSwitch: FC<ToggleSwitchProps> = ({
           style={{ transform: checked ? "translateX(2rem)" : "translateX(0)" }}
         />
       </button>
-      <span className="flex-1 text-left text-sm">{rightText}</span>
+      <span
+        className={cn(
+          "flex-1 text-left text-sm",
+          noWrap && "whitespace-nowrap",
+        )}
+      >
+        {rightText}
+      </span>
     </div>
   );
 };

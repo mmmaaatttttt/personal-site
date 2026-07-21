@@ -1,15 +1,11 @@
 "use client";
 
-import type { FC } from "react";
-
-type SortKey = "state" | "averageSaturation" | "averageTurnout";
-
-interface SortHeaderProps {
+interface SortHeaderProps<K extends string> {
   label: string;
-  sortKey: SortKey;
-  currentKey: SortKey;
+  sortKey: K;
+  currentKey: K;
   ascending: boolean;
-  onClick: (key: SortKey) => void;
+  onClick: (key: K) => void;
 }
 
 const UpArrow = () => (
@@ -37,13 +33,13 @@ function sortIcon(isActive: boolean, ascending: boolean) {
   return <DownArrow />;
 }
 
-const SortHeader: FC<SortHeaderProps> = ({
+export default function SortHeader<K extends string>({
   label,
   sortKey,
   currentKey,
   ascending,
   onClick,
-}) => {
+}: SortHeaderProps<K>) {
   const isActive = sortKey === currentKey;
 
   return (
@@ -59,7 +55,4 @@ const SortHeader: FC<SortHeaderProps> = ({
       </button>
     </span>
   );
-};
-
-export type { SortKey };
-export default SortHeader;
+}

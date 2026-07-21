@@ -94,7 +94,7 @@ const SentimentScoreTable: FC<SentimentScoreTableProps> = ({
       </NarrowContainer>
 
       <NarrowContainer width="100%" className="w-full">
-        <StyledTable padding="0.75rem 0.5rem" headers={headers} rows={rows} />
+        <StyledTable padding="0.1rem" headers={headers} rows={rows} />
       </NarrowContainer>
       {caption && (
         <p className="mt-4 text-center text-sm font-bold text-gray-600">

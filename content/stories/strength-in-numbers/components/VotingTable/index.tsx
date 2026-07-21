@@ -1,14 +1,15 @@
 "use client";
 
 import { format } from "d3-format";
-import { type FC, useState } from "react";
+import type { FC } from "react";
 import NarrowContainer from "@/components/story/shared/NarrowContainer";
 import { SliderGroup } from "@/components/story/shared/Slider";
+import SortHeader from "@/components/story/shared/SortHeader";
 import StyledTable from "@/components/story/shared/StyledTable";
 import useSliders from "@/hooks/useSliders";
+import useSortableTable from "@/hooks/useSortableTable";
 import COLORS from "@/utils/styles";
 import type { VoterStateRow } from "../../data";
-import SortHeader, { type SortKey } from "./SortHeader";
 
 const percentFormat = format(".2%");
 
@@ -17,26 +18,10 @@ interface VotingTableProps {
 }
 
 const VotingTable: FC<VotingTableProps> = ({ tableData }) => {
-  const [sortKey, setSortKey] = useState<SortKey>("averageTurnout");
-  const [ascending, setAscending] = useState(true);
-
-  const handleSortClick = (key: SortKey) => {
-    if (key === sortKey) {
-      setAscending((prev) => !prev);
-    } else {
-      setSortKey(key);
-      setAscending(true);
-    }
-  };
-
-  const sorted = [...tableData].sort((a, b) => {
-    const dir = ascending ? 1 : -1;
-    const v1 = a[sortKey];
-    const v2 = b[sortKey];
-    if (v1 > v2) return dir;
-    if (v1 < v2) return -dir;
-    return 0;
-  });
+  const { sorted, sortKey, ascending, handleSortClick } = useSortableTable(
+    tableData,
+    "averageTurnout",
+  );
 
   const sliderConfig = [
     {

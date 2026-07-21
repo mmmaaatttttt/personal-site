@@ -1,4 +1,4 @@
-import type { ReactNode } from "react";
+import { type ReactNode, useId } from "react";
 import { cn } from "@/lib/utils";
 
 interface TableCell {
@@ -9,6 +9,7 @@ interface TableCell {
 interface TableRow {
   key: string | number;
   cells: TableCell[];
+  className?: string;
 }
 
 interface TableHeader {
@@ -41,6 +42,8 @@ export default function StyledTable({
   rows,
   data,
 }: StyledTableProps) {
+  const id = useId();
+
   if (data) {
     const [headerRow, ...dataRows] = data;
     headers = headerRow.map((content, i) => ({ key: i, content }));
@@ -55,18 +58,19 @@ export default function StyledTable({
       style={margin !== undefined ? { margin } : undefined}
     >
       <table
-        data-styled-table
+        data-styled-table={id}
         className="border-gray/30 mx-auto w-full border-collapse border shadow-sm"
       >
         <style>{`
-          table[data-styled-table] th, table[data-styled-table] td {
+          table[data-styled-table="${id}"] th, table[data-styled-table="${id}"] td {
             text-align: center;
+            vertical-align: middle;
             padding: ${padding};
             border: 1px solid rgba(0, 0, 0, 0.1);
             font-size: 0.85rem;
             line-height: 1.4;
           }
-          table[data-styled-table] th {
+          table[data-styled-table="${id}"] th {
             font-weight: 700;
           }
         `}</style>
@@ -84,7 +88,7 @@ export default function StyledTable({
         {rows && (
           <tbody>
             {rows.map((row) => (
-              <tr key={row.key}>
+              <tr key={row.key} className={row.className}>
                 {row.cells.map((cell) => (
                   <td key={cell.key}>{cell.content}</td>
                 ))}
