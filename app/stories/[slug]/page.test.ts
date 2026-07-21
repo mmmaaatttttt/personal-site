@@ -71,6 +71,9 @@ vi.mock("@/content/stories/dailemma/index.mdx", () => ({
 vi.mock("@/content/stories/dailemma-2/index.mdx", () => ({
   default: () => null,
 }));
+vi.mock("@/content/stories/coin-operator/index.mdx", () => ({
+  default: () => null,
+}));
 
 import { notFound } from "next/navigation";
 import {
@@ -161,6 +164,7 @@ describe("ArticlePage", () => {
     "keeping-distances",
     "dailemma",
     "dailemma-2",
+    "coin-operator",
   ];
 
   it.each(

@@ -48,6 +48,15 @@ describe("useSortableTable", () => {
     ]);
   });
 
+  it("preserves relative order for rows with equal sort values", () => {
+    const tiedRows: Row[] = [
+      { name: "Beta", value: 1 },
+      { name: "Alpha", value: 1 },
+    ];
+    const { result } = renderHook(() => useSortableTable(tiedRows, "value"));
+    expect(result.current.sorted.map((r) => r.name)).toEqual(["Beta", "Alpha"]);
+  });
+
   it("toggles ascending when the same key is clicked again", () => {
     const { result } = renderHook(() => useSortableTable(rows, "value"));
     act(() => {
