@@ -24,7 +24,7 @@
   },
   "dependencies": {
     "@next/mdx": "^16.2.10",
-    "@react-email/render": "^2.0.10",
+    "@react-email/render": "^2.1.0",
     "@tailwindcss/typography": "^0.5.20",
     "@types/katex": "^0.16.8",
     "clsx": "^2.1.1",
