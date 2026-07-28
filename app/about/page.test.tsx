@@ -1,9 +1,6 @@
 import { render, screen } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
 
-vi.mock("next/image", () => ({
-  default: ({ alt }: { alt: string }) => <img alt={alt} />,
-}));
 vi.mock("@/components/layout/MainLayout", () => ({
   default: ({ children }: { children: React.ReactNode }) => (
     <div>{children}</div>

@@ -3,9 +3,6 @@ import { describe, expect, it, vi } from "vitest";
 
 const mockPlaceholders = vi.hoisted(() => ({}) as Record<string, string>);
 
-vi.mock("next/image", () => ({
-  default: ({ alt }: { alt: string }) => <img alt={alt} />,
-}));
 vi.mock("next/link", () => ({
   default: ({
     children,
