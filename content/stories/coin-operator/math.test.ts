@@ -318,19 +318,21 @@ const CLASSIFICATION_TEST_SCENARIOS: [
 ];
 
 describe("calculatePayout", () => {
-  it.each(
-    CLASSIFICATION_TEST_SCENARIOS.map((row) => [row[0], row[1]]),
-  )("calculatePayout(%j) -> %i", (slotResult, expectedPayout) => {
-    expect(calculatePayout(slotResult)).toBe(expectedPayout);
-  });
+  it.each(CLASSIFICATION_TEST_SCENARIOS.map((row) => [row[0], row[1]]))(
+    "calculatePayout(%j) -> %i",
+    (slotResult, expectedPayout) => {
+      expect(calculatePayout(slotResult)).toBe(expectedPayout);
+    },
+  );
 });
 
 describe("classifyPayout", () => {
-  it.each(
-    CLASSIFICATION_TEST_SCENARIOS.map((row) => [row[0], row[2]]),
-  )("classifyPayout(%j) -> %s", (slotResult, expectedClassification) => {
-    expect(classifyPayout(slotResult)).toBe(expectedClassification);
-  });
+  it.each(CLASSIFICATION_TEST_SCENARIOS.map((row) => [row[0], row[2]]))(
+    "classifyPayout(%j) -> %s",
+    (slotResult, expectedClassification) => {
+      expect(classifyPayout(slotResult)).toBe(expectedClassification);
+    },
+  );
 });
 
 describe("enumerateSlotResults", () => {

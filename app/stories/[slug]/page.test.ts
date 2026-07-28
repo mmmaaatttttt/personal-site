@@ -167,16 +167,17 @@ describe("ArticlePage", () => {
     "coin-operator",
   ];
 
-  it.each(
-    allStoryModuleSlugs,
-  )("renders without crashing for story module: %s", async (slug) => {
-    vi.mocked(getArticle).mockResolvedValue({
-      frontmatter: mockFrontmatter,
-      slug,
-    });
-    const result = await ArticlePage({ params: Promise.resolve({ slug }) });
-    expect(result).toBeTruthy();
-  });
+  it.each(allStoryModuleSlugs)(
+    "renders without crashing for story module: %s",
+    async (slug) => {
+      vi.mocked(getArticle).mockResolvedValue({
+        frontmatter: mockFrontmatter,
+        slug,
+      });
+      const result = await ArticlePage({ params: Promise.resolve({ slug }) });
+      expect(result).toBeTruthy();
+    },
+  );
 
   it("renders without a featured_image_caption (falsy caption branch)", async () => {
     vi.mocked(getArticle).mockResolvedValue({
