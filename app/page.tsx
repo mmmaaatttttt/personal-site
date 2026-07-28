@@ -46,7 +46,10 @@ export default async function Home() {
             href={`/stories/${latestStory.slug}`}
             className="group flex flex-col items-center gap-2 max-w-xs mx-auto"
           >
-            <div className="relative w-full aspect-video overflow-hidden rounded-lg">
+            <div
+              className="relative w-full aspect-video overflow-hidden rounded-lg"
+              data-testid="latest-story-thumbnail"
+            >
               <Image
                 src={imagePath}
                 alt={latestStory.caption}
