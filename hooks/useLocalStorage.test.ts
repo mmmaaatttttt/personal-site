@@ -28,7 +28,7 @@ describe("useLocalStorage", () => {
       result.current[1](7);
     });
     expect(result.current[0]).toBe(7);
-    expect(JSON.parse(localStorage.getItem("test-key")!)).toBe(7);
+    expect(JSON.parse(localStorage.getItem("test-key") as string)).toBe(7);
   });
 
   it("supports functional updater form", () => {

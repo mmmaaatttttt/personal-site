@@ -82,7 +82,7 @@ describe("TableOfContents — mobile details", () => {
 
   it("renders all links including Introduction inside details", () => {
     render(<TableOfContents headings={headings} />);
-    const details = document.querySelector("details")!;
+    const details = document.querySelector("details") as HTMLDetailsElement;
     const links = details.querySelectorAll("a");
     expect(links).toHaveLength(3);
     expect(links[0]).toHaveAttribute("href", "#introduction");
@@ -114,7 +114,9 @@ describe("TableOfContents — smooth scroll and URL hash", () => {
 
     render(<TableOfContents headings={headings} />);
     const nav = screen.getByRole("navigation", { name: "Table of contents" });
-    fireEvent.click(nav.querySelector('a[href="#section-one"]')!);
+    fireEvent.click(
+      nav.querySelector('a[href="#section-one"]') as HTMLAnchorElement,
+    );
 
     expect(scrollIntoViewMock).toHaveBeenCalledWith({ behavior: "smooth" });
     document.body.removeChild(target);
@@ -124,7 +126,9 @@ describe("TableOfContents — smooth scroll and URL hash", () => {
     render(<TableOfContents headings={headings} />);
     const nav = screen.getByRole("navigation", { name: "Table of contents" });
     expect(() =>
-      fireEvent.click(nav.querySelector('a[href="#section-one"]')!),
+      fireEvent.click(
+        nav.querySelector('a[href="#section-one"]') as HTMLAnchorElement,
+      ),
     ).not.toThrow();
     expect(scrollIntoViewMock).not.toHaveBeenCalled();
   });
@@ -136,7 +140,9 @@ describe("TableOfContents — smooth scroll and URL hash", () => {
 
     render(<TableOfContents headings={headings} />);
     const nav = screen.getByRole("navigation", { name: "Table of contents" });
-    fireEvent.click(nav.querySelector('a[href="#section-one"]')!);
+    fireEvent.click(
+      nav.querySelector('a[href="#section-one"]') as HTMLAnchorElement,
+    );
 
     expect(replaceStateSpy).toHaveBeenCalledWith(null, "", "#section-one");
     document.body.removeChild(target);
@@ -145,7 +151,9 @@ describe("TableOfContents — smooth scroll and URL hash", () => {
   it("updates the URL hash even when the target element is missing", () => {
     render(<TableOfContents headings={headings} />);
     const nav = screen.getByRole("navigation", { name: "Table of contents" });
-    fireEvent.click(nav.querySelector('a[href="#section-one"]')!);
+    fireEvent.click(
+      nav.querySelector('a[href="#section-one"]') as HTMLAnchorElement,
+    );
 
     expect(replaceStateSpy).toHaveBeenCalledWith(null, "", "#section-one");
     expect(scrollIntoViewMock).not.toHaveBeenCalled();
