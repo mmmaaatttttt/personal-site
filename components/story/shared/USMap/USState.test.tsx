@@ -61,7 +61,7 @@ describe("USState", () => {
         <USState {...baseProps} onMouseMove={onMouseMove} />
       </svg>,
     );
-    const path = container.querySelector("path")!;
+    const path = container.querySelector("path") as SVGPathElement;
     fireEvent.mouseMove(path);
     expect(onMouseMove).toHaveBeenCalledWith("Alabama", "Value: 10");
   });
@@ -73,7 +73,7 @@ describe("USState", () => {
         <USState {...baseProps} onMouseLeave={onMouseLeave} />
       </svg>,
     );
-    const path = container.querySelector("path")!;
+    const path = container.querySelector("path") as SVGPathElement;
     fireEvent.mouseLeave(path);
     expect(onMouseLeave).toHaveBeenCalled();
   });
@@ -89,7 +89,7 @@ describe("USState", () => {
         />
       </svg>,
     );
-    const path = container.querySelector("path")!;
+    const path = container.querySelector("path") as SVGPathElement;
     fireEvent.mouseMove(path);
     expect(onMouseMove).toHaveBeenCalledWith("Alabama", ["Line 1", "Line 2"]);
   });

@@ -212,11 +212,12 @@ What not to test: implementation details, internal state variable names, class n
 
 ### jsdom mock patterns
 
-`vitest.setup.tsx` provides global mocks for `ResizeObserver` and `framer-motion`. Do not re-add these in individual test files — the globals are already in place.
+`vitest.setup.tsx` provides global mocks for `ResizeObserver`, `framer-motion`, and `next/image`. Do not re-add these in individual test files — the globals are already in place.
 
 **What the global setup provides:**
 - `ResizeObserver` — fully mocked globally. No per-test mock needed.
 - `framer-motion` — passthrough mock that renders `motion.div`, `motion.rect`, `motion.path`, `motion.text`, `motion.g` as plain DOM elements (stripping motion-specific props), and stubs `AnimatePresence`, `useSpring`, `useTransform`, `useMotionValue`. No per-test mock needed for these.
+- `next/image` — passthrough mock rendering `<img alt={alt} src={src} />`. No per-test mock needed to assert on `alt`/`src`. Test files that want different behavior (e.g. `() => null`) can still override it locally — a per-file `vi.mock("next/image", ...)` takes precedence over the global one, same mechanism as the `animate()` exception below.
 
 **`framer-motion animate()` — the one exception:**
 

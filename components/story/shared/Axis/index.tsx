@@ -73,7 +73,7 @@ const Axis = <Domain extends AxisDomain>({
   xShift,
   yShift,
 }: AxisProps<Domain>) => {
-  const axisRef = useRef<SVGGElement>(null!);
+  const axisRef = useRef<SVGGElement | null>(null);
   const chart = useChart();
 
   const resolvedXShift =
@@ -130,7 +130,7 @@ const Axis = <Domain extends AxisDomain>({
         ? `translate(${resolvedTickShift}, 0)`
         : `translate(0, ${resolvedTickShift})`;
 
-    const g = select(axisRef.current);
+    const g = select(axisRef.current as SVGGElement);
     g.attr(
       "transform",
       `translate(${resolvedXShift - HALF_PX}, ${resolvedYShift - HALF_PX})`,

@@ -9,6 +9,16 @@ vi.mock("next/navigation", () => ({
   usePathname: () => "/",
 }));
 
+// Passthrough mock for next/image so tests can assert on alt/src without
+// Next's image optimization pipeline. Override locally (e.g. `() => null`)
+// in test files that don't care about the rendered image.
+vi.mock("next/image", () => ({
+  default: ({ alt, src }: { alt?: string; src?: string }) => (
+    // biome-ignore lint/performance/noImgElement: mocking next/image itself
+    <img alt={alt} src={src} />
+  ),
+}));
+
 global.ResizeObserver = vi.fn().mockImplementation(
   class {
     observe = vi.fn();

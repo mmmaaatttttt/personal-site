@@ -9,9 +9,6 @@ vi.mock("@/components/layout/MainLayout", () => ({
     <div>{children}</div>
   ),
 }));
-vi.mock("next/image", () => ({
-  default: ({ alt }: { alt: string }) => <img alt={alt} />,
-}));
 vi.mock("next/link", () => ({
   default: ({
     children,

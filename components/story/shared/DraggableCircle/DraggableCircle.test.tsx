@@ -136,7 +136,7 @@ describe("DraggableCircle", () => {
   it("returns early from onPointerMove when ownerSVGElement is null", () => {
     const onDrag = vi.fn();
     render(<DraggableCircle id={0} cx={50} cy={50} onDrag={onDrag} />);
-    const circle = document.querySelector("circle")!;
+    const circle = document.querySelector("circle") as SVGCircleElement;
     fireEvent.pointerDown(circle, { pointerId: 1 });
     fireEvent.pointerMove(circle, { clientX: 100, clientY: 100, pointerId: 1 });
     expect(onDrag).not.toHaveBeenCalled();

@@ -21,10 +21,13 @@ export function FigureProvider({ children }: { children: ReactNode }) {
   const counter = useRef(0);
 
   const register = useCallback((id: string) => {
-    if (!registry.current.has(id)) {
-      registry.current.set(id, ++counter.current);
+    const existing = registry.current.get(id);
+    if (existing !== undefined) {
+      return existing;
     }
-    return registry.current.get(id)!;
+    const next = ++counter.current;
+    registry.current.set(id, next);
+    return next;
   }, []);
 
   return (

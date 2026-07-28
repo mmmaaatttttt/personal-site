@@ -46,7 +46,7 @@
   },
   "devDependencies": {
     "@argos-ci/playwright": "^7.0.9",
-    "@biomejs/biome": "2.5.0",
+    "@biomejs/biome": "2.5.5",
     "@playwright/test": "^1.61.1",
     "@react-email/ui": "^6.9.0",
     "@tailwindcss/postcss": "^4.3.3",
