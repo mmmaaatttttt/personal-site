@@ -1,9 +1,14 @@
+import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import MainLayout from "@/components/layout/MainLayout";
 import placeholders from "@/lib/imagePlaceholders.json";
 import { getLatestStory } from "@/utils/content";
 import { normalizeImagePath } from "@/utils/stringHelpers";
+
+export const metadata: Metadata = {
+  robots: { index: false, follow: false },
+};
 
 export default async function NotFound() {
   const latest = await getLatestStory();
