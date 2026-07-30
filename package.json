@@ -34,7 +34,7 @@
     "framer-motion": "^12.42.2",
     "gray-matter": "^4.0.3",
     "katex": "^0.17.0",
-    "lucide-react": "^1.21.0",
+    "lucide-react": "^1.28.0",
     "next": "16.2.11",
     "odex": "^3.0.0-rc.4",
     "react": "19.2.7",
