@@ -1,0 +1,9 @@
+name: Manual Snapshot Tests
+on:
+  workflow_dispatch:
+
+jobs:
+  e2e:
+    uses: ./.github/workflows/snapshots-common.yml
+    secrets:
+      ARGOS_TOKEN: ${{ secrets.ARGOS_TOKEN }}
