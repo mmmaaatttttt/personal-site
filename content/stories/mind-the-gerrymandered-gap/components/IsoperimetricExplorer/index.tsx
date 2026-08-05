@@ -4,15 +4,11 @@ import { type FC, useEffect, useState } from "react";
 import ClippedSVG from "@/components/story/shared/ClippedSVG";
 import LabeledSlider from "@/components/story/shared/Slider/LabeledSlider";
 import StyledTable from "@/components/story/shared/StyledTable";
+import type { Point } from "@/types/geometry";
 import COLORS from "@/utils/styles";
 import { crossingExists } from "./crossingHelpers";
 import InteractivePolygon from "./InteractivePolygon";
-import {
-  generatePoints,
-  getAreaInfo,
-  getCircleParams,
-  type Point,
-} from "./mathHelpers";
+import { generatePoints, getAreaInfo, getCircleParams } from "./mathHelpers";
 
 const WIDTH = 600;
 const HEIGHT = 400;

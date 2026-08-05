@@ -1,9 +1,5 @@
+import type { Point } from "@/types/geometry";
 import { average, mod } from "@/utils/mathHelpers";
-
-export interface Point {
-  x: number;
-  y: number;
-}
 
 // Generates n evenly-spaced vertices on a regular polygon centered in the SVG.
 // Distance is normalized so the area of the corresponding circle stays constant

@@ -2,12 +2,8 @@ import type { AxisScale } from "d3-axis";
 import { curveLinear, curveNatural, line } from "d3-shape";
 import type { FC } from "react";
 import { useChart } from "@/context/ChartContext";
+import type { Point } from "@/types/geometry";
 import COLORS from "@/utils/styles";
-
-interface Point {
-  x: number;
-  y: number;
-}
 
 interface LinePlotProps {
   curve?: "curveNatural" | "curveLinear";
@@ -15,6 +11,8 @@ interface LinePlotProps {
   opacity?: number | string;
   stroke?: string;
   strokeWidth?: number;
+  /** SVG stroke-dasharray, e.g. "6 4". Omit for a solid line (default). */
+  strokeDasharray?: string;
   /** Falls back to ChartContext xScale when omitted. */
   xScale?: AxisScale<number>;
   /** Falls back to ChartContext yScale when omitted. */
@@ -29,6 +27,7 @@ const LinePlot: FC<LinePlotProps> = ({
   opacity = 1,
   stroke = COLORS.ORANGE,
   strokeWidth = 5,
+  strokeDasharray,
   xScale,
   yScale,
 }) => {
@@ -59,6 +58,7 @@ const LinePlot: FC<LinePlotProps> = ({
       d={linePath(truncateData()) as string}
       strokeWidth={strokeWidth}
       stroke={stroke}
+      strokeDasharray={strokeDasharray}
       fill="none"
       opacity={opacity}
     />
