@@ -1,0 +1,79 @@
+import FreeformCurveChart from "./components/FreeformCurveChart";
+import SymmetricCobweb from "./components/SymmetricCobweb";
+import BifurcationDiagram from "./components/BifurcationDiagram";
+import AsymmetricTrapdoor from "./components/AsymmetricTrapdoor";
+
+I am a terrible gambler. For me, the thrill of potential victory is always overshadowed by the agony of potential defeat. Maybe I've spent too much time studying games of chance ([case in point](./stories/coin-operator)), but I can never escape the feeling that if someone is offering me odds on a wager, they're not looking out for my best interests.
+
+Increasingly, though, it feels like I'm out of step with the culture at large. Since the Supreme Court [decided](https://en.wikipedia.org/wiki/Murphy_v._National_Collegiate_Athletic_Association) the federal government couldn't prohibit states from allowing sports betting in 2018, it has become legalized in nearly 40 states as of this writing. It isn't a red vs blue thing, either. From Montana to Massachusetts, legislators from across the political spectrum have legalized sports betting in the wake of this decision. You can find a breakdown of changes since 2018 by state [here](https://en.wikipedia.org/wiki/Gambling_in_the_United_States#Sports_betting).
+
+As the appetite for sports betting has increased, it has ushered in its wake questions around the boundary between gambling, gaming, and prediction markets. After all, betting on the outcome of a sporting event is a type of prediction market, in some sense no different than trying to bet on the outcome of an election or on the value of a certain stock a year from now. The line here between gambling and market investment is blurry; though recent lawsuits have tended to favor a very narrow definition of what qualifies as gaming. For example, after a [court victory](https://bclawreview.bc.edu/articles/10.70167/QYCV4877) in 2024, prediction market platform Kalshi expanded its offering of wagers you could make about the future.
+
+Is all of this just gambling, plain and simple? Or is there value in exposing the wisdom of the crowd through market efficiencies? Am I just a cranky Luddite, or is the future predicting the future?
+
+Let's see what the mathematics has to say.
+
+### Performance Anxiety
+
+Techniques in the natural sciences have allowed us to make predictions about the future for decades. It's what gives us weather forecasts and lets us land rovers on distant planets. 
+
+In principle, these same techniques could be used to generate predictions in the social sciences, too. But here there's a fundamental problem; when you stare into the void of a social phenomenon, it stares back at you. In other words, predictions about future outcomes can have an impact on the outcomes themselves.
+
+For example, consider the economy. If a reliable prediction emerged that warned of a market crash in the next twelve months, that information on its own could become a self-fulfilling prophecy, as folks who are concerned about the future of the economy take actions that cause it to nose dive. In principle the same could be trough in election forecasts: if an election is predicted to be a blowout for one party over another, the predicted losing party may be so unmotivated that they don't bother showing up to the polls at all. In so doing, they cement their fate.
+
+In a [paper](https://arxiv.org/pdf/2310.16608) from last year, this category of prediction is labeled *performative*. These are classes of predictions that are responsive to the existence of the prediction itself. Meteorologists don't change the weather by reporting on it (no matter how much Fox News might wish this weren't the case). But predictions from markets can indeed influence the markets they are trying to predict.
+
+Once you know this, it's natural to ask under what circumstances this doesn't matter. In other words, are there performative predictions that don't react to the market's influence on them, or that somehow account for the market effects inside the prediction itself?
+
+### Perfect Predictions
+
+Let's imagine we want to bet on the outcome of some binary event, like whether or not the Giants will win the World Series (yeah, I know it's not the early 2010s anymore, but it's just a hyptothetical, let me have my moment). A prediction market like Kalshi may let me buy a contract that will pay me $1 if the Giants win the World Series, and $0 if they don't. Moreover, if I see that the price of this contract is much less than what I think the team's chances are, then it makes rational sense for me to buy contracts. Put more concretely, if I think the chances of a World Series ring are 10%, and I can buy a contract for one cent, then I've identified an inefficiency in the market that I can exploit for profit. 
+
+Indeed, this is literally how Kalshi explains its markets [here](https://news.kalshi.com/p/what-are-event-contracts). Here's a direct quote: "the prices on Kalshi should reflect the true probabilities for different events!"
+
+For non-performative predictions, maybe this is the case. But what happens when actors have access to these markets and can make bidding decisions based on them? Doesn't this information bias the likelihood of the event?
+
+Put more precisely, suppose a prediction market says the probability of an event *E* is some value *p* between 0 and 1. Therefore, the contract is priced at *p * 100* cents.
+
+This is the market's estimate of the probability of the event, which is different from the true probability of the event. According to Kalshi, these probabilities should be equal, in other words it should be the case that *P(E) = p*. But for a performative prediction, we need an even stronger claim, because we don't just care about the probability that *E* happens. We care about the probability that *E* happens *given the fact that the published probability is p*. Or, in [math speak](https://en.wikipedia.org/wiki/Conditional_probability) the claim is that *P(E | p) = p* for any published probability *p*.
+
+From a strictly mathematical standpoint, there's no guarantee that this equality holds. However, if we assume the probability function for *E* is continuous, we are at least guaranteed a price where this equality does hold. Don't believe me? Try it out for yourself. The graph below plots the probability an event happens given that the price is *p* against *p* itself. You can draw any probability function you want, but it will always be a continuous line. If you can draw a blue curve that doesn't intersect the gray diagonal at at least one green circle, I will give you a million dollars.
+
+<Figure caption="Click and drag to adjust the blue probability graph. No matter how hard you try, any path you draw will intersect with the gray diagonal line in at least one spot. Each point of intersection represents a point where the published probability matches the probability of the event given that published price.">
+  <FreeformCurveChart />
+</Figure>
+
+I feel safe in this wager because it's mathematically air-tight. This is an example of the [intermediate value theorem](https://en.wikipedia.org/wiki/Intermediate_value_theorem). Assuming our probabilities are continuous, and our contracts are between $0 and $1, we are guaranteed to have at least one price that matches the probability of the event given that price.
+
+TBD
+
+<Figure caption="TBD">
+  <SymmetricCobweb />
+</Figure>
+
+TBD
+
+<Figure caption="TBD">
+  <BifurcationDiagram />
+</Figure>
+
+TBD
+
+<Figure caption="TBD">
+  <AsymmetricTrapdoor />
+</Figure>
+
+TBD
+
+Sources
+
+- [Sports betting in the United States](https://en.wikipedia.org/wiki/Gambling_in_the_United_States#Sports_betting)
+
+- [Political Prediction Markets: Bad Law, but Good Policy?](https://bclawreview.bc.edu/articles/10.70167/QYCV4877)
+
+- [Working with Event Contracts](https://news.kalshi.com/p/what-are-event-contracts)
+
+- [Conditional Probability](https://en.wikipedia.org/wiki/Conditional_probability)
+
+
+https://www.nbcsports.com/nfl/profootballtalk/rumor-mill/news/new-york-files-36-billion-lawsuit-against-kalshi-alleging-its-running-an-illegal-gambling-operation
