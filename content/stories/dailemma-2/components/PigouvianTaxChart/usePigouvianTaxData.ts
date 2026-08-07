@@ -4,7 +4,12 @@ import {
   ownerProfitChange,
   workerIncome,
 } from "../../../dailemma/math";
-import { nashRateWithAutomationTax, optimalAutomationTax } from "../../math";
+import {
+  computeYExtent,
+  nashRateWithAutomationTax,
+  optimalAutomationTax,
+  padYDomain,
+} from "../../math";
 
 const ALPHA_RANGE = linspace(0, 1, 100);
 const Y_PAD_FACTOR = 0.08;
@@ -73,9 +78,8 @@ export function usePigouvianTaxData(
   );
 
   const allY = [...ownerData.map((d) => d.y), ...workerData.map((d) => d.y)];
-  const yMin = Math.min(0, ...allY);
-  const yMax = Math.max(1, ...allY);
-  const yPad = (yMax - yMin) * Y_PAD_FACTOR;
+  const { yMin, yMax } = computeYExtent(allY, [0], [1]);
+  const yPad = padYDomain(yMin, yMax, Y_PAD_FACTOR);
 
   return {
     ownerData,
