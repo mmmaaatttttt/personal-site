@@ -29,38 +29,80 @@ function readStdin() {
   });
 }
 
+// Finds the body of a brace block starting at the first "{" at or after
+// searchFrom, respecting nested braces (e.g. inline object-literal field
+// types like `{ x: number; y: number }[]`), and returns the body text plus
+// the index just past the matching close brace. A naive `[^}]*` regex stops
+// at the FIRST "}" it sees, which is wrong whenever a field's type is itself
+// an object literal — it truncates the interface and silently compares
+// garbage against garbage, producing false "exact match" positives.
+function readBalancedBraceBody(content, searchFrom) {
+  const openIdx = content.indexOf("{", searchFrom);
+  if (openIdx === -1) return null;
+  let depth = 0;
+  for (let i = openIdx; i < content.length; i++) {
+    if (content[i] === "{") depth++;
+    else if (content[i] === "}") {
+      depth--;
+      if (depth === 0) {
+        return { body: content.slice(openIdx + 1, i), endIndex: i + 1 };
+      }
+    }
+  }
+  return null;
+}
+
+function splitTopLevelFields(body) {
+  const fields = [];
+  let depth = 0;
+  let current = "";
+  for (const char of body) {
+    if (char === "{" || char === "(" || char === "[") depth++;
+    else if (char === "}" || char === ")" || char === "]") depth--;
+    if ((char === ";" || char === "\n") && depth === 0) {
+      fields.push(current);
+      current = "";
+    } else {
+      current += char;
+    }
+  }
+  fields.push(current);
+  return fields;
+}
+
 function extractTypeShapes(content) {
   const results = [];
   const patterns = [
-    /(?:export\s+)?interface\s+([A-Za-z0-9_]+)\s*(?:extends\s+[^{]+)?{([^}]*)}/g,
-    /(?:export\s+)?type\s+([A-Za-z0-9_]+)\s*=\s*{([^}]*)}/g,
+    /(?:export\s+)?interface\s+([A-Za-z0-9_]+)\s*(?:extends\s+[^{]+)?(?={)/g,
+    /(?:export\s+)?type\s+([A-Za-z0-9_]+)\s*=\s*(?={)/g,
   ];
 
   for (const re of patterns) {
     let m = re.exec(content);
     while (m !== null) {
       const name = m[1];
-      const body = m[2];
-      const fields = body
-        .split(/[\n;]+/)
-        .map((line) => line.replace(/\/\/.*$/, "").trim())
-        .filter(Boolean)
-        .map((line) => {
-          const colonIdx = line.indexOf(":");
-          if (colonIdx === -1) return null;
-          const fieldName = line.slice(0, colonIdx).replace(/\?$/, "").trim();
-          const fieldType = line
-            .slice(colonIdx + 1)
-            .trim()
-            .replace(/,$/, "");
-          if (!fieldName || !fieldType) return null;
-          return `${fieldName}:${fieldType}`;
-        })
-        .filter(Boolean)
-        .sort();
+      const block = readBalancedBraceBody(content, re.lastIndex);
+      if (block) {
+        const fields = splitTopLevelFields(block.body)
+          .map((line) => line.replace(/\/\/.*$/, "").trim())
+          .filter(Boolean)
+          .map((line) => {
+            const colonIdx = line.indexOf(":");
+            if (colonIdx === -1) return null;
+            const fieldName = line.slice(0, colonIdx).replace(/\?$/, "").trim();
+            const fieldType = line
+              .slice(colonIdx + 1)
+              .trim()
+              .replace(/,$/, "");
+            if (!fieldName || !fieldType) return null;
+            return `${fieldName}:${fieldType}`;
+          })
+          .filter(Boolean)
+          .sort();
 
-      if (fields.length > 0) {
-        results.push({ name, signature: fields.join("|") });
+        if (fields.length > 0) {
+          results.push({ name, signature: fields.join("|") });
+        }
       }
       m = re.exec(content);
     }
