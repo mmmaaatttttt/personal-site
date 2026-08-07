@@ -70,6 +70,13 @@ export function combinations(n: number, k: number): number {
 }
 
 /**
+ * Restricts a value to the [min, max] range.
+ */
+export function clamp(value: number, min: number, max: number): number {
+  return Math.min(max, Math.max(min, value));
+}
+
+/**
  * Interpolates values between inputs x0 and x1.
  */
 export function interpolate(x0: number, x1: number, t: number): number {

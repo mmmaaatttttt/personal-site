@@ -1,5 +1,6 @@
 import type { ScaleLinear } from "d3-scale";
 import { useState } from "react";
+import { clamp } from "@/utils/mathHelpers";
 import { marketData } from "../../data";
 
 const MONTHS = [
@@ -51,7 +52,7 @@ export function useMarketScrubber(
   const [currentIdx, setCurrentIdx] = useState(INITIAL_IDX);
 
   function handleDrag(_id: number, { x }: { x: number; y: number }) {
-    const clamped = Math.max(xMin, Math.min(xMax, x));
+    const clamped = clamp(x, xMin, xMax);
     const dataX = xScale.invert(clamped);
     let nearestIdx = 0;
     let nearestDist = Infinity;

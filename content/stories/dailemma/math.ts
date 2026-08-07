@@ -1,6 +1,4 @@
-export function clamp01(v: number): number {
-  return Math.max(0, Math.min(1, v));
-}
+import { clamp } from "@/utils/mathHelpers";
 
 export function alphaNE(
   savings: number,
@@ -9,7 +7,7 @@ export function alphaNE(
   difficulty: number,
 ): number {
   if (difficulty === 0) return savings > demandLoss / numFirms ? 1 : 0;
-  return clamp01((savings - demandLoss / numFirms) / difficulty);
+  return clamp((savings - demandLoss / numFirms) / difficulty, 0, 1);
 }
 
 export function alphaCO(
@@ -18,7 +16,36 @@ export function alphaCO(
   difficulty: number,
 ): number {
   if (difficulty === 0) return savings > demandLoss ? 1 : 0;
-  return clamp01((savings - demandLoss) / difficulty);
+  return clamp((savings - demandLoss) / difficulty, 0, 1);
+}
+
+const SIGNIFICANCE_THRESHOLD = 0.001;
+
+export interface OverAutomation {
+  currentNE: number;
+  currentCO: number;
+  overPct: number | null;
+}
+
+/**
+ * The Nash-equilibrium vs. cooperative automation share at a given savings
+ * level, and the percentage by which NE over-automates relative to CO.
+ * Shared by WedgeExplorer and SavingsWedge, which both plot this same
+ * quantity against a different x-axis (number of firms vs. savings delta).
+ */
+export function computeOverAutomation(
+  savings: number,
+  demandLoss: number,
+  numFirms: number,
+  difficulty: number,
+): OverAutomation {
+  const currentNE = alphaNE(savings, demandLoss, numFirms, difficulty);
+  const currentCO = alphaCO(savings, demandLoss, difficulty);
+  const overPct =
+    currentCO > SIGNIFICANCE_THRESHOLD
+      ? Math.round(((currentNE - currentCO) / currentCO) * 100)
+      : null;
+  return { currentNE, currentCO, overPct };
 }
 
 export function ownerProfitChange(

@@ -1,5 +1,5 @@
+import { clamp } from "@/utils/mathHelpers";
 import COLORS from "@/utils/styles";
-import { clamp01 } from "../../../dailemma/math";
 
 const DECIMALS = 2;
 
@@ -15,7 +15,7 @@ function colored(value: string, color: string): string {
 // clamped rate whenever clamping actually changes the value — instead of
 // silently printing a false equation like "(0.5 - 0.8) / 1 = 0".
 function formatResult(raw: number): string {
-  const clamped = clamp01(raw);
+  const clamped = clamp(raw, 0, 1);
   if (raw === clamped) return fmt(clamped);
   return `${fmt(raw)} \\rightarrow ${fmt(clamped)}`;
 }
