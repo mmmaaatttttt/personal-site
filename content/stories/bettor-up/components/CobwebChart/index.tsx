@@ -67,7 +67,7 @@ const CobwebChart: FC<CobwebChartProps> = ({
       height={height}
       graphPadding={CHART_PADDING}
       axes={false}
-      xLabel="Contract Price (aka Probability)"
+      xLabel="Contract Price"
       yLabel="Event Probability at Given Price"
     >
       <Axis

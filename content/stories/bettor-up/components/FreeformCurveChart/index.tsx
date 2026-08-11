@@ -47,7 +47,7 @@ export default function FreeformCurveChart() {
           height={HEIGHT}
           graphPadding={PADDING}
           axes={false}
-          xLabel="Contract Price (aka Probability)"
+          xLabel="Contract Price"
           yLabel="Event Probability at Given Price"
         >
           <Axis key="y-axis" direction="y" scale={yScale} tickFormat=".2f" />
