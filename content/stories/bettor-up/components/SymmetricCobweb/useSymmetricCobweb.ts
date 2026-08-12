@@ -12,8 +12,8 @@ import {
 
 const STEPS = 20;
 const RESPONSE_STRENGTH_MIN = 0;
-const RESPONSE_STRENGTH_MAX = 12;
-const RESPONSE_STRENGTH_INITIAL = 3;
+const RESPONSE_STRENGTH_MAX = 10;
+const RESPONSE_STRENGTH_INITIAL = 2.5;
 const STARTING_PROBABILITY_INITIAL = 0.25;
 
 export default function useSymmetricCobweb() {
@@ -22,7 +22,7 @@ export default function useSymmetricCobweb() {
       initialValue: RESPONSE_STRENGTH_INITIAL,
       min: RESPONSE_STRENGTH_MIN,
       max: RESPONSE_STRENGTH_MAX,
-      title: (v) => `Probability curve concavity: ${v}`,
+      title: (v) => `Curviness: ${(v / 10).toFixed(2)}`,
       step: 0.1,
       color: COLORS.ORANGE,
     },
@@ -54,7 +54,6 @@ export default function useSymmetricCobweb() {
     () => findFixedPoints(map, mapDerivative),
     [map, mapDerivative],
   );
-  const gain = responseStrength / 4;
 
-  return { sliderData, map, cobwebPath, fixedPoints, gain };
+  return { sliderData, map, cobwebPath, fixedPoints };
 }

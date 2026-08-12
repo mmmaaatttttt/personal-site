@@ -3,14 +3,12 @@
 import NarrowContainer from "@/components/story/shared/NarrowContainer";
 import { SliderGroup } from "@/components/story/shared/Slider";
 import CobwebChart from "../CobwebChart";
-import LoopGainReadout from "./LoopGainReadout";
 import useSymmetricCobweb from "./useSymmetricCobweb";
 
 const CONTAINER_WIDTH = "50%";
 
 export default function SymmetricCobweb() {
-  const { sliderData, map, cobwebPath, fixedPoints, gain } =
-    useSymmetricCobweb();
+  const { sliderData, map, cobwebPath, fixedPoints } = useSymmetricCobweb();
 
   return (
     <NarrowContainer width={CONTAINER_WIDTH}>
@@ -23,7 +21,6 @@ export default function SymmetricCobweb() {
           cobwebPath={cobwebPath}
           fixedPoints={fixedPoints}
         />
-        <LoopGainReadout gain={gain} />
       </div>
     </NarrowContainer>
   );
