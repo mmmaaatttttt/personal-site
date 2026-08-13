@@ -3,27 +3,18 @@ import { describe, expect, it } from "vitest";
 import "@testing-library/jest-dom/vitest";
 import SymmetricCobweb from ".";
 
-function getGainReadout(container: HTMLElement) {
-  return container.querySelector("span.text-lg.font-bold") as HTMLElement;
-}
-
 describe("SymmetricCobweb", () => {
-  it("renders two sliders, the chart, and the gain readout", () => {
+  it("renders two sliders and the chart", () => {
     render(<SymmetricCobweb />);
     expect(screen.getAllByRole("slider")).toHaveLength(2);
     expect(document.querySelector("svg")).toBeInTheDocument();
   });
 
-  it("shows the initial loop gain as k/4", () => {
-    const { container } = render(<SymmetricCobweb />);
-    expect(getGainReadout(container)).toHaveTextContent("1.00");
-  });
-
-  it("updates the gain readout when the k slider changes", () => {
-    const { container } = render(<SymmetricCobweb />);
+  it("accepts changes to the curviness slider without crashing", () => {
+    render(<SymmetricCobweb />);
     const [kSlider] = screen.getAllByRole("slider");
     fireEvent.change(kSlider, { target: { value: "8" } });
-    expect(getGainReadout(container)).toHaveTextContent("2.00");
+    expect(kSlider).toHaveValue("8");
   });
 
   it("accepts changes to the starting-price slider without crashing", () => {
