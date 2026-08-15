@@ -1,10 +1,5 @@
 import { describe, expect, it } from "vitest";
-import {
-  buildCobwebPath,
-  findFixedPoints,
-  symmetricMap,
-  symmetricMapPrime,
-} from "./mathUtils";
+import { buildCobwebPath, findFixedPoints } from "./mathUtils";
 
 describe("buildCobwebPath", () => {
   it("builds the alternating vertical/horizontal staircase for the identity map", () => {
@@ -21,6 +16,40 @@ describe("buildCobwebPath", () => {
   it("returns only the starting point when steps is 0", () => {
     const path = buildCobwebPath((probability) => probability, 0.6, 0);
     expect(path).toEqual([{ x: 0.6, y: 0 }]);
+  });
+
+  it("clamps a step below 0 to the floor, draws it, then stops", () => {
+    const path = buildCobwebPath(() => -0.5, 0.6, 5);
+    expect(path).toEqual([
+      { x: 0.6, y: 0 },
+      { x: 0.6, y: 0 },
+      { x: 0, y: 0 },
+    ]);
+  });
+
+  it("clamps a step above 1 to the ceiling, draws it, then stops", () => {
+    const path = buildCobwebPath(() => 1.5, 0.6, 5);
+    expect(path).toEqual([
+      { x: 0.6, y: 0 },
+      { x: 0.6, y: 1 },
+      { x: 1, y: 1 },
+    ]);
+  });
+
+  it("includes the in-bounds steps taken before an out-of-bounds step clamps and stops the path", () => {
+    let calls = 0;
+    const map = () => {
+      calls += 1;
+      return calls === 1 ? 0.4 : -0.2;
+    };
+    const path = buildCobwebPath(map, 0.6, 5);
+    expect(path).toEqual([
+      { x: 0.6, y: 0 },
+      { x: 0.6, y: 0.4 },
+      { x: 0.4, y: 0.4 },
+      { x: 0.4, y: 0 },
+      { x: 0, y: 0 },
+    ]);
   });
 });
 
@@ -72,38 +101,5 @@ describe("findFixedPoints", () => {
       () => 1,
     );
     expect(fixedPoints).toEqual([]);
-  });
-});
-
-describe("symmetricMap", () => {
-  it("always has a fixed point at probability 0.5 regardless of responseStrength", () => {
-    expect(symmetricMap(0.5, 2)).toBeCloseTo(0.5, 10);
-    expect(symmetricMap(0.5, 12)).toBeCloseTo(0.5, 10);
-  });
-
-  it("computes the sigmoid value for a given probability and responseStrength", () => {
-    expect(symmetricMap(0.1, 2)).toBeCloseTo(0.31, 3);
-  });
-
-  it("is monotonically increasing in probability", () => {
-    const responseStrength = 6;
-    expect(symmetricMap(0.2, responseStrength)).toBeLessThan(
-      symmetricMap(0.4, responseStrength),
-    );
-    expect(symmetricMap(0.4, responseStrength)).toBeLessThan(
-      symmetricMap(0.6, responseStrength),
-    );
-  });
-});
-
-describe("symmetricMapPrime", () => {
-  it("equals responseStrength / 4 at the fixed point probability 0.5", () => {
-    expect(symmetricMapPrime(0.5, 4)).toBeCloseTo(1, 10);
-    expect(symmetricMapPrime(0.5, 8)).toBeCloseTo(2, 10);
-  });
-
-  it("is always positive since the sigmoid is monotonically increasing", () => {
-    expect(symmetricMapPrime(0.1, 6)).toBeGreaterThan(0);
-    expect(symmetricMapPrime(0.9, 6)).toBeGreaterThan(0);
   });
 });

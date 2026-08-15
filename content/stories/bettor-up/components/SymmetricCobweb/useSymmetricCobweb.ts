@@ -3,36 +3,28 @@
 import { useMemo } from "react";
 import useSliders from "@/hooks/useSliders";
 import COLORS from "@/utils/styles";
-import {
-  buildCobwebPath,
-  findFixedPoints,
-  symmetricMap,
-  symmetricMapPrime,
-} from "../../mathUtils";
+import { buildCobwebPath, findFixedPoints } from "../../mathUtils";
+import { symmetricMap, symmetricMapPrime } from "./utils";
 
 const STEPS = 20;
-const RESPONSE_STRENGTH_MIN = 0;
-const RESPONSE_STRENGTH_MAX = 10;
-const RESPONSE_STRENGTH_INITIAL = 2.5;
-const STARTING_PROBABILITY_INITIAL = 0.25;
 
 export default function useSymmetricCobweb() {
   const { values, sliderData } = useSliders([
     {
-      initialValue: RESPONSE_STRENGTH_INITIAL,
-      min: RESPONSE_STRENGTH_MIN,
-      max: RESPONSE_STRENGTH_MAX,
+      initialValue: 2.5,
+      min: 0,
+      max: 10,
       title: (v) => `Curviness: ${(v / 10).toFixed(2)}`,
       step: 0.1,
-      color: COLORS.ORANGE,
+      color: COLORS.BLUE,
     },
     {
-      initialValue: STARTING_PROBABILITY_INITIAL,
+      initialValue: 0.25,
       min: 0,
       max: 1,
       step: 0.01,
       title: (v) => `Initial contract price: $${v.toFixed(2)}`,
-      color: COLORS.BLUE,
+      color: COLORS.ORANGE,
     },
   ]);
   const [responseStrength, startingProbability] = values;

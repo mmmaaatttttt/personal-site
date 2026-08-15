@@ -8,6 +8,8 @@ export interface FixedPoint {
 
 const BISECTION_ITERATIONS = 60;
 const SCAN_RESOLUTION = 2000;
+const PROBABILITY_MIN = 0;
+const PROBABILITY_MAX = 1;
 
 /**
  * Builds the staircase path of a cobweb diagram: alternating vertical moves
@@ -22,10 +24,12 @@ export function buildCobwebPath(
   const points: Point[] = [{ x: startingProbability, y: 0 }];
   let x = startingProbability;
   for (let i = 0; i < steps; i++) {
-    const y = map(x);
+    const rawY = map(x);
+    const y = Math.min(PROBABILITY_MAX, Math.max(PROBABILITY_MIN, rawY));
     points.push({ x, y });
     points.push({ x: y, y });
     x = y;
+    if (rawY !== y) break;
   }
   return points;
 }
@@ -95,24 +99,4 @@ export function findFixedPoints(
   }
 
   return fixedPoints;
-}
-
-/**
- * Symmetric teaching case: f(probability) = 1 / (1 + exp(-responseStrength*(probability - 0.5))).
- * Always has a fixed point at probability = 0.5, with slope responseStrength/4
- * there. Pitchfork bifurcation at responseStrength = 4.
- */
-export function symmetricMap(
-  probability: number,
-  responseStrength: number,
-): number {
-  return 1 / (1 + Math.exp(-responseStrength * (probability - 0.5)));
-}
-
-export function symmetricMapPrime(
-  probability: number,
-  responseStrength: number,
-): number {
-  const sigmoidValue = symmetricMap(probability, responseStrength);
-  return responseStrength * sigmoidValue * (1 - sigmoidValue);
 }
