@@ -12,7 +12,7 @@ import type { FixedPoint } from "../../mathUtils";
 const CURVE_RESOLUTION = 200;
 export const CHART_WIDTH = 500;
 export const CHART_HEIGHT = 500;
-export const CHART_PADDING = { top: 30, bottom: 60, left: 60, right: 30 };
+export const CHART_PADDING = { top: 30, bottom: 80, left: 75, right: 30 };
 const FIXED_POINT_RADIUS = 7;
 
 interface CobwebChartProps {
@@ -74,16 +74,16 @@ const CobwebChart: FC<CobwebChartProps> = ({
         key="y-axis"
         direction="y"
         scale={resolvedYScale}
-        tickFormat=".2f"
+        tickFormat=".1f"
       />
       <Axis
         key="x-axis"
         direction="x"
         scale={resolvedXScale}
-        tickFormat=".2f"
+        tickFormat=".1f"
         rotateLabels={false}
         textAnchor="middle"
-        labelPosition={{ dy: "0.71em" }}
+        labelPosition={{ dy: "1.4em" }}
       />
       <LinePlot
         graphData={diagonalData}

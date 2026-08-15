@@ -12,7 +12,7 @@ import { toDomainCoords } from "./utils";
 
 const WIDTH = 500;
 const HEIGHT = 500;
-const PADDING = { top: 30, bottom: 60, left: 60, right: 30 };
+const PADDING = { top: 30, bottom: 80, left: 75, right: 30 };
 const CONTAINER_WIDTH = "50%";
 const CROSSING_RADIUS = 7;
 
@@ -50,15 +50,15 @@ export default function FreeformCurveChart() {
           xLabel="Contract Price"
           yLabel="Event Probability at Given Price"
         >
-          <Axis key="y-axis" direction="y" scale={yScale} tickFormat=".2f" />
+          <Axis key="y-axis" direction="y" scale={yScale} tickFormat=".1f" />
           <Axis
             key="x-axis"
             direction="x"
             scale={xScale}
-            tickFormat=".2f"
+            tickFormat=".1f"
             rotateLabels={false}
             textAnchor="middle"
-            labelPosition={{ dy: "0.71em" }}
+            labelPosition={{ dy: "1.4em" }}
           />
           <LinePlot
             graphData={diagonalData}
