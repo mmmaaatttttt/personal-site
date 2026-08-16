@@ -1,8 +1,5 @@
-/**
- * Symmetric teaching case: f(probability) = 1 / (1 + exp(-responseStrength*(probability - 0.5))).
- * Always has a fixed point at probability = 0.5, with slope responseStrength/4
- * there. Pitchfork bifurcation at responseStrength = 4.
- */
+// Always has a fixed point at 0.5, slope responseStrength/4 there —
+// pitchfork bifurcation at responseStrength = 4.
 export function symmetricMap(
   probability: number,
   responseStrength: number,

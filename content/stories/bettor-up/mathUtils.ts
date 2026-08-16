@@ -11,11 +11,7 @@ const SCAN_RESOLUTION = 2000;
 const PROBABILITY_MIN = 0;
 const PROBABILITY_MAX = 1;
 
-/**
- * Builds the staircase path of a cobweb diagram: alternating vertical moves
- * to the curve and horizontal moves to the diagonal, starting from
- * startingProbability on the x-axis.
- */
+/** Cobweb staircase: alternates vertical moves to the curve and horizontal moves to the diagonal. */
 export function buildCobwebPath(
   map: (probability: number) => number,
   startingProbability: number,
@@ -56,14 +52,8 @@ function bisect(
 }
 
 /**
- * Finds all fixed points of map in [0, 1] by scanning map(probability) -
- * probability on a grid. A grid point landing exactly on a root is recorded
- * directly; a sign change between two consecutive *nonzero* samples is
- * refined via bisection. The nonzero guard matters because a map like the
- * logistic teaching case has an exact fixed point at probability=0.5 that
- * lands on the grid — without it, the point immediately after that exact
- * zero would spuriously bracket a second, bogus root right next to the real
- * one.
+ * Grid scan + bisection. The nonzero guard on previousGap prevents a
+ * spurious second root next to an exact zero that lands on the grid.
  */
 export function findFixedPoints(
   map: (probability: number) => number,

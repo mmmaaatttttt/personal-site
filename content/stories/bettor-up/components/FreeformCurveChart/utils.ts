@@ -8,27 +8,15 @@ export const RESOLUTION = 200;
 const DEFAULT_DERIVATIVE_STEP_SIZE = 0.001;
 const INITIAL_VALUE = 0.5;
 
-/**
- * Starting curve: a flat line, not the diagonal itself. The diagonal
- * (probability -> probability) trivially satisfies the fixed-point equation
- * at every single point, so any curve that's still mostly untouched diagonal
- * — including right after the very first click, before any painting has
- * happened — produces a "crossing" at nearly every sampled point. A flat
- * line crosses the diagonal at exactly one honest point (INITIAL_VALUE), so
- * there's no degenerate case to guard against.
- */
+// Starts flat, not diagonal — the diagonal trivially satisfies the
+// fixed-point equation everywhere, which would spuriously "cross" at
+// nearly every sampled point.
 export function createInitialBuckets(resolution: number): number[] {
   return Array.from({ length: resolution + 1 }, () => INITIAL_VALUE);
 }
 
-/**
- * Paints a straight segment between two drawn points into the bucket array,
- * overwriting whichever buckets it passes over. Because every write replaces
- * whatever was there — regardless of which direction the pointer moved, or
- * whether it doubled back on itself — the result is always single-valued:
- * the constraint that this is a valid function enforces itself, rather than
- * needing to reject invalid drawing gestures.
- */
+// Every write overwrites whatever was there, so the result stays
+// single-valued regardless of drag direction.
 export function paintSegment(
   buckets: number[],
   resolution: number,
@@ -63,12 +51,8 @@ export function bucketsToPoints(
   return buckets.map((y, i) => ({ x: i / resolution, y }));
 }
 
-/**
- * Piecewise-linear interpolation between buckets, so the curve can be
- * sampled at any probability, not just drawn grid points. Delegates to
- * d3-scale's multi-point scaleLinear rather than hand-rolling the same
- * piecewise interpolation it already provides.
- */
+// Delegates to d3-scale's scaleLinear for piecewise interpolation
+// instead of hand-rolling it.
 export function bucketsToFunction(
   buckets: number[],
   resolution: number,
@@ -88,18 +72,9 @@ export function numericalDerivative(
   return (map(upperBound) - map(lowerBound)) / (upperBound - lowerBound);
 }
 
-/**
- * Converts a pointer event on an SVG rect into [0,1]x[0,1] domain
- * coordinates, or null if the pointer is outside that domain.
- *
- * Returning null rather than clamping matters: clamping lets a drag that
- * overshoots the edge "hug" that boundary — every move gets clamped to the
- * same x, so the one bucket there keeps getting overwritten while y keeps
- * changing, and the eventual jump to the neighboring bucket renders as a
- * near-vertical line. Refusing to report a position outside the box means
- * reaching x=0 or x=1 takes real pixel precision, which a mouse won't
- * sustain for a drag.
- */
+// Returns null instead of clamping — clamping would let an overshot drag
+// "hug" the boundary at a fixed x while y keeps changing, then jump to the
+// neighboring bucket as a near-vertical line.
 export function toDomainCoords(
   e: PointerEvent<SVGRectElement>,
   xScale: ScaleLinear<number, number>,

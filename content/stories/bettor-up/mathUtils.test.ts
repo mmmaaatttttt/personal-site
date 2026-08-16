@@ -80,10 +80,7 @@ describe("findFixedPoints", () => {
   });
 
   it("records a grid-aligned interior root directly, without a spurious duplicate next to it", () => {
-    // gap(probability) = map(probability) - probability = probability - 0.5,
-    // exactly zero at probability = 0.5, which lands on the scan grid. A
-    // naive scan would also flag the very next grid point as a second sign
-    // change; this must not happen.
+    // gap(probability) = probability - 0.5, exactly 0 at the grid point 0.5.
     const map = (probability: number) => 2 * probability - 0.5;
     const mapDerivative = () => 2;
 
