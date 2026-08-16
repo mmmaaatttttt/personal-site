@@ -52,10 +52,6 @@ function bisect(
   return (currentLow + currentHigh) / 2;
 }
 
-/**
- * Grid scan + bisection. The nonzero guard on previousGap prevents a
- * spurious second root next to an exact zero that lands on the grid.
- */
 export function findFixedPoints(
   map: (probability: number) => number,
   mapDerivative: (probability: number) => number,
@@ -64,28 +60,33 @@ export function findFixedPoints(
   const gap = (probability: number) => map(probability) - probability;
   const toFixedPoint = (probability: number): FixedPoint => {
     const slope = mapDerivative(probability);
-    return { probability, slope, stable: Math.abs(slope) < 1 };
+    return { probability, slope, stable: Math.abs(slope) <= 1 };
   };
 
   const fixedPoints: FixedPoint[] = [];
   let previousProbability = 0;
   let previousGap = gap(0);
-  if (previousGap === 0) fixedPoints.push(toFixedPoint(0));
+  let inZeroRun = previousGap === 0;
+  if (inZeroRun) fixedPoints.push(toFixedPoint(0));
 
   for (let i = 1; i <= resolution; i++) {
     const probability = i / resolution;
     const currentGap = gap(probability);
     if (!Number.isNaN(currentGap) && currentGap === 0) {
-      fixedPoints.push(toFixedPoint(probability));
-    } else if (
-      !Number.isNaN(currentGap) &&
-      !Number.isNaN(previousGap) &&
-      previousGap !== 0 &&
-      Math.sign(currentGap) !== Math.sign(previousGap)
-    ) {
-      fixedPoints.push(
-        toFixedPoint(bisect(gap, previousProbability, probability)),
-      );
+      if (!inZeroRun) fixedPoints.push(toFixedPoint(probability));
+      inZeroRun = true;
+    } else {
+      if (
+        !Number.isNaN(currentGap) &&
+        !Number.isNaN(previousGap) &&
+        previousGap !== 0 &&
+        Math.sign(currentGap) !== Math.sign(previousGap)
+      ) {
+        fixedPoints.push(
+          toFixedPoint(bisect(gap, previousProbability, probability)),
+        );
+      }
+      inZeroRun = false;
     }
     previousProbability = probability;
     previousGap = currentGap;

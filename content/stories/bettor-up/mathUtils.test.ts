@@ -113,6 +113,35 @@ describe("findFixedPoints", () => {
     expect(fixedPoints).toEqual([]);
   });
 
+  it("collapses a run of exact zeros into a single fixed point instead of one per grid step", () => {
+    const identity = (probability: number) => probability;
+    const fixedPoints = findFixedPoints(identity, () => 1);
+    expect(fixedPoints).toHaveLength(1);
+    expect(fixedPoints[0].probability).toBe(0);
+  });
+
+  it("treats a slope of exactly 1 as stable, not unstable", () => {
+    const map = (probability: number) => 2 * probability - 0.5;
+    const mapDerivative = () => 1;
+
+    const fixedPoints = findFixedPoints(map, mapDerivative);
+
+    expect(fixedPoints).toHaveLength(1);
+    expect(fixedPoints[0].slope).toBe(1);
+    expect(fixedPoints[0].stable).toBe(true);
+  });
+
+  it("treats a slope of exactly -1 as stable, not unstable", () => {
+    const map = (probability: number) => 2 * probability - 0.5;
+    const mapDerivative = () => -1;
+
+    const fixedPoints = findFixedPoints(map, mapDerivative);
+
+    expect(fixedPoints).toHaveLength(1);
+    expect(fixedPoints[0].slope).toBe(-1);
+    expect(fixedPoints[0].stable).toBe(true);
+  });
+
   it("doesn't hallucinate a crossing across an undefined region, even when the gap is positive before it and negative after", () => {
     const map = (probability: number) => {
       if (probability < 0.3) return probability + 0.1;
