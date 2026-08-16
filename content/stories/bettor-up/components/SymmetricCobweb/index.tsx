@@ -11,7 +11,7 @@ export default function SymmetricCobweb() {
   const { sliderData, map, cobwebPath, fixedPoints } = useSymmetricCobweb();
 
   return (
-    <NarrowContainer width={CONTAINER_WIDTH}>
+    <NarrowContainer width={CONTAINER_WIDTH} fullWidthAt="lg">
       <div className="flex flex-col items-center gap-4">
         <div className="w-full">
           <SliderGroup data={sliderData} />

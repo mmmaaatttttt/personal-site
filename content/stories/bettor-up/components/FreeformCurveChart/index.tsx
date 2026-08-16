@@ -38,7 +38,7 @@ export default function FreeformCurveChart() {
   } = useFreeformCurveChart();
 
   return (
-    <NarrowContainer width={CONTAINER_WIDTH}>
+    <NarrowContainer width={CONTAINER_WIDTH} fullWidthAt="lg">
       <div className="flex flex-col items-center gap-4">
         <Graph
           xScale={xScale}
