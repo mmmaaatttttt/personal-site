@@ -151,4 +151,21 @@ describe("LinePlot Component", () => {
     // We just verify it renders a non-empty path for data with outliers
     expect(pathD.length).toBeGreaterThan(0);
   });
+
+  it("skips NaN points instead of drawing an invalid path through them", () => {
+    const dataWithNaN = [
+      { x: 0, y: 10 },
+      { x: 50, y: Number.NaN },
+      { x: 100, y: 50 },
+    ];
+
+    const { container } = render(
+      <svg role="img" aria-label="test">
+        <LinePlot {...defaultProps} graphData={dataWithNaN} />
+      </svg>,
+    );
+    const pathD = container.querySelector("path")?.getAttribute("d") ?? "";
+
+    expect(pathD).not.toContain("NaN");
+  });
 });

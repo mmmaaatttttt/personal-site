@@ -38,6 +38,7 @@ const LinePlot: FC<LinePlotProps> = ({
   const linePath = line<Point>()
     .x((d) => resolvedXScale(d.x) ?? 0)
     .y((d) => resolvedYScale(d.y) ?? 0)
+    .defined((d) => !Number.isNaN(d.x) && !Number.isNaN(d.y))
     .curve(curves[curve]);
 
   const truncateData = () =>
