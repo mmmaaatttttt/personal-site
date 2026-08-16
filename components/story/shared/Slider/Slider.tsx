@@ -33,6 +33,7 @@ const Slider: FC<SliderProps> = ({
   const [isHovered, setIsHovered] = useState(false);
   const [isDragging, setIsDragging] = useState(false);
   const percentage = ((value - min) / (max - min)) * 100;
+  const THUMB_REM = 2;
 
   const lightColor = useMemo(
     () => getOpaqueLightColor(activeColor),
@@ -104,8 +105,13 @@ const Slider: FC<SliderProps> = ({
         onMouseDown={handleInteractionStart}
         onTouchStart={handleInteractionStart}
         onChange={(e) => onChange(Number(e.target.value))}
-        className="absolute z-30 w-full cursor-pointer appearance-none bg-transparent accent-transparent focus:outline-none [&::-webkit-slider-thumb]:h-8 [&::-webkit-slider-thumb]:w-8 [&::-webkit-slider-thumb]:appearance-none [&::-moz-range-thumb]:h-8 [&::-moz-range-thumb]:w-8 [&::-moz-range-thumb]:appearance-none border-none"
-        style={{ height: height + 2 * padding, touchAction: "pan-y" }}
+        className="absolute z-30 cursor-pointer appearance-none bg-transparent accent-transparent focus:outline-none [&::-webkit-slider-thumb]:h-8 [&::-webkit-slider-thumb]:w-8 [&::-webkit-slider-thumb]:appearance-none [&::-moz-range-thumb]:h-8 [&::-moz-range-thumb]:w-8 [&::-moz-range-thumb]:appearance-none border-none"
+        style={{
+          height: height + 2 * padding,
+          touchAction: "pan-y",
+          left: `-${THUMB_REM / 2}rem`,
+          width: `calc(100% + ${THUMB_REM}rem)`,
+        }}
       />
     </div>
   );
