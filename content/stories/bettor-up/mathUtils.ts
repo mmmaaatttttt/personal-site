@@ -21,6 +21,7 @@ export function buildCobwebPath(
   let x = startingProbability;
   for (let i = 0; i < steps; i++) {
     const rawY = map(x);
+    if (Number.isNaN(rawY)) break;
     const y = Math.min(PROBABILITY_MAX, Math.max(PROBABILITY_MIN, rawY));
     points.push({ x, y });
     points.push({ x: y, y });
@@ -74,9 +75,11 @@ export function findFixedPoints(
   for (let i = 1; i <= resolution; i++) {
     const probability = i / resolution;
     const currentGap = gap(probability);
-    if (currentGap === 0) {
+    if (!Number.isNaN(currentGap) && currentGap === 0) {
       fixedPoints.push(toFixedPoint(probability));
     } else if (
+      !Number.isNaN(currentGap) &&
+      !Number.isNaN(previousGap) &&
       previousGap !== 0 &&
       Math.sign(currentGap) !== Math.sign(previousGap)
     ) {

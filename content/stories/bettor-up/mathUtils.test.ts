@@ -51,6 +51,11 @@ describe("buildCobwebPath", () => {
       { x: 0, y: 0 },
     ]);
   });
+
+  it("stops without pushing a NaN point when map is undefined everywhere", () => {
+    const path = buildCobwebPath(() => NaN, 0.6, 5);
+    expect(path).toEqual([{ x: 0.6, y: 0 }]);
+  });
 });
 
 describe("findFixedPoints", () => {
@@ -97,6 +102,24 @@ describe("findFixedPoints", () => {
       (probability) => probability + 0.5,
       () => 1,
     );
+    expect(fixedPoints).toEqual([]);
+  });
+
+  it("returns an empty array instead of thousands of spurious points when map is NaN everywhere", () => {
+    const fixedPoints = findFixedPoints(
+      () => NaN,
+      () => NaN,
+    );
+    expect(fixedPoints).toEqual([]);
+  });
+
+  it("doesn't hallucinate a crossing across an undefined region, even when the gap is positive before it and negative after", () => {
+    const map = (probability: number) => {
+      if (probability < 0.3) return probability + 0.1;
+      if (probability > 0.7) return probability - 0.1;
+      return NaN;
+    };
+    const fixedPoints = findFixedPoints(map, () => 1);
     expect(fixedPoints).toEqual([]);
   });
 });
