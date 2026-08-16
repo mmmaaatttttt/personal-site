@@ -10,8 +10,16 @@ vi.mock("./LabeledSlider", () => ({
 }));
 
 vi.mock("../FlexContainer", () => ({
-  default: ({ children }: { children?: React.ReactNode }) => (
-    <div data-testid="flex-container">{children}</div>
+  default: ({
+    children,
+    className,
+  }: {
+    children?: React.ReactNode;
+    className?: string;
+  }) => (
+    <div data-testid="flex-container" className={className}>
+      {children}
+    </div>
   ),
 }));
 
@@ -87,5 +95,12 @@ describe("SliderGroup", () => {
   it("applies compact styling (covers compact ? 'my-0' : 'm-1' true branch)", () => {
     render(<SliderGroup data={[makeSlider(1)]} compact={true} />);
     expect(screen.getByTestId("labeled-slider")).toBeInTheDocument();
+  });
+
+  it("applies min-w-0 to the group and each row so content can't force them wider", () => {
+    render(<SliderGroup data={[makeSlider(1)]} />);
+    expect(screen.getByTestId("flex-container")).toHaveClass("min-w-0");
+    const row = screen.getByTestId("labeled-slider").parentElement;
+    expect(row).toHaveClass("min-w-0");
   });
 });
