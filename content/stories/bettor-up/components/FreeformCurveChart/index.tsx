@@ -106,7 +106,7 @@ export default function FreeformCurveChart() {
           />
         </Graph>
         <Button onClick={reset} variant="outline" size="sm">
-          Reset
+          Reset Curve
         </Button>
       </div>
     </NarrowContainer>

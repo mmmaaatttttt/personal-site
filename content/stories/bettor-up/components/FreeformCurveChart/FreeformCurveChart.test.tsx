@@ -89,7 +89,7 @@ describe("FreeformCurveChart", () => {
     fireEvent.pointerMove(surface, { clientX: 388, clientY: 71, pointerId: 1 });
     expect(getCurvePath(container).getAttribute("d")).not.toBe(initial);
 
-    fireEvent.click(screen.getByRole("button", { name: "Reset" }));
+    fireEvent.click(screen.getByRole("button", { name: "Reset Curve" }));
 
     expect(getCurvePath(container).getAttribute("d")).toBe(initial);
     expect(container.querySelectorAll("circle")).toHaveLength(1);
