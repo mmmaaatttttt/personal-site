@@ -110,9 +110,10 @@ describe("Figure — collapsed state", () => {
         <div>Content</div>
       </Figure>,
     );
-    expect(screen.getByText("Offset caption")).toHaveStyle({
-      marginTop: "-2em",
-    });
+    expect(screen.getByText("Offset caption")).toHaveAttribute(
+      "style",
+      expect.stringContaining("margin-top: -2em"),
+    );
   });
 });
 
