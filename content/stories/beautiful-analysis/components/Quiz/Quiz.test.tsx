@@ -61,6 +61,29 @@ describe("Quiz Component", () => {
     expect(screen.getByTestId("mock-review-panel")).toBeInTheDocument();
   });
 
+  it("navigates between review results with the prev/next buttons", () => {
+    render(<Quiz title="Test Quiz" maxQuestions={2} />);
+
+    fireEvent.click(screen.getByText("Start Quiz!"));
+    fireEvent.click(screen.getAllByRole("button")[0]);
+    fireEvent.click(screen.getByText("Next Question"));
+    fireEvent.click(screen.getAllByRole("button")[0]);
+    fireEvent.click(screen.getByText("Show My Results"));
+
+    const prevButton = screen.getByLabelText("Previous question results");
+    const nextButton = screen.getByLabelText("Next question results");
+
+    expect(prevButton).toBeDisabled();
+    expect(nextButton).not.toBeDisabled();
+
+    fireEvent.click(nextButton);
+    expect(nextButton).toBeDisabled();
+    expect(prevButton).not.toBeDisabled();
+
+    fireEvent.click(prevButton);
+    expect(prevButton).toBeDisabled();
+  });
+
   it("allows resetting the quiz", () => {
     render(<Quiz title="Test Quiz" maxQuestions={1} />);
     fireEvent.click(screen.getByText("Start Quiz!"));
