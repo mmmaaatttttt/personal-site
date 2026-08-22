@@ -3,11 +3,13 @@ import SymmetricCobweb from "./components/SymmetricCobweb";
 import AttritionBias from "./components/AttritionBias";
 import AttritionFeedback from "./components/AttritionFeedback";
 
-I am a terrible gambler. For me, the thrill of potential victory is always overshadowed by the agony of potential defeat. Maybe I've spent too much time studying games of chance ([case in point](./stories/coin-operator)), but I can never escape the feeling that if someone is offering me odds on a wager, they're not looking out for my best interest.
+I am a terrible gambler. For me, the thrill of potential victory is always overshadowed by the agony of potential defeat. Maybe I've spent too much time studying games of chance ([case in point](./stories/coin-operator)), but I can never escape the feeling that if someone is offering me odds on a wager, they're not looking out for my best interests.
 
 Increasingly, though, it feels like I'm out of step with the culture at large. Since the Supreme Court [decided](https://en.wikipedia.org/wiki/Murphy_v._National_Collegiate_Athletic_Association) the federal government couldn't prohibit states from allowing sports betting in 2018, it has become legalized in nearly 40 states. It isn't a red versus blue thing, either. From Montana to Massachusetts, legislators from across the political spectrum have legalized sports betting in the wake of this decision. You can find a breakdown of changes since 2018 by state [here](https://en.wikipedia.org/wiki/Gambling_in_the_United_States#Sports_betting).
 
-As the appetite for sports betting increases, so too do questions around the boundary between gambling, gaming, and prediction markets. After all, betting on the outcome of a sporting event is a type of prediction market, in some sense no different than trying to bet on the outcome of an election or on the value of a certain stock a year from now. The line between gambling and market investment is blurry; though recent lawsuits have tended to favor a very narrow definition of what qualifies as gaming. For example, after a [court victory](https://bclawreview.bc.edu/articles/10.70167/QYCV4877) in 2024, prediction market platform Kalshi expanded its offering of wagers you could make about the future. In fact, just last month, they announced they would be expanding their markets to include making predictions on the outcomes of [medical clinical trials](https://www.statnews.com/2026/07/16/kalshi-new-offering-prediction-market-clinical-trials-fda-approvals/). 
+As the appetite for sports betting increases, so too do questions around the boundary between gambling, gaming, and prediction markets. After all, betting on the outcome of a sporting event is a type of prediction market, in some sense no different than trying to bet on the outcome of an election or on the value of a certain stock a year from now.
+
+The line between gambling and market investment is blurry, though recent lawsuits have tended to favor a very narrow definition of what qualifies as gaming. For example, after a [court victory](https://bclawreview.bc.edu/articles/10.70167/QYCV4877) in 2024, prediction market platform Kalshi expanded its offering of wagers you could make about the future. In fact, just last month, it announced it would be expanding its markets to include making predictions on the outcomes of [medical clinical trials](https://www.statnews.com/2026/07/16/kalshi-new-offering-prediction-market-clinical-trials-fda-approvals/). 
 
 Is all of this just gambling, plain and simple? Or is there value in exposing the wisdom of the crowd through market efficiencies? Am I just a cranky Luddite, or do I need to embrace a future that involves betting on the future?
 
@@ -17,33 +19,33 @@ Let's see what the mathematics has to say.
 
 ### Performance Anxiety
 
-Techniques in the natural sciences have allowed us to make predictions about the future for decades. It's what gives us weather forecasts and lets us land rovers on distant planets. 
+Techniques in the natural sciences have allowed us to make predictions about the future for decades. They're what gives us weather forecasts and lets us land rovers on distant planets. 
 
-In principle, these same techniques could be used to generate predictions in the social sciences, too. But here there's a fundamental problem; unlike natural phenomena, social phenomena are often very aware of predictions made about them. In other words, predictions about future outcomes can have an impact on the outcomes themselves.
+In principle, these same techniques could be used to generate predictions in the social sciences, too. But there's a fundamental problem: unlike natural phenomena, social phenomena are often very aware of predictions made about them. That is to say, predictions about future outcomes can have an impact on the outcomes themselves.
 
-For example, consider the economy. If a reliable prediction warned of a market crash in the next twelve months, that information on its own could become a self-fulfilling prophecy. Folks who are concerned about the future of the economy could take actions based on that prediction that would cause the economy to nose dive.
+For example, consider the economy. If a reliable prediction warned of a market crash in the next twelve months, that information on its own could become a self-fulfilling prophecy. Folks who are concerned about the future of the economy could take actions based on that prediction that would cause the economy to nosedive.
 
-In principle the same could be trough in election forecasts: if an election is predicted to be a blowout for one party over another, the predicted losing party may be so unmotivated that they don't bother showing up to the polls at all. In so doing, they cement their fate.
+The same could be true in election forecasts: if an election is predicted to be a blowout for one party over another, the predicted losing party may be so unmotivated that they don't bother showing up to the polls at all. In so doing, they cement their fate.
 
-In a [paper](https://arxiv.org/pdf/2310.16608) from last year, this category of prediction is labeled *performative*. These are classes of predictions that are responsive to the existence of the prediction itself. Meteorologists don't change the weather by reporting on it (no matter how much Fox News might wish otherwise). But predictions from markets can indeed influence the markets they are trying to predict.
+In a [paper](https://arxiv.org/pdf/2310.16608) from last year, its authors label this category of prediction as *performative*. These are classes of predictions that are responsive to the existence of the prediction itself. Meteorologists don't change the weather by reporting on it (no matter how much certain "news" outlets might wish otherwise). But predictions from markets can indeed influence the markets they are trying to predict.
 
-Once you know this, it's natural to ask under what circumstances this doesn't matter. In other words, are there performative predictions that don't react to the market's influence on them, or that somehow account for the market effects inside the prediction itself?
+Once you know this, it's natural to ask under what circumstances this doesn't matter. Are there performative predictions that don't react to the market's influence on them, or that somehow account for the market effects inside the prediction itself?
 
 ---
 
 ### Perfect Predictions
 
-Let's imagine we want to bet on the outcome of some binary event, like whether or not the Giants will win the World Series (yeah, I know it's not the early 2010s anymore, but it's just a hyptothetical, let me have my moment). A prediction market like Kalshi may let me buy a contract that will pay me $1 if the Giants win the World Series, and $0 if they don't. Moreover, if I see that the market price of this contract is much less than what I think the team's chances are, then it makes rational sense for me to buy contracts. Put more concretely, if I think the chances of a World Series ring are 10%, and I can buy a contract for one cent, then I've identified an inefficiency in the market that I can exploit for profit. 
+Let's imagine we want to bet on the outcome of some binary event, like whether or not the Giants will win the World Series (yeah, I know it's not the early 2010s anymore, but it's just a hypothetical, let me have my moment). A prediction market like Kalshi may let me buy a contract that will pay me $1 if the Giants win the World Series, and $0 if they don't. Moreover, if I see that the market price of this contract is much less than what I think the team's chances are, then it makes rational sense for me to buy contracts. Put more concretely, if I think the chances of a World Series ring are 10%, and I can buy a contract for one cent, then I've identified an inefficiency in the market that I can exploit for profit. 
 
 Indeed, this is literally how Kalshi explains its markets [here](https://news.kalshi.com/p/what-are-event-contracts). Here's a direct quote: "the prices on Kalshi should reflect the true probabilities for different events!"
 
 For non-performative predictions, maybe this is the case. But what happens when actors have access to these markets and can make bidding decisions based on them? Doesn't this information bias the likelihood of the event?
 
-Put more precisely, suppose a prediction market says the probability of an event *E* is some value *p* between 0 and 1. Therefore, the contract is priced at *p × 100* cents.
+Suppose a prediction market says the probability of an event *E* is some value *p* between 0 and 1. Therefore, the contract is priced at *p × 100* cents. This is the market's estimate of the probability of the event, which is different from the **true** probability of the event.
 
-This is the market's estimate of the probability of the event, which is different from the **true** probability of the event. According to Kalshi, these probabilities should be equal, in other words it should be the case that *P(E) = p*. But for a performative prediction, we need an even stronger claim, because we don't just care about the probability that *E* happens. We care about the probability that *E* happens *given the fact that the published probability is p*. Or, in [math speak](https://en.wikipedia.org/wiki/Conditional_probability) the claim is that *P(E | p) = p* for any published probability *p*.
+According to Kalshi, these probabilities should be equal: it should be the case that *P(E) = p*. But for a performative prediction, we need an even stronger claim, because we don't just care about the probability that *E* happens. We care about the probability that *E* happens *given the fact that the published probability is p*. Or, in [math speak](https://en.wikipedia.org/wiki/Conditional_probability), the claim is that *P(E | p) = p* for any published probability *p*.
 
-From a strictly mathematical standpoint, there's no guarantee that this equality holds. However, if we assume the probability function for *E* is continuous, we are at least guaranteed a price where this equality does hold. Don't believe me? Try it out for yourself. The graph below plots the probability an event happens given that the price is *p* against *p* itself. You can draw any probability function you want, but it will always be a continuous line. If you can draw a blue curve that doesn't intersect the gray diagonal at at least one green circle, I will give you a million dollars.
+From a strictly mathematical standpoint, there's no guarantee that this equality holds. However, if we assume the probability function for *E* is continuous, we are at least guaranteed a price where this equality does hold. Don't believe me? Try it out for yourself. The graph below plots the probability an event happens given that the price is *p* against *p* itself. You can draw any probability function you want, but it will always be a continuous line. If you can draw a blue curve that doesn't intersect the gray diagonal at least once, I will give you a million dollars.
 
 <Figure caption="Click and drag to adjust the blue graph. Any path you draw will intersect with the gray diagonal line in at least one spot. Each point of intersection is a point where the published price matches the probability of the event given that price.">
   <FreeformCurveChart />
@@ -57,35 +59,37 @@ I feel safe in this wager because it's mathematically air-tight. This is an exam
 
 Just because there's a guaranteed price that will match the probability of an event given that published price, it does not mean the published price will settle there. In an ideal world this is where the price will settle, but the world is far from perfect.
 
-For example, let's imagine a family of S-shaped probability curves, each one crossing the diagonal at the halfway mark. Put another way, for any one of these curves, if the price of a contract is 50 cents, then the probability that *E* happens is 50%. 
+For example, let's imagine a family of S-shaped probability curves, each one crossing the diagonal at the halfway mark. For any one of these curves, if the price of a contract is 50 cents, then the probability that *E* happens is 50%. 
 
-Because of the S shape, to the left of this midpoint, the probabilty curve bends up. To the right, it bends down. For this family of curves, we can explore what happens when the price deviates a bit from this central point where the market aligns with the event's likelihood.
+Because of the S shape, to the left of this midpoint, the probability curve bends up. To the right, it bends down. For this family of curves, we can explore what happens when the price deviates a bit from this central point where the market aligns with the event's likelihood.
 
 <Figure caption="Adjust the curviness of the curve and the starting price of the contract; the black steps show what will happen to the price over time.">
   <SymmetricCobweb />
 </Figure>
 
-Let's look at a specific case. Suppose the price of a contract is $0.25, and the underlying probability curve has a curviness of 0.25. As you can tell, this is a very midly curvy curve; no one would blame you for taking a glance and assuming it's a straight line.
+Let's look at a specific case. Suppose the price of a contract is $0.25, and the underlying probability curve has a curviness of 0.25. As you can tell, this is a mildly curvy curve; no one would blame you for taking a glance and assuming it's a straight line.
 
-Let's think through what will happen. As you can see, at $0.25, the probability curve sits *above* the diagonal, at a probability of around 0.35. This means that the contract is *underpriced*; folks who understand the underlying probabilities well will be quick to purchase contracts, on the expectaction that each one will net them a 10 cent profit on average. 
+At $0.25, the probability curve sits *above* the diagonal, at a probability of around 0.35. This means that the contract is *underpriced*; folks who understand the underlying probabilities well will be quick to purchase contracts, on the expectation that each one will net them a 10-cent profit on average. 
 
 Therefore, demand goes up. As demand goes up, the price will move up with it. If people behave as if the probability is 0.35, then the price will move to $0.35. This is where the first step in our staircase comes from. And from here, the cycle repeats; at a $0.35 price, the probability is a little over 40%. People will continue to buy, which shifts the price up again. The market moves towards a $0.50 contract price, which aligns with the probability of the event occurring at that price. The invisible hand gently cradles the profits of those who moved early.
 
-Unfortunately, slight adjustments in the model can turn the invisible hand from a stabilizing force to a chaos monkey (I use this term in the non-mathematical sense). Bump the curviness to 0.75, and a very different story emerges. Now at a $0.25 contract price, the probability is only around 13%. The contract is overpriced, so people will move to sell. Selling in turn moves the contract price to $0.13, where the probability also drops to around 6%. This race to the bottom continues dropping the price and in so doing, dropping the probability that the event happens.
+Unfortunately, slight adjustments in the model can turn the invisible hand from a stabilizing force to a chaos monkey (I use this term in the non-mathematical sense). Bump the curviness to 0.75, and a very different story emerges. Now at a $0.25 contract price, the probability is only around 13%. The contract is overpriced, so people will move to sell. Selling in turn moves the contract price to $0.13, where the probability also drops to around 6%. This race to the bottom continues dropping the price and, in so doing, dropping the probability that the event happens.
 
-Across both of these examples, the price changing story is similar, but the behavior around $0.50 could not be more different. In the first case, the $0.50 is an attracting fixed point. If the price dips, the market pushes it back. The price and the probability are stable to deviations, and in particular, the probability is not sensitive to the market.
+Across both of these examples, the way the price changes is similar. But the behavior around $0.50 could not be more different. In the first case, the $0.50 is an attracting fixed point. If the price dips, the market pushes it back. The price and the probability are stable to deviations, and in particular, the probability is not sensitive to the market.
 
 But in the second example, $0.50 is a repelling fixed point. A small deviation on one side sends the probability plummeting to almost 0; on the other side, the probability rockets to a near certainty. In this scenario, the probability is extremely sensitive to the market, and just the presence of the market has a huge influence on the final outcome. This is not a probability curve that prediction markets want you to know about.
 
 ---
 
-### Patient Impatience
+### Laws of Attrition
 
 Hopefully now you have some sense of the potential risks involved in creating prediction markets around the likelihood of events. In some cases, the markets themselves can impact the likelihood of the event the market is built upon.
 
-Let's table this observation for a moment, and return to Kalshi's planned foray into medical trials. Even in a perfect world where these markets had no influence, medical trials are already rife with potential sources of bias. 
+Let's table this observation for a moment, and return to Kalshi's planned foray into medical trials. These prediction markets are similar to what already exists: there are contracts that you can buy, priced between $0 and $1, that update in real time as new information influences the market. These contracts eventually resolve based on some pre-determined trigger, e.g. an FDA approval, or some other official document that concludes the trial one way or another. For our current purposes here, though, I'm less interested in *how* the contracts resolve than in the live pricing changes that happen before they do.
 
-Consider [attrition bias](https://catalogofbias.org/biases/attrition-bias/). This is a category of bias in which trial participants may leave the trial for systematic reasons in a way that may bias the results of the trial.
+And unfortunately, even in a perfect world where these markets had no influence, medical trials are already rife with potential sources of bias. 
+
+Consider [attrition bias](https://catalogofbias.org/biases/attrition-bias/). This happens when trial participants leave the trial for systematic reasons in a way that skews the results of the trial.
 
 Here's a concrete scenario. Suppose we are trying to study the efficacy of some medical intervention. That intervention has a true efficacy rate: maybe it's 0% effective, maybe it's 100% effective, and most likely it's somewhere in between. 
 
@@ -101,17 +105,19 @@ Suppose, for instance, that only 60% of participants who don't respond to the in
 
 You'll see similar behavior if people who respond to the intervention are more likely to drop out. In that case, the observed efficacy will be lower than the true efficacy.
 
-While there's some symmetry in *how* attrition bias plays out, there's also a fundamental asymmetry at play as well. The biased estimate can be either too high or too low, but both come from people leaving a trial once it has begun. Those doors are almost always one-way; people can leave trials, but cannot be added to them after they have started.
+While there's some symmetry in *how* attrition bias plays out, there's a fundamental asymmetry at play as well. The biased estimate can be either too high or too low, but both come from people leaving a trial once it has begun. Those doors are almost always one-way; people can leave trials, but cannot be added to them after they have started.
+
+Bias in these trials is already hard enough to account for. As we'll see next, layering a prediction market on top can make this worse, not better.
 
 ---
 
-### Medital Markets Revisited
+### Medical Markets Revisited
 
-Now that we've explored attrition bias, let's fold in another source of potential risk from creating prediction markets around clinical trials. Namely, patients will be able to see them.
+Now that we've explored attrition bias, let's fold in another source of potential risk from creating prediction markets around clinical trials. Namely, patients will be able to see the markets and respond to them.
 
-In other words, in addition to the typical attrition we'd expect to see in any trial, exposing a market means there's a new information source that may impact attrition independently. For example, if I'm a part of a medical trial whose public market is tanking, I very well may decide that staying in the trial isn't worth it and bail out.
+In addition to the typical attrition we'd expect to see in any trial, exposing a market means there's a new information source that may impact attrition independently. For example, if I'm part of a medical trial whose public market is tanking, I very well may decide that staying in the trial isn't worth it and bail out.
 
-We can fold both of these sources of attrition into the model, for both the responsive and non-responsive trial participants. The higher the market sensitivity in one of these groups, the more likely people are to bail out if the signal from the market looks bad.
+We can fold both of these sources of attrition into the model, for both the responsive and non-responsive trial participants. The higher the market sensitivity in one of these groups, the more likely people are to bail out if the signal from the market looks bad. We model this by saying that the attrition is proportional to how far the price is from its maximum. In other words, the farther the price is from $1, the more attrition we will have, and this is tuned by the sensitivity of each group to the market.
  
 The one other thing we need to consider is not just how patients respond to the market, but how the market responds to patients. More specifically, how sensitive is the market to patient attrition? If it's insensitive, then it won't react at all to attrition. If it's very sensitive, then patient attrition has the potential to quickly and significantly impact the public pricing in the market.
 
@@ -121,25 +127,33 @@ All of these parameters give us a lot of fodder for exploring what can happen. B
   <AttritionFeedback />
 </Figure>
 
-If you have slider decision paralysis, consider the following scenario. Set the initial contract price to $0.55, and the true true efficacy rate is actually 50%. In other words, the market is pricing the trial too high, and in a perfect market the price would lower to the true efficacy.
+If you have slider decision paralysis, consider the following scenario. Set the initial contract price to $0.55, and the true efficacy rate is actually 50%. In this case, the market is pricing the trial too high, and in a perfect market the price would lower to the true efficacy.
 
 Assume that there is no attrition coming from the responsive group; that is, their completion rate is 100%. They are responding to the intervention so are content to stay in the trial. For the same reason, they are only slightly influenced by the market. Put it at 10%.
 
-Non-responsive parcipants, on the other hand, are more likely to leave the trial or be influenced by the market, because they do not have positive signal coming from their own experience. Try putting their completion rate at 60% and their market influence at 50%.
+Non-responsive participants, on the other hand, are more likely to leave the trial or be influenced by the market, because they do not have a positive signal coming from their own experience. Try putting their completion rate at 60% and their market influence at 50%.
 
-In this scenario, if the market is at all sensitive to attrition, rather than the price going down to the true efficacy, it actually *increases* to around $0.66, an error of more than 30%. The market's sensitivity to attrition basically just controls how quickly the market converges to that price. 
+In this scenario, if the market is at all sensitive to attrition, rather than the price going down to the true efficacy, it actually *increases* to around $0.66, an error of 16 points. The market's sensitivity to attrition controls how quickly the market converges to that price. 
 
-Fundamentally the phenomenon is the same as what we saw before, but the market amplifies things. The lower the non-respondant completion rate, or the more influenced they are by the market, the higher the market price will go. This is true *regardless* of what the true efficacy is! This is a performance if ever I've seen one.
+Fundamentally the phenomenon is the same as what we saw before, but the market amplifies things. The lower the non-respondent completion rate, or the more influenced they are by the market, the higher the market price will go. This is true *regardless* of what the true efficacy is! This is a performance if ever I've seen one.
+
+This result is also a little counterintuitive; note that with these parameter values, non-respondents are leaving the trial, and their departures cause the market price to *inflate*, not crash. But this is the same principle we saw in the last section: with fewer non-respondents around, proportionally more respondents are left in the trial. This not only biases the trial results, but also amplifies the bias in the market price.
 
 ---
 
 ### Conclusion
 
-The moral here is that market is like the abyss; when you stare into it, it stares back at you. Trying to predict outcomes that themselves can be influenced by those predictions is inherintly risky business, in spite of what the latest tech oligarch may try to tell you.
+The market is like the abyss; when you stare into it, it stares back at you. Trying to predict outcomes that themselves can be influenced by those predictions is inherently risky business.
 
-When it comes to medical trials specifically, the mathematics tells us that there's no [a priori](https://en.wikipedia.org/wiki/A_priori_and_a_posteriori) to assume that prediction markets will give us any special insight into their success. They are just as likely to over or underestimate that likelihood. And when combined with all of the negative externalities associated with these markets, as well as the troubling [gamification](https://www.msn.com/en-us/money/smallbusiness/a-groom-blew-his-entire-wedding-fund-on-draftkings-now-he-s-suing-the-sports-betting-company/ar-AA26U4Fj) that tries to lure people away from literally all their money, it's difficult for me to take what these companies say at face value. 
+Of course, no models are perfect, and this one is a simplification of a very complex situation. Markets are responsive to millions of other things beyond attrition. My goal isn't to convince you that this model is 100% correct. It's just to convince you that the markets these companies are getting into are very likely to be at least somewhat performative.
 
-And I'm not the only one. Though Kalshi emerged victorious from the lawsuit I mentioned up top, they were hit with a new, $36 billion lawsuit [just this month](https://www.nbcsports.com/nfl/profootballtalk/rumor-mill/news/new-york-files-36-billion-lawsuit-against-kalshi-alleging-its-running-an-illegal-gambling-operation), alleging that they are nothing more than an illegal gambling operation. 
+Moreover, that performativity is fundamentally baked in, and has the potential to distort the markets, no matter how much a savvy investor may try to arbitrage against it. There's no reason to assume that prediction markets price for bias; in order to price for it, traders need some other signal to anchor on, and in many of these prediction markets, such an anchor may not exist. Even worse, it may exist but be pointed in exactly the wrong direction. Look, for instance, at how the prediction markets performed in the recent Democratic Senate primary in Florida ([source](https://bsky.app/profile/bft.wtf/post/3mtjevi44x22d)): 
+
+![Senate primary prediction market over time](../../images/fl-senate.png "In this primary, prediction markets took a big swing, and whiffed hard.")
+
+When it comes to medical trials specifically, the mathematics tells us that there's no [a priori](https://en.wikipedia.org/wiki/A_priori_and_a_posteriori) reason to assume that prediction markets will give us any special insight into their success. They are just as likely to over- or underestimate that likelihood. And when combined with all of the negative externalities associated with these markets, as well as the troubling [gamification](https://www.msn.com/en-us/money/smallbusiness/a-groom-blew-his-entire-wedding-fund-on-draftkings-now-he-s-suing-the-sports-betting-company/ar-AA26U4Fj) that tries to lure people away from literally all their money, it's difficult for me to take what these companies say at face value. 
+
+And I'm not the only one. Though Kalshi emerged victorious from the lawsuit I mentioned up top, it was hit with a new $36 billion lawsuit [just this month](https://www.nbcsports.com/nfl/profootballtalk/rumor-mill/news/new-york-files-36-billion-lawsuit-against-kalshi-alleging-its-running-an-illegal-gambling-operation), alleging that it is nothing more than an illegal gambling operation. 
 
 As for whether the allegations are true, I don't think I'd buy a contract on that outcome for anything less than 85 cents.
 
