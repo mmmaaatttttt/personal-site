@@ -92,6 +92,12 @@ vi.mock("framer-motion", () => ({
     }: ComponentPropsWithoutRef<"rect"> & Record<string, unknown>) => (
       <rect {...stripMotionProps(props)}>{children}</rect>
     ),
+    circle: ({
+      children,
+      ...props
+    }: ComponentPropsWithoutRef<"circle"> & Record<string, unknown>) => (
+      <circle {...stripMotionProps(props)}>{children}</circle>
+    ),
     path: ({
       children,
       ...props
