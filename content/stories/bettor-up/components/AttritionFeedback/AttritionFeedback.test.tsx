@@ -84,7 +84,7 @@ describe("AttritionFeedback", () => {
       .querySelector(`path[stroke="${COLORS.DARK_GRAY}"]`)
       ?.getAttribute("d");
 
-    fireEvent.change(adjustmentSpeedSlider, { target: { value: "0.2" } });
+    fireEvent.change(adjustmentSpeedSlider, { target: { value: "0.8" } });
 
     const pathAfter = container
       .querySelector(`path[stroke="${COLORS.DARK_GRAY}"]`)
