@@ -12,13 +12,13 @@ export default defineConfig({
       NEXT_PUBLIC_TURNSTILE_SITE_KEY: "test-site-key",
     },
     include: ["**/*.{test,spec}.{ts,tsx}"],
-    exclude: ["e2e/**", "**/node_modules/**"],
+    exclude: ["e2e/**", "**/node_modules/**", ".claude/worktrees/**"],
     coverage: {
       provider: "v8",
       reporter: ["text", "html"],
+      include: ["**/*.{ts,tsx}"],
       exclude: [
         "e2e/**",
-        "content/**",
         "out/**",
         "scripts/**",
         "mdx-components.tsx",
@@ -26,6 +26,7 @@ export default defineConfig({
         "**/*.d.ts",
         "**/node_modules/**",
         ".next/**",
+        ".claude/worktrees/**",
       ],
       thresholds: {
         lines: 100,
