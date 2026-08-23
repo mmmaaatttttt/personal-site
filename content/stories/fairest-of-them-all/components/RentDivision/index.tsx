@@ -8,10 +8,17 @@ import NarrowContainer from "@/components/story/shared/NarrowContainer";
 import LabeledSlider from "@/components/story/shared/Slider/LabeledSlider";
 import Tooltip, { useTooltip } from "@/components/story/shared/Tooltip";
 import { Button } from "@/components/ui/Button";
-import { generateFreqMap } from "@/utils/arrayHelpers";
 import { total } from "@/utils/mathHelpers";
 import COLORS from "@/utils/styles";
-import { generateAllPoints, mixColors, type PointData } from "./helpers";
+import {
+  advanceToNext,
+  generateAllPoints,
+  getNameFromLabel,
+  getTooltipBody,
+  getTriangleColor,
+  type PointData,
+  shouldBeDisabled,
+} from "./helpers";
 import LabeledCircle from "./LabeledCircle";
 import Polygon from "./Polygon";
 import RadioButtonGroup from "./RadioButtonGroup";
@@ -58,105 +65,9 @@ const RentDivision: FC = () => {
   const [finalCorners, setFinalCorners] = useState<PointData[] | null>(null);
   const { tooltip, showTooltip, hideTooltip } = useTooltip();
 
-  const getNameFromLabel = (pt: PointData) =>
-    NAMES.find((name) => name[0] === pt.label) ?? "";
-
-  const getTooltipBody = (point: PointData) =>
-    point.prices.map(
-      (price, idx) => `${ROOM_COLORS[idx]}: $${price.toFixed(2)}`,
-    );
-
-  const shouldBeDisabled = (prices: number[], idx: number) => {
-    const anyFree = prices.some((p) => p === 0);
-    return anyFree && prices[idx] !== 0;
-  };
-
-  const getTriangleColor = (corners: PointData[]) => {
-    const colors = corners.map((c) => c.color);
-    const colorMap = generateFreqMap(colors);
-    if (colorMap.has(COLORS.BLACK)) return COLORS.LIGHT_GRAY;
-    if (colorMap.size === 1) return colorMap.keys().next().value as string;
-    if (colorMap.size === 3) return COLORS.WHITE;
-    const colorHexes = Array.from(colorMap.keys()) as string[];
-    const counts = Array.from(colorMap.values());
-    return mixColors(
-      counts[0] / (counts[0] + counts[1]),
-      colorHexes[0],
-      colorHexes[1],
-    );
-  };
-
-  const advanceToNext = (
-    updatedPoints: PointData[][],
-    loc: [number, number],
-  ) => {
-    const [y, x] = loc;
-    const point = updatedPoints[y][x];
-
-    if (y === 0)
-      return { activePtLoc: [1, 0] as [number, number], finalCorners: null };
-    if (y === 1 && x === 0)
-      return { activePtLoc: [1, 1] as [number, number], finalCorners: null };
-
-    const candidates = [
-      { x: x - 1, y: y - 1 },
-      { x, y: y - 1 },
-      { x: x + 1, y },
-      { x: x + 1, y: y + 1 },
-      { x, y: y + 1 },
-      { x: x - 1, y },
-    ].map((n) => ({ ...n, color: updatedPoints[n.y]?.[n.x]?.color ?? null }));
-
-    let nextLoc: [number, number] | null = null;
-
-    for (let i = 0; i < candidates.length; i++) {
-      const curr = candidates[i];
-      const next = candidates[(i + 1) % candidates.length];
-      const colors = [curr.color, next.color, point.color];
-      const colorSet = new Set(colors);
-
-      if (
-        colorSet.size === 3 &&
-        !colorSet.has(null) &&
-        !colorSet.has(COLORS.BLACK)
-      ) {
-        return {
-          activePtLoc: loc,
-          finalCorners: [
-            updatedPoints[curr.y][curr.x],
-            updatedPoints[next.y][next.x],
-            point,
-          ],
-        };
-      }
-
-      if (
-        curr.color !== null &&
-        curr.color !== COLORS.BLACK &&
-        curr.color !== point.color &&
-        next.color === COLORS.BLACK &&
-        !nextLoc
-      ) {
-        nextLoc = [next.y, next.x];
-      }
-
-      if (
-        next.color !== null &&
-        next.color !== COLORS.BLACK &&
-        next.color !== point.color &&
-        curr.color === COLORS.BLACK
-      ) {
-        nextLoc = [curr.y, curr.x];
-      }
-    }
-
-    return { activePtLoc: nextLoc ?? loc, finalCorners: null };
-  };
-
-  const handleRoomChoice = () => {
-    if (currentColorIdx === null) return;
+  const handleRoomChoice = (idx: number) => {
     const [y, x] = activePtLoc;
-    const colorStr = ROOM_COLORS[currentColorIdx].toUpperCase();
+    const colorStr = ROOM_COLORS[idx].toUpperCase();
     const color = COLORS[colorStr as keyof typeof COLORS];
 
     const newPtData: PointData = {
@@ -224,7 +135,7 @@ const RentDivision: FC = () => {
           (c) => COLORS[c.toUpperCase() as keyof typeof COLORS] === p.color,
         );
         return {
-          name: getNameFromLabel(p),
+          name: getNameFromLabel(p, NAMES),
           color: ROOM_COLORS[colorIdx],
           price: p.prices[colorIdx],
         };
@@ -267,12 +178,14 @@ const RentDivision: FC = () => {
 
     const [activeY, activeX] = activePtLoc;
     const activePoint = points[activeY][activeX];
-    const currentRoommate = getNameFromLabel(activePoint);
-    const radioLabels = getTooltipBody(activePoint).map((text, idx) => ({
-      text,
-      color: COLORS[ROOM_COLORS[idx].toUpperCase() as keyof typeof COLORS],
-      disabled: shouldBeDisabled(activePoint.prices, idx),
-    }));
+    const currentRoommate = getNameFromLabel(activePoint, NAMES);
+    const radioLabels = getTooltipBody(activePoint, ROOM_COLORS).map(
+      (text, idx) => ({
+        text,
+        color: COLORS[ROOM_COLORS[idx].toUpperCase() as keyof typeof COLORS],
+        disabled: shouldBeDisabled(activePoint.prices, idx),
+      }),
+    );
     const buttonText =
       currentColorIdx !== null
         ? `Confirm the ${ROOM_COLORS[currentColorIdx].toLowerCase()} room for ${currentRoommate}.`
@@ -325,9 +238,12 @@ const RentDivision: FC = () => {
       <LabeledCircle
         key={`${p.x}|${p.y}`}
         {...p}
-        color={p.color ?? COLORS.BLACK}
+        color={p.color}
         handleLeave={hideTooltip}
-        handleUpdate={showTooltip("Room Prices", getTooltipBody(p))}
+        handleUpdate={showTooltip(
+          "Room Prices",
+          getTooltipBody(p, ROOM_COLORS),
+        )}
         isActive={x === activeX && y === activeY && startedButNotFinished}
       />
     )),

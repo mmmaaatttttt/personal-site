@@ -1,5 +1,28 @@
 import { describe, expect, it } from "vitest";
-import { generateAllPoints, mixColors } from "./helpers";
+import COLORS from "@/utils/styles";
+import {
+  advanceToNext,
+  generateAllPoints,
+  getNameFromLabel,
+  getTooltipBody,
+  getTriangleColor,
+  mixColors,
+  type PointData,
+  shouldBeDisabled,
+} from "./helpers";
+
+const makePoint = (
+  color: string,
+  overrides: Partial<PointData> = {},
+): PointData => ({
+  x: 0,
+  y: 0,
+  color,
+  prices: [0, 0, 0],
+  r: 1,
+  label: "",
+  ...overrides,
+});
 
 // Minimal corner set matching the real defaults
 const RENT = 1600;
@@ -93,5 +116,157 @@ describe("mixColors", () => {
   it("mixes two gray values proportionally", () => {
     // #ffffff + #000000 at fraction=0.25: Math.round(0.25*255)=64 → #404040
     expect(mixColors(0.25, "#ffffff", "#000000")).toBe("#404040");
+  });
+});
+
+describe("getNameFromLabel", () => {
+  it("finds the name whose first letter matches the label", () => {
+    expect(getNameFromLabel(makePoint("x", { label: "B" }), names)).toBe(
+      "Brett",
+    );
+  });
+});
+
+describe("getTooltipBody", () => {
+  it("formats each price with its room color", () => {
+    const point = makePoint("x", { prices: [10, 20.5, 0] });
+    expect(getTooltipBody(point, ["Orange", "Green", "Purple"])).toEqual([
+      "Orange: $10.00",
+      "Green: $20.50",
+      "Purple: $0.00",
+    ]);
+  });
+});
+
+describe("shouldBeDisabled", () => {
+  it("disables a non-zero price when another room is free", () => {
+    expect(shouldBeDisabled([0, 1600, 0], 1)).toBe(true);
+  });
+
+  it("does not disable the free room itself", () => {
+    expect(shouldBeDisabled([0, 1600, 0], 0)).toBe(false);
+  });
+
+  it("does not disable anything when no room is free", () => {
+    expect(shouldBeDisabled([500, 600, 500], 0)).toBe(false);
+  });
+});
+
+describe("getTriangleColor", () => {
+  it("returns light gray when any corner is still unassigned (black)", () => {
+    const corners = [
+      makePoint(COLORS.BLACK),
+      makePoint(COLORS.RED),
+      makePoint(COLORS.RED),
+    ];
+    expect(getTriangleColor(corners)).toBe(COLORS.LIGHT_GRAY);
+  });
+
+  it("returns the shared color when all three corners match", () => {
+    const corners = [
+      makePoint(COLORS.GREEN),
+      makePoint(COLORS.GREEN),
+      makePoint(COLORS.GREEN),
+    ];
+    expect(getTriangleColor(corners)).toBe(COLORS.GREEN);
+  });
+
+  it("returns white when all three corners are distinct colors", () => {
+    const corners = [
+      makePoint(COLORS.RED),
+      makePoint(COLORS.GREEN),
+      makePoint(COLORS.DARK_BLUE),
+    ];
+    expect(getTriangleColor(corners)).toBe(COLORS.WHITE);
+  });
+
+  it("blends the two colors weighted by their frequency otherwise", () => {
+    const corners = [
+      makePoint(COLORS.RED),
+      makePoint(COLORS.RED),
+      makePoint(COLORS.GREEN),
+    ];
+    expect(getTriangleColor(corners)).toBe(
+      mixColors(2 / 3, COLORS.RED, COLORS.GREEN),
+    );
+  });
+});
+
+describe("advanceToNext", () => {
+  it("moves from the apex (row 0) to the first base corner", () => {
+    const points = [[makePoint(COLORS.RED)]];
+    expect(advanceToNext(points, [0, 0])).toEqual({
+      activePtLoc: [1, 0],
+      finalCorners: null,
+    });
+  });
+
+  it("moves from the second row's left point to its right neighbor", () => {
+    const points = [
+      [makePoint(COLORS.RED)],
+      [makePoint(COLORS.GREEN), makePoint(COLORS.BLUE)],
+    ];
+    expect(advanceToNext(points, [1, 0])).toEqual({
+      activePtLoc: [1, 1],
+      finalCorners: null,
+    });
+  });
+
+  it("declares a win when a rainbow triangle forms", () => {
+    // point at [2][1]; candidate 0 = [1][0], candidate 1 = [1][1]
+    const points: PointData[][] = [];
+    points[1] = [];
+    points[1][0] = makePoint(COLORS.GREEN);
+    points[1][1] = makePoint(COLORS.DARK_BLUE);
+    points[2] = [];
+    points[2][1] = makePoint(COLORS.RED);
+
+    const result = advanceToNext(points, [2, 1]);
+    expect(result.finalCorners).toEqual([
+      points[1][0],
+      points[1][1],
+      points[2][1],
+    ]);
+  });
+
+  it("advances toward an unassigned neighbor without overwriting an earlier match", () => {
+    // point at [2][1]. Candidates in order: [1][0]=BLUE, [1][1]=BLACK,
+    // [2][2]=absent, [3][2]=GREEN, [3][1]=BLACK, [2][0]=absent.
+    // i=0 (BLUE -> BLACK) sets nextLoc to [1][1]; i=3 (GREEN -> BLACK) would
+    // also qualify but must be blocked since nextLoc is already set.
+    const points: PointData[][] = [];
+    points[1] = [];
+    points[1][0] = makePoint(COLORS.BLUE);
+    points[1][1] = makePoint(COLORS.BLACK);
+    points[2] = [];
+    points[2][1] = makePoint(COLORS.RED);
+    points[3] = [];
+    points[3][1] = makePoint(COLORS.BLACK);
+    points[3][2] = makePoint(COLORS.GREEN);
+
+    const result = advanceToNext(points, [2, 1]);
+    expect(result).toEqual({ activePtLoc: [1, 1], finalCorners: null });
+  });
+
+  it("advances toward an unassigned point from its assigned neighbor", () => {
+    // point at [2][1]; candidate 0 = [1][0] = BLACK, candidate 1 = [1][1] = BLUE.
+    const points: PointData[][] = [];
+    points[1] = [];
+    points[1][0] = makePoint(COLORS.BLACK);
+    points[1][1] = makePoint(COLORS.BLUE);
+    points[2] = [];
+    points[2][1] = makePoint(COLORS.RED);
+
+    const result = advanceToNext(points, [2, 1]);
+    expect(result).toEqual({ activePtLoc: [1, 0], finalCorners: null });
+  });
+
+  it("stays put when no neighbor qualifies", () => {
+    const points: PointData[][] = [];
+    points[2] = [];
+    points[2][1] = makePoint(COLORS.RED);
+
+    const result = advanceToNext(points, [2, 1]);
+    expect(result).toEqual({ activePtLoc: [2, 1], finalCorners: null });
   });
 });

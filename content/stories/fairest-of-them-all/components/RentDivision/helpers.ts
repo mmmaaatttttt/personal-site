@@ -1,10 +1,11 @@
+import { generateFreqMap } from "@/utils/arrayHelpers";
 import { interpolate } from "@/utils/mathHelpers";
 import COLORS from "@/utils/styles";
 
 export interface PointData {
   x: number;
   y: number;
-  color: string | null;
+  color: string;
   prices: number[];
   r: number;
   label: string;
@@ -28,11 +29,9 @@ function deduceLabel(
 ): string {
   const label1 = neighbor1.label;
   const label2 = neighbor2.label;
-  return (
-    names
-      .map((name) => name[0])
-      .find((ltr) => ltr !== label1 && ltr !== label2) ?? ""
-  );
+  return names
+    .map((name) => name[0])
+    .find((ltr) => ltr !== label1 && ltr !== label2) as string;
 }
 
 /**
@@ -172,4 +171,116 @@ export function mixColors(
   const g = Math.round(fraction * g1 + (1 - fraction) * g2);
   const b = Math.round(fraction * b1 + (1 - fraction) * b2);
   return `#${r.toString(16).padStart(2, "0")}${g.toString(16).padStart(2, "0")}${b.toString(16).padStart(2, "0")}`;
+}
+
+/**
+ * Looks up the full name for a point's single-letter label. Every label is
+ * deduced from `names` during grid generation, so a match always exists.
+ */
+export function getNameFromLabel(pt: PointData, names: string[]): string {
+  return names.find((name) => name[0] === pt.label) as string;
+}
+
+export function getTooltipBody(
+  point: PointData,
+  roomColors: string[],
+): string[] {
+  return point.prices.map(
+    (price, idx) => `${roomColors[idx]}: $${price.toFixed(2)}`,
+  );
+}
+
+export function shouldBeDisabled(prices: number[], idx: number): boolean {
+  const anyFree = prices.some((p) => p === 0);
+  return anyFree && prices[idx] !== 0;
+}
+
+export function getTriangleColor(corners: PointData[]): string {
+  const colors = corners.map((c) => c.color);
+  const colorMap = generateFreqMap(colors);
+  if (colorMap.has(COLORS.BLACK)) return COLORS.LIGHT_GRAY;
+  if (colorMap.size === 1) return colorMap.keys().next().value as string;
+  if (colorMap.size === 3) return COLORS.WHITE;
+  const colorHexes = Array.from(colorMap.keys()) as string[];
+  const counts = Array.from(colorMap.values());
+  return mixColors(
+    counts[0] / (counts[0] + counts[1]),
+    colorHexes[0],
+    colorHexes[1],
+  );
+}
+
+export interface AdvanceResult {
+  activePtLoc: [number, number];
+  finalCorners: PointData[] | null;
+}
+
+/**
+ * Walks the Sperner's-lemma search from the just-answered grid point to the
+ * next point that needs an answer, or to a "rainbow" triangle (three
+ * pairwise-distinct, fully-assigned colors) that ends the game.
+ */
+export function advanceToNext(
+  updatedPoints: PointData[][],
+  loc: [number, number],
+): AdvanceResult {
+  const [y, x] = loc;
+  const point = updatedPoints[y][x];
+
+  if (y === 0) return { activePtLoc: [1, 0], finalCorners: null };
+  if (y === 1 && x === 0) return { activePtLoc: [1, 1], finalCorners: null };
+
+  const candidates = [
+    { x: x - 1, y: y - 1 },
+    { x, y: y - 1 },
+    { x: x + 1, y },
+    { x: x + 1, y: y + 1 },
+    { x, y: y + 1 },
+    { x: x - 1, y },
+  ].map((n) => ({ ...n, color: updatedPoints[n.y]?.[n.x]?.color ?? null }));
+
+  let nextLoc: [number, number] | null = null;
+
+  for (let i = 0; i < candidates.length; i++) {
+    const curr = candidates[i];
+    const next = candidates[(i + 1) % candidates.length];
+    const colors: (string | null)[] = [curr.color, next.color, point.color];
+    const colorSet = new Set(colors);
+
+    if (
+      colorSet.size === 3 &&
+      !colorSet.has(null) &&
+      !colorSet.has(COLORS.BLACK)
+    ) {
+      return {
+        activePtLoc: loc,
+        finalCorners: [
+          updatedPoints[curr.y][curr.x],
+          updatedPoints[next.y][next.x],
+          point,
+        ],
+      };
+    }
+
+    if (
+      curr.color !== null &&
+      curr.color !== COLORS.BLACK &&
+      curr.color !== point.color &&
+      next.color === COLORS.BLACK &&
+      !nextLoc
+    ) {
+      nextLoc = [next.y, next.x];
+    }
+
+    if (
+      next.color !== null &&
+      next.color !== COLORS.BLACK &&
+      next.color !== point.color &&
+      curr.color === COLORS.BLACK
+    ) {
+      nextLoc = [curr.y, curr.x];
+    }
+  }
+
+  return { activePtLoc: nextLoc ?? loc, finalCorners: null };
 }
