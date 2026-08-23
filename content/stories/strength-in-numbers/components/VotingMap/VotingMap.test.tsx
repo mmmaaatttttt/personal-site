@@ -4,10 +4,35 @@ import "@testing-library/jest-dom/vitest";
 import type { VotingDataRow } from "../../data";
 import VotingMap from ".";
 
+interface MapProperties {
+  name: string;
+  values: VotingDataRow[];
+}
+
+interface CapturedUSMapProps {
+  data: VotingDataRow[];
+  domain?: [number, number];
+  id: string;
+  fillAccessor: (properties: MapProperties) => number | null;
+  getTooltipTitle: (properties: MapProperties) => string;
+  getTooltipBody: (properties: MapProperties) => string | string[];
+}
+
+const { usMapProps } = vi.hoisted(() => ({
+  usMapProps: { current: null as unknown as CapturedUSMapProps },
+}));
+
 vi.mock("@/components/story/shared/USMap", () => ({
-  default: ({ data, id }: { data: VotingDataRow[]; id: string }) => (
-    <div data-testid="us-map" data-id={id} data-count={data.length} />
-  ),
+  default: (props: CapturedUSMapProps) => {
+    usMapProps.current = props;
+    return (
+      <div
+        data-testid="us-map"
+        data-id={props.id}
+        data-count={props.data.length}
+      />
+    );
+  },
 }));
 
 const makeRow = (overrides: Partial<VotingDataRow>): VotingDataRow => ({
@@ -116,5 +141,89 @@ describe("VotingMap (workers variant)", () => {
       "data-id",
       "voting-map-workers",
     );
+  });
+});
+
+describe("USMap callback props", () => {
+  it("fillAccessor returns the value for the current year", () => {
+    render(<VotingMap data={mockData} variant="voters" />);
+    const properties = {
+      name: "Alabama",
+      values: mockData.filter((d) => d.state === "Alabama"),
+    };
+    expect(usMapProps.current.fillAccessor(properties)).toBe(3000000);
+  });
+
+  it("fillAccessor returns null when there is no row for the current year", () => {
+    render(<VotingMap data={mockData} variant="voters" />);
+    const properties = {
+      name: "Alabama",
+      values: mockData.filter((d) => d.state === "Alabama" && d.year !== 2016),
+    };
+    expect(usMapProps.current.fillAccessor(properties)).toBeNull();
+  });
+
+  it("getTooltipTitle returns the properties name", () => {
+    render(<VotingMap data={mockData} variant="voters" />);
+    expect(
+      usMapProps.current.getTooltipTitle({ name: "Alabama", values: [] }),
+    ).toBe("Alabama");
+  });
+
+  it("getTooltipBody returns 'No data available' when there is no row for the current year", () => {
+    render(<VotingMap data={mockData} variant="voters" />);
+    const properties = {
+      name: "Alabama",
+      values: mockData.filter((d) => d.state === "Alabama" && d.year !== 2016),
+    };
+    expect(usMapProps.current.getTooltipBody(properties)).toBe(
+      "No data available",
+    );
+  });
+
+  it("getTooltipBody returns 'No data available' when the accessor value is null", () => {
+    render(<VotingMap data={mockData} variant="voters" />);
+    const properties = {
+      name: "Alabama",
+      values: [
+        makeRow({ year: 2016, state: "Alabama", active_registration: 0 }),
+      ],
+    };
+    expect(usMapProps.current.getTooltipBody(properties)).toBe(
+      "No data available",
+    );
+  });
+
+  it("getTooltipBody returns a formatted label and value when data is present", () => {
+    render(<VotingMap data={mockData} variant="voters" />);
+    const properties = {
+      name: "Alabama",
+      values: mockData.filter((d) => d.state === "Alabama"),
+    };
+    expect(usMapProps.current.getTooltipBody(properties)).toBe(
+      "Active Registered Voters: 3,000,000",
+    );
+  });
+
+  it("falls back to the first option when the selected value doesn't exist in the new variant's options", () => {
+    const { rerender } = render(
+      <VotingMap data={mockData} variant="workers" />,
+    );
+    const select = screen.getByRole("combobox") as HTMLSelectElement;
+    fireEvent.change(select, { target: { value: "6" } });
+    rerender(<VotingMap data={mockData} variant="voters" />);
+    const properties = {
+      name: "Alabama",
+      values: mockData.filter((d) => d.state === "Alabama"),
+    };
+    expect(usMapProps.current.fillAccessor(properties)).toBe(3000000);
+  });
+
+  it("passes an undefined domain when no rows have a valid value for the selected option", () => {
+    const zeroData = [
+      makeRow({ year: 2016, state: "Alabama", active_registration: 0 }),
+    ];
+    render(<VotingMap data={zeroData} variant="voters" />);
+    expect(usMapProps.current.domain).toBeUndefined();
   });
 });
