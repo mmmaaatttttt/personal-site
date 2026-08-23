@@ -37,7 +37,6 @@ const Spinner: FC<SpinnerProps> = ({ onSpinEnd, message }) => {
   const rotationRef = useRef(0);
 
   const spin = useCallback(() => {
-    if (disabled) return;
     setDisabled(true);
 
     const direction = Math.random() < 0.5 ? -1 : 1;
@@ -57,7 +56,7 @@ const Spinner: FC<SpinnerProps> = ({ onSpinEnd, message }) => {
         setDisabled(false);
       },
     });
-  }, [disabled, onSpinEnd]);
+  }, [onSpinEnd]);
 
   return (
     <div>
@@ -72,7 +71,7 @@ const Spinner: FC<SpinnerProps> = ({ onSpinEnd, message }) => {
             ({ d, color }) => (
               <path
                 key={color}
-                d={arcGen(d) ?? ""}
+                d={arcGen(d) as string}
                 fill={color}
                 stroke={COLORS.BLACK}
                 strokeWidth={1}

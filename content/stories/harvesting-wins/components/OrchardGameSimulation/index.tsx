@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/Button";
 import { camelCaseToTitle } from "@/utils/stringHelpers";
 import COLORS from "@/utils/styles";
 import { strategies } from "../../data";
+import { simulateGame } from "./simulateGame";
 
 interface PlayData {
   gamesPlayed: number;
@@ -33,31 +34,6 @@ const OrchardGameSimulation: FC<OrchardGameSimulationProps> = ({
   const playingRef = useRef(false);
   const lastTickRef = useRef<number>(0);
 
-  const simulateGame = useCallback(
-    (strategyFn: (counts: number[]) => number): boolean => {
-      const counts = [...initialFruitCounts];
-      let raven = initialRavenCount;
-      const colorCount = counts.length;
-
-      while (true) {
-        const idx = Math.floor((colorCount + 2) * Math.random());
-        if (idx < colorCount) {
-          counts[idx] = Math.max(counts[idx] - 1, 0);
-        } else if (idx === colorCount) {
-          raven--;
-        } else {
-          for (let i = 0; i < wildCardCount; i++) {
-            const si = strategyFn(counts);
-            counts[si] = Math.max(counts[si] - 1, 0);
-          }
-        }
-        if (counts.every((c) => c === 0)) return true;
-        if (raven === 0) return false;
-      }
-    },
-    [initialFruitCounts, initialRavenCount, wildCardCount],
-  );
-
   const tick = useCallback(
     (now: number) => {
       if (!playingRef.current) return;
@@ -66,7 +42,12 @@ const OrchardGameSimulation: FC<OrchardGameSimulationProps> = ({
         lastTickRef.current = now;
         setPlayData((prev) => {
           const next = prev.map((d, i) => {
-            const won = +simulateGame(strategies[i].fn);
+            const won = +simulateGame(
+              initialFruitCounts,
+              initialRavenCount,
+              wildCardCount,
+              strategies[i].fn,
+            );
             return {
               gamesPlayed: d.gamesPlayed + 1,
               gamesWon: d.gamesWon + won,
@@ -78,7 +59,7 @@ const OrchardGameSimulation: FC<OrchardGameSimulationProps> = ({
 
       requestAnimationFrame(tick);
     },
-    [simulateGame],
+    [initialFruitCounts, initialRavenCount, wildCardCount],
   );
 
   const togglePlaying = useCallback(() => {
