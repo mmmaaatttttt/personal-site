@@ -49,4 +49,12 @@ describe("CoinFlipBayesianModel", () => {
     const { container } = render(<CoinFlipBayesianModel />);
     expect(container.querySelector("svg")).toBeTruthy();
   });
+
+  it("switches to the fair-coin-more-likely prior when the toggle is clicked", () => {
+    render(<CoinFlipBayesianModel />);
+    const toggle = screen.getByRole("switch");
+    expect(toggle).toHaveAttribute("aria-checked", "false");
+    fireEvent.click(toggle);
+    expect(toggle).toHaveAttribute("aria-checked", "true");
+  });
 });

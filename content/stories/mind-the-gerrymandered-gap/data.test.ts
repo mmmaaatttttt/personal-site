@@ -1,4 +1,4 @@
-import { describe, expect, it } from "vitest";
+import { describe, expect, it, vi } from "vitest";
 import {
   calculateNormalizedEg,
   electionData,
@@ -47,5 +47,34 @@ describe("mind-the-gerrymandered-gap data", () => {
         String(slider.initialValue),
       );
     }
+  });
+
+  it("skips computing an efficiency gap for a year a state has no rows for", async () => {
+    const csv = [
+      "Year,State,District,Republican,Democrat",
+      "2010,StateA,1,60,40",
+      "2012,StateA,1,55,45",
+      "2010,StateB,1,50,50",
+    ].join("\n");
+
+    vi.doMock("node:fs", async (importOriginal) => {
+      const actual = await importOriginal<typeof import("node:fs")>();
+      return {
+        ...actual,
+        readFileSync: () => csv,
+        default: { ...actual, readFileSync: () => csv },
+      };
+    });
+    vi.resetModules();
+
+    const { stateSummaries: gapSummaries } = await import("./data");
+    const stateB = gapSummaries.find((s) => s.state === "StateB");
+    if (!stateB) throw new Error("expected StateB in stateSummaries");
+
+    expect(stateB.efficiencyGaps[2010]).toBeDefined();
+    expect(stateB.efficiencyGaps[2012]).toBeUndefined();
+
+    vi.doUnmock("node:fs");
+    vi.resetModules();
   });
 });

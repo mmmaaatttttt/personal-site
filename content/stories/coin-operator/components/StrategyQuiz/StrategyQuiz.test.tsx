@@ -103,6 +103,16 @@ describe("StrategyQuiz", () => {
     expect(getConfirmButton()).not.toBeDisabled();
   });
 
+  it("deselects Skip Bonus Spin when clicked again, re-disabling confirm", () => {
+    start();
+
+    const skip = screen.getByText("Skip Bonus Spin");
+    fireEvent.click(skip);
+    fireEvent.click(skip);
+    expect(skip).toHaveAttribute("aria-pressed", "false");
+    expect(getConfirmButton()).toBeDisabled();
+  });
+
   it("does not reveal feedback until Confirm is clicked", () => {
     start();
 

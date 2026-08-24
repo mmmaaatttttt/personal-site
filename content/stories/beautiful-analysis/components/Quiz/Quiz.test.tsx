@@ -1,7 +1,22 @@
 import { fireEvent, render, screen } from "@testing-library/react";
-import { beforeEach, describe, expect, it, vi } from "vitest";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import "@testing-library/jest-dom/vitest";
+import type { QuizQuestion } from "../../data/ba-quiz";
 import Quiz from "./index";
+
+const { mockQuizData } = vi.hoisted(() => ({
+  mockQuizData: { current: null as unknown as QuizQuestion[] | null },
+}));
+
+vi.mock("../../data/ba-quiz", async (importOriginal) => {
+  const actual = await importOriginal<typeof import("../../data/ba-quiz")>();
+  return {
+    ...actual,
+    get default() {
+      return mockQuizData.current ?? actual.default;
+    },
+  };
+});
 
 // Mock the animated sub-component
 vi.mock("./QuizReviewPanel", () => ({
@@ -28,6 +43,10 @@ vi.mock("@/utils/mathHelpers", () => ({
 describe("Quiz Component", () => {
   beforeEach(() => {
     vi.clearAllMocks();
+  });
+
+  afterEach(() => {
+    mockQuizData.current = null;
   });
 
   it("renders start screen correctly", () => {
@@ -94,5 +113,11 @@ describe("Quiz Component", () => {
     fireEvent.click(screen.getByText("Try Again!"));
 
     expect(screen.getByText("Start Quiz!")).toBeInTheDocument();
+  });
+
+  it("renders nothing when there are no quiz questions available", () => {
+    mockQuizData.current = [];
+    const { container } = render(<Quiz />);
+    expect(container).toBeEmptyDOMElement();
   });
 });

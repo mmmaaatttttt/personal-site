@@ -1,13 +1,26 @@
 import { fireEvent, render, screen } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
 import "@testing-library/jest-dom/vitest";
+import COLORS from "@/utils/styles";
 import type { PollWorkerAgeRow } from "../../data";
 import VotingPollWorkerAge from ".";
 
+interface CapturedPieChartProps {
+  values: number[];
+  colorScale: (i: number) => string;
+}
+
+const { capturedPieChartProps } = vi.hoisted(() => ({
+  capturedPieChartProps: { current: null as unknown as CapturedPieChartProps },
+}));
+
 vi.mock("@/components/story/shared/PieChart", () => ({
-  default: ({ values }: { values: number[] }) => (
-    <div data-testid="pie-chart" data-values={JSON.stringify(values)} />
-  ),
+  default: (props: CapturedPieChartProps) => {
+    capturedPieChartProps.current = props;
+    return (
+      <div data-testid="pie-chart" data-values={JSON.stringify(props.values)} />
+    );
+  },
 }));
 
 vi.mock("@/components/story/shared/PieChart/PieSlice", () => ({
@@ -82,6 +95,33 @@ describe("VotingPollWorkerAge", () => {
     render(<VotingPollWorkerAge data={mockData} states={mockStates} />);
     const select = screen.getByRole("combobox") as HTMLSelectElement;
     fireEvent.change(select, { target: { value: "0" } }); // Alabama
+    expect(select.options[select.selectedIndex].text).toBe("Alabama");
+  });
+
+  it("maps a pie slice index to its age color", () => {
+    render(<VotingPollWorkerAge data={mockData} states={mockStates} />);
+    expect(capturedPieChartProps.current.colorScale(2)).toBe(COLORS.YELLOW);
+  });
+
+  it("falls back to the first state when there are fewer than 3 states", () => {
+    render(<VotingPollWorkerAge data={mockData} states={["Alabama"]} />);
+    const select = screen.getByRole("combobox") as HTMLSelectElement;
+    expect(select.options[select.selectedIndex].text).toBe("Alabama");
+  });
+
+  it("falls back to an empty selection and shows the no-data message when there are no states", () => {
+    render(<VotingPollWorkerAge data={mockData} states={[]} />);
+    expect(screen.getByText(/No data available/)).toBeInTheDocument();
+  });
+
+  it("falls back to the first available state when the selected state disappears from the list", () => {
+    const { rerender } = render(
+      <VotingPollWorkerAge data={mockData} states={mockStates} />,
+    );
+    rerender(
+      <VotingPollWorkerAge data={mockData} states={["Alabama", "Alaska"]} />,
+    );
+    const select = screen.getByRole("combobox") as HTMLSelectElement;
     expect(select.options[select.selectedIndex].text).toBe("Alabama");
   });
 });
