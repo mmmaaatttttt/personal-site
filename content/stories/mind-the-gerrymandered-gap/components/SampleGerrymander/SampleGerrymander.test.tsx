@@ -1,6 +1,25 @@
 import { act, fireEvent, render, screen } from "@testing-library/react";
+import type { ComponentProps } from "react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import SampleGerrymander from ".";
+import type InteractiveGrid from "./InteractiveGrid";
+
+type InteractiveGridProps = ComponentProps<typeof InteractiveGrid>;
+
+const { interactiveGridProps } = vi.hoisted(() => ({
+  interactiveGridProps: { current: null as unknown as InteractiveGridProps },
+}));
+
+vi.mock("./InteractiveGrid", async (importOriginal) => {
+  const actual = await importOriginal<typeof import("./InteractiveGrid")>();
+  const RealInteractiveGrid = actual.default;
+  return {
+    default: (props: InteractiveGridProps) => {
+      interactiveGridProps.current = props;
+      return <RealInteractiveGrid {...props} />;
+    },
+  };
+});
 
 beforeEach(() => {
   localStorage.clear();
@@ -106,5 +125,14 @@ describe("SampleGerrymander", () => {
     fireEvent.pointerDown(targetLine);
 
     expect(targetLine.getAttribute("stroke")).not.toBe(initialStroke);
+  });
+
+  it("ignores a null status update from InteractiveGrid", () => {
+    render(<SampleGerrymander onDistrictCountsChange={vi.fn()} />);
+    const before = interactiveGridProps.current.segments;
+
+    interactiveGridProps.current.onSegmentUpdate(0, 0, null);
+
+    expect(interactiveGridProps.current.segments).toBe(before);
   });
 });
