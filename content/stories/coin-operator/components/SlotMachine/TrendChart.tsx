@@ -86,11 +86,10 @@ const TrendChart: FC<TrendChartProps> = ({ history }) => {
       });
   }, [points, yScale]);
 
-  const linePath =
-    d3Line<Point>()
-      .x((d) => xScale(d.round) as number)
-      .y((d) => animYRef.current[d.round] ?? BOTTOM_Y)
-      .curve(curveLinear)(points) ?? "";
+  const linePath = d3Line<Point>()
+    .x((d) => xScale(d.round) as number)
+    .y((d) => animYRef.current[d.round] ?? BOTTOM_Y)
+    .curve(curveLinear)(points) as string;
 
   const xTickValues = useMemo(
     () => niceIntegerTickValues(0, maxRound, X_TICK_COUNT),

@@ -56,7 +56,7 @@ const PAdicFractalDistance: FC = () => {
           <AnimatePresence>
             {points.map((pt, i) => {
               const startPt = points[getStartIdx(i, prime, points)];
-              const fill = LEVEL_COLORS[pt.fillIdx] ?? COLORS.BLACK;
+              const fill = LEVEL_COLORS[pt.fillIdx];
               const tx = xScale(pt.cx);
               const ty = yScale(pt.cy);
               const sx = xScale(startPt.cx);

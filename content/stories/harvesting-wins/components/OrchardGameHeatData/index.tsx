@@ -66,8 +66,9 @@ const OrchardGameHeatData: FC = () => {
           value={selectedOption.value}
           onChange={(opt) =>
             setSelectedOption(
-              selectOptions.find((o) => o.value === opt.value) ??
-                selectOptions[0],
+              selectOptions.find(
+                (o) => o.value === opt.value,
+              ) as (typeof selectOptions)[number],
             )
           }
           options={selectOptions.map(({ value, label }) => ({
