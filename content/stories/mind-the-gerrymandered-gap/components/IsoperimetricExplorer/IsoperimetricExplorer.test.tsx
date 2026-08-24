@@ -1,6 +1,12 @@
 import { act, fireEvent, render, screen } from "@testing-library/react";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import IsoperimetricExplorer from ".";
+import { crossingExists } from "./crossingHelpers";
+
+vi.mock("./crossingHelpers", async (importOriginal) => {
+  const actual = await importOriginal<typeof import("./crossingHelpers")>();
+  return { ...actual, crossingExists: vi.fn(actual.crossingExists) };
+});
 
 beforeEach(() => {
   SVGSVGElement.prototype.getScreenCTM = vi.fn().mockReturnValue({
@@ -65,34 +71,78 @@ describe("IsoperimetricExplorer", () => {
     expect(document.querySelectorAll("line").length).toBe(6);
   });
 
-  it("ignores a drag that would create a self-intersection", async () => {
+  it("moves a vertex to the dragged position", async () => {
     await act(async () => {
       render(<IsoperimetricExplorer />);
     });
+    const firstVertex = document.querySelectorAll("circle")[1];
 
-    const circles = document.querySelectorAll("circle");
-    // The vertex circles are after the perimeter circle, so index 1–3 are vertices
-    const firstVertex = circles[1];
-
-    const initialCx = firstVertex.getAttribute("cx");
-
-    // Drag vertex to a position that would create a crossing (far outside polygon)
-    await act(async () => {
-      fireEvent.pointerDown(firstVertex, { pointerId: 1 });
-      // Move to the centroid area — for a 3-sided polygon this won't cross,
-      // but a move to a very extreme position will be rejected.
-      fireEvent.pointerMove(firstVertex, {
-        clientX: 300,
-        clientY: 350,
-        pointerId: 1,
-      });
-      fireEvent.pointerUp(firstVertex, { pointerId: 1 });
+    fireEvent.pointerDown(firstVertex, { pointerId: 1 });
+    fireEvent.pointerMove(firstVertex, {
+      clientX: 250,
+      clientY: 200,
+      pointerId: 1,
     });
+    fireEvent.pointerUp(firstVertex, { pointerId: 1 });
 
-    // If crossing was prevented the cx stays at original; if allowed it changes.
-    // The point (300, 350) is near the centroid for a triangle — not a crossing.
-    // This just verifies the drag flow works without throwing.
-    expect(firstVertex.getAttribute("cx")).toBeDefined();
-    void initialCx; // acknowledged
+    expect(firstVertex.getAttribute("cx")).toBe("250");
+    expect(firstVertex.getAttribute("cy")).toBe("200");
+  });
+
+  it("clamps a dragged vertex to the SVG's upper bounds", async () => {
+    await act(async () => {
+      render(<IsoperimetricExplorer />);
+    });
+    const firstVertex = document.querySelectorAll("circle")[1];
+
+    fireEvent.pointerDown(firstVertex, { pointerId: 1 });
+    fireEvent.pointerMove(firstVertex, {
+      clientX: 9999,
+      clientY: 9999,
+      pointerId: 1,
+    });
+    fireEvent.pointerUp(firstVertex, { pointerId: 1 });
+
+    expect(firstVertex.getAttribute("cx")).toBe("592");
+    expect(firstVertex.getAttribute("cy")).toBe("392");
+  });
+
+  it("clamps a dragged vertex to the SVG's lower bounds", async () => {
+    await act(async () => {
+      render(<IsoperimetricExplorer />);
+    });
+    const firstVertex = document.querySelectorAll("circle")[1];
+
+    fireEvent.pointerDown(firstVertex, { pointerId: 1 });
+    fireEvent.pointerMove(firstVertex, {
+      clientX: -9999,
+      clientY: -9999,
+      pointerId: 1,
+    });
+    fireEvent.pointerUp(firstVertex, { pointerId: 1 });
+
+    expect(firstVertex.getAttribute("cx")).toBe("8");
+    expect(firstVertex.getAttribute("cy")).toBe("8");
+  });
+
+  it("ignores a drag that would create a self-intersection", async () => {
+    vi.mocked(crossingExists).mockReturnValueOnce(true);
+    await act(async () => {
+      render(<IsoperimetricExplorer />);
+    });
+    const firstVertex = document.querySelectorAll("circle")[1];
+    const initialCx = firstVertex.getAttribute("cx");
+    const initialCy = firstVertex.getAttribute("cy");
+
+    fireEvent.pointerDown(firstVertex, { pointerId: 1 });
+    fireEvent.pointerMove(firstVertex, {
+      clientX: 300,
+      clientY: 200,
+      pointerId: 1,
+    });
+    fireEvent.pointerUp(firstVertex, { pointerId: 1 });
+
+    expect(firstVertex.getAttribute("cx")).toBe(initialCx);
+    expect(firstVertex.getAttribute("cy")).toBe(initialCy);
   });
 });

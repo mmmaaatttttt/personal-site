@@ -19,6 +19,13 @@ describe("logGamma", () => {
     // logGamma(10) = log(9!) = log(362880)
     expect(logGamma(10)).toBeCloseTo(Math.log(362880), 8);
   });
+
+  it("uses the reflection formula for z < 0.5", () => {
+    expect(logGamma(0.3) + logGamma(0.7)).toBeCloseTo(
+      Math.log(Math.PI / Math.sin(Math.PI * 0.3)),
+      10,
+    );
+  });
 });
 
 describe("betaPdf", () => {
@@ -54,6 +61,22 @@ describe("betaPdf", () => {
     // Beta(2,1): pdf = 2x
     expect(betaPdf(0.5, 2, 1)).toBeCloseTo(1, 8);
     expect(betaPdf(0.25, 2, 1)).toBeCloseTo(0.5, 8);
+  });
+
+  it("is +Infinity at x=0 when a < 1", () => {
+    expect(betaPdf(0, 0.5, 2)).toBe(Infinity);
+  });
+
+  it("equals 1/B(1,b) at x=0 when a = 1", () => {
+    expect(betaPdf(0, 1, 2)).toBeCloseTo(2, 10);
+  });
+
+  it("is +Infinity at x=1 when b < 1", () => {
+    expect(betaPdf(1, 2, 0.5)).toBe(Infinity);
+  });
+
+  it("equals 1/B(a,1) at x=1 when b = 1", () => {
+    expect(betaPdf(1, 2, 1)).toBeCloseTo(2, 10);
   });
 });
 

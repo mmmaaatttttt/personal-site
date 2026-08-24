@@ -5,21 +5,29 @@ import "@testing-library/jest-dom/vitest";
 import type { MapProperties, WeddingData } from "../../types";
 import SelectableUSMap from "./index";
 
+interface CapturedUSMapProps {
+  data: unknown[];
+  fillAccessor: unknown;
+  getTooltipTitle: (properties: MapProperties) => string;
+  getTooltipBody: (properties: MapProperties) => string | string[];
+}
+
+const { usMapProps } = vi.hoisted(() => ({
+  usMapProps: { current: null as unknown as CapturedUSMapProps },
+}));
+
 // Mock components
 vi.mock("@/components/story/shared/USMap", () => ({
-  default: ({
-    data,
-    fillAccessor,
-  }: {
-    data: unknown[];
-    fillAccessor: unknown;
-  }) => (
-    <div
-      data-testid="mock-us-map"
-      data-data-len={data.length}
-      data-fill-accessor-type={typeof fillAccessor}
-    />
-  ),
+  default: (props: CapturedUSMapProps) => {
+    usMapProps.current = props;
+    return (
+      <div
+        data-testid="mock-us-map"
+        data-data-len={props.data.length}
+        data-fill-accessor-type={typeof props.fillAccessor}
+      />
+    );
+  },
 }));
 
 vi.mock("@/components/story/shared/Select", () => ({
@@ -104,5 +112,54 @@ describe("SelectableUSMap Component", () => {
     // we've verified the state update logic works if components re-render with new props
     // In a more complex test, we could spy on the accessor call or colors prop
     expect(select).toHaveValue("v2");
+  });
+
+  it("passes through custom tooltip title and body helpers when provided", () => {
+    const getTooltipTitle = () => "custom title";
+    const getTooltipBody = () => "custom body";
+    render(
+      <SelectableUSMap
+        data={mockData}
+        selectOptions={mockOptions}
+        getTooltipTitle={getTooltipTitle}
+        getTooltipBody={getTooltipBody}
+      />,
+    );
+
+    expect(usMapProps.current.getTooltipTitle).toBe(getTooltipTitle);
+    expect(usMapProps.current.getTooltipBody).toBe(getTooltipBody);
+  });
+
+  describe("default tooltip helpers", () => {
+    it("uses the properties name as the default tooltip title", () => {
+      render(<SelectableUSMap data={mockData} selectOptions={mockOptions} />);
+      expect(
+        usMapProps.current.getTooltipTitle({ name: "Alabama", values: [] }),
+      ).toBe("Alabama");
+    });
+
+    it("falls back to an empty title when the properties name is missing", () => {
+      render(<SelectableUSMap data={mockData} selectOptions={mockOptions} />);
+      expect(usMapProps.current.getTooltipTitle({ name: "", values: [] })).toBe(
+        "",
+      );
+    });
+
+    it("shows an item count as the default tooltip body when values are present", () => {
+      render(<SelectableUSMap data={mockData} selectOptions={mockOptions} />);
+      expect(
+        usMapProps.current.getTooltipBody({
+          name: "Alabama",
+          values: mockData,
+        }),
+      ).toBe("2 items");
+    });
+
+    it("falls back to an empty body when there are no values", () => {
+      render(<SelectableUSMap data={mockData} selectOptions={mockOptions} />);
+      expect(
+        usMapProps.current.getTooltipBody({ name: "Alabama", values: [] }),
+      ).toBe("");
+    });
   });
 });
