@@ -1,11 +1,7 @@
+import { findLargestPower } from "../../padicMath";
+
 function pAdicNorm(num: number, p: number): number {
-  let absN = Math.abs(num);
-  let power = 0;
-  while (absN % p === 0 && absN > 1) {
-    power++;
-    absN /= p;
-  }
-  return p ** -power;
+  return p ** -findLargestPower(num, p);
 }
 
 export function generateGrid(size: number, prime: number): (number | null)[][] {

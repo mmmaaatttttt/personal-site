@@ -1,7 +1,4 @@
-export interface Point {
-  x: number;
-  y: number;
-}
+import type { Point } from "@/types/geometry";
 
 export interface Segment {
   x1: number;

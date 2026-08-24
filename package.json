@@ -35,11 +35,11 @@
     "gray-matter": "^4.0.3",
     "katex": "^0.18.1",
     "lucide-react": "^1.28.0",
-    "next": "16.2.11",
+    "next": "16.3.2",
     "odex": "^3.0.0-rc.4",
     "react": "19.2.8",
     "react-dom": "19.2.8",
-    "react-email": "^6.6.4",
+    "react-email": "^6.9.2",
     "react-select": "^5.10.2",
     "tailwind-merge": "^3.6.0",
     "topojson-client": "^3.1.0"
@@ -48,7 +48,7 @@
     "@argos-ci/playwright": "^7.0.9",
     "@biomejs/biome": "2.5.5",
     "@playwright/test": "^1.61.1",
-    "@react-email/ui": "^6.9.1",
+    "@react-email/ui": "^6.9.2",
     "@tailwindcss/postcss": "^4.3.3",
     "@testing-library/jest-dom": "^6.9.1",
     "@testing-library/react": "^16.3.2",
@@ -56,17 +56,17 @@
     "@types/geojson": "^7946.0.16",
     "@types/node": "^20.19.37",
     "@types/react": "^19.2.17",
-    "@types/react-dom": "^19.2.3",
+    "@types/react-dom": "^19.2.4",
     "@types/topojson-client": "^3.1.5",
     "@types/topojson-specification": "^1.0.5",
     "@vitejs/plugin-react": "^6.0.2",
     "@vitest/coverage-v8": "^4.1.9",
     "husky": "^9.1.7",
-    "jsdom": "^29.1.1",
+    "jsdom": "^30.0.1",
     "tailwindcss": "^4.2.1",
     "tsx": "^4.23.1",
     "typescript": "^6.0.3",
     "vitest": "^4.1.10",
-    "wrangler": "^4.113.0"
+    "wrangler": "^4.123.0"
   }
 }

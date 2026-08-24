@@ -1,6 +1,4 @@
-import { alphaCO, alphaNE } from "../../math";
-
-const SIGNIFICANCE_THRESHOLD = 0.001;
+import { alphaCO, alphaNE, computeOverAutomation } from "../../math";
 
 export interface WedgeData {
   neData: { x: number; y: number }[];
@@ -26,12 +24,12 @@ export function useWedgeData(
     y: alphaCO(savings, demandLoss, difficulty),
   }));
 
-  const currentNE = alphaNE(savings, demandLoss, numFirms, difficulty);
-  const currentCO = alphaCO(savings, demandLoss, difficulty);
-  const overPct =
-    currentCO > SIGNIFICANCE_THRESHOLD
-      ? Math.round(((currentNE - currentCO) / currentCO) * 100)
-      : null;
+  const { currentNE, currentCO, overPct } = computeOverAutomation(
+    savings,
+    demandLoss,
+    numFirms,
+    difficulty,
+  );
 
   return { neData, coData, currentNE, currentCO, overPct };
 }

@@ -74,6 +74,9 @@ vi.mock("@/content/stories/dailemma-2/index.mdx", () => ({
 vi.mock("@/content/stories/coin-operator/index.mdx", () => ({
   default: () => null,
 }));
+vi.mock("@/content/stories/bettor-up/index.mdx", () => ({
+  default: () => null,
+}));
 
 import { notFound } from "next/navigation";
 import {
@@ -165,6 +168,7 @@ describe("ArticlePage", () => {
     "dailemma",
     "dailemma-2",
     "coin-operator",
+    "bettor-up",
   ];
 
   it.each(allStoryModuleSlugs)(

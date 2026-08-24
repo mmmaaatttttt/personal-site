@@ -4,6 +4,7 @@ import {
   linspace,
   ownerProfitChange,
 } from "../../../dailemma/math";
+import { computeYExtent, padYDomain } from "../../math";
 
 const ALPHA_RANGE = linspace(0, 1, 100);
 const Y_PAD_FACTOR = 0.08;
@@ -81,9 +82,8 @@ export function useLevelInstrumentsData(
     ...ubiData.map((d) => d.y),
     ...capitalTaxData.map((d) => d.y),
   ];
-  const yMin = Math.min(0, ...allY);
-  const yMax = Math.max(0, ...allY);
-  const yPad = (yMax - yMin) * Y_PAD_FACTOR;
+  const { yMin, yMax } = computeYExtent(allY, [0], [0]);
+  const yPad = padYDomain(yMin, yMax, Y_PAD_FACTOR);
 
   return {
     baselineData,

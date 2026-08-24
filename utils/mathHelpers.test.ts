@@ -4,6 +4,7 @@ import {
   average,
   calculateWastedVotes,
   choices,
+  clamp,
   combinations,
   cryptoRandom,
   euclideanDistance,
@@ -99,6 +100,25 @@ describe("combinations", () => {
 
   it("is symmetric: n choose k === n choose n-k", () => {
     expect(combinations(8, 3)).toBe(combinations(8, 5));
+  });
+});
+
+describe("clamp", () => {
+  it("returns the value unchanged when within range", () => {
+    expect(clamp(5, 0, 10)).toBe(5);
+  });
+
+  it("clamps to the minimum when below range", () => {
+    expect(clamp(-5, 0, 10)).toBe(0);
+  });
+
+  it("clamps to the maximum when above range", () => {
+    expect(clamp(15, 0, 10)).toBe(10);
+  });
+
+  it("handles boundary values", () => {
+    expect(clamp(0, 0, 10)).toBe(0);
+    expect(clamp(10, 0, 10)).toBe(10);
   });
 });
 

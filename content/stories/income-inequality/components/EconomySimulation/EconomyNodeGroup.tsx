@@ -7,17 +7,9 @@ import { scaleLinear } from "d3-scale";
 import { select } from "d3-selection";
 import { type FC, useEffect, useRef } from "react";
 
+import { darkenHex } from "@/utils/colorHelpers";
 import COLORS from "@/utils/styles";
 import type { CollisionFn, EconomyNode } from "../../data";
-
-/** Simple hex darkening — avoids a polished dependency */
-function darkenHex(hex: string, amount: number): string {
-  const n = parseInt(hex.replace("#", ""), 16);
-  const r = Math.max(0, (n >> 16) - Math.round(255 * amount));
-  const g = Math.max(0, ((n >> 8) & 0xff) - Math.round(255 * amount));
-  const b = Math.max(0, (n & 0xff) - Math.round(255 * amount));
-  return `#${((r << 16) | (g << 8) | b).toString(16).padStart(6, "0")}`;
-}
 
 const NODE_RADIUS = 15;
 

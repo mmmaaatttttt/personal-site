@@ -2,11 +2,51 @@ import { describe, expect, it } from "vitest";
 import { alphaCO, alphaNE } from "../dailemma/math";
 import {
   coalitionAutomationRate,
+  computeYExtent,
   effectiveMarketSize,
   nashRateWithAutomationTax,
   nashRateWithWorkerEquity,
   optimalAutomationTax,
+  padYDomain,
 } from "./math";
+
+describe("computeYExtent", () => {
+  it("returns the plain min/max when no anchors are given", () => {
+    expect(computeYExtent([3, -2, 5])).toEqual({ yMin: -2, yMax: 5 });
+  });
+
+  it("forces an anchor into the min side only when given there", () => {
+    expect(computeYExtent([1, 2, 3], [0])).toEqual({ yMin: 0, yMax: 3 });
+  });
+
+  it("forces an anchor into the max side only when given there", () => {
+    expect(computeYExtent([0.2, 0.5], [], [1])).toEqual({
+      yMin: 0.2,
+      yMax: 1,
+    });
+  });
+
+  it("leaves an anchor with no effect when the data already exceeds it", () => {
+    expect(computeYExtent([-5, 10], [0], [0])).toEqual({ yMin: -5, yMax: 10 });
+  });
+
+  it("applies independent anchors on both sides at once", () => {
+    expect(computeYExtent([0.3, 0.6], [0], [1])).toEqual({
+      yMin: 0,
+      yMax: 1,
+    });
+  });
+});
+
+describe("padYDomain", () => {
+  it("computes padding as a fraction of the domain span", () => {
+    expect(padYDomain(0, 10, 0.08)).toBeCloseTo(0.8);
+  });
+
+  it("returns 0 for a zero-width domain", () => {
+    expect(padYDomain(5, 5, 0.1)).toBe(0);
+  });
+});
 
 describe("coalitionAutomationRate", () => {
   it("at coalitionSize=1 equals the Nash equilibrium rate", () => {
