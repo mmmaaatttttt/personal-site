@@ -89,7 +89,8 @@ export function areaHelper(pts1: Point[], pts2: Point[]): number {
   const slope1 = (pts1[1].y - pts1[0].y) / (pts1[1].x - pts1[0].x);
   const slope2 = (pts2[1].y - pts2[0].y) / (pts2[1].x - pts2[0].x);
   const intersectionX =
-    (slope2 * pts2[0].x - slope1 * pts1[0].x) / (slope2 - slope1);
+    (pts2[0].y - pts1[0].y + slope1 * pts1[0].x - slope2 * pts2[0].x) /
+    (slope1 - slope2);
   const intersectionY = slope1 * (intersectionX - pts1[0].x) + pts1[0].y;
   const intersect: Point = { x: intersectionX, y: intersectionY };
 
