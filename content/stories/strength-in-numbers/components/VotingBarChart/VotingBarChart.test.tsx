@@ -114,3 +114,54 @@ describe("VotingBarChart (party variant)", () => {
     expect(select.value).toBe("1");
   });
 });
+
+describe("VotingBarChart (edge cases)", () => {
+  it("excludes a row whose statistic is not computable for the current year", () => {
+    const partialData: VotingDataRow[] = [
+      makeRow({
+        year: 2008,
+        state: "Alabama",
+        abbreviation: "AL",
+        active_registration: 2800000,
+        eligible_voters_estimated: 3500000,
+      }),
+      makeRow({
+        year: 2008,
+        state: "Alaska",
+        abbreviation: "AK",
+        active_registration: 0,
+        eligible_voters_estimated: 500000,
+      }),
+    ];
+    render(<VotingBarChart data={partialData} variant="voters" />);
+    expect(screen.getByText("AL")).toBeInTheDocument();
+    expect(screen.queryByText("AK")).not.toBeInTheDocument();
+  });
+
+  it("falls back to the first option when the selected value doesn't exist on the new variant, and shows the no-data message", () => {
+    const noPartyData: VotingDataRow[] = [
+      makeRow({
+        year: 2008,
+        state: "Alabama",
+        abbreviation: "AL",
+        dem_percent: 0,
+      }),
+      makeRow({
+        year: 2008,
+        state: "Alaska",
+        abbreviation: "AK",
+        dem_percent: 0,
+      }),
+    ];
+    const { rerender } = render(
+      <VotingBarChart data={noPartyData} variant="voters" />,
+    );
+    rerender(<VotingBarChart data={noPartyData} variant="party" />);
+    expect(
+      screen.getByText("Most Democratic States has no data for 2008."),
+    ).toBeInTheDocument();
+    expect(
+      screen.getByText("Please make another selection."),
+    ).toBeInTheDocument();
+  });
+});

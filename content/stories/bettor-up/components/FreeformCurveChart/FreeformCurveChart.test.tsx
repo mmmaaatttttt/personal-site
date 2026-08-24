@@ -63,6 +63,21 @@ describe("FreeformCurveChart", () => {
     expect(getCurvePath(container).getAttribute("d")).toBe(before);
   });
 
+  it("ignores a pointer-down outside the [0,1] domain", () => {
+    const { container } = render(<FreeformCurveChart />);
+    const before = getCurvePath(container).getAttribute("d");
+    const surface = getDrawSurface(container);
+
+    fireEvent.pointerDown(surface, {
+      clientX: 5000,
+      clientY: 71,
+      pointerId: 1,
+    });
+    fireEvent.pointerMove(surface, { clientX: 388, clientY: 71, pointerId: 1 });
+
+    expect(getCurvePath(container).getAttribute("d")).toBe(before);
+  });
+
   it("stops painting after pointer up", () => {
     const { container } = render(<FreeformCurveChart />);
     const surface = getDrawSurface(container);

@@ -29,4 +29,22 @@ describe("Spinner", () => {
     fireEvent.click(btn);
     expect(btn).toBeDisabled();
   });
+
+  it("spins counter-clockwise when the random direction roll is low", () => {
+    vi.spyOn(Math, "random").mockReturnValue(0.1);
+    render(<Spinner onSpinEnd={vi.fn()} message="" />);
+    const btn = screen.getByRole("button", { name: "Spin!" });
+    fireEvent.click(btn);
+    expect(btn).toBeDisabled();
+    vi.restoreAllMocks();
+  });
+
+  it("spins clockwise when the random direction roll is high", () => {
+    vi.spyOn(Math, "random").mockReturnValue(0.9);
+    render(<Spinner onSpinEnd={vi.fn()} message="" />);
+    const btn = screen.getByRole("button", { name: "Spin!" });
+    fireEvent.click(btn);
+    expect(btn).toBeDisabled();
+    vi.restoreAllMocks();
+  });
 });

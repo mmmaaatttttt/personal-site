@@ -18,7 +18,7 @@ export default function NonlinearGamingRelationships({ idx }: Props) {
       visData={nonlinearVisData[i]}
       compact={i === 1}
       step={STEP}
-      max={maxByIdx[i] ?? 20}
+      max={maxByIdx[i]}
     />
   );
 }
