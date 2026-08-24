@@ -5,7 +5,11 @@ import {
   ownerProfitChange,
   workerIncome,
 } from "../../../dailemma/math";
-import { nashRateWithWorkerEquity } from "../../math";
+import {
+  computeYExtent,
+  nashRateWithWorkerEquity,
+  padYDomain,
+} from "../../math";
 
 const ALPHA_RANGE = linspace(0, 1, 100);
 const Y_PAD_FACTOR = 0.08;
@@ -91,13 +95,16 @@ export function useWorkerEquityData(
     REPLACEMENT_RATE,
   );
 
-  const workerYMin = Math.min(...workerData.map((d) => d.y));
-  const workerYMax = Math.max(...workerData.map((d) => d.y));
-  const ownerYMin = Math.min(0, ...ownerData.map((d) => d.y));
-  const ownerYMax = Math.max(...ownerData.map((d) => d.y));
+  const { yMin: workerYMin, yMax: workerYMax } = computeYExtent(
+    workerData.map((d) => d.y),
+  );
+  const { yMin: ownerYMin, yMax: ownerYMax } = computeYExtent(
+    ownerData.map((d) => d.y),
+    [0],
+  );
   const yMin = Math.min(ownerYMin, workerYMin);
   const yMax = Math.max(ownerYMax, workerYMax);
-  const yPad = (yMax - yMin) * Y_PAD_FACTOR;
+  const yPad = padYDomain(yMin, yMax, Y_PAD_FACTOR);
 
   return {
     ownerData,

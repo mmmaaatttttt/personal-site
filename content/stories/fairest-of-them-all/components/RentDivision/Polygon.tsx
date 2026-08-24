@@ -1,9 +1,5 @@
 import type { FC } from "react";
-
-interface Point {
-  x: number;
-  y: number;
-}
+import type { Point } from "@/types/geometry";
 
 interface PolygonProps {
   fill?: string;

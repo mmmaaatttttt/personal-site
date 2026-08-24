@@ -5,6 +5,7 @@ import {
   ownerProfitChange,
   workerIncome,
 } from "../../../dailemma/math";
+import { computeYExtent, padYDomain } from "../../math";
 
 const ALPHA_RANGE = linspace(0, 1, 100);
 const Y_PAD_FACTOR = 0.08;
@@ -70,14 +71,16 @@ export function useWelfareChartData(
   const neWorkerIncome = workerIncome(marketOutcome, replacementRate);
 
   const ownerY = ownerData.map((d) => d.y);
-  const yMin = Math.min(0, ...ownerY);
-  const yMax = Math.max(1, ...ownerY);
-  const yPad = (yMax - yMin) * Y_PAD_FACTOR;
+  const { yMin, yMax } = computeYExtent(ownerY, [0], [1]);
+  const yPad = padYDomain(yMin, yMax, Y_PAD_FACTOR);
 
   const workerY = workerData.map((d) => d.y);
-  const workerYMin = Math.min(0, ...workerY);
-  const workerYMax = Math.max(1, ...workerY);
-  const workerYPad = (workerYMax - workerYMin) * Y_PAD_FACTOR;
+  const { yMin: workerYMin, yMax: workerYMax } = computeYExtent(
+    workerY,
+    [0],
+    [1],
+  );
+  const workerYPad = padYDomain(workerYMin, workerYMax, Y_PAD_FACTOR);
 
   return {
     ownerData,

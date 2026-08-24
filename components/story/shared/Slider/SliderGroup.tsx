@@ -1,6 +1,7 @@
 "use client";
 
 import type { FC } from "react";
+import { cn } from "@/lib/utils";
 import FlexContainer from "../FlexContainer";
 import LabeledSlider from "./LabeledSlider";
 
@@ -31,7 +32,10 @@ const SliderGroup: FC<SliderGroupProps> = ({
     const title =
       typeof d.title === "function" ? d.title(d.value) : d.title || "";
     return (
-      <div key={d.key ?? i} className={`${compact ? "my-0" : "m-1"} flex-1`}>
+      <div
+        key={d.key ?? i}
+        className={cn(compact ? "my-0" : "m-1", "flex-1 min-w-0")}
+      >
         <LabeledSlider
           min={d.min}
           max={d.max}
@@ -48,7 +52,12 @@ const SliderGroup: FC<SliderGroupProps> = ({
   });
 
   return (
-    <FlexContainer column={column} cross="center" flex={data.length}>
+    <FlexContainer
+      column={column}
+      cross="center"
+      flex={data.length}
+      className="min-w-0"
+    >
       {sliders}
     </FlexContainer>
   );

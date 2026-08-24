@@ -1,4 +1,31 @@
-import { clamp01 } from "../dailemma/math";
+import { clamp } from "@/utils/mathHelpers";
+
+/**
+ * Min/max of a series of chart y-values, each side optionally forced to
+ * include a set of anchor values (e.g. [0] so a profit/loss chart always
+ * shows the zero line, or [0, 1] so a probability-range chart always shows
+ * both ends). Anchors are separate per side since not every chart wants the
+ * same forcing on both ends.
+ */
+export function computeYExtent(
+  values: number[],
+  minAnchors: number[] = [],
+  maxAnchors: number[] = [],
+): { yMin: number; yMax: number } {
+  return {
+    yMin: Math.min(...values, ...minAnchors),
+    yMax: Math.max(...values, ...maxAnchors),
+  };
+}
+
+/** Padding to add above/below a [yMin, yMax] domain, as a fraction of its span. */
+export function padYDomain(
+  yMin: number,
+  yMax: number,
+  padFactor: number,
+): number {
+  return (yMax - yMin) * padFactor;
+}
 
 /**
  * Automation rate chosen by a coalition of `coalitionSize` firms that jointly
@@ -16,8 +43,10 @@ export function coalitionAutomationRate(
   if (difficulty === 0) {
     return savings > (coalitionSize * demandLoss) / numFirms ? 1 : 0;
   }
-  return clamp01(
+  return clamp(
     (savings - (coalitionSize * demandLoss) / numFirms) / difficulty,
+    0,
+    1,
   );
 }
 
@@ -47,8 +76,10 @@ export function nashRateWithAutomationTax(
   if (difficulty === 0) {
     return savings - automationTaxRate > demandLoss / numFirms ? 1 : 0;
   }
-  return clamp01(
+  return clamp(
     (savings - automationTaxRate - demandLoss / numFirms) / difficulty,
+    0,
+    1,
   );
 }
 
@@ -85,5 +116,5 @@ export function nashRateWithWorkerEquity(
     sectorSpendingFraction,
   );
   if (difficulty === 0) return savings > demandLoss / effN ? 1 : 0;
-  return clamp01((savings - demandLoss / effN) / difficulty);
+  return clamp((savings - demandLoss / effN) / difficulty, 0, 1);
 }

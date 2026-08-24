@@ -5,13 +5,13 @@ export interface PAdicPoint {
   num: number;
 }
 
-function largestPrimePower(n: number, p: number): number {
+function magnitudeExponent(n: number, p: number): number {
   if (n === 0) return 0;
   return Math.floor(Math.log(n) / Math.log(p));
 }
 
 function pAdicExpansion(num: number, prime: number): number[] {
-  const maxPow = largestPrimePower(num, prime);
+  const maxPow = magnitudeExponent(num, prime);
   const coeffs = Array.from<number>({ length: maxPow + 1 }).fill(0);
   let remaining = num;
   for (let exp = coeffs.length - 1; exp > 0; exp--) {
@@ -52,7 +52,7 @@ export function generatePAdicPoints(
     points.push({
       cx: pointSum(points, nextNum, highestPower, lastDigit, prime, "cx"),
       cy: pointSum(points, nextNum, highestPower, lastDigit, prime, "cy"),
-      fillIdx: Math.floor(Math.log(nextNum) / Math.log(prime)),
+      fillIdx: magnitudeExponent(nextNum, prime),
       num: nextNum,
     });
   }
@@ -65,7 +65,7 @@ export function getStartIdx(
   points: PAdicPoint[],
 ): number {
   let idx = 0;
-  const exp = largestPrimePower(num, prime);
+  const exp = magnitudeExponent(num, prime);
   if (exp > 0) idx = num % prime ** exp;
   return Math.min(idx, points.length - 1);
 }

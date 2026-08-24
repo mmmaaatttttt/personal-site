@@ -82,8 +82,8 @@ describe("ScatterPoint", () => {
       </TestSvg>,
     );
     const circle = container.querySelector("circle");
-    // darken(#ffffff, 0.3) = #b2b2b2
-    expect(circle?.getAttribute("stroke")).toBe("#b2b2b2");
+    // darkenHex(#ffffff, 0.3): 255*0.7=178.5, rounds to 179 = 0xb3
+    expect(circle?.getAttribute("stroke")).toBe("#b3b3b3");
     expect(circle?.getAttribute("stroke-width")).toBe("1");
   });
 

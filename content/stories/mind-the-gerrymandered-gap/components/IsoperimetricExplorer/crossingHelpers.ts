@@ -1,9 +1,5 @@
+import type { Point } from "@/types/geometry";
 import { mod } from "@/utils/mathHelpers";
-
-interface Point {
-  x: number;
-  y: number;
-}
 
 interface Segment {
   x1: number;

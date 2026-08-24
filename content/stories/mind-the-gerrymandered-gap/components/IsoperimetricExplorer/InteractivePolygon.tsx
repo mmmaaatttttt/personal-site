@@ -1,10 +1,6 @@
 import type { FC } from "react";
 import DraggableCircle from "@/components/story/shared/DraggableCircle";
-
-interface Point {
-  x: number;
-  y: number;
-}
+import type { Point } from "@/types/geometry";
 
 interface InteractivePolygonProps {
   points: Point[];

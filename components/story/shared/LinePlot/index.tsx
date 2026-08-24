@@ -2,12 +2,8 @@ import type { AxisScale } from "d3-axis";
 import { curveLinear, curveNatural, line } from "d3-shape";
 import type { FC } from "react";
 import { useChart } from "@/context/ChartContext";
+import type { Point } from "@/types/geometry";
 import COLORS from "@/utils/styles";
-
-interface Point {
-  x: number;
-  y: number;
-}
 
 interface LinePlotProps {
   curve?: "curveNatural" | "curveLinear";
@@ -42,6 +38,7 @@ const LinePlot: FC<LinePlotProps> = ({
   const linePath = line<Point>()
     .x((d) => resolvedXScale(d.x) ?? 0)
     .y((d) => resolvedYScale(d.y) ?? 0)
+    .defined((d) => !Number.isNaN(d.x) && !Number.isNaN(d.y))
     .curve(curves[curve]);
 
   const truncateData = () =>

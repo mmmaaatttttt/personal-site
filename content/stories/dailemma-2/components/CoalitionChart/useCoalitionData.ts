@@ -4,7 +4,11 @@ import {
   linspace,
   ownerProfitChange,
 } from "../../../dailemma/math";
-import { coalitionAutomationRate } from "../../math";
+import {
+  coalitionAutomationRate,
+  computeYExtent,
+  padYDomain,
+} from "../../math";
 
 const ALPHA_RANGE = linspace(0, 1, 100);
 const Y_PAD_FACTOR = 0.08;
@@ -64,9 +68,8 @@ export function useCoalitionData(
   );
 
   const ownerY = ownerData.map((d) => d.y);
-  const yMin = Math.min(0, ...ownerY);
-  const yMax = Math.max(0, ...ownerY);
-  const yPad = (yMax - yMin) * Y_PAD_FACTOR;
+  const { yMin, yMax } = computeYExtent(ownerY, [0], [0]);
+  const yPad = padYDomain(yMin, yMax, Y_PAD_FACTOR);
 
   return {
     ownerData,

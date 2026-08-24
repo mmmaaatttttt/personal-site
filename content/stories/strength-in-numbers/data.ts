@@ -1,5 +1,6 @@
 import fs from "node:fs";
 import path from "node:path";
+import { average } from "@/utils/mathHelpers";
 
 export interface VoterStateRow {
   state: string;
@@ -150,14 +151,8 @@ function computeVoterTableData(rows: RawRow[]): VoterStateRow[] {
       .map((d) => d.election_participants / d.eligible_voters_estimated)
       .filter((n) => n !== 0 && Number.isFinite(n));
 
-    const averageSaturation =
-      saturations.length > 0
-        ? saturations.reduce((a, b) => a + b, 0) / saturations.length
-        : 0;
-    const averageTurnout =
-      turnouts.length > 0
-        ? turnouts.reduce((a, b) => a + b, 0) / turnouts.length
-        : 0;
+    const averageSaturation = average(saturations);
+    const averageTurnout = average(turnouts);
 
     return { state, averageSaturation, averageTurnout };
   });

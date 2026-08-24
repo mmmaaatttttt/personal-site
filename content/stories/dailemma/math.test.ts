@@ -2,25 +2,11 @@ import { describe, expect, it } from "vitest";
 import {
   alphaCO,
   alphaNE,
-  clamp01,
   linspace,
   ownerProfitChange,
   pdPayoffs,
   workerIncome,
 } from "./math";
-
-describe("clamp01", () => {
-  it("passes through values in [0,1]", () => {
-    expect(clamp01(0)).toBe(0);
-    expect(clamp01(0.5)).toBe(0.5);
-    expect(clamp01(1)).toBe(1);
-  });
-
-  it("clamps values outside [0,1]", () => {
-    expect(clamp01(-0.1)).toBe(0);
-    expect(clamp01(1.5)).toBe(1);
-  });
-});
 
 describe("alphaNE", () => {
   it("matches paper baseline: s=0.7, ell=0.35, N=7, k=1 → 0.65", () => {
