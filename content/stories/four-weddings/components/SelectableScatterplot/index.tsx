@@ -61,7 +61,7 @@ const SelectableScatterplot: FC<SelectableScatterplotProps> = ({
     .map((d) => ({
       cx: accessorX(d) || 0,
       cy: accessorY(d) || 0,
-      area: accessorR(d) || DEFAULT_DOT_AREA,
+      area: accessorR(d) as number,
       fill: colorScale(d.ranking),
       key: `${d.season}:${d.episode} - ${d.name}`,
     }));

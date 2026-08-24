@@ -5,11 +5,26 @@ import "@testing-library/jest-dom/vitest";
 import type { HistogramOption, WeddingData } from "../../types";
 import SelectableHistogram from "./index";
 
+interface CapturedBarGraphProps {
+  barData: { height: number }[];
+  barLabel: (bar: { height: number }) => number;
+}
+
+const { capturedBarGraphProps } = vi.hoisted(() => ({
+  capturedBarGraphProps: { current: null as unknown as CapturedBarGraphProps },
+}));
+
 // Mock components
 vi.mock("@/components/story/shared/BarGraph", () => ({
-  default: ({ barData }: { barData: unknown[] }) => (
-    <div data-testid="mock-bar-graph" data-bar-data={JSON.stringify(barData)} />
-  ),
+  default: (props: CapturedBarGraphProps) => {
+    capturedBarGraphProps.current = props;
+    return (
+      <div
+        data-testid="mock-bar-graph"
+        data-bar-data={JSON.stringify(props.barData)}
+      />
+    );
+  },
 }));
 
 vi.mock("@/components/story/shared/Select", () => ({
@@ -138,5 +153,23 @@ describe("SelectableHistogram Component", () => {
     validBins.forEach((bin) => {
       expect(bin.x1 - bin.x0).toBe(firstWidth);
     });
+  });
+
+  it("labels each bar with its height", () => {
+    render(<SelectableHistogram data={mockData} selectOptions={mockOptions} />);
+    expect(capturedBarGraphProps.current.barLabel({ height: 3 })).toBe(3);
+  });
+
+  it("bins a value of exactly 0 without dropping it", () => {
+    const zeroData = [{ value: 0 }, { value: 10 }] as unknown as WeddingData[];
+    const { getByTestId } = render(
+      <SelectableHistogram data={zeroData} selectOptions={mockOptions} />,
+    );
+    const graph = getByTestId("mock-bar-graph");
+    const barData: BarDatum[] = JSON.parse(
+      graph.getAttribute("data-bar-data") || "[]",
+    );
+    const totalBinned = barData.reduce((sum, b) => sum + b.height, 0);
+    expect(totalBinned).toBe(2);
   });
 });

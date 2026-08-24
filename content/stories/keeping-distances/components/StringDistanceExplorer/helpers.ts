@@ -53,9 +53,6 @@ function _editDistance(
     str1[len1 - 1] === str2[len2 - 2] &&
     str1[len1 - 2] === str2[len2 - 1]
   ) {
-    memo[`${len1 - 2}|${len2 - 2}`] =
-      memo[`${len1 - 2}|${len2 - 2}`] ??
-      _editDistance(str1, str2, len1 - 2, len2 - 2, memo, swapsAllowed);
     dist = Math.min(dist, memo[`${len1 - 2}|${len2 - 2}`] + cost);
   }
 

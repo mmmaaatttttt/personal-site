@@ -100,7 +100,7 @@ const VotingLineChart = ({
       const targetOpacity = point ? 1 : 0;
 
       controls.push(
-        animate(animCyRef.current[year] ?? BOTTOM_Y, targetCy, {
+        animate(animCyRef.current[year], targetCy, {
           duration: 0.35,
           ease: "easeInOut",
           onUpdate: (v) => {
@@ -111,7 +111,7 @@ const VotingLineChart = ({
       );
 
       controls.push(
-        animate(animOpacityRef.current[year] ?? 0, targetOpacity, {
+        animate(animOpacityRef.current[year], targetOpacity, {
           duration: 0.35,
           ease: "easeInOut",
           onUpdate: (v) => {
@@ -131,14 +131,14 @@ const VotingLineChart = ({
   // with the circles. Filter out years whose opacity is near zero so the path
   // doesn't include invisible phantom points.
   const visibleYears = YEARS.filter(
-    (year) => (animOpacityRef.current[year] ?? 0) > 0.01,
+    (year) => animOpacityRef.current[year] > 0.01,
   );
   const linePath =
     visibleYears.length > 0
       ? (d3Line<number>()
           .x((year) => xScale(year) as number)
-          .y((year) => animCyRef.current[year] ?? BOTTOM_Y)
-          .curve(curveLinear)(visibleYears) ?? "")
+          .y((year) => animCyRef.current[year])
+          .curve(curveLinear)(visibleYears) as string)
       : "";
 
   return (
@@ -178,10 +178,10 @@ const VotingLineChart = ({
               <circle
                 key={year}
                 cx={xScale(year) as number}
-                cy={animCyRef.current[year] ?? BOTTOM_Y}
+                cy={animCyRef.current[year]}
                 r={10}
                 fill={color}
-                opacity={animOpacityRef.current[year] ?? 0}
+                opacity={animOpacityRef.current[year]}
               />
             ))}
           </Graph>

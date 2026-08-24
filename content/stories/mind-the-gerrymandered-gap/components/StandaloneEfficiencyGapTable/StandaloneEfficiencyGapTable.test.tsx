@@ -32,6 +32,14 @@ describe("StandaloneEfficiencyGapTable", () => {
     ).toBeInTheDocument();
   });
 
+  it("falls back to null when the saved value isn't valid JSON", () => {
+    localStorage.setItem(GERRYMANDER_COUNTS_KEY, "not valid json");
+    render(<StandaloneEfficiencyGapTable />);
+    expect(
+      screen.queryByText(/sample efficiency gap calculation/i),
+    ).not.toBeInTheDocument();
+  });
+
   it("updates when the gerrymander counts event fires", async () => {
     render(<StandaloneEfficiencyGapTable />);
 

@@ -45,4 +45,14 @@ describe("FourWeddingsVisualization Dispatcher", () => {
     );
     expect(getByTestId("mock-scatter")).toBeInTheDocument();
   });
+
+  it("renders nothing for an unrecognized vizType", () => {
+    const { container } = render(
+      <FourWeddingsVisualization
+        vizType={"invalid" as unknown as "map"}
+        vizIndex={1}
+      />,
+    );
+    expect(container).toBeEmptyDOMElement();
+  });
 });

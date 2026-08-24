@@ -154,4 +154,27 @@ describe("SelectableScatterplot Component", () => {
     expect(scatterData[0].cx).toBe(1000); // budget (still first option)
     expect(scatterData[0].cy).toBe(1000); // budget
   });
+
+  it("plots a zero value on either axis rather than dropping the point", () => {
+    const zeroData = [
+      { season: 1, episode: 1, name: "W1", ranking: 1, budget: 0, guests: 0 },
+    ] as unknown as WeddingData[];
+
+    const { getByTestId } = render(
+      <SelectableScatterplot
+        data={zeroData}
+        selectOptions={mockOptions}
+        graphOptions={graphOptions}
+      />,
+    );
+
+    const plot = getByTestId("mock-scatterplot");
+    const scatterData = JSON.parse(
+      plot.getAttribute("data-scatter-data") || "[]",
+    );
+
+    expect(scatterData).toHaveLength(1);
+    expect(scatterData[0].cx).toBe(0);
+    expect(scatterData[0].cy).toBe(0);
+  });
 });

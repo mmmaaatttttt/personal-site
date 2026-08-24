@@ -146,10 +146,8 @@ const Quiz: FC<QuizProps> = ({
           type="button"
           disabled={!selectedAnswer}
           onClick={() => {
-            if (selectedAnswer) {
-              setAnswers([...answers, selectedAnswer]);
-              setSelectedAnswer(null);
-            }
+            setAnswers([...answers, selectedAnswer as string]);
+            setSelectedAnswer(null);
           }}
           className="mt-8 rounded-md bg-link px-8 py-3 font-semibold text-white shadow-md transition hover:bg-orange-600 disabled:cursor-not-allowed disabled:bg-gray-300 disabled:shadow-none text-sm md:text-base"
         >

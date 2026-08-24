@@ -70,4 +70,26 @@ describe("MarketDataExplorer", () => {
     const updatedCx = scrubber.getAttribute("cx");
     expect(updatedCx).not.toBe(initialCx);
   });
+
+  it("shows a tooltip near the S&P 500 point on focus and hides it on blur", () => {
+    render(<MarketDataExplorer />);
+    const point = screen.getByRole("button", { name: /S&P 500 at/ });
+
+    fireEvent.focus(point);
+    expect(screen.getByText(/S&P 500: /)).toBeInTheDocument();
+
+    fireEvent.blur(point);
+    expect(screen.queryByText(/S&P 500: /)).not.toBeInTheDocument();
+  });
+
+  it("shows a tooltip near the job openings point on focus and hides it on blur", () => {
+    render(<MarketDataExplorer />);
+    const point = screen.getByRole("button", { name: /Job openings at/ });
+
+    fireEvent.focus(point);
+    expect(screen.getByText(/Job openings: /)).toBeInTheDocument();
+
+    fireEvent.blur(point);
+    expect(screen.queryByText(/Job openings: /)).not.toBeInTheDocument();
+  });
 });

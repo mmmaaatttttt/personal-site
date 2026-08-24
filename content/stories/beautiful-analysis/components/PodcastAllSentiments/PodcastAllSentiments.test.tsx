@@ -1,9 +1,25 @@
 import { render, screen } from "@testing-library/react";
 import type { ReactNode } from "react";
-import { beforeEach, describe, expect, it, vi } from "vitest";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import "@testing-library/jest-dom/vitest";
 import type { ScaleLinear } from "d3-scale";
+import type { EpisodeSentiment } from "../../data/ba-all-sentiment";
 import PodcastAllSentiments from "./index";
+
+const { mockBaAllSentiment } = vi.hoisted(() => ({
+  mockBaAllSentiment: { current: null as unknown as EpisodeSentiment[] | null },
+}));
+
+vi.mock("../../data/ba-all-sentiment", async (importOriginal) => {
+  const actual =
+    await importOriginal<typeof import("../../data/ba-all-sentiment")>();
+  return {
+    ...actual,
+    get default() {
+      return mockBaAllSentiment.current ?? actual.default;
+    },
+  };
+});
 
 // Mock the animated sub-component
 vi.mock("./SentimentCircle", () => ({
@@ -54,6 +70,10 @@ describe("PodcastAllSentiments Component", () => {
     vi.clearAllMocks();
   });
 
+  afterEach(() => {
+    mockBaAllSentiment.current = null;
+  });
+
   it("renders initial episode and sentiment dots", () => {
     render(<PodcastAllSentiments />);
 
@@ -81,5 +101,11 @@ describe("PodcastAllSentiments Component", () => {
 
     // Let's assume we can change selection via fireEvent if we find the right element.
     // To keep it simple, let's verify that the component is reactive to state changes.
+  });
+
+  it("renders nothing when there is no episode data", () => {
+    mockBaAllSentiment.current = [];
+    const { container } = render(<PodcastAllSentiments />);
+    expect(container).toBeEmptyDOMElement();
   });
 });

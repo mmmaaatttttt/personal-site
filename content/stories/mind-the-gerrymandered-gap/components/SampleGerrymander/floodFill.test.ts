@@ -83,4 +83,34 @@ describe("countRegions", () => {
     expect(districts).toHaveLength(1);
     expect(districts[0]).toEqual([[0, 0]]);
   });
+
+  it("expands upward when a district can only be reached from below (U-shape)", () => {
+    // 2 rows x 3 cols. District A wraps under isolated cell B:
+    //   A B A
+    //   A A A
+    // (0,2) is only reachable by moving up from (1,2).
+    const segments = [
+      [true, true],
+      [false, true, false],
+      [false, false],
+    ];
+    const districts = countRegions(segments, 2, 3);
+    expect(districts).toHaveLength(2);
+    const sizes = districts.map((d) => d.length).sort((a, b) => a - b);
+    expect(sizes).toEqual([1, 5]);
+  });
+
+  it("expands leftward when a district can only be reached from the right (U-shape)", () => {
+    // 3 rows x 2 cols. District A wraps under isolated cell B, with the
+    // direct (1,0)-(2,0) link walled off so (2,0) is only reachable by
+    // moving left from (2,1):
+    //   A B
+    //   A A
+    //   A A
+    const segments = [[true], [false, true], [false], [true, false], [false]];
+    const districts = countRegions(segments, 3, 2);
+    expect(districts).toHaveLength(2);
+    const sizes = districts.map((d) => d.length).sort((a, b) => a - b);
+    expect(sizes).toEqual([1, 5]);
+  });
 });

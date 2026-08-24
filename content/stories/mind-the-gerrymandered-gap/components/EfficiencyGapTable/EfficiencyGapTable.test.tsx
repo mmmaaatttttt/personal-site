@@ -53,6 +53,14 @@ describe("EfficiencyGapTable", () => {
     expect(screen.getByText(/in favor of/i)).toBeInTheDocument();
   });
 
+  it("shows 'in favor of red' copy when the gap favors red", () => {
+    const districtCounts: [number, number][] = Array.from({ length: 6 }, () => [
+      4, 5,
+    ]);
+    render(<EfficiencyGapTable districtCounts={districtCounts} />);
+    expect(screen.getByText(/in favor of red/i)).toBeInTheDocument();
+  });
+
   it("shows no 'in favor of' copy when wasted votes are equal", () => {
     // Equal wasted votes: each district 5v5 split is impossible in integer math with odd total
     // Use a tie: 3 blue wins, 3 red wins with symmetric margins

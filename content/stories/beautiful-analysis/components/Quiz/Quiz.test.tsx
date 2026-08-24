@@ -1,7 +1,22 @@
 import { fireEvent, render, screen } from "@testing-library/react";
-import { beforeEach, describe, expect, it, vi } from "vitest";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import "@testing-library/jest-dom/vitest";
+import type { QuizQuestion } from "../../data/ba-quiz";
 import Quiz from "./index";
+
+const { mockQuizData } = vi.hoisted(() => ({
+  mockQuizData: { current: null as unknown as QuizQuestion[] | null },
+}));
+
+vi.mock("../../data/ba-quiz", async (importOriginal) => {
+  const actual = await importOriginal<typeof import("../../data/ba-quiz")>();
+  return {
+    ...actual,
+    get default() {
+      return mockQuizData.current ?? actual.default;
+    },
+  };
+});
 
 // Mock the animated sub-component
 vi.mock("./QuizReviewPanel", () => ({
@@ -28,6 +43,10 @@ vi.mock("@/utils/mathHelpers", () => ({
 describe("Quiz Component", () => {
   beforeEach(() => {
     vi.clearAllMocks();
+  });
+
+  afterEach(() => {
+    mockQuizData.current = null;
   });
 
   it("renders start screen correctly", () => {
@@ -61,6 +80,29 @@ describe("Quiz Component", () => {
     expect(screen.getByTestId("mock-review-panel")).toBeInTheDocument();
   });
 
+  it("navigates between review results with the prev/next buttons", () => {
+    render(<Quiz title="Test Quiz" maxQuestions={2} />);
+
+    fireEvent.click(screen.getByText("Start Quiz!"));
+    fireEvent.click(screen.getAllByRole("button")[0]);
+    fireEvent.click(screen.getByText("Next Question"));
+    fireEvent.click(screen.getAllByRole("button")[0]);
+    fireEvent.click(screen.getByText("Show My Results"));
+
+    const prevButton = screen.getByLabelText("Previous question results");
+    const nextButton = screen.getByLabelText("Next question results");
+
+    expect(prevButton).toBeDisabled();
+    expect(nextButton).not.toBeDisabled();
+
+    fireEvent.click(nextButton);
+    expect(nextButton).toBeDisabled();
+    expect(prevButton).not.toBeDisabled();
+
+    fireEvent.click(prevButton);
+    expect(prevButton).toBeDisabled();
+  });
+
   it("allows resetting the quiz", () => {
     render(<Quiz title="Test Quiz" maxQuestions={1} />);
     fireEvent.click(screen.getByText("Start Quiz!"));
@@ -71,5 +113,11 @@ describe("Quiz Component", () => {
     fireEvent.click(screen.getByText("Try Again!"));
 
     expect(screen.getByText("Start Quiz!")).toBeInTheDocument();
+  });
+
+  it("renders nothing when there are no quiz questions available", () => {
+    mockQuizData.current = [];
+    const { container } = render(<Quiz />);
+    expect(container).toBeEmptyDOMElement();
   });
 });

@@ -1,0 +1,43 @@
+import type { VotingDataRow } from "./data";
+
+export const richVotingRow: VotingDataRow = {
+  year: 2016,
+  state: "Alabama",
+  abbreviation: "AL",
+  num_jurisdictions: 67,
+  active_registration: 3000000,
+  election_participants: 2000000,
+  eligible_voters_estimated: 3500000,
+  jurisdictions_with_poll_worker_count: 30,
+  participants_in_jurisdictions_with_poll_worker_info: 1500000,
+  participants_in_jurisdictions_with_polling_place_info: 1500000,
+  polling_places: 2000,
+  poll_workers: 8000,
+  difficulty_very_difficult: 5,
+  difficulty_somewhat_difficult: 10,
+  difficulty_neither_difficult_nor_easy: 15,
+  difficulty_somewhat_easy: 20,
+  difficulty_very_easy: 25,
+  dem_percent: 35,
+  rep_percent: 55,
+  ages: [10, 50, 100, 150, 80, 30],
+};
+
+export const starvedVotingRow: VotingDataRow = {
+  ...richVotingRow,
+  active_registration: 0,
+  election_participants: 0,
+  eligible_voters_estimated: 0,
+  num_jurisdictions: 0,
+  jurisdictions_with_poll_worker_count: 0,
+  participants_in_jurisdictions_with_poll_worker_info: 0,
+  participants_in_jurisdictions_with_polling_place_info: 0,
+  polling_places: 0,
+  poll_workers: 0,
+  difficulty_very_difficult: 0,
+  difficulty_somewhat_difficult: 0,
+  difficulty_neither_difficult_nor_easy: 0,
+  difficulty_somewhat_easy: 0,
+  difficulty_very_easy: 0,
+  ages: [0, 0, 0, 0, 0, 0],
+};

@@ -110,6 +110,35 @@ describe("areaHelper", () => {
     // ∫|x - (4-x)| dx on [0,4] = ∫|2x-4| dx = two triangles of area 4 each = 8
     expect(areaHelper(f1, f2)).toBeCloseTo(8);
   });
+
+  it("computes the correct crossing point for an asymmetric crossing", () => {
+    const f1 = [
+      { x: 0, y: 5 },
+      { x: 2.5, y: 2.5 },
+      { x: 5, y: 0 },
+    ];
+    const f2 = [
+      { x: 0, y: 0 },
+      { x: 2.5, y: 1.5 },
+      { x: 5, y: 3 },
+    ];
+    // f1(x) = 5 - x, f2(x) = 0.6x, crossing at x = 25/8 = 3.125, y = 1.875.
+    // Left triangle: base 5 (the y=0..5 gap at x=0), height 3.125 → area 7.8125.
+    // Right triangle: base 3 (the y=0..3 gap at x=5), height 1.875 → area 2.8125.
+    expect(l1Norm(f1, f2)).toBeCloseTo(10.625);
+  });
+
+  it("falls back to 0 when the post-crossing area difference is exactly zero", () => {
+    const pts1 = [
+      { x: -2, y: -6 },
+      { x: 2, y: 6 },
+    ];
+    const pts2 = [
+      { x: -3, y: -4 },
+      { x: 3, y: 4 },
+    ];
+    expect(areaHelper(pts1, pts2)).toBe(0);
+  });
 });
 
 describe("lInfNormEndpoints", () => {
@@ -146,6 +175,23 @@ describe("lInfNormEndpoints", () => {
     const seg2 = lInfNormEndpoints(b, a);
     expect(Math.abs(seg1.y2 - seg1.y1)).toBeCloseTo(
       Math.abs(seg2.y2 - seg2.y1),
+    );
+  });
+
+  it("swaps arguments internally when pts1's midpoint is to the right of pts2's", () => {
+    const pts1 = [
+      { x: 0, y: 0 },
+      { x: 60, y: 10 },
+      { x: 100, y: 0 },
+    ];
+    const pts2 = [
+      { x: 0, y: 30 },
+      { x: 40, y: 11 },
+      { x: 100, y: 1 },
+    ];
+    const seg = lInfNormEndpoints(pts1, pts2);
+    expect(Math.abs(seg.y2 - seg.y1)).toBeGreaterThanOrEqual(
+      Math.abs(pts2[0].y - pts1[0].y) - 0.01,
     );
   });
 });

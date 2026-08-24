@@ -1,7 +1,39 @@
 import { fireEvent, render, screen } from "@testing-library/react";
-import { beforeEach, describe, expect, it, vi } from "vitest";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import "@testing-library/jest-dom/vitest";
+import type { EpisodeSentimentCounts } from "../../data/ba-sentiment-counts";
 import SelectableMultiBarGraph from "./index";
+
+const { mockBaSentimentCounts, mockSentimentOptions } = vi.hoisted(() => ({
+  mockBaSentimentCounts: {
+    current: null as unknown as EpisodeSentimentCounts[] | null,
+  },
+  mockSentimentOptions: {
+    current: null as unknown as { value: string; label: string }[][] | null,
+  },
+}));
+
+vi.mock("../../data/ba-sentiment-counts", async (importOriginal) => {
+  const actual =
+    await importOriginal<typeof import("../../data/ba-sentiment-counts")>();
+  return {
+    ...actual,
+    get default() {
+      return mockBaSentimentCounts.current ?? actual.default;
+    },
+  };
+});
+
+vi.mock("../../data/beautiful-analysis", async (importOriginal) => {
+  const actual =
+    await importOriginal<typeof import("../../data/beautiful-analysis")>();
+  return {
+    ...actual,
+    get defaultSentimentOptions() {
+      return mockSentimentOptions.current ?? actual.defaultSentimentOptions;
+    },
+  };
+});
 
 // Mock MultiBarGraph to verify the data and yMax passed to it
 vi.mock("@/components/story/shared/MultiBarGraph", () => ({
@@ -17,6 +49,11 @@ vi.mock("@/components/story/shared/MultiBarGraph", () => ({
 describe("SelectableMultiBarGraph Component", () => {
   beforeEach(() => {
     vi.clearAllMocks();
+  });
+
+  afterEach(() => {
+    mockBaSentimentCounts.current = null;
+    mockSentimentOptions.current = null;
   });
 
   it("renders correctly and calculates yMax dynamically based on data", () => {
@@ -60,5 +97,31 @@ describe("SelectableMultiBarGraph Component", () => {
 
     // The data counts differ between index 2 and index 0, so yMax should update
     expect(newYMax).not.toBe(initialYMax);
+  });
+
+  it("passes an empty data array and falls back to the default yMax when there is no episode data", () => {
+    mockBaSentimentCounts.current = [];
+    render(<SelectableMultiBarGraph yMax={250} />);
+
+    const graph = screen.getByTestId("mock-multi-bar-graph");
+    expect(graph.getAttribute("data-data")).toBe("[]");
+    expect(graph.getAttribute("data-ymax")).toBe("250");
+  });
+
+  it("falls back to sentiment index 0 when the selected option's value is empty", () => {
+    mockSentimentOptions.current = [
+      [
+        { value: "0", label: "A" },
+        { value: "1", label: "B" },
+        { value: "", label: "C" },
+        { value: "3", label: "D" },
+        { value: "4", label: "E" },
+      ],
+    ];
+    render(<SelectableMultiBarGraph />);
+
+    const graph = screen.getByTestId("mock-multi-bar-graph");
+    const data = JSON.parse(graph.getAttribute("data-data") ?? "[]");
+    expect(data[0].counts).toEqual({ Chris: 29, Caller: 11 });
   });
 });

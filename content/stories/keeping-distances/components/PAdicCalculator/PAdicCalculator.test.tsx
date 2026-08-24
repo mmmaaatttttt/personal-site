@@ -34,6 +34,23 @@ describe("PAdicCalculator", () => {
     expect((input as HTMLInputElement).value).not.toBe("0");
   });
 
+  it("ignores a number entered outside the valid range", async () => {
+    const katexMod = await import("katex");
+    const renderSpy = katexMod.default.render as ReturnType<typeof vi.fn>;
+
+    render(<PAdicCalculator />);
+    const input = screen.getByLabelText("Number 1");
+    renderSpy.mockClear();
+
+    fireEvent.change(input, { target: { value: "2000000" } });
+    // Out of range: state doesn't change, so the formula never re-renders.
+    expect(renderSpy).not.toHaveBeenCalled();
+
+    fireEvent.change(input, { target: { value: "42" } });
+    // Sanity check: an in-range value does trigger a re-render.
+    expect(renderSpy).toHaveBeenCalled();
+  });
+
   it("changing prime updates the formula (katex.render is called again)", async () => {
     const katexMod = await import("katex");
     const renderSpy = katexMod.default.render as ReturnType<typeof vi.fn>;

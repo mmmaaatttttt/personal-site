@@ -192,4 +192,40 @@ describe("buildBarData", () => {
     expect(result).toHaveLength(1);
     expect(result[0].key).toBe("PA");
   });
+
+  it("defaults to a zero seat gap when the state has no entry for the year", () => {
+    const electionDataWithMichigan: ElectionRow[] = [
+      ...electionData,
+      {
+        year: 2016,
+        state: "Michigan",
+        district: 1,
+        dem: 400,
+        rep: 500,
+        demEst: false,
+        repEst: false,
+      },
+      {
+        year: 2016,
+        state: "Michigan",
+        district: 2,
+        dem: 450,
+        rep: 550,
+        demEst: false,
+        repEst: false,
+      },
+    ];
+    const stateSummariesWithMichigan: StateSummary[] = [
+      ...stateSummaries,
+      { state: "Michigan", efficiencyGaps: {}, seatGaps: {} },
+    ];
+    const result = buildBarData(
+      2016,
+      2,
+      electionDataWithMichigan,
+      stateSummariesWithMichigan,
+    );
+    const mi = result.find((d) => d.key === "MI");
+    expect(mi?.height).toBe(0);
+  });
 });

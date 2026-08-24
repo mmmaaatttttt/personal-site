@@ -2,10 +2,21 @@ import { fireEvent, render, screen } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
 import "@testing-library/jest-dom/vitest";
 
-// animate() is imperative and doesn't run in jsdom — mock it as a no-op
 vi.mock("framer-motion", async (importOriginal) => {
   const actual = await importOriginal<typeof import("framer-motion")>();
-  return { ...actual, animate: vi.fn() };
+  return {
+    ...actual,
+    animate: vi.fn(
+      (
+        _from: number,
+        to: number,
+        options?: { onUpdate?: (v: number) => void },
+      ) => {
+        options?.onUpdate?.(to);
+        return { stop: vi.fn() };
+      },
+    ),
+  };
 });
 
 import type { VotingDataRow } from "../../data";
@@ -177,6 +188,34 @@ describe("VotingLineChart (workers variant)", () => {
     );
     expect(
       container.querySelector('[id="clip-path-state-line-graph"]'),
+    ).toBeInTheDocument();
+  });
+
+  it("falls back to the first statistic option when the selected value doesn't exist in the new variant", () => {
+    const { rerender, container } = render(
+      <VotingLineChart data={mockData} states={mockStates} variant="workers" />,
+    );
+    const [statSelect] = screen.getAllByRole("combobox") as HTMLSelectElement[];
+    fireEvent.change(statSelect, { target: { value: "6" } });
+    expect(statSelect.value).toBe("6");
+
+    rerender(
+      <VotingLineChart data={mockData} states={mockStates} variant="voters" />,
+    );
+
+    expect(container.querySelector('path[stroke-width="5"]')).toHaveAttribute(
+      "stroke",
+      "#ff8f34",
+    );
+  });
+});
+
+describe("VotingLineChart with no data for the selected state", () => {
+  it("shows a not-available message instead of the graph", () => {
+    render(<VotingLineChart data={mockData} states={[]} variant="voters" />);
+    expect(screen.getByText(/data not available/)).toBeInTheDocument();
+    expect(
+      screen.getByText("Please explore a different option."),
     ).toBeInTheDocument();
   });
 });

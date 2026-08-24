@@ -42,7 +42,7 @@ const CoinFlipHistogram: FC = () => {
     x0: key,
     x1: key + 1,
   }));
-  const maxH = max(barData, (d) => d.height) ?? 0;
+  const maxH = max(barData, (d) => d.height) as number;
   const yScale = scaleLinear()
     .domain([0, Math.max(maxH, 0.1)])
     .range([HEIGHT - PADDING.bottom, PADDING.top]);

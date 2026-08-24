@@ -115,8 +115,6 @@ const HarassmentNodeGroup: FC<HarassmentNodeGroupProps> = ({
   }, [shoutCount]);
 
   useEffect(() => {
-    if (!gRef.current) return;
-
     const generateWave = (node: HarassmentNode) => {
       const currentShoutCount = shoutCountRef.current;
       setShoutCount((prev) => prev + 1);
@@ -239,14 +237,11 @@ const HarassmentNodeGroup: FC<HarassmentNodeGroupProps> = ({
   }, [width, height]);
 
   useEffect(() => {
-    if (!simulationRef.current || !gRef.current) return;
-
-    const sim = simulationRef.current;
+    const sim = simulationRef.current as Simulation<HarassmentNode, undefined>;
 
     // Check intersections on tick
     const checkIntersections = () => {
-      const gcur = gRef.current;
-      if (!gcur) return;
+      const gcur = gRef.current as SVGGElement;
       const gSelection = select(gcur);
       const nodeSelection = gSelection.selectAll<
         SVGCircleElement,
@@ -258,19 +253,20 @@ const HarassmentNodeGroup: FC<HarassmentNodeGroupProps> = ({
           ".shout",
         )
         .each(function (d) {
-          if (!d) return;
           const color = String(d.nodeKey).split("-")[0];
           const waveCircle = select(this);
-          const waveX = +(waveCircle.attr("cx") || 0);
-          const waveY = +(waveCircle.attr("cy") || 0);
-          const waveR = +(waveCircle.attr("r") || 0);
+          const waveX = +(waveCircle.attr("cx") as string);
+          const waveY = +(waveCircle.attr("cy") as string);
+          const waveR = +(waveCircle.attr("r") as string);
 
           nodeSelection.each(function (nodeData) {
             const nodeColor = nodeData.properties.color;
             const { x, y, r } = nodeData;
-            if (x === undefined || y === undefined) return;
 
-            const distance = Math.hypot(x - waveX, y - waveY);
+            const distance = Math.hypot(
+              (x as number) - waveX,
+              (y as number) - waveY,
+            );
             if (nodeColor !== color && distance < r + waveR) {
               const node = select(this);
               // Quick red flash
@@ -312,15 +308,14 @@ const HarassmentNodeGroup: FC<HarassmentNodeGroupProps> = ({
         }
       });
 
-      const gcur = gRef.current;
-      if (!gcur) return;
+      const gcur = gRef.current as SVGGElement;
       const nodesSel = select(gcur)
         .selectAll<SVGCircleElement, HarassmentNode>(".node")
         .data(
           sim.nodes().map((node) => {
             const { max, min } = Math;
-            node.x = max(node.r, min(width - node.r, node.x || 0));
-            node.y = max(node.r, min(height - node.r, node.y || 0));
+            node.x = max(node.r, min(width - node.r, node.x as number));
+            node.y = max(node.r, min(height - node.r, node.y as number));
             return node;
           }),
           (d) => d.key,
@@ -338,7 +333,9 @@ const HarassmentNodeGroup: FC<HarassmentNodeGroupProps> = ({
         .attr("stroke-width", 2);
 
       const nodesToUpdate = isMoving ? enterNodes.merge(nodesSel) : enterNodes;
-      nodesToUpdate.attr("cx", (d) => d.x ?? 0).attr("cy", (d) => d.y ?? 0);
+      nodesToUpdate
+        .attr("cx", (d) => d.x as number)
+        .attr("cy", (d) => d.y as number);
 
       if (isMoving) {
         checkIntersections();
@@ -411,7 +408,9 @@ const HarassmentNodeGroup: FC<HarassmentNodeGroupProps> = ({
   // Keep clearing shouts purely on reset (!playing)
   useEffect(() => {
     if (!playing) {
-      if (gRef.current) select(gRef.current).selectAll(".shout").remove();
+      select(gRef.current as SVGGElement)
+        .selectAll(".shout")
+        .remove();
       setShoutCount(0);
     }
   }, [playing]);

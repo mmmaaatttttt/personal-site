@@ -43,4 +43,34 @@ describe("ManhattanPaths", () => {
     // generatePathOptions(2, 3) = C(5,2) = 10 paths
     expect(screen.getByText(/Path 1 of 10/)).toBeTruthy();
   });
+
+  it("activates a grid point via the Enter key", () => {
+    render(<ManhattanPaths />);
+    const circles = document.querySelectorAll("circle");
+    const targetCircle = circles[14] as SVGCircleElement;
+
+    fireEvent.keyDown(targetCircle, { key: "Enter" });
+
+    expect(screen.getByText(/Path 1 of 10/)).toBeTruthy();
+  });
+
+  it("activates a grid point via the space key", () => {
+    render(<ManhattanPaths />);
+    const circles = document.querySelectorAll("circle");
+    const targetCircle = circles[14] as SVGCircleElement;
+
+    fireEvent.keyDown(targetCircle, { key: " " });
+
+    expect(screen.getByText(/Path 1 of 10/)).toBeTruthy();
+  });
+
+  it("ignores irrelevant key presses on a grid point", () => {
+    render(<ManhattanPaths />);
+    const circles = document.querySelectorAll("circle");
+    const targetCircle = circles[14] as SVGCircleElement;
+
+    fireEvent.keyDown(targetCircle, { key: "Tab" });
+
+    expect(screen.getByText(/Path 1 of 6/)).toBeTruthy();
+  });
 });

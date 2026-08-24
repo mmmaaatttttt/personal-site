@@ -68,8 +68,6 @@ const SelectableMultiBarGraph: FC<SelectableMultiBarGraphProps> = ({
     return Math.ceil((maxVal * 1.1) / 100) * 100;
   }, [dataForOption, yMax]);
 
-  if (!options || options.length === 0) return null;
-
   return (
     <div className="w-full" data-testid="selectable-multi-bar-graph-container">
       <NarrowContainer width={containerWidth.toString()} className="mb-8">

@@ -1,9 +1,34 @@
 import { act, fireEvent, render, screen } from "@testing-library/react";
-import { beforeEach, describe, expect, it, vi } from "vitest";
+import type { ComponentProps } from "react";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import SampleGerrymander from ".";
+import type InteractiveGrid from "./InteractiveGrid";
+
+type InteractiveGridProps = ComponentProps<typeof InteractiveGrid>;
+
+const { interactiveGridProps } = vi.hoisted(() => ({
+  interactiveGridProps: { current: null as unknown as InteractiveGridProps },
+}));
+
+vi.mock("./InteractiveGrid", async (importOriginal) => {
+  const actual = await importOriginal<typeof import("./InteractiveGrid")>();
+  const RealInteractiveGrid = actual.default;
+  return {
+    default: (props: InteractiveGridProps) => {
+      interactiveGridProps.current = props;
+      return <RealInteractiveGrid {...props} />;
+    },
+  };
+});
 
 beforeEach(() => {
   localStorage.clear();
+  Element.prototype.setPointerCapture = vi.fn();
+  Element.prototype.releasePointerCapture = vi.fn();
+});
+
+afterEach(() => {
+  vi.restoreAllMocks();
 });
 
 describe("SampleGerrymander", () => {
@@ -75,18 +100,39 @@ describe("SampleGerrymander", () => {
     expect(localStorage.getItem("segments")).toBeNull();
   });
 
-  it("saves segments to localStorage on Save click", async () => {
-    render(<SampleGerrymander onDistrictCountsChange={vi.fn()} />);
-    // Toggle a segment to make saveable
+  it("saves segments to localStorage on Save click", () => {
+    const { container } = render(
+      <SampleGerrymander onDistrictCountsChange={vi.fn()} />,
+    );
+    expect(localStorage.getItem("segments")).toBeNull();
+
+    const lines = container.querySelectorAll("line");
+    fireEvent.pointerDown(lines[0]);
+    fireEvent.click(screen.getByText("Save"));
+
+    expect(localStorage.getItem("segments")).not.toBeNull();
+    expect(screen.getByText("Saved")).toBeInTheDocument();
+  });
+
+  it("toggles the segment at the clicked line on pointer down", () => {
     const { container } = render(
       <SampleGerrymander onDistrictCountsChange={vi.fn()} />,
     );
     const lines = container.querySelectorAll("line");
-    if (lines.length > 0) {
-      fireEvent.mouseDown(lines[0]);
-    }
-    // Save button becomes active — but we can't click "Save" until it appears
-    // Just verify localStorage was not set before any interaction
-    expect(localStorage.getItem("segments")).toBeNull();
+    const targetLine = lines[0];
+    const initialStroke = targetLine.getAttribute("stroke");
+
+    fireEvent.pointerDown(targetLine);
+
+    expect(targetLine.getAttribute("stroke")).not.toBe(initialStroke);
+  });
+
+  it("ignores a null status update from InteractiveGrid", () => {
+    render(<SampleGerrymander onDistrictCountsChange={vi.fn()} />);
+    const before = interactiveGridProps.current.segments;
+
+    interactiveGridProps.current.onSegmentUpdate(0, 0, null);
+
+    expect(interactiveGridProps.current.segments).toBe(before);
   });
 });

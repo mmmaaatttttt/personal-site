@@ -102,4 +102,40 @@ describe("FunctionDistanceExplorer", () => {
     // constant gap of 3 over domain width 5 = area 15
     expect(text.textContent).toContain("15.00");
   });
+
+  it("drags a midpoint freely in both x and y", () => {
+    const { container } = render(<FunctionDistanceExplorer />);
+    const midpoint = container.querySelectorAll("circle")[1];
+    const initialCx = midpoint.getAttribute("cx");
+    const initialCy = midpoint.getAttribute("cy");
+
+    fireEvent.pointerDown(midpoint, { pointerId: 1 });
+    fireEvent.pointerMove(midpoint, {
+      clientX: 250,
+      clientY: 300,
+      pointerId: 1,
+    });
+    fireEvent.pointerUp(midpoint, { pointerId: 1 });
+
+    expect(midpoint.getAttribute("cx")).not.toBe(initialCx);
+    expect(midpoint.getAttribute("cy")).not.toBe(initialCy);
+  });
+
+  it("constrains an endpoint's x position while its y moves freely", () => {
+    const { container } = render(<FunctionDistanceExplorer />);
+    const endpoint = container.querySelectorAll("circle")[0];
+    const initialCx = endpoint.getAttribute("cx");
+    const initialCy = endpoint.getAttribute("cy");
+
+    fireEvent.pointerDown(endpoint, { pointerId: 1 });
+    fireEvent.pointerMove(endpoint, {
+      clientX: 250,
+      clientY: 300,
+      pointerId: 1,
+    });
+    fireEvent.pointerUp(endpoint, { pointerId: 1 });
+
+    expect(endpoint.getAttribute("cx")).toBe(initialCx);
+    expect(endpoint.getAttribute("cy")).not.toBe(initialCy);
+  });
 });

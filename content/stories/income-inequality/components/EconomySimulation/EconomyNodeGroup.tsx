@@ -83,8 +83,6 @@ const EconomyNodeGroup: FC<EconomyNodeGroupProps> = ({
 
   // Initialize simulation once per mount
   useEffect(() => {
-    if (!gRef.current) return;
-
     const handleCollision = (node1: EconomyNode, node2: EconomyNode) => {
       if (!stateRef.current.playing || stateRef.current.paused) return;
       const {
@@ -126,7 +124,6 @@ const EconomyNodeGroup: FC<EconomyNodeGroupProps> = ({
     simRef.current = sim;
 
     const draw = () => {
-      if (!gRef.current) return;
       const { playing, paused, speeds, velocityMultiplier, initialV } =
         stateRef.current;
       const isMoving = playing && !paused;
@@ -158,11 +155,11 @@ const EconomyNodeGroup: FC<EconomyNodeGroupProps> = ({
           sim.nodes().map((node) => {
             node.x = Math.max(
               NODE_RADIUS,
-              Math.min(width - NODE_RADIUS, node.x ?? 0),
+              Math.min(width - NODE_RADIUS, node.x as number),
             );
             node.y = Math.max(
               NODE_RADIUS,
-              Math.min(height - NODE_RADIUS, node.y ?? 0),
+              Math.min(height - NODE_RADIUS, node.y as number),
             );
             return node;
           }),
@@ -180,8 +177,8 @@ const EconomyNodeGroup: FC<EconomyNodeGroupProps> = ({
       const toUpdate = isMoving ? entered.merge(nodesSel) : entered;
 
       toUpdate
-        .attr("cx", (d) => d.x ?? 0)
-        .attr("cy", (d) => d.y ?? 0)
+        .attr("cx", (d) => d.x as number)
+        .attr("cy", (d) => d.y as number)
         .attr("fill", (d) => {
           const speed = speeds[d.key] ?? 0;
           return colorScale(speed * velocityMultiplier);
@@ -200,14 +197,13 @@ const EconomyNodeGroup: FC<EconomyNodeGroupProps> = ({
     return () => {
       sim.stop();
       drawRef.current = null;
-      if (gRef.current) select(gRef.current).selectAll("*").remove();
+      select(gRef.current).selectAll("*").remove();
     };
   }, [width, height]); // eslint-disable-line react-hooks/exhaustive-deps
 
   // React to population count changes; draw once so circles are visible even before start
   useEffect(() => {
-    const sim = simRef.current;
-    if (!sim) return;
+    const sim = simRef.current as Simulation<EconomyNode, undefined>;
 
     const count = speeds.length;
     const currentNodes = sim.nodes();
@@ -246,8 +242,7 @@ const EconomyNodeGroup: FC<EconomyNodeGroupProps> = ({
 
   // React to playing/paused changes
   useEffect(() => {
-    const sim = simRef.current;
-    if (!sim) return;
+    const sim = simRef.current as Simulation<EconomyNode, undefined>;
 
     if (playing && !paused) {
       sim.alpha(1).restart();
@@ -259,8 +254,7 @@ const EconomyNodeGroup: FC<EconomyNodeGroupProps> = ({
   // Rescale existing node velocities when multiplier changes
   const prevMultiplierRef = useRef(velocityMultiplier);
   useEffect(() => {
-    const sim = simRef.current;
-    if (!sim) return;
+    const sim = simRef.current as Simulation<EconomyNode, undefined>;
     const prev = prevMultiplierRef.current;
     if (prev === velocityMultiplier) return;
     sim.nodes().forEach((node) => {
@@ -274,10 +268,10 @@ const EconomyNodeGroup: FC<EconomyNodeGroupProps> = ({
 
   // Reset: clear and reinitialize nodes, draw once so circles are visible at rest
   useEffect(() => {
-    const sim = simRef.current;
-    if (!sim || playing) return;
+    if (playing) return;
+    const sim = simRef.current as Simulation<EconomyNode, undefined>;
 
-    if (gRef.current) select(gRef.current).selectAll("*").remove();
+    select(gRef.current).selectAll("*").remove();
 
     const existingNodes: EconomyNode[] = [];
     const { cos, sin, PI, random } = Math;

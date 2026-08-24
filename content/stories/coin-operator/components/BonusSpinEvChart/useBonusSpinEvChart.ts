@@ -144,11 +144,10 @@ export function useBonusSpinEvChart() {
     (value, n) => animYRef.current[n] ?? (yScale(value) as number),
   );
 
-  const boundedLinePath =
-    d3Line<number>()
-      .x((_, i) => xScale(i) as number)
-      .y((_, i) => animatedBoundedY[i])
-      .curve(curveLinear)(boundedCurve) ?? "";
+  const boundedLinePath = d3Line<number>()
+    .x((_, i) => xScale(i) as number)
+    .y((_, i) => animatedBoundedY[i])
+    .curve(curveLinear)(boundedCurve) as string;
 
   return {
     sliderData,

@@ -149,6 +149,16 @@ describe("SlotMachine (no bonus spins, the default)", () => {
     fireEvent.click(getViewToggle());
     expect(getResetButton()).toBeInTheDocument();
   });
+
+  it("switches back to the spin view when the toggle is flipped a second time", () => {
+    render(<SlotMachine />);
+    fireEvent.click(getViewToggle());
+    expect(screen.queryByRole("img")).toBeInTheDocument();
+
+    fireEvent.click(getViewToggle());
+    expect(screen.queryByRole("img")).not.toBeInTheDocument();
+    expect(getPullButton()).toBeInTheDocument();
+  });
 });
 
 describe("SlotMachine (maxBonusSpins > 0)", () => {
@@ -310,6 +320,22 @@ describe("SlotMachine (maxBonusSpins > 0)", () => {
     expect(
       screen.getByRole("button", { name: "Show expected value" }),
     ).toBeInTheDocument();
+  });
+
+  it("pulses only the selected reel while a bonus spin is in flight", () => {
+    resolveImmediately();
+    render(<SlotMachine maxBonusSpins={3} />);
+    fireEvent.click(getPullButton());
+    fireEvent.click(getReelButtons()[3]);
+
+    vi.mocked(animate).mockImplementation(
+      () => ({ stop: vi.fn() }) as unknown as ReturnType<typeof animate>,
+    );
+    fireEvent.click(getBonusSpinButton());
+
+    const reels = getReelButtons();
+    expect(reels[3].querySelector(".animate-pulse")).toBeInTheDocument();
+    expect(reels[0].querySelector(".animate-pulse")).not.toBeInTheDocument();
   });
 
   it("shows a trend chart and clears history from either view", () => {
