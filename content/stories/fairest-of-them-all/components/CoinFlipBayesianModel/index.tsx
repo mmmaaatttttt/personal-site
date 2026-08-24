@@ -50,7 +50,7 @@ const CoinFlipBayesianModel: FC = () => {
     x,
     y: betaPdf(x, displayA, displayB),
   }));
-  const yMax = max(graphData, (d) => d.y) ?? 1;
+  const yMax = max(graphData, (d) => d.y) as number;
 
   const xScale = scaleLinear()
     .domain([0, 1])

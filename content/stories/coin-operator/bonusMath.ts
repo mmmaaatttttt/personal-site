@@ -118,8 +118,6 @@ function computeActionValues(
       let value = -SPIN_COST;
       for (const candidate of ALL_SYMBOLS) {
         const probability = PROBABILITY_MAP[candidate];
-        if (probability === 0) continue;
-
         const nextState: SlotResult = [rest[0], rest[1], rest[2], candidate];
         value += probability * continuation(nextState, spinsRemaining - 1);
       }

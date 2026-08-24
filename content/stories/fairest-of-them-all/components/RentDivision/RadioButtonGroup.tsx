@@ -32,8 +32,7 @@ const RadioButtonGroup: FC<RadioButtonGroupProps> = ({
   };
 
   const handleConfirm = () => {
-    if (selectedIndex === null) return;
-    const confirmed = selectedIndex;
+    const confirmed = selectedIndex as number;
     setSelectedIndex(null);
     handleSelectConfirm(confirmed);
   };

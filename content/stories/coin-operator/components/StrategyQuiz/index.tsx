@@ -120,7 +120,6 @@ const StrategyQuiz: FC = () => {
   }
 
   const handleSelectSlot = (slotIndex: number) => {
-    if (confirmed) return;
     setSelection((prev) =>
       prev?.type === "slot" && prev.index === slotIndex
         ? null
@@ -129,13 +128,11 @@ const StrategyQuiz: FC = () => {
   };
 
   const handleNoBonus = () => {
-    if (confirmed) return;
     setSelection((prev) => (prev?.type === "stay" ? null : { type: "stay" }));
   };
 
   const handleConfirm = () => {
-    if (selectedAction === null) return;
-    const action = selectedAction;
+    const action = selectedAction as QuizAction;
     setConfirmed(true);
     setAnswers((prev) => [...prev, action]);
   };

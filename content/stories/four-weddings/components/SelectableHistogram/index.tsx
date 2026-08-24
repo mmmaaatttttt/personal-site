@@ -37,10 +37,7 @@ const SelectableHistogram: FC<SelectableHistogramProps> = ({
   }, [data, accessor, isMounted]);
 
   const results = useMemo(() => {
-    const vals = (extent(validData, accessor) as unknown as [
-      number,
-      number,
-    ]) || [0, 100];
+    const vals = extent(validData, accessor) as unknown as [number, number];
     const thresholds = range(Math.min(vals[0], 0), vals[1] + 2 * step, step);
 
     const binner = bin<WeddingData, number>()
