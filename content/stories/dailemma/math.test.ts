@@ -63,6 +63,14 @@ describe("alphaCO", () => {
     expect(alphaCO(0.5, 0.5, 1)).toBe(0);
   });
 
+  it("returns 1 when difficulty is 0 and savings exceed demand loss", () => {
+    expect(alphaCO(0.5, 0.3, 0)).toBe(1);
+  });
+
+  it("returns 0 when difficulty is 0 and savings don't exceed demand loss", () => {
+    expect(alphaCO(0.3, 0.5, 0)).toBe(0);
+  });
+
   it("is independent of N (cooperative outcome ignores competition)", () => {
     const s = 0.7;
     const ell = 0.35;
