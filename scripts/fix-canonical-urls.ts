@@ -1,9 +1,9 @@
-const fs = require("node:fs");
-const path = require("node:path");
+import fs from "node:fs";
+import path from "node:path";
 
 const OUT_DIR = path.join(__dirname, "../out");
 
-function walkDir(dir, results = []) {
+function walkDir(dir: string, results: string[] = []): string[] {
   for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
     const fullPath = path.join(dir, entry.name);
     if (entry.isDirectory()) {
@@ -20,7 +20,7 @@ function walkDir(dir, results = []) {
 // to alternates.canonical — even though CloudFront serves (and redirects to) the
 // no-slash URL. Strip it back out of the exported HTML so canonical matches the
 // URL that's actually live, or Google excludes the real page from the index.
-function stripCanonicalTrailingSlash(html) {
+function stripCanonicalTrailingSlash(html: string): string {
   return html.replace(/(<link rel="canonical" href="[^"]*?)\/(")/, "$1$2");
 }
 

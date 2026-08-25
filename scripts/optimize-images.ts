@@ -1,12 +1,12 @@
-const fs = require("node:fs");
-const path = require("node:path");
-const sharp = require("sharp");
+import fs from "node:fs";
+import path from "node:path";
+import sharp from "sharp";
 
 const TARGET_WIDTHS = [640, 828, 1080, 1200, 1920];
 const INPUT_DIR = path.join(__dirname, "../public/images");
 const OUTPUT_DIR = path.join(__dirname, "../public/images/_optimized");
 
-function walkDir(dir, results = []) {
+function walkDir(dir: string, results: string[] = []): string[] {
   for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
     const fullPath = path.join(dir, entry.name);
     if (entry.isDirectory()) {
@@ -18,7 +18,13 @@ function walkDir(dir, results = []) {
   return results;
 }
 
-async function processImage(srcPath) {
+interface ProcessImageResult {
+  generated: number;
+  skipped: number;
+  maxGeneratedWidth: number;
+}
+
+async function processImage(srcPath: string): Promise<ProcessImageResult> {
   const srcStat = fs.statSync(srcPath);
   const filename = `${path.basename(srcPath, path.extname(srcPath))}.webp`;
   const relativeName = path.relative(INPUT_DIR, path.dirname(srcPath));
@@ -59,8 +65,10 @@ async function processImage(srcPath) {
   return { generated, skipped, maxGeneratedWidth };
 }
 
-async function generatePlaceholders(images) {
-  const manifest = {};
+async function generatePlaceholders(
+  images: string[],
+): Promise<Record<string, string>> {
+  const manifest: Record<string, string> = {};
   for (const imgPath of images) {
     const relative = path.relative(INPUT_DIR, imgPath);
     if (!relative.startsWith("featured_images")) continue;
@@ -77,7 +85,7 @@ async function main() {
 
   let totalGenerated = 0;
   let totalSkipped = 0;
-  const maxWidths = {};
+  const maxWidths: Record<string, number> = {};
 
   for (const imgPath of images) {
     const rel = path.relative(process.cwd(), imgPath);
