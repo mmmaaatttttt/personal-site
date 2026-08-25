@@ -15,6 +15,7 @@
     "dev:email": "email dev --dir emails",
     "lint": "biome check",
     "lint:write": "biome check --write --unsafe",
+    "new-story": "tsx scripts/new-story.ts",
     "prepare": "husky",
     "start": "next start",
     "test": "vitest run",
