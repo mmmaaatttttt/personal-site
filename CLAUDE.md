@@ -24,7 +24,10 @@ Matt's personal/blog site built with Next.js, TypeScript, React, and D3. The sit
 
 ## Visual Regression Tests
 
-Playwright screenshot tests cover every page, and run in CI via Argos.
+Playwright tests live under `e2e/`, split into two kinds:
+
+- `e2e/screenshots/` — one Argos snapshot spec per page, covering every page, run in CI via Argos. Shares a `takeSnapshot` helper from `e2e/screenshots/argos.ts`.
+- `e2e/interaction/` — bespoke behavioral specs for stories with drag/slider interactions (not snapshot-based). Shares a `dragTo` helper from `e2e/interaction/dragTo.ts`.
 
 ---
 
@@ -34,9 +37,15 @@ Stories are `.mdx` files in `content/stories/<slug>/index.mdx`. They are compile
 
 MDX files are real modules — `import` statements work normally and are resolved by webpack/Turbopack at build time.
 
+### Scaffolding a new story
+
+Run `npm run new-story <slug>` to generate the skeleton for a new story. It creates `content/stories/<slug>/{meta.ts,index.mdx}` and `e2e/screenshots/<slug>.spec.ts`, and registers the slug in the `storyModules` map in `app/stories/[slug]/page.tsx`. The sitemap, RSS feed, and `/stories` list page all pick up the new slug automatically since they're driven by `getArticleSlugs`/`getAllArticles` — no separate registration needed there.
+
+Still manual after running it: dropping the real featured image into `public/images/featured_images/`, writing the real title/caption/tags/content, and — if the story has drag/slider interactions — hand-writing `e2e/interaction/<slug>.spec.ts` (this isn't scaffolded since it depends on the story's specific interactive elements).
+
 ### Story metadata
 
-Each story has a typed `meta.ts` in `content/stories/<slug>/meta.ts` — not frontmatter in the MDX file. The `getArticle()` utility reads from `utils/storyMeta.ts` which re-exports all story metas.
+Each story has a typed `meta.ts` in `content/stories/<slug>/meta.ts` — not frontmatter in the MDX file. The `getArticle()` utility (in `utils/content.ts`) loads it via `utils/loadMeta.ts`, which dynamically imports `content/stories/<slug>/meta.ts` per slug.
 
 ### Story-level data files
 
