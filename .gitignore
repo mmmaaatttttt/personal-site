@@ -13,8 +13,9 @@
 
 # testing
 /coverage
-/e2e/**-snapshots/
+/e2e/**/*-snapshots/
 /test-results/
+/screenshots/
 
 # next.js
 /.next/
