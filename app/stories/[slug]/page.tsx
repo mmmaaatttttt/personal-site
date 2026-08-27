@@ -54,6 +54,7 @@ const storyModules: Record<
   "dailemma-2": () => import("@/content/stories/dailemma-2/index.mdx"),
   "coin-operator": () => import("@/content/stories/coin-operator/index.mdx"),
   "bettor-up": () => import("@/content/stories/bettor-up/index.mdx"),
+  "standee-by-me": () => import("@/content/stories/standee-by-me/index.mdx"),
 };
 
 export async function generateStaticParams() {
