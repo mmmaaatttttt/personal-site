@@ -4,7 +4,8 @@ vi.mock("@/utils/content", () => ({
   getAllArticles: vi.fn().mockResolvedValue([
     {
       slug: "test-story",
-      date: "2024-03-15",
+      date: "March 2024",
+      rawDate: "2024-03-15",
       title: "Test Story",
       caption: "A test",
       featured_image: "/img.jpg",
