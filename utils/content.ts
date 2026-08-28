@@ -18,6 +18,7 @@ export interface ArticleFrontmatter {
 export interface ArticleMeta extends ArticleFrontmatter {
   slug: string;
   timeToRead: number;
+  rawDate: string;
 }
 
 /**
@@ -83,6 +84,7 @@ export async function getAllArticles(): Promise<ArticleMeta[]> {
       return {
         ...frontmatter,
         date: formattedDate,
+        rawDate: frontmatter.date,
         slug,
         timeToRead,
       };
@@ -90,7 +92,7 @@ export async function getAllArticles(): Promise<ArticleMeta[]> {
   );
 
   return articles.sort(
-    (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime(),
+    (a, b) => new Date(b.rawDate).getTime() - new Date(a.rawDate).getTime(),
   );
 }
 
