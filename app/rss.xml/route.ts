@@ -13,7 +13,7 @@ export async function GET() {
       <link>${SITE_URL}/stories/${article.slug}/</link>
       <guid isPermaLink="true">${SITE_URL}/stories/${article.slug}/</guid>
       <description><![CDATA[${article.caption}]]></description>
-      <pubDate>${new Date(article.date).toUTCString()}</pubDate>
+      <pubDate>${new Date(article.rawDate).toUTCString()}</pubDate>
     </item>`,
     )
     .join("\n");

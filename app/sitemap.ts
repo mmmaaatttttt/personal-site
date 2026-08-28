@@ -7,7 +7,7 @@ export const dynamic = "force-static";
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const stories = (await getAllArticles()).map((article) => ({
     url: `${SITE_URL}/stories/${article.slug}`,
-    lastModified: new Date(article.date),
+    lastModified: new Date(article.rawDate),
     changeFrequency: "monthly" as const,
     priority: 0.8,
   }));
