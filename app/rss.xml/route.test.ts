@@ -6,7 +6,8 @@ vi.mock("@/utils/content", () => ({
       slug: "test-story",
       title: "Test Story",
       caption: "A test caption",
-      date: "2024-01-15",
+      date: "January 2024",
+      rawDate: "2024-01-15",
       featured_image: "/img.jpg",
       tags: [],
       timeToRead: 5,
@@ -41,5 +42,13 @@ describe("GET /rss.xml", () => {
     expect(text).toContain("<![CDATA[Test Story]]>");
     expect(text).toContain("https://mattlane.us/stories/test-story/");
     expect(text).toContain("<![CDATA[A test caption]]>");
+  });
+
+  it("formats pubDate from the raw ISO date, not the display-formatted date", async () => {
+    const response = await GET();
+    const text = await response.text();
+    expect(text).toContain(
+      `<pubDate>${new Date("2024-01-15").toUTCString()}</pubDate>`,
+    );
   });
 });
