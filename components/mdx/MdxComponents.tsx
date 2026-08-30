@@ -53,7 +53,7 @@ export const MdxComponents: Record<string, unknown> = {
   ),
   hr: () => <hr className="my-2 border-gray-200" />,
   img: (props: ComponentPropsWithoutRef<"img">) => (
-    <span className="my-12 block">
+    <span className="my-6 block">
       <span className="relative mx-auto block w-fit">
         <Image
           src={normalizeImagePath(
@@ -62,7 +62,7 @@ export const MdxComponents: Record<string, unknown> = {
           alt={props.alt || ""}
           width={800}
           height={600}
-          className="block h-auto max-h-[600px] max-w-full object-contain"
+          className="block h-auto max-h-[600px] max-w-full object-contain mb-0"
         />
       </span>
       {props.title && (
