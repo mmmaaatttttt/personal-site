@@ -10,8 +10,8 @@ export async function GET() {
     .map(
       (article) => `    <item>
       <title><![CDATA[${article.title}]]></title>
-      <link>${SITE_URL}/stories/${article.slug}/</link>
-      <guid isPermaLink="true">${SITE_URL}/stories/${article.slug}/</guid>
+      <link>${SITE_URL}/stories/${article.slug}</link>
+      <guid isPermaLink="true">${SITE_URL}/stories/${article.slug}</guid>
       <description><![CDATA[${article.caption}]]></description>
       <pubDate>${new Date(article.rawDate).toUTCString()}</pubDate>
     </item>`,

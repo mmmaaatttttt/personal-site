@@ -40,7 +40,8 @@ describe("GET /rss.xml", () => {
     const response = await GET();
     const text = await response.text();
     expect(text).toContain("<![CDATA[Test Story]]>");
-    expect(text).toContain("https://mattlane.us/stories/test-story/");
+    expect(text).toContain("https://mattlane.us/stories/test-story");
+    expect(text).not.toContain("https://mattlane.us/stories/test-story/");
     expect(text).toContain("<![CDATA[A test caption]]>");
   });
 
