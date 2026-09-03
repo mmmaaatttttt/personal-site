@@ -40,7 +40,7 @@
     "odex": "^3.0.0-rc.4",
     "react": "19.2.8",
     "react-dom": "19.2.8",
-    "react-email": "^6.9.2",
+    "react-email": "^6.9.3",
     "react-select": "^5.10.2",
     "tailwind-merge": "^3.6.0",
     "topojson-client": "^3.1.0"
