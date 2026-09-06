@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { generateFreqMap } from "./arrayHelpers";
+import { generateFreqMap, groupBy } from "./arrayHelpers";
 
 describe("generateFreqMap", () => {
   it("counts occurrences correctly", () => {
@@ -24,5 +24,33 @@ describe("generateFreqMap", () => {
     expect(map.get(1)).toBe(3);
     expect(map.get(2)).toBe(2);
     expect(map.get(3)).toBe(1);
+  });
+});
+
+describe("groupBy", () => {
+  it("partitions items by key, preserving item order within a group", () => {
+    const items = [
+      { name: "a", tag: "x" },
+      { name: "b", tag: "y" },
+      { name: "c", tag: "x" },
+    ];
+    const groups = groupBy(items, (item) => item.tag);
+    expect(groups.get("x")).toEqual([items[0], items[2]]);
+    expect(groups.get("y")).toEqual([items[1]]);
+  });
+
+  it("merges non-consecutive occurrences of the same key into one group", () => {
+    const groups = groupBy(["a", "b", "a"], (item) => item);
+    expect(groups.get("a")).toEqual(["a", "a"]);
+    expect(groups.size).toBe(2);
+  });
+
+  it("preserves first-seen key order", () => {
+    const groups = groupBy(["b", "a", "b"], (item) => item);
+    expect(Array.from(groups.keys())).toEqual(["b", "a"]);
+  });
+
+  it("returns an empty map for an empty array", () => {
+    expect(groupBy([], (item) => item).size).toBe(0);
   });
 });

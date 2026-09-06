@@ -1,8 +1,11 @@
+import { groupBy } from "@/utils/arrayHelpers";
 import { machineExpectedValue } from "./bonusMath";
 import {
   PAYOUT_RATES,
   PayoutClassifications,
+  type PayoutClassificationValue,
   PROBABILITY_MAP,
+  type SlotResult,
   SlotValue,
   SYMBOL_EMOJI,
   SYMBOL_NAME,
@@ -71,28 +74,30 @@ export interface PayoutGroup {
 // three coins plus any one of several irrelevant fourth symbols) — group by
 // classification, not raw payout, so unrelated mechanics that happen to
 // total the same payout don't get merged into one row.
-const payoutGroupsByClassification = new Map<string, PayoutGroup>();
-
-for (const slotResult of enumerateSlotResults()) {
-  const classification = classifyPayout(slotResult);
-  if (classification === null) continue;
-
-  const probability = calculateProbability(slotResult);
-  const group = payoutGroupsByClassification.get(classification);
-
-  if (group) {
-    group.probability += probability;
-  } else {
-    payoutGroupsByClassification.set(classification, {
-      classification,
-      payout: calculatePayout(slotResult),
-      probability,
-    });
-  }
-}
+const classifiedResults = enumerateSlotResults()
+  .map((slotResult) => ({
+    slotResult,
+    classification: classifyPayout(slotResult),
+  }))
+  .filter(
+    (
+      result,
+    ): result is {
+      slotResult: SlotResult;
+      classification: PayoutClassificationValue;
+    } => result.classification !== null,
+  );
 
 export const payoutRows: PayoutGroup[] = Array.from(
-  payoutGroupsByClassification.values(),
+  groupBy(classifiedResults, (result) => result.classification),
+  ([classification, results]) => ({
+    classification,
+    payout: calculatePayout(results[0].slotResult),
+    probability: results.reduce(
+      (sum, result) => sum + calculateProbability(result.slotResult),
+      0,
+    ),
+  }),
 ).sort((a, b) => a.payout - b.payout);
 
 export const expectedValue = payoutRows.reduce(
