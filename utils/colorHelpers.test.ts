@@ -1,5 +1,16 @@
 import { describe, expect, it } from "vitest";
-import { darkenHex, lightenHex } from "./colorHelpers";
+import { darkenHex, hexToRgb, lightenHex } from "./colorHelpers";
+
+describe("hexToRgb", () => {
+  it("parses each channel", () => {
+    expect(hexToRgb("#ff8f34")).toEqual([255, 143, 52]);
+  });
+
+  it("parses black and white", () => {
+    expect(hexToRgb("#000000")).toEqual([0, 0, 0]);
+    expect(hexToRgb("#ffffff")).toEqual([255, 255, 255]);
+  });
+});
 
 describe("darkenHex", () => {
   it("returns black when amount is 1", () => {

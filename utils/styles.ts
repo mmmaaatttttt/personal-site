@@ -1,3 +1,5 @@
+import { hexToRgb } from "@/utils/colorHelpers";
+
 const COLORS = {
   BLUE: "#5ecfff",
   DARK_BLUE: "#2227ff",
@@ -19,10 +21,8 @@ const COLORS = {
 };
 
 export const hexToRgba = (hex: string, opacity: number) => {
-  const numbers = [hex.slice(1, 3), hex.slice(3, 5), hex.slice(5, 7)].map(
-    (subHex) => parseInt(subHex, 16),
-  );
-  return `rgba(${numbers[0]}, ${numbers[1]}, ${numbers[2]}, ${opacity})`;
+  const [r, g, b] = hexToRgb(hex);
+  return `rgba(${r}, ${g}, ${b}, ${opacity})`;
 };
 
 export const SIZES = {
