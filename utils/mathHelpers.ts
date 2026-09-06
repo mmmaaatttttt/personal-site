@@ -51,8 +51,13 @@ export function generateData(
   return data;
 }
 
-export function choices<T>(arr: T[], num: number): T[] {
-  return shuffle(arr.slice()).slice(0, num);
+export function choices<T>(
+  arr: T[],
+  num: number,
+  rng: () => number = cryptoRandom,
+): T[] {
+  if (num === 1) return [arr[Math.floor(rng() * arr.length)]];
+  return shuffle(arr.slice(), rng).slice(0, num);
 }
 
 /**
@@ -131,9 +136,9 @@ function swap<T>(arr: T[], i: number, j: number): T[] {
   return arr;
 }
 
-export function shuffle<T>(arr: T[]): T[] {
+export function shuffle<T>(arr: T[], rng: () => number = cryptoRandom): T[] {
   for (let i = arr.length - 1; i >= 0; i--) {
-    const randomIdx = Math.floor(Math.random() * i);
+    const randomIdx = Math.floor(rng() * i);
     swap(arr, i, randomIdx);
   }
   return arr;

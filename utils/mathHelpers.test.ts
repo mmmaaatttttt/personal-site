@@ -246,6 +246,18 @@ describe("shuffle", () => {
     const result = shuffle(arr);
     expect(result).toBe(arr);
   });
+
+  it("defaults to cryptoRandom when no rng is given", () => {
+    const arr = [1, 2, 3];
+    shuffle(arr, cryptoRandom);
+    expect(arr).toHaveLength(3);
+  });
+
+  it("uses an injected rng deterministically", () => {
+    const arr = [1, 2, 3, 4];
+    const result = shuffle(arr, () => 0);
+    expect(result).toEqual([2, 3, 4, 1]);
+  });
 });
 
 describe("choices", () => {
@@ -264,6 +276,24 @@ describe("choices", () => {
     const arr = [1, 2, 3, 4];
     choices(arr, 2);
     expect(arr).toHaveLength(4);
+  });
+
+  it("uses an injected rng deterministically", () => {
+    const result = choices([1, 2, 3, 4, 5], 3, () => 0);
+    expect(result).toEqual([2, 3, 4]);
+  });
+
+  describe("picking exactly one (O(1) fast path)", () => {
+    it("does not mutate or reorder the original array", () => {
+      const arr = [1, 2, 3, 4];
+      choices(arr, 1);
+      expect(arr).toEqual([1, 2, 3, 4]);
+    });
+
+    it("uses an injected rng deterministically", () => {
+      expect(choices([10, 20, 30], 1, () => 0)).toEqual([10]);
+      expect(choices([10, 20, 30], 1, () => 0.999)).toEqual([30]);
+    });
   });
 });
 

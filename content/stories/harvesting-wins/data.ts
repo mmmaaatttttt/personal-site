@@ -1,3 +1,4 @@
+import { choices } from "@/utils/mathHelpers";
 import { camelCaseToTitle } from "@/utils/stringHelpers";
 import COLORS from "@/utils/styles";
 import type { OrchardDataPoint } from "./orchard-game";
@@ -29,7 +30,7 @@ export const strategies: Strategy[] = [
       for (let i = 0; i < fruitCounts.length; i++) {
         if (fruitCounts[i] > 0) validIndices.push(i);
       }
-      return validIndices[Math.floor(Math.random() * validIndices.length)];
+      return choices(validIndices, 1)[0];
     },
   },
   {
