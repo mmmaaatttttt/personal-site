@@ -5,6 +5,7 @@ import { animate } from "framer-motion";
 import { type FC, useCallback, useRef, useState } from "react";
 import ClippedSVG from "@/components/story/shared/ClippedSVG";
 import { Button } from "@/components/ui/Button";
+import { mod } from "@/utils/mathHelpers";
 import COLORS from "@/utils/styles";
 import { SPINNER_COLORS } from "./constants";
 
@@ -50,7 +51,7 @@ const Spinner: FC<SpinnerProps> = ({ onSpinEnd, message }) => {
       onUpdate: (v) => setRotation(v),
       onComplete: () => {
         rotationRef.current = target;
-        const trueMod = (((target / 360) % 1) + 1) % 1;
+        const trueMod = mod(target / 360, 1);
         const idx = Math.floor(trueMod * SPINNER_COLORS.length);
         onSpinEnd(idx);
         setDisabled(false);

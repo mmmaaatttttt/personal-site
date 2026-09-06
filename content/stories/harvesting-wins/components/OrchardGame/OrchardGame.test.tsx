@@ -1,6 +1,7 @@
 import { fireEvent, render, screen } from "@testing-library/react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import "@testing-library/jest-dom/vitest";
+import { mod } from "@/utils/mathHelpers";
 import OrchardGame from ".";
 import { SPINNER_COLORS } from "./constants";
 
@@ -39,7 +40,7 @@ function resetSpinTracking() {
 
 function queueSpin(idx: number) {
   const targetMod = (idx + 0.5) / SPINNER_COLORS.length;
-  const currentMod = (((cumulativeRotation / 360) % 1) + 1) % 1;
+  const currentMod = mod(cumulativeRotation / 360, 1);
   let deltaMod = targetMod - currentMod;
   if (deltaMod <= 0) deltaMod += 1;
   const multiplier = 1 + deltaMod; // direction always +1, magnitude in (1,2]
