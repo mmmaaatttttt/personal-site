@@ -1,0 +1,64 @@
+import Figure from "@/components/story/shared/Figure";
+import Latex from "@/components/story/shared/Latex";
+import StandeeCollector from "./components/StandeeCollector";
+
+As the only kid in my house growing up, I envisioned households with four gaming controllers as the height of opulence. To have not only the means, but the personnel, to support a gaming experience with yourself and three other humans? The extravagance!
+
+You can imagine my delight, then, when our youngest started muddling his way through some of his first gaming experiences. Around the same time, Nintendo released [Super Mario Wonder](https://en.wikipedia.org/wiki/Super_Mario_Bros._Wonder). The game promised a chaotic yet also relatively tame couch co-op experience. I knew, then, that it had to be mine.
+
+![Super Mario Wonder Screenshot](../../images/mario-wonder-elephants.jpg "Family game night cosplaying as a herd of elephants in Super Mario Wonder. (Source: Nintendo)")
+
+This game was the first one my wife, our kids and I would sit down and play together, without the competitive backstabbing that comes with games like *Mario Kart.* Having three other players, and needing three other controllers, convinced me that in spite of everything else going on in the world, I was truly living my rich life.
+
+As the weeks went on, we gradually churned our way through the game together. We defeated Bowser (given 40 years of the same conflict, I don't think that's a spoiler?), found and completed all of the hidden levels, and unlocked all of the game's special-power-endowing [badges](https://www.mariowiki.com/Badge_(Super_Mario_Bros._Wonder)). However, as a completionist, I'm somewhat ashamed to admit one thing. There's one set of things we failed to collect in full.
+
+Standees.
+
+### Standee By Me
+
+What's a Standee, you ask? This is a very good question. Even when we were playing the game, I remember not really knowing. In hindsight, I wish I'd paid more attention, since I think they could've proved useful.
+
+Super Mario Wonder has a mechanic whereby when you are playing with others, a hit that normally would kill you does not. Instead, you turn into a cute little ghost, and have a few seconds to tag a living player to be resurrected without losing a life. Standees are little cutouts of the characters that you can place in levels, and can also revive your ghost form before you are claimed by the grim reaper.
+
+As with any other good avatar in the 21st century, standees can also accumulate "likes." Unfortunately, I have aged out of being able to tell you what good this does. 
+
+![Screenshot of Mario with a standee](../../images/mario-standee.jpg "An example of a standee; Mario has placed this one next to him. (Source: Nintendo)")
+
+The game has many standees to collect. You acquire them by purchasing them from shops using purple coins you find in levels. Each standee costs 10 coins, but here's the rub: at that price, standees are like a box of chocolates. You never know what you're going to get.
+
+Consider Mario. As with every other playable character, he has 12 standees. When the game begins, you are given the first standee for each character. So when it comes time to shop, at the start of the game there are 11 Mario standees to collect.
+
+![Screenshot of all Mario Standees](../../images/mario-standees-all.png "All of the Mario standees; the game gives you the first one for free.")
+
+The standee you start with is not a part of the drawing pool, so when you pay for your first standee, it's guaranteed to be new. If you buy a second standee, there are 10 standees that you still need to collect, and 11 standees total, so the likelihood of getting a new standee is no longer guaranteed; it's 10/11, or around 91%. Similarly, if you have two standees and purchase one, the likelihood that it will be new is 9 / 11, since there are 11 Mario standees to draw from, and 11 - 2 = 9 of them are ones you don't already have.
+
+Given the possibility of duplicates, it's natural to ask how many times we expect to have to draw in order to complete the set. To think this through, it's helpful to work our way backwards. Let's say we have 10 of the 11 standees already collected. In this case, the probability that any random purchase will give us our missing standee is 1 / 11. Flipping this proprtion gives us the expected value: since we have a one in eleven chance of getting that last standee, on average we expect to need to make 11 purchases to complete our collection.
+
+What if we have 9 of the 11 standees? The same argument applies. The probability that a random purchase will give us one of our two missing standees is 2 / 11. This means that on average, we expect to need 11 / 2, or 5 and a half purchases, before getting something new.
+
+The story repeats itself no matter how many standees we're looking for. We find the probability of getting a new standee given how many we already have, and then invert that probability to give us the expected value. Since the only way to get all the standees is to get one new one, then a second new one, then a third one, and so on, we can calculate the expected number of purchases we need to make by adding up all of these expected values. In this case, we get:
+
+<Latex
+  displayMode
+  str={
+    "\\begin{aligned}" +
+    "&\\frac{11}{11} + \\frac{11}{10} + \\frac{11}{9} + ... + \\frac{11}{2} + \\frac{11}{1} \\\\[1em]" +
+    "=&\\; 11 \\times \\left( 1 + \\frac{1}{2} + ... + \\frac{1}{9} + \\frac{1}{10} + \\frac{1}{11} \\right) \\\\" +
+    "\\approx&\\; 33.22" +
+    "\\end{aligned}"
+  }
+/>
+
+So in order to get 12 Mario standees, you should expect to need to make just over 33 purchases. Another way to spin this: you should expect 21 out of your 33 purchases to be redundant purchases of standees you already have. 
+
+---
+
+### Standee to Reason
+
+Unfortunately for the completionists among us, Mario is not the only character with a set of 12 standees. The main came has 12 characters, and each one comes with their own set. While the game gives you one standee per character to start, this still means that there are 132 to collect. 
+
+As you might imagine, the more there are to collect, the more redundant standees you'll need to buy. But how bad does it get? You can use the simulator below to adjust the number of characters and see how many purchases you'll need to make.
+
+<Figure caption="Adjust the number of characters, and you can simulate how many draws it will take to complete your standee collection.">
+  <StandeeCollector />
+</Figure>
