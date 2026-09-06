@@ -9,7 +9,7 @@ import FlexContainer from "@/components/story/shared/FlexContainer";
 import Graph from "@/components/story/shared/Graph";
 import LinePlot from "@/components/story/shared/LinePlot";
 import SliderGroup from "@/components/story/shared/Slider/SliderGroup";
-import { generateData } from "@/utils/mathHelpers";
+import { clamp, generateData } from "@/utils/mathHelpers";
 
 function tickStep(scale: AxisScale<NumberValue>): number {
   const domain = scale.domain() as number[];
@@ -24,7 +24,7 @@ function getYDomain(
 ): [number, number] {
   const allY = graphData.flatMap((series) => series.map((d) => Math.abs(d.y)));
   const yMax0 = allY.length > 0 ? Math.max(...allY) : 0;
-  const yMax = Math.min(Math.max(Math.ceil(yMax0), smallestY), largestY);
+  const yMax = clamp(Math.ceil(yMax0), smallestY, largestY);
   return [-yMax, yMax];
 }
 
