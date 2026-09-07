@@ -121,4 +121,24 @@ For a broader perspective, here's a chart of the expected cost based on where yo
   <StrategyComparisonChart />
 </Figure>
 
-We can also solve for this minimum value algebraically. 
+We can also solve for this minimum value algebraically. Let's suppose you currently have *K* standees in your collection, and are deciding whether to purchase a random standee or a guaranteed standee. They key thing to notice is that if you want the cheaper option, you need to compare how much you'll expect to spend with each strategy.
+
+For a guaranteed standee, it's clear: you'll spend whatever the shop is charging. Let's call this cost <Latex str={`C_{G}`} />.
+
+For a random standee, as we've seen before, if you have *K* standees out of *N* total, you should expect to have to make <Latex str={`\\frac{N}{N - K}`} /> purchases. If the random standee cost is <Latex str={`C_{R}`} />, then the expected cost of this strategy is <Latex str={`C_{R} \\times \\frac{N}{N - K}`} />.
+
+Note that this expression is strictly increasing with *K*. In other words, the more of the collection you have, the more expensive the random strategy becomes. On the other hand, the guaranteed strategy has a fixed cost, independent of the size of your collection. Therefore, you should make the switch as soon as the random strategy cost exceeds the guaranteed strategy cost. Mathematically, this means the switching point is the smallest value of *K* for which 
+
+<Latex displayMode str={`C_{R} \\times \\frac{N}{N - K} > C_{G}.`} />
+
+Solving this inequality in terms of *K* gives us:
+
+<Latex displayMode str={`K > N \\times \\left( 1 - \\frac{C_{R}}{C_{G}} \\right).`} />
+
+In particular, if guaranteed standees are three times the cost of random standees, this means we should switch as soon as we have more than 2/3rds of the total collection. 
+
+Note that this switching point, as a fraction of the total number of standees, only depends on how much more expensive a guaranteed standee is compared to a random one. You can see that in the graph as well; the higher the multiplier, the longer you should stay with the random strategy.
+
+---
+
+### A Final Wrinkle
