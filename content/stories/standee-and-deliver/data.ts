@@ -742,7 +742,6 @@ export const CHARACTER_BACKGROUND_CLASSES: Record<string, string> = {
   Nabbit: "bg-[color(display-p3_0.514_0.400_0.702)]",
   Peach: "bg-[color(display-p3_0.949_0.643_0.890)]",
   "Red Yoshi": "bg-[color(display-p3_0.871_0.384_0.314)]",
-  Rosalina: "bg-[color(display-p3_0.604_0.937_0.988)]",
   Toadette: "bg-[color(display-p3_0.945_0.616_0.855)]",
   "Yellow Toad": "bg-[color(display-p3_0.875_0.867_0.314)]",
   "Yellow Yoshi": "bg-[color(display-p3_0.914_0.863_0.290)]",
