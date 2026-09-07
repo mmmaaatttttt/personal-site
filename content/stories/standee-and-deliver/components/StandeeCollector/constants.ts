@@ -1,5 +1,3 @@
-export const DEFAULT_NUM_CHARACTERS = 1;
-export const MIN_NUM_CHARACTERS = 1;
 export const TICK_INTERVAL_MS = 120;
 
 export const DEFAULT_SPEED = 1;

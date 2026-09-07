@@ -1,14 +1,30 @@
 import { fireEvent, render, screen } from "@testing-library/react";
-import { describe, expect, it } from "vitest";
+import { beforeEach, describe, expect, it } from "vitest";
+import { writeMemoryItem } from "@/hooks/useMemoryStore";
+import {
+  DEFAULT_GUARANTEED_MULTIPLIER,
+  DEFAULT_RANDOM_COST,
+  GUARANTEED_MULTIPLIER_KEY,
+  NUM_STANDEES_KEY,
+  RANDOM_COST_KEY,
+} from "../../sliderStore";
 import { expectedCost, expectedTotalDraws } from "../../utils";
 import PureStrategyComparison from ".";
+
+beforeEach(() => {
+  writeMemoryItem(RANDOM_COST_KEY, DEFAULT_RANDOM_COST);
+  writeMemoryItem(GUARANTEED_MULTIPLIER_KEY, DEFAULT_GUARANTEED_MULTIPLIER);
+  writeMemoryItem(NUM_STANDEES_KEY, 20);
+});
 
 describe("PureStrategyComparison", () => {
   it("renders the sliders and a comparison table for both pure strategies", () => {
     render(<PureStrategyComparison numStandees={20} />);
     expect(screen.getByText(/Number of Standees: 20/)).toBeInTheDocument();
-    expect(screen.getByText(/Random Pack Cost/)).toBeInTheDocument();
-    expect(screen.getByText(/Guaranteed Cost: 3x Random/)).toBeInTheDocument();
+    expect(screen.getByText(/Random Cost per Standee/)).toBeInTheDocument();
+    expect(
+      screen.getByText(/Guaranteed Cost Per Standee: 3x Random Cost/),
+    ).toBeInTheDocument();
 
     const randomDraws = expectedTotalDraws(20, 20);
     const randomCost = expectedCost(20, 20, 10, 30);
@@ -47,13 +63,22 @@ describe("PureStrategyComparison", () => {
     render(<PureStrategyComparison numStandees={20} />);
     const slider = screen.getAllByRole("slider")[1];
     fireEvent.change(slider, { target: { value: "25" } });
-    expect(screen.getByText(/Random Pack Cost: 25/)).toBeInTheDocument();
+    expect(screen.getByText(/Random Cost per Standee: 25/)).toBeInTheDocument();
 
     const randomCost = expectedCost(20, 20, 25, 75);
     expect(
       screen.getByText(
         randomCost.toLocaleString(undefined, { maximumFractionDigits: 0 }),
       ),
+    ).toBeInTheDocument();
+  });
+
+  it("uses singular 'coin' when the random cost slider is set to 1", () => {
+    render(<PureStrategyComparison numStandees={20} />);
+    const slider = screen.getAllByRole("slider")[1];
+    fireEvent.change(slider, { target: { value: "1" } });
+    expect(
+      screen.getByText(/Random Cost per Standee: 1 coin$/),
     ).toBeInTheDocument();
   });
 
@@ -104,6 +129,7 @@ describe("PureStrategyComparison", () => {
     // At numStandees=1 with a 1x guaranteed multiplier, both strategies cost
     // exactly randomCost: H_1 = 1, so random-only's n*H_n collapses to n, and
     // guaranteed-only's cost is n*guaranteedCost with guaranteedCost=randomCost.
+    writeMemoryItem(NUM_STANDEES_KEY, 1);
     render(<PureStrategyComparison numStandees={1} />);
     const guaranteedMultiplierSlider = screen.getAllByRole("slider")[2];
     fireEvent.change(guaranteedMultiplierSlider, { target: { value: "1" } });
@@ -123,6 +149,7 @@ describe("PureStrategyComparison", () => {
 
   it("falls back to the default total when numStandees is not passed", () => {
     render(<PureStrategyComparison />);
-    expect(screen.getAllByText("TBD").length).toBeGreaterThan(0);
+    expect(screen.getByText("Random")).toBeInTheDocument();
+    expect(screen.getByText("Guaranteed")).toBeInTheDocument();
   });
 });

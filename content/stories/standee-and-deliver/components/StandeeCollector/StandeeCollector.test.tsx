@@ -1,9 +1,11 @@
 import { act, fireEvent, render, screen } from "@testing-library/react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
+import { writeMemoryItem } from "@/hooks/useMemoryStore";
 import { standees } from "../../data";
+import { DEFAULT_NUM_CHARACTERS, NUM_CHARACTERS_KEY } from "../../sliderStore";
 import { standeesForCharacterCount } from "../../utils";
 import StandeeCollector from ".";
-import { DEFAULT_NUM_CHARACTERS, TICK_INTERVAL_MS } from "./constants";
+import { TICK_INTERVAL_MS } from "./constants";
 
 const defaultStandeeCount = standeesForCharacterCount(
   standees,
@@ -14,6 +16,7 @@ const defaultFoundCount = DEFAULT_NUM_CHARACTERS;
 
 beforeEach(() => {
   vi.useFakeTimers();
+  writeMemoryItem(NUM_CHARACTERS_KEY, DEFAULT_NUM_CHARACTERS);
 });
 
 afterEach(() => {

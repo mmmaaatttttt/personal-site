@@ -4,22 +4,33 @@ import { type FC, useMemo, useState } from "react";
 import NarrowContainer from "@/components/story/shared/NarrowContainer";
 import { SliderGroup } from "@/components/story/shared/Slider";
 import { Button } from "@/components/ui/Button";
+import useSliders from "@/hooks/useSliders";
 import COLORS from "@/utils/styles";
 import { characterNames, standees } from "../../data";
-import { standeesForCharacterCount } from "../../utils";
-import StandeeGrid from "../StandeeGrid";
 import {
   DEFAULT_NUM_CHARACTERS,
-  DEFAULT_SPEED,
-  MAX_SPEED,
   MIN_NUM_CHARACTERS,
-  MIN_SPEED,
-  SPEED_STEP,
-} from "./constants";
+  NUM_CHARACTERS_KEY,
+} from "../../sliderStore";
+import { standeesForCharacterCount } from "../../utils";
+import StandeeGrid from "../StandeeGrid";
+import { DEFAULT_SPEED, MAX_SPEED, MIN_SPEED, SPEED_STEP } from "./constants";
 import { useStandeeCollector } from "./useStandeeCollector";
 
 const StandeeCollector: FC = () => {
-  const [numCharacters, setNumCharacters] = useState(DEFAULT_NUM_CHARACTERS);
+  const { values, sliderData: settingsSliderData } = useSliders([
+    {
+      key: "numCharacters",
+      initialValue: DEFAULT_NUM_CHARACTERS,
+      storageKey: NUM_CHARACTERS_KEY,
+      min: MIN_NUM_CHARACTERS,
+      max: characterNames.length,
+      step: 1,
+      title: (val: number) => `Number of Characters: ${val}`,
+      color: COLORS.ORANGE,
+    },
+  ]);
+  const [numCharacters] = values;
   const [speed, setSpeed] = useState(DEFAULT_SPEED);
 
   const standeeData = useMemo(
@@ -41,18 +52,6 @@ const StandeeCollector: FC = () => {
   const foundCount = tallies.filter(
     (tally, index) => tally > 0 || starterFlags[index],
   ).length;
-
-  const settingsSliderData = [
-    {
-      value: numCharacters,
-      handleValueChange: setNumCharacters,
-      min: MIN_NUM_CHARACTERS,
-      max: characterNames.length,
-      step: 1,
-      title: (val: number) => `Number of Characters: ${val}`,
-      color: COLORS.ORANGE,
-    },
-  ];
 
   const speedSliderData = [
     {
