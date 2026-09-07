@@ -12,7 +12,7 @@ interface LatexProps {
 
 const Latex: FC<LatexProps> = ({ str, displayMode = false }) => {
   const ref = useCallback(
-    (el: HTMLDivElement | null) => {
+    (el: HTMLElement | null) => {
       if (!el) return;
       katex.render(str, el, { displayMode, throwOnError: false });
       // this is a janky hack to override default inline styles.
@@ -24,7 +24,12 @@ const Latex: FC<LatexProps> = ({ str, displayMode = false }) => {
     [str, displayMode],
   );
 
-  return <div ref={ref} className="latex-wrapper" />;
+  // A block element (div) would force a line break even in inline mode, so
+  // only display-mode equations (meant to sit on their own line) get one.
+  if (displayMode) {
+    return <div ref={ref} className="latex-wrapper" />;
+  }
+  return <span ref={ref} className="latex-wrapper" />;
 };
 
 export default Latex;
