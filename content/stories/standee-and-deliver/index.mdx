@@ -3,6 +3,7 @@ import Latex from "@/components/story/shared/Latex";
 import StandeeCollector from "./components/StandeeCollector";
 import PureStrategyComparison from "./components/PureStrategyComparison";
 import MixedStrategyExplorer from "./components/MixedStrategyExplorer";
+import StrategyComparisonChart from "./components/StrategyComparisonChart";
 
 As the only kid in my house growing up, I envisioned households with four gaming controllers as the height of opulence. To have not only the means, but the personnel, to support a gaming experience with yourself and three other humans? The extravagance!
 
@@ -114,3 +115,10 @@ So there must be some point at which we should switch from a random strategy to 
   <MixedStrategyExplorer />
 </Figure>
 
+For a broader perspective, here's a chart of the expected cost based on where you switch between a random and a guaranteed purchase strategy. Note that as long as the guaranteed cost is greater than the random cost, there is some unique point at which it makes sense to switch from random to guaranteed. 
+
+<Figure caption="Can you move the red dot to hit the minimum of the graph? This minimal point is where you should switch.">
+  <StrategyComparisonChart />
+</Figure>
+
+We can also solve for this minimum value algebraically. 
