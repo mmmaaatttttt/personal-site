@@ -8,7 +8,7 @@ You can imagine my delight, then, when our youngest started muddling his way thr
 
 ![Super Mario Wonder Screenshot](../../images/mario-wonder-elephants.jpg "Family game night cosplaying as a herd of elephants in Super Mario Wonder. (Source: Nintendo)")
 
-This game was the first one my wife, our kids and I would sit down and play together, without the competitive backstabbing that comes with games like *Mario Kart.* Having three other players, and needing three other controllers, convinced me that in spite of everything else going on in the world, I was truly living my rich life.
+This game was the first one my wife, our kids and I would sit down and play together, without the competitive backstabbing that comes with games like _Mario Kart._ Having three other players, and needing three other controllers, convinced me that in spite of everything else going on in the world, I was truly living my rich life.
 
 As the weeks went on, we gradually churned our way through the game together. We defeated Bowser (given 40 years of the same conflict, I don't think that's a spoiler?), found and completed all of the hidden levels, and unlocked all of the game's special-power-endowing [badges](https://www.mariowiki.com/Badge_(Super_Mario_Bros._Wonder)). However, as a completionist, I'm somewhat ashamed to admit one thing. There's one set of things we failed to collect in full.
 
@@ -20,7 +20,7 @@ What's a Standee, you ask? This is a very good question. Even when we were playi
 
 Super Mario Wonder has a mechanic whereby when you are playing with others, a hit that normally would kill you does not. Instead, you turn into a cute little ghost, and have a few seconds to tag a living player to be resurrected without losing a life. Standees are little cutouts of the characters that you can place in levels, and can also revive your ghost form before you are claimed by the grim reaper.
 
-As with any other good avatar in the 21st century, standees can also accumulate "likes." Unfortunately, I have aged out of being able to tell you what good this does. 
+As with any other good avatar in the 21st century, standees can also accumulate "likes." Unfortunately, I have aged out of being able to tell you what good this does.
 
 ![Screenshot of Mario with a standee](../../images/mario-standee.jpg "An example of a standee; Mario has placed this one next to him. (Source: Nintendo)")
 
@@ -49,16 +49,47 @@ The story repeats itself no matter how many standees we're looking for. We find 
   }
 />
 
-So in order to get 12 Mario standees, you should expect to need to make just over 33 purchases. Another way to spin this: you should expect 21 out of your 33 purchases to be redundant purchases of standees you already have. 
+So in order to get 12 Mario standees, you should expect to need to make just over 33 purchases. Another way to spin this: you should expect 21 out of your 33 purchases to be redundant purchases of standees you already have.
 
 ---
 
-### Standee to Reason
+### Standees in Harmony
 
-Unfortunately for the completionists among us, Mario is not the only character with a set of 12 standees. The main came has 12 characters, and each one comes with their own set. While the game gives you one standee per character to start, this still means that there are 132 to collect. 
+Unfortunately for the completionists among us, Mario is not the only character with a set of 12 standees. The main came has 12 characters, and each one comes with their own set. While the game gives you one standee per character to start, this still means that there are 132 to collect.
 
 As you might imagine, the more there are to collect, the more redundant standees you'll need to buy. But how bad does it get? You can use the simulator below to adjust the number of characters and see how many purchases you'll need to make.
 
 <Figure caption="Adjust the number of characters, and you can simulate how many draws it will take to complete your standee collection.">
   <StandeeCollector />
 </Figure>
+
+Even without the simulation, we can apply the same logic as above to figure out the expected value. In fact, we can do this for any number of standees _N_. Just like before, we expect to get our first new standee after _N_ / _N_ = 1 draw, our second standee after _N_ / (_N_ - 1) draws, and so on, until there's only one standee left. At that point, each purchase gives us a 1 / _N_ chance of completing the set, so we expect to need _N_ purchases at the end to make that happen.
+
+Or, if we want to put on our monocles and get fancy with it, the total number of expected draws is equal to:
+
+<Latex
+  displayMode
+  str={
+    "\\begin{aligned}" +
+    "&\\frac{N}{N} + \\frac{N}{N - 1} + \\frac{N}{N - 2} + ... + \\frac{N}{2} + \\frac{N}{1} \\\\[1em]" +
+    "=&\\; N \\times \\left( 1 + \\frac{1}{2} + ... + \\frac{1}{N - 2} + \\frac{1}{N - 1} + \\frac{1}{N} \\right) \\\\[1.5em]" +
+    "=&\\; N \\times H_{N}," +
+    "\\end{aligned}"
+  }
+/>
+
+where <Latex str={`H_{N} = \\sum_{i=1}^{N} \\frac{1}{i}`} /> is the sum of the reciprocals of the first N whole numbers. This is known as the N-th [harmonic number](https://en.wikipedia.org/wiki/Harmonic_number).
+
+Because these harmonic numbers grow without bound, the more standees you need to buy, the more money you'll waste on standees you already have. We already saw that for 11 standees, <Latex str={`11 \\times H_{11}`} /> is around 33, so you can expect about 2/3rds of your purchases to be wasteful. But with 12 characters, the number of standees we need to buy is 132. At this count, <Latex str={`132 \\times H_{132}`} /> is over 732. This means that to collect the 132 standees in the game, you should expect to buy around 600 standees you don't need. In this case, nearly 82% of your purchases will be wasteful!
+
+As an aside, note that earlier this year a Nintendo Switch 2 edition of the game was released, which included an additional set of Standees for Princess Rosalina. So if you're a completionist and play this version of the game, you'll need to collect 144 standees. You should expect this to require the purchase of <Latex str={`144 \\times H_{144}`} />, or around 799 standees. Once again, this means that you can expect 655 (or around 82%) of your purchases to be redunant.
+
+---
+
+### That's so Random
+
+What we've just explored here is a classical mathematics problem. It goes by the name of the [coupon collector's problem](https://en.wikipedia.org/wiki/Coupon_collector%27s_problem), though in modern parlance we may as well call it the standee collector's problem, since I imagine the youth may be more familiar with collecting standees than collecting coupons. But aside from the specific object we are trying to collect, the premise and the conclusion are the same: if you're trying to collect a set of *N* objects by drawing from a population where each object is equally likely, you should expect to need <Latex str={`N \\times H_{N}`} /> draws to get the job done.
+
+This is bad news for collectors who have an almost complete collection when *N* is large. It means that the more objects you have in your collection, the harder it is to get new ones. And from a game design standpoint it's problematic, too. For someone who has collected every standee except one, the thought of having to earn over a thousand coins in order to chase that last standee is pretty far from most folks' definition of fun.
+
+Fortunately, the game as an escape hatch for you, if you're skilled enough to find it. Late in the game, there's one shop 
