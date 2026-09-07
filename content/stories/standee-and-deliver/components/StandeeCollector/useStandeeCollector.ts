@@ -1,6 +1,7 @@
 "use client";
 
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
+import { useTickLoop } from "@/hooks/useTickLoop";
 import { choices } from "@/utils/mathHelpers";
 import type { StandeeData } from "../../data";
 import { computeStarterFlags } from "../../utils";
@@ -29,69 +30,34 @@ export function useStandeeCollector(standeeData: StandeeData[], speed: number) {
   const [state, setState] = useState<RunState>(() =>
     emptyRunState(standeeData.length),
   );
-  const [playing, setPlaying] = useState(false);
-
-  const playingRef = useRef(false);
-  const lastTickRef = useRef(0);
-  const speedRef = useRef(speed);
-  speedRef.current = speed;
-  const eligibleIndicesRef = useRef(eligibleIndices);
-  eligibleIndicesRef.current = eligibleIndices;
 
   const isFinished = eligibleIndices.every((index) => state.tallies[index] > 0);
 
-  const tick = useCallback((now: number) => {
-    if (!playingRef.current) return;
-
-    if (now - lastTickRef.current > TICK_INTERVAL_MS / speedRef.current) {
-      lastTickRef.current = now;
+  const { playing, toggle, stop } = useTickLoop({
+    tickIntervalMs: TICK_INTERVAL_MS / speed,
+    onTick: () => {
       setState((prev) => {
-        const [index] = choices(eligibleIndicesRef.current, 1);
+        const [index] = choices(eligibleIndices, 1);
         const tallies = [...prev.tallies];
         tallies[index] += 1;
         return { tallies, lastDrawnIndex: index };
       });
-    }
-
-    requestAnimationFrame(tick);
-  }, []);
-
-  const toggle = useCallback(() => {
-    setPlaying((prev) => {
-      const next = !prev;
-      playingRef.current = next;
-      if (next) {
-        lastTickRef.current = 0;
-        requestAnimationFrame(tick);
-      }
-      return next;
-    });
-  }, [tick]);
+    },
+  });
 
   const reset = useCallback(() => {
-    playingRef.current = false;
-    setPlaying(false);
+    stop();
     setState(emptyRunState(standeeData.length));
-  }, [standeeData.length]);
+  }, [stop, standeeData.length]);
 
   useEffect(() => {
-    playingRef.current = false;
-    setPlaying(false);
+    stop();
     setState(emptyRunState(standeeData.length));
-  }, [standeeData.length]);
+  }, [stop, standeeData.length]);
 
   useEffect(() => {
-    if (isFinished) {
-      playingRef.current = false;
-      setPlaying(false);
-    }
-  }, [isFinished]);
-
-  useEffect(() => {
-    return () => {
-      playingRef.current = false;
-    };
-  }, []);
+    if (isFinished) stop();
+  }, [isFinished, stop]);
 
   return {
     tallies: state.tallies,
