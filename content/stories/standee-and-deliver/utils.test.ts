@@ -5,6 +5,7 @@ import {
   expectedTotalDraws,
   getTier,
   harmonicNumber,
+  optimalSwitchPoint,
   pickDraw,
   pickInitialOwned,
   simulateFullRun,
@@ -175,6 +176,55 @@ describe("expectedCost", () => {
 
     expect(simulatedAverage).toBeGreaterThan(closedForm * 0.85);
     expect(simulatedAverage).toBeLessThan(closedForm * 1.15);
+  });
+});
+
+describe("optimalSwitchPoint", () => {
+  function bruteForceOptimalCost(
+    numStandees: number,
+    randomCost: number,
+    guaranteedCost: number,
+  ): number {
+    let best = Infinity;
+    for (let k = 0; k <= numStandees; k++) {
+      const cost = expectedCost(numStandees, k, randomCost, guaranteedCost);
+      if (cost < best) best = cost;
+    }
+    return best;
+  }
+
+  it.each([
+    [144, 10, 30],
+    [144, 10, 50],
+    [144, 10, 15],
+    [50, 5, 20],
+    [200, 3, 100],
+    [144, 25, 30],
+    [144, 1, 500],
+    [144, 50, 1],
+    [12, 1, 100],
+    [1, 1, 1],
+    [144, 10, 10],
+  ])(
+    "matches the true minimum cost for numStandees=%i randomCost=%i guaranteedCost=%i",
+    (numStandees, randomCost, guaranteedCost) => {
+      const k = optimalSwitchPoint(numStandees, randomCost, guaranteedCost);
+      const cost = expectedCost(numStandees, k, randomCost, guaranteedCost);
+      const trueBest = bruteForceOptimalCost(
+        numStandees,
+        randomCost,
+        guaranteedCost,
+      );
+      expect(cost).toBeCloseTo(trueBest, 6);
+    },
+  );
+
+  it("clamps to 0 when guaranteed is cheap enough that random is never worth it", () => {
+    expect(optimalSwitchPoint(144, 50, 1)).toBe(0);
+  });
+
+  it("clamps to numStandees when random is cheap enough to never switch", () => {
+    expect(optimalSwitchPoint(144, 1, 500)).toBe(144);
   });
 });
 

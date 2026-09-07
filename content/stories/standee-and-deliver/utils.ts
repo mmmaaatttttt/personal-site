@@ -145,6 +145,28 @@ export function expectedCost(
   );
 }
 
+export function optimalSwitchPoint(
+  numStandees: number,
+  randomCost: number,
+  guaranteedCost: number,
+): number {
+  const raw = numStandees * (1 - randomCost / guaranteedCost);
+  const candidates = [Math.floor(raw), Math.ceil(raw)].map((k) =>
+    Math.min(numStandees, Math.max(0, k)),
+  );
+
+  let best = candidates[0];
+  let bestCost = expectedCost(numStandees, best, randomCost, guaranteedCost);
+  for (const k of candidates) {
+    const cost = expectedCost(numStandees, k, randomCost, guaranteedCost);
+    if (cost < bestCost) {
+      best = k;
+      bestCost = cost;
+    }
+  }
+  return best;
+}
+
 export type Tier = "black" | "silver" | "gold";
 
 const BLACK_POSES = new Set(["Jumping", "Posing", "Crouching", "Swimming"]);
