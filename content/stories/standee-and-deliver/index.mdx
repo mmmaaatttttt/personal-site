@@ -1,6 +1,7 @@
 import Figure from "@/components/story/shared/Figure";
 import Latex from "@/components/story/shared/Latex";
 import StandeeCollector from "./components/StandeeCollector";
+import PureStrategyComparison from "./components/PureStrategyComparison";
 
 As the only kid in my house growing up, I envisioned households with four gaming controllers as the height of opulence. To have not only the means, but the personnel, to support a gaming experience with yourself and three other humans? The extravagance!
 
@@ -92,4 +93,11 @@ What we've just explored here is a classical mathematics problem. It goes by the
 
 This is bad news for collectors who have an almost complete collection when *N* is large. It means that the more objects you have in your collection, the harder it is to get new ones. And from a game design standpoint it's problematic, too. For someone who has collected every standee except one, the thought of having to earn over a thousand coins in order to chase that last standee is pretty far from most folks' definition of fun.
 
-Fortunately, the game as an escape hatch for you, if you're skilled enough to find it. Late in the game, there's one shop 
+Fortunately, the game as an escape hatch for you, if you're skilled enough to find it. Late in the game, there's one shop that sells standees you are *guaranteed* not to have yet. The store charges an additional cost for these guarnteed standees: 30 coins, instead of 10. Still, when you're close to having a comlete set, this price is a bargain.
+
+The table below lets you explore just how much of a bargain. Below, you can vary the number of standees in the collection, the cost of a random purchase, and the multiplier factor for a standee that's guaranteed to be new. Even if the game priced these guaranteed standees at 40 or 50 coins, on average it would still be cheaper to find this shop than it would be to try your luck with random standees.
+
+<Figure caption="Here you can compare the cost of buying random standees or guaranteed standees as you change the relative cost of each, along with the total number to collect.">
+  <PureStrategyComparison />
+</Figure>
+
