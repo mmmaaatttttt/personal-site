@@ -15,8 +15,8 @@ export const DEFAULT_NUM_CHARACTERS = 1;
 export const MIN_NUM_CHARACTERS = 1;
 
 export const NUM_STANDEES_KEY = "standee-and-deliver-numStandees";
-export const DEFAULT_NUM_STANDEES = 144;
+export const DEFAULT_NUM_STANDEES = 132;
 export const MIN_NUM_STANDEES = 1;
-export const MAX_NUM_STANDEES = 144;
+export const MAX_NUM_STANDEES = 143;
 
 export const SWITCH_POINT_KEY = "standee-and-deliver-switchPoint";
