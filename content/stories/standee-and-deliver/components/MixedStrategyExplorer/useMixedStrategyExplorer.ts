@@ -50,7 +50,7 @@ export function useMixedStrategyExplorer(numStandees: number) {
       min: 0,
       max: numStandees,
       step: 1,
-      title: (val: number) => `Straegy Switch Point: ${val}`,
+      title: (val: number) => `Strategy Switch Point: ${val}`,
       color: COLORS.GREEN,
     },
   ]);
