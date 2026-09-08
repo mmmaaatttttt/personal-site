@@ -14,16 +14,28 @@ import katex from "katex";
 describe("Latex", () => {
   it("renders without crashing", () => {
     const { container } = render(<Latex str="x^2" />);
-    expect(container.querySelector("div")).toBeTruthy();
+    expect(container.querySelector("span")).toBeTruthy();
   });
 
   it("calls katex.render with the str prop", () => {
     render(<Latex str="E = mc^2" />);
     expect(katex.render).toHaveBeenCalledWith(
       "E = mc^2",
-      expect.any(HTMLDivElement),
+      expect.any(HTMLSpanElement),
       expect.objectContaining({ displayMode: false }),
     );
+  });
+
+  it("uses a span wrapper when not in display mode, so it can flow inline with surrounding text", () => {
+    const { container } = render(<Latex str="x^2" />);
+    expect(container.querySelector("span.latex-wrapper")).toBeTruthy();
+    expect(container.querySelector("div.latex-wrapper")).toBeNull();
+  });
+
+  it("uses a div wrapper in display mode, so the equation sits on its own line", () => {
+    const { container } = render(<Latex str="x^2" displayMode />);
+    expect(container.querySelector("div.latex-wrapper")).toBeTruthy();
+    expect(container.querySelector("span.latex-wrapper")).toBeNull();
   });
 
   it("calls katex.render with displayMode=true when prop is set", () => {

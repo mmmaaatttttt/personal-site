@@ -1,4 +1,5 @@
 import type { Point } from "@/types/geometry";
+import { clamp } from "@/utils/mathHelpers";
 
 export interface Segment {
   x1: number;
@@ -13,8 +14,8 @@ export function clamped(
   [yMin, yMax]: [number, number],
 ): Point[] {
   return points.map((pt) => ({
-    x: Math.min(Math.max(pt.x, xMin), xMax),
-    y: Math.min(Math.max(pt.y, yMin), yMax),
+    x: clamp(pt.x, xMin, xMax),
+    y: clamp(pt.y, yMin, yMax),
   }));
 }
 

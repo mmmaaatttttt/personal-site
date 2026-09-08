@@ -1,3 +1,4 @@
+import { hexToRgb } from "@/utils/colorHelpers";
 import { THEME_OPACITY } from "./constants";
 
 /**
@@ -7,9 +8,7 @@ import { THEME_OPACITY } from "./constants";
 export function getOpaqueLightColor(color: string): string {
   if (!color?.startsWith("#") || color.length !== 7) return color;
 
-  const r = parseInt(color.slice(1, 3), 16);
-  const g = parseInt(color.slice(3, 5), 16);
-  const b = parseInt(color.slice(5, 7), 16);
+  const [r, g, b] = hexToRgb(color);
 
   const alpha = THEME_OPACITY;
   const blend = (c: number) => Math.round(c * alpha + 255 * (1 - alpha));

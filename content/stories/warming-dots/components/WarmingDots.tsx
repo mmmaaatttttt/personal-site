@@ -12,7 +12,7 @@ import NarrowContainer from "@/components/story/shared/NarrowContainer";
 import { SliderGroup } from "@/components/story/shared/Slider";
 import useSliders from "@/hooks/useSliders";
 import type { DiffEqFactory } from "@/utils/mathHelpers";
-import { generateData } from "@/utils/mathHelpers";
+import { clamp, generateData } from "@/utils/mathHelpers";
 import { visualizationData } from "../data/warming-dots";
 
 interface WarmingDotsProps {
@@ -93,7 +93,7 @@ const WarmingDots: FC<WarmingDotsProps> = ({
   const graphData = transformData(values, diffEqs[0]);
   const flatData = graphData.flat();
   const yMaxVal = max(flatData, (d) => Math.abs(d.y)) || 0;
-  const yMax = Math.min(Math.max(Math.ceil(yMaxVal), smallestY), largestY);
+  const yMax = clamp(Math.ceil(yMaxVal), smallestY, largestY);
 
   const xScale = scaleLinear()
     .domain(extent(graphData[0], (d) => d.x) as [number, number])

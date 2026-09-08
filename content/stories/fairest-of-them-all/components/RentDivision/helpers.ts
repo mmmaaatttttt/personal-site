@@ -1,4 +1,5 @@
 import { generateFreqMap } from "@/utils/arrayHelpers";
+import { hexToRgb } from "@/utils/colorHelpers";
 import { interpolate } from "@/utils/mathHelpers";
 import COLORS from "@/utils/styles";
 
@@ -160,13 +161,8 @@ export function mixColors(
   color1: string,
   color2: string,
 ): string {
-  const parse = (hex: string) => [
-    parseInt(hex.slice(1, 3), 16),
-    parseInt(hex.slice(3, 5), 16),
-    parseInt(hex.slice(5, 7), 16),
-  ];
-  const [r1, g1, b1] = parse(color1);
-  const [r2, g2, b2] = parse(color2);
+  const [r1, g1, b1] = hexToRgb(color1);
+  const [r2, g2, b2] = hexToRgb(color2);
   const r = Math.round(fraction * r1 + (1 - fraction) * r2);
   const g = Math.round(fraction * g1 + (1 - fraction) * g2);
   const b = Math.round(fraction * b1 + (1 - fraction) * b2);

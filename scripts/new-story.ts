@@ -6,6 +6,13 @@ const ROOT = path.join(__dirname, "..");
 const STORIES_DIR = path.join(ROOT, "content", "stories");
 const E2E_SCREENSHOTS_DIR = path.join(ROOT, "e2e", "screenshots");
 const PAGE_PATH = path.join(ROOT, "app", "stories", "[slug]", "page.tsx");
+const PAGE_TEST_PATH = path.join(
+  ROOT,
+  "app",
+  "stories",
+  "[slug]",
+  "page.test.ts",
+);
 
 function toTitleCase(slug: string): string {
   return slug
@@ -72,6 +79,36 @@ function insertStoryModule(slug: string): void {
   fs.writeFileSync(PAGE_PATH, updated);
 }
 
+function insertPageTestEntries(slug: string): void {
+  const contents = fs.readFileSync(PAGE_TEST_PATH, "utf-8");
+
+  const mockBlockPattern =
+    /vi\.mock\("@\/content\/stories\/[^"]+\/index\.mdx", \(\) => \(\{\n {2}default: \(\) => null,\n\}\)\);\n/g;
+  const mockBlocks = [...contents.matchAll(mockBlockPattern)];
+  const lastMockBlock = mockBlocks.at(-1);
+  if (!lastMockBlock) {
+    throw new Error(`Could not find an existing MDX mock in ${PAGE_TEST_PATH}`);
+  }
+  const insertAt = lastMockBlock.index + lastMockBlock[0].length;
+  const mockEntry = `vi.mock("@/content/stories/${slug}/index.mdx", () => ({\n  default: () => null,\n}));\n`;
+  const withMock =
+    contents.slice(0, insertAt) + mockEntry + contents.slice(insertAt);
+
+  const arrayMatch = withMock.match(
+    /const allStoryModuleSlugs = \[\n([\s\S]*?)\n( *)\];/,
+  );
+  if (!arrayMatch) {
+    throw new Error(
+      `Could not find allStoryModuleSlugs array in ${PAGE_TEST_PATH}`,
+    );
+  }
+  const [fullMatch, body, closingIndent] = arrayMatch;
+  const updatedArray = `const allStoryModuleSlugs = [\n${body}\n    "${slug}",\n${closingIndent}];`;
+  const updated = withMock.replace(fullMatch, updatedArray);
+
+  fs.writeFileSync(PAGE_TEST_PATH, updated);
+}
+
 function main(): void {
   const slug = process.argv[2];
 
@@ -106,6 +143,7 @@ function main(): void {
   fs.writeFileSync(path.join(storyDir, "index.mdx"), mdxTemplate());
   fs.writeFileSync(e2ePath, e2eTemplate(slug, title));
   insertStoryModule(slug);
+  insertPageTestEntries(slug);
 
   execFileSync(
     "npx",
@@ -117,6 +155,7 @@ function main(): void {
       path.join(storyDir, "index.mdx"),
       e2ePath,
       PAGE_PATH,
+      PAGE_TEST_PATH,
     ],
     { cwd: ROOT, stdio: "inherit" },
   );
@@ -126,6 +165,7 @@ function main(): void {
   console.log(`  content/stories/${slug}/index.mdx`);
   console.log(`  e2e/screenshots/${slug}.spec.ts`);
   console.log(`  registered in app/stories/[slug]/page.tsx`);
+  console.log(`  registered in app/stories/[slug]/page.test.ts`);
   console.log("");
   console.log(
     `Still needed: public/images/featured_images/${slug.replace(/-/g, "_")}.jpg (referenced from meta.ts), and real title/caption/tags/content.`,
