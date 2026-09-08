@@ -747,3 +747,11 @@ export const CHARACTER_BACKGROUND_CLASSES: Record<string, string> = {
   "Yellow Yoshi": "bg-[color(display-p3_0.914_0.863_0.290)]",
   Yoshi: "bg-[color(display-p3_0.431_0.808_0.247)]",
 };
+
+export const tierDrawResultsTable: string[][] = [
+  ["Tier", "Draws", "Percentage"],
+  ["Black", "93", "46.5%"],
+  ["Silver", "90", "45.0%"],
+  ["Gold", "17", "8.5%"],
+  ["Total", "200", "100%"],
+];
