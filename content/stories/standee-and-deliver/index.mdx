@@ -4,8 +4,10 @@ import StandeeCollector from "./components/StandeeCollector";
 import PureStrategyComparison from "./components/PureStrategyComparison";
 import MixedStrategyExplorer from "./components/MixedStrategyExplorer";
 import StrategyComparisonChart from "./components/StrategyComparisonChart";
+import TierWeightExplorer from "./components/TierWeightExplorer";
+import { tierDrawResultsTable } from "./data";
 
-As the only kid in my house growing up, I envisioned households with four gaming controllers as the height of opulence. To have not only the means, but the personnel, to support a gaming experience with yourself and three other humans? The extravagance!
+As the only kid in my house growing up, I considered households with four gaming controllers as the height of opulence. To have not only the means, but the personnel, to support a gaming experience with yourself and three other humans? The extravagance!
 
 You can imagine my delight, then, when our youngest started muddling his way through some of his first gaming experiences. Around the same time, Nintendo released [Super Mario Wonder](https://en.wikipedia.org/wiki/Super_Mario_Bros._Wonder). The game promised a chaotic yet also relatively tame couch co-op experience. I knew, then, that it had to be mine.
 
@@ -13,23 +15,21 @@ You can imagine my delight, then, when our youngest started muddling his way thr
 
 This game was the first one my wife, our kids and I would sit down and play together, without the competitive backstabbing that comes with games like _Mario Kart._ Having three other players, and needing three other controllers, convinced me that in spite of everything else going on in the world, I was truly living my rich life.
 
-As the weeks went on, we gradually churned our way through the game together. We defeated Bowser (given 40 years of the same conflict, I don't think that's a spoiler?), found and completed all of the hidden levels, and unlocked all of the game's special-power-endowing [badges](https://www.mariowiki.com/Badge_(Super_Mario_Bros._Wonder)). However, as a completionist, I'm somewhat ashamed to admit one thing. There's one set of things we failed to collect in full.
+As the weeks went on, we gradually churned our way through the game together. We defeated Bowser (given 40 years of the same conflict, I don't think that's a spoiler?), found and completed all of the hidden levels, and unlocked all of the game's special-power-endowing [badges](<https://www.mariowiki.com/Badge_(Super_Mario_Bros._Wonder)>). However, as a completionist, I'm somewhat ashamed to admit one thing. There's one set of things we failed to collect in full.
 
 Standees.
 
 ### Standee By Me
 
-What's a Standee, you ask? This is a very good question. Even when we were playing the game, I remember not really knowing. In hindsight, I wish I'd paid more attention, since I think they could've proved useful.
+What's a Standee, you ask? This is a very good question. Even when we were playing the game, I did not really know. I think it's because they're mostly used in online play, but we only played together on the couch.
 
-Super Mario Wonder has a mechanic whereby when you are playing with others, a hit that normally would kill you does not. Instead, you turn into a cute little ghost, and have a few seconds to tag a living player to be resurrected without losing a life. Standees are little cutouts of the characters that you can place in levels, and can also revive your ghost form before you are claimed by the grim reaper.
-
-As with any other good avatar in the 21st century, standees can also accumulate "likes." Unfortunately, I have aged out of being able to tell you what good this does.
+Super Mario Wonder has a mechanic whereby when you are playing with others, a hit that normally would kill you does not. Instead, you turn into a cute little ghost, and have a few seconds to tag a living player to be resurrected without losing a life. Standees are little cutouts of the characters that you can place in levels during online play, and can also revive your ghost form before you are claimed by the grim reaper.
 
 ![Screenshot of Mario with a standee](../../images/mario-standee.jpg "An example of a standee; Mario has placed this one next to him. (Source: Nintendo)")
 
 The game has many standees to collect. You acquire them by purchasing them from shops using purple coins you find in levels. Each standee costs 10 coins, but here's the rub: at that price, standees are like a box of chocolates. You never know what you're going to get.
 
-Consider Mario. As with every other playable character, he has 12 standees. When the game begins, you are given the first standee for each character. So when it comes time to shop, at the start of the game there are 11 Mario standees to collect.
+Consider Mario. As with every other playable character, he has 12 standees. You get one standee just for starting the game, leaving you with 11 standees to collect.
 
 ![Screenshot of all Mario Standees](../../images/mario-standees-all.png "All of the Mario standees; the game gives you the first one for free.")
 
@@ -60,7 +60,9 @@ So in order to get 12 Mario standees, you should expect to need to make just ove
 
 Unfortunately for the completionists among us, Mario is not the only character with a set of 12 standees. The main came has 12 characters, and each one comes with their own set. While the game gives you one standee per character to start, this still means that there are 132 to collect.
 
-As you might imagine, the more there are to collect, the more redundant standees you'll need to buy. But how bad does it get? You can use the simulator below to adjust the number of characters and see how many purchases you'll need to make.
+As you might imagine, the more there are to collect, the more redundant standees you'll need to buy. But how bad does it get? You can use the simulator below to adjust the number of characters and see how many purchases you can expect to make, on average.
+
+<HERE>
 
 <Figure caption="Adjust the number of characters, and you can simulate how many draws it will take to complete your standee collection.">
   <StandeeCollector />
@@ -91,11 +93,11 @@ As an aside, note that earlier this year a Nintendo Switch 2 edition of the game
 
 ### That's so Random
 
-What we've just explored here is a classical mathematics problem. It goes by the name of the [coupon collector's problem](https://en.wikipedia.org/wiki/Coupon_collector%27s_problem), though in modern parlance we may as well call it the standee collector's problem, since I imagine the youth may be more familiar with collecting standees than collecting coupons. But aside from the specific object we are trying to collect, the premise and the conclusion are the same: if you're trying to collect a set of *N* objects by drawing from a population where each object is equally likely, you should expect to need <Latex str={`N \\times H_{N}`} /> draws to get the job done.
+What we've just explored here is a classical mathematics problem. It goes by the name of the [coupon collector's problem](https://en.wikipedia.org/wiki/Coupon_collector%27s_problem), though in modern parlance we may as well call it the standee collector's problem, since I imagine the youth may be more familiar with collecting standees than collecting coupons. But aside from the specific object we are trying to collect, the premise and the conclusion are the same: if you're trying to collect a set of _N_ objects by drawing from a population where each object is equally likely, you should expect to need <Latex str={`N \\times H_{N}`} /> draws to get the job done.
 
-This is bad news for collectors who have an almost complete collection when *N* is large. It means that the more objects you have in your collection, the harder it is to get new ones. And from a game design standpoint it's problematic, too. For someone who has collected every standee except one, the thought of having to earn over a thousand coins in order to chase that last standee is pretty far from most folks' definition of fun.
+This is bad news for collectors who have an almost complete collection when _N_ is large. It means that the more objects you have in your collection, the harder it is to get new ones. And from a game design standpoint it's problematic, too. For someone who has collected every standee except one, the thought of having to earn over a thousand coins in order to chase that last standee is pretty far from most folks' definition of fun.
 
-Fortunately, the game as an escape hatch for you, if you're skilled enough to find it. Late in the game, there's one shop that sells standees you are *guaranteed* not to have yet. The store charges an additional cost for these guarnteed standees: 30 coins, instead of 10. Still, when you're close to having a comlete set, this price is a bargain.
+Fortunately, the game as an escape hatch for you, if you're skilled enough to find it. Late in the game, there's one shop that sells standees you are _guaranteed_ not to have yet. The store charges an additional cost for these guarnteed standees: 30 coins, instead of 10. Still, when you're close to having a comlete set, this price is a bargain.
 
 The table below lets you explore just how much of a bargain. Below, you can vary the number of standees in the collection, the cost of a random purchase, and the multiplier factor for a standee that's guaranteed to be new. Even if the game priced these guaranteed standees at 40 or 50 coins, on average it would still be cheaper to find this shop than it would be to try your luck with random standees.
 
@@ -107,7 +109,7 @@ The table below lets you explore just how much of a bargain. Below, you can vary
 
 ### Strategy Mixologist
 
-You may have already noticed that the previous section introduced a false dichotomy. When we're buying standees, it's not an all-or-nothing proposition. You don't have to choose what type of standee to purchase and then stick with that approach for the entire game. And indeed, intuitively it seems like we should purchase random standees earlier on, because they're cheaper and we are less likely to buy a standee we don't already have. Conversely, in the late game, purchasing a guaranteed standee can save us thousands of coins. 
+You may have already noticed that the previous section introduced a false dichotomy. When we're buying standees, it's not an all-or-nothing proposition. You don't have to choose what type of standee to purchase and then stick with that approach for the entire game. And indeed, intuitively it seems like we should purchase random standees earlier on, because they're cheaper and we are less likely to buy a standee we don't already have. Conversely, in the late game, purchasing a guaranteed standee can save us thousands of coins.
 
 So there must be some point at which we should switch from a random strategy to a guaranteed one. Now the question becomes: where is that switching point? There is an optimal solution, but before the big reveal, here's an opportunity to explore that point for yourself. As you might expect, switching over to paying slightly more for a guaranteed standee can do wonders for completing your colletion more quickly.
 
@@ -115,30 +117,129 @@ So there must be some point at which we should switch from a random strategy to 
   <MixedStrategyExplorer />
 </Figure>
 
-For a broader perspective, here's a chart of the expected cost based on where you switch between a random and a guaranteed purchase strategy. Note that as long as the guaranteed cost is greater than the random cost, there is some unique point at which it makes sense to switch from random to guaranteed. 
+For a broader perspective, here's a chart of the expected cost based on where you switch between a random and a guaranteed purchase strategy. Note that as long as the guaranteed cost is greater than the random cost, there is some unique point at which it makes sense to switch from random to guaranteed.
 
 <Figure caption="Can you move the red dot to hit the minimum of the graph? This minimal point is where you should switch.">
   <StrategyComparisonChart />
 </Figure>
 
-We can also solve for this minimum value algebraically. Let's suppose you currently have *K* standees in your collection, and are deciding whether to purchase a random standee or a guaranteed standee. They key thing to notice is that if you want the cheaper option, you need to compare how much you'll expect to spend with each strategy.
+We can also solve for this minimum value algebraically. Let's suppose you currently have _K_ standees in your collection, and are deciding whether to purchase a random standee or a guaranteed standee. They key thing to notice is that if you want the cheaper option, you need to compare how much you'll expect to spend with each strategy.
 
 For a guaranteed standee, it's clear: you'll spend whatever the shop is charging. Let's call this cost <Latex str={`C_{G}`} />.
 
-For a random standee, as we've seen before, if you have *K* standees out of *N* total, you should expect to have to make <Latex str={`\\frac{N}{N - K}`} /> purchases. If the random standee cost is <Latex str={`C_{R}`} />, then the expected cost of this strategy is <Latex str={`C_{R} \\times \\frac{N}{N - K}`} />.
+For a random standee, as we've seen before, if you have _K_ standees out of _N_ total, you should expect to have to make <Latex str={`\\frac{N}{N - K}`} /> purchases. If the random standee cost is <Latex str={`C_{R}`} />, then the expected cost of this strategy is <Latex str={`C_{R} \\times \\frac{N}{N - K}`} />.
 
-Note that this expression is strictly increasing with *K*. In other words, the more of the collection you have, the more expensive the random strategy becomes. On the other hand, the guaranteed strategy has a fixed cost, independent of the size of your collection. Therefore, you should make the switch as soon as the random strategy cost exceeds the guaranteed strategy cost. Mathematically, this means the switching point is the smallest value of *K* for which 
+Note that this expression is strictly increasing with _K_. In other words, the more of the collection you have, the more expensive the random strategy becomes. On the other hand, the guaranteed strategy has a fixed cost, independent of the size of your collection. Therefore, you should make the switch as soon as the random strategy cost exceeds the guaranteed strategy cost. Mathematically, this means the switching point is the smallest value of _K_ for which
 
-<Latex displayMode str={`C_{R} \\times \\frac{N}{N - K} > C_{G}.`} />
+<Latex displayMode str={`C_{R} \\times \\frac{N}{N - K} \\geq C_{G}.`} />
 
-Solving this inequality in terms of *K* gives us:
+Solving this inequality in terms of _K_ gives us:
 
-<Latex displayMode str={`K > N \\times \\left( 1 - \\frac{C_{R}}{C_{G}} \\right).`} />
+<Latex
+  displayMode
+  str={`K \\geq N \\times \\left( 1 - \\frac{C_{R}}{C_{G}} \\right).`}
+/>
 
-In particular, if guaranteed standees are three times the cost of random standees, this means we should switch as soon as we have more than 2/3rds of the total collection. 
+In particular, if guaranteed standees are three times the cost of random standees, this means we should switch as soon as we have more than 2/3rds of the total collection.
 
 Note that this switching point, as a fraction of the total number of standees, only depends on how much more expensive a guaranteed standee is compared to a random one. You can see that in the graph as well; the higher the multiplier, the longer you should stay with the random strategy.
 
 ---
 
 ### A Final Wrinkle
+
+Unfortunately, there's a problem with our analysis: it assumes that every standee is equally likely. Based on internet chatter and my own experimentation, this does not appear to be the case.
+
+Instead, each standee belongs to one of three tiers: black, silver, and gold. The black standees are the four in the left, the silver are the four in the middle, and the gold are the four on the right. Since we start with the jumping standee for each character, and this is a black-tier standee, this means completing our collection requires finding three black standees, as well as four silver and four gold ones for each character.
+
+I started a fresh game and purchased 200 random standees to see how frequently I landed one in each tier. Here are my results:
+
+<StyledTable data={tierDrawResultsTable} />
+
+While I can't rule out the fact that black and silver standees are equally likely, it is quite clear to me that gold ones are much more rare.
+
+This literally changes the equation. For our last exploration, below you can adjust the relative likelihood of drawing from each standee tier. The closer you are to one of the vertices, the more likely that tier is to be drawn. There are two points of interest: at the bottom, the X denotes the probabilities based on my experimental data. Near the center, the + denotes the probabilities based on each standee being equally likely. Note that each standee being equally likely means the black tier is _less_ likely to appear than the other tiers, because this tier has fewer standees in it.
+
+As you adjust things, you'll see that when the tiers aren't equally likely, it pulls forward the point where we should switch to a guaranteed strategy.
+
+<Figure caption="Here you can adjust the relatively likelihood of getting a standee from each tier and seeing how that influences the strategy.">
+  <TierWeightExplorer />
+</Figure>
+
+To get very explicit on the comparison, if we assume all standees are equally likely, then you should switch to paying the premium for a guaranteed standee when you have **88** standees in your collection (**96** standees if you have the DLC). But if we use my experimental data as the source of truth, the graph suggests you should switch strategies at **68** standies for the base game, and **74** standees for the DLC. That's at least 20 standees earlier!
+
+And you can get even more sophisticated with your estimates if your input is not just the total count of how many standees you have, but the subtotals per tier. Again, let's assume the experimental data is correct. If we let <Latex str={`K_{B}`} /> denote our count of black standees, <Latex str={`K_{S}`} /> denote our count for silver, and <Latex str={`K_{G}`} /> denote our count for gold, then our inequality for when we should switch becomes
+
+<Latex displayMode str={`1.86 K_{B} + 1.35 K_{S} + 0.255 K_{G} \\geq 96`} />
+
+for the base game, and
+
+<Latex displayMode str={`1.86 K_{B} + 1.35 K_{S} + 0.255 K_{G} \\geq 104`} />
+
+for the DLC.
+
+Notice that these inequalities weigh the most common standees more heavily than the rarer ones. This makes intuitive sense: if you have a bunch of the common items, searching randomly for items that are not going to come up as frequently is more likely to be wasteful. In particular, these inequalities tell us that it might make sense to switch when you have as few as 55 standees, if you collect all 44 black ones and an additional 11 silver ones.
+
+(If you're curious where these inequalities come from, I've got you. You can see details in the [appendix](.#appendix-math-nerds-unite).)
+
+---
+
+### Conclusion
+
+Mario may be but a humble plumber, but he's also got a nose for interesting emergent math problems. There are many other generalizations of the coupon collector's problem for you to explore, if you're curious. I tried to deep dive with my kids on this subject, but they just wanted to play another level.
+
+---
+
+### Appendix: A General Switching Inequality
+
+Curious about how we generalize the switching point inequality in the general case where the number of tiers, and their associated probabilities, might be variable? Then sit down and let me spin you a yarn.
+
+Let's suppose there are *M* tiers of items you're tring to collect. For any tier *i*, suppose there are <Latex str={`N_{i}`} /> items to collect, and that you have already collected <Latex str={`K_{i}`} /> of them. Moreover, we assume that items within each tier are all equally likely, but that the probability of drawing from a given tier is <Latex str={`p_{i}`} />. That's just another way of saying that some tiers may be more rare than others, but no items within a given tier are more likely to appear than other items within that same tier.
+
+In the case of one tier, we said that the probability of randomly getting a new item was <Latex str={`\\frac{N - K}{N}`} />. In this more complex setup, the probability (let's call it *q*) is:
+
+<Latex displayMode str={`q = \\sum_{i=1}^{M}p_{i}\\frac{N_{i} - K_{i}}{N_{i}}.`} />
+
+The reason is that we have a probability <Latex str={`p_{i}`} /> of being in the *i*th tier, and once we're in that tier, a probability <Latex str={`\\frac{N_{i} - K_{i}}{N_{i}}`} /> of getting a new item within that tier. So the total probability is just the aggregate probability for each tier.
+
+Just like before, the expected value is just one divided by the probability. So the expected number of purchases we'll need to make is 1 / *q*.
+
+Also, just like before, we should switch when the random cost, multiplied by this expected value, is greater than or equal to the guaranteed cost. In other words, the switching point is determined by the inequality:
+
+<Latex displayMode str={`\\frac{C_{R}}{q} \\geq C_{G}.`} />
+
+Rearranging terms gives us
+
+<Latex displayMode str={`q \\leq \\frac{C_{R}}{C_{G}}.`} />
+
+One final thing to note about *q* is that if divide through by the denominator, we get 
+
+<Latex
+  displayMode
+  str={
+    "\\begin{aligned}" +
+    "q &= \\sum_{i=1}^{M}p_{i}\\left( 1 - \\frac{K_{i}}{N_{i}} \\right) \\\\[1em]" +
+    "&= 1 - \\sum_{i=1}^{M} \\frac{p_{i} K_{i}}{N_{i}}" +
+    "\\end{aligned}"
+  }
+/>
+
+since the probabilities <Latex str={`p_{i}`} /> must all sum up to 1.
+
+Putting this all together, it means we should switch from a random to a guaranteed strategy when
+
+<Latex displayMode str={`1 - \\frac{C_{R}}{C_{G}} \\leq \\sum_{i=1}^{M} \\frac{p_{i} K_{i}}{N_{i}}.`} />
+
+Some notes on this:
+
+1. When *M* = 1, that is there's only one tier, then <Latex str={`p_{1} = 1`} />, and this becomes the inequality we first encountered.
+
+2. In the actual game, the left-hand side resolves to 2/3, and the <Latex str={`N_{i}`} /> resolve to either 36 or 39 for black, and 48 or 52 for silver and gold (depending on whether you consider the DLC or not). If we plug in 0.465 for the black tier probability, 0.45 for the silver tier, and 0.085 for the gold tier, then this inequality simplifies to exactly the ones written at the end of [A Final Wrinkle](#a-final-wrinkle).
+
+Sources:
+
+- [Super Mario Wiki - Standees](https://www.mariowiki.com/Standee)
+
+- [Harmonic numbers](https://en.wikipedia.org/wiki/Harmonic_number)
+
+- [Coupon collector's problem](https://en.wikipedia.org/wiki/Coupon_collector%27s_problem)
