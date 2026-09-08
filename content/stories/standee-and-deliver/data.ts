@@ -748,10 +748,31 @@ export const CHARACTER_BACKGROUND_CLASSES: Record<string, string> = {
   Yoshi: "bg-[color(display-p3_0.431_0.808_0.247)]",
 };
 
+export const tierDrawCounts = { black: 93, silver: 90, gold: 17 };
+
+export const tierDrawTotal =
+  tierDrawCounts.black + tierDrawCounts.silver + tierDrawCounts.gold;
+
+function tierDrawPercentage(count: number): string {
+  return `${((count / tierDrawTotal) * 100).toFixed(1)}%`;
+}
+
 export const tierDrawResultsTable: string[][] = [
   ["Tier", "Draws", "Percentage"],
-  ["Black", "93", "46.5%"],
-  ["Silver", "90", "45.0%"],
-  ["Gold", "17", "8.5%"],
-  ["Total", "200", "100%"],
+  [
+    "Black",
+    String(tierDrawCounts.black),
+    tierDrawPercentage(tierDrawCounts.black),
+  ],
+  [
+    "Silver",
+    String(tierDrawCounts.silver),
+    tierDrawPercentage(tierDrawCounts.silver),
+  ],
+  [
+    "Gold",
+    String(tierDrawCounts.gold),
+    tierDrawPercentage(tierDrawCounts.gold),
+  ],
+  ["Total", String(tierDrawTotal), "100%"],
 ];
