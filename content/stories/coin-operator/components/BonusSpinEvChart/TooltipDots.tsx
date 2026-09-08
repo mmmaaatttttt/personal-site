@@ -3,6 +3,7 @@
 import type { ScaleLinear } from "d3-scale";
 import type { FC } from "react";
 import type { useTooltip } from "@/components/story/shared/Tooltip";
+import TooltipMarker from "@/components/story/shared/TooltipMarker";
 
 type TooltipHandlers = Pick<
   ReturnType<typeof useTooltip>,
@@ -44,31 +45,21 @@ const TooltipDots: FC<TooltipDotsProps> = ({
   hideTooltip,
 }) => (
   <>
-    {curve.map((value, n) => {
-      const { title, body } = tooltipData[n];
-      const cy = animatedCy ? animatedCy[n] : yScale(value);
-      return (
-        // biome-ignore lint/a11y/useSemanticElements: SVG circle cannot be replaced with <button>
-        <circle
-          // biome-ignore lint/suspicious/noArrayIndexKey: curve is a fixed-length array indexed by spin count
-          key={n}
-          cx={xScale(n)}
-          cy={cy}
-          r={dotRadius}
-          fill={color}
-          role="button"
-          tabIndex={0}
-          aria-label={`${title}: ${body.join("; ")}`}
-          onMouseEnter={showTooltip(title, body)}
-          onMouseLeave={hideTooltip}
-          onFocus={(e) => {
-            const rect = e.currentTarget.getBoundingClientRect();
-            showTooltipAt(title, body, rect.left + rect.width / 2, rect.top);
-          }}
-          onBlur={hideTooltip}
-        />
-      );
-    })}
+    {curve.map((value, n) => (
+      <TooltipMarker
+        // biome-ignore lint/suspicious/noArrayIndexKey: curve is a fixed-length array indexed by spin count
+        key={n}
+        cx={xScale(n)}
+        cy={animatedCy ? animatedCy[n] : yScale(value)}
+        r={dotRadius}
+        fill={color}
+        title={tooltipData[n].title}
+        body={tooltipData[n].body}
+        showTooltip={showTooltip}
+        showTooltipAt={showTooltipAt}
+        hideTooltip={hideTooltip}
+      />
+    ))}
   </>
 );
 
