@@ -7,6 +7,8 @@ import Legend from "@/components/story/shared/Legend";
 import LinePlot from "@/components/story/shared/LinePlot";
 import NarrowContainer from "@/components/story/shared/NarrowContainer";
 import { SliderGroup } from "@/components/story/shared/Slider";
+import Tooltip, { useTooltip } from "@/components/story/shared/Tooltip";
+import TooltipMarker from "@/components/story/shared/TooltipMarker";
 import useSliders from "@/hooks/useSliders";
 import COLORS from "@/utils/styles";
 import { characterNames, standees } from "../../data";
@@ -85,6 +87,7 @@ const TierWeightExplorer: FC<StandeeInteractiveProps> = ({
   const [numStandees, randomCost, guaranteedMultiplier] = values;
   const [tierWeights, setTierWeights] = useState(DEFAULT_TIER_WEIGHTS);
   const guaranteedCost = randomCost * guaranteedMultiplier;
+  const { tooltip, showTooltip, showTooltipAt, hideTooltip } = useTooltip();
 
   const tierCounts = useMemo(
     () => tierCountsForCollectionSize(numStandees, CHARACTER_POSE_CYCLE),
@@ -174,19 +177,28 @@ const TierWeightExplorer: FC<StandeeInteractiveProps> = ({
           curve="curveLinear"
           stroke={COLORS.DARK_BLUE}
         />
-        <circle
+        <TooltipMarker
           cx={xScale(uniformMinimum.x)}
           cy={yScale(uniformMinimum.y)}
           r={6}
           fill={COLORS.GREEN}
+          body={`Switch after you have ${uniformMinimum.x} standees in your collection`}
+          showTooltip={showTooltip}
+          showTooltipAt={showTooltipAt}
+          hideTooltip={hideTooltip}
         />
-        <circle
+        <TooltipMarker
           cx={xScale(weightedMinimum.x)}
           cy={yScale(weightedMinimum.y)}
           r={6}
           fill={COLORS.DARK_BLUE}
+          body={`Switch after you have ${weightedMinimum.x} standees in your collection`}
+          showTooltip={showTooltip}
+          showTooltipAt={showTooltipAt}
+          hideTooltip={hideTooltip}
         />
       </Graph>
+      <Tooltip info={tooltip} />
     </NarrowContainer>
   );
 };
