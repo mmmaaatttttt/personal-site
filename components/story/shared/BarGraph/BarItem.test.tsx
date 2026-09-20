@@ -1,24 +1,7 @@
 import { render, screen } from "@testing-library/react";
-import { describe, expect, it, vi } from "vitest";
+import { describe, expect, it } from "vitest";
 import "@testing-library/jest-dom/vitest";
 import BarItem from "./BarItem";
-
-vi.mock("framer-motion", () => ({
-  motion: {
-    rect: ({
-      animate: _a,
-      initial: _i,
-      transition: _t,
-      ...rest
-    }: Record<string, unknown>) => <rect {...rest} />,
-    text: ({
-      animate: _a,
-      initial: _i,
-      transition: _t,
-      ...rest
-    }: Record<string, unknown>) => <text {...rest} />,
-  },
-}));
 
 const defaultData = { key: "a", height: 50 };
 const defaultProps = {

@@ -1,49 +1,7 @@
 import { render, screen } from "@testing-library/react";
-import type { ReactNode, SVGProps } from "react";
 import { describe, expect, it, vi } from "vitest";
 import "@testing-library/jest-dom/vitest";
 import MultiBarGraph from ".";
-
-// Mock framer-motion to render static elements for tests
-vi.mock("framer-motion", async (importOriginal) => {
-  const actual = await importOriginal<typeof import("framer-motion")>();
-  return {
-    ...actual,
-    motion: {
-      ...actual.motion,
-      rect: (
-        props: SVGProps<SVGRectElement> & {
-          animate?: Record<string, unknown>;
-        },
-      ) => {
-        const { animate, ...rest } = props;
-        return <rect {...rest} {...animate} />;
-      },
-      g: (
-        props: SVGProps<SVGGElement> & {
-          animate?: Record<string, unknown>;
-        },
-      ) => {
-        const { animate, ...rest } = props;
-        return <g {...rest} {...animate} />;
-      },
-      text: (
-        props: SVGProps<SVGTextElement> & {
-          animate?: Record<string, unknown>;
-        },
-      ) => {
-        const { animate, ...rest } = props;
-        return <text {...rest} {...animate} />;
-      },
-    },
-    AnimatePresence: ({ children }: { children?: ReactNode }) => (
-      <>{children}</>
-    ),
-  };
-});
-
-// Note: MultiBarGraph uses framer-motion which might need some mocking in JSDOM
-// or we just check if the basic elements are rendered.
 
 describe("MultiBarGraph Component", () => {
   const mockData = [

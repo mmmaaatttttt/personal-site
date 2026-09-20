@@ -1,23 +1,8 @@
 import { act, render, renderHook, screen } from "@testing-library/react";
-import type { HTMLAttributes, MouseEvent, ReactNode, TouchEvent } from "react";
-import { describe, expect, it, vi } from "vitest";
+import type { MouseEvent, TouchEvent } from "react";
+import { describe, expect, it } from "vitest";
 import "@testing-library/jest-dom/vitest";
 import Tooltip, { useTooltip } from ".";
-
-// Mock framer-motion to render static elements for tests
-vi.mock("framer-motion", async (importOriginal) => {
-  const actual = await importOriginal<typeof import("framer-motion")>();
-  return {
-    ...actual,
-    motion: {
-      ...actual.motion,
-      div: (props: HTMLAttributes<HTMLDivElement>) => <div {...props} />,
-    },
-    AnimatePresence: ({ children }: { children?: ReactNode }) => (
-      <>{children}</>
-    ),
-  };
-});
 
 describe("Tooltip Hook and Component", () => {
   it("useTooltip correctly manages tooltip state", () => {

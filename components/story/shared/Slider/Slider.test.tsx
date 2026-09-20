@@ -1,26 +1,6 @@
 import { fireEvent, render, screen } from "@testing-library/react";
 import "@testing-library/jest-dom/vitest";
 import { describe, expect, it, vi } from "vitest";
-
-vi.mock("framer-motion", async (importOriginal) => {
-  const actual = await importOriginal<typeof import("framer-motion")>();
-  return {
-    ...actual,
-    motion: {
-      ...actual.motion,
-      div: ({
-        animate: _animate,
-        transition: _transition,
-        ...rest
-      }: {
-        animate?: unknown;
-        transition?: unknown;
-        [key: string]: unknown;
-      }) => <div {...rest} />,
-    },
-  };
-});
-
 import Slider from "./Slider";
 
 describe("Slider", () => {

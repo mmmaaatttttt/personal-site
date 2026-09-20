@@ -1,26 +1,6 @@
 import { render } from "@testing-library/react";
 import "@testing-library/jest-dom/vitest";
-import { describe, expect, it, vi } from "vitest";
-
-// motion.circle is undefined in framer-motion v12 under jsdom;
-// replace it with a plain <circle> that spreads animate attrs so tests can assert values.
-vi.mock("framer-motion", () => ({
-  motion: {
-    circle: ({
-      animate,
-      initial: _initial,
-      transition: _transition,
-      ...rest
-    }: {
-      animate?: Record<string, unknown>;
-      initial?: unknown;
-      transition?: unknown;
-      [key: string]: unknown;
-    }) => <circle {...rest} {...(animate ?? {})} />,
-  },
-  memo: (fn: unknown) => fn,
-}));
-
+import { describe, expect, it } from "vitest";
 import ScatterPoint from "./ScatterPoint";
 
 const TestSvg = ({ children }: { children: React.ReactNode }) => (
