@@ -2,6 +2,7 @@
 
 import { useMemo } from "react";
 import useSliders from "@/hooks/useSliders";
+import { formatCurrency } from "@/utils/formatHelpers";
 import COLORS from "@/utils/styles";
 import { buildCobwebPath, findFixedPoints } from "../../mathUtils";
 import { symmetricMap, symmetricMapPrime } from "./utils";
@@ -23,7 +24,7 @@ export default function useSymmetricCobweb() {
       min: 0,
       max: 1,
       step: 0.01,
-      title: (v) => `Initial contract price: $${v.toFixed(2)}`,
+      title: (v) => `Initial contract price: ${formatCurrency(v, 2)}`,
       color: COLORS.ORANGE,
     },
   ]);

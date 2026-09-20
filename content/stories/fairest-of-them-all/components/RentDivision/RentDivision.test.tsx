@@ -58,7 +58,7 @@ describe("RentDivision", () => {
     expect(screen.getByText(/Alex's Turn/)).toBeTruthy();
     pickAndConfirm("#radio-2");
 
-    expect(screen.getByText(/within \$\d+ of a fair division/)).toBeTruthy();
+    expect(screen.getByText(/within \$[\d,]+ of a fair division/)).toBeTruthy();
     expect(screen.getByText(/Alex is paying/)).toBeTruthy();
     expect(screen.getByText(/Brett is paying/)).toBeTruthy();
     expect(screen.getByText(/Cameron is paying/)).toBeTruthy();

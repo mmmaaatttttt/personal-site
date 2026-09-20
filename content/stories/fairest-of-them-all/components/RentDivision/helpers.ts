@@ -1,5 +1,6 @@
 import { generateFreqMap } from "@/utils/arrayHelpers";
 import { hexToRgb } from "@/utils/colorHelpers";
+import { formatCurrency } from "@/utils/formatHelpers";
 import { interpolate } from "@/utils/mathHelpers";
 import COLORS from "@/utils/styles";
 
@@ -182,7 +183,7 @@ export function getTooltipBody(
   roomColors: string[],
 ): string[] {
   return point.prices.map(
-    (price, idx) => `${roomColors[idx]}: $${price.toFixed(2)}`,
+    (price, idx) => `${roomColors[idx]}: ${formatCurrency(price, 2)}`,
   );
 }
 
