@@ -22,7 +22,7 @@ export interface HealthOutcomeByYear {
 function parseHealthOutcomesCSV(): HealthOutcomeByYear[] {
   const csvPath = path.join(
     process.cwd(),
-    "data/csv/health_spending_life_expectancy_2000_2023.csv",
+    "content/stories/dont-produce-be-happy/health_spending_life_expectancy_2000_2023.csv",
   );
   const text = fs.readFileSync(csvPath, "utf-8").replace(/\r/g, "");
   const [, ...dataLines] = text.trim().split("\n");
