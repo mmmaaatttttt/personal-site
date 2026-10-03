@@ -1,16 +1,21 @@
 "use client";
 
-import { Coffee, Link2 } from "lucide-react";
+import { Check, Coffee, Link2 } from "lucide-react";
 import { type FC, useState } from "react";
 import BlueskyIcon from "@/components/icons/BlueskyIcon";
 import GithubIcon from "@/components/icons/GithubIcon";
 import LinkedinIcon from "@/components/icons/LinkedinIcon";
+import { trackEvent } from "@/lib/analytics";
+import { STORY_ACTION_CLICK_EVENT } from "@/lib/constants";
 
 interface StoryActionsProps {
   githubUrl: string;
   blueskyUrl: string;
   linkedinUrl: string;
 }
+
+const SECONDARY_ACTION_CLASS =
+  "inline-flex h-11 w-11 items-center justify-center rounded border border-gray-300 text-gray-500 hover:border-link hover:text-link";
 
 const StoryActions: FC<StoryActionsProps> = ({
   githubUrl,
@@ -20,6 +25,7 @@ const StoryActions: FC<StoryActionsProps> = ({
   const [copied, setCopied] = useState(false);
 
   const handleCopy = () => {
+    trackEvent(STORY_ACTION_CLICK_EVENT, { action: "copy-link" });
     navigator.clipboard.writeText(window.location.href).then(() => {
       setCopied(true);
       setTimeout(() => setCopied(false), 2000);
@@ -27,12 +33,15 @@ const StoryActions: FC<StoryActionsProps> = ({
   };
 
   return (
-    <div className="flex flex-col sm:flex-row flex-wrap gap-3 pb-12 not-prose">
+    <div className="flex flex-wrap items-center gap-3 pb-6 not-prose">
       <a
         href="https://buymeacoffee.com/mattlane"
         target="_blank"
         rel="noopener noreferrer"
-        className="inline-flex items-center justify-center gap-2 rounded bg-link px-5 py-3 text-sm font-semibold text-white hover:opacity-80"
+        onClick={() =>
+          trackEvent(STORY_ACTION_CLICK_EVENT, { action: "coffee" })
+        }
+        className="inline-flex h-11 items-center justify-center gap-2 rounded bg-link px-5 text-sm font-semibold text-white hover:opacity-80"
       >
         <Coffee size={18} strokeWidth={1.5} />
         Buy me a coffee
@@ -41,36 +50,49 @@ const StoryActions: FC<StoryActionsProps> = ({
         href={blueskyUrl}
         target="_blank"
         rel="noopener noreferrer"
-        className="inline-flex items-center justify-center gap-2 rounded border-2 border-link px-5 py-3 text-sm font-semibold text-link hover:opacity-80"
+        aria-label="Share on Bluesky"
+        onClick={() =>
+          trackEvent(STORY_ACTION_CLICK_EVENT, { action: "bluesky" })
+        }
+        className={SECONDARY_ACTION_CLASS}
       >
         <BlueskyIcon size={18} />
-        Share on Bluesky
       </a>
       <a
         href={linkedinUrl}
         target="_blank"
         rel="noopener noreferrer"
-        className="inline-flex items-center justify-center gap-2 rounded border-2 border-link px-5 py-3 text-sm font-semibold text-link hover:opacity-80"
+        aria-label="Share on LinkedIn"
+        onClick={() =>
+          trackEvent(STORY_ACTION_CLICK_EVENT, { action: "linkedin" })
+        }
+        className={SECONDARY_ACTION_CLASS}
       >
         <LinkedinIcon size={18} strokeWidth={1.5} />
-        Share on LinkedIn
       </a>
       <button
         type="button"
         onClick={handleCopy}
-        className="inline-flex items-center justify-center gap-2 rounded border border-current px-5 py-3 text-sm text-gray-500 hover:opacity-80"
+        aria-label={copied ? "Copied!" : "Copy link"}
+        className={SECONDARY_ACTION_CLASS}
       >
-        <Link2 size={18} strokeWidth={1.5} />
-        {copied ? "Copied!" : "Copy link"}
+        {copied ? (
+          <Check size={18} strokeWidth={1.5} />
+        ) : (
+          <Link2 size={18} strokeWidth={1.5} />
+        )}
       </button>
       <a
         href={githubUrl}
         target="_blank"
         rel="noopener noreferrer"
-        className="inline-flex items-center justify-center gap-2 rounded border border-current px-5 py-3 text-sm text-gray-500 hover:opacity-80"
+        aria-label="Edit on GitHub"
+        onClick={() =>
+          trackEvent(STORY_ACTION_CLICK_EVENT, { action: "github" })
+        }
+        className={SECONDARY_ACTION_CLASS}
       >
         <GithubIcon size={18} strokeWidth={1.5} />
-        Edit on GitHub
       </a>
     </div>
   );

@@ -10,3 +10,5 @@ export const EMAIL_SIGNUP_SUBMIT_ERROR_EVENT = "email-signup-submit-error";
 export const EMAIL_SIGNUP_DISMISSED_EVENT = "email-signup-dismissed";
 
 export const EMAIL_SIGNUP_MODAL_QUERY_PARAM = "subscribe";
+
+export const STORY_ACTION_CLICK_EVENT = "story-action-click";
