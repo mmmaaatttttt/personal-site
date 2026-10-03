@@ -36,7 +36,7 @@
     "gray-matter": "^4.0.3",
     "katex": "^0.18.1",
     "lucide-react": "^1.34.0",
-    "next": "16.3.4",
+    "next": "16.3.6",
     "odex": "^3.0.0-rc.4",
     "react": "19.2.8",
     "react-dom": "19.2.8",
