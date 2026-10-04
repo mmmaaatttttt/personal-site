@@ -1,7 +1,7 @@
 import Image from "next/image";
 import { notFound } from "next/navigation";
 import type { ComponentType } from "react";
-import EmailSignupSlideIn from "@/components/layout/EmailSignupSlideIn";
+import EmailSignup from "@/components/layout/EmailSignup";
 import MainLayout from "@/components/layout/MainLayout";
 import ScrollProgressBar from "@/components/layout/ScrollProgressBar";
 import StoryActions from "@/components/layout/StoryActions";
@@ -169,7 +169,6 @@ export default async function ArticlePage({ params }: PageProps) {
       <script type="application/ld+json">{JSON.stringify(breadcrumbLd)}</script>
       <article className="w-full">
         <ScrollProgressBar />
-        <EmailSignupSlideIn />
         {/* Full Bleed Hero Header */}
         <header className="relative w-full aspect-video sm:aspect-auto sm:h-screen flex flex-col items-center justify-center text-center px-4 overflow-hidden mb-0">
           <Image
@@ -222,6 +221,9 @@ export default async function ArticlePage({ params }: PageProps) {
             <FigureProvider>
               <StoryContent />
             </FigureProvider>
+          </div>
+          <div className="pb-6">
+            <EmailSignup source="inline" />
           </div>
           <StoryActions
             githubUrl={githubUrl}

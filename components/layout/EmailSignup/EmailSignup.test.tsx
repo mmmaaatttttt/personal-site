@@ -166,11 +166,28 @@ describe("EmailSignup", () => {
     });
   });
 
-  it("tags the view event with the slideIn source", () => {
-    render(<EmailSignup source="slideIn" />);
+  it("tags the view event with the inline source", () => {
+    render(<EmailSignup source="inline" />);
     expect(window.umami?.track).toHaveBeenCalledWith(EMAIL_SIGNUP_VIEW_EVENT, {
-      source: "slideIn",
+      source: "inline",
     });
+  });
+
+  it("renders the same headline regardless of source", () => {
+    const { unmount } = render(<EmailSignup source="inline" />);
+    expect(
+      screen.getByText(
+        "Never miss a story. No AI slop. Just sweet, sweet math.",
+      ),
+    ).toBeInTheDocument();
+    unmount();
+
+    render(<EmailSignup source="modal" />);
+    expect(
+      screen.getByText(
+        "Never miss a story. No AI slop. Just sweet, sweet math.",
+      ),
+    ).toBeInTheDocument();
   });
 
   it("tracks a submit-success event on successful signup", async () => {
