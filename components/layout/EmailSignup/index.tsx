@@ -15,11 +15,13 @@ const SUBSCRIBE_URL = "https://subscribe.mattlane.workers.dev";
 const TURNSTILE_SITE_KEY = process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY ?? "";
 
 type SubmitStatus = "idle" | "loading" | "success" | "error";
-type Source = "modal" | "slideIn";
+type Source = "modal" | "inline";
 
 interface EmailSignupProps {
   source: Source;
 }
+
+const HEADLINE = "Never miss a story. No AI slop. Just sweet, sweet math.";
 
 const EmailSignup: FC<EmailSignupProps> = ({ source }) => {
   const [email, setEmail] = useState("");
@@ -127,9 +129,7 @@ const EmailSignup: FC<EmailSignupProps> = ({ source }) => {
 
   return (
     <div className="not-prose">
-      <p className="mb-2 text-sm font-semibold text-[#1a1a1a]">
-        Never miss a story. No AI slop. Just sweet, sweet math.
-      </p>
+      <p className="mb-2 text-sm font-semibold text-[#1a1a1a]">{HEADLINE}</p>
       <form
         onSubmit={handleSubmit}
         aria-label="Email signup"

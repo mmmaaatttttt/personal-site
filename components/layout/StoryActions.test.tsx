@@ -5,7 +5,8 @@ import {
   screen,
   waitFor,
 } from "@testing-library/react";
-import { describe, expect, it, vi } from "vitest";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
+import { STORY_ACTION_CLICK_EVENT } from "@/lib/constants";
 
 vi.mock("@/components/icons/BlueskyIcon", () => ({
   default: () => <svg data-testid="bluesky-icon" />,
@@ -29,6 +30,14 @@ const props = {
 };
 
 describe("StoryActions", () => {
+  beforeEach(() => {
+    window.umami = { track: vi.fn() };
+  });
+
+  afterEach(() => {
+    window.umami = undefined;
+  });
+
   it("renders all action buttons and links", () => {
     render(<StoryActions {...props} />);
     expect(
@@ -122,5 +131,51 @@ describe("StoryActions", () => {
     ).toBeInTheDocument();
 
     vi.useRealTimers();
+  });
+
+  it("tracks a click on the coffee link", () => {
+    render(<StoryActions {...props} />);
+    fireEvent.click(screen.getByRole("link", { name: /buy me a coffee/i }));
+    expect(window.umami?.track).toHaveBeenCalledWith(STORY_ACTION_CLICK_EVENT, {
+      action: "coffee",
+    });
+  });
+
+  it("tracks a click on the bluesky link", () => {
+    render(<StoryActions {...props} />);
+    fireEvent.click(screen.getByRole("link", { name: /share on bluesky/i }));
+    expect(window.umami?.track).toHaveBeenCalledWith(STORY_ACTION_CLICK_EVENT, {
+      action: "bluesky",
+    });
+  });
+
+  it("tracks a click on the linkedin link", () => {
+    render(<StoryActions {...props} />);
+    fireEvent.click(screen.getByRole("link", { name: /share on linkedin/i }));
+    expect(window.umami?.track).toHaveBeenCalledWith(STORY_ACTION_CLICK_EVENT, {
+      action: "linkedin",
+    });
+  });
+
+  it("tracks a click on the github link", () => {
+    render(<StoryActions {...props} />);
+    fireEvent.click(screen.getByRole("link", { name: /edit on github/i }));
+    expect(window.umami?.track).toHaveBeenCalledWith(STORY_ACTION_CLICK_EVENT, {
+      action: "github",
+    });
+  });
+
+  it("tracks a click on the copy link button", () => {
+    const writeText = vi.fn().mockResolvedValue(undefined);
+    Object.defineProperty(navigator, "clipboard", {
+      value: { writeText },
+      configurable: true,
+    });
+
+    render(<StoryActions {...props} />);
+    fireEvent.click(screen.getByRole("button", { name: /copy link/i }));
+    expect(window.umami?.track).toHaveBeenCalledWith(STORY_ACTION_CLICK_EVENT, {
+      action: "copy-link",
+    });
   });
 });
