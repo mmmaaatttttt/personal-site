@@ -230,4 +230,32 @@ describe("EmailSignup", () => {
       );
     });
   });
+
+  it("does not render the Turnstile widget while the form is off-screen", () => {
+    class NeverIntersectingObserver {
+      constructor(private callback: IntersectionObserverCallback) {}
+      observe(target: Element) {
+        this.callback(
+          [{ isIntersecting: false, target } as IntersectionObserverEntry],
+          this as unknown as IntersectionObserver,
+        );
+      }
+      unobserve() {}
+      disconnect() {}
+    }
+    vi.stubGlobal("IntersectionObserver", NeverIntersectingObserver);
+    render(<EmailSignup source="modal" />);
+    expect(window.turnstile.render).not.toHaveBeenCalled();
+    expect(window.umami?.track).not.toHaveBeenCalled();
+  });
+
+  it("does not crash if the Turnstile script finishes loading after the component unmounts", () => {
+    vi.stubGlobal("turnstile", undefined);
+    const { unmount } = render(<EmailSignup source="modal" />);
+    const script = document.head.querySelector<HTMLScriptElement>(
+      'script[src*="challenges.cloudflare.com"]',
+    );
+    unmount();
+    expect(() => script?.onload?.(new Event("load"))).not.toThrow();
+  });
 });
