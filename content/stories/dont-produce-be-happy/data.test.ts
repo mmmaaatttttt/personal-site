@@ -1,24 +1,30 @@
 import { describe, expect, it } from "vitest";
-import { usHappinessRankTable } from "./data";
+import { usHappinessByYear } from "./data";
 
-describe("usHappinessRankTable", () => {
-  it("has a header row followed by one row per year in the source", () => {
-    expect(usHappinessRankTable[0]).toEqual(["Year", "US world rank"]);
-    expect(usHappinessRankTable).toHaveLength(15);
+describe("usHappinessByYear", () => {
+  it("has one row per year from 2014-2025", () => {
+    expect(usHappinessByYear).toHaveLength(12);
+    expect(usHappinessByYear[0].year).toBe(2014);
+    expect(usHappinessByYear.at(-1)?.year).toBe(2025);
   });
 
-  it("does not include 2013, which is absent from the source file", () => {
-    const row2013 = usHappinessRankTable.find((row) => row[0] === "2013");
-    expect(row2013).toBeUndefined();
+  it("does not include 2011, 2012, or 2013", () => {
+    const years = usHappinessByYear.map((row) => row.year);
+    expect(years).not.toContain(2011);
+    expect(years).not.toContain(2012);
+    expect(years).not.toContain(2013);
   });
 
   it("shows the US falling out of the top 20 in 2024, its all-time low", () => {
-    const rank2024 = usHappinessRankTable.find((row) => row[0] === "2024");
-    expect(rank2024).toEqual(["2024", "24th"]);
+    const row2024 = usHappinessByYear.find((row) => row.year === 2024);
+    expect(row2024?.rank).toBe(24);
   });
 
   it("shows a partial recovery in 2025", () => {
-    const rank2025 = usHappinessRankTable.find((row) => row[0] === "2025");
-    expect(rank2025).toEqual(["2025", "23rd"]);
+    const row2025 = usHappinessByYear.find((row) => row.year === 2025);
+    expect(row2025?.rank).toBe(23);
+    expect(row2025?.score).toBeGreaterThan(
+      usHappinessByYear.find((row) => row.year === 2024)?.score ?? 0,
+    );
   });
 });

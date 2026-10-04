@@ -10,81 +10,28 @@ export const gdpGpiSeries = Array.from({ length: 15 }, (_, i) => {
   };
 });
 
-export interface HappinessDataPoint {
-  country: string;
-  gdpPerCapita: number;
-  lifeLadder: number;
-  year?: number;
-}
-
-// Real WHR/Gallup Life Ladder data, hand-entered Sept 2026; the US time series uses a different GDP basis (chained 2012 $) than the cross-section (nominal), so don't compare GDP across panels.
-export const crossSectionCountries: HappinessDataPoint[] = [
-  { country: "Finland", gdpPerCapita: 44855, lifeLadder: 7.764 },
-  { country: "Denmark", gdpPerCapita: 63230, lifeLadder: 7.539 },
-  { country: "Iceland", gdpPerCapita: 57955, lifeLadder: 7.54 },
-  { country: "Germany", gdpPerCapita: 56087, lifeLadder: 6.882 },
-  { country: "Mexico", gdpPerCapita: 13988, lifeLadder: 6.972 },
-  { country: "United States", gdpPerCapita: 85810, lifeLadder: 6.816 },
-  { country: "Brazil", gdpPerCapita: 9565, lifeLadder: 6.634 },
-  { country: "Japan", gdpPerCapita: 37145, lifeLadder: 6.13 },
-  { country: "China", gdpPerCapita: 13122, lifeLadder: 6.074 },
-  { country: "Nigeria", gdpPerCapita: 2448, lifeLadder: 4.788 },
-  { country: "Kenya", gdpPerCapita: 1853, lifeLadder: 4.674 },
-  { country: "India", gdpPerCapita: 2397, lifeLadder: 4.536 },
-];
-
 export const TRACKED_COUNTRY = "United States";
 
-// Real data from the official WHR data file; 2013 is genuinely missing from the source, not an omission here.
-export const usHappinessRankTable: string[][] = [
-  ["Year", "US world rank"],
-  ["2011", "11th"],
-  ["2012", "17th"],
-  ["2014", "15th"],
-  ["2015", "13th"],
-  ["2016", "14th"],
-  ["2017", "18th"],
-  ["2018", "19th"],
-  ["2019", "18th"],
-  ["2020", "19th"],
-  ["2021", "16th"],
-  ["2022", "15th"],
-  ["2023", "23rd"],
-  ["2024", "24th"],
-  ["2025", "23rd"],
-];
+export interface UsHappinessYear {
+  year: number;
+  rank: number;
+  score: number;
+}
 
-export const timeSeriesCountry: HappinessDataPoint[] = [
-  {
-    country: "United States",
-    year: 2011,
-    gdpPerCapita: 55097,
-    lifeLadder: 7.27,
-  },
-  {
-    country: "United States",
-    year: 2014,
-    gdpPerCapita: 57919,
-    lifeLadder: 7.119,
-  },
-  {
-    country: "United States",
-    year: 2017,
-    gdpPerCapita: 61026,
-    lifeLadder: 6.886,
-  },
-  {
-    country: "United States",
-    year: 2020,
-    gdpPerCapita: 62647,
-    lifeLadder: 6.951,
-  },
-  {
-    country: "United States",
-    year: 2023,
-    gdpPerCapita: 68095,
-    lifeLadder: 6.725,
-  },
+// Real data from the official WHR data file (WHR26_Data_Figure_2.1.xlsx); 2013 is genuinely missing from the source. Starts at 2014 (not 2011) so every row's rank delta is a clean one-year comparison.
+export const usHappinessByYear: UsHappinessYear[] = [
+  { year: 2014, rank: 15, score: 7.119 },
+  { year: 2015, rank: 13, score: 7.104 },
+  { year: 2016, rank: 14, score: 6.993 },
+  { year: 2017, rank: 18, score: 6.886 },
+  { year: 2018, rank: 19, score: 6.892 },
+  { year: 2019, rank: 18, score: 6.94 },
+  { year: 2020, rank: 19, score: 6.951 },
+  { year: 2021, rank: 16, score: 6.977 },
+  { year: 2022, rank: 15, score: 6.894 },
+  { year: 2023, rank: 23, score: 6.725 },
+  { year: 2024, rank: 24, score: 6.724 },
+  { year: 2025, rank: 23, score: 6.816 },
 ];
 
 export interface CountryOutcome {
