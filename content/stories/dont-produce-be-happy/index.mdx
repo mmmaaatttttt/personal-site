@@ -1,5 +1,6 @@
 import HealthSpendingScatter from "./components/HealthSpendingScatter";
-import { usHappinessRankTable } from "./data";
+import HappinessRankTable from "./components/HappinessRankTable";
+import { usHappinessByYear } from "./data";
 import { healthOutcomesByYear } from "./healthSpendingData";
 
 Whether you're on the left or the right, on one thing we can agree: America truly is an exceptional country. We spend the most on our military, hitting almost [one trillion dollars](https://data.worldbank.org/indicator/MS.MIL.XPND.CD?most_recent_value_desc=true) in military spending in 2024. We spend the most on healthcare [per capita](https://data.worldbank.org/indicator/SH.XPD.CHEX.PC.CD), even though our [average life expectency](https://data.worldbank.org/indicator/SP.DYN.LE00.IN) is slightly less than it is for folks in Saudi Arabia, where they spend a fraction of what we do.
@@ -8,4 +9,10 @@ Whether you're on the left or the right, on one thing we can agree: America trul
   <HealthSpendingScatter healthOutcomesByYear={healthOutcomesByYear} />
 </Figure>
 
-And yet, in spite of all of this expenditure on health and defense, life expectancy isn't the only metric that's lagging behind other countries. American happiness has plummeted too. 
+And yet, in spite of all of this expenditure on health and defense, life expectancy isn't the only metric that's lagging behind other countries. American happiness has decreased as well. That's according to [The World Happiness Report](https://www.worldhappiness.report/), which for years has measured a country's happiness by sampling its population and asking people to rate their current life using the [Cantril scale](https://news.gallup.com/poll/122453/understanding-gallup-uses-cantril-scale.aspx).The gist is that the scale goes from 0 to 10, where 0 is the worst possible life someone can imagine for themselves, and 10 is the best. 
+
+If we look at a rolling three year average of how the US has scored, the trend is not good. This aggregate metric has fallen by 4% since 2014. Our absolute ranking among all nations has also fallen significantly; this is both because other countries have increased their happiness over time, while others have not dropped as much as America.
+
+<HappinessRankTable rows={usHappinessByYear} />
+
+They say that money can't buy happiness, but surely it can get closer than what we're seeing here, can't it? What gives?
