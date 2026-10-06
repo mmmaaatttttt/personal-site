@@ -5,8 +5,8 @@ export const gdpGpiSeries = Array.from({ length: 15 }, (_, i) => {
   const t = year - 1950;
   return {
     year,
-    gdpIndex: exponentialGrowth(100, 0.025, t),
-    gpiIndex: 100 + 150 * diminishingReturns(t, 8),
+    gdpIndex: Math.round(exponentialGrowth(100, 0.025, t) * 1e6) / 1e6,
+    gpiIndex: Math.round((100 + 150 * diminishingReturns(t, 8)) * 1e6) / 1e6,
   };
 });
 
