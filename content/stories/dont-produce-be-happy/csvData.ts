@@ -1,6 +1,8 @@
 import fs from "node:fs";
 import path from "node:path";
 
+// Kept out of data.ts because other client components import values from
+// there directly, and `fs` can't be bundled into a client chunk.
 export type Region =
   | "North America"
   | "South America"
@@ -17,8 +19,19 @@ export interface HealthOutcomeByYear {
   lifeExpectancy: number;
 }
 
+export interface GdpHappinessRow {
+  country: string;
+  region: Region;
+  year: number;
+  gdpPerCapita: number;
+  lifeLadder: number;
+}
+
+export interface WithGdpHappinessByCountryYear {
+  gdpHappinessByCountryYear: GdpHappinessRow[];
+}
+
 // World Bank SH.XPD.CHEX.PC.CD / SP.DYN.LE00.IN, 52 countries, 2000-2023, nominal USD not PPP (won't match OWID's chart if cited as a source).
-// Kept out of data.ts because other client components import values from there directly, and `fs` can't be bundled into a client chunk.
 function parseHealthOutcomesCSV(): HealthOutcomeByYear[] {
   const csvPath = path.join(
     process.cwd(),
@@ -40,5 +53,28 @@ function parseHealthOutcomesCSV(): HealthOutcomeByYear[] {
   });
 }
 
+function parseGdpHappinessCSV(): GdpHappinessRow[] {
+  const csvPath = path.join(
+    process.cwd(),
+    "content/stories/dont-produce-be-happy/gdp_happiness_by_country_year_2014_2025.csv",
+  );
+  const text = fs.readFileSync(csvPath, "utf-8").replace(/\r/g, "");
+  const [, ...dataLines] = text.trim().split("\n");
+
+  return dataLines.map((line) => {
+    const [country, region, year, gdpPerCapita, lifeLadder] = line.split(",");
+    return {
+      country,
+      region: region as Region,
+      year: +year,
+      gdpPerCapita: +gdpPerCapita,
+      lifeLadder: +lifeLadder,
+    };
+  });
+}
+
 export const healthOutcomesByYear: HealthOutcomeByYear[] =
   parseHealthOutcomesCSV();
+
+export const gdpHappinessByCountryYear: GdpHappinessRow[] =
+  parseGdpHappinessCSV();

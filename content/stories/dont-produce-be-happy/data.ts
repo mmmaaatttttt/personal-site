@@ -1,4 +1,19 @@
+import COLORS from "@/utils/styles";
+import type { Region } from "./csvData";
 import { diminishingReturns, exponentialGrowth } from "./utils";
+
+export const REGION_COLORS: Record<Region, string> = {
+  "North America": COLORS.ORANGE,
+  "South America": COLORS.MAROON,
+  Africa: COLORS.PURPLE,
+  Europe: COLORS.DARK_BLUE,
+  Asia: COLORS.GREEN,
+  Oceania: COLORS.BLUE,
+};
+
+export const REGION_LEGEND = Object.entries(REGION_COLORS).map(
+  ([text, color]) => ({ text, color }),
+);
 
 export const gdpGpiSeries = Array.from({ length: 15 }, (_, i) => {
   const year = 1950 + i * 5;
