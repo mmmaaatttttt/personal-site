@@ -1,19 +1,34 @@
-import HealthSpendingScatter from "./components/HealthSpendingScatter";
+import RegionScatterPlotContainer from "./components/RegionScatterPlotContainer";
 import HappinessRankTable from "./components/HappinessRankTable";
 import { usHappinessByYear } from "./data";
 import { healthOutcomesByYear } from "./csvData";
 import { gdpHappinessByCountryYear } from "./csvData";
 
-Whether you're on the left or the right, on one thing we can agree: America truly is an exceptional country. We spend the most on our military, hitting almost [one trillion dollars](https://data.worldbank.org/indicator/MS.MIL.XPND.CD?most_recent_value_desc=true) in military spending in 2024. We spend the most on healthcare [per capita](https://data.worldbank.org/indicator/SH.XPD.CHEX.PC.CD), even though our [average life expectency](https://data.worldbank.org/indicator/SP.DYN.LE00.IN) is slightly less than it is for folks in Saudi Arabia, where they spend a fraction of what we do.
+Whether you're on the left or the right, on one thing we can agree: America truly is an exceptional country. We spend the most on our military, hitting almost [one trillion dollars](https://data.worldbank.org/indicator/MS.MIL.XPND.CD?most_recent_value_desc=true) in military spending in 2024. We spend the most on healthcare [per capita](https://data.worldbank.org/indicator/SH.XPD.CHEX.PC.CD), even though our [average life expectancy](https://data.worldbank.org/indicator/SP.DYN.LE00.IN) is slightly less than it is for folks in Saudi Arabia, where they spend a fraction of what we do.
 
 <Figure caption="Chart of life expectancy at birth vs health care spending per capita over time. Note how much worse things have gotten over time. American exceptionalism at its finest.">
-  <HealthSpendingScatter healthOutcomesByYear={healthOutcomesByYear} />
+  <RegionScatterPlotContainer variant="health-spending" rows={healthOutcomesByYear} />
 </Figure>
 
 And yet, in spite of all of this expenditure on health and defense, life expectancy isn't the only metric that's lagging behind other countries. American happiness has decreased as well. That's according to [The World Happiness Report](https://www.worldhappiness.report/), which for years has measured a country's happiness by sampling its population and asking people to rate their current life using the [Cantril scale](https://news.gallup.com/poll/122453/understanding-gallup-uses-cantril-scale.aspx).The gist is that the scale goes from 0 to 10, where 0 is the worst possible life someone can imagine for themselves, and 10 is the best. 
 
-If we look at a rolling three year average of how the US has scored, the trend is not good. This aggregate metric has fallen by 4% since 2014. Our absolute ranking among all nations has also fallen significantly; this is both because other countries have increased their happiness over time, while others have not dropped as much as America.
+If we look at a rolling three year average of how the US has scored, the trend is not good. This aggregate metric has fallen by 4% since 2014. Our absolute ranking among all nations has also fallen significantly; this is both because other countries have increased their happiness over time, and because others have not dropped as much as America.
 
 <HappinessRankTable rows={usHappinessByYear} />
 
 They say that money can't buy happiness, but surely it can get closer than what we're seeing here, can't it? What gives?
+
+### Happiness Regressions
+
+Part of this may have to do with a well-known fact that billionaires would be wise to remember: money, like any other resource, has a diminishing marginal value. The more of a thing you have, in general the less valuable each additional one of those things is to you.
+
+And when it comes to nations, this certainly seems to be true for money. Here's a chart of GDP vs that same happiness score from the table above, expanded to 127 countries where there's data from 2014 through 2025:
+
+<Figure caption="Life Ladder Score vs GDP over time. The US, notably, scored lower in happiness in 2025 than Kosovo, despite having a GDP more than ten times larger.">
+  <RegionScatterPlotContainer variant="gdp-happiness" rows={gdpHappinessByCountryYear} />
+</Figure>
+
+There are some definite trends here. In general, the higher a country's GDP, the higher the life satisfaction of its citizens. But in particular, this relationship is not linear: every dollar increase in GDP does not yield a commensurate rise in happiness. And indeed, there are many countries with significantly lower GDP and a life ladder score greater than in the United States.
+
+A good fit for data that has this general shape is to use a logarithmic curve. This is because the logarithm also is ever-increasing, but the *rate* at which it increases slows towards 0. Using a logarithmic curve to model the decreasing marginal value of money isn't a new thing. Esteemed mathematician [Daniel Bernoulli](https://en.wikipedia.org/wiki/Daniel_Bernoulli) was the first to publish a paper with this kind of modeling, and he did it all the way back in [1738](https://econ.ucsb.edu/~tedb/Courses/GraduateTheoryUCSB/Bernoulli.pdf).
+
