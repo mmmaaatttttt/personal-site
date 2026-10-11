@@ -11,6 +11,7 @@ const AxisLabel: FC<AxisLabelProps> = ({
   children,
   className,
   fontSize = "1.25rem",
+  style,
   ...props
 }) => {
   return (
@@ -21,7 +22,7 @@ const AxisLabel: FC<AxisLabelProps> = ({
         "stroke-white stroke-[0.5px]",
         className,
       )}
-      style={{ fontSize }}
+      style={{ fontSize, ...style }}
       {...props}
     >
       {children}
