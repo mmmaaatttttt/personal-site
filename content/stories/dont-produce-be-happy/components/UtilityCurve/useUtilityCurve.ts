@@ -5,7 +5,7 @@ import { useMemo, useState } from "react";
 import useSliders from "@/hooks/useSliders";
 import { clamp } from "@/utils/mathHelpers";
 import COLORS from "@/utils/styles";
-import type { GdpHappinessRow } from "../../csvData";
+import type { GdpHappinessRow } from "../../data/csvData";
 import { linearRegression } from "../../utils";
 
 const MIN_INCOME = 500;

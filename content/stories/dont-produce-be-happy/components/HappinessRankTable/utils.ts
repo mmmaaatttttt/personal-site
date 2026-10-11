@@ -1,4 +1,4 @@
-import type { UsHappinessYear } from "../../data";
+import type { UsHappinessYear } from "../../data/data";
 
 export interface RankDeltaRow extends UsHappinessYear {
   rankDelta: number | null;

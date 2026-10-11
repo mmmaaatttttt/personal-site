@@ -1,7 +1,7 @@
 import { darkenHex } from "@/utils/colorHelpers";
 import { formatCurrency } from "@/utils/formatHelpers";
-import type { GdpHappinessRow, HealthOutcomeByYear } from "../../csvData";
-import { REGION_COLORS, TRACKED_COUNTRY } from "../../data";
+import type { GdpHappinessRow, HealthOutcomeByYear } from "../../data/csvData";
+import { REGION_COLORS, TRACKED_COUNTRY } from "../../data/data";
 
 const DOT_RADIUS = 8;
 const STROKE_DARKEN_AMOUNT = 0.3;

@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import type { GdpHappinessRow, HealthOutcomeByYear } from "../../csvData";
+import type { GdpHappinessRow, HealthOutcomeByYear } from "../../data/csvData";
 import {
   deriveGdpHappinessScatterData,
   deriveHealthScatterData,

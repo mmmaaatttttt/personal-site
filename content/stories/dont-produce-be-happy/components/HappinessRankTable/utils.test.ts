@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import type { UsHappinessYear } from "../../data";
+import type { UsHappinessYear } from "../../data/data";
 import { computeRankDeltas } from "./utils";
 
 const rows = [

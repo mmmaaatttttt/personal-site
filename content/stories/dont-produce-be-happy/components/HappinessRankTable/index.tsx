@@ -1,6 +1,6 @@
 import type { FC } from "react";
 import StyledTable from "@/components/story/shared/StyledTable";
-import type { UsHappinessYear } from "../../data";
+import type { UsHappinessYear } from "../../data/data";
 import { computeRankDeltas } from "./utils";
 
 interface HappinessRankTableProps {

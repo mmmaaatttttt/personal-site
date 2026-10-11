@@ -1,7 +1,7 @@
 import { render, screen } from "@testing-library/react";
 import "@testing-library/jest-dom/vitest";
 import { describe, expect, it } from "vitest";
-import type { UsHappinessYear } from "../../data";
+import type { UsHappinessYear } from "../../data/data";
 import HappinessRankTable from ".";
 
 const rows = [

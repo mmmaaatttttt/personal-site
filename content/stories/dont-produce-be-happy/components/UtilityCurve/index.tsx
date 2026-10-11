@@ -9,7 +9,7 @@ import { Button } from "@/components/ui/Button";
 import { darkenHex } from "@/utils/colorHelpers";
 import { formatCurrency } from "@/utils/formatHelpers";
 import COLORS from "@/utils/styles";
-import type { WithGdpHappinessByCountryYear } from "../../csvData";
+import type { WithGdpHappinessByCountryYear } from "../../data/csvData";
 import ChartFrame from "../ChartFrame";
 import useUtilityCurve from "./useUtilityCurve";
 import { regressionEquationLatex } from "./utils";

@@ -2,8 +2,8 @@ import { fireEvent, render, screen } from "@testing-library/react";
 import "@testing-library/jest-dom/vitest";
 import { describe, expect, it } from "vitest";
 import { formatCurrency } from "@/utils/formatHelpers";
-import type { GdpHappinessRow } from "../../csvData";
-import { healthOutcomesByYear } from "../../csvData";
+import type { GdpHappinessRow } from "../../data/csvData";
+import { healthOutcomesByYear } from "../../data/csvData";
 import RegionScatterPlotContainer from ".";
 
 const gdpHappinessRows: GdpHappinessRow[] = [

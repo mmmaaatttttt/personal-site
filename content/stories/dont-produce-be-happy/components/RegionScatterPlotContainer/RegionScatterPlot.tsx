@@ -4,7 +4,7 @@ import type { ScaleLinear } from "d3-scale";
 import { motion } from "framer-motion";
 import Legend from "@/components/story/shared/Legend";
 import type { SliderData } from "@/hooks/useSliders";
-import { REGION_LEGEND } from "../../data";
+import { REGION_LEGEND } from "../../data/data";
 import ChartFrame from "../ChartFrame";
 
 const TRANSITION_DURATION = 0.4;

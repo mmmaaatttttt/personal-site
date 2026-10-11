@@ -3,7 +3,7 @@
 import { useMemo } from "react";
 import useSliders from "@/hooks/useSliders";
 import COLORS from "@/utils/styles";
-import type { GdpHappinessRow, HealthOutcomeByYear } from "../../csvData";
+import type { GdpHappinessRow, HealthOutcomeByYear } from "../../data/csvData";
 import {
   deriveGdpHappinessScatterData,
   deriveHealthScatterData,
