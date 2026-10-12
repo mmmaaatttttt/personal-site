@@ -1,8 +1,6 @@
 import fs from "node:fs";
 import path from "node:path";
 
-// Kept out of data.ts because other client components import values from
-// there directly, and `fs` can't be bundled into a client chunk.
 export type Region =
   | "North America"
   | "South America"
