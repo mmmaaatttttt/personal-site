@@ -47,7 +47,7 @@ describe("OrchardGameSimulation", () => {
   it("resets bar titles to 0% after Reset is clicked", () => {
     render(<OrchardGameSimulation />);
     // All bars start at 0%
-    const zeroPercents = screen.getAllByText(/0\.0%/);
+    const zeroPercents = screen.getAllByText(/: 0\.0%$/);
     expect(zeroPercents.length).toBe(4);
   });
 
@@ -69,7 +69,7 @@ describe("OrchardGameSimulation", () => {
       vi.advanceTimersByTime(500);
     });
     // At least one strategy's bar should have moved off the initial 0.0%.
-    expect(screen.queryAllByText(/0\.0%/).length).toBeLessThan(4);
+    expect(screen.queryAllByText(/: 0\.0%$/).length).toBeLessThan(4);
   });
 
   it("clears accumulated progress when Reset is clicked", () => {
@@ -80,7 +80,7 @@ describe("OrchardGameSimulation", () => {
     });
     fireEvent.click(screen.getByRole("button", { name: "Pause" }));
     fireEvent.click(screen.getByRole("button", { name: "Reset Simulation" }));
-    expect(screen.getAllByText(/0\.0%/).length).toBe(4);
+    expect(screen.getAllByText(/: 0\.0%$/).length).toBe(4);
     expect(screen.getByRole("button", { name: "Play" })).toBeInTheDocument();
   });
 
