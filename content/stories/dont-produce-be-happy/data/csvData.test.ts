@@ -132,8 +132,41 @@ describe("eurogreenFranceScenarios", () => {
     expect(typeof row.year).toBe("number");
     expect(typeof row.gdpGrowthRate).toBe("number");
     expect(typeof row.unemploymentRate).toBe("number");
-    expect(typeof row.co2PctOf1990).toBe("number");
+    expect(typeof row.co2EmissionsMt).toBe("number");
     expect(typeof row.giniCoefficient).toBe("number");
+    expect(typeof row.governmentDeficitPctGdp).toBe("number");
+  });
+
+  it("gives France a plausible real 2014 government deficit (% of GDP)", () => {
+    const row2014 = eurogreenFranceScenarios.find(
+      (r) => r.scenario === "Baseline" && r.year === 2014,
+    );
+    // France's real 2014 deficit was ~3.9% of GDP.
+    expect(row2014?.governmentDeficitPctGdp).toBeGreaterThan(3);
+    expect(row2014?.governmentDeficitPctGdp).toBeLessThan(5);
+  });
+
+  it("keeps CO2 emissions as raw megatons and Gini as a 0-1 decimal, not a 0-100 index", () => {
+    const row2014 = eurogreenFranceScenarios.find(
+      (r) => r.scenario === "Baseline" && r.year === 2014,
+    );
+    // France's real total GHG output is in the hundreds of Mt, not a 0-100 index.
+    expect(row2014?.co2EmissionsMt).toBeGreaterThan(100);
+    expect(row2014?.co2EmissionsMt).toBeLessThan(1000);
+    expect(row2014?.giniCoefficient).toBeGreaterThan(0);
+    expect(row2014?.giniCoefficient).toBeLessThan(1);
+  });
+
+  it("shows degrowth cutting CO2 emissions more than baseline by 2050", () => {
+    const degrowth2050 = eurogreenFranceScenarios.find(
+      (r) => r.scenario === "Degrowth" && r.year === 2050,
+    );
+    const baseline2050 = eurogreenFranceScenarios.find(
+      (r) => r.scenario === "Baseline" && r.year === 2050,
+    );
+    expect(degrowth2050?.co2EmissionsMt).toBeLessThan(
+      baseline2050?.co2EmissionsMt ?? Number.POSITIVE_INFINITY,
+    );
   });
 
   it("includes exactly Baseline, Green Growth, and Degrowth scenarios", () => {

@@ -50,8 +50,9 @@ export interface EurogreenScenarioRow {
   year: number;
   gdpGrowthRate: number;
   unemploymentRate: number;
-  co2PctOf1990: number;
+  co2EmissionsMt: number;
   giniCoefficient: number;
+  governmentDeficitPctGdp: number;
 }
 
 export interface WithEurogreenFranceScenarios {
@@ -136,8 +137,13 @@ function parseSocialShortfallCSV(): SocialShortfallRow[] {
 // alternatives to green growth", Nat Sustain 3:329-335 — the Eurogreen
 // stock-flow-consistent model for France, 2014-2050. Extracted from the
 // authors' own supplementary MATLAB output (mean simulated values across
-// 500 Monte Carlo runs), restricted to 3 of the paper's 4 scenarios
-// (dropping "Policies for Social Equity").
+// 500 Monte Carlo runs; co2EmissionsMt from their "CO2 TOT" variable,
+// converted kt -> Mt; giniCoefficient from their "GINI Coeff" variable,
+// converted from a 0-100 scale to 0-1; governmentDeficitPctGdp from their
+// "Deficit/GDP" variable), restricted to 3 of the paper's 4 scenarios
+// (dropping "Policies for Social Equity"). Their data does not include a
+// raw GDP-level or an annual-working-hours series, so those two of the
+// paper's six tracked variables aren't available here.
 function parseEurogreenScenariosCSV(): EurogreenScenarioRow[] {
   const csvPath = path.join(
     process.cwd(),
@@ -152,16 +158,18 @@ function parseEurogreenScenariosCSV(): EurogreenScenarioRow[] {
       year,
       gdpGrowthRate,
       unemploymentRate,
-      co2PctOf1990,
+      co2EmissionsMt,
       giniCoefficient,
+      governmentDeficitPctGdp,
     ] = line.split(",");
     return {
       scenario: scenario as EurogreenScenario,
       year: +year,
       gdpGrowthRate: +gdpGrowthRate,
       unemploymentRate: +unemploymentRate,
-      co2PctOf1990: +co2PctOf1990,
+      co2EmissionsMt: +co2EmissionsMt,
       giniCoefficient: +giniCoefficient,
+      governmentDeficitPctGdp: +governmentDeficitPctGdp,
     };
   });
 }
