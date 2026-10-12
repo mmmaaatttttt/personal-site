@@ -1,9 +1,14 @@
 import UtilityCurve from "./components/UtilityCurve";
 import RegionScatterPlotContainer from "./components/RegionScatterPlotContainer";
+import GrowthScenarioComparison from "./components/GrowthScenarioComparison";
 import HappinessRankTable from "./components/HappinessRankTable";
-import { usHappinessByYear } from "./data";
-import { healthOutcomesByYear } from "./csvData";
-import { gdpHappinessByCountryYear } from "./csvData";
+import { usHappinessByYear } from "./data/data";
+import {
+  eurogreenFranceScenarios,
+  gdpHappinessByCountryYear,
+  healthOutcomesByYear,
+  socialShortfallByCountry,
+} from "./data/csvData";
 
 Whether you're on the left or the right, on one thing we can agree: America truly is an exceptional country. We spend the most on our military, hitting almost [one trillion dollars](https://data.worldbank.org/indicator/MS.MIL.XPND.CD?most_recent_value_desc=true) in military spending in 2024. We spend the most on healthcare [per capita](https://data.worldbank.org/indicator/SH.XPD.CHEX.PC.CD), even though our [average life expectancy](https://data.worldbank.org/indicator/SP.DYN.LE00.IN) is slightly less than it is for folks in Saudi Arabia, where they spend a fraction of what we do.
 
@@ -41,5 +46,28 @@ If we find the best fit logarithmic curve for each of our data points by year, y
 
 If you make the tangent visible, its slope is the entire point: the farther to the right you go, the smaller the slope. In other words, the higher a country's GDP, the *less impactful* more GDP will be on its life satisfaction.
 
-What happens at the macro level happens at the micro level too. This marginal impact of money on happiness has been explored by behavioral economics, and the same shape was popularized by [Daniel Kahneman](https://en.wikipedia.org/wiki/Daniel_Kahneman). While economists will argue about the particulars of the shape, there seems to be broad alignment that happiness and income have a logarithmic relationship. In fact, one of Kahneman's [last papers](https://www.pnas.org/doi/10.1073/pnas.2208661120) reaffirmed this relationship among individuals within a population. 
+What happens at the macro level happens at the micro level too. This marginal impact of money on happiness has been explored by behavioral economics, and the same shape was popularized by [Daniel Kahneman](https://en.wikipedia.org/wiki/Daniel_Kahneman). While economists will argue about the particulars of the shape, there's broad alignment that happiness and income have a logarithmic relationship. In fact, one of Kahneman's [last papers](https://www.pnas.org/doi/10.1073/pnas.2208661120) reaffirmed this relationship among individuals within a population.
 
+### The Cost Of Growth
+
+The American cultural cancer celebrating the claim that "greed is good" is, in addition to being morally repugnant, not born out by any of the data. Our happiness is stagnant. Our health metrics are down. Military spending is at an all time high, and we get to pay for the privilege of waging eternal wars every time we go to the gas station.
+
+We're also collectively destroying the planet on a quest for a mathematical impossibility: continual economic growth on a planet with finite resources. I've written before about how we can take a [mathematical lens](/stories/warming-dots) to the question of renewable resource adoption. Here, this is just another piece in the puzzle that draws us to a clear conclusion. We are pursuing a goal of unsustainable growth, for reasons that are not even clear. The windfall that many countries saw from growth in the twentieth century are now in the rearview mirror. And whatever benefits the engines of growth still provide, half a century of flawed policy has trickled them up to the top 1%.
+
+Is there any way out of the trap we've set for ourselves? How can we jump-start some of these stagnant measures of human flourishing, while not also destroying one another or the planet?
+
+These questions are increasingly becoming the focus of academic study. And a paper from last year, titled [Post-growth: the science of wellbeing within planetary boundaries](https://www.sciencedirect.com/science/article/pii/S2542519624003103?fr=RR-2&ref=pdf_download&rr=a4914fafbb55d8c2), does a great job of surveying current research attempts to answer some of these thorny issues.
+
+### Growth, Green Growth, Negative Growth
+
+One of the main focus areas of the review is a categorization of economic models into three buckets. The first is status quo: we acknowledge (or, depending on your political party, we don't) the downsides to our current social contract. But we convince ourselves that the upsides to growth outweigh the downsides, and therefore take no significant action to alter our course.
+
+The second is a "green growth" model of the kind popularized by the Green New Deal. This approach acknowledges the ecological impact of our continued growth, and tries to correct for it by funneling our capitalistic desire for growth into transitioning that same economy into one based on renewable energy.
+
+The third set of models is even more radical. It intentionally eschews growth. Instead of basing an economy around ensuring that GDP is forever increasing, these models optimize for the very things for which GDP has become an increasingly bad proxy. According to the authors, these include (but are not limited to) "sustainability, equity, and human wellbeing."
+
+Economists have modeled different macroeconomic measurements over time for each of these modeling buckets for a couple of different countries. The predictions for France are below for you to explore. Why France? Je ne sais pas, you'll have to take that up with the original authors.
+
+<Figure caption="Modeling different macro-economic metrics for France under different growth (or non-growth) models. The data from 2014-2019 is real; after that it's simulated.">
+  <GrowthScenarioComparison rows={eurogreenFranceScenarios} />
+</Figure>
