@@ -5,34 +5,38 @@ import {
   deriveScenarioSeries,
   SCENARIO_COLORS,
   SCENARIO_LEGEND,
+  VARIABLE_OPTIONS,
 } from "./utils";
 
-const rows: EurogreenScenarioRow[] = [
+const rows = [
   {
     scenario: "Baseline",
     year: 2015,
     gdpGrowthRate: 1.04,
     unemploymentRate: 9.98,
-    co2PctOf1990: 80.48,
-    giniCoefficient: 32.57,
+    co2EmissionsMt: 421.31,
+    giniCoefficient: 0.3257,
+    governmentDeficitPctGdp: 3.5,
   },
   {
     scenario: "Baseline",
     year: 2014,
     gdpGrowthRate: 1.52,
     unemploymentRate: 9.96,
-    co2PctOf1990: 81.83,
-    giniCoefficient: 32.73,
+    co2EmissionsMt: 428.38,
+    giniCoefficient: 0.3273,
+    governmentDeficitPctGdp: 3.9,
   },
   {
     scenario: "Degrowth",
     year: 2014,
     gdpGrowthRate: 1.52,
     unemploymentRate: 9.96,
-    co2PctOf1990: 81.83,
-    giniCoefficient: 32.73,
+    co2EmissionsMt: 428.38,
+    giniCoefficient: 0.3273,
+    governmentDeficitPctGdp: 3.9,
   },
-];
+] as unknown as EurogreenScenarioRow[];
 
 describe("SCENARIO_COLORS / SCENARIO_LEGEND", () => {
   it("has exactly the three real Eurogreen scenarios, each with a distinct color", () => {
@@ -82,5 +86,48 @@ describe("deriveScenarioSeries", () => {
     const series = deriveScenarioSeries(rows, (row) => row.unemploymentRate);
     const degrowth = series.find((s) => s.scenario === "Degrowth");
     expect(degrowth?.data).toEqual([{ x: 2014, y: 9.96 }]);
+  });
+});
+
+describe("VARIABLE_OPTIONS", () => {
+  it("has a distinct value and label for each of the 5 available variables", () => {
+    expect(VARIABLE_OPTIONS).toHaveLength(5);
+    const values = VARIABLE_OPTIONS.map((option) => option.value);
+    const labels = VARIABLE_OPTIONS.map((option) => option.label);
+    expect(new Set(values).size).toBe(VARIABLE_OPTIONS.length);
+    expect(new Set(labels).size).toBe(VARIABLE_OPTIONS.length);
+  });
+
+  it("gives every option an accessor that reads a real field off a row", () => {
+    const row = rows[0];
+    for (const option of VARIABLE_OPTIONS) {
+      expect(typeof option.accessor(row)).toBe("number");
+    }
+  });
+
+  it("divides rate-based options by 100 so they're true fractions for d3's % format", () => {
+    const row = rows[0];
+    const gdpGrowth = VARIABLE_OPTIONS.find(
+      (option) => option.value === "gdp-growth",
+    );
+    const unemployment = VARIABLE_OPTIONS.find(
+      (option) => option.value === "unemployment",
+    );
+    const deficit = VARIABLE_OPTIONS.find(
+      (option) => option.value === "deficit",
+    );
+    expect(gdpGrowth?.accessor(row)).toBeCloseTo(row.gdpGrowthRate / 100);
+    expect(unemployment?.accessor(row)).toBeCloseTo(row.unemploymentRate / 100);
+    expect(deficit?.accessor(row)).toBeCloseTo(
+      row.governmentDeficitPctGdp / 100,
+    );
+  });
+
+  it("leaves non-rate options (CO2, Gini) at their raw value", () => {
+    const row = rows[0];
+    const co2 = VARIABLE_OPTIONS.find((option) => option.value === "co2");
+    const gini = VARIABLE_OPTIONS.find((option) => option.value === "gini");
+    expect(co2?.accessor(row)).toBe(row.co2EmissionsMt);
+    expect(gini?.accessor(row)).toBe(row.giniCoefficient);
   });
 });

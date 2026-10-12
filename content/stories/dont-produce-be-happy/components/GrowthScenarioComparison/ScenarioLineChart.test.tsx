@@ -1,8 +1,25 @@
 import { render, screen } from "@testing-library/react";
 import "@testing-library/jest-dom/vitest";
-import { describe, expect, it } from "vitest";
+import { describe, expect, it, vi } from "vitest";
 import COLORS from "@/utils/styles";
 import ScenarioLineChart from "./ScenarioLineChart";
+
+vi.mock("framer-motion", async (importOriginal) => {
+  const actual = await importOriginal<typeof import("framer-motion")>();
+  return {
+    ...actual,
+    animate: vi.fn(
+      (
+        _from: number,
+        to: number,
+        options?: { onUpdate?: (value: number) => void },
+      ) => {
+        options?.onUpdate?.(to);
+        return { stop: vi.fn() };
+      },
+    ),
+  };
+});
 
 const series = [
   {
@@ -39,6 +56,7 @@ describe("ScenarioLineChart", () => {
         series={series}
         yDomain={[-1, 2]}
         yAxisLabel="GDP growth rate (%)"
+        yTickFormat="+.1%"
       />,
     );
     expect(document.querySelectorAll("svg")).toHaveLength(1);
@@ -52,6 +70,7 @@ describe("ScenarioLineChart", () => {
         series={series}
         yDomain={[-1, 2]}
         yAxisLabel="GDP growth rate (%)"
+        yTickFormat="+.1%"
       />,
     );
     expect(
@@ -72,8 +91,55 @@ describe("ScenarioLineChart", () => {
         series={series}
         yDomain={[-1, 2]}
         yAxisLabel="GDP growth rate (%)"
+        yTickFormat="+.1%"
       />,
     );
     expect(screen.getByText("GDP growth rate (%)")).toBeInTheDocument();
+  });
+
+  it("formats y-axis ticks as a percentage when given a fraction and a % format", () => {
+    render(
+      <ScenarioLineChart
+        svgId="test-chart"
+        series={series}
+        yDomain={[0, 0.15]}
+        yAxisLabel="Unemployment rate"
+        yTickFormat=".0%"
+      />,
+    );
+    expect(screen.getByText("10%")).toBeInTheDocument();
+  });
+
+  it("leaves y-axis ticks as plain numbers for a non-percentage format", () => {
+    render(
+      <ScenarioLineChart
+        svgId="test-chart"
+        series={series}
+        yDomain={[0, 450]}
+        yAxisLabel="CO2 Emissions (Mt)"
+        yTickFormat=","
+      />,
+    );
+    expect(screen.getByText("400")).toBeInTheDocument();
+    expect(screen.queryByText("400%")).not.toBeInTheDocument();
+  });
+
+  it("renders an empty path, not a crash, for a scenario with no data points", () => {
+    const seriesWithMissingScenario = series.map((s) =>
+      s.scenario === "Degrowth" ? { ...s, data: [] } : s,
+    );
+    render(
+      <ScenarioLineChart
+        svgId="test-chart"
+        series={seriesWithMissingScenario}
+        yDomain={[-1, 2]}
+        yAxisLabel="GDP growth rate (%)"
+        yTickFormat="+.1%"
+      />,
+    );
+    expect(document.querySelectorAll("path:not(.domain)")).toHaveLength(3);
+    expect(
+      document.querySelector(`path[stroke="${COLORS.BLUE}"]`),
+    ).toHaveAttribute("d", "");
   });
 });
