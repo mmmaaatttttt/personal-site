@@ -51,7 +51,7 @@
     "@playwright/test": "^1.61.1",
     "@react-email/ui": "^6.9.5",
     "@tailwindcss/postcss": "^4.3.3",
-    "@testing-library/jest-dom": "^6.9.1",
+    "@testing-library/jest-dom": "^7.0.1",
     "@testing-library/react": "^16.3.2",
     "@types/d3": "^7.4.3",
     "@types/geojson": "^7946.0.16",
