@@ -26,10 +26,11 @@ describe("PAdicHeatChart", () => {
 
   it("renders colored rectangles (the heat cells)", () => {
     const { container } = render(<PAdicHeatChart />);
-    // A 25×25 lower-triangle grid has 25*26/2 = 325 non-null cells
+    // A 25×25 lower-triangle grid has 25*26/2 = 325 non-null cells. No
+    // clip-path rect: padding is 0, so ClippedSVG skips the (unused, since
+    // clipChildren is false here anyway) clip-path entirely as a no-op.
     const rects = container.querySelectorAll("rect");
-    // 325 data rects + 1 clipPath rect
-    expect(rects.length).toBe(326);
+    expect(rects.length).toBe(325);
   });
 
   it("updates the selected prime when dropdown changes", () => {
