@@ -1,6 +1,7 @@
 import UtilityCurve from "./components/UtilityCurve";
 import RegionScatterPlotContainer from "./components/RegionScatterPlotContainer";
 import GrowthScenarioComparison from "./components/GrowthScenarioComparison";
+import SocialEcologicalScatter from "./components/SocialEcologicalScatter";
 import HappinessRankTable from "./components/HappinessRankTable";
 import { usHappinessByYear } from "./data/data";
 import {
@@ -71,3 +72,26 @@ Economists have modeled different macroeconomic measurements over time for each 
 <Figure caption="Modeling different macro-economic metrics for France under different growth (or non-growth) models. The data from 2014-2019 is real; after that it's simulated.">
   <GrowthScenarioComparison rows={eurogreenFranceScenarios} />
 </Figure>
+
+One thing I noticed from these charts is how poorly a green growth strategy performs on several metrics. The change to GDP growth is negligible, but unemployment and the [Gini coefficient](https://en.wikipedia.org/wiki/Gini_coefficient) (a measure of income inequality) actually perform worse than under the status quo. Across almost every metric, including CO2 reduction, the degrowth strategy performs significantly better. The one exception is government deficit as a percentage of GDP. But on the other hand, this makes sense; if your goal is to intentionally shrink GDP, then calculating the deficit as a fraction of a shrinking pie can cause that fraction to grow even if the deficit itself is not growing at all.
+
+It's no surprise, then, that the authors of this paper advocate for a de-growth strategy. They offer up more arguments than wgodhat I'm presenting here. And for an academic paper, it's surprisingly readable. If take nothing away from this other than a marginally stronger desire to read an economics paper, I'll consider the time it took to write this well-spent.
+
+### Up, Up, and to the Left!
+
+While reducing carbon emissions and income inequality at the same time sounds like a great goal, there's one wrinkle: no country knows how to do it. Social progress has historically been pretty tightly coupled to ecological overreach.
+
+At the end of the paper, the authors categorize multiple countries based on 2015 data along two axes: how many social threshholds has each country achieved, and how many biophysical boundaries have they crossed. The definitions for these thresholds are taken from a separate paper, titled [A good life for all within planetary boundaries](https://www.nature.com/articles/s41893-018-0021-4), include metrics like:
+
+- Do people in the country meet a minimum threshold for life expectancy and life satisfaction?
+- How bad is the country's income inequality and unemployment?
+- Are people receiving sufficient education, nutrition, sanitation, and social support?
+- How much CO2 is the country emitting per capita per year?
+- Could the earth sustainably support the lifestyle of individuals in the country if everyone lived the same way?
+
+Ideally, countries will aim for all of the measures of social progress, while crossing as few of the ecological thresholds as possible. But unfortunately, based on the 2015 data that's not what we see. 
+
+<Figure caption="Social thresholds vs environmental thresholds for countries based on 2015 data. Circle size is proportional to per-capita GDP.">
+  <SocialEcologicalScatter socialShortfallByCountry={socialShortfallByCountry} />
+</Figure>
+
