@@ -7,6 +7,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import Axis from "@/components/story/shared/Axis";
 import AxisLabel from "@/components/story/shared/AxisLabel";
 import Graph from "@/components/story/shared/Graph";
+import COLORS from "@/utils/styles";
 import type { EurogreenScenario } from "../../data/csvData";
 
 const WIDTH = 700;
@@ -15,6 +16,8 @@ const GRAPH_PADDING = { top: 20, bottom: 50, left: 90, right: 20 };
 const AXIS_FONT = "14px";
 const X_DOMAIN: [number, number] = [2014, 2050];
 const ANIMATION_DURATION = 0.4;
+
+const SIMULATION_START_YEAR = 2020;
 
 interface ScenarioSeries {
   scenario: EurogreenScenario;
@@ -94,6 +97,13 @@ export default function ScenarioLineChart({
       gridlinesHorizontal
       gridlinesVertical={false}
     >
+      <rect
+        x={GRAPH_PADDING.left}
+        y={GRAPH_PADDING.top}
+        width={(xScale(SIMULATION_START_YEAR) as number) - GRAPH_PADDING.left}
+        height={HEIGHT - GRAPH_PADDING.top - GRAPH_PADDING.bottom}
+        fill={COLORS.LIGHT_GRAY}
+      />
       <Axis
         key="y-axis"
         direction="y"

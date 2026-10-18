@@ -124,6 +124,29 @@ describe("ScenarioLineChart", () => {
     expect(screen.queryByText("400%")).not.toBeInTheDocument();
   });
 
+  it("shades the real, calibrated 2014-2019 region, leaving the simulated years unshaded", () => {
+    render(
+      <ScenarioLineChart
+        svgId="test-chart"
+        series={series}
+        yDomain={[-1, 2]}
+        yAxisLabel="GDP growth rate (%)"
+        yTickFormat="+.1%"
+      />,
+    );
+    const shadedRegion = document.querySelector(
+      `rect[fill="${COLORS.LIGHT_GRAY}"]`,
+    );
+    expect(shadedRegion).not.toBeNull();
+    // The shaded region should start at the chart's left edge (2014) and end
+    // partway across (at 2020), well short of the right edge (2050).
+    const x = Number(shadedRegion?.getAttribute("x"));
+    const width = Number(shadedRegion?.getAttribute("width"));
+    expect(x).toBe(90);
+    expect(x + width).toBeGreaterThan(90);
+    expect(x + width).toBeLessThan(700 - 20);
+  });
+
   it("renders an empty path, not a crash, for a scenario with no data points", () => {
     const seriesWithMissingScenario = series.map((s) =>
       s.scenario === "Degrowth" ? { ...s, data: [] } : s,
