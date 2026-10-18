@@ -65,6 +65,34 @@ describe("ClippedSVG Component", () => {
     expect(g).not.toHaveAttribute("clip-path");
   });
 
+  it("skips the clip-path entirely when padding is zero on every side, since it would be a geometric no-op", () => {
+    const { container } = render(
+      <ClippedSVG id="no-pad" width={600} height={400} padding={0}>
+        <g />
+      </ClippedSVG>,
+    );
+    expect(container.querySelector("clipPath")).toBeNull();
+    const g = container.querySelector("svg > g");
+    expect(g).not.toHaveAttribute("clip-path");
+  });
+
+  it("still applies clip-path when padding is zero but clipChildren is explicitly requested alongside nonzero padding", () => {
+    const { container } = render(
+      <ClippedSVG
+        id="still-clipped"
+        width={600}
+        height={400}
+        padding={10}
+        clipChildren
+      >
+        <g />
+      </ClippedSVG>,
+    );
+    expect(container.querySelector("clipPath")).not.toBeNull();
+    const g = container.querySelector("svg > g");
+    expect(g).toHaveAttribute("clip-path", "url(#clip-path-still-clipped)");
+  });
+
   it("accepts padding as an object", () => {
     const objectPadding = { top: 10, left: 15, right: 20, bottom: 25 };
     const { container } = render(

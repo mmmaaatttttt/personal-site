@@ -40,6 +40,13 @@ const ClippedSVG: FC<ClippedSVGProps> = ({
       ? { top: padding, left: 0, right: padding, bottom: padding }
       : padding;
 
+  const isNoOpClip =
+    paddingObj.top === 0 &&
+    paddingObj.left === 0 &&
+    paddingObj.right === 0 &&
+    paddingObj.bottom === 0;
+  const applyClip = clipChildren && !isNoOpClip;
+
   return (
     <div ref={measureRef} className={cn("w-full h-full", className)}>
       <SVGContext.Provider
@@ -48,22 +55,24 @@ const ClippedSVG: FC<ClippedSVGProps> = ({
         <svg
           xmlns="http://www.w3.org/2000/svg"
           viewBox={`0 0 ${width} ${height}`}
-          style={{ marginTop }}
+          style={{ marginTop, aspectRatio: `${width} / ${height}` }}
           className="w-full h-auto overflow-visible"
           role="img"
           aria-label={id}
         >
-          <defs>
-            <clipPath id={`clip-path-${id}`}>
-              <rect
-                x={paddingObj.left}
-                y={paddingObj.top}
-                width={width - paddingObj.left - paddingObj.right}
-                height={height - paddingObj.top - paddingObj.bottom}
-              />
-            </clipPath>
-          </defs>
-          <g clipPath={clipChildren ? `url(#clip-path-${id})` : undefined}>
+          {!isNoOpClip && (
+            <defs>
+              <clipPath id={`clip-path-${id}`}>
+                <rect
+                  x={paddingObj.left}
+                  y={paddingObj.top}
+                  width={width - paddingObj.left - paddingObj.right}
+                  height={height - paddingObj.top - paddingObj.bottom}
+                />
+              </clipPath>
+            </defs>
+          )}
+          <g clipPath={applyClip ? `url(#clip-path-${id})` : undefined}>
             {children}
           </g>
         </svg>
