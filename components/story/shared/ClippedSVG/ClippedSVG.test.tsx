@@ -65,15 +65,17 @@ describe("ClippedSVG Component", () => {
     expect(g).not.toHaveAttribute("clip-path");
   });
 
-  it("skips the clip-path entirely when padding is zero on every side, since it would be a geometric no-op", () => {
+  it("still clips to the SVG bounds when padding is zero, so content outside the viewBox stays hidden", () => {
     const { container } = render(
       <ClippedSVG id="no-pad" width={600} height={400} padding={0}>
         <g />
       </ClippedSVG>,
     );
-    expect(container.querySelector("clipPath")).toBeNull();
+    const clipRect = container.querySelector("clipPath rect");
+    expect(clipRect).toHaveAttribute("width", "600");
+    expect(clipRect).toHaveAttribute("height", "400");
     const g = container.querySelector("svg > g");
-    expect(g).not.toHaveAttribute("clip-path");
+    expect(g).toHaveAttribute("clip-path", "url(#clip-path-no-pad)");
   });
 
   it("applies clip-path when clipChildren is requested and padding is nonzero", () => {

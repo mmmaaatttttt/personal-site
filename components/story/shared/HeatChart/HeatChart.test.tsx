@@ -32,7 +32,8 @@ describe("HeatChart", () => {
   it("renders one rect per non-null data point", () => {
     const { container } = render(<HeatChart {...baseProps} />);
     const rects = container.querySelectorAll("rect");
-    expect(rects.length).toBe(3);
+    // 3 data rects + 1 clipPath rect
+    expect(rects.length).toBe(4);
   });
 
   it("renders axis labels when axes=true (default)", () => {
@@ -54,7 +55,8 @@ describe("HeatChart", () => {
     ];
     const { container } = render(<HeatChart {...baseProps} data={sparse} />);
     const rects = container.querySelectorAll("rect");
-    expect(rects.length).toBe(1);
+    // 1 data rect + 1 clipPath rect
+    expect(rects.length).toBe(2);
   });
 
   it("accepts custom paddingScale without crashing", () => {
