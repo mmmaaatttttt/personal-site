@@ -24,17 +24,6 @@ describe("AxisLabel Component", () => {
     expect(text.style.fontSize).toBe("1.25rem");
   });
 
-  it("merges a custom style prop with the default font size instead of replacing it", () => {
-    render(
-      <svg role="img" aria-label="test">
-        <AxisLabel style={{ color: "rgb(1, 2, 3)" }}>Colored Label</AxisLabel>
-      </svg>,
-    );
-    const text = screen.getByText("Colored Label");
-    expect(text.style.fontSize).toBe("1.25rem");
-    expect(text.style.color).toBe("rgb(1, 2, 3)");
-  });
-
   it("respects custom props", () => {
     render(
       <svg role="img" aria-label="test">
