@@ -9,14 +9,17 @@ import { Button } from "@/components/ui/Button";
 import { darkenHex } from "@/utils/colorHelpers";
 import { formatCurrency } from "@/utils/formatHelpers";
 import COLORS from "@/utils/styles";
+import {
+  CHART_CONTAINER_WIDTH,
+  CHART_HEIGHT,
+  CHART_PADDING,
+  CHART_WIDTH,
+} from "../../constants";
 import type { WithGdpHappinessByCountryYear } from "../../data/csvData";
 import ChartFrame from "../ChartFrame";
 import useUtilityCurve from "./useUtilityCurve";
 import { regressionEquationLatex } from "./utils";
 
-const WIDTH = 600;
-const HEIGHT = 400;
-const GRAPH_PADDING = { top: 20, bottom: 50, left: 70, right: 20 };
 const MARKER_RADIUS = 5;
 const SCRUBBER_RADIUS = 8;
 const SCATTER_RADIUS = 8;
@@ -24,13 +27,13 @@ const SCATTER_STROKE_DARKEN_AMOUNT = 0.3;
 const SCATTER_STROKE = darkenHex(COLORS.GRAY, SCATTER_STROKE_DARKEN_AMOUNT);
 const SCATTER_OPACITY = 0.4;
 const TRANSITION_DURATION = 0.4;
-const X_MIN = GRAPH_PADDING.left;
-const X_MAX = WIDTH - GRAPH_PADDING.right;
+const X_MIN = CHART_PADDING.left;
+const X_MAX = CHART_WIDTH - CHART_PADDING.right;
 
 const xScale = scaleLinear().domain([0, 150000]).range([X_MIN, X_MAX]);
 const yScale = scaleLinear()
   .domain([2, 8])
-  .range([HEIGHT - GRAPH_PADDING.bottom, GRAPH_PADDING.top]);
+  .range([CHART_HEIGHT - CHART_PADDING.bottom, CHART_PADDING.top]);
 
 export default function UtilityCurve({
   gdpHappinessByCountryYear,
@@ -57,10 +60,10 @@ export default function UtilityCurve({
 
   return (
     <ChartFrame
-      containerWidth="75%"
-      width={WIDTH}
-      height={HEIGHT}
-      graphPadding={GRAPH_PADDING}
+      containerWidth={CHART_CONTAINER_WIDTH}
+      width={CHART_WIDTH}
+      height={CHART_HEIGHT}
+      graphPadding={CHART_PADDING}
       xScale={xScale}
       yScale={yScale}
       xTickFormat="$,"
@@ -155,7 +158,7 @@ export default function UtilityCurve({
           <DraggableCircle
             id={0}
             cx={markerX}
-            cy={HEIGHT - GRAPH_PADDING.bottom}
+            cy={CHART_HEIGHT - CHART_PADDING.bottom}
             r={SCRUBBER_RADIUS}
             fill={COLORS.DARK_GRAY}
             stroke="white"

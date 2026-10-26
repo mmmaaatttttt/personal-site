@@ -1,9 +1,8 @@
 "use client";
 
 import { useMemo } from "react";
-import useSliders from "@/hooks/useSliders";
-import COLORS from "@/utils/styles";
 import type { GdpHappinessRow, HealthOutcomeByYear } from "../../data/csvData";
+import useYearSlider from "../../useYearSlider";
 import {
   deriveGdpHappinessScatterData,
   deriveHealthScatterData,
@@ -25,19 +24,8 @@ export default function useRegionScatterData(
   const minYear = isGdpHappiness ? GDP_MIN_YEAR : HEALTH_MIN_YEAR;
   const maxYear = isGdpHappiness ? GDP_MAX_YEAR : HEALTH_MAX_YEAR;
   const initialYear = isGdpHappiness ? GDP_MIN_YEAR : HEALTH_MAX_YEAR;
-  const sliderColor = isGdpHappiness ? COLORS.GREEN : COLORS.DARK_GRAY;
 
-  const { values, sliderData } = useSliders([
-    {
-      initialValue: initialYear,
-      min: minYear,
-      max: maxYear,
-      step: 1,
-      title: (val) => `Year: ${val}`,
-      color: sliderColor,
-    },
-  ]);
-  const [year] = values;
+  const { year, sliderData } = useYearSlider(minYear, maxYear, initialYear);
 
   const data = useMemo(() => {
     const yearRows = props.rows.filter((row) => row.year === year);

@@ -9,8 +9,11 @@ import NarrowContainer from "@/components/story/shared/NarrowContainer";
 import { SliderGroup } from "@/components/story/shared/Slider";
 import Tooltip, { useTooltip } from "@/components/story/shared/Tooltip";
 import type { SliderData } from "@/hooks/useSliders";
-
-const DEFAULT_AXIS_FONT_SIZE = "11px";
+import {
+  CHART_AXIS_FONT_SIZE,
+  X_TICK_LABEL_POSITION,
+  Y_TICK_LABEL_POSITION,
+} from "../../constants";
 
 interface ChartFrameTooltipHelpers {
   showTooltip: ReturnType<typeof useTooltip>["showTooltip"];
@@ -30,7 +33,6 @@ interface ChartFrameProps {
   yTickFormat: string;
   xAxisLabel: ReactNode;
   yAxisLabel: ReactNode;
-  axisFontSize?: string;
   sliderData: SliderData[];
   toolbar?: ReactNode;
   children: (tooltip: ChartFrameTooltipHelpers) => ReactNode;
@@ -48,7 +50,6 @@ export default function ChartFrame({
   yTickFormat,
   xAxisLabel,
   yAxisLabel,
-  axisFontSize = DEFAULT_AXIS_FONT_SIZE,
   sliderData,
   toolbar,
   children,
@@ -77,7 +78,8 @@ export default function ChartFrame({
             direction="y"
             scale={yScale}
             tickFormat={yTickFormat}
-            fontSize={axisFontSize}
+            labelPosition={Y_TICK_LABEL_POSITION}
+            fontSize={CHART_AXIS_FONT_SIZE}
           />
           <Axis
             key="x-axis"
@@ -86,8 +88,8 @@ export default function ChartFrame({
             tickFormat={xTickFormat}
             rotateLabels={false}
             textAnchor="middle"
-            labelPosition={{ dy: "0.71em" }}
-            fontSize={axisFontSize}
+            labelPosition={X_TICK_LABEL_POSITION}
+            fontSize={CHART_AXIS_FONT_SIZE}
           />
           <AxisLabel
             x={10}

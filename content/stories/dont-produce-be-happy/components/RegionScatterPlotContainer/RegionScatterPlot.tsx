@@ -35,7 +35,6 @@ interface RegionScatterPlotProps {
   yTickFormat: string;
   xAxisLabel: string;
   yAxisLabel: string;
-  axisFontSize?: string;
   containerWidth: string;
 }
 
@@ -51,7 +50,6 @@ export default function RegionScatterPlot({
   yTickFormat,
   xAxisLabel,
   yAxisLabel,
-  axisFontSize,
   containerWidth,
 }: RegionScatterPlotProps) {
   return (
@@ -66,7 +64,6 @@ export default function RegionScatterPlot({
       yTickFormat={yTickFormat}
       xAxisLabel={xAxisLabel}
       yAxisLabel={yAxisLabel}
-      axisFontSize={axisFontSize}
       sliderData={sliderData}
       toolbar={<Legend labels={REGION_LEGEND} />}
     >

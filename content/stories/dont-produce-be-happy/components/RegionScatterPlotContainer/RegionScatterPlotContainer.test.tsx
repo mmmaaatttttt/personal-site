@@ -1,7 +1,9 @@
 import { fireEvent, render, screen } from "@testing-library/react";
 import "@testing-library/jest-dom/vitest";
-import { describe, expect, it } from "vitest";
+import { beforeEach, describe, expect, it } from "vitest";
+import { writeMemoryItem } from "@/hooks/useMemoryStore";
 import { formatCurrency } from "@/utils/formatHelpers";
+import { YEAR_STORAGE_KEY } from "../../constants";
 import type { GdpHappinessRow } from "../../data/csvData";
 import { healthOutcomesByYear } from "../../data/csvData";
 import RegionScatterPlotContainer from ".";
@@ -56,6 +58,10 @@ const countriesPerHealthYear = healthOutcomesByYear.filter(
 ).length;
 
 describe("RegionScatterPlotContainer (gdp-happiness variant)", () => {
+  beforeEach(() => {
+    writeMemoryItem(YEAR_STORAGE_KEY, 2014);
+  });
+
   it("renders one point per country for the selected year", () => {
     render(
       <RegionScatterPlotContainer
@@ -152,6 +158,10 @@ describe("RegionScatterPlotContainer (gdp-happiness variant)", () => {
 });
 
 describe("RegionScatterPlotContainer (health-spending variant)", () => {
+  beforeEach(() => {
+    writeMemoryItem(YEAR_STORAGE_KEY, 2023);
+  });
+
   it("renders one point per country for the default (most recent) year", () => {
     render(
       <RegionScatterPlotContainer

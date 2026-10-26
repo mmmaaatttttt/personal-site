@@ -1,6 +1,8 @@
 import { fireEvent, render, screen } from "@testing-library/react";
 import "@testing-library/jest-dom/vitest";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
+import { writeMemoryItem } from "@/hooks/useMemoryStore";
+import { YEAR_STORAGE_KEY } from "../../constants";
 import type { GdpHappinessRow } from "../../data/csvData";
 import UtilityCurve from ".";
 
@@ -27,6 +29,7 @@ const rows = [
 ] as unknown as GdpHappinessRow[];
 
 beforeEach(() => {
+  writeMemoryItem(YEAR_STORAGE_KEY, 2014);
   Element.prototype.setPointerCapture = vi.fn();
   Element.prototype.releasePointerCapture = vi.fn();
   SVGSVGElement.prototype.getScreenCTM = vi

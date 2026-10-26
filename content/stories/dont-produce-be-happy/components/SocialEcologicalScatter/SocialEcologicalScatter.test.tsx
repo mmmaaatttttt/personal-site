@@ -34,6 +34,25 @@ describe("SocialEcologicalScatter", () => {
     expect(document.querySelectorAll("circle")).toHaveLength(rows.length);
   });
 
+  it("labels both axes", () => {
+    render(<SocialEcologicalScatter socialShortfallByCountry={rows} />);
+    expect(screen.getByText("Social thresholds achieved")).toBeInTheDocument();
+    expect(
+      screen.getByText("Biophysical boundaries crossed"),
+    ).toBeInTheDocument();
+  });
+
+  it("only labels whole-number ticks, so no tick value repeats", () => {
+    render(<SocialEcologicalScatter socialShortfallByCountry={rows} />);
+    const tickLabels = Array.from(
+      document.querySelectorAll(".axis-group .tick text"),
+    ).map((tick) => tick.textContent);
+    expect(tickLabels).toEqual([
+      ...Array.from({ length: 12 }, (_, i) => String(i)),
+      ...Array.from({ length: 7 }, (_, i) => String(i)),
+    ]);
+  });
+
   it("renders a legend entry for each region", () => {
     render(<SocialEcologicalScatter socialShortfallByCountry={rows} />);
     expect(screen.getByText("North America")).toBeInTheDocument();

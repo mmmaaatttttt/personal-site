@@ -2,10 +2,9 @@
 
 import type { ScaleLinear } from "d3-scale";
 import { useMemo, useState } from "react";
-import useSliders from "@/hooks/useSliders";
 import { clamp } from "@/utils/mathHelpers";
-import COLORS from "@/utils/styles";
 import type { GdpHappinessRow } from "../../data/csvData";
+import useYearSlider from "../../useYearSlider";
 import { linearRegression } from "../../utils";
 
 const MIN_INCOME = 500;
@@ -25,17 +24,7 @@ export default function useUtilityCurve(
   const [showTangent, setShowTangent] = useState(false);
   const [showEquation, setShowEquation] = useState(false);
 
-  const { values, sliderData } = useSliders([
-    {
-      initialValue: MIN_YEAR,
-      min: MIN_YEAR,
-      max: MAX_YEAR,
-      step: 1,
-      title: (val) => `Year: ${val}`,
-      color: COLORS.BLUE,
-    },
-  ]);
-  const [year] = values;
+  const { year, sliderData } = useYearSlider(MIN_YEAR, MAX_YEAR, MIN_YEAR);
 
   const yearRows = useMemo(
     () => gdpHappinessByCountryYear.filter((d) => d.year === year),
