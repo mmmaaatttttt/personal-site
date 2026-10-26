@@ -1,28 +1,12 @@
 import type { FC } from "react";
 import StyledTable from "@/components/story/shared/StyledTable";
 import type { UsHappinessYear } from "../../data/data";
+import RankDelta from "./RankDelta";
 import { computeRankDeltas } from "./utils";
 
 interface HappinessRankTableProps {
   rows: UsHappinessYear[];
 }
-
-const RankDelta: FC<{ rankDelta: number | null }> = ({ rankDelta }) => {
-  if (rankDelta === null) return "—";
-  if (rankDelta === 0) return <span className="text-gray-400">—</span>;
-
-  const improved = rankDelta > 0;
-  return (
-    <span className={improved ? "text-green-600" : "text-red-600"}>
-      <span className="sr-only">
-        {improved ? "improved" : "worsened"} by {Math.abs(rankDelta)}
-      </span>
-      <span aria-hidden="true">
-        {improved ? "▲" : "▼"} {Math.abs(rankDelta)}
-      </span>
-    </span>
-  );
-};
 
 const HappinessRankTable: FC<HappinessRankTableProps> = ({ rows }) => {
   const deltaRows = computeRankDeltas(rows);

@@ -7,17 +7,18 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import Axis from "@/components/story/shared/Axis";
 import AxisLabel from "@/components/story/shared/AxisLabel";
 import Graph from "@/components/story/shared/Graph";
-import COLORS from "@/utils/styles";
+import {
+  CHART_AXIS_FONT_SIZE,
+  CHART_HEIGHT,
+  CHART_PADDING,
+  CHART_WIDTH,
+  X_TICK_LABEL_POSITION,
+  Y_TICK_LABEL_POSITION,
+} from "../../constants";
 import type { EurogreenScenario } from "../../data/csvData";
 
-const WIDTH = 700;
-const HEIGHT = 450;
-const GRAPH_PADDING = { top: 20, bottom: 50, left: 90, right: 20 };
-const AXIS_FONT = "14px";
 const X_DOMAIN: [number, number] = [2014, 2050];
 const ANIMATION_DURATION = 0.4;
-
-const SIMULATION_START_YEAR = 2020;
 
 interface ScenarioSeries {
   scenario: EurogreenScenario;
@@ -44,14 +45,14 @@ export default function ScenarioLineChart({
     () =>
       scaleLinear()
         .domain(X_DOMAIN)
-        .range([GRAPH_PADDING.left, WIDTH - GRAPH_PADDING.right]),
+        .range([CHART_PADDING.left, CHART_WIDTH - CHART_PADDING.right]),
     [],
   );
   const yScale = useMemo(
     () =>
       scaleLinear()
         .domain(yDomain)
-        .range([HEIGHT - GRAPH_PADDING.bottom, GRAPH_PADDING.top]),
+        .range([CHART_HEIGHT - CHART_PADDING.bottom, CHART_PADDING.top]),
     [yDomain],
   );
 
@@ -88,28 +89,22 @@ export default function ScenarioLineChart({
   return (
     <Graph
       axes={false}
-      graphPadding={GRAPH_PADDING}
-      width={WIDTH}
-      height={HEIGHT}
+      graphPadding={CHART_PADDING}
+      width={CHART_WIDTH}
+      height={CHART_HEIGHT}
       svgId={svgId}
       xScale={xScale}
       yScale={yScale}
       gridlinesHorizontal
-      gridlinesVertical={false}
+      gridlinesVertical
     >
-      <rect
-        x={GRAPH_PADDING.left}
-        y={GRAPH_PADDING.top}
-        width={(xScale(SIMULATION_START_YEAR) as number) - GRAPH_PADDING.left}
-        height={HEIGHT - GRAPH_PADDING.top - GRAPH_PADDING.bottom}
-        fill={COLORS.LIGHT_GRAY}
-      />
       <Axis
         key="y-axis"
         direction="y"
         scale={yScale}
         tickFormat={yTickFormat}
-        fontSize={AXIS_FONT}
+        labelPosition={Y_TICK_LABEL_POSITION}
+        fontSize={CHART_AXIS_FONT_SIZE}
       />
       <Axis
         key="x-axis"
@@ -118,18 +113,18 @@ export default function ScenarioLineChart({
         tickFormat="d"
         rotateLabels={false}
         textAnchor="middle"
-        labelPosition={{ dy: "0.71em" }}
-        fontSize={AXIS_FONT}
+        labelPosition={X_TICK_LABEL_POSITION}
+        fontSize={CHART_AXIS_FONT_SIZE}
       />
       <AxisLabel
         x={10}
-        y={HEIGHT / 2}
+        y={CHART_HEIGHT / 2}
         dy={10}
-        transform={`rotate(-90 10,${HEIGHT / 2})`}
+        transform={`rotate(-90 10,${CHART_HEIGHT / 2})`}
       >
         {yAxisLabel}
       </AxisLabel>
-      <AxisLabel x={WIDTH / 2} y={HEIGHT - 8} anchor="middle">
+      <AxisLabel x={CHART_WIDTH / 2} y={CHART_HEIGHT - 8} anchor="middle">
         Year
       </AxisLabel>
       {series.map(({ scenario, color, data }) => {
