@@ -21,6 +21,7 @@
     "test": "vitest run",
     "test:coverage": "vitest run --coverage",
     "test:e2e": "playwright test",
+    "test:snapshots:pr": "sh -c 'gh workflow run \"Manual Snapshot Tests\" --ref \"$(gh pr view \"$1\" --json headRefName --jq .headRefName)\"' --",
     "test:watch": "vitest"
   },
   "dependencies": {
