@@ -126,7 +126,7 @@ describe("VotingLineChart (voters variant)", () => {
     expect(options).toContain("Arizona");
   });
 
-  it("uses the provided svgId for the clip path", () => {
+  it("uses the provided svgId for the chart's svg", () => {
     const { container } = render(
       <VotingLineChart
         data={mockData}
@@ -136,7 +136,7 @@ describe("VotingLineChart (voters variant)", () => {
       />,
     );
     expect(
-      container.querySelector('[id="clip-path-my-line-graph"]'),
+      container.querySelector('svg[aria-label="my-line-graph"]'),
     ).toBeInTheDocument();
   });
 
@@ -182,12 +182,12 @@ describe("VotingLineChart (workers variant)", () => {
     expect(options).toHaveLength(7);
   });
 
-  it("uses the default svgId clip path when not provided", () => {
+  it("uses the default svgId when not provided", () => {
     const { container } = render(
       <VotingLineChart data={mockData} states={mockStates} variant="workers" />,
     );
     expect(
-      container.querySelector('[id="clip-path-state-line-graph"]'),
+      container.querySelector('svg[aria-label="state-line-graph"]'),
     ).toBeInTheDocument();
   });
 

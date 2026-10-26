@@ -56,6 +56,8 @@ const storyModules: Record<
   "bettor-up": () => import("@/content/stories/bettor-up/index.mdx"),
   "standee-and-deliver": () =>
     import("@/content/stories/standee-and-deliver/index.mdx"),
+  "dont-produce-be-happy": () =>
+    import("@/content/stories/dont-produce-be-happy/index.mdx"),
 };
 
 export async function generateStaticParams() {

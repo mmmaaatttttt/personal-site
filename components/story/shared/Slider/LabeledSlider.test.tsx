@@ -1,26 +1,6 @@
 import { render, screen } from "@testing-library/react";
 import "@testing-library/jest-dom/vitest";
 import { describe, expect, it, vi } from "vitest";
-
-vi.mock("framer-motion", async (importOriginal) => {
-  const actual = await importOriginal<typeof import("framer-motion")>();
-  return {
-    ...actual,
-    motion: {
-      ...actual.motion,
-      div: ({
-        animate: _a,
-        transition: _t,
-        ...rest
-      }: {
-        animate?: unknown;
-        transition?: unknown;
-        [key: string]: unknown;
-      }) => <div {...rest} />,
-    },
-  };
-});
-
 import LabeledSlider from "./LabeledSlider";
 
 const defaultProps = {

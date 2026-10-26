@@ -1,28 +1,6 @@
 import { fireEvent, render } from "@testing-library/react";
-import type { SVGProps } from "react";
 import { describe, expect, it, vi } from "vitest";
 import "@testing-library/jest-dom/vitest";
-
-vi.mock("framer-motion", async (importOriginal) => {
-  const actual = await importOriginal<typeof import("framer-motion")>();
-  return {
-    ...actual,
-    motion: {
-      ...actual.motion,
-      path: (
-        props: SVGProps<SVGPathElement> & {
-          initial?: unknown;
-          animate?: unknown;
-          transition?: unknown;
-        },
-      ) => {
-        const { initial: _i, animate: _a, transition: _t, ...rest } = props;
-        return <path {...rest} />;
-      },
-    },
-  };
-});
-
 import USState from "./USState";
 
 describe("USState", () => {

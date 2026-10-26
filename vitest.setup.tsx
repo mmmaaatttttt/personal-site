@@ -71,10 +71,16 @@ const MOTION_PROP_KEYS = new Set([
   "dragMomentum",
 ]);
 
-function stripMotionProps(props: Record<string, unknown>) {
-  return Object.fromEntries(
-    Object.entries(props).filter(([k]) => !MOTION_PROP_KEYS.has(k)),
+function resolveMotionProps(props: Record<string, unknown>) {
+  const { animate, ...rest } = props;
+  const stripped = Object.fromEntries(
+    Object.entries(rest).filter(([k]) => !MOTION_PROP_KEYS.has(k)),
   );
+  const resolvedAnimate =
+    animate && typeof animate === "object"
+      ? (animate as Record<string, unknown>)
+      : {};
+  return { ...stripped, ...resolvedAnimate };
 }
 
 // Minimalist passthrough mock for framer-motion to ensure JSDOM stability
@@ -84,37 +90,37 @@ vi.mock("framer-motion", () => ({
       children,
       ...props
     }: ComponentPropsWithoutRef<"div"> & Record<string, unknown>) => (
-      <div {...stripMotionProps(props)}>{children}</div>
+      <div {...resolveMotionProps(props)}>{children}</div>
     ),
     rect: ({
       children,
       ...props
     }: ComponentPropsWithoutRef<"rect"> & Record<string, unknown>) => (
-      <rect {...stripMotionProps(props)}>{children}</rect>
+      <rect {...resolveMotionProps(props)}>{children}</rect>
     ),
     circle: ({
       children,
       ...props
     }: ComponentPropsWithoutRef<"circle"> & Record<string, unknown>) => (
-      <circle {...stripMotionProps(props)}>{children}</circle>
+      <circle {...resolveMotionProps(props)}>{children}</circle>
     ),
     path: ({
       children,
       ...props
     }: ComponentPropsWithoutRef<"path"> & Record<string, unknown>) => (
-      <path {...stripMotionProps(props)}>{children}</path>
+      <path {...resolveMotionProps(props)}>{children}</path>
     ),
     text: ({
       children,
       ...props
     }: ComponentPropsWithoutRef<"text"> & Record<string, unknown>) => (
-      <text {...stripMotionProps(props)}>{children}</text>
+      <text {...resolveMotionProps(props)}>{children}</text>
     ),
     g: ({
       children,
       ...props
     }: ComponentPropsWithoutRef<"g"> & Record<string, unknown>) => (
-      <g {...stripMotionProps(props)}>{children}</g>
+      <g {...resolveMotionProps(props)}>{children}</g>
     ),
   },
   AnimatePresence: ({ children }: { children?: ReactNode }) => <>{children}</>,

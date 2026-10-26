@@ -8,6 +8,7 @@ import NarrowContainer from "@/components/story/shared/NarrowContainer";
 import LabeledSlider from "@/components/story/shared/Slider/LabeledSlider";
 import Tooltip, { useTooltip } from "@/components/story/shared/Tooltip";
 import { Button } from "@/components/ui/Button";
+import { formatCurrency } from "@/utils/formatHelpers";
 import { total } from "@/utils/mathHelpers";
 import COLORS from "@/utils/styles";
 import {
@@ -145,7 +146,8 @@ const RentDivision: FC = () => {
       return (
         <FlexContainer column main="center" cross="start" textAlign="center">
           <h3>
-            You&apos;re within ${rentRemaining.toFixed(0)} of a fair division!
+            You&apos;re within {formatCurrency(rentRemaining)} of a fair
+            division!
           </h3>
           <FlexContainer main="around" width="100%" shouldWrap>
             {pointData.map((d) => (
@@ -153,14 +155,14 @@ const RentDivision: FC = () => {
                 key={d.color}
                 color={COLORS[d.color.toUpperCase() as keyof typeof COLORS]}
               >
-                {d.name} is paying ${d.price.toFixed(2)}
+                {d.name} is paying {formatCurrency(d.price, 2)}
               </ColoredSpan>
             ))}
           </FlexContainer>
           <p>
-            They can each chip in an additional $
-            {(rentRemaining / 3).toFixed(2)} to make up the remaining cost.{" "}
-            <br />
+            They can each chip in an additional{" "}
+            {formatCurrency(rentRemaining / 3, 2)} to make up the remaining
+            cost. <br />
             If that doesn&apos;t seem fair, you can refine the mesh and try
             again.
           </p>
@@ -204,7 +206,6 @@ const RentDivision: FC = () => {
     );
   };
 
-  // --- SVG triangles ---
   const triangles = [];
   for (let y = 0; y < points.length - 1; y++) {
     const pointsRow = points[y];

@@ -80,6 +80,9 @@ vi.mock("@/content/stories/bettor-up/index.mdx", () => ({
 vi.mock("@/content/stories/standee-and-deliver/index.mdx", () => ({
   default: () => null,
 }));
+vi.mock("@/content/stories/dont-produce-be-happy/index.mdx", () => ({
+  default: () => null,
+}));
 
 import { notFound } from "next/navigation";
 import {
@@ -173,6 +176,7 @@ describe("ArticlePage", () => {
     "coin-operator",
     "bettor-up",
     "standee-and-deliver",
+    "dont-produce-be-happy",
   ];
 
   it.each(allStoryModuleSlugs)(

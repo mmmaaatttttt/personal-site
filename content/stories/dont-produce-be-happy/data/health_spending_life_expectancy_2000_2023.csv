@@ -1,0 +1,1249 @@
+country,region,year,health_spending_per_capita,life_expectancy
+Argentina,South America,2000,702.23,73.91
+Argentina,South America,2001,660.63,74.15
+Argentina,South America,2002,219.96,74.31
+Argentina,South America,2003,261.2,74.31
+Argentina,South America,2004,303.32,74.87
+Argentina,South America,2005,395.65,75.23
+Argentina,South America,2006,456.06,75.28
+Argentina,South America,2007,569.27,74.78
+Argentina,South America,2008,745.4,75.43
+Argentina,South America,2009,787.78,75.58
+Argentina,South America,2010,979.77,75.68
+Argentina,South America,2011,1208.23,76.1
+Argentina,South America,2012,1363.22,75.8
+Argentina,South America,2013,1428.91,75.83
+Argentina,South America,2014,1291.32,76.27
+Argentina,South America,2015,1523.91,76.6
+Argentina,South America,2016,1276.8,76.11
+Argentina,South America,2017,1491.12,76.54
+Argentina,South America,2018,1195.6,76.77
+Argentina,South America,2019,1007.46,76.85
+Argentina,South America,2020,910.96,75.88
+Argentina,South America,2021,1182.16,73.95
+Argentina,South America,2022,1415.8,75.81
+Argentina,South America,2023,1456.99,77.39
+Australia,Oceania,2000,1626.73,79.23
+Australia,Oceania,2001,1550.37,79.63
+Australia,Oceania,2002,1752.94,79.94
+Australia,Oceania,2003,2227.13,80.24
+Australia,Oceania,2004,2744.08,80.49
+Australia,Oceania,2005,2995.87,80.84
+Australia,Oceania,2006,3174.87,81.04
+Australia,Oceania,2007,3792.81,81.29
+Australia,Oceania,2008,4083.43,81.4
+Australia,Oceania,2009,3989.44,81.54
+Australia,Oceania,2010,4947.96,81.7
+Australia,Oceania,2011,5876.89,81.9
+Australia,Oceania,2012,6038.87,82.05
+Australia,Oceania,2013,5811.87,82.15
+Australia,Oceania,2014,6098.25,82.3
+Australia,Oceania,2015,5271.93,82.4
+Australia,Oceania,2016,5418.44,82.45
+Australia,Oceania,2017,5770.69,82.5
+Australia,Oceania,2018,5843.65,82.75
+Australia,Oceania,2019,5543.38,82.9
+Australia,Oceania,2020,5968.0,83.2
+Australia,Oceania,2021,7092.13,83.3
+Australia,Oceania,2022,6723.98,83.2
+Australia,Oceania,2023,6980.39,83.05
+Austria,Europe,2000,2301.89,78.13
+Austria,Europe,2001,2315.42,78.58
+Austria,Europe,2002,2531.62,78.68
+Austria,Europe,2003,3122.31,78.63
+Austria,Europe,2004,3606.78,79.18
+Austria,Europe,2005,3720.02,79.33
+Austria,Europe,2006,3899.91,79.88
+Austria,Europe,2007,4484.82,80.18
+Austria,Europe,2008,5080.84,80.43
+Austria,Europe,2009,4939.76,80.33
+Austria,Europe,2010,4815.27,80.58
+Austria,Europe,2011,5191.92,80.98
+Austria,Europe,2012,4983.68,80.94
+Austria,Europe,2013,5251.97,81.14
+Austria,Europe,2014,5418.48,81.49
+Austria,Europe,2015,4649.6,81.19
+Austria,Europe,2016,4758.9,81.64
+Austria,Europe,2017,4999.87,81.64
+Austria,Europe,2018,5394.56,81.69
+Austria,Europe,2019,5313.19,81.9
+Austria,Europe,2020,5569.84,81.19
+Austria,Europe,2021,6554.14,81.19
+Austria,Europe,2022,5897.98,81.3
+Austria,Europe,2023,6267.93,81.79
+Bangladesh,Asia,2000,8.28,62.05
+Bangladesh,Asia,2001,8.1,62.84
+Bangladesh,Asia,2002,9.05,63.59
+Bangladesh,Asia,2003,9.98,64.29
+Bangladesh,Asia,2004,10.79,64.91
+Bangladesh,Asia,2005,11.31,65.51
+Bangladesh,Asia,2006,12.06,66.05
+Bangladesh,Asia,2007,14.04,66.46
+Bangladesh,Asia,2008,15.56,67.05
+Bangladesh,Asia,2009,17.7,67.53
+Bangladesh,Asia,2010,20.62,68.01
+Bangladesh,Asia,2011,22.77,68.5
+Bangladesh,Asia,2012,23.44,68.99
+Bangladesh,Asia,2013,26.97,69.49
+Bangladesh,Asia,2014,29.91,70.02
+Bangladesh,Asia,2015,33.21,70.54
+Bangladesh,Asia,2016,39.31,71.08
+Bangladesh,Asia,2017,42.18,71.61
+Bangladesh,Asia,2018,44.79,72.12
+Bangladesh,Asia,2019,45.08,72.62
+Bangladesh,Asia,2020,49.03,71.42
+Bangladesh,Asia,2021,56.1,71.1
+Bangladesh,Asia,2022,56.62,74.27
+Bangladesh,Asia,2023,53.46,74.67
+Belgium,Europe,2000,1849.92,77.72
+Belgium,Europe,2001,1879.93,77.97
+Belgium,Europe,2002,2084.72,78.08
+Belgium,Europe,2003,2822.5,78.13
+Belgium,Europe,2004,3322.29,78.88
+Belgium,Europe,2005,3415.65,78.98
+Belgium,Europe,2006,3547.07,79.38
+Belgium,Europe,2007,4066.21,79.78
+Belgium,Europe,2008,4656.04,79.68
+Belgium,Europe,2009,4755.81,80.03
+Belgium,Europe,2010,4626.03,80.18
+Belgium,Europe,2011,4990.36,80.59
+Belgium,Europe,2012,4763.94,80.39
+Belgium,Europe,2013,5005.65,80.59
+Belgium,Europe,2014,5110.17,81.29
+Belgium,Europe,2015,4465.46,80.99
+Belgium,Europe,2016,4569.64,81.44
+Belgium,Europe,2017,4827.59,81.49
+Belgium,Europe,2018,5233.68,81.6
+Belgium,Europe,2019,5087.46,82.0
+Belgium,Europe,2020,5269.41,80.7
+Belgium,Europe,2021,5847.17,81.79
+Belgium,Europe,2022,5487.59,81.75
+Belgium,Europe,2023,5931.01,82.4
+Brazil,South America,2000,313.93,69.58
+Brazil,South America,2001,271.56,69.98
+Brazil,South America,2002,248.38,70.4
+Brazil,South America,2003,253.09,70.88
+Brazil,South America,2004,297.68,71.36
+Brazil,South America,2005,387.93,71.83
+Brazil,South America,2006,489.54,72.3
+Brazil,South America,2007,607.73,72.73
+Brazil,South America,2008,713.67,73.11
+Brazil,South America,2009,728.56,73.46
+Brazil,South America,2010,906.01,73.78
+Brazil,South America,2011,1043.35,74.05
+Brazil,South America,2012,968.73,74.33
+Brazil,South America,2013,993.8,74.61
+Brazil,South America,2014,1030.66,74.82
+Brazil,South America,2015,796.15,75.11
+Brazil,South America,2016,810.2,75.08
+Brazil,South America,2017,954.75,75.38
+Brazil,South America,2018,880.28,75.63
+Brazil,South America,2019,868.17,75.81
+Brazil,South America,2020,680.77,74.51
+Brazil,South America,2021,768.27,73.04
+Brazil,South America,2022,871.28,74.87
+Brazil,South America,2023,1009.84,75.85
+Canada,North America,2000,1988.16,79.17
+Canada,North America,2001,2041.88,79.4
+Canada,North America,2002,2134.85,79.53
+Canada,North America,2003,2534.86,79.72
+Canada,North America,2004,2896.19,79.99
+Canada,North America,2005,3268.47,80.11
+Canada,North America,2006,3758.36,80.54
+Canada,North America,2007,4187.87,80.54
+Canada,North America,2008,4454.12,80.72
+Canada,North America,2009,4355.83,81.07
+Canada,North America,2010,5060.89,81.32
+Canada,North America,2011,5399.99,81.48
+Canada,North America,2012,5518.57,81.66
+Canada,North America,2013,5460.03,81.74
+Canada,North America,2014,5209.93,81.78
+Canada,North America,2015,4658.84,81.83
+Canada,North America,2016,4647.15,81.94
+Canada,North America,2017,4894.77,81.81
+Canada,North America,2018,5052.9,81.8
+Canada,North America,2019,5098.89,82.16
+Canada,North America,2020,5646.19,81.53
+Canada,North America,2021,6511.47,81.45
+Canada,North America,2022,6252.34,81.09
+Canada,North America,2023,6186.65,81.63
+Chile,South America,2000,353.25,77.13
+Chile,South America,2001,323.63,77.58
+Chile,South America,2002,319.53,77.84
+Chile,South America,2003,346.16,77.88
+Chile,South America,2004,422.96,78.28
+Chile,South America,2005,495.56,78.46
+Chile,South America,2006,565.85,78.53
+Chile,South America,2007,643.06,78.65
+Chile,South America,2008,719.08,78.75
+Chile,South America,2009,730.63,78.89
+Chile,South America,2010,861.72,79.09
+Chile,South America,2011,984.45,79.24
+Chile,South America,2012,1070.51,79.22
+Chile,South America,2013,1171.77,79.55
+Chile,South America,2014,1138.66,79.71
+Chile,South America,2015,1122.13,80.01
+Chile,South America,2016,1167.89,80.3
+Chile,South America,2017,1353.69,80.61
+Chile,South America,2018,1430.7,80.56
+Chile,South America,2019,1348.99,80.32
+Chile,South America,2020,1270.98,79.35
+Chile,South America,2021,1576.69,78.88
+Chile,South America,2022,1541.38,79.18
+Chile,South America,2023,1736.52,81.17
+China,Asia,2000,42.81,72.29
+China,Asia,2001,44.36,72.67
+China,Asia,2002,49.92,73.03
+China,Asia,2003,56.54,73.39
+China,Asia,2004,64.28,73.73
+China,Asia,2005,73.0,74.08
+China,Asia,2006,82.48,74.4
+China,Asia,2007,98.56,74.79
+China,Asia,2008,133.84,74.83
+China,Asia,2009,164.88,75.32
+China,Asia,2010,188.87,75.67
+China,Asia,2011,239.2,75.89
+China,Asia,2012,284.7,76.2
+China,Asia,2013,329.09,76.45
+China,Asia,2014,362.29,76.71
+China,Asia,2015,393.1,76.97
+China,Asia,2016,398.17,77.21
+China,Asia,2017,439.94,77.23
+China,Asia,2018,504.11,77.71
+China,Asia,2019,538.99,77.94
+China,Asia,2020,582.95,78.02
+China,Asia,2021,670.26,78.12
+China,Asia,2022,755.44,78.2
+China,Asia,2023,763.38,77.95
+Colombia,South America,2000,134.71,70.91
+Colombia,South America,2001,138.48,71.19
+Colombia,South America,2002,132.18,71.54
+Colombia,South America,2003,129.72,72.31
+Colombia,South America,2004,159.61,72.76
+Colombia,South America,2005,209.68,73.16
+Colombia,South America,2006,240.1,73.5
+Colombia,South America,2007,309.62,73.75
+Colombia,South America,2008,379.17,74.21
+Colombia,South America,2009,383.92,74.53
+Colombia,South America,2010,452.44,74.88
+Colombia,South America,2011,501.84,75.18
+Colombia,South America,2012,547.01,75.61
+Colombia,South America,2013,580.96,75.83
+Colombia,South America,2014,588.29,75.95
+Colombia,South America,2015,470.1,76.07
+Colombia,South America,2016,448.85,76.23
+Colombia,South America,2017,497.54,76.42
+Colombia,South America,2018,526.12,76.58
+Colombia,South America,2019,507.06,76.79
+Colombia,South America,2020,464.42,74.76
+Colombia,South America,2021,568.84,72.7
+Colombia,South America,2022,507.07,76.51
+Colombia,South America,2023,571.15,77.72
+Costa Rica,North America,2000,250.31,77.32
+Costa Rica,North America,2001,258.0,77.61
+Costa Rica,North America,2002,279.42,77.94
+Costa Rica,North America,2003,290.83,78.21
+Costa Rica,North America,2004,293.78,78.51
+Costa Rica,North America,2005,313.48,78.88
+Costa Rica,North America,2006,364.52,79.05
+Costa Rica,North America,2007,429.42,79.1
+Costa Rica,North America,2008,518.11,79.18
+Costa Rica,North America,2009,537.06,79.37
+Costa Rica,North America,2010,663.69,79.35
+Costa Rica,North America,2011,753.43,79.62
+Costa Rica,North America,2012,788.53,79.92
+Costa Rica,North America,2013,829.94,80.19
+Costa Rica,North America,2014,836.23,80.23
+Costa Rica,North America,2015,889.38,80.41
+Costa Rica,North America,2016,884.73,79.99
+Costa Rica,North America,2017,867.77,79.99
+Costa Rica,North America,2018,917.31,80.09
+Costa Rica,North America,2019,930.44,80.3
+Costa Rica,North America,2020,969.89,79.72
+Costa Rica,North America,2021,977.15,78.05
+Costa Rica,North America,2022,978.84,79.32
+Costa Rica,North America,2023,1163.3,80.8
+Czechia,Europe,2000,342.92,74.97
+Czechia,Europe,2001,388.54,75.17
+Czechia,Europe,2002,497.74,75.22
+Czechia,Europe,2003,640.66,75.17
+Czechia,Europe,2004,746.33,75.72
+Czechia,Europe,2005,852.65,75.92
+Czechia,Europe,2006,942.12,76.52
+Czechia,Europe,2007,1110.18,76.72
+Czechia,Europe,2008,1449.34,76.98
+Czechia,Europe,2009,1442.24,77.08
+Czechia,Europe,2010,1509.45,77.42
+Czechia,Europe,2011,1649.16,77.87
+Czechia,Europe,2012,1509.78,78.08
+Czechia,Europe,2013,1508.8,78.18
+Czechia,Europe,2014,1512.59,78.82
+Czechia,Europe,2015,1308.8,78.58
+Czechia,Europe,2016,1374.9,79.03
+Czechia,Europe,2017,1516.75,78.98
+Czechia,Europe,2018,1750.81,79.03
+Czechia,Europe,2019,1805.44,79.23
+Czechia,Europe,2020,2106.28,78.23
+Czechia,Europe,2021,2538.03,77.22
+Czechia,Europe,2022,2431.08,78.93
+Czechia,Europe,2023,2671.08,79.83
+Denmark,Europe,2000,2491.54,76.59
+Denmark,Europe,2001,2597.97,76.79
+Denmark,Europe,2002,2891.71,76.9
+Denmark,Europe,2003,3602.28,77.14
+Denmark,Europe,2004,4189.47,77.49
+Denmark,Europe,2005,4436.07,77.84
+Denmark,Europe,2006,4770.14,78.1
+Denmark,Europe,2007,5453.84,78.2
+Denmark,Europe,2008,6117.7,78.45
+Denmark,Europe,2009,6208.48,78.6
+Denmark,Europe,2010,6156.69,79.1
+Denmark,Europe,2011,6426.4,79.8
+Denmark,Europe,2012,6155.76,80.05
+Denmark,Europe,2013,6320.08,80.3
+Denmark,Europe,2014,6447.92,80.7
+Denmark,Europe,2015,5508.53,80.7
+Denmark,Europe,2016,5603.76,80.85
+Denmark,Europe,2017,5817.43,81.1
+Denmark,Europe,2018,6219.13,80.95
+Denmark,Europe,2019,6049.93,81.45
+Denmark,Europe,2020,6520.66,81.6
+Denmark,Europe,2021,7429.99,81.4
+Denmark,Europe,2022,6451.19,81.3
+Denmark,Europe,2023,6510.62,81.75
+Egypt,Africa,2000,69.37,67.33
+Egypt,Africa,2001,68.67,67.61
+Egypt,Africa,2002,64.0,67.85
+Egypt,Africa,2003,50.35,68.05
+Egypt,Africa,2004,50.33,68.21
+Egypt,Africa,2005,59.47,68.36
+Egypt,Africa,2006,66.33,68.49
+Egypt,Africa,2007,73.29,68.63
+Egypt,Africa,2008,90.16,68.76
+Egypt,Africa,2009,98.9,68.92
+Egypt,Africa,2010,105.08,69.08
+Egypt,Africa,2011,116.23,69.23
+Egypt,Africa,2012,139.82,69.46
+Egypt,Africa,2013,139.67,69.63
+Egypt,Africa,2014,155.06,69.91
+Egypt,Africa,2015,170.26,70.14
+Egypt,Africa,2016,142.62,70.44
+Egypt,Africa,2017,106.0,70.71
+Egypt,Africa,2018,118.01,70.97
+Egypt,Africa,2019,142.7,71.21
+Egypt,Africa,2020,148.35,69.79
+Egypt,Africa,2021,176.94,68.98
+Egypt,Africa,2022,171.68,71.01
+Egypt,Africa,2023,141.41,71.63
+Ethiopia,Africa,2000,5.29,50.88
+Ethiopia,Africa,2001,5.51,51.43
+Ethiopia,Africa,2002,5.15,52.09
+Ethiopia,Africa,2003,5.71,52.88
+Ethiopia,Africa,2004,5.74,53.73
+Ethiopia,Africa,2005,6.48,54.36
+Ethiopia,Africa,2006,8.42,55.4
+Ethiopia,Africa,2007,11.63,56.57
+Ethiopia,Africa,2008,13.04,57.73
+Ethiopia,Africa,2009,15.14,58.72
+Ethiopia,Africa,2010,16.17,59.71
+Ethiopia,Africa,2011,14.62,60.59
+Ethiopia,Africa,2012,20.0,61.44
+Ethiopia,Africa,2013,19.27,62.16
+Ethiopia,Africa,2014,21.61,62.93
+Ethiopia,Africa,2015,23.22,63.59
+Ethiopia,Africa,2016,24.34,64.16
+Ethiopia,Africa,2017,24.18,64.77
+Ethiopia,Africa,2018,23.52,65.26
+Ethiopia,Africa,2019,25.94,65.74
+Ethiopia,Africa,2020,28.28,65.97
+Ethiopia,Africa,2021,26.07,65.33
+Ethiopia,Africa,2022,27.07,66.9
+Ethiopia,Africa,2023,34.8,67.31
+Finland,Europe,2000,1726.74,77.47
+Finland,Europe,2001,1810.4,77.97
+Finland,Europe,2002,2059.33,78.12
+Finland,Europe,2003,2613.85,78.37
+Finland,Europe,2004,3044.12,78.71
+Finland,Europe,2005,3236.86,78.82
+Finland,Europe,2006,3414.94,79.21
+Finland,Europe,2007,3918.64,79.26
+Finland,Europe,2008,4486.34,79.57
+Finland,Europe,2009,4349.9,79.72
+Finland,Europe,2010,4251.53,79.87
+Finland,Europe,2011,4717.51,80.47
+Finland,Europe,2012,4573.2,80.63
+Finland,Europe,2013,4892.03,80.98
+Finland,Europe,2014,4922.43,81.18
+Finland,Europe,2015,4128.21,81.48
+Finland,Europe,2016,4108.74,81.43
+Finland,Europe,2017,4235.75,81.63
+Finland,Europe,2018,4521.28,81.73
+Finland,Europe,2019,4459.93,81.98
+Finland,Europe,2020,4736.21,81.93
+Finland,Europe,2021,5261.91,81.89
+Finland,Europe,2022,4902.04,81.19
+Finland,Europe,2023,5515.4,81.59
+France,Europe,2000,2161.85,79.06
+France,Europe,2001,2192.72,79.16
+France,Europe,2002,2449.76,79.26
+France,Europe,2003,3006.31,79.11
+France,Europe,2004,3458.63,80.16
+France,Europe,2005,3575.03,80.16
+France,Europe,2006,3811.55,80.81
+France,Europe,2007,4312.31,81.11
+France,Europe,2008,4807.37,81.21
+France,Europe,2009,4737.58,81.41
+France,Europe,2010,4593.66,81.66
+France,Europe,2011,4936.96,82.11
+France,Europe,2012,4659.92,81.97
+France,Europe,2013,4884.72,82.22
+France,Europe,2014,5007.3,82.72
+France,Europe,2015,4226.63,82.32
+France,Europe,2016,4289.35,82.57
+France,Europe,2017,4436.64,82.58
+France,Europe,2018,4693.0,82.68
+France,Europe,2019,4519.99,82.83
+France,Europe,2020,4760.08,82.18
+France,Europe,2021,5364.9,82.32
+France,Europe,2022,4857.73,82.13
+France,Europe,2023,5149.05,82.83
+Germany,Europe,2000,2336.36,77.93
+Germany,Europe,2001,2338.12,78.33
+Germany,Europe,2002,2557.54,78.23
+Germany,Europe,2003,3139.36,78.38
+Germany,Europe,2004,3447.27,78.68
+Germany,Europe,2005,3544.57,78.93
+Germany,Europe,2006,3681.37,79.13
+Germany,Europe,2007,4162.69,79.53
+Germany,Europe,2008,4647.31,79.74
+Germany,Europe,2009,4655.17,79.84
+Germany,Europe,2010,4592.07,79.99
+Germany,Europe,2011,5016.24,80.44
+Germany,Europe,2012,4744.87,80.54
+Germany,Europe,2013,5080.62,80.49
+Germany,Europe,2014,5287.34,81.09
+Germany,Europe,2015,4605.59,80.64
+Germany,Europe,2016,4723.32,80.99
+Germany,Europe,2017,5039.35,80.99
+Germany,Europe,2018,5473.56,80.89
+Germany,Europe,2019,5447.32,81.29
+Germany,Europe,2020,5906.81,81.04
+Germany,Europe,2021,6653.58,80.79
+Germany,Europe,2022,6226.14,80.61
+Germany,Europe,2023,6394.62,81.04
+Ghana,Africa,2000,10.46,58.14
+Ghana,Africa,2001,12.15,58.4
+Ghana,Africa,2002,14.3,58.71
+Ghana,Africa,2003,18.96,59.01
+Ghana,Africa,2004,23.57,59.32
+Ghana,Africa,2005,38.52,59.64
+Ghana,Africa,2006,49.35,59.98
+Ghana,Africa,2007,57.34,60.28
+Ghana,Africa,2008,63.45,60.58
+Ghana,Africa,2009,62.44,60.93
+Ghana,Africa,2010,80.68,61.3
+Ghana,Africa,2011,91.71,61.62
+Ghana,Africa,2012,81.97,61.99
+Ghana,Africa,2013,105.35,62.4
+Ghana,Africa,2014,78.47,62.83
+Ghana,Africa,2015,78.22,63.17
+Ghana,Africa,2016,64.86,63.52
+Ghana,Africa,2017,54.11,63.83
+Ghana,Africa,2018,53.38,64.14
+Ghana,Africa,2019,71.15,64.45
+Ghana,Africa,2020,97.38,64.31
+Ghana,Africa,2021,94.4,64.29
+Ghana,Africa,2022,82.32,65.25
+Ghana,Africa,2023,70.26,65.5
+Greece,Europe,2000,885.41,77.89
+Greece,Europe,2001,1004.82,78.39
+Greece,Europe,2002,1168.82,78.64
+Greece,Europe,2003,1566.41,78.84
+Greece,Europe,2004,1782.7,79.04
+Greece,Europe,2005,1935.27,79.24
+Greece,Europe,2006,2052.88,79.44
+Greece,Europe,2007,2426.76,79.44
+Greece,Europe,2008,2840.51,79.94
+Greece,Europe,2009,2809.06,80.19
+Greece,Europe,2010,2564.37,80.39
+Greece,Europe,2011,2338.92,80.73
+Greece,Europe,2012,1948.25,80.63
+Greece,Europe,2013,1832.03,81.29
+Greece,Europe,2014,1700.49,81.39
+Greece,Europe,2015,1481.42,81.04
+Greece,Europe,2016,1513.26,81.39
+Greece,Europe,2017,1509.78,81.29
+Greece,Europe,2018,1603.08,81.79
+Greece,Europe,2019,1569.03,81.64
+Greece,Europe,2020,1674.78,81.29
+Greece,Europe,2021,1846.37,80.08
+Greece,Europe,2022,1768.11,80.79
+Greece,Europe,2023,1962.6,81.74
+Iceland,Europe,2000,2855.57,79.65
+Iceland,Europe,2001,2528.55,80.69
+Iceland,Europe,2002,3046.82,80.5
+Iceland,Europe,2003,3839.69,80.96
+Iceland,Europe,2004,4414.23,81.0
+Iceland,Europe,2005,5079.69,81.5
+Iceland,Europe,2006,4918.23,81.16
+Iceland,Europe,2007,5803.81,81.45
+Iceland,Europe,2008,4749.68,81.61
+Iceland,Europe,2009,3622.98,81.75
+Iceland,Europe,2010,3614.04,81.9
+Iceland,Europe,2011,3937.32,82.36
+Iceland,Europe,2012,3784.38,82.92
+Iceland,Europe,2013,4095.68,82.06
+Iceland,Europe,2014,4522.91,82.86
+Iceland,Europe,2015,4303.84,82.47
+Iceland,Europe,2016,5053.52,82.2
+Iceland,Europe,2017,5992.05,82.66
+Iceland,Europe,2018,6280.04,82.86
+Iceland,Europe,2019,5912.01,83.16
+Iceland,Europe,2020,5692.89,83.06
+Iceland,Europe,2021,6722.42,83.17
+Iceland,Europe,2022,6851.63,82.12
+Iceland,Europe,2023,7064.62,82.46
+India,Asia,2000,18.48,62.75
+India,Asia,2001,19.74,63.16
+India,Asia,2002,20.16,63.65
+India,Asia,2003,21.89,64.09
+India,Asia,2004,24.92,64.48
+India,Asia,2005,27.5,64.94
+India,Asia,2006,29.38,65.37
+India,Asia,2007,35.63,65.8
+India,Asia,2008,37.65,66.25
+India,Asia,2009,38.06,66.7
+India,Asia,2010,44.8,67.16
+India,Asia,2011,48.18,67.62
+India,Asia,2012,48.45,68.08
+India,Asia,2013,55.47,68.5
+India,Asia,2014,56.35,68.93
+India,Asia,2015,58.12,69.33
+India,Asia,2016,59.73,69.71
+India,Asia,2017,56.67,70.07
+India,Asia,2018,57.47,70.42
+India,Asia,2019,60.69,70.75
+India,Asia,2020,63.83,70.16
+India,Asia,2021,75.55,67.28
+India,Asia,2022,81.51,71.7
+India,Asia,2023,84.69,72.0
+Indonesia,Asia,2000,15.39,66.29
+Indonesia,Asia,2001,16.87,66.58
+Indonesia,Asia,2002,18.98,66.95
+Indonesia,Asia,2003,25.51,67.13
+Indonesia,Asia,2004,25.98,65.52
+Indonesia,Asia,2005,34.1,67.53
+Indonesia,Asia,2006,44.4,67.66
+Indonesia,Asia,2007,56.0,67.91
+Indonesia,Asia,2008,59.24,68.08
+Indonesia,Asia,2009,62.4,68.27
+Indonesia,Asia,2010,85.56,68.36
+Indonesia,Asia,2011,107.01,68.63
+Indonesia,Asia,2012,105.85,68.86
+Indonesia,Asia,2013,102.34,69.06
+Indonesia,Asia,2014,102.0,69.29
+Indonesia,Asia,2015,96.16,69.52
+Indonesia,Asia,2016,106.4,69.73
+Indonesia,Asia,2017,110.33,69.95
+Indonesia,Asia,2018,110.72,70.08
+Indonesia,Asia,2019,118.22,70.35
+Indonesia,Asia,2020,131.82,68.82
+Indonesia,Asia,2021,158.9,67.45
+Indonesia,Asia,2022,127.44,70.92
+Indonesia,Asia,2023,131.78,71.15
+Ireland,Europe,2000,1564.84,76.54
+Ireland,Europe,2001,1823.73,77.13
+Ireland,Europe,2002,2200.36,77.63
+Ireland,Europe,2003,2910.93,78.14
+Ireland,Europe,2004,3483.16,78.54
+Ireland,Europe,2005,3938.19,78.94
+Ireland,Europe,2006,4147.13,79.24
+Ireland,Europe,2007,4858.65,79.64
+Ireland,Europe,2008,5638.78,80.1
+Ireland,Europe,2009,5502.89,80.19
+Ireland,Europe,2010,5133.46,80.74
+Ireland,Europe,2011,5538.0,80.75
+Ireland,Europe,2012,5187.27,80.85
+Ireland,Europe,2013,5295.52,80.95
+Ireland,Europe,2014,5309.9,81.35
+Ireland,Europe,2015,4575.85,81.45
+Ireland,Europe,2016,4746.94,81.65
+Ireland,Europe,2017,5023.51,82.16
+Ireland,Europe,2018,5494.99,82.2
+Ireland,Europe,2019,5454.31,82.7
+Ireland,Europe,2020,6073.11,82.46
+Ireland,Europe,2021,6754.08,82.25
+Ireland,Europe,2022,6407.92,82.51
+Ireland,Europe,2023,6877.94,82.81
+Israel,Asia,2000,1473.01,78.95
+Israel,Asia,2001,1509.45,79.41
+Israel,Asia,2002,1355.33,79.45
+Israel,Asia,2003,1384.19,79.65
+Israel,Asia,2004,1438.99,80.15
+Israel,Asia,2005,1509.11,80.15
+Israel,Asia,2006,1555.56,80.55
+Israel,Asia,2007,1769.93,80.5
+Israel,Asia,2008,2126.11,80.95
+Israel,Asia,2009,2034.46,81.4
+Israel,Asia,2010,2237.91,81.6
+Israel,Asia,2011,2442.29,81.66
+Israel,Asia,2012,2405.18,81.7
+Israel,Asia,2013,2673.34,82.06
+Israel,Asia,2014,2804.23,82.15
+Israel,Asia,2015,2645.79,82.05
+Israel,Asia,2016,2783.82,82.41
+Israel,Asia,2017,3074.45,82.55
+Israel,Asia,2018,3199.42,82.8
+Israel,Asia,2019,3335.25,82.8
+Israel,Asia,2020,3616.5,82.65
+Israel,Asia,2021,4294.19,82.5
+Israel,Asia,2022,4107.73,82.7
+Israel,Asia,2023,3927.7,83.2
+Italy,Europe,2000,1524.24,79.78
+Italy,Europe,2001,1586.67,80.13
+Italy,Europe,2002,1762.36,80.23
+Italy,Europe,2003,2160.91,79.98
+Italy,Europe,2004,2560.46,80.78
+Italy,Europe,2005,2669.73,80.78
+Italy,Europe,2006,2821.77,81.28
+Italy,Europe,2007,3077.41,81.43
+Italy,Europe,2008,3483.39,81.49
+Italy,Europe,2009,3314.16,81.64
+Italy,Europe,2010,3190.72,82.04
+Italy,Europe,2011,3358.96,82.19
+Italy,Europe,2012,3071.0,82.24
+Italy,Europe,2013,3139.88,82.69
+Italy,Europe,2014,3190.47,83.09
+Italy,Europe,2015,2707.43,82.54
+Italy,Europe,2016,2735.28,83.24
+Italy,Europe,2017,2851.29,82.95
+Italy,Europe,2018,3031.46,83.35
+Italy,Europe,2019,2908.83,83.5
+Italy,Europe,2020,3058.9,82.2
+Italy,Europe,2021,3414.57,82.65
+Italy,Europe,2022,3154.57,82.7
+Italy,Europe,2023,3283.47,83.35
+Japan,Asia,2000,2751.38,81.08
+Japan,Asia,2001,2488.65,81.42
+Japan,Asia,2002,2412.35,81.69
+Japan,Asia,2003,2650.24,81.76
+Japan,Asia,2004,2884.67,82.03
+Japan,Asia,2005,2892.6,81.96
+Japan,Asia,2006,2763.53,82.32
+Japan,Asia,2007,2781.49,82.51
+Japan,Asia,2008,3223.29,82.59
+Japan,Asia,2009,3696.58,82.93
+Japan,Asia,2010,4071.8,82.84
+Japan,Asia,2011,5103.34,82.59
+Japan,Asia,2012,5232.36,83.1
+Japan,Asia,2013,4356.16,83.33
+Japan,Asia,2014,4121.21,83.59
+Japan,Asia,2015,3754.18,83.79
+Japan,Asia,2016,4194.23,83.98
+Japan,Asia,2017,4135.24,84.1
+Japan,Asia,2018,4265.78,84.21
+Japan,Asia,2019,4431.3,84.36
+Japan,Asia,2020,4581.61,84.56
+Japan,Asia,2021,4843.94,84.45
+Japan,Asia,2022,4201.79,84.0
+Japan,Asia,2023,3638.19,84.04
+Kenya,Africa,2000,21.53,56.08
+Kenya,Africa,2001,22.11,56.5
+Kenya,Africa,2002,22.29,56.76
+Kenya,Africa,2003,25.64,57.37
+Kenya,Africa,2004,27.65,57.95
+Kenya,Africa,2005,30.99,58.51
+Kenya,Africa,2006,40.3,59.06
+Kenya,Africa,2007,49.45,59.41
+Kenya,Africa,2008,54.36,59.95
+Kenya,Africa,2009,55.46,60.48
+Kenya,Africa,2010,58.82,60.91
+Kenya,Africa,2011,57.02,61.28
+Kenya,Africa,2012,64.48,61.54
+Kenya,Africa,2013,67.6,61.73
+Kenya,Africa,2014,72.85,61.99
+Kenya,Africa,2015,70.95,62.28
+Kenya,Africa,2016,73.89,62.53
+Kenya,Africa,2017,66.47,62.73
+Kenya,Africa,2018,75.28,62.83
+Kenya,Africa,2019,85.65,62.94
+Kenya,Africa,2020,86.59,61.6
+Kenya,Africa,2021,94.2,61.23
+Kenya,Africa,2022,91.18,63.55
+Kenya,Africa,2023,84.96,63.65
+Mexico,North America,2000,319.35,72.56
+Mexico,North America,2001,364.4,72.91
+Mexico,North America,2002,385.61,73.11
+Mexico,North America,2003,411.83,73.31
+Mexico,North America,2004,446.14,73.43
+Mexico,North America,2005,483.98,73.63
+Mexico,North America,2006,514.3,73.75
+Mexico,North America,2007,558.07,73.8
+Mexico,North America,2008,573.11,73.69
+Mexico,North America,2009,492.6,73.63
+Mexico,North America,2010,534.09,73.72
+Mexico,North America,2011,565.32,73.92
+Mexico,North America,2012,582.48,74.13
+Mexico,North America,2013,625.6,74.29
+Mexico,North America,2014,609.82,74.4
+Mexico,North America,2015,553.91,74.43
+Mexico,North America,2016,489.92,74.38
+Mexico,North America,2017,512.55,74.26
+Mexico,North America,2018,528.26,74.3
+Mexico,North America,2019,549.73,74.53
+Mexico,North America,2020,535.12,70.45
+Mexico,North America,2021,606.13,69.75
+Mexico,North America,2022,650.97,73.97
+Mexico,North America,2023,760.99,75.07
+Netherlands,Europe,2000,2028.18,77.99
+Netherlands,Europe,2001,2175.73,78.19
+Netherlands,Europe,2002,2544.81,78.29
+Netherlands,Europe,2003,3244.36,78.49
+Netherlands,Europe,2004,3689.46,79.1
+Netherlands,Europe,2005,3823.48,79.35
+Netherlands,Europe,2006,4080.22,79.7
+Netherlands,Europe,2007,4696.14,80.1
+Netherlands,Europe,2008,5382.45,80.25
+Netherlands,Europe,2009,5282.74,80.55
+Netherlands,Europe,2010,5191.69,80.7
+Netherlands,Europe,2011,5562.12,81.2
+Netherlands,Europe,2012,5284.65,81.1
+Netherlands,Europe,2013,5532.73,81.3
+Netherlands,Europe,2014,5601.89,81.71
+Netherlands,Europe,2015,4676.56,81.51
+Netherlands,Europe,2016,4644.02,81.56
+Netherlands,Europe,2017,4934.58,81.76
+Netherlands,Europe,2018,5330.66,81.81
+Netherlands,Europe,2019,5340.61,82.11
+Netherlands,Europe,2020,5865.91,81.36
+Netherlands,Europe,2021,6718.89,81.31
+Netherlands,Europe,2022,5967.9,81.61
+Netherlands,Europe,2023,6371.86,81.86
+New Zealand,Oceania,2000,1054.28,78.64
+New Zealand,Oceania,2001,1053.74,78.69
+New Zealand,Oceania,2002,1250.13,78.85
+New Zealand,Oceania,2003,1610.73,79.15
+New Zealand,Oceania,2004,1981.97,79.55
+New Zealand,Oceania,2005,2295.37,79.85
+New Zealand,Oceania,2006,2304.07,80.05
+New Zealand,Oceania,2007,2705.66,80.15
+New Zealand,Oceania,2008,2708.66,80.35
+New Zealand,Oceania,2009,2582.28,80.7
+New Zealand,Oceania,2010,3072.74,80.9
+New Zealand,Oceania,2011,3501.22,81.16
+New Zealand,Oceania,2012,3682.94,81.41
+New Zealand,Oceania,2013,3833.82,81.4
+New Zealand,Oceania,2014,3997.43,81.46
+New Zealand,Oceania,2015,3433.6,81.61
+New Zealand,Oceania,2016,3516.93,81.66
+New Zealand,Oceania,2017,3702.1,81.86
+New Zealand,Oceania,2018,3706.8,81.71
+New Zealand,Oceania,2019,3679.6,82.06
+New Zealand,Oceania,2020,3887.71,82.26
+New Zealand,Oceania,2021,4749.04,82.21
+New Zealand,Oceania,2022,5138.34,81.96
+New Zealand,Oceania,2023,4997.24,81.76
+Nigeria,Africa,2000,17.16,47.14
+Nigeria,Africa,2001,17.96,47.55
+Nigeria,Africa,2002,17.54,48.02
+Nigeria,Africa,2003,37.91,48.62
+Nigeria,Africa,2004,42.82,49.15
+Nigeria,Africa,2005,52.24,49.54
+Nigeria,Africa,2006,63.63,49.88
+Nigeria,Africa,2007,66.91,50.38
+Nigeria,Africa,2008,77.45,50.75
+Nigeria,Africa,2009,65.72,51.08
+Nigeria,Africa,2010,73.01,51.31
+Nigeria,Africa,2011,80.24,51.49
+Nigeria,Africa,2012,87.9,51.69
+Nigeria,Africa,2013,97.3,51.83
+Nigeria,Africa,2014,102.4,51.94
+Nigeria,Africa,2015,92.91,51.94
+Nigeria,Africa,2016,75.52,52.19
+Nigeria,Africa,2017,70.32,52.4
+Nigeria,Africa,2018,63.6,52.67
+Nigeria,Africa,2019,67.63,53.01
+Nigeria,Africa,2020,67.91,53.07
+Nigeria,Africa,2021,81.87,53.45
+Nigeria,Africa,2022,89.63,54.08
+Nigeria,Africa,2023,66.82,54.46
+Norway,Europe,2000,2948.93,78.63
+Norway,Europe,2001,3099.0,78.79
+Norway,Europe,2002,3889.96,78.99
+Norway,Europe,2003,4632.57,79.39
+Norway,Europe,2004,5097.34,79.84
+Norway,Europe,2005,5584.69,80.04
+Norway,Europe,2006,5892.99,80.34
+Norway,Europe,2007,6895.56,80.4
+Norway,Europe,2008,7768.05,80.59
+Norway,Europe,2009,7301.96,80.8
+Norway,Europe,2010,7859.52,81.0
+Norway,Europe,2011,8900.37,81.3
+Norway,Europe,2012,8970.12,81.45
+Norway,Europe,2013,9241.27,81.75
+Norway,Europe,2014,9116.38,82.1
+Norway,Europe,2015,7566.56,82.3
+Norway,Europe,2016,7492.08,82.41
+Norway,Europe,2017,7815.79,82.61
+Norway,Europe,2018,8271.86,82.76
+Norway,Europe,2019,8007.36,82.96
+Norway,Europe,2020,7824.58,83.21
+Norway,Europe,2021,9163.14,83.16
+Norway,Europe,2022,8692.58,82.51
+Norway,Europe,2023,8296.36,83.01
+Pakistan,Asia,2000,15.37,61.9
+Pakistan,Asia,2001,13.42,62.24
+Pakistan,Asia,2002,14.98,62.56
+Pakistan,Asia,2003,14.35,62.83
+Pakistan,Asia,2004,15.54,63.1
+Pakistan,Asia,2005,19.59,62.42
+Pakistan,Asia,2006,24.44,63.62
+Pakistan,Asia,2007,26.14,63.81
+Pakistan,Asia,2008,24.34,64.0
+Pakistan,Asia,2009,23.15,64.21
+Pakistan,Asia,2010,23.63,64.38
+Pakistan,Asia,2011,25.02,64.66
+Pakistan,Asia,2012,25.6,64.88
+Pakistan,Asia,2013,28.21,65.13
+Pakistan,Asia,2014,32.12,65.37
+Pakistan,Asia,2015,33.99,65.64
+Pakistan,Asia,2016,36.47,65.94
+Pakistan,Asia,2017,42.07,66.22
+Pakistan,Asia,2018,40.1,66.48
+Pakistan,Asia,2019,36.01,66.73
+Pakistan,Asia,2020,36.91,65.7
+Pakistan,Asia,2021,42.8,65.77
+Pakistan,Asia,2022,38.77,67.42
+Pakistan,Asia,2023,30.49,67.65
+Peru,South America,2000,83.64,69.82
+Peru,South America,2001,89.37,70.31
+Peru,South America,2002,97.66,70.81
+Peru,South America,2003,97.35,71.28
+Peru,South America,2004,105.17,71.45
+Peru,South America,2005,123.25,71.99
+Peru,South America,2006,136.14,72.34
+Peru,South America,2007,158.55,72.75
+Peru,South America,2008,191.43,72.74
+Peru,South America,2009,209.2,72.63
+Peru,South America,2010,241.43,72.89
+Peru,South America,2011,264.46,73.33
+Peru,South America,2012,309.31,73.98
+Peru,South America,2013,320.96,74.59
+Peru,South America,2014,332.19,75.26
+Peru,South America,2015,310.61,75.73
+Peru,South America,2016,311.34,75.95
+Peru,South America,2017,332.54,75.96
+Peru,South America,2018,362.76,76.02
+Peru,South America,2019,367.99,76.28
+Peru,South America,2020,399.14,73.83
+Peru,South America,2021,455.36,71.6
+Peru,South America,2022,445.1,76.83
+Peru,South America,2023,445.53,77.74
+Philippines,Asia,2000,32.1,67.79
+Philippines,Asia,2001,27.61,67.83
+Philippines,Asia,2002,26.77,67.89
+Philippines,Asia,2003,31.6,68.05
+Philippines,Asia,2004,33.5,68.3
+Philippines,Asia,2005,45.68,68.42
+Philippines,Asia,2006,53.87,68.17
+Philippines,Asia,2007,64.28,68.55
+Philippines,Asia,2008,75.69,68.64
+Philippines,Asia,2009,77.65,68.63
+Philippines,Asia,2010,89.35,68.88
+Philippines,Asia,2011,95.96,69.1
+Philippines,Asia,2012,109.21,69.24
+Philippines,Asia,2013,118.87,69.28
+Philippines,Asia,2014,106.16,69.31
+Philippines,Asia,2015,113.43,69.45
+Philippines,Asia,2016,118.06,69.49
+Philippines,Asia,2017,120.32,69.97
+Philippines,Asia,2018,125.28,69.76
+Philippines,Asia,2019,141.69,69.68
+Philippines,Asia,2020,166.61,70.1
+Philippines,Asia,2021,208.19,66.67
+Philippines,Asia,2022,182.93,69.47
+Philippines,Asia,2023,194.05,69.83
+Poland,Europe,2000,238.0,73.75
+Poland,Europe,2001,282.82,74.2
+Poland,Europe,2002,315.83,74.5
+Poland,Europe,2003,339.34,74.6
+Poland,Europe,2004,392.0,74.85
+Poland,Europe,2005,465.7,75.0
+Poland,Europe,2006,524.1,75.14
+Poland,Europe,2007,660.92,75.24
+Poland,Europe,2008,892.6,75.54
+Poland,Europe,2009,759.61,75.7
+Poland,Europe,2010,809.2,76.25
+Poland,Europe,2011,866.09,76.7
+Poland,Europe,2012,815.14,76.75
+Poland,Europe,2013,878.09,77.0
+Poland,Europe,2014,911.3,77.6
+Poland,Europe,2015,803.96,77.45
+Poland,Europe,2016,816.09,77.85
+Poland,Europe,2017,909.58,77.75
+Poland,Europe,2018,978.74,77.6
+Poland,Europe,2019,1014.04,77.9
+Poland,Europe,2020,1025.98,76.4
+Poland,Europe,2021,1183.3,75.35
+Poland,Europe,2022,1219.29,77.16
+Poland,Europe,2023,1577.98,78.26
+Portugal,Europe,2000,995.34,76.31
+Portugal,Europe,2001,1015.55,76.81
+Portugal,Europe,2002,1139.4,77.07
+Portugal,Europe,2003,1443.38,77.22
+Portugal,Europe,2004,1723.74,77.67
+Portugal,Europe,2005,1814.35,78.07
+Portugal,Europe,2006,1857.65,78.42
+Portugal,Europe,2007,2112.53,78.32
+Portugal,Europe,2008,2391.98,78.52
+Portugal,Europe,2009,2346.54,78.73
+Portugal,Europe,2010,2259.3,79.03
+Portugal,Europe,2011,2255.97,80.47
+Portugal,Europe,2012,1976.91,80.37
+Portugal,Europe,2013,2027.42,80.72
+Portugal,Europe,2014,2056.61,81.12
+Portugal,Europe,2015,1787.04,81.12
+Portugal,Europe,2016,1870.32,81.12
+Portugal,Europe,2017,1991.32,81.42
+Portugal,Europe,2018,2206.71,81.32
+Portugal,Europe,2019,2209.5,81.68
+Portugal,Europe,2020,2328.36,81.33
+Portugal,Europe,2021,2764.04,81.38
+Portugal,Europe,2022,2600.57,81.63
+Portugal,Europe,2023,2762.26,82.33
+Russia,Europe,2000,95.21,65.48
+Russia,Europe,2001,117.88,65.38
+Russia,Europe,2002,140.06,65.13
+Russia,Europe,2003,163.31,65.03
+Russia,Europe,2004,207.61,65.47
+Russia,Europe,2005,270.14,65.53
+Russia,Europe,2006,350.84,66.73
+Russia,Europe,2007,459.6,67.59
+Russia,Europe,2008,606.78,67.95
+Russia,Europe,2009,513.91,68.68
+Russia,Europe,2010,564.3,68.84
+Russia,Europe,2011,681.04,69.68
+Russia,Europe,2012,755.49,70.07
+Russia,Europe,2013,805.52,70.58
+Russia,Europe,2014,736.32,70.74
+Russia,Europe,2015,496.95,71.18
+Russia,Europe,2016,463.29,71.65
+Russia,Europe,2017,577.07,72.45
+Russia,Europe,2018,606.11,72.66
+Russia,Europe,2019,650.47,73.08
+Russia,Europe,2020,814.94,71.34
+Russia,Europe,2021,881.74,69.9
+Russia,Europe,2022,1082.82,72.55
+Russia,Europe,2023,1003.33,73.25
+Saudi Arabia,Asia,2000,493.37,72.61
+Saudi Arabia,Asia,2001,482.1,72.95
+Saudi Arabia,Asia,2002,449.84,73.3
+Saudi Arabia,Asia,2003,457.09,73.66
+Saudi Arabia,Asia,2004,471.46,74.03
+Saudi Arabia,Asia,2005,545.74,74.4
+Saudi Arabia,Asia,2006,634.82,74.76
+Saudi Arabia,Asia,2007,662.01,75.07
+Saudi Arabia,Asia,2008,663.14,75.3
+Saudi Arabia,Asia,2009,760.19,75.45
+Saudi Arabia,Asia,2010,765.92,75.62
+Saudi Arabia,Asia,2011,954.39,75.81
+Saudi Arabia,Asia,2012,1093.16,76.09
+Saudi Arabia,Asia,2013,1189.68,76.52
+Saudi Arabia,Asia,2014,1363.59,77.12
+Saudi Arabia,Asia,2015,1309.27,77.78
+Saudi Arabia,Asia,2016,1353.22,78.35
+Saudi Arabia,Asia,2017,1400.9,78.72
+Saudi Arabia,Asia,2018,1488.98,78.75
+Saudi Arabia,Asia,2019,1504.55,78.31
+Saudi Arabia,Asia,2020,1574.7,77.6
+Saudi Arabia,Asia,2021,1654.74,77.09
+Saudi Arabia,Asia,2022,1830.89,77.31
+Saudi Arabia,Asia,2023,1825.25,78.73
+South Africa,Africa,2000,236.08,58.37
+South Africa,Africa,2001,202.81,57.16
+South Africa,Africa,2002,179.51,55.58
+South Africa,Africa,2003,286.02,54.24
+South Africa,Africa,2004,362.29,53.96
+South Africa,Africa,2005,400.54,53.91
+South Africa,Africa,2006,417.91,54.22
+South Africa,Africa,2007,455.17,54.95
+South Africa,Africa,2008,442.11,55.98
+South Africa,Africa,2009,487.63,57.41
+South Africa,Africa,2010,621.42,58.89
+South Africa,Africa,2011,686.87,60.6
+South Africa,Africa,2012,646.5,61.74
+South Africa,Africa,2013,593.8,62.39
+South Africa,Africa,2014,539.31,63.18
+South Africa,Africa,2015,491.91,64.05
+South Africa,Africa,2016,456.57,64.75
+South Africa,Africa,2017,527.52,65.42
+South Africa,Africa,2018,558.8,65.73
+South Africa,Africa,2019,538.8,66.07
+South Africa,Africa,2020,503.47,65.15
+South Africa,Africa,2021,592.95,62.01
+South Africa,Africa,2022,570.48,65.45
+South Africa,Africa,2023,536.59,66.14
+South Korea,Asia,2000,475.25,75.91
+South Korea,Asia,2001,503.16,76.41
+South Korea,Asia,2002,536.92,76.77
+South Korea,Asia,2003,684.8,77.21
+South Korea,Asia,2004,764.49,77.67
+South Korea,Asia,2005,944.55,78.17
+South Korea,Asia,2006,1130.54,78.67
+South Korea,Asia,2007,1256.36,79.12
+South Korea,Asia,2008,1186.38,79.52
+South Korea,Asia,2009,1150.97,79.97
+South Korea,Asia,2010,1417.11,80.12
+South Korea,Asia,2011,1570.55,80.57
+South Korea,Asia,2012,1603.93,80.82
+South Korea,Asia,2013,1738.81,81.27
+South Korea,Asia,2014,1922.99,81.72
+South Korea,Asia,2015,1950.9,82.02
+South Korea,Asia,2016,2042.73,82.28
+South Korea,Asia,2017,2258.15,82.63
+South Korea,Asia,2018,2523.04,82.63
+South Korea,Asia,2019,2602.48,83.23
+South Korea,Asia,2020,2699.66,83.43
+South Korea,Asia,2021,3125.83,83.53
+South Korea,Asia,2022,3078.55,82.68
+South Korea,Asia,2023,3043.87,83.43
+Spain,Europe,2000,1005.28,78.97
+Spain,Europe,2001,1045.05,79.37
+Spain,Europe,2002,1174.58,79.57
+Spain,Europe,2003,1648.06,79.62
+Spain,Europe,2004,1932.21,79.87
+Spain,Europe,2005,2074.33,80.17
+Spain,Europe,2006,2256.68,80.82
+Spain,Europe,2007,2625.56,80.87
+Spain,Europe,2008,3019.76,81.18
+Spain,Europe,2009,2962.48,81.48
+Spain,Europe,2010,2816.84,81.63
+Spain,Europe,2011,2938.18,82.48
+Spain,Europe,2012,2620.84,82.43
+Spain,Europe,2013,2664.48,83.08
+Spain,Europe,2014,2716.58,83.23
+Spain,Europe,2015,2383.85,82.83
+Spain,Europe,2016,2378.14,83.33
+Spain,Europe,2017,2564.56,83.28
+Spain,Europe,2018,2784.16,83.43
+Spain,Europe,2019,2756.62,83.83
+Spain,Europe,2020,2942.42,82.23
+Spain,Europe,2021,3188.85,83.18
+Spain,Europe,2022,2948.61,83.13
+Spain,Europe,2023,3106.62,83.93
+Sweden,Europe,2000,2173.19,79.64
+Sweden,Europe,2001,2154.63,79.8
+Sweden,Europe,2002,2456.7,79.85
+Sweden,Europe,2003,3107.49,80.1
+Sweden,Europe,2004,3488.66,80.5
+Sweden,Europe,2005,3546.79,80.55
+Sweden,Europe,2006,3755.68,80.75
+Sweden,Europe,2007,4295.55,80.9
+Sweden,Europe,2008,4609.92,81.1
+Sweden,Europe,2009,4118.42,81.35
+Sweden,Europe,2010,4391.12,81.45
+Sweden,Europe,2011,6363.61,81.8
+Sweden,Europe,2012,6280.83,81.7
+Sweden,Europe,2013,6716.21,81.96
+Sweden,Europe,2014,6632.24,82.25
+Sweden,Europe,2015,5626.05,82.2
+Sweden,Europe,2016,5719.46,82.31
+Sweden,Europe,2017,5871.52,82.41
+Sweden,Europe,2018,6042.14,82.56
+Sweden,Europe,2019,5688.04,83.11
+Sweden,Europe,2020,6030.53,82.36
+Sweden,Europe,2021,6894.2,83.06
+Sweden,Europe,2022,6022.39,83.06
+Sweden,Europe,2023,6206.23,83.31
+Switzerland,Europe,2000,3550.13,79.68
+Switzerland,Europe,2001,3751.75,80.18
+Switzerland,Europe,2002,4198.36,80.39
+Switzerland,Europe,2003,5005.12,80.54
+Switzerland,Europe,2004,5593.48,81.09
+Switzerland,Europe,2005,5661.17,81.24
+Switzerland,Europe,2006,5657.28,81.49
+Switzerland,Europe,2007,6124.81,81.74
+Switzerland,Europe,2008,7075.71,81.99
+Switzerland,Europe,2009,7263.63,82.04
+Switzerland,Europe,2010,7645.26,82.25
+Switzerland,Europe,2011,9139.43,82.7
+Switzerland,Europe,2012,8868.98,82.7
+Switzerland,Europe,2013,9247.28,82.8
+Switzerland,Europe,2014,9469.66,83.2
+Switzerland,Europe,2015,9200.1,82.9
+Switzerland,Europe,2016,9201.47,83.6
+Switzerland,Europe,2017,9354.22,83.55
+Switzerland,Europe,2018,9541.07,83.75
+Switzerland,Europe,2019,9609.8,83.9
+Switzerland,Europe,2020,10294.58,83.0
+Switzerland,Europe,2021,11197.76,83.75
+Switzerland,Europe,2022,10930.14,83.6
+Switzerland,Europe,2023,11783.67,84.16
+Tanzania,Africa,2000,12.33,53.24
+Tanzania,Africa,2001,15.17,54.12
+Tanzania,Africa,2002,17.04,54.94
+Tanzania,Africa,2003,20.39,55.93
+Tanzania,Africa,2004,23.45,56.84
+Tanzania,Africa,2005,27.71,57.67
+Tanzania,Africa,2006,35.6,58.51
+Tanzania,Africa,2007,36.24,59.26
+Tanzania,Africa,2008,36.26,59.9
+Tanzania,Africa,2009,34.0,60.49
+Tanzania,Africa,2010,37.18,61.13
+Tanzania,Africa,2011,37.75,61.62
+Tanzania,Africa,2012,42.0,62.29
+Tanzania,Africa,2013,43.47,62.79
+Tanzania,Africa,2014,39.85,63.36
+Tanzania,Africa,2015,33.27,63.93
+Tanzania,Africa,2016,36.65,64.4
+Tanzania,Africa,2017,39.04,64.96
+Tanzania,Africa,2018,41.27,65.49
+Tanzania,Africa,2019,39.98,66.01
+Tanzania,Africa,2020,31.7,66.77
+Tanzania,Africa,2021,37.53,66.13
+Tanzania,Africa,2022,35.93,66.88
+Tanzania,Africa,2023,36.26,67.0
+Thailand,Asia,2000,62.21,71.2
+Thailand,Asia,2001,57.19,71.52
+Thailand,Asia,2002,69.69,71.78
+Thailand,Asia,2003,76.13,72.1
+Thailand,Asia,2004,82.92,72.1
+Thailand,Asia,2005,90.61,72.89
+Thailand,Asia,2006,103.26,73.34
+Thailand,Asia,2007,125.11,73.78
+Thailand,Asia,2008,149.07,74.22
+Thailand,Asia,2009,149.68,74.67
+Thailand,Asia,2010,168.62,75.01
+Thailand,Asia,2011,191.74,75.3
+Thailand,Asia,2012,201.71,75.59
+Thailand,Asia,2013,207.81,75.96
+Thailand,Asia,2014,213.74,76.28
+Thailand,Asia,2015,219.15,76.56
+Thailand,Asia,2016,229.78,76.77
+Thailand,Asia,2017,247.08,76.99
+Thailand,Asia,2018,274.71,77.19
+Thailand,Asia,2019,288.31,77.2
+Thailand,Asia,2020,304.38,77.33
+Thailand,Asia,2021,363.73,77.61
+Thailand,Asia,2022,369.98,75.29
+Thailand,Asia,2023,326.5,76.41
+Turkey,Asia,2000,192.83,71.93
+Turkey,Asia,2001,148.86,72.27
+Turkey,Asia,2002,181.39,72.61
+Turkey,Asia,2003,232.56,72.91
+Turkey,Asia,2004,292.65,73.22
+Turkey,Asia,2005,357.4,73.51
+Turkey,Asia,2006,409.26,73.8
+Turkey,Asia,2007,504.38,74.13
+Turkey,Asia,2008,561.74,74.38
+Turkey,Asia,2009,492.3,74.68
+Turkey,Asia,2010,531.83,74.96
+Turkey,Asia,2011,525.89,74.82
+Turkey,Asia,2012,520.44,75.55
+Turkey,Asia,2013,547.95,76.17
+Turkey,Asia,2014,520.41,76.45
+Turkey,Asia,2015,444.71,76.54
+Turkey,Asia,2016,456.37,76.59
+Turkey,Asia,2017,432.14,77.04
+Turkey,Asia,2018,380.28,77.45
+Turkey,Asia,2019,388.67,77.74
+Turkey,Asia,2020,386.26,76.53
+Turkey,Asia,2021,431.34,75.72
+Turkey,Asia,2022,385.88,77.59
+Turkey,Asia,2023,547.81,77.16
+United Kingdom,Europe,2000,2020.97,77.74
+United Kingdom,Europe,2001,2074.6,77.99
+United Kingdom,Europe,2002,2364.05,78.14
+United Kingdom,Europe,2003,2773.99,78.45
+United Kingdom,Europe,2004,3361.66,78.75
+United Kingdom,Europe,2005,3528.16,79.05
+United Kingdom,Europe,2006,3802.56,79.25
+United Kingdom,Europe,2007,4415.51,79.45
+United Kingdom,Europe,2008,4280.36,79.6
+United Kingdom,Europe,2009,3813.03,80.05
+United Kingdom,Europe,2010,3876.34,80.4
+United Kingdom,Europe,2011,4123.7,80.95
+United Kingdom,Europe,2012,4204.08,80.9
+United Kingdom,Europe,2013,4340.17,81.0
+United Kingdom,Europe,2014,4733.37,81.3
+United Kingdom,Europe,2015,4470.09,80.96
+United Kingdom,Europe,2016,4043.35,81.16
+United Kingdom,Europe,2017,3938.65,81.26
+United Kingdom,Europe,2018,4233.63,81.26
+United Kingdom,Europe,2019,4260.03,81.37
+United Kingdom,Europe,2020,4865.98,80.33
+United Kingdom,Europe,2021,5645.4,80.65
+United Kingdom,Europe,2022,5111.82,81.01
+United Kingdom,Europe,2023,5407.17,81.24
+United States,North America,2000,4548.55,76.64
+United States,North America,2001,4901.68,76.84
+United States,North America,2002,5327.94,76.94
+United States,North America,2003,5732.24,77.04
+United States,North America,2004,6071.84,77.49
+United States,North America,2005,6428.6,77.49
+United States,North America,2006,6802.48,77.69
+United States,North America,2007,7153.73,77.99
+United States,North America,2008,7364.94,78.04
+United States,North America,2009,7614.82,78.39
+United States,North America,2010,7836.09,78.54
+United States,North America,2011,8015.78,78.64
+United States,North America,2012,8262.29,78.74
+United States,North America,2013,8412.25,78.74
+United States,North America,2014,8796.34,78.84
+United States,North America,2015,9200.93,78.69
+United States,North America,2016,9535.6,78.54
+United States,North America,2017,9822.61,78.54
+United States,North America,2018,10180.48,78.64
+United States,North America,2019,10550.22,78.79
+United States,North America,2020,11648.5,76.98
+United States,North America,2021,12080.07,76.33
+United States,North America,2022,12586.2,77.43
+United States,North America,2023,13473.19,78.39
+Uruguay,South America,2000,699.2,74.69
+Uruguay,South America,2001,679.42,74.99
+Uruguay,South America,2002,436.44,74.98
+Uruguay,South America,2003,383.56,75.09
+Uruguay,South America,2004,375.94,75.32
+Uruguay,South America,2005,445.28,75.83
+Uruguay,South America,2006,500.66,75.89
+Uruguay,South America,2007,578.34,76.15
+Uruguay,South America,2008,811.7,76.28
+Uruguay,South America,2009,826.06,76.67
+Uruguay,South America,2010,1043.26,76.69
+Uruguay,South America,2011,1244.94,76.61
+Uruguay,South America,2012,1347.03,76.69
+Uruguay,South America,2013,1516.81,76.95
+Uruguay,South America,2014,1495.6,77.19
+Uruguay,South America,2015,1424.89,77.28
+Uruguay,South America,2016,1469.39,77.35
+Uruguay,South America,2017,1672.33,77.62
+Uruguay,South America,2018,1713.27,77.53
+Uruguay,South America,2019,1692.5,77.5
+Uruguay,South America,2020,1432.0,78.38
+Uruguay,South America,2021,1594.98,75.43
+Uruguay,South America,2022,1850.81,76.47
+Uruguay,South America,2023,2076.09,78.14
+Vietnam,Asia,2000,21.07,72.75
+Vietnam,Asia,2001,25.55,72.98
+Vietnam,Asia,2002,21.88,73.14
+Vietnam,Asia,2003,24.88,73.24
+Vietnam,Asia,2004,31.98,73.06
+Vietnam,Asia,2005,38.97,73.2
+Vietnam,Asia,2006,46.87,73.29
+Vietnam,Asia,2007,54.41,73.39
+Vietnam,Asia,2008,64.43,73.45
+Vietnam,Asia,2009,69.83,73.53
+Vietnam,Asia,2010,85.36,73.61
+Vietnam,Asia,2011,97.05,73.71
+Vietnam,Asia,2012,109.29,73.76
+Vietnam,Asia,2013,104.11,73.82
+Vietnam,Asia,2014,119.45,73.89
+Vietnam,Asia,2015,121.44,73.95
+Vietnam,Asia,2016,133.2,73.98
+Vietnam,Asia,2017,147.51,74.03
+Vietnam,Asia,2018,161.98,74.1
+Vietnam,Asia,2019,171.15,74.21
+Vietnam,Asia,2020,153.1,75.38
+Vietnam,Asia,2021,168.09,74.14
+Vietnam,Asia,2022,188.23,74.5
+Vietnam,Asia,2023,197.19,74.59
