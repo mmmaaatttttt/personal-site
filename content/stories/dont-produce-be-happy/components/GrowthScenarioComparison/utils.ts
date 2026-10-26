@@ -24,7 +24,7 @@ export function deriveScenarioSeries(
     color: SCENARIO_COLORS[scenario],
     data: rows
       .filter((row) => row.scenario === scenario)
-      .sort((a, b) => a.year - b.year)
+      .sort((first, second) => first.year - second.year)
       .map((row) => ({ x: row.year, y: accessor(row) })),
   }));
 }

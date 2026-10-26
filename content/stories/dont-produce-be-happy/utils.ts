@@ -3,23 +3,26 @@ export function linearRegression(points: { x: number; y: number }[]): {
   intercept: number;
   rSquared: number;
 } {
-  const meanX = points.reduce((sum, p) => sum + p.x, 0) / points.length;
-  const meanY = points.reduce((sum, p) => sum + p.y, 0) / points.length;
+  const meanX = points.reduce((sum, point) => sum + point.x, 0) / points.length;
+  const meanY = points.reduce((sum, point) => sum + point.y, 0) / points.length;
   const numerator = points.reduce(
-    (sum, p) => sum + (p.x - meanX) * (p.y - meanY),
+    (sum, point) => sum + (point.x - meanX) * (point.y - meanY),
     0,
   );
-  const denominator = points.reduce((sum, p) => sum + (p.x - meanX) ** 2, 0);
+  const denominator = points.reduce(
+    (sum, point) => sum + (point.x - meanX) ** 2,
+    0,
+  );
   const slope = numerator / denominator;
   const intercept = meanY - slope * meanX;
 
   const totalSumSquares = points.reduce(
-    (sum, p) => sum + (p.y - meanY) ** 2,
+    (sum, point) => sum + (point.y - meanY) ** 2,
     0,
   );
-  const residualSumSquares = points.reduce((sum, p) => {
-    const predicted = intercept + slope * p.x;
-    return sum + (p.y - predicted) ** 2;
+  const residualSumSquares = points.reduce((sum, point) => {
+    const predicted = intercept + slope * point.x;
+    return sum + (point.y - predicted) ** 2;
   }, 0);
   const rSquared = 1 - residualSumSquares / totalSumSquares;
 

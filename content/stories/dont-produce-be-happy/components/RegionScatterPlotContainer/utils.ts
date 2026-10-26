@@ -1,5 +1,6 @@
 import { darkenHex } from "@/utils/colorHelpers";
 import { formatCurrency } from "@/utils/formatHelpers";
+import { LIFE_LADDER_LABEL } from "../../constants";
 import type { GdpHappinessRow, HealthOutcomeByYear } from "../../data/csvData";
 import { REGION_COLORS, TRACKED_COUNTRY } from "../../data/data";
 
@@ -23,9 +24,8 @@ export function deriveGdpHappinessScatterData(rows: GdpHappinessRow[]) {
       opacity: isTracked ? 1 : DIMMED_OPACITY,
       label: row.country,
       key: row.country,
-      isTracked,
-      ariaLabel: `${row.country}, GDP per capita ${gdpText}, Life Ladder ${lifeLadderText}`,
-      tooltipBody: [gdpText, lifeLadderText],
+      ariaLabel: `${row.country}, GDP per capita ${formatCurrency(row.gdpPerCapita)}, Life Ladder ${lifeLadderText}`,
+      tooltipBody: [gdpText, `${LIFE_LADDER_LABEL}: ${lifeLadderText}`],
     };
   });
 }
@@ -33,7 +33,7 @@ export function deriveGdpHappinessScatterData(rows: GdpHappinessRow[]) {
 export function deriveHealthScatterData(countries: HealthOutcomeByYear[]) {
   return countries.map((country) => {
     const fill = REGION_COLORS[country.region];
-    const isUnitedStates = country.country === "United States";
+    const isTracked = country.country === TRACKED_COUNTRY;
     const healthSpendingText = `${formatCurrency(country.healthSpendingPerCapita)} per capita`;
     const lifeExpectancyText = `${country.lifeExpectancy.toFixed(1)} years`;
     return {
@@ -43,10 +43,9 @@ export function deriveHealthScatterData(countries: HealthOutcomeByYear[]) {
       fill,
       stroke: darkenHex(fill, STROKE_DARKEN_AMOUNT),
       strokeWidth: 1,
-      opacity: isUnitedStates ? 1 : DIMMED_OPACITY,
+      opacity: isTracked ? 1 : DIMMED_OPACITY,
       label: country.country,
       key: country.country,
-      isUnitedStates,
       ariaLabel: `${country.country}, life expectancy ${lifeExpectancyText}, health spending ${healthSpendingText}`,
       tooltipBody: [healthSpendingText, lifeExpectancyText],
     };

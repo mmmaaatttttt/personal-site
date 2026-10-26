@@ -43,13 +43,13 @@ describe("deriveScatterData", () => {
 
   it("scales the poorest country in the data to the minimum radius", () => {
     const points = deriveScatterData(rows);
-    const malawi = points.find((p) => p.key === "Malawi");
+    const malawi = points.find((point) => point.key === "Malawi");
     expect(malawi?.radius).toBeCloseTo(5, 5);
   });
 
   it("gives a country between the extremes a radius strictly between the min and max", () => {
     const points = deriveScatterData(rows);
-    const brazil = points.find((p) => p.key === "Brazil");
+    const brazil = points.find((point) => point.key === "Brazil");
     expect(brazil?.radius).toBeGreaterThan(5);
     expect(brazil?.radius).toBeLessThan(20);
   });
@@ -72,8 +72,8 @@ describe("deriveScatterData", () => {
       },
     ];
     const points = deriveScatterData(lowGdpRows);
-    const lao = points.find((p) => p.key === "Lao PDR");
-    const botswana = points.find((p) => p.key === "Botswana");
+    const lao = points.find((point) => point.key === "Lao PDR");
+    const botswana = points.find((point) => point.key === "Botswana");
     expect(lao?.radius).not.toBeCloseTo(botswana?.radius ?? 0, 1);
   });
 
@@ -131,7 +131,7 @@ describe("deriveScatterData", () => {
     ];
 
     const points = deriveScatterData(collidingRows);
-    const cxValues = points.map((p) => p.cx);
+    const cxValues = points.map((point) => point.cx);
     expect(new Set(cxValues).size).toBe(3);
     // All still centered on the real shared count, just spread around it.
     for (const cx of cxValues) {
@@ -147,7 +147,7 @@ describe("deriveScatterData", () => {
 
   it("sorts output with the largest circles first so small ones aren't hidden behind them", () => {
     const points = deriveScatterData(rows);
-    const radii = points.map((p) => p.radius);
-    expect(radii).toEqual([...radii].sort((a, b) => b - a));
+    const radii = points.map((point) => point.radius);
+    expect(radii).toEqual([...radii].sort((first, second) => second - first));
   });
 });

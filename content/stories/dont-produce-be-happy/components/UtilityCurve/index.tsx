@@ -14,6 +14,9 @@ import {
   CHART_HEIGHT,
   CHART_PADDING,
   CHART_WIDTH,
+  GDP_PER_CAPITA_DOMAIN,
+  LIFE_LADDER_DOMAIN,
+  LIFE_LADDER_LABEL,
 } from "../../constants";
 import type { WithGdpHappinessByCountryYear } from "../../data/csvData";
 import ChartFrame from "../ChartFrame";
@@ -30,9 +33,11 @@ const TRANSITION_DURATION = 0.4;
 const X_MIN = CHART_PADDING.left;
 const X_MAX = CHART_WIDTH - CHART_PADDING.right;
 
-const xScale = scaleLinear().domain([0, 150000]).range([X_MIN, X_MAX]);
+const xScale = scaleLinear()
+  .domain(GDP_PER_CAPITA_DOMAIN)
+  .range([X_MIN, X_MAX]);
 const yScale = scaleLinear()
-  .domain([2, 8])
+  .domain(LIFE_LADDER_DOMAIN)
   .range([CHART_HEIGHT - CHART_PADDING.bottom, CHART_PADDING.top]);
 
 export default function UtilityCurve({
@@ -69,7 +74,7 @@ export default function UtilityCurve({
       xTickFormat="$,"
       yTickFormat=".1f"
       xAxisLabel="GDP per capita"
-      yAxisLabel="Life Ladder Score"
+      yAxisLabel={LIFE_LADDER_LABEL}
       sliderData={sliderData}
       toolbar={
         <>
@@ -141,14 +146,14 @@ export default function UtilityCurve({
             aria-label={`Income ${formatCurrency(income)}, Life Ladder ${currentWellbeing.toFixed(2)}`}
             onMouseEnter={showTooltip(
               formatCurrency(income),
-              `${currentWellbeing.toFixed(2)}`,
+              `${LIFE_LADDER_LABEL}: ${currentWellbeing.toFixed(2)}`,
             )}
             onMouseLeave={hideTooltip}
-            onFocus={(e) => {
-              const rect = e.currentTarget.getBoundingClientRect();
+            onFocus={(event) => {
+              const rect = event.currentTarget.getBoundingClientRect();
               showTooltipAt(
                 formatCurrency(income),
-                `${currentWellbeing.toFixed(2)}`,
+                `${LIFE_LADDER_LABEL}: ${currentWellbeing.toFixed(2)}`,
                 rect.left + rect.width / 2,
                 rect.top,
               );

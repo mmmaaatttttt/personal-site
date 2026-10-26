@@ -31,17 +31,19 @@ export function deriveScatterData(rows: SocialShortfallRow[]) {
   }
 
   const points = Array.from(groups.values()).flatMap((group) => {
-    const sorted = [...group].sort((a, b) =>
-      a.country.localeCompare(b.country),
+    const sorted = [...group].sort((first, second) =>
+      first.country.localeCompare(second.country),
     );
     const center = (sorted.length - 1) / 2;
-    return sorted.map((row, i) => {
+    return sorted.map((row, index) => {
       const fill = REGION_COLORS[row.region];
       const gdpText = `${formatCurrency(row.gdpPerCapita)} per capita`;
       const socialText = `${row.socialThresholdsAchieved} of 11 social thresholds achieved`;
       const biophysicalText = `${row.biophysicalBoundariesTransgressed} of 6 biophysical boundaries transgressed`;
       return {
-        cx: row.biophysicalBoundariesTransgressed + (i - center) * JITTER_STEP,
+        cx:
+          row.biophysicalBoundariesTransgressed +
+          (index - center) * JITTER_STEP,
         cy: row.socialThresholdsAchieved,
         radius: radiusScale(row.gdpPerCapita),
         fill,
@@ -54,5 +56,5 @@ export function deriveScatterData(rows: SocialShortfallRow[]) {
     });
   });
 
-  return points.sort((a, b) => b.radius - a.radius);
+  return points.sort((first, second) => second.radius - first.radius);
 }

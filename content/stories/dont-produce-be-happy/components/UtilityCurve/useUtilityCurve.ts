@@ -3,12 +3,13 @@
 import type { ScaleLinear } from "d3-scale";
 import { useMemo, useState } from "react";
 import { clamp } from "@/utils/mathHelpers";
+import { GDP_PER_CAPITA_DOMAIN } from "../../constants";
 import type { GdpHappinessRow } from "../../data/csvData";
 import useYearSlider from "../../useYearSlider";
 import { linearRegression } from "../../utils";
 
 const MIN_INCOME = 500;
-const MAX_INCOME = 150000;
+const MAX_INCOME = GDP_PER_CAPITA_DOMAIN[1];
 const CURVE_STEPS = 50;
 const INITIAL_INCOME = 20000;
 const MIN_YEAR = 2014;
@@ -27,17 +28,16 @@ export default function useUtilityCurve(
   const { year, sliderData } = useYearSlider(MIN_YEAR, MAX_YEAR, MIN_YEAR);
 
   const yearRows = useMemo(
-    () => gdpHappinessByCountryYear.filter((d) => d.year === year),
+    () => gdpHappinessByCountryYear.filter((row) => row.year === year),
     [gdpHappinessByCountryYear, year],
   );
 
-  // Log-utility (Bernoulli 1738); slope/intercept are an OLS fit (R^2~=0.78) on the same countries shown in GdpHappinessDivergence, not the WHR's own multi-factor model.
   const { slope, intercept, rSquared } = useMemo(
     () =>
       linearRegression(
-        yearRows.map((d) => ({
-          x: Math.log(d.gdpPerCapita),
-          y: d.lifeLadder,
+        yearRows.map((row) => ({
+          x: Math.log(row.gdpPerCapita),
+          y: row.lifeLadder,
         })),
       ),
     [yearRows],
@@ -49,33 +49,30 @@ export default function useUtilityCurve(
 
   const curveData = useMemo(
     () =>
-      Array.from({ length: CURVE_STEPS + 1 }, (_, i) => {
-        const x = MIN_INCOME + (i / CURVE_STEPS) * (MAX_INCOME - MIN_INCOME);
-        return { x, y: intercept + slope * Math.log(x) };
+      Array.from({ length: CURVE_STEPS + 1 }, (_, step) => {
+        const curveIncome =
+          MIN_INCOME + (step / CURVE_STEPS) * (MAX_INCOME - MIN_INCOME);
+        return { x: curveIncome, y: intercept + slope * Math.log(curveIncome) };
       }),
     [slope, intercept],
   );
 
   const scatterPoints = useMemo(
     () =>
-      yearRows.map((d) => ({
-        x: d.gdpPerCapita,
-        y: d.lifeLadder,
-        key: d.country,
+      yearRows.map((row) => ({
+        x: row.gdpPerCapita,
+        y: row.lifeLadder,
+        key: row.country,
       })),
     [yearRows],
   );
 
-  function handleDrag(_id: number, { x }: { x: number; y: number }) {
-    const clamped = clamp(x, xMin, xMax);
-    // The axis domain starts at 0 (to match GdpHappinessDivergence), but
-    // Math.log(income) blows up as income approaches 0, so clamp the
-    // resulting income separately to the curve's own safe bounds.
+  function handleDrag(_id: number, { x: pointerX }: { x: number; y: number }) {
+    const clamped = clamp(pointerX, xMin, xMax);
     setIncome(clamp(xScale.invert(clamped), MIN_INCOME, MAX_INCOME));
   }
 
   const currentWellbeing = predictedLifeLadder(income);
-  // d/dx [intercept + slope * ln(x)] = slope / x
   const slopeAtIncome = slope / income;
 
   const tangentLine = {

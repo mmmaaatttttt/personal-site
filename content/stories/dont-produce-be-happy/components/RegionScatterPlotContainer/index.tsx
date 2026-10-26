@@ -6,6 +6,9 @@ import {
   CHART_HEIGHT,
   CHART_PADDING,
   CHART_WIDTH,
+  GDP_PER_CAPITA_DOMAIN,
+  LIFE_LADDER_DOMAIN,
+  LIFE_LADDER_LABEL,
 } from "../../constants";
 import RegionScatterPlot from "./RegionScatterPlot";
 import useRegionScatterData, {
@@ -15,8 +18,8 @@ import useRegionScatterData, {
 const X_RANGE = [CHART_PADDING.left, CHART_WIDTH - CHART_PADDING.right];
 const Y_RANGE = [CHART_HEIGHT - CHART_PADDING.bottom, CHART_PADDING.top];
 
-const gdpXScale = scaleLinear().domain([0, 150000]).range(X_RANGE);
-const gdpYScale = scaleLinear().domain([2, 8]).range(Y_RANGE);
+const gdpXScale = scaleLinear().domain(GDP_PER_CAPITA_DOMAIN).range(X_RANGE);
+const gdpYScale = scaleLinear().domain(LIFE_LADDER_DOMAIN).range(Y_RANGE);
 
 const healthXScale = scaleLinear().domain([0, 14000]).range(X_RANGE);
 const healthYScale = scaleLinear().domain([45, 87]).range(Y_RANGE);
@@ -39,7 +42,7 @@ export default function RegionScatterPlotContainer(
         xTickFormat="$,"
         yTickFormat=".1f"
         xAxisLabel="GDP per capita"
-        yAxisLabel="Life Ladder Score"
+        yAxisLabel={LIFE_LADDER_LABEL}
         containerWidth={CHART_CONTAINER_WIDTH}
       />
     );
@@ -56,8 +59,8 @@ export default function RegionScatterPlotContainer(
       yScale={healthYScale}
       xTickFormat="$,"
       yTickFormat="d"
-      xAxisLabel="Healthcare Spending Per Capita (USD)"
-      yAxisLabel="Life Expectancy (years)"
+      xAxisLabel="Healthcare spending per capita"
+      yAxisLabel="Life expectancy (years)"
       containerWidth={CHART_CONTAINER_WIDTH}
     />
   );
