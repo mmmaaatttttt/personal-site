@@ -13,11 +13,11 @@ import {
 
 Whether you're on the left or the right, on one thing we can agree: America truly is an exceptional country. We spend the most on our military, hitting almost [one trillion dollars](https://data.worldbank.org/indicator/MS.MIL.XPND.CD?most_recent_value_desc=true) in military spending in 2024. We spend the most on healthcare [per capita](https://data.worldbank.org/indicator/SH.XPD.CHEX.PC.CD), even though our [average life expectancy](https://data.worldbank.org/indicator/SP.DYN.LE00.IN) is slightly less than it is for folks in Saudi Arabia, which spends a fraction of what we do.
 
-<Figure caption="Chart of life expectancy at birth vs health care spending per capita over time. Note how much worse things have gotten for the US over time.">
+<Figure caption="Chart of life expectancy at birth vs healthcare spending per capita over time. Note how much worse things have gotten for the US over time.">
   <RegionScatterPlotContainer variant="health-spending" rows={healthOutcomesByYear} />
 </Figure>
 
-In spite of all of this expenditure on health and defense, life expectancy isn't the only metric that's lagging behind other countries. American happiness has decreased as well. That's according to [The World Happiness Report](https://www.worldhappiness.report/), which for years has measured a country's happiness by sampling its population and asking people to rate their current life using the [Cantril scale](https://news.gallup.com/poll/122453/understanding-gallup-uses-cantril-scale.aspx). The scale goes from 0 to 10, where 0 is the worst possible life someone can imagine for themselves, and 10 is the best.
+In spite of all of this expenditure on health and defense, life expectancy isn't the only metric that's lagging behind other countries. American happiness has decreased as well. That's according to the [World Happiness Report](https://www.worldhappiness.report/), which for years has measured a country's happiness by sampling its population and asking people to rate their current life using the [Cantril scale](https://news.gallup.com/poll/122453/understanding-gallup-uses-cantril-scale.aspx). The scale goes from 0 to 10, where 0 is the worst possible life someone can imagine for themselves, and 10 is the best.
 
 If we look at a rolling three-year average of how the US has scored, it's not looking good. This aggregate metric has fallen by 4% since 2014. Our absolute ranking among all nations has also fallen significantly; this is both because other countries have increased their happiness over time, and because others have not dropped as much as America.
 
@@ -31,7 +31,7 @@ Part of this may have to do with a well-known fact that billionaires would be wi
 
 And when it comes to nations, this certainly seems to be true for money. Here's a chart of GDP per capita vs that same happiness score from the table above, expanded to 127 countries where there's data from 2014 through 2025:
 
-<Figure caption="Life Ladder Score vs GDP per capita over time. The US, notably, scored lower in happiness in 2025 than Kosovo, despite having a per-capita GDP more than ten times larger.">
+<Figure caption="Life ladder score vs GDP per capita over time. The US, notably, scored lower in happiness in 2025 than Kosovo, despite having a per-capita GDP more than ten times larger.">
   <RegionScatterPlotContainer variant="gdp-happiness" rows={gdpHappinessByCountryYear} />
 </Figure>
 
@@ -39,7 +39,7 @@ There are some definite trends here. In general, the higher a country's GDP, the
 
 A good fit for data that has this general shape is to use a logarithmic curve. This is because the logarithm is also ever-increasing, but the *rate* at which it increases slows towards 0. Using a logarithmic curve to model the decreasing marginal value of money isn't a new thing. Esteemed mathematician [Daniel Bernoulli](https://en.wikipedia.org/wiki/Daniel_Bernoulli) was the first to publish a paper with this kind of modeling, and he did it all the way back in [1738](https://econ.ucsb.edu/~tedb/Courses/GraduateTheoryUCSB/Bernoulli.pdf).
 
-If we find the best fit logarithmic curve for each year, you can see that the fit isn't half bad.
+If we find the best-fit logarithmic curve for each year, you can see that the fit isn't half bad.
 
 <Figure caption="Logarithmic regression curves for the data by year.">
   <UtilityCurve gdpHappinessByCountryYear={gdpHappinessByCountryYear} />
@@ -49,7 +49,7 @@ If you make the tangent visible, its slope is the entire point: the farther to t
 
 What happens at the macro level happens at the micro level too. This marginal impact of money on happiness has been explored by behavioral economics, and the same shape was studied by [Daniel Kahneman](https://en.wikipedia.org/wiki/Daniel_Kahneman), who initially popularized the claim that happiness didn't significantly increase beyond an annual income of $75,000. While economists will argue about the particulars of the shape, there's broad alignment that happiness and income have a logarithmic relationship. In fact, one of Kahneman's [last papers](https://www.pnas.org/doi/10.1073/pnas.2208661120) affirmed a logarithmic relationship between income and happiness rather than asserting a hard upper bound.
 
-### The Cost Of Growth
+### The Cost of Growth
 
 So, to the extent that money buys happiness, it buys marginally less happiness the more money you have. But coming back to America, that's not what we see. Our social metrics aren't just growing more slowly; in many cases, they're decreasing.
 
@@ -57,7 +57,7 @@ We're also collectively destroying the planet on a quest for a mathematical impo
 
 Is there any way out of the trap we've set for ourselves? How can we jump-start some of these stagnant measures of human flourishing, while not also destroying one another or the planet?
 
-These questions are increasingly becoming the focus of academic study. And a paper from 2024, titled [Post-growth: the science of wellbeing within planetary boundaries](https://www.sciencedirect.com/science/article/pii/S2542519624003103?fr=RR-2&ref=pdf_download&rr=a4914fafbb55d8c2), does a great job of surveying current research attempts to tackle some of these thorny issues.
+These questions are increasingly becoming the focus of academic study. And a paper from 2024, titled [Post-growth: the science of wellbeing within planetary boundaries](https://www.sciencedirect.com/science/article/pii/S2542519624003103), does a great job of surveying current research attempts to tackle some of these thorny issues.
 
 ### Growth, Green Growth, Negative Growth
 
@@ -69,19 +69,19 @@ The third set of models is even more radical. It intentionally eschews growth. I
 
 Economists have modeled different macroeconomic measurements over time for each of these buckets for a few different countries. The predictions for France are below for you to explore. Why France? Je ne sais pas, you'll have to take that up with the original authors.
 
-<Figure caption="Modeling different macroeconomic metrics for France under different growth (or non-growth) models. The data from 2014-2019 is real; after that it's simulated.">
+<Figure caption="Modeling different macroeconomic metrics for France under different growth (or non-growth) models.">
   <GrowthScenarioComparison rows={eurogreenFranceScenarios} />
 </Figure>
 
 One thing I noticed from these charts is how poorly a green growth strategy performs on several metrics. The change to GDP growth is negligible, but unemployment and the [Gini coefficient](https://en.wikipedia.org/wiki/Gini_coefficient) (a measure of income inequality) actually perform worse than under the status quo. Across almost every metric, including CO2 reduction, the degrowth strategy performs significantly better. The one exception is government deficit as a percentage of GDP. This makes sense; if your goal is to intentionally shrink GDP, then calculating the deficit as a fraction of a shrinking pie can cause that fraction to grow even if the deficit itself is not growing at all.
 
-It's no surprise, then, that the authors of this paper advocate for a degrowth strategy. They offer up more arguments than what I'm presenting here. And for an academic paper, it's surprisingly readable. If you take nothing away from this other than a marginally stronger desire to read an economics paper, I'll consider the time it took to write this well-spent.
+It's no surprise, then, that the authors of this paper advocate for a degrowth strategy. They offer up more arguments than what I'm presenting here. And for an academic paper, it's surprisingly readable. If you take nothing away from this other than a marginally stronger desire to read an economics paper, I'll consider the time it took to write this well spent.
 
 ### Up, Up, and to the Left!
 
 While reducing carbon emissions and income inequality at the same time sounds like a great goal, there's one wrinkle: no country knows how to do it. Social progress has historically been pretty tightly coupled to ecological overreach.
 
-At the end of the paper, the authors categorize multiple countries based on 2015 data along two axes: how many social thresholds has each country achieved, and how many biophysical boundaries have they crossed. The definitions for these thresholds are taken from a separate paper, titled [A good life for all within planetary boundaries](https://www.nature.com/articles/s41893-018-0021-4), and include metrics like:
+At the end of the paper, the authors categorize multiple countries based on 2015 data along two axes: how many social thresholds has each country achieved, and how many biophysical boundaries has it crossed. The definitions for these thresholds are taken from a separate paper, titled [A good life for all within planetary boundaries](https://www.nature.com/articles/s41893-018-0021-4), and include metrics like:
 
 - Do people in the country meet a minimum threshold for life expectancy and life satisfaction?
 - How bad is the country's income inequality and unemployment?
@@ -89,9 +89,9 @@ At the end of the paper, the authors categorize multiple countries based on 2015
 - How much CO2 is the country emitting per capita per year?
 - Could the earth sustainably support the lifestyle of individuals in the country if everyone lived the same way?
 
-Ideally, countries will achieve all of the measures of social progress, while crossing as few of the ecological thresholds as possible. But unfortunately, based on the 2015 data that's not what we see.
+Ideally, countries will achieve all of the measures of social progress, while crossing as few of the ecological thresholds as possible. But unfortunately, based on the 2015 data, that's not what we see.
 
-<Figure caption="Social thresholds vs environmental thresholds for countries based on 2015 data. Circle size is proportional to per-capita GDP.">
+<Figure caption="Social thresholds vs environmental thresholds for countries based on 2015 data. Circle size is based on per-capita GDP.">
   <SocialEcologicalScatter socialShortfallByCountry={socialShortfallByCountry} />
 </Figure>
 
@@ -115,5 +115,5 @@ Sources:
 - [Exposition of a New Theory on the Measurement of Risk](https://econ.ucsb.edu/~tedb/Courses/GraduateTheoryUCSB/Bernoulli.pdf)
 - [Income and emotional well-being: A conflict resolved](https://www.pnas.org/doi/10.1073/pnas.2208661120)
 - [Easterlin Paradox](https://en.wikipedia.org/wiki/Easterlin_paradox)
-- [Post-growth: the science of wellbeing within planetary boundaries](https://www.sciencedirect.com/science/article/pii/S2542519624003103?fr=RR-2&ref=pdf_download&rr=a4914fafbb55d8c2)
+- [Post-growth: the science of wellbeing within planetary boundaries](https://www.sciencedirect.com/science/article/pii/S2542519624003103)
 - [A good life for all within planetary boundaries](https://www.nature.com/articles/s41893-018-0021-4)
