@@ -32,7 +32,7 @@ describe("ClippedSVG Component", () => {
     );
 
     const clipPath = container.querySelector("clipPath");
-    expect(clipPath).toHaveAttribute("id", "clip-path-test-svg");
+    expect(clipPath?.id).toMatch(/^clip-path-test-svg-[\w-]+$/);
 
     const rect = clipPath?.querySelector("rect");
     // padding 20 means top=20, left=0, right=20, bottom=20 according to the code:
@@ -51,8 +51,9 @@ describe("ClippedSVG Component", () => {
         <g />
       </ClippedSVG>,
     );
+    const clipPath = container.querySelector("clipPath");
     const g = container.querySelector("svg > g");
-    expect(g).toHaveAttribute("clip-path", "url(#clip-path-test-svg)");
+    expect(g).toHaveAttribute("clip-path", `url(#${clipPath?.id})`);
   });
 
   it("skips clip-path when clipChildren is false", () => {
@@ -74,8 +75,9 @@ describe("ClippedSVG Component", () => {
     const clipRect = container.querySelector("clipPath rect");
     expect(clipRect).toHaveAttribute("width", "600");
     expect(clipRect).toHaveAttribute("height", "400");
+    const clipPath = container.querySelector("clipPath");
     const g = container.querySelector("svg > g");
-    expect(g).toHaveAttribute("clip-path", "url(#clip-path-no-pad)");
+    expect(g).toHaveAttribute("clip-path", `url(#${clipPath?.id})`);
   });
 
   it("applies clip-path when clipChildren is requested and padding is nonzero", () => {
@@ -90,9 +92,27 @@ describe("ClippedSVG Component", () => {
         <g />
       </ClippedSVG>,
     );
-    expect(container.querySelector("clipPath")).not.toBeNull();
+    const clipPath = container.querySelector("clipPath");
     const g = container.querySelector("svg > g");
-    expect(g).toHaveAttribute("clip-path", "url(#clip-path-still-clipped)");
+    expect(g).toHaveAttribute("clip-path", `url(#${clipPath?.id})`);
+  });
+
+  it("gives each instance its own clip-path id even when two share the same id prop", () => {
+    const { container } = render(
+      <>
+        <ClippedSVG id="svg" width={600} height={450}>
+          <g />
+        </ClippedSVG>
+        <ClippedSVG id="svg" width={600} height={600}>
+          <g />
+        </ClippedSVG>
+      </>,
+    );
+    const [firstClip, secondClip] = container.querySelectorAll("clipPath");
+    expect(firstClip.id).not.toBe(secondClip.id);
+    const [firstGroup, secondGroup] = container.querySelectorAll("svg > g");
+    expect(firstGroup).toHaveAttribute("clip-path", `url(#${firstClip.id})`);
+    expect(secondGroup).toHaveAttribute("clip-path", `url(#${secondClip.id})`);
   });
 
   it("accepts padding as an object", () => {

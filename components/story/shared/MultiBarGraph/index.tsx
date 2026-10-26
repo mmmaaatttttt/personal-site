@@ -126,7 +126,7 @@ const MultiBarGraph: FC<MultiBarGraphProps> = ({
             fontSize="0.8rem"
           />
 
-          <g clipPath={`url(#clip-path-${id})`}>
+          <g>
             <AnimatePresence>
               {data
                 .map((_, colIndex) => ({

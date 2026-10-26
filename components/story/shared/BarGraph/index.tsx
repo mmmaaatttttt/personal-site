@@ -113,7 +113,7 @@ const BarGraph: FC<BarGraphProps> = ({
           tickStepY ? () => tickStepY : tickStep ? () => tickStep : undefined
         }
       >
-        <g clipPath={`url(#clip-path-${svgId})`}>
+        <g>
           {(() => {
             const items = barData.map((d, i) => {
               let x: number;

@@ -1,6 +1,6 @@
 "use client";
 
-import type { FC, ReactNode } from "react";
+import { type FC, type ReactNode, useId } from "react";
 import { SVGContext } from "@/context/SVGContext";
 import { useResizeObserver } from "@/hooks/useResizeObserver";
 import { cn } from "@/lib/utils";
@@ -34,6 +34,7 @@ const ClippedSVG: FC<ClippedSVGProps> = ({
   clipChildren = true,
 }) => {
   const [measureRef, dimensions] = useResizeObserver();
+  const clipPathId = `clip-path-${id}-${useId().replace(/[^\w-]/g, "")}`;
 
   const paddingObj: Padding =
     typeof padding === "number"
@@ -54,7 +55,7 @@ const ClippedSVG: FC<ClippedSVGProps> = ({
           aria-label={id}
         >
           <defs>
-            <clipPath id={`clip-path-${id}`}>
+            <clipPath id={clipPathId}>
               <rect
                 x={paddingObj.left}
                 y={paddingObj.top}
@@ -63,7 +64,7 @@ const ClippedSVG: FC<ClippedSVGProps> = ({
               />
             </clipPath>
           </defs>
-          <g clipPath={clipChildren ? `url(#clip-path-${id})` : undefined}>
+          <g clipPath={clipChildren ? `url(#${clipPathId})` : undefined}>
             {children}
           </g>
         </svg>
