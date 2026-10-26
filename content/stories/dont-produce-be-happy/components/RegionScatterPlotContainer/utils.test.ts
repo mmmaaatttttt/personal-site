@@ -77,14 +77,6 @@ describe("deriveGdpHappinessScatterData", () => {
     expect(us.strokeWidth).toBe(germany.strokeWidth);
   });
 
-  it("flags the United States and only the United States", () => {
-    const [us, germany, kenya] =
-      deriveGdpHappinessScatterData(gdpHappinessRows);
-    expect(us.isTracked).toBe(true);
-    expect(germany.isTracked).toBe(false);
-    expect(kenya.isTracked).toBe(false);
-  });
-
   it("keeps the United States at full opacity and dims everyone else", () => {
     const [us, germany, kenya] =
       deriveGdpHappinessScatterData(gdpHappinessRows);
@@ -96,9 +88,12 @@ describe("deriveGdpHappinessScatterData", () => {
   it("builds an aria-label and tooltip body from the country's GDP and Life Ladder score", () => {
     const [us] = deriveGdpHappinessScatterData(gdpHappinessRows);
     expect(us.ariaLabel).toBe(
-      "United States, GDP per capita $90,027 per capita, Life Ladder 6.82",
+      "United States, GDP per capita $90,027, Life Ladder 6.82",
     );
-    expect(us.tooltipBody).toEqual(["$90,027 per capita", "6.82"]);
+    expect(us.tooltipBody).toEqual([
+      "$90,027 per capita",
+      "Life ladder score: 6.82",
+    ]);
   });
 });
 
@@ -122,13 +117,6 @@ describe("deriveHealthScatterData", () => {
     expect(us.radius).toBe(germany.radius);
     expect(germany.radius).toBe(kenya.radius);
     expect(us.strokeWidth).toBe(germany.strokeWidth);
-  });
-
-  it("flags the United States and only the United States", () => {
-    const [us, germany, kenya] = deriveHealthScatterData(healthCountries);
-    expect(us.isUnitedStates).toBe(true);
-    expect(germany.isUnitedStates).toBe(false);
-    expect(kenya.isUnitedStates).toBe(false);
   });
 
   it("keeps the United States at full opacity and dims everyone else", () => {

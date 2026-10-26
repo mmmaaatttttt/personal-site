@@ -106,8 +106,8 @@ export default function SocialEcologicalScatter({
               aria-label={point.ariaLabel}
               onMouseEnter={showTooltip(point.label, point.tooltipBody)}
               onMouseLeave={hideTooltip}
-              onFocus={(e) => {
-                const rect = e.currentTarget.getBoundingClientRect();
+              onFocus={(event) => {
+                const rect = event.currentTarget.getBoundingClientRect();
                 showTooltipAt(
                   point.label,
                   point.tooltipBody,

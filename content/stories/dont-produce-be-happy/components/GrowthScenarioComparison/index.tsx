@@ -4,6 +4,7 @@ import { useState } from "react";
 import Legend from "@/components/story/shared/Legend";
 import NarrowContainer from "@/components/story/shared/NarrowContainer";
 import Select from "@/components/story/shared/Select";
+import { CHART_CONTAINER_WIDTH } from "../../constants";
 import type { EurogreenScenarioRow } from "../../data/csvData";
 import ScenarioLineChart from "./ScenarioLineChart";
 import {
@@ -27,7 +28,7 @@ export default function GrowthScenarioComparison({
   const series = deriveScenarioSeries(rows, selectedOption.accessor);
 
   return (
-    <NarrowContainer width="80%" fullWidthAt="lg">
+    <NarrowContainer width={CHART_CONTAINER_WIDTH} fullWidthAt="lg">
       <div className="space-y-4">
         <div className="flex items-center justify-center gap-4">
           <Select
