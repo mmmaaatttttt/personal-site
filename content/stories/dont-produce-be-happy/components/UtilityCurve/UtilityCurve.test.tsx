@@ -193,7 +193,9 @@ describe("UtilityCurve", () => {
     const marker = screen.getByRole("button", { name: /Life Ladder/ });
 
     fireEvent.focus(marker);
-    expect(document.querySelector(".fixed.z-50")).not.toBeNull();
+    expect(document.querySelector(".fixed.z-50")).toHaveTextContent(
+      "Life ladder score:",
+    );
 
     fireEvent.blur(marker);
     expect(document.querySelector(".fixed.z-50")).toBeNull();

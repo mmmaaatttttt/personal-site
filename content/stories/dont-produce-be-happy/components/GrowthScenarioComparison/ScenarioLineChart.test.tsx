@@ -124,7 +124,7 @@ describe("ScenarioLineChart", () => {
     expect(screen.queryByText("400%")).not.toBeInTheDocument();
   });
 
-  it("shades the real, calibrated 2014-2019 region, leaving the simulated years unshaded", () => {
+  it("draws no background shading behind the scenario lines", () => {
     render(
       <ScenarioLineChart
         svgId="test-chart"
@@ -134,17 +134,9 @@ describe("ScenarioLineChart", () => {
         yTickFormat="+.1%"
       />,
     );
-    const shadedRegion = document.querySelector(
-      `rect[fill="${COLORS.LIGHT_GRAY}"]`,
-    );
-    expect(shadedRegion).not.toBeNull();
-    // The shaded region should start at the chart's left edge (2014) and end
-    // partway across (at 2020), well short of the right edge (2050).
-    const x = Number(shadedRegion?.getAttribute("x"));
-    const width = Number(shadedRegion?.getAttribute("width"));
-    expect(x).toBe(90);
-    expect(x + width).toBeGreaterThan(90);
-    expect(x + width).toBeLessThan(700 - 20);
+    expect(
+      document.querySelector(`rect[fill="${COLORS.LIGHT_GRAY}"]`),
+    ).toBeNull();
   });
 
   it("renders an empty path, not a crash, for a scenario with no data points", () => {

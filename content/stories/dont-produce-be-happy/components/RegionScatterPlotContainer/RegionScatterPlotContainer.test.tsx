@@ -128,7 +128,7 @@ describe("RegionScatterPlotContainer (gdp-happiness variant)", () => {
     expect(tooltip).not.toBeNull();
     expect(tooltip).toHaveTextContent("Finland");
     expect(tooltip).toHaveTextContent(expectedGdp);
-    expect(tooltip).toHaveTextContent("7.41");
+    expect(tooltip).toHaveTextContent("Life ladder score: 7.41");
 
     fireEvent.blur(point);
     expect(document.querySelector(".fixed.z-50")).toBeNull();

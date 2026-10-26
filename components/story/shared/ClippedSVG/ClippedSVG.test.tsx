@@ -76,7 +76,7 @@ describe("ClippedSVG Component", () => {
     expect(g).not.toHaveAttribute("clip-path");
   });
 
-  it("still applies clip-path when padding is zero but clipChildren is explicitly requested alongside nonzero padding", () => {
+  it("applies clip-path when clipChildren is requested and padding is nonzero", () => {
     const { container } = render(
       <ClippedSVG
         id="still-clipped"
