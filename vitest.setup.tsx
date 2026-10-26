@@ -71,10 +71,6 @@ const MOTION_PROP_KEYS = new Set([
   "dragMomentum",
 ]);
 
-// `animate` carries the settled geometry/style for components that only set
-// it there (e.g. `animate={{ cx, cy }}`) rather than duplicating it as a
-// static prop — merge it back in after stripping so tests can still read
-// those values off the rendered element, instead of seeing them vanish.
 function resolveMotionProps(props: Record<string, unknown>) {
   const { animate, ...rest } = props;
   const stripped = Object.fromEntries(

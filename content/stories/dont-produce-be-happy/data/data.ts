@@ -22,7 +22,6 @@ export interface UsHappinessYear {
   score: number;
 }
 
-// Real data from the official WHR data file (WHR26_Data_Figure_2.1.xlsx); 2013 is genuinely missing from the source. Starts at 2014 (not 2011) so every row's rank delta is a clean one-year comparison.
 export const usHappinessByYear: UsHappinessYear[] = [
   { year: 2014, rank: 15, score: 7.119 },
   { year: 2015, rank: 13, score: 7.104 },

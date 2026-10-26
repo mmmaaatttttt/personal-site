@@ -57,7 +57,6 @@ export interface WithEurogreenFranceScenarios {
   eurogreenFranceScenarios: EurogreenScenarioRow[];
 }
 
-// World Bank SH.XPD.CHEX.PC.CD / SP.DYN.LE00.IN, 52 countries, 2000-2023, nominal USD not PPP (won't match OWID's chart if cited as a source).
 function parseHealthOutcomesCSV(): HealthOutcomeByYear[] {
   const csvPath = path.join(
     process.cwd(),
@@ -99,12 +98,6 @@ function parseGdpHappinessCSV(): GdpHappinessRow[] {
   });
 }
 
-// Fanning, O'Neill, Hickel & Roux (2022), "The social shortfall and ecological
-// overshoot of nations", Nat Sustain 5:26-36, supplementary data (2015, the
-// most recent historical year). Counts are out of 11 social indicators and 6
-// biophysical indicators, each normalised so 1.0 = the threshold/boundary;
-// restricted to the 81 countries with non-missing data for every indicator.
-// GDP per capita is World Bank NY.GDP.PCAP.CD for the same year.
 function parseSocialShortfallCSV(): SocialShortfallRow[] {
   const csvPath = path.join(
     process.cwd(),
@@ -131,17 +124,6 @@ function parseSocialShortfallCSV(): SocialShortfallRow[] {
   });
 }
 
-// D'Alessandro, Cieplinski, Distefano & Dittmer (2020), "Feasible
-// alternatives to green growth", Nat Sustain 3:329-335 — the Eurogreen
-// stock-flow-consistent model for France, 2014-2050. Extracted from the
-// authors' own supplementary MATLAB output (mean simulated values across
-// 500 Monte Carlo runs; co2EmissionsMt from their "CO2 TOT" variable,
-// converted kt -> Mt; giniCoefficient from their "GINI Coeff" variable,
-// converted from a 0-100 scale to 0-1; governmentDeficitPctGdp from their
-// "Deficit/GDP" variable), restricted to 3 of the paper's 4 scenarios
-// (dropping "Policies for Social Equity"). Their data does not include a
-// raw GDP-level or an annual-working-hours series, so those two of the
-// paper's six tracked variables aren't available here.
 function parseEurogreenScenariosCSV(): EurogreenScenarioRow[] {
   const csvPath = path.join(
     process.cwd(),
