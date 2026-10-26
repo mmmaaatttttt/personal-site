@@ -9,3 +9,28 @@ updates:
     directory: "/" # Location of package manifests
     schedule:
       interval: "weekly"
+    groups:
+      react:
+        applies-to: version-updates
+        patterns:
+          - "react"
+          - "react-dom"
+          - "@types/react"
+          - "@types/react-dom"
+      react-security:
+        applies-to: security-updates
+        patterns:
+          - "react"
+          - "react-dom"
+          - "@types/react"
+          - "@types/react-dom"
+      next:
+        applies-to: version-updates
+        patterns:
+          - "next"
+          - "@next/*"
+      next-security:
+        applies-to: security-updates
+        patterns:
+          - "next"
+          - "@next/*"
