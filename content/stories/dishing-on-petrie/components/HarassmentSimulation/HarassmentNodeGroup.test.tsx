@@ -1,4 +1,4 @@
-import { act, cleanup, render } from "@testing-library/react";
+import { act, cleanup, render, waitFor } from "@testing-library/react";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import "@testing-library/jest-dom/vitest";
 import HarassmentNodeGroup from "./HarassmentNodeGroup";
@@ -190,13 +190,17 @@ describe("HarassmentNodeGroup Component", () => {
       act(() => {
         getOnImpact()?.(blueNode, blueNode);
       });
-      await wait(250);
-      expect(container.querySelectorAll(".shout").length).toBeGreaterThan(0);
+      await waitFor(() =>
+        expect(container.querySelectorAll(".shout").length).toBeGreaterThan(0),
+      );
 
-      await wait(3500);
-      expect(handleShout).toHaveBeenCalledWith(
-        "blueShoutsHeardFromBlueOnly",
-        expect.any(Number),
+      await waitFor(
+        () =>
+          expect(handleShout).toHaveBeenCalledWith(
+            "blueShoutsHeardFromBlueOnly",
+            expect.any(Number),
+          ),
+        { timeout: 4000 },
       );
     });
 
@@ -229,10 +233,13 @@ describe("HarassmentNodeGroup Component", () => {
       act(() => {
         getOnImpact()?.(blueNode, blueNode);
       });
-      await wait(300);
-      expect(handleShout).toHaveBeenCalledWith(
-        "greenShoutsHeardFromBlue",
-        expect.any(Number),
+      await waitFor(
+        () =>
+          expect(handleShout).toHaveBeenCalledWith(
+            "greenShoutsHeardFromBlue",
+            expect.any(Number),
+          ),
+        { timeout: 2000 },
       );
     });
 
@@ -265,10 +272,13 @@ describe("HarassmentNodeGroup Component", () => {
       act(() => {
         getOnImpact()?.(greenNode, greenNode);
       });
-      await wait(300);
-      expect(handleShout).toHaveBeenCalledWith(
-        "blueShoutsHeardFromGreen",
-        expect.any(Number),
+      await waitFor(
+        () =>
+          expect(handleShout).toHaveBeenCalledWith(
+            "blueShoutsHeardFromGreen",
+            expect.any(Number),
+          ),
+        { timeout: 2000 },
       );
     });
 
@@ -290,10 +300,13 @@ describe("HarassmentNodeGroup Component", () => {
       act(() => {
         getOnImpact()?.(greenNode, greenNode);
       });
-      await wait(3500);
-      expect(handleShout).toHaveBeenCalledWith(
-        "greenShoutsHeardFromGreenOnly",
-        expect.any(Number),
+      await waitFor(
+        () =>
+          expect(handleShout).toHaveBeenCalledWith(
+            "greenShoutsHeardFromGreenOnly",
+            expect.any(Number),
+          ),
+        { timeout: 4000 },
       );
     });
 
@@ -347,8 +360,9 @@ describe("HarassmentNodeGroup Component", () => {
           { key: "blue-1", properties: { color: "#1E3A8A" }, r: 15 },
         );
       });
-      await wait(250);
-      expect(container.querySelectorAll(".shout").length).toBeGreaterThan(0);
+      await waitFor(() =>
+        expect(container.querySelectorAll(".shout").length).toBeGreaterThan(0),
+      );
 
       rerender(
         <svg role="img" aria-label="test">
