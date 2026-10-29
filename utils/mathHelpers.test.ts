@@ -11,6 +11,7 @@ import {
   generateData,
   interpolate,
   mod,
+  seededRandom,
   shuffle,
   total,
 } from "./mathHelpers";
@@ -309,5 +310,22 @@ describe("cryptoRandom", () => {
   it("does not return the same value on consecutive calls", () => {
     const values = new Set(Array.from({ length: 10 }, () => cryptoRandom()));
     expect(values.size).toBeGreaterThan(1);
+  });
+});
+
+describe("seededRandom", () => {
+  it("produces the same sequence for the same seed", () => {
+    const first = seededRandom(42);
+    const second = seededRandom(42);
+    expect([first(), first(), first()]).toEqual([second(), second(), second()]);
+  });
+
+  it("produces values in [0, 1)", () => {
+    const random = seededRandom(7);
+    for (let index = 0; index < 100; index += 1) {
+      const value = random();
+      expect(value).toBeGreaterThanOrEqual(0);
+      expect(value).toBeLessThan(1);
+    }
   });
 });
