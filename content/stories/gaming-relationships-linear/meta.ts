@@ -7,7 +7,6 @@ const meta: ArticleFrontmatter = {
   caption: "A mathematical ballad of love and hate.",
   featured_image_caption:
     "Murray explaining his relationship model. Image credit: Flight of the Conchords (HBO).",
-  tags: ["differential equations", "relationships", "modeling", "functions"],
 };
 
 export default meta;

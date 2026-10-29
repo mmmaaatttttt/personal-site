@@ -10,7 +10,6 @@ interface StoryCardProps {
   date: string;
   featured_image: string;
   slug: string;
-  tags: string[];
   title: string;
   timeToRead?: number;
   index?: number;
@@ -22,7 +21,6 @@ const StoryCard: FC<StoryCardProps> = ({
   date,
   featured_image,
   slug,
-  tags,
   title,
   timeToRead,
   index = 0,
@@ -66,16 +64,6 @@ const StoryCard: FC<StoryCardProps> = ({
           <p className="text-sm leading-relaxed text-dark-gray">{caption}</p>
         </div>
       </Link>
-      <div className="flex flex-wrap justify-end gap-1">
-        {tags.map((tag) => (
-          <span
-            key={tag}
-            className="rounded-full bg-gray-400 px-2 py-0 text-[13px] font-medium italic text-white"
-          >
-            {tag}
-          </span>
-        ))}
-      </div>
     </div>
   );
 };

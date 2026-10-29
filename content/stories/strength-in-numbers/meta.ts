@@ -6,7 +6,6 @@ const meta: ArticleFrontmatter = {
   featured_image: "../../images/featured_images/strength_in_numbers.jpg",
   caption: "Exploring American voting trends in the 21st century.",
   featured_image_caption: "Image credit: SnapwireSnaps from Pixabay.",
-  tags: ["statistics", "civics", "voting"],
 };
 
 export default meta;

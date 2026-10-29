@@ -7,7 +7,6 @@ const meta: ArticleFrontmatter = {
   caption: "Using data to study what makes a wedding work.",
   featured_image_caption:
     "Four brides featured in an episode of four weddings. Image credit: TLC.",
-  tags: ["statistics", "game shows", "games", "relationships"],
 };
 
 export default meta;

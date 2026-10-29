@@ -7,7 +7,6 @@ const meta: ArticleFrontmatter = {
   caption: "Super Mario Wonder-ful mathematics.",
   featured_image_caption:
     "Mario can't contain his excitement about doing some math together.",
-  tags: ["probability", "games", "decision theory", "expected value"],
 };
 
 export default meta;

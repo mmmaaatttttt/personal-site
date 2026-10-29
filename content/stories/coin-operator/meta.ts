@@ -7,14 +7,6 @@ const meta: ArticleFrontmatter = {
   caption:
     "Investigating the presence of an infinite money machine in a popular puzzle game.",
   featured_image_caption: "Photo of the casino room in Blue Prince.",
-  tags: [
-    "games",
-    "statistics",
-    "probability",
-    "expected value",
-    "decision theory",
-    "dynamic programming",
-  ],
 };
 
 export default meta;

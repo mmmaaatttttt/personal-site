@@ -9,7 +9,6 @@ vi.mock("@/utils/content", () => ({
       title: "Test Story",
       caption: "A test",
       featured_image: "/img.jpg",
-      tags: [],
       timeToRead: 5,
     },
   ]),

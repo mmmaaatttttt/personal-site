@@ -26,7 +26,6 @@ const baseProps = {
   date: "January 2024",
   featured_image: "/images/test.jpg",
   slug: "test-story",
-  tags: ["math", "games"],
   title: "Test Story",
   timeToRead: 5,
   index: 0,
@@ -46,12 +45,6 @@ describe("StoryCard", () => {
       "href",
       "/stories/test-story",
     );
-  });
-
-  it("renders all tags", () => {
-    render(<StoryCard {...baseProps} />);
-    expect(screen.getByText("math")).toBeInTheDocument();
-    expect(screen.getByText("games")).toBeInTheDocument();
   });
 
   it("renders reading time when provided", () => {

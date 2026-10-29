@@ -29,7 +29,6 @@ vi.mock("@/utils/content", () => ({
     date: "June 2024",
     featured_image: "../../images/featured_images/latest.jpg",
     caption: "A caption for the latest story",
-    tags: [],
     timeToRead: 5,
   }),
 }));

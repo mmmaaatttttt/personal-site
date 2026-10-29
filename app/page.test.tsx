@@ -31,7 +31,6 @@ vi.mock("@/utils/content", () => ({
     caption: "A great caption",
     featured_image: "/images/latest.jpg",
     date: "2026-06-18",
-    tags: ["math"],
     timeToRead: 5,
   }),
 }));

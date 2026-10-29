@@ -8,12 +8,6 @@ const meta: ArticleFrontmatter = {
     "What does math have to say about a guy who'd rather not think about math?",
   featured_image_caption:
     "Comedian Chris Gethard, host of Beautiful / Anonymous. Image credit: NJ.com",
-  tags: [
-    "podcasts",
-    "statistics",
-    "machine learning",
-    "natural language processing",
-  ],
 };
 
 export default meta;

@@ -7,7 +7,6 @@ const meta: ArticleFrontmatter = {
   caption: "An interactive introduction to gerrymandering.",
   featured_image_caption:
     "A map of the United States. Image credit: John-Mark Smith on Unsplash.",
-  tags: ["geometry", "statistics", "civics", "modeling", "voting"],
 };
 
 export default meta;

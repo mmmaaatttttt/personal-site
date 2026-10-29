@@ -9,7 +9,6 @@ vi.mock("@/utils/content", () => ({
       date: "January 2024",
       rawDate: "2024-01-15",
       featured_image: "/img.jpg",
-      tags: [],
       timeToRead: 5,
     },
   ]),
