@@ -1,7 +1,7 @@
 import MainLayout from "@/components/layout/MainLayout";
 import { SITE_URL } from "@/lib/constants";
-import { getAllArticles, getMetadataOptions } from "@/utils/content";
-import ArticlesContent from "./ArticlesContent";
+import { getAllArticles, getStoryMap } from "@/utils/content";
+import ArticlesContent from "./components/ArticlesContent";
 
 export const metadata = {
   title: "Stories | Matt Lane",
@@ -12,11 +12,11 @@ export const metadata = {
 
 export default async function ArticlesPage() {
   const articles = await getAllArticles();
-  const { years, tags } = getMetadataOptions(articles);
+  const storyMap = getStoryMap(articles);
 
   return (
     <MainLayout>
-      <ArticlesContent articles={articles} years={years} tags={tags} />
+      <ArticlesContent articles={articles} storyMap={storyMap} />
     </MainLayout>
   );
 }

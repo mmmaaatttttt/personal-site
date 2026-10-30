@@ -7,8 +7,8 @@ import {
   getArticle,
   getArticleSlugs,
   getLatestStory,
-  getMetadataOptions,
-  jaccardDistance,
+  getRelatedArticles,
+  getStoryMap,
 } from "./content";
 
 vi.mock("node:fs", () => ({
@@ -16,6 +16,22 @@ vi.mock("node:fs", () => ({
     existsSync: vi.fn(),
     readFileSync: vi.fn(),
     readdirSync: vi.fn(),
+  },
+}));
+
+vi.mock("@/lib/storySimilarity.json", () => ({
+  default: {
+    stories: {
+      "test-story": {
+        position: [0.25, 0.75],
+        related: ["older-story", "gone"],
+      },
+      "older-story": { position: [1, 0], related: [] },
+    },
+    links: [
+      { source: "older-story", target: "test-story", score: 0.4 },
+      { source: "gone", target: "test-story", score: 0.3 },
+    ],
   },
 }));
 
@@ -30,7 +46,6 @@ const mockMetas: Record<string, import("./content").ArticleFrontmatter> = {
     featured_image: "/img/test.jpg",
     caption: "A test",
     featured_image_caption: "",
-    tags: ["math", "games"],
   },
   "older-story": {
     title: "Older Story",
@@ -38,7 +53,6 @@ const mockMetas: Record<string, import("./content").ArticleFrontmatter> = {
     featured_image: "/img/older.jpg",
     caption: "An older test",
     featured_image_caption: "",
-    tags: ["math"],
   },
 };
 
@@ -63,44 +77,6 @@ beforeEach(() => {
   vi.mocked(fs.readdirSync).mockReturnValue(
     asDirents([mockDirent("test-story")]),
   );
-});
-
-describe("jaccardDistance", () => {
-  it("returns 0 for identical arrays", () => {
-    expect(jaccardDistance(["a", "b", "c"], ["a", "b", "c"])).toBe(0);
-  });
-
-  it("returns 1 for completely disjoint arrays", () => {
-    expect(jaccardDistance(["a", "b"], ["c", "d"])).toBe(1);
-  });
-
-  it("returns 1 for two empty arrays", () => {
-    expect(jaccardDistance([], [])).toBe(1);
-  });
-
-  it("returns 0.5 for half-overlapping arrays", () => {
-    // intersection {a}, union {a, b} → distance = 1 - 1/2 = 0.5
-    expect(jaccardDistance(["a", "b"], ["a"])).toBe(0.5);
-  });
-
-  it("returns a value between 0 and 1 for partial overlap", () => {
-    const d = jaccardDistance(
-      ["math", "probability", "games"],
-      ["games", "politics"],
-    );
-    expect(d).toBeGreaterThan(0);
-    expect(d).toBeLessThan(1);
-  });
-
-  it("is symmetric", () => {
-    const a = ["math", "probability"];
-    const b = ["games", "probability"];
-    expect(jaccardDistance(a, b)).toBe(jaccardDistance(b, a));
-  });
-
-  it("returns 0 when one array is a subset of the other (same elements)", () => {
-    expect(jaccardDistance(["a"], ["a", "a"])).toBe(0);
-  });
 });
 
 describe("estimateReadingTime", () => {
@@ -176,7 +152,6 @@ describe("getAllArticles", () => {
     expect(articles[0]).toMatchObject({
       slug: "test-story",
       title: "Test Story",
-      tags: ["math", "games"],
       timeToRead: expect.any(Number),
     });
   });
@@ -198,22 +173,36 @@ describe("getLatestStory", () => {
   });
 });
 
-describe("getMetadataOptions", () => {
-  it("extracts unique sorted tags", () => {
-    const articles = [
-      { tags: ["math", "games"], date: "2024-01-01" },
-      { tags: ["games", "politics"], date: "2023-06-01" },
-    ] as unknown as ArticleMeta[];
-    const { tags } = getMetadataOptions(articles);
-    expect(tags).toEqual(["games", "math", "politics"]);
+describe("getRelatedArticles", () => {
+  const articles = [
+    { slug: "test-story" },
+    { slug: "older-story" },
+  ] as unknown as ArticleMeta[];
+
+  it("returns related articles in ranked order, skipping unknown slugs", () => {
+    expect(getRelatedArticles("test-story", articles)).toEqual([
+      { slug: "older-story" },
+    ]);
   });
 
-  it("extracts unique years sorted descending", () => {
+  it("returns an empty list for a story without similarity data", () => {
+    expect(getRelatedArticles("missing-story", articles)).toEqual([]);
+  });
+});
+
+describe("getStoryMap", () => {
+  it("positions known articles and keeps links between them", () => {
     const articles = [
-      { tags: [], date: "2023-07-01" },
-      { tags: [], date: "2024-07-01" },
+      { slug: "test-story" },
+      { slug: "older-story" },
+      { slug: "missing-story" },
     ] as unknown as ArticleMeta[];
-    const { years } = getMetadataOptions(articles);
-    expect(years).toEqual([2024, 2023]);
+    expect(getStoryMap(articles)).toEqual({
+      points: [
+        { article: { slug: "test-story" }, x: 0.25, y: 0.75 },
+        { article: { slug: "older-story" }, x: 1, y: 0 },
+      ],
+      links: [{ source: "older-story", target: "test-story", score: 0.4 }],
+    });
   });
 });

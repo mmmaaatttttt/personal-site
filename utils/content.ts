@@ -1,6 +1,7 @@
 import fs from "node:fs";
 import path from "node:path";
 import matter from "gray-matter";
+import storySimilarity from "@/lib/storySimilarity.json";
 import { loadMeta } from "@/utils/loadMeta";
 
 const ARTICLES_DIR = path.join(process.cwd(), "content", "stories");
@@ -11,7 +12,6 @@ export interface ArticleFrontmatter {
   featured_image: string;
   caption: string;
   featured_image_caption: string;
-  tags: string[];
   outline?: Array<{ title: string; hash: string }>;
 }
 
@@ -101,30 +101,49 @@ export async function getLatestStory(): Promise<ArticleMeta> {
   return articles[0];
 }
 
-/**
- * Get unique years and tags from all articles for filtering.
- */
-export function getMetadataOptions(articles: ArticleMeta[]) {
-  const years = Array.from(
-    new Set(articles.map((a) => new Date(a.date).getFullYear())),
-  ).sort((a, b) => b - a);
-
-  const tags = Array.from(new Set(articles.flatMap((a) => a.tags))).sort();
-
-  return { years, tags };
+export function getRelatedArticles(
+  slug: string,
+  articles: ArticleMeta[],
+): ArticleMeta[] {
+  const stories: Record<string, { related: string[] } | undefined> =
+    storySimilarity.stories;
+  const relatedSlugs = stories[slug]?.related ?? [];
+  return relatedSlugs.flatMap((relatedSlug) =>
+    articles.filter((article) => article.slug === relatedSlug),
+  );
 }
 
-/**
- * Compute Jaccard distance between two arrays of strings.
- * Used for finding related articles by tag similarity.
- */
-export function jaccardDistance(a: string[], b: string[]): number {
-  const setA = new Set(a);
-  const setB = new Set(b);
-  const intersection = new Set([...setA].filter((x) => setB.has(x)));
-  const union = new Set([...setA, ...setB]);
-  if (union.size === 0) return 1;
-  return 1 - intersection.size / union.size;
+export interface StoryMapPoint {
+  article: ArticleMeta;
+  x: number;
+  y: number;
+}
+
+export interface StoryMapLink {
+  source: string;
+  target: string;
+  score: number;
+}
+
+export interface StoryMap {
+  points: StoryMapPoint[];
+  links: StoryMapLink[];
+}
+
+export function getStoryMap(articles: ArticleMeta[]): StoryMap {
+  const stories: Record<string, { position: number[] } | undefined> =
+    storySimilarity.stories;
+  const points = articles.flatMap((article) => {
+    const story = stories[article.slug];
+    if (!story) return [];
+    const [x, y] = story.position;
+    return [{ article, x, y }];
+  });
+  const known = new Set(points.map(({ article }) => article.slug));
+  const links = storySimilarity.links.filter(
+    ({ source, target }) => known.has(source) && known.has(target),
+  );
+  return { points, links };
 }
 
 /**

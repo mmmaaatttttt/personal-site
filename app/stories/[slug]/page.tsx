@@ -14,7 +14,7 @@ import {
   getAllArticles,
   getArticle,
   getArticleSlugs,
-  jaccardDistance,
+  getRelatedArticles,
 } from "@/utils/content";
 import { getStoryHeadings } from "@/utils/headings";
 import { renderMarkdownLinks } from "@/utils/renderHelpers";
@@ -74,7 +74,6 @@ export async function generateMetadata({ params }: PageProps) {
       title: `${frontmatter.title} | Matt Lane`,
       description: frontmatter.caption,
       authors: [{ name: "Matt Lane", url: SITE_URL }],
-      keywords: frontmatter.tags,
       alternates: { canonical: `${SITE_URL}/stories/${slug}` },
       openGraph: {
         title: `${frontmatter.title} | Matt Lane`,
@@ -122,12 +121,7 @@ export default async function ArticlePage({ params }: PageProps) {
   const allArticles = await getAllArticles();
   const timeToRead = allArticles.find((a) => a.slug === slug)?.timeToRead ?? 5;
 
-  const relatedArticles = allArticles
-    .filter((a) => a.slug !== slug)
-    .map((a) => ({ ...a, distance: jaccardDistance(a.tags, frontmatter.tags) }))
-    .filter((a) => a.distance < 1)
-    .sort((a, b) => a.distance - b.distance)
-    .slice(0, 3);
+  const relatedArticles = getRelatedArticles(slug, allArticles);
 
   const githubUrl = `https://github.com/mmmaaatttttt/personal-site/blob/main/content/stories/${slug}/index.mdx`;
   const linkedinUrl = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(`${SITE_URL}/stories/${slug}`)}`;
@@ -244,7 +238,6 @@ export default async function ArticlePage({ params }: PageProps) {
                   date={a.date}
                   featured_image={a.featured_image}
                   slug={a.slug}
-                  tags={a.tags ? [...a.tags].sort() : []}
                   title={a.title}
                   timeToRead={a.timeToRead}
                   index={i}
