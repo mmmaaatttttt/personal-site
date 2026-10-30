@@ -1,3 +1,13 @@
+export function datelineFor({
+  date,
+  timeToRead,
+}: {
+  date: string;
+  timeToRead?: number;
+}): string {
+  return timeToRead ? `${date} - ${timeToRead} minute read` : date;
+}
+
 export function formatCurrency(
   value: number,
   maximumFractionDigits = 0,
