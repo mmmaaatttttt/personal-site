@@ -41,7 +41,13 @@ MDX files are real modules — `import` statements work normally and are resolve
 
 Run `npm run new-story <slug>` to generate the skeleton for a new story. It creates `content/stories/<slug>/{meta.ts,index.mdx}` and `e2e/screenshots/<slug>.spec.ts`, and registers the slug in the `storyModules` map in `app/stories/[slug]/page.tsx`. The sitemap, RSS feed, and `/stories` list page all pick up the new slug automatically since they're driven by `getArticleSlugs`/`getAllArticles` — no separate registration needed there.
 
-Still manual after running it: dropping the real featured image into `public/images/featured_images/`, writing the real title/caption/tags/content, and — if the story has drag/slider interactions — hand-writing `e2e/interaction/<slug>.spec.ts` (this isn't scaffolded since it depends on the story's specific interactive elements).
+Still manual after running it: dropping the real featured image into `public/images/featured_images/`, writing the real title/caption/content, running `npm run embed-stories` once the content is written, and — if the story has drag/slider interactions — hand-writing `e2e/interaction/<slug>.spec.ts` (this isn't scaffolded since it depends on the story's specific interactive elements).
+
+### Story similarity (related stories + `/stories` map)
+
+There are no tags. `scripts/embed-stories.ts` extracts each story's prose with `extractProse` (it compiles the MDX with Next's own MDX compiler via `next/dist/build/swc` and keeps only the text inside rendered elements — an internal Next API, so re-check it after Next upgrades), embeds it with a pinned local model (`Xenova/bge-base-en-v1.5` via `@huggingface/transformers`), then writes `lib/storySimilarity.json`: per story, a content hash, the top 3 related stories (the "you may like" list), and a UMAP position (seeded, so identical input gives identical output); plus `links`, every pair of stories whose similarity clears a fixed cutoff. Links are symmetric by construction and drive the `/stories` bubble map's threads and springs — don't swap them for the top-3 lists, which aren't mutual. The JSON is committed; builds never run the model. `utils/similarity.test.ts` fails when any story's extracted prose no longer matches its committed hash — fix it by re-running `npm run embed-stories` (~2 minutes) and committing the JSON, never by editing hashes by hand.
+
+The bubble map (`app/stories/components/BubbleMap/`) is a d3-force simulation whose per-tick logic lives in custom forces inside `createBubbleSimulation`, so `simulation.tick()` exercises it synchronously in tests. With `prefers-reduced-motion` it settles synchronously with no animation; the Argos snapshot relies on that for a deterministic layout. Never reorder bubble DOM nodes to change paint order — moving a focused element drops keyboard focus and breaks tab order.
 
 ### Story metadata
 
@@ -181,6 +187,19 @@ MDX files are server components. Any component used directly in MDX can only rec
 If a component needs a function prop (e.g. `getTooltipData`), wrap it in a `"use client"` component that defines the function internally. The MDX calls the wrapper with only serializable props. `BaMultiBarGraph` is the reference example.
 
 **ODE / diff-eq stories follow the same pattern.** The `visData` objects in gaming-relationships stories contain `diffEqs: DiffEq[]` (functions). The solution is a thin `"use client"` wrapper per story (e.g. `LinearGamingRelationships`) that imports its data file internally and accepts only a serializable `idx: number` from MDX.
+
+### Where components live
+
+Placement follows who uses the component:
+
+| Used by                                   | Location                                         |
+| ----------------------------------------- | ------------------------------------------------ |
+| One story                                 | `content/stories/<slug>/components/<Name>/`      |
+| Two or more stories                       | `components/story/shared/<Name>/`                |
+| One page (e.g. the `/stories` index)      | `app/<route>/components/<Name>/`                 |
+| Site-wide UI (layout, icons, ui)          | `components/<area>/<Name>/`                      |
+
+`app/<route>/` itself holds only Next route files (`page.tsx`, `layout.tsx`, route handlers) and their tests — never a component, hook, or `utils.ts`. Any component with a test gets its own folder (`<Name>/index.tsx` + `<Name>.test.tsx`), with its private hook, `utils.ts`, `constants.ts`, and single-file sub-components as siblings inside that folder (see the OrchardGame example below). A sub-component that is itself multi-file gets its own folder at the same level as its parent rather than nested inside it — e.g. `app/stories/components/BubbleMap/` sits beside `app/stories/components/ArticlesContent/`. Only untested presentational files (e.g. icons) may stay flat.
 
 ### Component decomposition
 
