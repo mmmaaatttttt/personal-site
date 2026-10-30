@@ -1,0 +1,230 @@
+{
+  "model": "Xenova/bge-base-en-v1.5",
+  "revision": "4d6cd88e18e51a5e020c2c305726d76ada9c03cf",
+  "stories": {
+    "beautiful-analysis": {
+      "contentHash": "726d9179746778ddd42f69b3003bf0bb322e7517683ba588075493683ea23f3e",
+      "position": [0.9861, 0.6358],
+      "related": ["four-weddings", "dishing-on-petrie", "strength-in-numbers"]
+    },
+    "bettor-up": {
+      "contentHash": "784c9c403a7ab7aad1ed60947798e0c29b47044da7deb07718a686c4288150e2",
+      "position": [0.0614, 0.818],
+      "related": ["coin-operator", "fairest-of-them-all", "dailemma"]
+    },
+    "coin-operator": {
+      "contentHash": "314207a3f097ea627061fab20d3864bedebeecbe5bb29ec726db4e6b7fb3d463",
+      "position": [0.2637, 1],
+      "related": [
+        "standee-and-deliver",
+        "harvesting-wins",
+        "fairest-of-them-all"
+      ]
+    },
+    "dailemma": {
+      "contentHash": "7d21562b7c7cb0972ef891f6098c3e3901b06c24eaa3af6357671d72c12ca531",
+      "position": [0, 0.5051],
+      "related": ["dailemma-2", "bettor-up", "dont-produce-be-happy"]
+    },
+    "dailemma-2": {
+      "contentHash": "a96c81c97e94ab7f37464d90fdde636f310fd20f101b7fb41819d1708fb45f69",
+      "position": [0.0795, 0.4281],
+      "related": ["dailemma", "income-inequality", "dont-produce-be-happy"]
+    },
+    "dishing-on-petrie": {
+      "contentHash": "c41b94765e4aefa301c9679a98fd8a5172bd771af453ebb7c51c167bfb89cb66",
+      "position": [0.8328, 0.5554],
+      "related": [
+        "beautiful-analysis",
+        "strength-in-numbers",
+        "gaming-relationships-linear"
+      ]
+    },
+    "dont-produce-be-happy": {
+      "contentHash": "2b0213bf721196db427152144ac7614ba88476350bfa19bd656e984bf2f667cf",
+      "position": [0.2417, 0.3748],
+      "related": ["warming-dots", "income-inequality", "dailemma-2"]
+    },
+    "fairest-of-them-all": {
+      "contentHash": "16bf9d60497d2b9ace19b0c1f1bf9f8987ce5d32ea3ef6583187850fc14206f2",
+      "position": [0.2084, 0.8086],
+      "related": ["income-inequality", "coin-operator", "bettor-up"]
+    },
+    "four-weddings": {
+      "contentHash": "a34ef1550f69056277a1e3319d0819099f0925d4164e34c5501e6f704b521f01",
+      "position": [0.8602, 0.7743],
+      "related": ["beautiful-analysis", "strength-in-numbers", "coin-operator"]
+    },
+    "gaming-relationships-linear": {
+      "contentHash": "5a2306cc998dfd833e909d10a18a605b46f52c54a36597b175713bf09fe59bcc",
+      "position": [0.677, 0],
+      "related": [
+        "gaming-relationships-nonlinear",
+        "keeping-distances",
+        "warming-dots"
+      ]
+    },
+    "gaming-relationships-nonlinear": {
+      "contentHash": "e57a8426095cb7cb6a191d53532926c1be5b29fff0dc8b1e4e0192800e050fd0",
+      "position": [0.609, 0.1317],
+      "related": [
+        "gaming-relationships-linear",
+        "warming-dots",
+        "keeping-distances"
+      ]
+    },
+    "harvesting-wins": {
+      "contentHash": "4e95fc7d5b618671af227590d5ba54af720030a75f928d31c173fb01e6e8b824",
+      "position": [0.5259, 0.9543],
+      "related": ["coin-operator", "standee-and-deliver", "fairest-of-them-all"]
+    },
+    "income-inequality": {
+      "contentHash": "d3973bff492574b02b66f12bc24ef83ea994f6e0c31befef92f31bc0203826b7",
+      "position": [0.2289, 0.5455],
+      "related": ["dont-produce-be-happy", "fairest-of-them-all", "dailemma-2"]
+    },
+    "keeping-distances": {
+      "contentHash": "d351888a19ab030abe7f8ff978cec8b8de41e812369dc428a570bd6d22b55f55",
+      "position": [0.8021, 0.1584],
+      "related": [
+        "mind-the-gerrymandered-gap",
+        "gaming-relationships-linear",
+        "gaming-relationships-nonlinear"
+      ]
+    },
+    "mind-the-gerrymandered-gap": {
+      "contentHash": "fbd17f62fe7144d36c4045ca85c7554d025543483284e9839893fb95b7a21f27",
+      "position": [0.9442, 0.3083],
+      "related": [
+        "strength-in-numbers",
+        "keeping-distances",
+        "fairest-of-them-all"
+      ]
+    },
+    "standee-and-deliver": {
+      "contentHash": "c40cb0208f727768bd8386868b989710ebee07b449b0e4adeaec42618afd36f4",
+      "position": [0.3941, 0.9711],
+      "related": ["coin-operator", "harvesting-wins", "fairest-of-them-all"]
+    },
+    "strength-in-numbers": {
+      "contentHash": "17d26840ebf3e828792f4101948c06e84bb3f74070d8d820d1aa329ca66bb324",
+      "position": [1, 0.4715],
+      "related": [
+        "mind-the-gerrymandered-gap",
+        "four-weddings",
+        "dishing-on-petrie"
+      ]
+    },
+    "warming-dots": {
+      "contentHash": "e17c633e83a3bbbf37cef4c7c1f73544c3e4e6db57a1a0935e6dc4a3c37e26a9",
+      "position": [0.3957, 0.2215],
+      "related": [
+        "dont-produce-be-happy",
+        "gaming-relationships-nonlinear",
+        "gaming-relationships-linear"
+      ]
+    }
+  },
+  "links": [
+    {
+      "source": "beautiful-analysis",
+      "target": "dishing-on-petrie",
+      "score": 0.159
+    },
+    {
+      "source": "beautiful-analysis",
+      "target": "four-weddings",
+      "score": 0.197
+    },
+    {
+      "source": "bettor-up",
+      "target": "coin-operator",
+      "score": 0.18
+    },
+    {
+      "source": "bettor-up",
+      "target": "dailemma",
+      "score": 0.102
+    },
+    {
+      "source": "bettor-up",
+      "target": "fairest-of-them-all",
+      "score": 0.18
+    },
+    {
+      "source": "coin-operator",
+      "target": "fairest-of-them-all",
+      "score": 0.192
+    },
+    {
+      "source": "coin-operator",
+      "target": "harvesting-wins",
+      "score": 0.367
+    },
+    {
+      "source": "coin-operator",
+      "target": "standee-and-deliver",
+      "score": 0.436
+    },
+    {
+      "source": "dailemma",
+      "target": "dailemma-2",
+      "score": 0.797
+    },
+    {
+      "source": "dailemma-2",
+      "target": "dont-produce-be-happy",
+      "score": 0.117
+    },
+    {
+      "source": "dailemma-2",
+      "target": "income-inequality",
+      "score": 0.135
+    },
+    {
+      "source": "dont-produce-be-happy",
+      "target": "income-inequality",
+      "score": 0.263
+    },
+    {
+      "source": "dont-produce-be-happy",
+      "target": "warming-dots",
+      "score": 0.478
+    },
+    {
+      "source": "fairest-of-them-all",
+      "target": "income-inequality",
+      "score": 0.209
+    },
+    {
+      "source": "fairest-of-them-all",
+      "target": "standee-and-deliver",
+      "score": 0.126
+    },
+    {
+      "source": "gaming-relationships-linear",
+      "target": "gaming-relationships-nonlinear",
+      "score": 0.704
+    },
+    {
+      "source": "gaming-relationships-nonlinear",
+      "target": "warming-dots",
+      "score": 0.21
+    },
+    {
+      "source": "harvesting-wins",
+      "target": "standee-and-deliver",
+      "score": 0.301
+    },
+    {
+      "source": "keeping-distances",
+      "target": "mind-the-gerrymandered-gap",
+      "score": 0.214
+    },
+    {
+      "source": "mind-the-gerrymandered-gap",
+      "target": "strength-in-numbers",
+      "score": 0.435
+    }
+  ]
+}
