@@ -9,6 +9,7 @@ const nextConfig: NextConfig = {
   },
   output: "export",
   trailingSlash: true,
+  agentRules: false,
   images: {
     loader: "custom",
     loaderFile: "./lib/imageLoader.ts",

@@ -3,6 +3,7 @@ import Link from "next/link";
 import type { CSSProperties, FC } from "react";
 import placeholders from "@/lib/imagePlaceholders.json";
 import { cn } from "@/lib/utils";
+import { datelineFor } from "@/utils/formatHelpers";
 import { normalizeImagePath } from "@/utils/stringHelpers";
 
 interface StoryCardProps {
@@ -10,7 +11,6 @@ interface StoryCardProps {
   date: string;
   featured_image: string;
   slug: string;
-  tags: string[];
   title: string;
   timeToRead?: number;
   index?: number;
@@ -22,7 +22,6 @@ const StoryCard: FC<StoryCardProps> = ({
   date,
   featured_image,
   slug,
-  tags,
   title,
   timeToRead,
   index = 0,
@@ -61,21 +60,11 @@ const StoryCard: FC<StoryCardProps> = ({
             {title}
           </h4>
           <h6 className="mb-4 text-sm font-serif font-bold text-gray-400">
-            {date} {timeToRead ? `- ${timeToRead} minute read` : ""}
+            {datelineFor({ date, timeToRead })}
           </h6>
           <p className="text-sm leading-relaxed text-dark-gray">{caption}</p>
         </div>
       </Link>
-      <div className="flex flex-wrap justify-end gap-1">
-        {tags.map((tag) => (
-          <span
-            key={tag}
-            className="rounded-full bg-gray-400 px-2 py-0 text-[13px] font-medium italic text-white"
-          >
-            {tag}
-          </span>
-        ))}
-      </div>
     </div>
   );
 };

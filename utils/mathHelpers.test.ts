@@ -3,14 +3,20 @@ import { describe, expect, it, vi } from "vitest";
 import {
   average,
   calculateWastedVotes,
+  centerAndNormalize,
   choices,
   clamp,
   combinations,
   cryptoRandom,
+  dot,
   euclideanDistance,
   generateData,
   interpolate,
+  meanVector,
   mod,
+  normalizeVector,
+  scaleToUnitSquare,
+  seededRandom,
   shuffle,
   total,
 } from "./mathHelpers";
@@ -309,5 +315,80 @@ describe("cryptoRandom", () => {
   it("does not return the same value on consecutive calls", () => {
     const values = new Set(Array.from({ length: 10 }, () => cryptoRandom()));
     expect(values.size).toBeGreaterThan(1);
+  });
+});
+
+describe("seededRandom", () => {
+  it("produces the same sequence for the same seed", () => {
+    const first = seededRandom(42);
+    const second = seededRandom(42);
+    expect([first(), first(), first()]).toEqual([second(), second(), second()]);
+  });
+
+  it("produces values in [0, 1)", () => {
+    const random = seededRandom(7);
+    for (let index = 0; index < 100; index += 1) {
+      const value = random();
+      expect(value).toBeGreaterThanOrEqual(0);
+      expect(value).toBeLessThan(1);
+    }
+  });
+});
+
+describe("vector helpers", () => {
+  it("computes dot products", () => {
+    expect(dot([1, 2, 3], [4, 5, 6])).toBe(32);
+  });
+
+  it("normalizes to unit length", () => {
+    expect(normalizeVector([3, 4])).toEqual([0.6, 0.8]);
+  });
+
+  it("averages vectors component-wise", () => {
+    expect(
+      meanVector([
+        [1, 2],
+        [3, 6],
+      ]),
+    ).toEqual([2, 4]);
+  });
+
+  it("centers vectors on their mean and normalizes them", () => {
+    const centered = centerAndNormalize([
+      [2, 1],
+      [0, 1],
+    ]);
+    expect(centered).toEqual([
+      [1, 0],
+      [-1, 0],
+    ]);
+  });
+});
+
+describe("scaleToUnitSquare", () => {
+  it("scales each axis independently into [0, 1]", () => {
+    expect(
+      scaleToUnitSquare([
+        [2, 10],
+        [4, 30],
+        [3, 20],
+      ]),
+    ).toEqual([
+      [0, 0],
+      [1, 1],
+      [0.5, 0.5],
+    ]);
+  });
+
+  it("does not divide by zero when every point shares a coordinate", () => {
+    expect(
+      scaleToUnitSquare([
+        [5, 5],
+        [5, 5],
+      ]),
+    ).toEqual([
+      [0, 0],
+      [0, 0],
+    ]);
   });
 });

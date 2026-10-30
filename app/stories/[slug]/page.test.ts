@@ -21,7 +21,7 @@ vi.mock("@/utils/content", () => ({
   getAllArticles: vi.fn().mockResolvedValue([]),
   getArticle: vi.fn(),
   getArticleSlugs: vi.fn().mockReturnValue([]),
-  jaccardDistance: vi.fn().mockReturnValue(1),
+  getRelatedArticles: vi.fn().mockReturnValue([]),
 }));
 vi.mock("@/utils/headings", () => ({
   getStoryHeadings: vi.fn().mockReturnValue([]),
@@ -89,7 +89,7 @@ import {
   getAllArticles,
   getArticle,
   getArticleSlugs,
-  jaccardDistance,
+  getRelatedArticles,
 } from "@/utils/content";
 import ArticlePage, { generateMetadata, generateStaticParams } from "./page";
 
@@ -98,7 +98,6 @@ const mockFrontmatter = {
   caption: "A test caption",
   featured_image: "../../images/featured_images/test.jpg",
   date: "2024-01-01",
-  tags: ["math"],
   featured_image_caption: "Photo credit: someone",
 };
 
@@ -229,7 +228,6 @@ describe("ArticlePage", () => {
         caption: "cap",
         date: "2024-01-01",
         featured_image: "/img.jpg",
-        tags: ["math"],
         timeToRead: 7,
       },
     ] as unknown as Awaited<ReturnType<typeof getAllArticles>>);
@@ -244,16 +242,14 @@ describe("ArticlePage", () => {
     expect(result).toBeTruthy();
   });
 
-  it("renders related articles when jaccard distance < 1", async () => {
-    vi.mocked(jaccardDistance).mockReturnValue(0.5);
-    vi.mocked(getAllArticles).mockResolvedValueOnce([
+  it("renders related articles returned by getRelatedArticles", async () => {
+    const articles = [
       {
         slug: "beautiful-analysis",
         title: "Unported",
         caption: "cap",
         date: "2024-01-01",
         featured_image: "/img.jpg",
-        tags: ["math"],
         timeToRead: 5,
       },
       {
@@ -262,7 +258,6 @@ describe("ArticlePage", () => {
         caption: "cap",
         date: "2024-02-01",
         featured_image: "/img.jpg",
-        tags: ["math"],
         timeToRead: 3,
       },
       {
@@ -271,10 +266,11 @@ describe("ArticlePage", () => {
         caption: "cap",
         date: "2024-03-01",
         featured_image: "/img.jpg",
-        tags: null as unknown as string[],
         timeToRead: 4,
       },
-    ] as unknown as Awaited<ReturnType<typeof getAllArticles>>);
+    ] as unknown as Awaited<ReturnType<typeof getAllArticles>>;
+    vi.mocked(getAllArticles).mockResolvedValueOnce(articles);
+    vi.mocked(getRelatedArticles).mockReturnValueOnce(articles.slice(1));
     vi.mocked(getArticle).mockResolvedValue({
       frontmatter: mockFrontmatter,
       slug: "beautiful-analysis",
@@ -284,7 +280,9 @@ describe("ArticlePage", () => {
       params: Promise.resolve({ slug: "beautiful-analysis" }),
     });
     expect(result).toBeTruthy();
-    // reset jaccardDistance back to default
-    vi.mocked(jaccardDistance).mockReturnValue(1);
+    expect(getRelatedArticles).toHaveBeenCalledWith(
+      "beautiful-analysis",
+      articles,
+    );
   });
 });

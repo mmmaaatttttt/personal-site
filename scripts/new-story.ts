@@ -36,7 +36,6 @@ const meta: ArticleFrontmatter = {
   featured_image: "../../images/featured_images/${imageName}.jpg",
   caption: "TBD",
   featured_image_caption: "TBD",
-  tags: [],
 };
 
 export default meta;
@@ -168,7 +167,10 @@ function main(): void {
   console.log(`  registered in app/stories/[slug]/page.test.ts`);
   console.log("");
   console.log(
-    `Still needed: public/images/featured_images/${slug.replace(/-/g, "_")}.jpg (referenced from meta.ts), and real title/caption/tags/content.`,
+    `Still needed: public/images/featured_images/${slug.replace(/-/g, "_")}.jpg (referenced from meta.ts), and real title/caption/content.`,
+  );
+  console.log(
+    "Once the content is written, run `npm run embed-stories` and commit lib/storySimilarity.json — the similarity test fails until you do.",
   );
   console.log(
     `If the story needs a bespoke interaction test, add one by hand at e2e/interaction/${slug}.spec.ts (see e2e/interaction/dragTo.ts for the shared drag helper) — this is not scaffolded since it depends on the story's specific interactive elements.`,

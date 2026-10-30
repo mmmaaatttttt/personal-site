@@ -9,9 +9,9 @@ vi.mock("@/components/layout/MainLayout", () => ({
 }));
 vi.mock("@/utils/content", () => ({
   getAllArticles: vi.fn().mockResolvedValue([]),
-  getMetadataOptions: vi.fn().mockReturnValue({ years: [], tags: [] }),
+  getStoryMap: vi.fn().mockReturnValue({ points: [], links: [] }),
 }));
-vi.mock("./ArticlesContent", () => ({
+vi.mock("./components/ArticlesContent", () => ({
   default: () => <div data-testid="articles-content" />,
 }));
 

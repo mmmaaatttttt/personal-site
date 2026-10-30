@@ -8,7 +8,6 @@ const meta: ArticleFrontmatter = {
     "On the intersection between Google maps, spelling mistakes, and prime numbers.",
   featured_image_caption:
     "View from the top of a taxi. Photo by Clem Onojeghuo on Unsplash.",
-  tags: ["geometry", "number theory", "functions"],
 };
 
 export default meta;
