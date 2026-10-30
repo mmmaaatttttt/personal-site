@@ -166,3 +166,39 @@ export function seededRandom(seed: number): () => number {
     return ((value ^ (value >>> 14)) >>> 0) / 4294967296;
   };
 }
+
+export type Vector = number[];
+
+export function dot(first: Vector, second: Vector): number {
+  return first.reduce((sum, value, index) => sum + value * second[index], 0);
+}
+
+export function normalizeVector(vector: Vector): Vector {
+  const length = Math.hypot(...vector);
+  return vector.map((value) => value / length);
+}
+
+export function meanVector(vectors: Vector[]): Vector {
+  return vectors[0].map((_, index) =>
+    average(vectors, (vector) => vector[index]),
+  );
+}
+
+export function centerAndNormalize(vectors: Vector[]): Vector[] {
+  const mean = meanVector(vectors);
+  return vectors.map((vector) =>
+    normalizeVector(vector.map((value, index) => value - mean[index])),
+  );
+}
+
+export function scaleToUnitSquare(
+  points: [number, number][],
+): [number, number][] {
+  const xs = points.map(([x]) => x);
+  const ys = points.map(([, y]) => y);
+  const minX = Math.min(...xs);
+  const minY = Math.min(...ys);
+  const spanX = Math.max(...xs) - minX || 1;
+  const spanY = Math.max(...ys) - minY || 1;
+  return points.map(([x, y]) => [(x - minX) / spanX, (y - minY) / spanY]);
+}

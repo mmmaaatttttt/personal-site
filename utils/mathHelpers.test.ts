@@ -3,14 +3,19 @@ import { describe, expect, it, vi } from "vitest";
 import {
   average,
   calculateWastedVotes,
+  centerAndNormalize,
   choices,
   clamp,
   combinations,
   cryptoRandom,
+  dot,
   euclideanDistance,
   generateData,
   interpolate,
+  meanVector,
   mod,
+  normalizeVector,
+  scaleToUnitSquare,
   seededRandom,
   shuffle,
   total,
@@ -327,5 +332,63 @@ describe("seededRandom", () => {
       expect(value).toBeGreaterThanOrEqual(0);
       expect(value).toBeLessThan(1);
     }
+  });
+});
+
+describe("vector helpers", () => {
+  it("computes dot products", () => {
+    expect(dot([1, 2, 3], [4, 5, 6])).toBe(32);
+  });
+
+  it("normalizes to unit length", () => {
+    expect(normalizeVector([3, 4])).toEqual([0.6, 0.8]);
+  });
+
+  it("averages vectors component-wise", () => {
+    expect(
+      meanVector([
+        [1, 2],
+        [3, 6],
+      ]),
+    ).toEqual([2, 4]);
+  });
+
+  it("centers vectors on their mean and normalizes them", () => {
+    const centered = centerAndNormalize([
+      [2, 1],
+      [0, 1],
+    ]);
+    expect(centered).toEqual([
+      [1, 0],
+      [-1, 0],
+    ]);
+  });
+});
+
+describe("scaleToUnitSquare", () => {
+  it("scales each axis independently into [0, 1]", () => {
+    expect(
+      scaleToUnitSquare([
+        [2, 10],
+        [4, 30],
+        [3, 20],
+      ]),
+    ).toEqual([
+      [0, 0],
+      [1, 1],
+      [0.5, 0.5],
+    ]);
+  });
+
+  it("does not divide by zero when every point shares a coordinate", () => {
+    expect(
+      scaleToUnitSquare([
+        [5, 5],
+        [5, 5],
+      ]),
+    ).toEqual([
+      [0, 0],
+      [0, 0],
+    ]);
   });
 });
