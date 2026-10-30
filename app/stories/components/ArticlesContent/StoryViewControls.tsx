@@ -65,7 +65,6 @@ const StoryViewControls: FC<StoryViewControlsProps> = ({
         <button
           key={option.view}
           type="button"
-          data-view={option.view}
           aria-label={label}
           aria-pressed={selected}
           onClick={() => onSelect?.(option.view)}

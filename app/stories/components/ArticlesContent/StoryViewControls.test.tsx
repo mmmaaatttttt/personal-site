@@ -29,14 +29,10 @@ describe("StoryViewControls", () => {
   });
 
   it("names and draws the reversed direction for the active view", () => {
-    const { container } = renderControls({ view: "date", reversed: true });
+    renderControls({ view: "date", reversed: true });
+    const button = screen.getByRole("button", { name: "Oldest first" });
     expect(
-      screen.getByRole("button", { name: "Oldest first" }),
-    ).toBeInTheDocument();
-    expect(
-      container.querySelector(
-        '[data-view="date"] svg.lucide-calendar-arrow-up',
-      ),
+      button.querySelector("svg.lucide-calendar-arrow-up"),
     ).toBeInTheDocument();
   });
 
