@@ -3,6 +3,7 @@ import Link from "next/link";
 import type { CSSProperties, FC } from "react";
 import placeholders from "@/lib/imagePlaceholders.json";
 import { cn } from "@/lib/utils";
+import { datelineFor } from "@/utils/formatHelpers";
 import { normalizeImagePath } from "@/utils/stringHelpers";
 
 interface StoryCardProps {
@@ -59,7 +60,7 @@ const StoryCard: FC<StoryCardProps> = ({
             {title}
           </h4>
           <h6 className="mb-4 text-sm font-serif font-bold text-gray-400">
-            {date} {timeToRead ? `- ${timeToRead} minute read` : ""}
+            {datelineFor({ date, timeToRead })}
           </h6>
           <p className="text-sm leading-relaxed text-dark-gray">{caption}</p>
         </div>

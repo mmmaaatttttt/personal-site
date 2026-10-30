@@ -3,20 +3,16 @@ import { scaleLinear } from "d3-scale";
 import type { PointerEvent } from "react";
 import type { Point } from "@/types/geometry";
 import { clamp, interpolate } from "@/utils/mathHelpers";
+import { clientToSvgPoint } from "@/utils/svgHelpers";
 
 export const RESOLUTION = 200;
 const DEFAULT_DERIVATIVE_STEP_SIZE = 0.001;
 const INITIAL_VALUE = 0.5;
 
-// Starts flat, not diagonal — the diagonal trivially satisfies the
-// fixed-point equation everywhere, which would spuriously "cross" at
-// nearly every sampled point.
 export function createInitialBuckets(resolution: number): number[] {
   return Array.from({ length: resolution + 1 }, () => INITIAL_VALUE);
 }
 
-// Every write overwrites whatever was there, so the result stays
-// single-valued regardless of drag direction.
 export function paintSegment(
   buckets: number[],
   resolution: number,
@@ -80,14 +76,14 @@ export function toDomainCoords(
   xScale: ScaleLinear<number, number>,
   yScale: ScaleLinear<number, number>,
 ): { x: number; y: number } | null {
-  const svg = e.currentTarget.ownerSVGElement;
-  if (!svg) return null;
-  const ctm = svg.getScreenCTM();
-  if (!ctm) return null;
-  const svgX = (e.clientX - ctm.e) / ctm.a;
-  const svgY = (e.clientY - ctm.f) / ctm.d;
-  const x = xScale.invert(svgX);
-  const y = yScale.invert(svgY);
+  const point = clientToSvgPoint(
+    e.currentTarget.ownerSVGElement,
+    e.clientX,
+    e.clientY,
+  );
+  if (!point) return null;
+  const x = xScale.invert(point.x);
+  const y = yScale.invert(point.y);
   if (x < 0 || x > 1 || y < 0 || y > 1) return null;
   return { x, y };
 }

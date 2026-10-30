@@ -2,6 +2,7 @@
 
 import { type FC, type PointerEvent, useEffect, useRef, useState } from "react";
 import COLORS from "@/utils/styles";
+import { clientToSvgPoint } from "@/utils/svgHelpers";
 
 interface DraggableCircleProps {
   id: number;
@@ -39,16 +40,8 @@ const DraggableCircle: FC<DraggableCircleProps> = ({
     };
   }, []);
 
-  const toSVGCoords = (e: PointerEvent<SVGCircleElement>) => {
-    const svg = e.currentTarget.ownerSVGElement;
-    if (!svg) return null;
-    const ctm = svg.getScreenCTM();
-    if (!ctm) return null;
-    return {
-      x: (e.clientX - ctm.e) / ctm.a,
-      y: (e.clientY - ctm.f) / ctm.d,
-    };
-  };
+  const toSVGCoords = (e: PointerEvent<SVGCircleElement>) =>
+    clientToSvgPoint(e.currentTarget.ownerSVGElement, e.clientX, e.clientY);
 
   return (
     <circle
