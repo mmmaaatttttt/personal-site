@@ -1,5 +1,5 @@
 import { act, renderHook } from "@testing-library/react";
-import { beforeEach, describe, expect, it, vi } from "vitest";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import type { ArticleMeta } from "@/utils/content";
 
 const navigation = vi.hoisted(() => ({
@@ -25,6 +25,10 @@ beforeEach(() => {
   navigation.params = new URLSearchParams();
   navigation.push.mockClear();
   window.history.replaceState(null, "", "/stories");
+});
+
+afterEach(() => {
+  vi.restoreAllMocks();
 });
 
 describe("useArticlesContent", () => {
@@ -90,4 +94,24 @@ describe("useArticlesContent", () => {
       scroll: false,
     });
   });
+
+  it.each([
+    [0, "/stories/a"],
+    [0.5, "/stories/b"],
+  ])(
+    "sends a random draw of %d to %s without changing the view",
+    (draw, path) => {
+      vi.spyOn(crypto, "getRandomValues").mockImplementation((buffer) => {
+        (buffer as Uint32Array)[0] = draw * 2 ** 32;
+        return buffer;
+      });
+      navigation.params = new URLSearchParams("sort=z-a");
+      const { result } = renderHook(() => useArticlesContent(articles));
+      act(() => result.current.selectView("random"));
+      expect(navigation.push).toHaveBeenCalledTimes(1);
+      expect(navigation.push).toHaveBeenCalledWith(path);
+      expect(result.current.view).toBe("title");
+      expect(result.current.reversed).toBe(true);
+    },
+  );
 });
