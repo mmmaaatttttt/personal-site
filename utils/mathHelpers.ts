@@ -138,7 +138,7 @@ function swap<T>(arr: T[], i: number, j: number): T[] {
 
 export function shuffle<T>(arr: T[], rng: () => number = cryptoRandom): T[] {
   for (let i = arr.length - 1; i >= 0; i--) {
-    const randomIdx = Math.floor(rng() * i);
+    const randomIdx = Math.floor(rng() * (i + 1));
     swap(arr, i, randomIdx);
   }
   return arr;
