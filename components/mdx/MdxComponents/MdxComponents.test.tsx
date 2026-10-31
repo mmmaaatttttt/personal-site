@@ -48,7 +48,7 @@ vi.mock("@/utils/slugify", () => ({
     typeof children === "string" ? children : "",
 }));
 
-import { MdxComponents } from "./MdxComponents";
+import { MdxComponents } from ".";
 
 type AnyFC = React.FC<Record<string, unknown>>;
 

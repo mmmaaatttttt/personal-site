@@ -2,7 +2,7 @@ import { render } from "@testing-library/react";
 import "@testing-library/jest-dom/vitest";
 import { Loader, Search } from "lucide-react";
 import { describe, expect, it } from "vitest";
-import { Icon } from "./Icon";
+import { Icon } from ".";
 
 describe("Icon", () => {
   it("renders an svg element", () => {

@@ -18,7 +18,7 @@ vi.mock("@/components/icons/LinkedinIcon", () => ({
   default: () => <svg data-testid="linkedin-icon" />,
 }));
 
-import StoryActions from "./StoryActions";
+import StoryActions from ".";
 
 const props = {
   githubUrl:
