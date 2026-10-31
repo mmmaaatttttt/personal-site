@@ -201,6 +201,8 @@ Placement follows who uses the component:
 
 `app/<route>/` itself holds only Next route files (`page.tsx`, `layout.tsx`, route handlers) and their tests — never a component, hook, or `utils.ts`. Any component with a test gets its own folder (`<Name>/index.tsx` + `<Name>.test.tsx`), with its private hook, `utils.ts`, `constants.ts`, and single-file sub-components as siblings inside that folder (see the OrchardGame example below). A sub-component that is itself multi-file gets its own folder at the same level as its parent rather than nested inside it — e.g. `app/stories/components/BubbleMap/` sits beside `app/stories/components/ArticlesContent/`. A component may stay a flat file only if it has no test.
 
+These rules are enforced, not just documented: `scripts/structureRules.mjs` defines them once, `scripts/structureRules.test.ts` fails CI on any violation in the repo, and the `.claude/hooks/check-component-path.mjs` PreToolUse hook blocks Claude from writing a violating file. Change the rules in `structureRules.mjs`, never by special-casing the test or the hook. Project hooks run through `.claude/hooks/run-node.sh`, which loads nvm and the `.nvmrc` Node — the hook environment's own `node` may be missing or too old to run ES modules.
+
 ### Component decomposition
 
 **One component per file — no exceptions.** Even small sub-components that are only used by one parent must live in their own file. If a file exports multiple components, split it before shipping.

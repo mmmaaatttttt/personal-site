@@ -1,7 +1,7 @@
 "use client";
 
 import GamingRelationships from "@/components/story/shared/GamingRelationships";
-import { nonlinearVisData } from "../data";
+import { nonlinearVisData } from "../../data";
 
 // Both nonlinear visualizations use step=0.02; the three-person chart extends max to 40.
 const STEP = 0.02;

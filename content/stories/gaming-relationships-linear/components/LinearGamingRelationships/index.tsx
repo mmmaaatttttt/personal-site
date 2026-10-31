@@ -1,7 +1,7 @@
 "use client";
 
 import GamingRelationships from "@/components/story/shared/GamingRelationships";
-import { linearVisData } from "../data";
+import { linearVisData } from "../../data";
 
 interface Props {
   idx: number | string;
