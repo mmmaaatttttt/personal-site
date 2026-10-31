@@ -23,7 +23,7 @@ vi.mock("@/components/icons/GithubIcon", () => ({
 }));
 
 import { EMAIL_SIGNUP_MODAL_QUERY_PARAM } from "@/lib/constants";
-import Footer from "./Footer";
+import Footer from ".";
 
 describe("Footer", () => {
   it("renders all social links", () => {

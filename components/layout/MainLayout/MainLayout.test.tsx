@@ -7,13 +7,13 @@ vi.mock("next/navigation", () => ({
 vi.mock("@/hooks/useIsMounted", () => ({
   useIsMounted: vi.fn(),
 }));
-vi.mock("./Footer", () => ({
+vi.mock("../Footer", () => ({
   default: () => <div data-testid="footer" />,
 }));
-vi.mock("./EmailSignupModal", () => ({
+vi.mock("../EmailSignupModal", () => ({
   default: () => <div data-testid="email-signup-modal" />,
 }));
-vi.mock("./Navbar", () => ({
+vi.mock("../Navbar", () => ({
   default: ({
     hide,
     title,
@@ -34,7 +34,7 @@ vi.mock("./Navbar", () => ({
 
 import { usePathname } from "next/navigation";
 import { useIsMounted } from "@/hooks/useIsMounted";
-import MainLayout from "./MainLayout";
+import MainLayout from ".";
 
 describe("MainLayout", () => {
   it("renders children, navbar, footer, and the email signup modal", () => {

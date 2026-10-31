@@ -11,7 +11,7 @@ vi.mock("next/link", () => ({
   }) => <a href={href}>{children}</a>,
 }));
 
-import Navbar from "./Navbar";
+import Navbar from ".";
 
 describe("Navbar", () => {
   it("renders navigation links with correct hrefs", () => {

@@ -19,7 +19,7 @@ vi.mock("@/utils/stringHelpers", () => ({
   normalizeImagePath: (p: string) => p,
 }));
 
-import StoryCard from "./StoryCard";
+import StoryCard from ".";
 
 const baseProps = {
   caption: "A test caption",

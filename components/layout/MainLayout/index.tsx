@@ -3,9 +3,9 @@
 import { usePathname } from "next/navigation";
 import type { FC, ReactNode } from "react";
 import { useIsMounted } from "@/hooks/useIsMounted";
-import EmailSignupModal from "./EmailSignupModal";
-import Footer from "./Footer";
-import Navbar from "./Navbar";
+import EmailSignupModal from "../EmailSignupModal";
+import Footer from "../Footer";
+import Navbar from "../Navbar";
 
 interface MainLayoutProps {
   children: ReactNode;

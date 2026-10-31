@@ -1,6 +1,6 @@
 import { render } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
-import LinkedinIcon from "./LinkedinIcon";
+import LinkedinIcon from ".";
 
 describe("LinkedinIcon", () => {
   it("renders an SVG with default size and strokeWidth", () => {

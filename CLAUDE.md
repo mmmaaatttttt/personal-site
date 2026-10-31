@@ -65,7 +65,7 @@ import { myTableData } from "./data";
 
 ### Global components (no import needed in MDX)
 
-Shared utilities that are registered in `components/mdx/MdxComponents.tsx` are available in any MDX file without importing:
+Shared utilities that are registered in `components/mdx/MdxComponents/index.tsx` are available in any MDX file without importing:
 
 ---
 
@@ -199,7 +199,7 @@ Placement follows who uses the component:
 | One page (e.g. the `/stories` index)      | `app/<route>/components/<Name>/`                 |
 | Site-wide UI (layout, icons, ui)          | `components/<area>/<Name>/`                      |
 
-`app/<route>/` itself holds only Next route files (`page.tsx`, `layout.tsx`, route handlers) and their tests — never a component, hook, or `utils.ts`. Any component with a test gets its own folder (`<Name>/index.tsx` + `<Name>.test.tsx`), with its private hook, `utils.ts`, `constants.ts`, and single-file sub-components as siblings inside that folder (see the OrchardGame example below). A sub-component that is itself multi-file gets its own folder at the same level as its parent rather than nested inside it — e.g. `app/stories/components/BubbleMap/` sits beside `app/stories/components/ArticlesContent/`. Only untested presentational files (e.g. icons) may stay flat.
+`app/<route>/` itself holds only Next route files (`page.tsx`, `layout.tsx`, route handlers) and their tests — never a component, hook, or `utils.ts`. Any component with a test gets its own folder (`<Name>/index.tsx` + `<Name>.test.tsx`), with its private hook, `utils.ts`, `constants.ts`, and single-file sub-components as siblings inside that folder (see the OrchardGame example below). A sub-component that is itself multi-file gets its own folder at the same level as its parent rather than nested inside it — e.g. `app/stories/components/BubbleMap/` sits beside `app/stories/components/ArticlesContent/`. A component may stay a flat file only if it has no test.
 
 ### Component decomposition
 

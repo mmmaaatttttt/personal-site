@@ -1,10 +1,10 @@
 import { render } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
-import GithubIcon from "./GithubIcon";
+import BlueskyIcon from ".";
 
-describe("GithubIcon", () => {
+describe("BlueskyIcon", () => {
   it("renders an SVG with default size and strokeWidth", () => {
-    const { container } = render(<GithubIcon />);
+    const { container } = render(<BlueskyIcon />);
     const svg = container.querySelector("svg");
     expect(svg).toBeInTheDocument();
     expect(svg).toHaveAttribute("width", "24");
@@ -13,7 +13,7 @@ describe("GithubIcon", () => {
   });
 
   it("renders with custom size and strokeWidth", () => {
-    const { container } = render(<GithubIcon size={32} strokeWidth={2} />);
+    const { container } = render(<BlueskyIcon size={32} strokeWidth={2} />);
     const svg = container.querySelector("svg");
     expect(svg).toHaveAttribute("width", "32");
     expect(svg).toHaveAttribute("height", "32");
@@ -21,13 +21,13 @@ describe("GithubIcon", () => {
   });
 
   it("has a title element for accessibility", () => {
-    const { container } = render(<GithubIcon />);
+    const { container } = render(<BlueskyIcon />);
     const title = container.querySelector("title");
-    expect(title).toHaveTextContent("GitHub");
+    expect(title).toHaveTextContent("Bluesky");
   });
 
   it("spreads additional SVG props onto the element", () => {
-    const { container } = render(<GithubIcon className="icon-test" />);
+    const { container } = render(<BlueskyIcon className="icon-test" />);
     const svg = container.querySelector("svg");
     expect(svg).toHaveClass("icon-test");
   });
