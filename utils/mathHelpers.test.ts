@@ -264,6 +264,16 @@ describe("shuffle", () => {
     const result = shuffle(arr, () => 0);
     expect(result).toEqual([2, 3, 4, 1]);
   });
+
+  it("reaches every ordering exactly once across all draws", () => {
+    const orderings = [0, 0.4, 0.8].flatMap((firstDraw) =>
+      [0, 0.6].map((secondDraw) => {
+        const draws = [firstDraw, secondDraw, 0];
+        return shuffle(["a", "b", "c"], () => draws.shift() ?? 0).join("");
+      }),
+    );
+    expect(new Set(orderings).size).toBe(6);
+  });
 });
 
 describe("choices", () => {
