@@ -13,7 +13,7 @@ import { SliderGroup } from "@/components/story/shared/Slider";
 import useSliders from "@/hooks/useSliders";
 import type { DiffEqFactory } from "@/utils/mathHelpers";
 import { clamp, generateData } from "@/utils/mathHelpers";
-import { visualizationData } from "../data/warming-dots";
+import { visualizationData } from "../../data/warming-dots";
 
 interface WarmingDotsProps {
   vizIndex?: number | string;

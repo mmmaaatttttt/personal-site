@@ -78,7 +78,7 @@ vi.mock("@/components/story/shared/LinePlot", () => ({
   ),
 }));
 
-import WarmingDots from "./WarmingDots";
+import WarmingDots from ".";
 
 afterEach(() => {
   gridImpl.current = (_step: number, cb: (x: number, y: number[]) => void) => {

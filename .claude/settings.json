@@ -6,7 +6,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "node .claude/hooks/check-component-path.mjs",
+            "command": "sh \"$CLAUDE_PROJECT_DIR/.claude/hooks/run-node.sh\" \"$CLAUDE_PROJECT_DIR/.claude/hooks/check-component-path.mjs\"",
             "timeout": 10
           }
         ]
@@ -18,7 +18,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "node .claude/hooks/check-duplicate-types.mjs",
+            "command": "sh \"$CLAUDE_PROJECT_DIR/.claude/hooks/run-node.sh\" \"$CLAUDE_PROJECT_DIR/.claude/hooks/check-duplicate-types.mjs\"",
             "timeout": 20
           }
         ]
