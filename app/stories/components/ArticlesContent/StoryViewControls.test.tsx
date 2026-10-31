@@ -18,7 +18,7 @@ const renderControls = (
 describe("StoryViewControls", () => {
   it("renders an icon button per view and marks the active one", () => {
     renderControls({ view: "title" });
-    expect(screen.getAllByRole("button")).toHaveLength(3);
+    expect(screen.getAllByRole("button")).toHaveLength(4);
     expect(screen.getByRole("button", { name: "A to Z" })).toHaveAttribute(
       "aria-pressed",
       "true",
@@ -63,5 +63,13 @@ describe("StoryViewControls", () => {
     const { props } = renderControls();
     fireEvent.click(screen.getByRole("button", { name: "Similarity" }));
     expect(props.onSelect).toHaveBeenCalledWith("similarity");
+  });
+
+  it("offers a random story as an action rather than a view", () => {
+    const { props } = renderControls();
+    const button = screen.getByRole("button", { name: "I'm feeling lucky" });
+    expect(button).not.toHaveAttribute("aria-pressed");
+    fireEvent.click(button);
+    expect(props.onSelect).toHaveBeenCalledWith("random");
   });
 });

@@ -1,7 +1,7 @@
 import type { ArticleMeta } from "@/utils/content";
 
 export type StoryOrder = "date" | "title";
-export type StoryView = StoryOrder | "similarity";
+export type StoryView = StoryOrder | "similarity" | "random";
 
 export interface StorySort {
   view: StoryView;

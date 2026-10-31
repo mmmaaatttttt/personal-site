@@ -6,6 +6,7 @@ import {
   Bubbles,
   CalendarArrowDown,
   CalendarArrowUp,
+  CircleQuestionMark,
   type LucideIcon,
 } from "lucide-react";
 import type { FC } from "react";
@@ -42,6 +43,13 @@ const VIEW_OPTIONS: ViewOption[] = [
     label: "Similarity",
     reversedLabel: "Similarity",
   },
+  {
+    view: "random",
+    icon: CircleQuestionMark,
+    reversedIcon: CircleQuestionMark,
+    label: "I'm feeling lucky",
+    reversedLabel: "I'm feeling lucky",
+  },
 ];
 
 interface StoryViewControlsProps {
@@ -66,7 +74,7 @@ const StoryViewControls: FC<StoryViewControlsProps> = ({
           key={option.view}
           type="button"
           aria-label={label}
-          aria-pressed={selected}
+          aria-pressed={option.view === "random" ? undefined : selected}
           onClick={() => onSelect?.(option.view)}
           className={cn(
             "group relative rounded-md border border-gray p-2 transition-colors",
