@@ -51,7 +51,7 @@
     "@biomejs/biome": "2.5.10",
     "@huggingface/transformers": "^3.8.1",
     "@playwright/test": "^1.64.1",
-    "@react-email/ui": "^6.11.3",
+    "@react-email/ui": "^6.11.6",
     "@tailwindcss/postcss": "^4.3.3",
     "@testing-library/jest-dom": "^7.0.1",
     "@testing-library/react": "^16.3.3",
